@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>e-Fatura XML'i Excel'e Çevir: Toplu, Ücretsiz, Dosya Yüklemeden</title>
+<meta name="description" content="e-Fatura ve e-Arşiv XML ya da ZIP dosyalarını toplu olarak Excel'e çevirin. Fatura no, tarih, satıcı, alıcı, KDV oranları ve kalemler. Dosyalarınız bilgisayarınızdan çıkmaz.">
+<link rel="canonical" href="https://keremcanarslan.github.io/e-fatura-excel/">
+<meta property="og:title" content="e-Fatura XML → Excel (toplu, ücretsiz)">
+<meta property="og:description" content="Yüzlerce e-Fatura XML'ini tek Excel dosyasına dökün. İşlem tarayıcınızda yapılır, dosya yüklenmez.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://keremcanarslan.github.io/e-fatura-excel/">
+<meta name="theme-color" content="#0d3b2e">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230d3b2e'/%3E%3Ctext x='16' y='22' font-family='Arial' font-weight='700' font-size='15' fill='white' text-anchor='middle'%3EKA%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../stil.css">
+<script defer src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"e-Fatura XML'i Excel'e Çevir","url":"https://keremcanarslan.github.io/e-fatura-excel/","applicationCategory":"BusinessApplication","operatingSystem":"Tarayıcı","inLanguage":"tr","offers":{"@type":"Offer","price":"0","priceCurrency":"TRY"}}
+</script>
+</head>
+<body>
+<nav class="nav"><div class="kap">
+  <a class="logo" href="../"><span class="logo-ikon">KA</span>Kerem Can Arslan</a>
+  <div class="nav-linkler"><a href="../#hizmetler">Hizmetler</a><a href="../eposta-guvenlik-testi/">E-posta testi</a></div>
+  <a class="btn btn-ana btn-kucuk" href="../#iletisim">İletişim</a>
+</div></nav>
+
+<main class="bolum" style="padding-top:48px"><div class="kap">
+  <div class="dar" style="padding:0">
+    <span class="etiket">Ücretsiz araç</span>
+    <h1 style="font-size:clamp(28px,4.4vw,42px)">e-Fatura XML'i Excel'e çevir</h1>
+    <p class="giris">e-Fatura ve e-Arşiv faturalarınızın XML dosyalarını (ya da indirdiğiniz ZIP'leri) bırakın. Fatura no, tarih, satıcı, alıcı, KDV oranlarına göre matrah ve vergi, ödenecek tutar ve tüm kalemler tek Excel dosyasına dökülür.</p>
+  </div>
+
+  <div class="kart arac">
+    <label id="birak" class="birak" for="dosya">
+      <b>Dosyaları buraya bırakın ya da tıklayıp seçin</b>
+      <p>XML ve ZIP, aynı anda yüzlerce dosya olabilir</p>
+      <input id="dosya" type="file" multiple accept=".xml,.zip,application/xml,text/xml,application/zip" hidden>
+    </label>
+    <div class="btnler" style="margin-top:14px">
+      <button id="ornek" class="btn btn-ikinci btn-kucuk" type="button">Örnek faturalarla dene</button>
+      <button id="indir" class="btn btn-ana btn-kucuk" type="button" disabled>Excel'e indir</button>
+      <button id="sifirla" class="btn btn-ikinci btn-kucuk" type="button" hidden>Temizle</button>
+    </div>
+    <div id="sonuc" class="sonuc" aria-live="polite"></div>
+  </div>
+  <p style="color:var(--soluk);font-size:14px;margin-top:12px">Dosyalarınız bilgisayarınızdan çıkmaz: okuma ve dönüştürme tarayıcınızın içinde yapılır, hiçbir sunucuya yüklenmez.</p>
+
+  <div class="kart" style="margin-top:32px;background:var(--vurgu-zemin);border-color:#cfe6d9">
+    <h3>Bu işi her ay elle mi yapıyorsunuz?</h3>
+    <p>Taranmış ya da PDF faturalardan bilgi okuma, e-posta kutunuza gelen faturaları otomatik toplama, muhasebe programınızın içe aktarma biçimine çevirme, tedarikçi ve ay bazında rapor. Size özel hazırlayıp çalışır halde teslim ederim.</p>
+    <div class="btnler" style="margin-top:16px"><a class="btn btn-ana" href="https://bionluk.com/keremcanarslan/Excel-formul-tablo-ve-rapor-islerinizi-yaparim-889998">Bionluk ilanına git</a></div>
+  </div>
+
+  <section class="sss dar" style="margin-top:44px;padding:0">
+    <h2 style="font-size:26px;margin-bottom:8px">Sık sorulanlar</h2>
+    <details><summary>XML dosyalarını nereden bulurum?</summary><p>e-Fatura ya da e-Arşiv hizmeti aldığınız entegratörün panelinde (gelen ve giden faturalar listesinde) "XML indir" ya da toplu "ZIP indir" seçeneği bulunur. GİB e-Arşiv Portal'dan indirilen ZIP dosyaları da kabul edilir.</p></details>
+    <details><summary>Excel'de hangi bilgiler var?</summary><p>"Faturalar" sayfasında her fatura bir satırdır: fatura no, ETTN, tarih, senaryo ve tip, satıcı ve alıcının unvanı, VKN/TCKN, vergi dairesi ve ili, mal/hizmet toplamı, iskonto, KDV oranlarına göre matrah ve KDV, diğer vergiler, tevkifat ve ödenecek tutar. "Kalemler" sayfasında her ürün ya da hizmet satırı ayrı ayrı yer alır.</p></details>
+    <details><summary>Aynı faturayı iki kez yüklersem?</summary><p>ETTN'si aynı olan fatura bir kez sayılır, tekrar edenler atlanır ve kaç tane atlandığı yazılır.</p></details>
+    <details><summary>PDF faturalarla çalışır mı?</summary><p>Bu araç yalnız XML okur; PDF, faturanın görüntüsüdür. PDF ya da taranmış faturalardan toplu bilgi çıkarma için size özel bir çözüm hazırlayabilirim.</p></details>
+  </section>
+</div></main>
+
+<footer class="alt"><div class="kap"><span><a href="../">Kerem Can Arslan</a> · Yazılım ve otomasyon</span><span>e-Fatura UBL-TR 1.2 biçimi</span></div></footer>
+
+<script>
+const BIRIM = { C62: "Adet", NIU: "Adet", KGM: "kg", GRM: "g", LTR: "lt", MTR: "m", MTK: "m²", MTQ: "m³", HUR: "Saat", DAY: "Gün", MON: "Ay", ANN: "Yıl", KWH: "kWh", SET: "Set", PA: "Paket", BX: "Kutu", PR: "Çift", TNE: "ton", CMT: "cm", MLT: "ml", D61: "Dakika" };
+
+// UBL'de aynı ad farklı derinliklerde tekrar eder; yalnız doğrudan çocuklar üzerinden yol izlenir.
+const C = (el, ...yol) => { let k = el; for (const ad of yol) { if (!k) return null; k = [...k.children].find(c => c.localName === ad) || null; } return k; };
+const CS = (el, ad) => el ? [...el.children].filter(c => c.localName === ad) : [];
+const T = (el, ...yol) => { const x = C(el, ...yol); return x ? x.textContent.trim() : ""; };
+const N = (el, ...yol) => { const t = T(el, ...yol); if (t === "") return null; const n = parseFloat(t); return isNaN(n) ? null : n; };
+const yuvarla = n => Math.round(n * 100) / 100;
+
+function taraf(p) {
+  if (!p) return { ad: "", no: "", vd: "", il: "" };
+  const kimlik = CS(p, "PartyIdentification").map(x => C(x, "ID")).filter(Boolean).find(i => /^(VKN|TCKN)$/i.test(i.getAttribute("schemeID") || ""));
+  let ad = T(p, "PartyName", "Name");
+  if (!ad) { const k = C(p, "Person"); if (k) ad = [T(k, "FirstName"), T(k, "MiddleName"), T(k, "FamilyName")].filter(Boolean).join(" "); }
+  return { ad, no: kimlik ? kimlik.textContent.trim() : "", vd: T(p, "PartyTaxScheme", "TaxScheme", "Name"), il: T(p, "PostalAddress", "CityName") };
+}
+function kdvAlt(tt) { // TaxTotal → KDV (0015) alt toplamları
+  return CS(tt, "TaxSubtotal").filter(st => T(st, "TaxCategory", "TaxScheme", "TaxTypeCode") === "0015");
+}
+function fatura(inv, dosya) {
+  const sat = taraf(C(inv, "AccountingSupplierParty", "Party")), al = taraf(C(inv, "AccountingCustomerParty", "Party"));
+  const kdv = {}; let diger = 0;
+  for (const tt of CS(inv, "TaxTotal")) for (const st of CS(tt, "TaxSubtotal")) {
+    const tutar = N(st, "TaxAmount") || 0;
+    if (T(st, "TaxCategory", "TaxScheme", "TaxTypeCode") === "0015") {
+      const oran = N(st, "Percent"); const k = oran === null ? "?" : String(oran);
+      kdv[k] = kdv[k] || { matrah: 0, tutar: 0 };
+      kdv[k].matrah += N(st, "TaxableAmount") || 0; kdv[k].tutar += tutar;
+    } else diger += tutar;
+  }
+  const tevkifat = CS(inv, "WithholdingTaxTotal").reduce((t, w) => t + (N(w, "TaxAmount") || 0), 0);
+  const lm = C(inv, "LegalMonetaryTotal");
+  const kalemler = CS(inv, "InvoiceLine").map(l => {
+    const ks = CS(l, "TaxTotal").flatMap(kdvAlt)[0];
+    const iskonto = CS(l, "AllowanceCharge").filter(a => T(a, "ChargeIndicator") === "false").reduce((t, a) => t + (N(a, "Amount") || 0), 0);
+    const q = C(l, "InvoicedQuantity");
+    return { sira: T(l, "ID"), ad: T(l, "Item", "Name") || T(l, "Item", "Description"), miktar: N(l, "InvoicedQuantity"),
+      birim: q ? (BIRIM[q.getAttribute("unitCode")] || q.getAttribute("unitCode") || "") : "", fiyat: N(l, "Price", "PriceAmount"),
+      iskonto: iskonto ? yuvarla(iskonto) : null, tutar: N(l, "LineExtensionAmount"), kdvOran: ks ? N(ks, "Percent") : null, kdvTutar: ks ? N(ks, "TaxAmount") : null };
+  });
+  return { dosya, no: T(inv, "ID"), ettn: T(inv, "UUID"), tarih: T(inv, "IssueDate"), saat: T(inv, "IssueTime"), senaryo: T(inv, "ProfileID"),
+    tip: T(inv, "InvoiceTypeCode"), pb: T(inv, "DocumentCurrencyCode") || "TRY", sat, al,
+    malHizmet: N(lm, "LineExtensionAmount"), iskonto: N(lm, "AllowanceTotalAmount"), vergiHaric: N(lm, "TaxExclusiveAmount"),
+    kdv, kdvToplam: yuvarla(Object.values(kdv).reduce((t, x) => t + x.tutar, 0)), diger: yuvarla(diger), tevkifat: yuvarla(tevkifat),
+    vergiDahil: N(lm, "TaxInclusiveAmount"), odenecek: N(lm, "PayableAmount"), kalemler };
+}
+
+function coz(bayt) {
+  let bas = new TextDecoder("utf-8").decode(bayt.slice(0, 200));
+  const m = bas.match(/encoding=["']([\w-]+)["']/i);
+  let metin;
+  try { metin = new TextDecoder(m && !/utf-?8/i.test(m[1]) ? m[1] : "utf-8").decode(bayt); } catch (e) { metin = new TextDecoder("utf-8").decode(bayt); }
+  return metin.replace(/^﻿/, "");
+}
+function xmlOku(metin, dosya) {
+  const doc = new DOMParser().parseFromString(metin, "application/xml");
+  if (doc.getElementsByTagName("parsererror").length) throw new Error("okunamadı");
+  const kok = doc.documentElement;
+  const liste = kok.localName === "Invoice" ? [kok] : [...doc.getElementsByTagNameNS("*", "Invoice")].filter(i => C(i, "ID"));
+  if (!liste.length) throw new Error("fatura değil");
+  return liste.map(i => fatura(i, dosya));
+}
+
+let FATURALAR = [], ETTN = new Set(), ATLANAN = 0, HATALAR = [];
+async function dosyalariIsle(dosyalar) {
+  for (const d of dosyalar) {
+    const ad = d.name || "dosya";
+    try {
+      if (/\.zip$/i.test(ad)) {
+        if (!window.JSZip) throw new Error("ZIP okuyucu yüklenemedi");
+        const z = await JSZip.loadAsync(d);
+        const ic = Object.values(z.files).filter(f => !f.dir && /\.xml$/i.test(f.name));
+        if (!ic.length) throw new Error("içinde XML yok");
+        for (const f of ic) { try { ekle(xmlOku(coz(await f.async("uint8array")), ad + " / " + f.name.split("/").pop())); } catch (e) { HATALAR.push(ad + " / " + f.name + ": " + e.message); } }
+      } else ekle(xmlOku(coz(new Uint8Array(await d.arrayBuffer())), ad));
+    } catch (e) { HATALAR.push(ad + ": " + e.message); }
+  }
+  goster();
+}
+function ekle(liste) {
+  for (const f of liste) {
+    const k = f.ettn || f.no + "|" + f.sat.no;
+    if (ETTN.has(k)) { ATLANAN++; continue; }
+    ETTN.add(k); FATURALAR.push(f);
+  }
+}
+
+const para = (n, pb) => n === null || n === undefined ? "" : n.toLocaleString("tr-TR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + (pb ? " " + pb : "");
+const kacis = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const trTarih = t => /^\d{4}-\d{2}-\d{2}$/.test(t) ? t.split("-").reverse().join(".") : t;
+const sonucKutu = document.getElementById("sonuc"), indirBtn = document.getElementById("indir"), sifirlaBtn = document.getElementById("sifirla");
+
+function goster() {
+  FATURALAR.sort((a, b) => (a.tarih + a.saat).localeCompare(b.tarih + b.saat));
+  indirBtn.disabled = !FATURALAR.length; sifirlaBtn.hidden = !FATURALAR.length && !HATALAR.length;
+  let h = "";
+  if (FATURALAR.length) {
+    const pbToplam = {};
+    for (const f of FATURALAR) { const t = pbToplam[f.pb] = pbToplam[f.pb] || { odenecek: 0, kdv: 0 }; t.odenecek += f.odenecek || 0; t.kdv += f.kdvToplam || 0; }
+    const kalem = FATURALAR.reduce((t, f) => t + f.kalemler.length, 0);
+    h += '<div class="ozet"><span><b>' + FATURALAR.length + "</b> fatura</span><span><b>" + kalem + "</b> kalem</span>" +
+      Object.entries(pbToplam).map(([pb, t]) => "<span>Ödenecek toplam <b>" + para(t.odenecek, pb) + "</b> · KDV <b>" + para(t.kdv, pb) + "</b></span>").join("") +
+      (ATLANAN ? "<span>" + ATLANAN + " tekrar eden fatura atlandı</span>" : "") + "</div>";
+    const gosterilen = FATURALAR.slice(0, 200);
+    h += '<div class="tablo-kap"><table><thead><tr><th>Fatura no</th><th>Tarih</th><th>Tip</th><th>Satıcı</th><th>Alıcı</th><th class="sayi">Vergi hariç</th><th class="sayi">KDV</th><th class="sayi">Ödenecek</th></tr></thead><tbody>' +
+      gosterilen.map(f => "<tr><td>" + kacis(f.no) + "</td><td>" + trTarih(f.tarih) + "</td><td>" + kacis(f.tip) + "</td><td>" + kacis(f.sat.ad) + "</td><td>" + kacis(f.al.ad) +
+        '</td><td class="sayi">' + para(f.vergiHaric) + '</td><td class="sayi">' + para(f.kdvToplam) + '</td><td class="sayi">' + para(f.odenecek, f.pb) + "</td></tr>").join("") + "</tbody></table></div>";
+    if (FATURALAR.length > 200) h += '<p style="color:var(--soluk);font-size:14px">Ekranda ilk 200 fatura gösteriliyor; Excel dosyasında hepsi var.</p>';
+  }
+  if (HATALAR.length) h += '<div class="hata-kutu"><b>' + HATALAR.length + " dosya okunamadı</b> (e-Fatura XML'i değil ya da bozuk):<br>" + HATALAR.slice(0, 8).map(kacis).join("<br>") + (HATALAR.length > 8 ? "<br>…" : "") + "</div>";
+  sonucKutu.innerHTML = h;
+}
+
+function excel() {
+  if (!window.XLSX) { alert("Excel kütüphanesi yüklenemedi; sayfayı yenileyip tekrar deneyin."); return; }
+  const oranlar = [...new Set(FATURALAR.flatMap(f => Object.keys(f.kdv)))].sort((a, b) => parseFloat(a) - parseFloat(b));
+  // Excel gün numarası (1899-12-30 tabanı); Date nesnesi saat dilimi yüzünden kesirli değer üretiyordu.
+  const tarih = t => /^\d{4}-\d{2}-\d{2}$/.test(t) ? (Date.UTC(+t.slice(0, 4), +t.slice(5, 7) - 1, +t.slice(8, 10)) - Date.UTC(1899, 11, 30)) / 864e5 : t;
+  const faturalar = FATURALAR.map(f => {
+    const r = { "Dosya": f.dosya, "Fatura No": f.no, "ETTN": f.ettn, "Tarih": tarih(f.tarih), "Saat": f.saat, "Senaryo": f.senaryo, "Tip": f.tip, "Para Birimi": f.pb,
+      "Satıcı": f.sat.ad, "Satıcı VKN/TCKN": f.sat.no, "Satıcı Vergi Dairesi": f.sat.vd, "Satıcı İl": f.sat.il,
+      "Alıcı": f.al.ad, "Alıcı VKN/TCKN": f.al.no, "Alıcı Vergi Dairesi": f.al.vd, "Alıcı İl": f.al.il,
+      "Mal/Hizmet Toplamı": f.malHizmet, "İskonto": f.iskonto, "Vergi Hariç Tutar": f.vergiHaric };
+    for (const o of oranlar) { r["KDV Matrahı %" + o] = f.kdv[o] ? yuvarla(f.kdv[o].matrah) : null; r["KDV %" + o] = f.kdv[o] ? yuvarla(f.kdv[o].tutar) : null; }
+    Object.assign(r, { "KDV Toplamı": f.kdvToplam, "Diğer Vergiler": f.diger || null, "Tevkifat": f.tevkifat || null, "Vergiler Dahil": f.vergiDahil, "Ödenecek Tutar": f.odenecek, "Kalem Sayısı": f.kalemler.length });
+    return r;
+  });
+  const kalemler = FATURALAR.flatMap(f => f.kalemler.map(k => ({ "Fatura No": f.no, "Tarih": tarih(f.tarih), "Satıcı": f.sat.ad, "Alıcı": f.al.ad, "Sıra": k.sira,
+    "Mal/Hizmet": k.ad, "Miktar": k.miktar, "Birim": k.birim, "Birim Fiyat": k.fiyat, "İskonto": k.iskonto, "Tutar": k.tutar, "KDV %": k.kdvOran, "KDV Tutarı": k.kdvTutar, "Para Birimi": f.pb })));
+  const wb = XLSX.utils.book_new();
+  for (const [ad, satirlar] of [["Faturalar", faturalar], ["Kalemler", kalemler]]) {
+    const ws = XLSX.utils.json_to_sheet(satirlar);
+    const basliklar = Object.keys(satirlar[0] || {});
+    const tc = basliklar.indexOf("Tarih");
+    if (tc >= 0) for (let r = 1; r <= satirlar.length; r++) { const h = ws[XLSX.utils.encode_cell({ r, c: tc })]; if (h && h.t === "n") h.z = "dd.mm.yyyy"; }
+    ws["!cols"] = basliklar.map(b => ({ wch: Math.min(42, Math.max(b.length + 2, ...satirlar.slice(0, 300).map(s => String(b === "Tarih" ? "00.00.0000" : s[b] ?? "").length + 1))) }));
+    ws["!autofilter"] = { ref: ws["!ref"] };
+    XLSX.utils.book_append_sheet(wb, ws, ad);
+  }
+  const g = new Date();
+  XLSX.writeFile(wb, "faturalar-" + g.getFullYear() + String(g.getMonth() + 1).padStart(2, "0") + String(g.getDate()).padStart(2, "0") + ".xlsx");
+}
+
+// Örnek veriler uydurmadır; aracı kendi dosyası olmadan görmek isteyenler için.
+function ornekXml(no, ettn, tarih, tip, alici, kalemler) {
+  const ns = 'xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"';
+  const oranlar = {}; let toplam = 0;
+  const satir = kalemler.map(([ad, miktar, birim, fiyat, oran], i) => {
+    const tutar = yuvarla(miktar * fiyat), vergi = yuvarla(tutar * oran / 100); toplam += tutar;
+    oranlar[oran] = oranlar[oran] || [0, 0]; oranlar[oran][0] += tutar; oranlar[oran][1] += vergi;
+    return `<cac:InvoiceLine><cbc:ID>${i + 1}</cbc:ID><cbc:InvoicedQuantity unitCode="${birim}">${miktar}</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="TRY">${tutar.toFixed(2)}</cbc:LineExtensionAmount><cac:TaxTotal><cbc:TaxAmount currencyID="TRY">${vergi.toFixed(2)}</cbc:TaxAmount><cac:TaxSubtotal><cbc:TaxableAmount currencyID="TRY">${tutar.toFixed(2)}</cbc:TaxableAmount><cbc:TaxAmount currencyID="TRY">${vergi.toFixed(2)}</cbc:TaxAmount><cbc:Percent>${oran}</cbc:Percent><cac:TaxCategory><cac:TaxScheme><cbc:Name>KDV</cbc:Name><cbc:TaxTypeCode>0015</cbc:TaxTypeCode></cac:TaxScheme></cac:TaxCategory></cac:TaxSubtotal></cac:TaxTotal><cac:Item><cbc:Name>${ad}</cbc:Name></cac:Item><cac:Price><cbc:PriceAmount currencyID="TRY">${fiyat.toFixed(2)}</cbc:PriceAmount></cac:Price></cac:InvoiceLine>`;
+  }).join("");
+  const kdv = Object.values(oranlar).reduce((t, x) => t + x[1], 0);
+  const alt = Object.entries(oranlar).map(([o, [m, v]]) => `<cac:TaxSubtotal><cbc:TaxableAmount currencyID="TRY">${m.toFixed(2)}</cbc:TaxableAmount><cbc:TaxAmount currencyID="TRY">${v.toFixed(2)}</cbc:TaxAmount><cbc:Percent>${o}</cbc:Percent><cac:TaxCategory><cac:TaxScheme><cbc:Name>KDV</cbc:Name><cbc:TaxTypeCode>0015</cbc:TaxTypeCode></cac:TaxScheme></cac:TaxCategory></cac:TaxSubtotal>`).join("");
+  const parti = (kimlik, tur, ad, vd, il, kisi) => `<cac:Party><cac:PartyIdentification><cbc:ID schemeID="${tur}">${kimlik}</cbc:ID></cac:PartyIdentification>${kisi ? "" : `<cac:PartyName><cbc:Name>${ad}</cbc:Name></cac:PartyName>`}<cac:PostalAddress><cbc:CityName>${il}</cbc:CityName></cac:PostalAddress><cac:PartyTaxScheme><cac:TaxScheme><cbc:Name>${vd}</cbc:Name></cac:TaxScheme></cac:PartyTaxScheme>${kisi ? `<cac:Person><cbc:FirstName>${ad.split(" ")[0]}</cbc:FirstName><cbc:FamilyName>${ad.split(" ").slice(1).join(" ")}</cbc:FamilyName></cac:Person>` : ""}</cac:Party>`;
+  return `<?xml version="1.0" encoding="UTF-8"?><Invoice ${ns}><cbc:UBLVersionID>2.1</cbc:UBLVersionID><cbc:CustomizationID>TR1.2</cbc:CustomizationID><cbc:ProfileID>${tip}</cbc:ProfileID><cbc:ID>${no}</cbc:ID><cbc:UUID>${ettn}</cbc:UUID><cbc:IssueDate>${tarih}</cbc:IssueDate><cbc:IssueTime>10:15:00</cbc:IssueTime><cbc:InvoiceTypeCode>SATIS</cbc:InvoiceTypeCode><cbc:DocumentCurrencyCode>TRY</cbc:DocumentCurrencyCode><cac:AccountingSupplierParty>${parti("1234567890", "VKN", "Örnek Gıda Ltd. Şti.", "Çankaya", "Ankara")}</cac:AccountingSupplierParty><cac:AccountingCustomerParty>${parti(...alici)}</cac:AccountingCustomerParty><cac:TaxTotal><cbc:TaxAmount currencyID="TRY">${kdv.toFixed(2)}</cbc:TaxAmount>${alt}</cac:TaxTotal><cac:LegalMonetaryTotal><cbc:LineExtensionAmount currencyID="TRY">${toplam.toFixed(2)}</cbc:LineExtensionAmount><cbc:TaxExclusiveAmount currencyID="TRY">${toplam.toFixed(2)}</cbc:TaxExclusiveAmount><cbc:TaxInclusiveAmount currencyID="TRY">${(toplam + kdv).toFixed(2)}</cbc:TaxInclusiveAmount><cbc:AllowanceTotalAmount currencyID="TRY">0.00</cbc:AllowanceTotalAmount><cbc:PayableAmount currencyID="TRY">${(toplam + kdv).toFixed(2)}</cbc:PayableAmount></cac:LegalMonetaryTotal>${satir}</Invoice>`;
+}
+const ORNEKLER = [
+  ["ORN2026000000101", "0f1c2a3b-0000-4000-8000-000000000101", "2026-10-01", "TICARIFATURA", ["9876543210", "VKN", "Deneme Market A.Ş.", "Kadıköy", "İstanbul"], [["Zeytinyağı 1 L", 24, "C62", 285, 1], ["Kese kâğıdı (1000'li)", 3, "PA", 210, 20]]],
+  ["ORN2026000000102", "0f1c2a3b-0000-4000-8000-000000000102", "2026-10-03", "EARSIVFATURA", ["11111111110", "TCKN", "Ayşe Yılmaz", "Yenimahalle", "Ankara", true], [["Ev tipi un 5 kg", 2, "C62", 165, 1], ["Teslimat hizmeti", 1, "C62", 50, 20]]],
+  ["ORN2026000000103", "0f1c2a3b-0000-4000-8000-000000000103", "2026-10-07", "TEMELFATURA", ["5555555555", "VKN", "Lezzet Lokantası Ltd. Şti.", "Konak", "İzmir"], [["Kuru fasulye", 50, "KGM", 92.5, 1], ["Ayçiçek yağı 18 L", 4, "C62", 1340, 1], ["Peçete koli", 6, "BX", 375, 20]]],
+];
+
+const birak = document.getElementById("birak"), girdi = document.getElementById("dosya");
+girdi.addEventListener("change", () => { dosyalariIsle([...girdi.files]); girdi.value = ""; });
+["dragenter", "dragover"].forEach(o => birak.addEventListener(o, e => { e.preventDefault(); birak.classList.add("ustunde"); }));
+["dragleave", "drop"].forEach(o => birak.addEventListener(o, e => { e.preventDefault(); birak.classList.remove("ustunde"); }));
+birak.addEventListener("drop", e => dosyalariIsle([...e.dataTransfer.files]));
+document.getElementById("ornek").addEventListener("click", () => {
+  const enc = new TextEncoder();
+  dosyalariIsle(ORNEKLER.map(o => ({ name: "ornek-" + o[0].slice(-3) + ".xml", arrayBuffer: async () => enc.encode(ornekXml(...o)).buffer })));
+});
+indirBtn.addEventListener("click", excel);
+sifirlaBtn.addEventListener("click", () => { FATURALAR = []; ETTN = new Set(); ATLANAN = 0; HATALAR = []; goster(); });
+</script>
+</body>
+</html>
