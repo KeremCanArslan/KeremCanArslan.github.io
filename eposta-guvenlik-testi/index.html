@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>E-posta Güvenlik Testi: SPF, DKIM, DMARC Kontrolü (Ücretsiz)</title>
+<meta name="description" content="Alan adınızın SPF, DKIM ve DMARC kayıtlarını ücretsiz kontrol edin. E-postalarınız neden spama düşüyor, sahte gönderime açık mı, nasıl düzeltilir; sade Türkçe sonuç.">
+<link rel="canonical" href="https://keremcanarslan.github.io/eposta-guvenlik-testi/">
+<meta property="og:title" content="E-posta Güvenlik Testi (SPF, DKIM, DMARC)">
+<meta property="og:description" content="Alan adınızı yazın, e-posta kayıtlarınızdaki eksikleri ve çözümünü görün. Ücretsiz, kayıtsız.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://keremcanarslan.github.io/eposta-guvenlik-testi/">
+<meta name="theme-color" content="#0d3b2e">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230d3b2e'/%3E%3Ctext x='16' y='22' font-family='Arial' font-weight='700' font-size='15' fill='white' text-anchor='middle'%3EKA%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../stil.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"E-posta Güvenlik Testi","url":"https://keremcanarslan.github.io/eposta-guvenlik-testi/","applicationCategory":"SecurityApplication","operatingSystem":"Tarayıcı","inLanguage":"tr","offers":{"@type":"Offer","price":"0","priceCurrency":"TRY"}}
+</script>
+</head>
+<body>
+<nav class="nav"><div class="kap">
+  <a class="logo" href="../"><span class="logo-ikon">KA</span>Kerem Can Arslan</a>
+  <div class="nav-linkler"><a href="../#hizmetler">Hizmetler</a><a href="../e-fatura-excel/">e-Fatura → Excel</a></div>
+  <a class="btn btn-ana btn-kucuk" href="../#iletisim">İletişim</a>
+</div></nav>
+
+<main class="bolum" style="padding-top:48px"><div class="kap dar">
+  <span class="etiket">Ücretsiz araç</span>
+  <h1 style="font-size:clamp(28px,4.4vw,42px)">E-posta güvenlik testi</h1>
+  <p class="giris">Şirket e-postalarınız spama mı düşüyor, ya da biri sizin adınıza sahte e-posta gönderebilir mi? Alan adınızı yazın; SPF, DKIM ve DMARC kayıtlarınızı kontrol edip eksikleri ve çözümünü gösterir.</p>
+
+  <div class="kart arac">
+    <form id="form" class="girdi-satir" autocomplete="off">
+      <input id="alan" class="girdi" placeholder="ornekfirma.com ya da ad@ornekfirma.com" aria-label="Alan adı" inputmode="url" spellcheck="false">
+      <button id="btn" class="btn btn-ana" type="submit">Kontrol et</button>
+    </form>
+    <div id="sonuc" class="sonuc" aria-live="polite"></div>
+  </div>
+  <p style="color:var(--soluk);font-size:14px;margin-top:12px">Yalnız herkese açık DNS kayıtlarına bakılır. Sorgu tarayıcınızdan Cloudflare ya da Google'ın genel DNS hizmetine gider; sonuç bana gönderilmez, kaydedilmez.</p>
+
+  <section class="sss" style="margin-top:44px">
+    <h2 style="font-size:26px;margin-bottom:8px">Sık sorulanlar</h2>
+    <details><summary>SPF, DKIM ve DMARC ne işe yarar?</summary><p>SPF, alan adınız adına hangi sunucuların e-posta gönderebileceğini listeler. DKIM, giden e-postaya sahteciliği zorlaştıran bir imza ekler. DMARC ise bu iki kontrolden geçemeyen e-postaya alıcı sunucunun ne yapacağını söyler (teslim et, spama at, reddet) ve size rapor gönderir. Gmail ve Outlook, toplu gönderim yapan alan adlarında bu kayıtları artık zorunlu tutuyor.</p></details>
+    <details><summary>DKIM "bulunamadı" çıkıyor ama kullanıyorum, neden?</summary><p>DKIM kayıtları bir "seçici" adıyla tutulur ve bu adlar DNS'te listelenemez. Test, yaygın seçicileri (google, selector1, default gibi) dener. Sağlayıcınız farklı bir ad kullanıyorsa DKIM açık olduğu halde bulunamayabilir; sağlayıcınızın yönetim panelinden kontrol edin.</p></details>
+    <details><summary>Puanım düşük, e-postalarım hemen engellenir mi?</summary><p>Hayır. Puan, eksik korumayı gösterir. Eksikler e-postanızın spama düşme ihtimalini ve sahte gönderime açıklığı artırır. Düzeltme DNS panelinden birkaç kayıt eklemekle yapılır; yanlış yapılan bir DMARC ayarı ise kendi e-postalarınızı engelleyebilir, o yüzden adım adım ilerlemek gerekir.</p></details>
+    <details><summary>Düzeltmeyi kim yapar?</summary><p>Alan adınızın DNS panelinde (alan adını aldığınız firma ya da Cloudflare) kayıt eklenerek yapılır. İsterseniz ben yaparım: önce yalnız izleme modunda DMARC kurarım, raporlar temiz çıkınca korumayı sıkılaştırırım; hiçbir e-postanız kaybolmaz.</p></details>
+  </section>
+
+  <div class="kart" style="margin-top:36px;background:var(--vurgu-zemin);border-color:#cfe6d9">
+    <h3>Eksikleri sizin yerinize düzelteyim</h3>
+    <p>SPF, DKIM ve DMARC kurulumu; Google Workspace, Microsoft 365, Yandex ve hosting e-postalarıyla. DNS panelinize erişim geldikten sonra genellikle aynı gün biter.</p>
+    <div class="btnler" style="margin-top:16px"><a class="btn btn-ana" href="https://bionluk.com/keremcanarslan/SPF-ve-DMARC-ile-e-postanizin-spama-dusmesini-onlerim-891153">Bionluk ilanına git</a></div>
+  </div>
+</div></main>
+
+<footer class="alt"><div class="kap"><span><a href="../">Kerem Can Arslan</a> · Yazılım ve otomasyon</span><span><a href="https://github.com/KeremCanArslan/email-security-check">Kaynak kodu (geniş sürüm)</a></span></div></footer>
+
+<script>
+const SECICILER = ["default","google","selector1","selector2","k1","k2","s1","s2","mail","dkim","smtp","mandrill","mxvault","zoho","yandex","protonmail","sig1","fm1","mailjet"];
+const TIP = { MX: 15, TXT: 16 };
+const onbellek = new Map();
+
+// Genel DNS-over-HTTPS (JSON); Cloudflare olmazsa Google.
+async function dns(ad, tip) {
+  const anahtar = ad + "|" + tip;
+  if (onbellek.has(anahtar)) return onbellek.get(anahtar);
+  const adresler = [
+    "https://cloudflare-dns.com/dns-query?name=" + encodeURIComponent(ad) + "&type=" + tip,
+    "https://dns.google/resolve?name=" + encodeURIComponent(ad) + "&type=" + tip,
+  ];
+  let sonuc = null;
+  for (const u of adresler) {
+    try {
+      const r = await fetch(u, { headers: { accept: "application/dns-json" } });
+      if (!r.ok) continue;
+      const j = await r.json();
+      sonuc = { durum: j.Status, kayitlar: (j.Answer || []).filter(a => a.type === TIP[tip]).map(a => a.data) };
+      break;
+    } catch (e) { /* sıradaki sağlayıcı */ }
+  }
+  if (!sonuc) throw new Error("dns");
+  onbellek.set(anahtar, sonuc);
+  return sonuc;
+}
+// TXT verisi tırnaklı parçalar halinde gelir: "v=spf1 ..." "devamı"
+const txtBirlestir = d => (d.match(/"((?:[^"\\]|\\.)*)"/g) || [d]).map(p => p.replace(/^"|"$/g, "").replace(/\\(.)/g, "$1")).join("");
+async function txt(ad) { return (await dns(ad, "TXT")).kayitlar.map(txtBirlestir); }
+
+const SPF_SORGU = /^[+\-~?]?(include:|a$|a:|a\/|mx$|mx:|mx\/|ptr|exists:|redirect=)/i;
+async function spfSorguSay(kayit, gorulen = new Set(), derinlik = 0) {
+  let toplam = 0;
+  for (const terim of kayit.split(/\s+/).slice(1)) {
+    if (!SPF_SORGU.test(terim)) continue;
+    toplam++;
+    const kucuk = terim.toLowerCase().replace(/^[+\-~?]/, "");
+    let hedef = null;
+    if (kucuk.startsWith("include:")) hedef = terim.split(":").slice(1).join(":");
+    else if (kucuk.startsWith("redirect=")) hedef = terim.split("=").slice(1).join("=");
+    if (hedef && !gorulen.has(hedef) && derinlik < 10) {
+      gorulen.add(hedef);
+      const ic = (await txt(hedef)).filter(t => t.toLowerCase().startsWith("v=spf1"));
+      if (ic.length) toplam += await spfSorguSay(ic[0], gorulen, derinlik + 1);
+    }
+  }
+  return toplam;
+}
+function etiketler(kayit) {
+  const t = {};
+  kayit.split(";").forEach(p => { const i = p.indexOf("="); if (i > 0) t[p.slice(0, i).trim().toLowerCase()] = p.slice(i + 1).trim(); });
+  return t;
+}
+
+async function kontrol(alan) {
+  const b = []; // {baslik, durum, metin, cozum, ceza}
+  const ekle = (baslik, durum, metin, cozum = "", ceza = 0) => b.push({ baslik, durum, metin, cozum, ceza });
+  const kayitlar = {};
+
+  const mx = await dns(alan, "MX");
+  if (mx.durum === 3) return { yok: true };
+  const mxler = mx.kayitlar.map(m => m.split(/\s+/).pop().replace(/\.$/, "")).filter(Boolean);
+  if (mxler.length) ekle("MX", "ok", "Posta sunucuları bulundu: " + mxler.slice(0, 3).join(", "));
+  else ekle("MX", "info", "MX kaydı yok; bu alan adı e-posta almıyor. SPF ve DMARC yine de sahte gönderime karşı korur.");
+
+  const spfler = (await txt(alan)).filter(t => t.toLowerCase().startsWith("v=spf1"));
+  if (!spfler.length) {
+    ekle("SPF", "fail", "SPF kaydı yok. Herkes bu alan adı adına e-posta gönderebilir.", "Alan adı adına e-posta gönderen tüm servisleri içeren tek bir SPF TXT kaydı eklenmeli, sonu ~all olmalı.", 30);
+  } else {
+    const spf = kayitlar.SPF = spfler[0];
+    if (spfler.length > 1) ekle("SPF", "fail", spfler.length + " adet SPF kaydı var. Yalnız bir kayıt olabilir; alıcı sunucular bunu hata sayar.", "SPF kayıtları tek bir TXT kaydında birleştirilmeli.", 20);
+    const son = spf.trim().split(/\s+/).pop().toLowerCase();
+    if (son === "+all" || son === "all") ekle("SPF", "fail", "SPF +all ile bitiyor; internetteki tüm sunuculara gönderim izni veriyor.", "+all yerine ~all yazılmalı (tüm göndericiler eklendikten sonra -all).", 30);
+    else if (son === "?all") ekle("SPF", "warn", "SPF ?all ile bitiyor; koruma sağlamıyor.", "?all yerine ~all yazılmalı.", 15);
+    else if (son === "~all" || son === "-all") ekle("SPF", "ok", "SPF kaydı geçerli ve " + son + " ile bitiyor.");
+    else if (!son.startsWith("redirect=")) ekle("SPF", "warn", "SPF kaydının sonunda 'all' tanımı yok.", "SPF kaydının sonuna ~all eklenmeli.", 10);
+    const sayi = await spfSorguSay(spf);
+    if (sayi > 10) ekle("SPF", "fail", "SPF " + sayi + " DNS sorgusu gerektiriyor; sınır 10 olduğu için doğrulama başarısız olur.", "include: sayısı azaltılmalı ya da ip4:/ip6: aralıklarıyla değiştirilmeli.", 20);
+  }
+
+  const dmarclar = (await txt("_dmarc." + alan)).filter(t => t.toLowerCase().startsWith("v=dmarc1"));
+  if (!dmarclar.length) {
+    ekle("DMARC", "fail", "DMARC kaydı yok. Sahte e-postalar reddedilmiyor, rapor da alınmıyor.", "_dmarc TXT kaydı eklenmeli: v=DMARC1; p=none; rua=mailto:<adres>. Önce yalnız izleme yapılır, hiçbir e-posta engellenmez.", 30);
+  } else {
+    const d = kayitlar.DMARC = dmarclar[0];
+    const t = etiketler(d), p = (t.p || "").toLowerCase();
+    if (p === "none") ekle("DMARC", "warn", "DMARC politikası p=none (yalnız izleme). Sahte e-postalar yine teslim ediliyor.", "İki hafta temiz rapordan sonra politika p=quarantine, ardından p=reject yapılmalı.", 15);
+    else if (p === "quarantine" || p === "reject") ekle("DMARC", "ok", "DMARC politikası p=" + p + ".");
+    else ekle("DMARC", "fail", "DMARC politika değeri geçersiz: " + (p || "-"), "p= değeri none, quarantine ya da reject olmalı.", 20);
+    if ((t.pct || "100") !== "100") ekle("DMARC", "warn", "DMARC iletilerin yalnız %" + t.pct + " kadarına uygulanıyor.", "Raporlar temiz çıkınca pct kaldırılmalı ya da 100 yapılmalı.", 5);
+    if (!("rua" in t)) ekle("DMARC", "warn", "DMARC kaydında rua adresi yok; toplu raporlar alınmıyor.", "Günlük toplu raporlar için rua=mailto:<adres> eklenmeli.", 5);
+  }
+
+  // DKIM seçicileri listelenemez; yaygın olanlar denenir. Joker kayıt her denemeyi eşleştireceği için önce rastgele bir ad sorulur.
+  const anahtarVar = async s => (await txt(s + "._domainkey." + alan)).some(x => /(^|;)\s*p=/.test(x));
+  let bulunan = [];
+  if (await anahtarVar("zz-deneme-7f3a")) bulunan = ["*"];
+  else {
+    const var_ = await Promise.all(SECICILER.map(anahtarVar));
+    bulunan = SECICILER.filter((_, i) => var_[i]);
+  }
+  if (bulunan.length) ekle("DKIM", "ok", "DKIM anahtarı bulundu" + (bulunan[0] === "*" ? "." : " (seçici: " + bulunan.join(", ") + ")."));
+  else ekle("DKIM", "warn", "Yaygın seçicilerde DKIM anahtarı bulunamadı. Sağlayıcınız farklı bir seçici kullanıyor olabilir.", "E-posta sağlayıcısının yönetim panelinden DKIM imzalama açılmalı ve verdiği anahtar DNS'e eklenmeli.", 10);
+
+  const sts = (await txt("_mta-sts." + alan)).some(t => t.toLowerCase().startsWith("v=stsv1"));
+  if (sts) ekle("MTA-STS", "ok", "MTA-STS yayımlanmış; gelen e-postalarda şifreli teslimat zorunlu.");
+  else ekle("MTA-STS", "info", "MTA-STS yayımlanmamış (önerilir, zorunlu değil).", "İsteğe bağlı: MTA-STS ile alan adınıza gelen e-postalarda şifreli teslimat zorunlu kılınabilir.", 5);
+
+  return { b, kayitlar };
+}
+
+const DURUM_YAZI = { ok: "Tamam", warn: "Uyarı", fail: "Sorun", info: "Bilgi" };
+const kacis = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+function temizle(g) {
+  let a = g.trim().toLowerCase();
+  if (a.includes("@")) a = a.split("@").pop();
+  a = a.replace(/^[a-z]+:\/\//, "").split(/[\/?#:\s]/)[0].replace(/\.$/, "").replace(/^www\./, "");
+  try { a = new URL("http://" + a).hostname; } catch (e) { return ""; } // Türkçe karakterli alan adlarını punycode'a çevirir
+  return /^([a-z0-9-]+\.)+[a-z0-9-]{2,}$/.test(a) ? a : "";
+}
+
+const form = document.getElementById("form"), girdi = document.getElementById("alan"), btn = document.getElementById("btn"), kutu = document.getElementById("sonuc");
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+  const alan = temizle(girdi.value);
+  if (!alan) { kutu.innerHTML = '<div class="hata-kutu">Geçerli bir alan adı yazın, örneğin ornekfirma.com</div>'; return; }
+  btn.disabled = true; btn.textContent = "Kontrol ediliyor…"; kutu.innerHTML = "";
+  try {
+    const r = await kontrol(alan);
+    if (r.yok) { kutu.innerHTML = '<div class="hata-kutu">' + kacis(alan) + " adında bir alan adı bulunamadı. Yazımı kontrol edin.</div>"; return; }
+    const puan = Math.max(0, 100 - r.b.reduce((t, x) => t + x.ceza, 0));
+    const renk = puan >= 80 ? "var(--ok)" : puan >= 50 ? "var(--uyari)" : "var(--hata)";
+    const yorum = puan >= 80 ? "İyi durumda." : puan >= 50 ? "Eksikler var; düzeltilmesi önerilir." : "Önemli eksikler var; e-postalarınız spama düşebilir ve sahte gönderime açık.";
+    let h = '<div class="puan"><div class="puan-sayi" style="color:' + renk + '">' + puan + '<span style="font-size:20px;color:var(--soluk)">/100</span></div><div><b>' + kacis(alan) + "</b><br><span style=\"color:var(--soluk)\">" + yorum + "</span></div></div>";
+    for (const x of r.b) {
+      h += '<div class="satir"><span class="durum ' + x.durum + '">' + DURUM_YAZI[x.durum] + "</span><div><b>" + x.baslik + "</b><div>" + kacis(x.metin) + "</div>" +
+        (x.cozum && x.durum !== "ok" ? '<div class="ne">Ne yapılmalı: ' + kacis(x.cozum) + "</div>" : "") + "</div></div>";
+    }
+    for (const [ad, k] of Object.entries(r.kayitlar)) h += '<div class="satir"><span class="durum info">Kayıt</span><div><b>Mevcut ' + ad + ' kaydı</b><p class="kayit">' + kacis(k) + "</p></div></div>";
+    if (puan < 100) h += '<div class="not" style="margin-top:14px">Bu eksikleri DNS panelinizden birkaç kayıtla düzeltebilirsiniz. İsterseniz sizin yerinize ben yaparım; e-postalarınızı engellemeden, adım adım. <a href="https://bionluk.com/keremcanarslan/SPF-ve-DMARC-ile-e-postanizin-spama-dusmesini-onlerim-891153" style="font-weight:700">Bionluk ilanına git</a></div>';
+    kutu.innerHTML = h;
+    history.replaceState(null, "", "#" + alan);
+  } catch (err) {
+    kutu.innerHTML = '<div class="hata-kutu">DNS sorgusu yapılamadı. İnternet bağlantınızı kontrol edip tekrar deneyin.</div>';
+  } finally { btn.disabled = false; btn.textContent = "Kontrol et"; }
+});
+// Bağlantıyla paylaşılan sonuç: .../eposta-guvenlik-testi/#ornekfirma.com
+if (location.hash.length > 1) { girdi.value = decodeURIComponent(location.hash.slice(1)); form.requestSubmit(); }
+window.addEventListener("hashchange", () => { const a = decodeURIComponent(location.hash.slice(1)); if (a && temizle(a) !== temizle(girdi.value)) { girdi.value = a; form.requestSubmit(); } });
+</script>
+</body>
+</html>
