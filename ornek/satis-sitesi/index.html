@@ -41,7 +41,7 @@ main{max-width:1100px;margin:0 auto;padding:30px 20px 60px}
 .gorsel{aspect-ratio:4/3;display:grid;place-items:center}
 .gorsel svg{width:46%;height:auto}
 .muzik .gorsel{background:linear-gradient(135deg,#fdf1df,#f6dcb5)}
-.sorf .gorsel{background:linear-gradient(135deg,#dff3f4,#b6e2e5)}
+.sorf .gorsel{background:linear-gradient(135deg,#e6f4f5,#c4e6e8)}
 .urun-ic{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
 .etiket{font-size:12px;color:var(--deniz);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
 .urun h3{margin:0;font-size:16px;color:var(--koyu)}
@@ -80,13 +80,13 @@ footer{text-align:center;color:var(--soluk);font-size:13px;padding:24px 20px 40p
 <body>
 <div class="serit"><b>Örnek tasarım</b> · Ürünler ve fiyatlar örnektir, ödeme alınmaz.</div>
 <header><div class="ust">
-  <a class="logo" href="#">Ritim<span>&</span>Dalga</a>
+  <a class="logo" href="#">Ritim<span>.</span>Müzik</a>
   <button class="sepet-btn" id="sepetAc">Sepet<i id="sayac">0</i></button>
 </div></header>
 
 <div class="hero"><div class="hero-ic">
-  <h1>Müzik aletleri ve sörf malzemeleri tek yerde</h1>
-  <p>Gitardan sörf tahtasına, seçili ürünler hızlı kargo ve güvenli ödemeyle kapınızda.</p>
+  <h1>Müzik aletleri ve sarf malzemeleri tek yerde</h1>
+  <p>Gitardan tele, bagetten penaya; ihtiyacınız olan her şey hızlı kargo ve güvenli ödemeyle kapınızda.</p>
   <a class="btn" href="#urunler">Ürünlere Göz At</a>
 </div></div>
 
@@ -102,14 +102,14 @@ footer{text-align:center;color:var(--soluk);font-size:13px;padding:24px 20px 40p
     <h2>Ürünler</h2>
     <div class="filtre">
       <button class="secili" data-k="hepsi">Hepsi</button>
-      <button data-k="muzik">Müzik</button>
-      <button data-k="sorf">Sörf</button>
+      <button data-k="muzik">Müzik Aletleri</button>
+      <button data-k="sorf">Sarf Malzemeleri</button>
     </div>
   </div>
   <div class="urunler" id="liste"></div>
 </main>
 
-<footer>Ritim&Dalga · Örnek tasarım</footer>
+<footer>Ritim Müzik · Örnek tasarım</footer>
 
 <div class="perde" id="perde"></div>
 <aside class="cekmece" id="cekmece">
@@ -134,27 +134,27 @@ const ikon={
  ukulele:'<svg viewBox="0 0 64 64" fill="none" stroke="#8a5a2b" stroke-width="3" stroke-linecap="round"><path d="M46 10l8 8M50 14L32 32"/><ellipse cx="24" cy="40" rx="12" ry="11" fill="#f0c890"/><circle cx="24" cy="40" r="3"/></svg>',
  kajon:'<svg viewBox="0 0 64 64" fill="none" stroke="#8a5a2b" stroke-width="3"><rect x="16" y="10" width="32" height="44" rx="3" fill="#e8b878"/><circle cx="32" cy="24" r="6"/></svg>',
  klavye:'<svg viewBox="0 0 64 64" fill="none" stroke="#8a5a2b" stroke-width="3"><rect x="6" y="20" width="52" height="24" rx="3" fill="#f6e6cc"/><path d="M14 30v14M22 30v14M30 30v14M38 30v14M46 30v14"/></svg>',
- tahta:'<svg viewBox="0 0 64 64" fill="none" stroke="#0f6470" stroke-width="3"><path d="M32 4c10 10 12 30 0 56C20 34 22 14 32 4z" fill="#ffd27a"/><path d="M32 8v48"/></svg>',
- wetsuit:'<svg viewBox="0 0 64 64" fill="none" stroke="#0f6470" stroke-width="3" stroke-linejoin="round"><path d="M24 8h16l4 10 8 6-4 6-6-4v30H22V26l-6 4-4-6 8-6z" fill="#2a4d5c"/></svg>',
- leash:'<svg viewBox="0 0 64 64" fill="none" stroke="#0f6470" stroke-width="3" stroke-linecap="round"><path d="M14 46c10-24 26-6 36-28"/><rect x="8" y="44" width="12" height="10" rx="3" fill="#ffd27a"/><circle cx="50" cy="16" r="5" fill="#ffd27a"/></svg>',
- yuzgec:'<svg viewBox="0 0 64 64" fill="none" stroke="#0f6470" stroke-width="3"><path d="M20 54c4-20 8-34 22-44 2 16-4 34-12 44z" fill="#3fb3b8"/></svg>'
+ tel:'<svg viewBox="0 0 64 64" fill="none" stroke="#0f6470" stroke-width="3" stroke-linecap="round"><circle cx="32" cy="32" r="20" fill="#dff3f4"/><circle cx="32" cy="32" r="13"/><circle cx="32" cy="32" r="6"/></svg>',
+ pena:'<svg viewBox="0 0 64 64" fill="none" stroke="#0f6470" stroke-width="3" stroke-linejoin="round"><path d="M14 18c8-6 28-6 36 0 2 10-10 30-18 34-8-4-20-24-18-34z" fill="#ffd27a"/></svg>',
+ baget:'<svg viewBox="0 0 64 64" fill="none" stroke="#0f6470" stroke-width="4" stroke-linecap="round"><path d="M14 54L44 10M24 56L50 14"/><circle cx="45" cy="9" r="3" fill="#0f6470"/><circle cx="51" cy="13" r="3" fill="#0f6470"/></svg>',
+ kapo:'<svg viewBox="0 0 64 64" fill="none" stroke="#0f6470" stroke-width="3" stroke-linejoin="round"><path d="M12 24h40v10H12z" fill="#3fb3b8"/><path d="M20 34v14h8V34M44 24c6-8 4-14-4-14"/></svg>'
 };
 const urunler=[
  {id:1,ad:'Akustik Gitar',k:'muzik',i:'gitar',f:4250,e:4900},
  {id:2,ad:'Soprano Ukulele',k:'muzik',i:'ukulele',f:1350},
  {id:3,ad:'Kajon',k:'muzik',i:'kajon',f:2100},
  {id:4,ad:'61 Tuşlu Klavye',k:'muzik',i:'klavye',f:5600,e:6200},
- {id:5,ad:'Sörf Tahtası 7.2',k:'sorf',i:'tahta',f:12900},
- {id:6,ad:'Wetsuit 3/2 mm',k:'sorf',i:'wetsuit',f:3800,e:4300},
- {id:7,ad:'Sörf Leash 7ft',k:'sorf',i:'leash',f:650},
- {id:8,ad:'Sörf Yüzgeci (Set)',k:'sorf',i:'yuzgec',f:980}
+ {id:5,ad:'Akustik Gitar Teli Seti',k:'sorf',i:'tel',f:290},
+ {id:6,ad:'Pena Seti (12 Adet)',k:'sorf',i:'pena',f:120,e:150},
+ {id:7,ad:'Bateri Bageti 5A',k:'sorf',i:'baget',f:340},
+ {id:8,ad:'Gitar Kapo',k:'sorf',i:'kapo',f:260}
 ];
 const tl=n=>n.toLocaleString('tr-TR')+' TL';
 const sepet={};
 function ciz(k='hepsi'){
  document.getElementById('liste').innerHTML=urunler.filter(u=>k==='hepsi'||u.k===k).map(u=>`
   <div class="urun ${u.k}"><div class="gorsel">${ikon[u.i]}</div><div class="urun-ic">
-   <span class="etiket">${u.k==='muzik'?'Müzik':'Sörf'}</span><h3>${u.ad}</h3>
+   <span class="etiket">${u.k==='muzik'?'Müzik Aleti':'Sarf Malzemesi'}</span><h3>${u.ad}</h3>
    <div class="fiyat">${tl(u.f)}${u.e?`<s>${tl(u.e)}</s>`:''}</div>
    <button class="btn ekle" data-id="${u.id}">Sepete Ekle</button></div></div>`).join('');
 }
