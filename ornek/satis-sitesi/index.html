@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Satış Sitesi — Örnek Tasarım</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f7f8;--kart:#fff;--koyu:#0f2a3a;--deniz:#127c8a;--kum:#f2b45c;--metin:#1f2d36;--soluk:#6b7a85;--cizgi:#e3e8ec}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--metin);overflow-x:hidden}
+.serit{background:var(--koyu);color:#cfe3ea;font-size:13px;text-align:center;padding:8px 16px}
+.serit b{color:var(--kum)}
+header{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--cizgi)}
+.ust{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font:700 24px 'Space Grotesk',sans-serif;color:var(--koyu);text-decoration:none}
+.logo span{color:var(--deniz)}
+.sepet-btn{position:relative;background:var(--koyu);color:#fff;border:0;border-radius:12px;padding:10px 16px;font:600 14px Inter,sans-serif;cursor:pointer}
+.sepet-btn i{position:absolute;top:-7px;right:-7px;background:var(--kum);color:var(--koyu);font-style:normal;font-size:12px;border-radius:999px;min-width:22px;height:22px;display:grid;place-items:center}
+.hero{max-width:1100px;margin:22px auto 0;padding:0 20px}
+.hero-ic{border-radius:24px;padding:44px 36px;color:#fff;background:linear-gradient(120deg,#0f2a3a 0%,#127c8a 60%,#3fb3b8 100%);position:relative;overflow:hidden}
+.hero-ic::after{content:"";position:absolute;right:-60px;bottom:-80px;width:340px;height:340px;border-radius:50%;border:40px solid rgba(255,255,255,.08)}
+.hero h1{font:700 40px/1.1 'Space Grotesk',sans-serif;margin:0 0 12px;max-width:560px}
+.hero p{margin:0 0 22px;max-width:480px;color:#d6edf0}
+.hero .btn{background:var(--kum);color:var(--koyu)}
+.btn{display:inline-block;border:0;border-radius:12px;padding:12px 20px;font:600 15px Inter,sans-serif;cursor:pointer;text-decoration:none}
+.guven{max-width:1100px;margin:18px auto 0;padding:0 20px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.guven div{background:#fff;border:1px solid var(--cizgi);border-radius:14px;padding:14px;font-size:14px;color:var(--soluk)}
+.guven b{display:block;color:var(--koyu);font-size:15px}
+main{max-width:1100px;margin:0 auto;padding:30px 20px 60px}
+.baslik{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.baslik h2{font:700 28px 'Space Grotesk',sans-serif;margin:0;color:var(--koyu)}
+.filtre{display:flex;gap:8px}
+.filtre button{border:1px solid var(--cizgi);background:#fff;border-radius:999px;padding:8px 14px;font:500 14px Inter,sans-serif;cursor:pointer;color:var(--metin)}
+.filtre button.secili{background:var(--koyu);color:#fff;border-color:var(--koyu)}
+.urunler{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.urun{background:var(--kart);border:1px solid var(--cizgi);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+.gorsel{aspect-ratio:4/3;display:grid;place-items:center}
+.gorsel svg{width:46%;height:auto}
+.muzik .gorsel{background:linear-gradient(135deg,#fdf1df,#f6dcb5)}
+.sorf .gorsel{background:linear-gradient(135deg,#dff3f4,#b6e2e5)}
+.urun-ic{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.etiket{font-size:12px;color:var(--deniz);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.urun h3{margin:0;font-size:16px;color:var(--koyu)}
+.fiyat{font:700 18px 'Space Grotesk',sans-serif;color:var(--koyu);margin-top:auto}
+.fiyat s{font:400 13px Inter,sans-serif;color:var(--soluk);margin-left:6px}
+.ekle{background:var(--deniz);color:#fff;width:100%;margin-top:8px}
+.ekle:hover{background:var(--koyu)}
+.cekmece{position:fixed;top:0;right:0;height:100%;width:min(380px,100%);background:#fff;z-index:30;transform:translateX(100%);transition:.25s;display:flex;flex-direction:column;box-shadow:-20px 0 40px -20px rgba(0,0,0,.3)}
+.cekmece{visibility:hidden}.cekmece.acik{transform:none;visibility:visible}
+.perde{position:fixed;inset:0;background:rgba(15,42,58,.45);z-index:25;display:none}
+.perde.acik{display:block}
+.c-ust{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid var(--cizgi)}
+.c-ust h3{margin:0;font:700 20px 'Space Grotesk',sans-serif}
+.kapat{background:none;border:0;font-size:26px;cursor:pointer;color:var(--soluk)}
+.c-liste{flex:1;overflow:auto;padding:10px 20px}
+.c-satir{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--cizgi);font-size:14px}
+.c-satir small{color:var(--soluk);display:block}
+.adet{display:flex;align-items:center;gap:8px}
+.adet button{width:26px;height:26px;border-radius:8px;border:1px solid var(--cizgi);background:#fff;cursor:pointer}
+.c-alt{padding:18px 20px;border-top:1px solid var(--cizgi)}
+.c-alt .toplam{display:flex;justify-content:space-between;font-weight:600;margin-bottom:6px}
+.c-alt .not{font-size:13px;color:var(--soluk);margin:0 0 12px}
+.c-alt .btn{width:100%;background:var(--kum);color:var(--koyu)}
+.bos{color:var(--soluk);text-align:center;padding:40px 0}
+.bilgi{display:none;position:fixed;inset:0;z-index:40;background:rgba(15,42,58,.55);align-items:center;justify-content:center;padding:20px}
+.bilgi.acik{display:flex}
+.bilgi div{background:#fff;border-radius:20px;padding:26px;max-width:400px;text-align:center}
+.bilgi h3{font:700 22px 'Space Grotesk',sans-serif;margin:0 0 8px;color:var(--koyu)}
+.bilgi p{color:var(--soluk);margin:0 0 16px}
+.bilgi .btn{background:var(--koyu);color:#fff}
+footer{text-align:center;color:var(--soluk);font-size:13px;padding:24px 20px 40px;border-top:1px solid var(--cizgi)}
+@media (max-width:900px){.urunler{grid-template-columns:repeat(2,1fr)}.guven{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.hero h1{font-size:30px}.hero-ic{padding:30px 22px}.urunler{gap:10px}.urun h3{font-size:14px}.urun-ic{padding:10px 12px 12px}}
+</style>
+</head>
+<body>
+<div class="serit"><b>Örnek tasarım</b> · Ürünler ve fiyatlar örnektir, ödeme alınmaz.</div>
+<header><div class="ust">
+  <a class="logo" href="#">Ritim<span>&</span>Dalga</a>
+  <button class="sepet-btn" id="sepetAc">Sepet<i id="sayac">0</i></button>
+</div></header>
+
+<div class="hero"><div class="hero-ic">
+  <h1>Müzik aletleri ve sörf malzemeleri tek yerde</h1>
+  <p>Gitardan sörf tahtasına, seçili ürünler hızlı kargo ve güvenli ödemeyle kapınızda.</p>
+  <a class="btn" href="#urunler">Ürünlere Göz At</a>
+</div></div>
+
+<div class="guven">
+  <div><b>Kartla güvenli ödeme</b>Taksit seçenekleriyle</div>
+  <div><b>Hızlı kargo</b>Aynı gün kargoda</div>
+  <div><b>Kolay iade</b>14 gün içinde</div>
+  <div><b>WhatsApp destek</b>Sorularınıza hızlı cevap</div>
+</div>
+
+<main id="urunler">
+  <div class="baslik">
+    <h2>Ürünler</h2>
+    <div class="filtre">
+      <button class="secili" data-k="hepsi">Hepsi</button>
+      <button data-k="muzik">Müzik</button>
+      <button data-k="sorf">Sörf</button>
+    </div>
+  </div>
+  <div class="urunler" id="liste"></div>
+</main>
+
+<footer>Ritim&Dalga · Örnek tasarım</footer>
+
+<div class="perde" id="perde"></div>
+<aside class="cekmece" id="cekmece">
+  <div class="c-ust"><h3>Sepetim</h3><button class="kapat" id="kapat" aria-label="Kapat">×</button></div>
+  <div class="c-liste" id="cListe"></div>
+  <div class="c-alt">
+    <div class="toplam"><span>Toplam</span><span id="toplam">0 TL</span></div>
+    <p class="not">Kargo ödeme adımında hesaplanır.</p>
+    <button class="btn" id="odeme">Ödemeye Geç</button>
+  </div>
+</aside>
+
+<div class="bilgi" id="bilgi"><div>
+  <h3>Örnek sayfa</h3>
+  <p>Gerçek sitede bu adımda kart bilgileri güvenli ödeme sayfasında alınır ve sipariş size bildirilir.</p>
+  <button class="btn" id="bilgiKapat">Tamam</button>
+</div></div>
+
+<script>
+const ikon={
+ gitar:'<svg viewBox="0 0 64 64" fill="none" stroke="#8a5a2b" stroke-width="3" stroke-linecap="round"><path d="M44 8l12 12M50 14L30 34"/><path d="M30 34c-4-4-11-3-14 1-2 2-2 5-1 7-4 1-7 5-6 9 1 5 6 7 10 6 4-1 6-4 6-8 3 1 6 0 8-2 3-4 2-9-3-13z" fill="#e8b878"/><circle cx="22" cy="44" r="3"/></svg>',
+ ukulele:'<svg viewBox="0 0 64 64" fill="none" stroke="#8a5a2b" stroke-width="3" stroke-linecap="round"><path d="M46 10l8 8M50 14L32 32"/><ellipse cx="24" cy="40" rx="12" ry="11" fill="#f0c890"/><circle cx="24" cy="40" r="3"/></svg>',
+ kajon:'<svg viewBox="0 0 64 64" fill="none" stroke="#8a5a2b" stroke-width="3"><rect x="16" y="10" width="32" height="44" rx="3" fill="#e8b878"/><circle cx="32" cy="24" r="6"/></svg>',
+ klavye:'<svg viewBox="0 0 64 64" fill="none" stroke="#8a5a2b" stroke-width="3"><rect x="6" y="20" width="52" height="24" rx="3" fill="#f6e6cc"/><path d="M14 30v14M22 30v14M30 30v14M38 30v14M46 30v14"/></svg>',
+ tahta:'<svg viewBox="0 0 64 64" fill="none" stroke="#0f6470" stroke-width="3"><path d="M32 4c10 10 12 30 0 56C20 34 22 14 32 4z" fill="#ffd27a"/><path d="M32 8v48"/></svg>',
+ wetsuit:'<svg viewBox="0 0 64 64" fill="none" stroke="#0f6470" stroke-width="3" stroke-linejoin="round"><path d="M24 8h16l4 10 8 6-4 6-6-4v30H22V26l-6 4-4-6 8-6z" fill="#2a4d5c"/></svg>',
+ leash:'<svg viewBox="0 0 64 64" fill="none" stroke="#0f6470" stroke-width="3" stroke-linecap="round"><path d="M14 46c10-24 26-6 36-28"/><rect x="8" y="44" width="12" height="10" rx="3" fill="#ffd27a"/><circle cx="50" cy="16" r="5" fill="#ffd27a"/></svg>',
+ yuzgec:'<svg viewBox="0 0 64 64" fill="none" stroke="#0f6470" stroke-width="3"><path d="M20 54c4-20 8-34 22-44 2 16-4 34-12 44z" fill="#3fb3b8"/></svg>'
+};
+const urunler=[
+ {id:1,ad:'Akustik Gitar',k:'muzik',i:'gitar',f:4250,e:4900},
+ {id:2,ad:'Soprano Ukulele',k:'muzik',i:'ukulele',f:1350},
+ {id:3,ad:'Kajon',k:'muzik',i:'kajon',f:2100},
+ {id:4,ad:'61 Tuşlu Klavye',k:'muzik',i:'klavye',f:5600,e:6200},
+ {id:5,ad:'Sörf Tahtası 7.2',k:'sorf',i:'tahta',f:12900},
+ {id:6,ad:'Wetsuit 3/2 mm',k:'sorf',i:'wetsuit',f:3800,e:4300},
+ {id:7,ad:'Sörf Leash 7ft',k:'sorf',i:'leash',f:650},
+ {id:8,ad:'Sörf Yüzgeci (Set)',k:'sorf',i:'yuzgec',f:980}
+];
+const tl=n=>n.toLocaleString('tr-TR')+' TL';
+const sepet={};
+function ciz(k='hepsi'){
+ document.getElementById('liste').innerHTML=urunler.filter(u=>k==='hepsi'||u.k===k).map(u=>`
+  <div class="urun ${u.k}"><div class="gorsel">${ikon[u.i]}</div><div class="urun-ic">
+   <span class="etiket">${u.k==='muzik'?'Müzik':'Sörf'}</span><h3>${u.ad}</h3>
+   <div class="fiyat">${tl(u.f)}${u.e?`<s>${tl(u.e)}</s>`:''}</div>
+   <button class="btn ekle" data-id="${u.id}">Sepete Ekle</button></div></div>`).join('');
+}
+function sepetCiz(){
+ const ids=Object.keys(sepet).filter(i=>sepet[i]>0);
+ document.getElementById('sayac').textContent=ids.reduce((a,i)=>a+sepet[i],0);
+ const L=document.getElementById('cListe');
+ if(!ids.length){L.innerHTML='<div class="bos">Sepetiniz boş</div>';document.getElementById('toplam').textContent='0 TL';return;}
+ let t=0;
+ L.innerHTML=ids.map(i=>{const u=urunler.find(x=>x.id==i);t+=u.f*sepet[i];return `<div class="c-satir"><div>${u.ad}<small>${tl(u.f)}</small></div><div class="adet"><button data-a="-" data-id="${i}">−</button>${sepet[i]}<button data-a="+" data-id="${i}">+</button></div></div>`}).join('');
+ document.getElementById('toplam').textContent=tl(t);
+}
+const ac=()=>{cekmece.classList.add('acik');perde.classList.add('acik')}, kapa=()=>{cekmece.classList.remove('acik');perde.classList.remove('acik')};
+document.getElementById('liste').onclick=e=>{const b=e.target.closest('.ekle');if(!b)return;sepet[b.dataset.id]=(sepet[b.dataset.id]||0)+1;sepetCiz();ac();};
+document.getElementById('cListe').onclick=e=>{const b=e.target.closest('button');if(!b)return;sepet[b.dataset.id]+=b.dataset.a==='+'?1:-1;sepetCiz();};
+document.querySelector('.filtre').onclick=e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('.filtre button').forEach(x=>x.classList.remove('secili'));b.classList.add('secili');ciz(b.dataset.k);};
+sepetAc.onclick=ac;kapat.onclick=kapa;perde.onclick=kapa;
+odeme.onclick=()=>bilgi.classList.add('acik');bilgiKapat.onclick=()=>bilgi.classList.remove('acik');
+ciz();sepetCiz();
+</script>
+</body>
+</html>
