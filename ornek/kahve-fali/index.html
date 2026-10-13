@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Kahve Falı — Örnek Tasarım</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f1ea; --kart:#fffaf4; --koyu:#3b2418; --kahve:#6f4430; --telve:#a9744f;
+  --altin:#c9a46a; --metin:#3d2b22; --soluk:#8a7464; --cizgi:#e6d7c7;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;overflow-x:hidden;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--metin);line-height:1.6}
+.serit{background:var(--koyu);color:#f3e6d6;font-size:13px;text-align:center;padding:8px 16px}
+.serit b{color:var(--altin)}
+header{position:sticky;top:0;z-index:5;background:rgba(247,241,234,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--cizgi)}
+.ust{max-width:1040px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:26px;color:var(--koyu);text-decoration:none;letter-spacing:.5px}
+.logo span{color:var(--telve)}
+.btn{display:inline-block;background:var(--kahve);color:#fff;text-decoration:none;border:0;border-radius:999px;padding:12px 22px;font:600 15px Inter,sans-serif;cursor:pointer}
+.btn:hover{background:var(--koyu)}
+.btn.ince{padding:9px 16px;font-size:14px}
+.hero{max-width:1040px;margin:0 auto;padding:56px 20px 40px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:52px;line-height:1.05;margin:0 0 16px;color:var(--koyu)}
+.hero p{font-size:17px;color:var(--soluk);margin:0 0 26px;max-width:460px}
+.rozetler{display:flex;gap:18px;flex-wrap:wrap;margin-top:26px;font-size:14px;color:var(--soluk)}
+.rozetler div::before{content:"✦ ";color:var(--altin)}
+.fincan{aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 50% 50%,#2a160d 0 38%,#4a2a1a 39% 46%,#f5ece2 47% 60%,#e9dccd 61% 100%);box-shadow:0 30px 60px -20px rgba(59,36,24,.45);position:relative;width:100%;max-width:380px;margin-left:auto}
+.fincan::after{content:"";position:absolute;inset:27%;border-radius:50%;background:
+  radial-gradient(circle at 30% 40%,rgba(169,116,79,.75) 0 7%,transparent 8%),
+  radial-gradient(circle at 62% 32%,rgba(169,116,79,.6) 0 5%,transparent 6%),
+  radial-gradient(circle at 55% 66%,rgba(169,116,79,.7) 0 9%,transparent 10%),
+  radial-gradient(circle at 35% 70%,rgba(169,116,79,.5) 0 4%,transparent 5%)}
+section{max-width:1040px;margin:0 auto;padding:48px 20px}
+h2{font-family:'Cormorant Garamond',serif;font-size:38px;color:var(--koyu);margin:0 0 8px}
+.alt{color:var(--soluk);margin:0 0 28px}
+.adimlar{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.adim{background:var(--kart);border:1px solid var(--cizgi);border-radius:18px;padding:24px}
+.adim .no{font-family:'Cormorant Garamond',serif;font-size:34px;color:var(--altin);line-height:1}
+.adim h3{margin:8px 0 6px;font-size:17px;color:var(--koyu)}
+.adim p{margin:0;color:var(--soluk);font-size:15px}
+.fiyatlar{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.paket{background:var(--kart);border:1px solid var(--cizgi);border-radius:18px;padding:24px;text-align:center}
+.paket.one{border-color:var(--altin);box-shadow:0 12px 30px -18px rgba(111,68,48,.6)}
+.paket h3{margin:0 0 4px;font-size:18px;color:var(--koyu)}
+.paket .tutar{font-family:'Cormorant Garamond',serif;font-size:40px;color:var(--kahve);margin:6px 0}
+.paket p{margin:0;color:var(--soluk);font-size:14px}
+.form-kutu{background:var(--kart);border:1px solid var(--cizgi);border-radius:22px;padding:32px;max-width:680px;margin:0 auto}
+.satir{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label{display:block;font-size:14px;font-weight:600;color:var(--koyu);margin:14px 0 6px}
+input,select,textarea{width:100%;padding:12px 14px;border:1px solid var(--cizgi);border-radius:12px;background:#fff;font:15px Inter,sans-serif;color:var(--metin)}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--altin);border-color:transparent}
+textarea{min-height:90px;resize:vertical}
+.yukle{border:2px dashed var(--cizgi);border-radius:16px;padding:22px;text-align:center;color:var(--soluk);cursor:pointer;background:#fff}
+.yukle:hover{border-color:var(--altin)}
+.onizleme{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.onizleme img{width:84px;height:84px;object-fit:cover;border-radius:12px;border:1px solid var(--cizgi)}
+.not{font-size:13px;color:var(--soluk);margin-top:10px}
+.form-kutu .btn{width:100%;margin-top:22px;padding:15px}
+.sss details{background:var(--kart);border:1px solid var(--cizgi);border-radius:14px;padding:16px 20px;margin-bottom:10px}
+.sss summary{cursor:pointer;font-weight:600;color:var(--koyu)}
+.sss p{margin:10px 0 0;color:var(--soluk)}
+footer{text-align:center;color:var(--soluk);font-size:13px;padding:30px 20px 40px;border-top:1px solid var(--cizgi);margin-top:20px}
+.basari{display:none;position:fixed;inset:0;background:rgba(43,26,18,.55);align-items:center;justify-content:center;padding:20px;z-index:20}
+.basari.acik{display:flex}
+.basari div{background:var(--kart);border-radius:20px;padding:28px;max-width:420px;text-align:center}
+.basari h3{font-family:'Cormorant Garamond',serif;font-size:30px;margin:0 0 8px;color:var(--koyu)}
+.basari p{color:var(--soluk);margin:0 0 18px}
+.wa{position:fixed;right:18px;bottom:18px;background:#25d366;color:#fff;border-radius:999px;padding:12px 18px;font-weight:600;text-decoration:none;box-shadow:0 10px 24px -10px rgba(0,0,0,.4);font-size:14px}
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr;padding-top:36px;gap:28px}
+  .hero h1{font-size:40px}
+  .fincan{width:100%;max-width:240px;margin:0 auto}
+  .adimlar,.fiyatlar{grid-template-columns:1fr}
+  .satir{grid-template-columns:1fr}
+  .form-kutu{padding:22px}
+  .ust .btn{display:none}
+}
+</style>
+</head>
+<body>
+<div class="serit"><b>Örnek tasarım</b> · Form gerçek gönderim yapmaz; metin, isim ve fiyatlar size göre değişir.</div>
+
+<header>
+  <div class="ust">
+    <a class="logo" href="#">Telve<span>.</span></a>
+    <a class="btn ince" href="#fal-gonder">Falına Baktır</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div>
+    <h1>Fincanınızı gönderin, falınız WhatsApp'tan gelsin</h1>
+    <p>Kahvenizi için, fincanı kapatın ve soğuyunca üç fotoğrafını çekin. Gerisini bize bırakın; falınız size özel yorumlanıp aynı gün telefonunuza gelir.</p>
+    <a class="btn" href="#fal-gonder">Hemen Fal Gönder</a>
+    <div class="rozetler"><div>Aynı gün cevap</div><div>Kişiye özel yorum</div><div>Bilgileriniz gizli tutulur</div></div>
+  </div>
+  <div class="fincan" aria-hidden="true"></div>
+</div>
+
+<section>
+  <h2>Nasıl çalışır?</h2>
+  <p class="alt">Üç adımda falınız elinizde.</p>
+  <div class="adimlar">
+    <div class="adim"><div class="no">1</div><h3>Fotoğrafları çekin</h3><p>Fincanın içinden iki, tabağından bir fotoğraf yeterli.</p></div>
+    <div class="adim"><div class="no">2</div><h3>Formu doldurun</h3><p>Adınızı, doğum tarihinizi ve varsa niyetinizi yazıp fotoğrafları ekleyin.</p></div>
+    <div class="adim"><div class="no">3</div><h3>Falınız gelsin</h3><p>Yorumunuz WhatsApp'tan, sesli ya da yazılı olarak size ulaşır.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Fal seçenekleri</h2>
+  <p class="alt">Fiyatları ve seçenekleri siz belirlersiniz.</p>
+  <div class="fiyatlar">
+    <div class="paket"><h3>Kahve Falı</h3><div class="tutar">— TL</div><p>Yazılı yorum</p></div>
+    <div class="paket one"><h3>Sesli Kahve Falı</h3><div class="tutar">— TL</div><p>Sesli mesajla detaylı yorum</p></div>
+    <div class="paket"><h3>Aşk Falı</h3><div class="tutar">— TL</div><p>İlişki ve niyet odaklı yorum</p></div>
+  </div>
+</section>
+
+<section id="fal-gonder">
+  <h2 style="text-align:center">Falınızı gönderin</h2>
+  <p class="alt" style="text-align:center">Fotoğraflar ve bilgileriniz doğrudan fal bakan kişiye iletilir.</p>
+  <form class="form-kutu" id="form">
+    <div class="satir">
+      <div><label for="ad">Adınız</label><input id="ad" required placeholder="Adınız"></div>
+      <div><label for="dogum">Doğum tarihiniz</label><input id="dogum" type="date"></div>
+    </div>
+    <div class="satir">
+      <div><label for="durum">İlişki durumu</label>
+        <select id="durum"><option>Belirtmek istemiyorum</option><option>Bekar</option><option>İlişkisi var</option><option>Evli</option></select></div>
+      <div><label for="tur">Fal türü</label>
+        <select id="tur"><option>Kahve Falı</option><option>Sesli Kahve Falı</option><option>Aşk Falı</option></select></div>
+    </div>
+    <label for="niyet">Niyetiniz (isteğe bağlı)</label>
+    <textarea id="niyet" placeholder="Merak ettiğiniz bir konu varsa yazabilirsiniz"></textarea>
+    <label>Fincan fotoğrafları</label>
+    <div class="yukle" id="yukle">Fotoğraf seçmek için dokunun<br><small>En fazla 3 fotoğraf</small></div>
+    <input type="file" id="dosya" accept="image/*" multiple hidden>
+    <div class="onizleme" id="onizleme"></div>
+    <label for="tel">WhatsApp numaranız</label>
+    <input id="tel" type="tel" required placeholder="05xx xxx xx xx">
+    <button class="btn" type="submit">Falımı Gönder</button>
+    <p class="not">Gönder'e bastığınızda bilgileriniz ve fotoğraflarınız fal bakan kişiye e-postayla ulaşır.</p>
+  </form>
+</section>
+
+<section class="sss">
+  <h2>Sık sorulanlar</h2>
+  <details><summary>Falım ne zaman gelir?</summary><p>Genellikle aynı gün içinde WhatsApp'tan gönderilir.</p></details>
+  <details><summary>Fotoğrafları nasıl çekmeliyim?</summary><p>Fincan iyice soğuduktan sonra, aydınlık bir yerde fincanın içinden iki, tabaktan bir fotoğraf çekin.</p></details>
+  <details><summary>Bilgilerim kimseyle paylaşılır mı?</summary><p>Hayır. Gönderdikleriniz yalnızca falınıza bakan kişiye ulaşır.</p></details>
+</section>
+
+<footer>Telve · Örnek tasarım</footer>
+
+<a class="wa" href="#fal-gonder">WhatsApp'tan yazın</a>
+
+<div class="basari" id="basari"><div>
+  <h3>Falınız alındı</h3>
+  <p>Bu bir örnek sayfa olduğu için hiçbir yere gönderim yapılmadı. Gerçek sitede bu bilgiler ve fotoğraflar fal bakan kişiye e-postayla gelir.</p>
+  <button class="btn" id="kapat" type="button">Tamam</button>
+</div></div>
+
+<script>
+const dosya=document.getElementById('dosya'), onizleme=document.getElementById('onizleme');
+document.getElementById('yukle').onclick=()=>dosya.click();
+dosya.onchange=()=>{onizleme.innerHTML='';[...dosya.files].slice(0,3).forEach(f=>{const i=document.createElement('img');i.src=URL.createObjectURL(f);onizleme.appendChild(i);});};
+document.getElementById('form').onsubmit=e=>{e.preventDefault();document.getElementById('basari').classList.add('acik');};
+document.getElementById('kapat').onclick=()=>document.getElementById('basari').classList.remove('acik');
+</script>
+</body>
+</html>
