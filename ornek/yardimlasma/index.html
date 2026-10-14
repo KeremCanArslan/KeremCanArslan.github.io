@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Elbirliği — Örnek Uygulama</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef1ee; --ekran:#f7f8f6; --kart:#fff; --ana:#0f766e; --ana-koyu:#0b5a54; --ana-acik:#d7f2ee;
+  --istek:#b45309; --istek-acik:#fdecd3; --teklif:#15803d; --teklif-acik:#dcf5e3;
+  --metin:#1f2933; --soluk:#6b7280; --cizgi:#e3e7e3; --kirmizi:#b42318; --kirmizi-acik:#fde7e5;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--metin);line-height:1.5;overflow-x:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+.serit{background:#12312e;color:#dcefeb;font-size:13px;text-align:center;padding:8px 16px}
+.serit b{color:#7fd8cb}
+.sahne{display:flex;justify-content:center;padding:28px 16px 40px}
+.telefon{width:390px;height:800px;max-height:calc(100vh - 90px);min-height:640px;border:11px solid #161a19;border-radius:46px;overflow:hidden;position:relative;background:var(--ekran);box-shadow:0 30px 60px -20px rgba(0,0,0,.35)}
+.ekran{position:absolute;inset:0}
+.sayfa{position:absolute;inset:0 0 66px 0;overflow-y:auto;display:none;padding-bottom:20px}
+.sayfa.aktif{display:block}
+.sayfa.navsiz{bottom:0}
+.ust{position:sticky;top:0;z-index:3;background:rgba(247,248,246,.94);backdrop-filter:blur(8px);padding:16px 18px 10px;display:flex;align-items:center;gap:10px}
+.ust h2{margin:0;font-size:20px;font-weight:700;flex:1}
+.geri{border:0;background:none;padding:6px;margin-left:-6px;border-radius:10px;cursor:pointer;display:flex}
+.geri:hover{background:var(--cizgi)}
+.ic{padding:0 18px}
+svg{display:block}
+
+/* karşılama */
+.karsila{display:flex;flex-direction:column;min-height:100%;padding:56px 26px 30px;background:linear-gradient(180deg,var(--ana-acik),var(--ekran) 55%)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:26px;color:var(--ana-koyu)}
+.logo i{width:44px;height:44px;border-radius:14px;background:var(--ana);display:grid;place-items:center}
+.karsila h1{font-size:30px;line-height:1.15;margin:38px 0 10px}
+.karsila p{color:var(--soluk);margin:0 0 28px}
+.ozellik{display:flex;gap:12px;align-items:flex-start;margin-bottom:16px;font-size:15px}
+.ozellik i{flex:none;width:34px;height:34px;border-radius:10px;background:var(--kart);display:grid;place-items:center;border:1px solid var(--cizgi)}
+.bosluk{flex:1;min-height:20px}
+.btn{display:block;width:100%;border:0;border-radius:14px;padding:14px;background:var(--ana);color:#fff;font-weight:600;font-size:16px;cursor:pointer;text-align:center}
+.btn:hover{background:var(--ana-koyu)}
+.btn.ikincil{background:var(--kart);color:var(--ana-koyu);border:1px solid var(--cizgi);margin-top:10px}
+.btn.kirmizi{background:var(--kirmizi)}
+.btn.kucuk{display:inline-block;width:auto;padding:8px 14px;font-size:14px;border-radius:10px}
+
+/* form */
+label{display:block;font-size:13px;font-weight:600;margin:14px 0 6px}
+.alan{width:100%;border:1px solid var(--cizgi);background:var(--kart);border-radius:12px;padding:12px 13px;font-size:15px;outline:none}
+.alan:focus{border-color:var(--ana);box-shadow:0 0 0 3px var(--ana-acik)}
+textarea.alan{resize:none;height:110px}
+.not{font-size:12.5px;color:var(--soluk);margin-top:8px}
+.secim{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.secim button{border:1px solid var(--cizgi);background:var(--kart);border-radius:12px;padding:12px 8px;cursor:pointer;font-weight:600;font-size:14px}
+.secim button.sec{border-color:var(--ana);background:var(--ana-acik);color:var(--ana-koyu)}
+.onay{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;margin:16px 0 18px;color:var(--soluk)}
+.onay input{margin-top:3px;accent-color:var(--ana)}
+
+/* akış */
+.ara{display:flex;align-items:center;gap:8px;background:var(--kart);border:1px solid var(--cizgi);border-radius:12px;padding:0 12px;margin:0 18px}
+.ara input{border:0;outline:none;background:none;padding:11px 0;flex:1;font-size:15px}
+.cipler{display:flex;gap:8px;overflow-x:auto;padding:12px 18px 4px;scrollbar-width:none}
+.cipler::-webkit-scrollbar{display:none}
+.cip{flex:none;border:1px solid var(--cizgi);background:var(--kart);border-radius:999px;padding:7px 14px;font-size:13.5px;font-weight:500;cursor:pointer}
+.cip.sec{background:var(--ana);border-color:var(--ana);color:#fff}
+.sekme{display:flex;margin:10px 18px 6px;background:#e4e8e4;border-radius:12px;padding:3px}
+.sekme button{flex:1;white-space:nowrap;border:0;background:none;padding:8px 4px;border-radius:9px;font-size:13.5px;font-weight:600;color:var(--soluk);cursor:pointer}
+.sekme button.sec{background:var(--kart);color:var(--metin);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.kart{background:var(--kart);border:1px solid var(--cizgi);border-radius:16px;padding:14px;margin:10px 18px 0;cursor:pointer;transition:transform .1s}
+.kart:active{transform:scale(.99)}
+.etiketler{display:flex;gap:6px;align-items:center;margin-bottom:6px;flex-wrap:wrap}
+.rozet{font-size:11.5px;font-weight:700;border-radius:6px;padding:2px 8px}
+.rozet.istek{background:var(--istek-acik);color:var(--istek)}
+.rozet.teklif{background:var(--teklif-acik);color:var(--teklif)}
+.rozet.gri{background:#eef0ee;color:var(--soluk);font-weight:600}
+.kart h3{margin:0 0 4px;font-size:15.5px;line-height:1.35}
+.alt-bilgi{display:flex;gap:12px;font-size:12.5px;color:var(--soluk);align-items:center}
+.alt-bilgi span{display:flex;align-items:center;gap:4px}
+.bos{text-align:center;color:var(--soluk);padding:40px 30px;font-size:14px}
+
+/* detay */
+.detay-kutu{background:var(--kart);border:1px solid var(--cizgi);border-radius:18px;padding:18px;margin:4px 18px 0}
+.detay-kutu h1{font-size:21px;line-height:1.3;margin:6px 0 10px}
+.detay-kutu p{margin:0 0 14px;font-size:15px;white-space:pre-line}
+.gizli{display:flex;gap:10px;align-items:center;background:var(--ana-acik);color:var(--ana-koyu);border-radius:12px;padding:11px 12px;font-size:13px;margin:14px 18px 0}
+.aksiyon{padding:16px 18px 0}
+.link-btn{border:0;background:none;color:var(--soluk);font-size:14px;display:flex;align-items:center;gap:6px;margin:14px auto 0;cursor:pointer;padding:6px 10px;border-radius:8px}
+.link-btn:hover{background:var(--cizgi)}
+
+/* mesajlar */
+.sohbet-satir{display:flex;gap:12px;align-items:center;padding:12px 18px;cursor:pointer;border-bottom:1px solid var(--cizgi);background:var(--kart)}
+.avatar{flex:none;width:44px;height:44px;border-radius:50%;background:#e4e8e4;display:grid;place-items:center;color:var(--soluk)}
+.sohbet-satir b{display:block;font-size:14.5px}
+.sohbet-satir small{color:var(--soluk);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px}
+.mesaj-alani{position:absolute;inset:62px 0 70px 0;overflow-y:auto;padding:10px 14px}
+.ilan-ozet{font-size:12.5px;background:var(--kart);border:1px solid var(--cizgi);border-radius:10px;padding:8px 10px;margin-bottom:12px;color:var(--soluk)}
+.balon{max-width:78%;padding:9px 12px;border-radius:16px;margin:6px 0;font-size:14.5px;width:fit-content}
+.balon.gelen{background:var(--kart);border:1px solid var(--cizgi);border-bottom-left-radius:4px}
+.balon.giden{background:var(--ana);color:#fff;margin-left:auto;border-bottom-right-radius:4px}
+.yazma{position:absolute;left:0;right:0;bottom:0;display:flex;gap:8px;padding:12px 14px;background:var(--ekran);border-top:1px solid var(--cizgi)}
+.yazma input{flex:1}
+.gonder{border:0;background:var(--ana);border-radius:12px;width:46px;display:grid;place-items:center;cursor:pointer}
+
+/* hesap & yönetim */
+.profil{display:flex;gap:14px;align-items:center;margin:4px 18px 6px;background:var(--kart);border:1px solid var(--cizgi);border-radius:16px;padding:14px}
+.profil .avatar{width:52px;height:52px;background:var(--ana-acik);color:var(--ana-koyu);font-weight:700;font-size:20px}
+.liste{margin:12px 18px 0;background:var(--kart);border:1px solid var(--cizgi);border-radius:16px;overflow:hidden}
+.satir{display:flex;align-items:center;gap:12px;padding:14px;border-bottom:1px solid var(--cizgi);cursor:pointer;font-size:15px;width:100%;background:none;border-left:0;border-right:0;border-top:0;text-align:left}
+.satir:last-child{border-bottom:0}
+.satir span{flex:1}
+.satir small{color:var(--soluk)}
+.anahtar{width:44px;height:26px;border-radius:999px;background:var(--ana);position:relative;flex:none}
+.anahtar::after{content:"";position:absolute;top:3px;left:21px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .15s}
+.anahtar.kapali{background:#cfd5cf}
+.anahtar.kapali::after{left:3px}
+.baslik-kucuk{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--soluk);text-transform:uppercase;margin:20px 18px 0}
+.istatistik{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:4px 18px 0}
+.istatistik div{background:var(--kart);border:1px solid var(--cizgi);border-radius:14px;padding:12px;text-align:center}
+.istatistik b{display:block;font-size:22px}
+.istatistik small{color:var(--soluk);font-size:12px}
+.sikayet-kart{background:var(--kart);border:1px solid var(--cizgi);border-left:4px solid var(--kirmizi);border-radius:14px;padding:12px 14px;margin:10px 18px 0}
+.sikayet-kart h4{margin:0 0 4px;font-size:15px}
+.sikayet-kart .neden{font-size:12.5px;color:var(--kirmizi);background:var(--kirmizi-acik);display:inline-block;border-radius:6px;padding:2px 8px;margin-bottom:10px}
+.sikayet-kart .btnler{display:flex;gap:8px}
+.yakinda{margin:12px 18px 0;border:1px dashed #b9c4bd;border-radius:14px;padding:14px;font-size:13.5px;color:var(--soluk)}
+.yakinda b{color:var(--metin);display:block;margin-bottom:2px}
+
+/* alt menü */
+.altnav{position:absolute;left:0;right:0;bottom:0;height:66px;background:var(--kart);border-top:1px solid var(--cizgi);display:flex;z-index:5}
+.altnav.gizle{display:none}
+.altnav button{flex:1;border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px;font-weight:600;color:#9aa19c;cursor:pointer;position:relative}
+.altnav button.sec{color:var(--ana)}
+.altnav .arti{width:46px;height:46px;border-radius:15px;background:var(--ana);display:grid;place-items:center;margin-top:-4px}
+.nokta{position:absolute;top:10px;left:calc(50% + 6px);background:var(--kirmizi);color:#fff;font-size:10px;border-radius:999px;min-width:16px;height:16px;display:grid;place-items:center;padding:0 4px}
+
+/* alt pencere + bildirim */
+.perde{position:absolute;inset:0;background:rgba(15,25,22,.42);z-index:8;display:none}
+.perde.acik{display:block}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--kart);border-radius:22px 22px 0 0;padding:10px 18px 22px;z-index:9;transform:translateY(105%);transition:transform .22s ease}
+.sheet.acik{transform:none}
+.tutamak{width:40px;height:5px;border-radius:9px;background:#d6dbd6;margin:0 auto 12px}
+.sheet h3{margin:0 0 4px}
+.sheet p{margin:0 0 10px;color:var(--soluk);font-size:13.5px}
+.neden-sec{display:flex;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid var(--cizgi);font-size:15px;cursor:pointer}
+.neden-sec input{accent-color:var(--kirmizi);width:18px;height:18px}
+.toast{position:absolute;left:50%;bottom:84px;transform:translate(-50%,20px);background:#17201d;color:#fff;font-size:14px;padding:10px 16px;border-radius:12px;opacity:0;pointer-events:none;transition:all .25s;z-index:10;width:max-content;max-width:86%;text-align:center}
+.toast.goster{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:520px){
+  .sahne{padding:0}
+  .telefon{width:100%;height:calc(100dvh - 37px);max-height:none;min-height:0;border:0;border-radius:0;box-shadow:none}
+}
+</style>
+</head>
+<body>
+<div class="serit"><b>Örnek uygulama</b> · İsim ve ilanlar örnektir, girilen bilgiler hiçbir yere gönderilmez.</div>
+
+<main class="sahne">
+<div class="telefon">
+<div class="ekran" id="ekran">
+
+  <!-- KARŞILAMA -->
+  <section class="sayfa navsiz aktif" id="s-karsila">
+    <div class="karsila">
+      <div class="logo"><i><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"/><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 15 6 6"/><path d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.73 2.73 0 0 0 16 4a2.78 2.78 0 0 0-5 1.8c0 1.2.8 2 1.5 2.8L16 12Z"/></svg></i>Elbirliği</div>
+      <h1>Yardım iste,<br>yardım et.</h1>
+      <p>Çevrendeki insanlarla ihtiyaçlarını paylaş, elinden gelen desteği ver.</p>
+      <div class="ozellik"><i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0f766e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.53 13.53 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg></i><div><b>Kimse kimseyi görmez</b><br><span style="color:var(--soluk)">Adın ve telefonun gizli kalır, yalnız ilanlar görünür.</span></div></div>
+      <div class="ozellik"><i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0f766e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></i><div><b>Uygulama içinden mesajlaş</b><br><span style="color:var(--soluk)">Numara paylaşmadan anlaşırsın.</span></div></div>
+      <div class="ozellik"><i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0f766e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg></i><div><b>Güvenli ortam</b><br><span style="color:var(--soluk)">Uygunsuz ilanlar şikâyet edilir, yönetim kaldırır.</span></div></div>
+      <div class="bosluk"></div>
+      <button class="btn" onclick="git('s-kayit')">Üye ol</button>
+      <button class="btn ikincil" onclick="girisYap()">Giriş yap</button>
+    </div>
+  </section>
+
+  <!-- KAYIT -->
+  <section class="sayfa navsiz" id="s-kayit">
+    <div class="ust"><button class="geri" onclick="git('s-karsila')" aria-label="Geri"></button><h2>Üye ol</h2></div>
+    <form class="ic" onsubmit="kayitOl(event)">
+      <label for="k-ad">Ad Soyad</label>
+      <input class="alan" id="k-ad" placeholder="Örn. Ayşe Yılmaz" autocomplete="off">
+      <label for="k-tel">Telefon</label>
+      <input class="alan" id="k-tel" placeholder="05xx xxx xx xx" inputmode="tel" autocomplete="off">
+      <label for="k-ilce">İlçe</label>
+      <select class="alan" id="k-ilce"></select>
+      <div class="not">Adın ve telefonun diğer üyelere hiçbir zaman gösterilmez.</div>
+      <label class="onay"><input type="checkbox" checked> Kullanım koşullarını ve aydınlatma metnini okudum.</label>
+      <button class="btn">Üyeliği oluştur</button>
+    </form>
+  </section>
+
+  <!-- AKIŞ -->
+  <section class="sayfa" id="s-akis">
+    <div class="ust" style="flex-direction:column;align-items:stretch;padding:16px 0 4px">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:0 18px 10px">
+        <div><div style="font-size:13px;color:var(--soluk)" id="selam">Merhaba</div><h2 style="font-size:22px">İlanlar</h2></div>
+        <span class="rozet gri" id="konum">İstanbul</span>
+      </div>
+      <div class="ara"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9aa19c" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input id="ara" placeholder="İlan ara" oninput="durum.arama=this.value;akisCiz()"></div>
+      <div class="cipler" id="cipler"></div>
+      <div class="sekme" id="tur-sekme">
+        <button class="sec" data-tur="hepsi">Tümü</button><button data-tur="istek">Yardım isteyen</button><button data-tur="teklif">Yardım eden</button>
+      </div>
+    </div>
+    <div id="akis-liste"></div>
+  </section>
+
+  <!-- DETAY -->
+  <section class="sayfa navsiz" id="s-detay">
+    <div class="ust"><button class="geri" onclick="git('s-akis')" aria-label="Geri"></button><h2>İlan</h2></div>
+    <div id="detay-ic"></div>
+  </section>
+
+  <!-- İLAN VER -->
+  <section class="sayfa" id="s-ver">
+    <div class="ust"><h2>İlan ver</h2></div>
+    <form class="ic" onsubmit="ilanVer(event)">
+      <label>Ne yapmak istiyorsun?</label>
+      <div class="secim" id="v-tur"><button type="button" class="sec" data-tur="istek">Yardım istiyorum</button><button type="button" data-tur="teklif">Yardım edebilirim</button></div>
+      <label for="v-kat">Kategori</label>
+      <select class="alan" id="v-kat"></select>
+      <label for="v-baslik">Başlık</label>
+      <input class="alan" id="v-baslik" maxlength="70" placeholder="Kısaca ne lazım ya da ne verebilirsin?">
+      <label for="v-aciklama">Açıklama</label>
+      <textarea class="alan" id="v-aciklama" maxlength="500" placeholder="Ayrıntıları yaz. Telefon numarası yazma, mesajlar uygulama içinden gelir."></textarea>
+      <label for="v-ilce">İlçe</label>
+      <select class="alan" id="v-ilce"></select>
+      <div class="not">İlanında adın görünmez, yalnız ilçe görünür.</div>
+      <div style="height:16px"></div>
+      <button class="btn">İlanı yayınla</button>
+    </form>
+  </section>
+
+  <!-- MESAJLAR -->
+  <section class="sayfa" id="s-mesajlar">
+    <div class="ust"><h2>Mesajlar</h2></div>
+    <div id="sohbet-liste"></div>
+  </section>
+
+  <!-- SOHBET -->
+  <section class="sayfa navsiz" id="s-sohbet">
+    <div class="ust" style="border-bottom:1px solid var(--cizgi)"><button class="geri" onclick="git('s-mesajlar')" aria-label="Geri"></button><h2 id="sohbet-baslik" style="font-size:17px">Üye</h2></div>
+    <div class="mesaj-alani" id="mesaj-alani"></div>
+    <form class="yazma" onsubmit="mesajGonder(event)">
+      <input class="alan" id="mesaj-gir" placeholder="Mesaj yaz" autocomplete="off">
+      <button class="gonder" aria-label="Gönder"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button>
+    </form>
+  </section>
+
+  <!-- HESAP -->
+  <section class="sayfa" id="s-hesap">
+    <div class="ust"><h2>Hesabım</h2></div>
+    <div class="profil"><div class="avatar" id="h-harf">A</div><div><b id="h-ad">Üye</b><div style="font-size:13px;color:var(--soluk)" id="h-ilce"></div></div></div>
+    <div class="gizli" style="margin-top:10px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Profilin diğer üyelere kapalı. Yalnız ilanların görünür.</div>
+    <div class="baslik-kucuk">İlanlarım</div>
+    <div id="ilanlarim"></div>
+    <div class="baslik-kucuk">Ayarlar</div>
+    <div class="liste">
+      <button class="satir" onclick="this.querySelector('.anahtar').classList.toggle('kapali')"><span>Yeni mesaj bildirimi</span><i class="anahtar"></i></button>
+      <button class="satir" onclick="this.querySelector('.anahtar').classList.toggle('kapali')"><span>İlçemdeki yeni ilanlar</span><i class="anahtar kapali"></i></button>
+      <button class="satir" onclick="git('s-yonetim')"><span>Yönetim paneli</span><small>yalnız yönetici</small></button>
+      <button class="satir" onclick="git('s-karsila')" style="color:var(--kirmizi)"><span>Çıkış yap</span></button>
+    </div>
+  </section>
+
+  <!-- YÖNETİM -->
+  <section class="sayfa navsiz" id="s-yonetim">
+    <div class="ust"><button class="geri" onclick="git('s-hesap')" aria-label="Geri"></button><h2>Yönetim paneli</h2></div>
+    <div class="istatistik"><div><b>1.284</b><small>Üye</small></div><div><b id="y-ilan">0</b><small>Aktif ilan</small></div><div><b id="y-sikayet">0</b><small>Şikâyet</small></div></div>
+    <div class="baslik-kucuk">Bekleyen şikâyetler</div>
+    <div id="sikayet-liste"></div>
+    <div class="yakinda"><b>Güvenli ödeme ve komisyon</b>Üyeler arası alım satım açıldığında ödeme uygulama içinden alınır, belirlediğiniz komisyon oranı otomatik kesilir.</div>
+  </section>
+
+  <nav class="altnav gizle" id="altnav">
+    <button data-s="s-akis" class="sec"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>İlanlar</button>
+    <button data-s="s-ver"><span class="arti"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button>
+    <button data-s="s-mesajlar"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Mesajlar<i class="nokta" id="okunmamis">1</i></button>
+    <button data-s="s-hesap"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Hesabım</button>
+  </nav>
+
+  <div class="perde" id="perde" onclick="sheetKapat()"></div>
+  <div class="sheet" id="sheet">
+    <div class="tutamak"></div>
+    <h3>İlanı şikâyet et</h3>
+    <p>Şikâyetin yönetime gider, kimin şikâyet ettiği ilan sahibine gösterilmez.</p>
+    <div id="nedenler"></div>
+    <div style="height:14px"></div>
+    <button class="btn kirmizi" onclick="sikayetGonder()">Şikâyet et</button>
+  </div>
+  <div class="toast" id="toast"></div>
+
+</div>
+</div>
+</main>
+
+<script>
+const GERI_SVG = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>';
+document.querySelectorAll('.geri').forEach(b => b.innerHTML = GERI_SVG);
+
+const KATEGORILER = ['Eşya','Taşıma','Ders','Yemek','Bakım','Evrak','Diğer'];
+const ILCELER = ['Bakırköy','Bahçelievler','Bağcılar','Beylikdüzü','Esenyurt','Kadıköy','Ataşehir','Üsküdar','Şişli','Fatih','Pendik','Avcılar'];
+const dk = n => Date.now() - n * 60000;
+
+let ilanlar = [
+  {id:1, tur:'istek', kat:'Taşıma', baslik:'Buzdolabını 3. kata çıkarmak için 2 kişi lazım', aciklama:'Asansör yok, cumartesi öğleden sonra yarım saatlik iş. Çay benden.', ilce:'Bakırköy', zaman:dk(35)},
+  {id:2, tur:'teklif', kat:'Ders', baslik:'Ortaokul öğrencilerine ücretsiz matematik desteği', aciklama:'Emekli öğretmenim. Hafta içi akşamları, kütüphanede ya da çevrim içi yardımcı olabilirim.', ilce:'Kadıköy', zaman:dk(80)},
+  {id:3, tur:'istek', kat:'Eşya', baslik:'8 yaş erkek çocuk için kışlık mont', aciklama:'Kullanılmış olabilir, temiz olsun yeter. 128-134 beden.', ilce:'Esenyurt', zaman:dk(150)},
+  {id:4, tur:'teklif', kat:'Eşya', baslik:'Az kullanılmış bebek arabası, ihtiyacı olana', aciklama:'Katlanır, tüm parçaları tam. Gelip almanız gerekiyor.', ilce:'Ataşehir', zaman:dk(240)},
+  {id:5, tur:'istek', kat:'Bakım', baslik:'Öğle saatlerinde annemle 1 saat oturacak gönüllü', aciklama:'Hafta içi 12.00-13.00 arası. Annem 78 yaşında, sohbet etmeyi seviyor.', ilce:'Üsküdar', zaman:dk(320)},
+  {id:6, tur:'teklif', kat:'Yemek', baslik:'Cuma günleri 10 kişilik sıcak yemek', aciklama:'Her cuma evde fazladan pişiriyorum. Saklama kabınızla gelirseniz paylaşırım.', ilce:'Bağcılar', zaman:dk(600)},
+  {id:7, tur:'istek', kat:'Evrak', baslik:'e-Devlet\'ten belge almak için yardım', aciklama:'Babamın emeklilik belgesi lazım, internetten nasıl alınacağını bilmiyoruz.', ilce:'Beylikdüzü', zaman:dk(1300)},
+  {id:8, tur:'teklif', kat:'Diğer', baslik:'Hızlı kredi, şartsız onay! Hemen arayın', aciklama:'Tüm bankalardan kredi çıkarıyoruz.', ilce:'Şişli', zaman:dk(55), sikayet:'Dolandırıcılık şüphesi'}
+];
+let sohbetler = [
+  {id:1, ilan:2, uye:'Üye #4821', okunmadi:true, mesajlar:[['g','Merhaba, kızım 7. sınıf. Kesirlerde zorlanıyor, salı akşamı uygun musunuz?'],['c','Merhaba, salı 19.00 olur. Kütüphanenin önünde buluşabiliriz.'],['g','Çok teşekkür ederim, orada olacağız.']]},
+  {id:2, ilan:4, uye:'Üye #1307', mesajlar:[['c','Bebek arabası hâlâ duruyor mu?'],['g','Duruyor, yarın akşam gelip alabilirsiniz.']]}
+];
+let durum = {kat:'Tümü', tur:'hepsi', arama:'', ilan:null, sohbet:null, ad:'Ayşe Y.', ilce:'Bakırköy', vTur:'istek', sikayetNeden:null};
+let sonId = 100;
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function once(t){
+  const m = Math.max(1, Math.round((Date.now()-t)/60000));
+  if (m < 60) return m + ' dk önce';
+  const s = Math.round(m/60); if (s < 24) return s + ' saat önce';
+  return Math.round(s/24) + ' gün önce';
+}
+const turAd = t => t === 'istek' ? 'Yardım istiyor' : 'Yardım edebilir';
+const PIN = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>';
+const SAAT = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+
+function toast(m){ const t=$('toast'); t.textContent=m; t.classList.add('goster'); clearTimeout(t._z); t._z=setTimeout(()=>t.classList.remove('goster'),2200); }
+
+function git(id){
+  document.querySelectorAll('.sayfa').forEach(s => s.classList.toggle('aktif', s.id === id));
+  const nav = $('altnav'), navli = !$(id).classList.contains('navsiz');
+  nav.classList.toggle('gizle', !navli);
+  nav.querySelectorAll('button').forEach(b => b.classList.toggle('sec', b.dataset.s === id));
+  $(id).scrollTop = 0;
+  if (id === 's-akis') akisCiz();
+  if (id === 's-mesajlar') sohbetListeCiz();
+  if (id === 's-hesap') hesapCiz();
+  if (id === 's-yonetim') yonetimCiz();
+}
+$('altnav').querySelectorAll('button').forEach(b => b.onclick = () => git(b.dataset.s));
+
+function secenekDoldur(){
+  $('k-ilce').innerHTML = $('v-ilce').innerHTML = ILCELER.map(i => `<option>${i}</option>`).join('');
+  $('v-kat').innerHTML = KATEGORILER.map(k => `<option>${k}</option>`).join('');
+  $('cipler').innerHTML = ['Tümü', ...KATEGORILER].map(k => `<button class="cip${k===durum.kat?' sec':''}" data-k="${k}">${k}</button>`).join('');
+  $('cipler').onclick = e => { const k=e.target.dataset.k; if(!k) return; durum.kat=k; $('cipler').querySelectorAll('.cip').forEach(c=>c.classList.toggle('sec',c.dataset.k===k)); akisCiz(); };
+  $('tur-sekme').onclick = e => { const t=e.target.dataset.tur; if(!t) return; durum.tur=t; $('tur-sekme').querySelectorAll('button').forEach(b=>b.classList.toggle('sec',b.dataset.tur===t)); akisCiz(); };
+  $('v-tur').onclick = e => { const t=e.target.dataset.tur; if(!t) return; durum.vTur=t; $('v-tur').querySelectorAll('button').forEach(b=>b.classList.toggle('sec',b.dataset.tur===t)); };
+}
+
+function kartHtml(i){
+  return `<div class="kart" onclick="detayAc(${i.id})">
+    <div class="etiketler"><span class="rozet ${i.tur}">${turAd(i.tur)}</span><span class="rozet gri">${esc(i.kat)}</span>${i.benim?'<span class="rozet gri">Senin ilanın</span>':''}</div>
+    <h3>${esc(i.baslik)}</h3>
+    <div class="alt-bilgi"><span>${PIN}${esc(i.ilce)}</span><span>${SAAT}${once(i.zaman)}</span></div>
+  </div>`;
+}
+
+function akisCiz(){
+  const q = durum.arama.trim().toLocaleLowerCase('tr');
+  const liste = ilanlar.filter(i => !i.sikayet || i.benim)
+    .filter(i => durum.kat === 'Tümü' || i.kat === durum.kat)
+    .filter(i => durum.tur === 'hepsi' || i.tur === durum.tur)
+    .filter(i => !q || (i.baslik + ' ' + i.aciklama).toLocaleLowerCase('tr').includes(q))
+    .sort((a,b) => b.zaman - a.zaman);
+  $('akis-liste').innerHTML = liste.length ? liste.map(kartHtml).join('') : '<div class="bos">Bu filtreye uyan ilan yok.<br>İlk ilanı sen ver.</div>';
+}
+
+function detayAc(id){
+  const i = ilanlar.find(x => x.id === id); if (!i) return;
+  durum.ilan = id;
+  $('detay-ic').innerHTML = `
+    <div class="detay-kutu">
+      <div class="etiketler"><span class="rozet ${i.tur}">${turAd(i.tur)}</span><span class="rozet gri">${esc(i.kat)}</span></div>
+      <h1>${esc(i.baslik)}</h1>
+      <p>${esc(i.aciklama)}</p>
+      <div class="alt-bilgi"><span>${PIN}${esc(i.ilce)}</span><span>${SAAT}${once(i.zaman)}</span></div>
+    </div>
+    <div class="gizli"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>İlan sahibinin adı ve numarası gizli. Mesajlaşma uygulama içinden olur.</div>
+    <div class="aksiyon">${i.benim
+      ? `<button class="btn ikincil" onclick="ilanKaldir(${i.id})">İlanı kaldır</button>`
+      : `<button class="btn" onclick="sohbetBaslat(${i.id})">${i.tur==='istek'?'Yardım etmek istiyorum':'Bu ilanla ilgileniyorum'}</button>
+         <button class="link-btn" onclick="sheetAc()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>İlanı şikâyet et</button>`}
+    </div>`;
+  git('s-detay');
+}
+
+function ilanVer(e){
+  e.preventDefault();
+  const baslik = $('v-baslik').value.trim(), aciklama = $('v-aciklama').value.trim();
+  if (baslik.length < 5) { toast('Başlık en az 5 karakter olmalı'); $('v-baslik').focus(); return; }
+  if (/(\+?90|0)?\s*5\d{2}[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}/.test(baslik + ' ' + aciklama)) { toast('Telefon numarası yazılamaz, mesajlar uygulamadan gelir'); return; }
+  ilanlar.push({id:++sonId, tur:durum.vTur, kat:$('v-kat').value, baslik, aciklama:aciklama || 'Ayrıntı için mesaj atabilirsiniz.', ilce:$('v-ilce').value, zaman:Date.now(), benim:true});
+  e.target.reset(); $('v-ilce').value = durum.ilce;
+  durum.kat = 'Tümü'; durum.tur = 'hepsi'; durum.arama = ''; $('ara').value = '';
+  secenekDoldur(); git('s-akis'); toast('İlanın yayında');
+}
+function ilanKaldir(id){ ilanlar = ilanlar.filter(i => i.id !== id); git('s-akis'); toast('İlan kaldırıldı'); }
+
+const NEDENLER = ['Dolandırıcılık şüphesi','Uygunsuz içerik','Ticari reklam','Kişisel bilgi paylaşımı'];
+function sheetAc(){
+  durum.sikayetNeden = null;
+  $('nedenler').innerHTML = NEDENLER.map(n => `<label class="neden-sec"><input type="radio" name="neden" value="${n}" onchange="durum.sikayetNeden=this.value">${n}</label>`).join('');
+  $('perde').classList.add('acik'); $('sheet').classList.add('acik');
+}
+function sheetKapat(){ $('perde').classList.remove('acik'); $('sheet').classList.remove('acik'); }
+function sikayetGonder(){
+  if (!durum.sikayetNeden) { toast('Bir neden seç'); return; }
+  const i = ilanlar.find(x => x.id === durum.ilan); if (i) i.sikayet = durum.sikayetNeden;
+  sheetKapat(); git('s-akis'); toast('Şikâyetin yönetime iletildi');
+}
+
+function sohbetBaslat(ilanId){
+  let s = sohbetler.find(x => x.ilan === ilanId && x.yeni);
+  if (!s) { s = {id:++sonId, ilan:ilanId, uye:'Üye #' + (1000 + Math.floor(Math.random()*8999)), mesajlar:[], yeni:true}; sohbetler.unshift(s); }
+  sohbetAc(s.id);
+}
+function sohbetListeCiz(){
+  $('sohbet-liste').innerHTML = sohbetler.length ? sohbetler.map(s => {
+    const i = ilanlar.find(x => x.id === s.ilan), son = s.mesajlar[s.mesajlar.length-1];
+    return `<div class="sohbet-satir" onclick="sohbetAc(${s.id})"><div class="avatar"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>
+      <div style="flex:1;min-width:0"><b>${s.uye}${s.okunmadi?' <span class="rozet istek" style="margin-left:4px">Yeni</span>':''}</b><small>${i?esc(i.baslik):'Kaldırılmış ilan'}</small><small style="color:var(--metin)">${son?esc(son[1]):'Henüz mesaj yok'}</small></div></div>`;
+  }).join('') : '<div class="bos">Henüz mesajın yok.</div>';
+}
+function sohbetAc(id){
+  const s = sohbetler.find(x => x.id === id); if (!s) return;
+  durum.sohbet = id; s.okunmadi = false; okunmamisGuncelle();
+  const i = ilanlar.find(x => x.id === s.ilan);
+  $('sohbet-baslik').textContent = s.uye;
+  mesajlariCiz(s, i);
+  git('s-sohbet');
+  $('s-sohbet').querySelector('.geri').onclick = () => git('s-mesajlar');
+}
+function mesajlariCiz(s, i){
+  $('mesaj-alani').innerHTML = `<div class="ilan-ozet">İlan: <b style="color:var(--metin)">${i?esc(i.baslik):'Kaldırılmış ilan'}</b></div>` +
+    s.mesajlar.map(m => `<div class="balon ${m[0]==='c'?'giden':'gelen'}">${esc(m[1])}</div>`).join('');
+  $('mesaj-alani').scrollTop = 1e6;
+}
+function mesajGonder(e){
+  e.preventDefault();
+  const v = $('mesaj-gir').value.trim(); if (!v) return;
+  const s = sohbetler.find(x => x.id === durum.sohbet), i = ilanlar.find(x => x.id === s.ilan);
+  s.mesajlar.push(['c', v]); $('mesaj-gir').value = ''; mesajlariCiz(s, i);
+  if (s.mesajlar.filter(m => m[0]==='c').length === 1) setTimeout(() => {
+    s.mesajlar.push(['g', 'Merhaba, mesajınız için teşekkürler. Yarın uygun musunuz?']);
+    if (durum.sohbet === s.id && $('s-sohbet').classList.contains('aktif')) mesajlariCiz(s, i);
+  }, 1400);
+}
+function okunmamisGuncelle(){ const n = sohbetler.filter(s => s.okunmadi).length; $('okunmamis').style.display = n ? '' : 'none'; $('okunmamis').textContent = n; }
+
+function hesapCiz(){
+  $('h-ad').textContent = durum.ad; $('h-harf').textContent = durum.ad.charAt(0).toLocaleUpperCase('tr'); $('h-ilce').textContent = durum.ilce + ', İstanbul';
+  const benim = ilanlar.filter(i => i.benim);
+  $('ilanlarim').innerHTML = benim.length ? benim.map(kartHtml).join('') : '<div class="kart" style="cursor:default;color:var(--soluk);font-size:14px" >Henüz ilan vermedin. <a href="#" onclick="git(\'s-ver\');return false" style="color:var(--ana);font-weight:600">İlan ver</a></div>';
+}
+
+function yonetimCiz(){
+  const sik = ilanlar.filter(i => i.sikayet);
+  $('y-ilan').textContent = ilanlar.filter(i => !i.sikayet).length;
+  $('y-sikayet').textContent = sik.length;
+  $('sikayet-liste').innerHTML = sik.length ? sik.map(i => `<div class="sikayet-kart"><h4>${esc(i.baslik)}</h4><span class="neden">${esc(i.sikayet)}</span>
+    <div class="btnler"><button class="btn kucuk kirmizi" onclick="yonetimKaldir(${i.id})">İlanı kaldır</button><button class="btn kucuk ikincil" style="margin:0" onclick="yonetimUygun(${i.id})">Sorun yok</button></div></div>`).join('')
+    : '<div class="bos" style="padding:24px">Bekleyen şikâyet yok.</div>';
+}
+function yonetimKaldir(id){ ilanlar = ilanlar.filter(i => i.id !== id); yonetimCiz(); toast('İlan kaldırıldı, sahibine bildirim gitti'); }
+function yonetimUygun(id){ const i = ilanlar.find(x => x.id === id); if (i) delete i.sikayet; yonetimCiz(); toast('İlan yayına geri döndü'); }
+
+function girisYap(){ $('selam').textContent = 'Merhaba ' + durum.ad.split(' ')[0]; $('konum').textContent = durum.ilce; $('v-ilce').value = durum.ilce; git('s-akis'); }
+function kayitOl(e){
+  e.preventDefault();
+  const ad = $('k-ad').value.trim();
+  if (ad) durum.ad = ad.split(/\s+/).map((p,j) => j ? p.charAt(0).toLocaleUpperCase('tr') + '.' : p).join(' ');
+  durum.ilce = $('k-ilce').value;
+  girisYap(); toast('Üyeliğin oluşturuldu');
+}
+
+secenekDoldur(); okunmamisGuncelle();
+$('k-ilce').value = durum.ilce;
+</script>
+</body>
+</html>
