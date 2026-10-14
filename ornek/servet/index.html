@@ -423,9 +423,9 @@ async function kareEylem(o){
     }else if(s!==o){
       const kr=Math.min(kira(i),Math.max(0,D.nakit[o]));
       D.nakit[o]-=kr;D.nakit[s]+=kr;
-      if(o===0){olay(`<b>${k.ad}</b> ${OYUNCU[s].ad}'nin. Kira ödedin: <b>${TL(kr)}</b>`);hareketEkle(`${k.ad} kirası → ${OYUNCU[s].ad}`,-kr)}
+      if(o===0){olay(`<b>${k.ad}</b> (sahibi ${OYUNCU[s].ad}). Kira ödedin: <b>${TL(kr)}</b>`);hareketEkle(`${k.ad} kirası → ${OYUNCU[s].ad}`,-kr)}
       else if(s===0){hareketEkle(`${ad} ${k.ad} kirası ödedi`,kr);akisEkle(`${ad} senin ${k.ad} mülküne geldi: +${TL(kr)} kira`,'#0f9d58');toast(`${ad} kira ödedi: +${TL(kr)}`)}
-      else akisEkle(`${ad}, ${OYUNCU[s].ad}'ye ${TL(kr)} kira ödedi (${k.ad}).`,OYUNCU[o].renk);
+      else akisEkle(`${ad} → ${OYUNCU[s].ad}: ${TL(kr)} kira (${k.ad})`,OYUNCU[o].renk);
     }else if(o===0){olay(`Kendi mülkün: <b>${k.ad}</b>. Ev kurabilirsin.`)}
     else botInsa(o);
   }else if(k.t==='sans'){
@@ -500,8 +500,8 @@ function teklifGeldi(o,m,f){
     <div class="mulk-kart"><div class="ust-renk" style="background:${GRUP[KARE[m].g]}">${KARE[m].ad}</div>
     <div class="ic"><div class="satir">Teklif <b class="sayi">${TL(f)}</b></div><div class="satir">Mülkün değeri <b class="sayi">${TL(mulkDeger(m))}</b></div><div class="satir">Şu anki kira <b class="sayi">${TL(kira(m))}</b></div></div></div>
     <div class="ikili"><button class="gec" id="tRed">Reddet</button><button class="al" id="tKabul">Kabul et</button></div>`);
-  $('tRed').onclick=()=>{akisEkle(`${OYUNCU[o].ad}'nin ${KARE[m].ad} teklifini reddettin.`,'#94a3b8');sheetKapat();hepsiniCiz()};
-  $('tKabul').onclick=()=>{D.nakit[o]-=f;D.nakit[0]+=f;D.sahip[m]=o;delete D.ev[m];hareketEkle(`${KARE[m].ad} satışı ← ${OYUNCU[o].ad}`,f);akisEkle(`${KARE[m].ad} mülkünü ${OYUNCU[o].ad}'ye ${TL(f)} karşılığında sattın.`,'#0f9d58');kaydet();sheetKapat();hepsiniCiz();toast('Satış tamamlandı')};
+  $('tRed').onclick=()=>{akisEkle(`${OYUNCU[o].ad} adlı oyuncunun ${KARE[m].ad} teklifini reddettin.`,'#94a3b8');sheetKapat();hepsiniCiz()};
+  $('tKabul').onclick=()=>{D.nakit[o]-=f;D.nakit[0]+=f;D.sahip[m]=o;delete D.ev[m];hareketEkle(`${KARE[m].ad} satışı ← ${OYUNCU[o].ad}`,f);akisEkle(`${KARE[m].ad} mülkünü ${TL(f)} karşılığında sattın (alan: ${OYUNCU[o].ad}).`,'#0f9d58');kaydet();sheetKapat();hepsiniCiz();toast('Satış tamamlandı')};
 }
 
 /* ---- sheet ---- */
@@ -544,7 +544,7 @@ function mulkSheet(m,zarla){
     return;
   }else{
     const oneri=Math.round(mulkDeger(m)*1.2/1000)*1000;
-    govde+=`<label style="font-size:12.5px;font-weight:600;color:var(--soluk)">${OYUNCU[s].ad}'ye teklif ver</label>
+    govde+=`<label style="font-size:12.5px;font-weight:600;color:var(--soluk)">Sahibi ${OYUNCU[s].ad} · teklif ver</label>
     <div class="adet"><button id="tEks">−</button><input class="girdi tutar" id="tTut" value="${oneri}" inputmode="numeric"><button id="tArt">+</button></div>
     <div class="ikili"><button class="gec" id="tKapat">Vazgeç</button><button class="al" id="tGonder">Teklif gönder</button></div>`;
     sheetAc(govde);
@@ -650,7 +650,7 @@ $('vGonder').onclick=()=>{
     <div class="satir">Alıcı <b>${OYUNCU[o].ad}</b></div><div class="satir">Tutar <b class="sayi">${TL(t)}</b></div><div class="satir">Açıklama <b>${acik.replace(/</g,'&lt;')}</b></div>
     <div class="ikili"><button class="gec" id="vVaz">Vazgeç</button><button class="al" id="vOnay">Gönder</button></div>`);
   $('vVaz').onclick=sheetKapat;
-  $('vOnay').onclick=()=>{D.nakit[0]-=t;D.nakit[o]+=t;hareketEkle(`Virman → ${OYUNCU[o].ad} · ${acik}`,-t);akisEkle(`${OYUNCU[o].ad}'ye ${TL(t)} virman yaptın.`,'#1d4ed8');
+  $('vOnay').onclick=()=>{D.nakit[0]-=t;D.nakit[o]+=t;hareketEkle(`Virman → ${OYUNCU[o].ad} · ${acik}`,-t);akisEkle(`${OYUNCU[o].ad} adlı oyuncuya ${TL(t)} virman yaptın.`,'#1d4ed8');
     $('vTutar').value='';$('vAcik').value='';vKime=null;kisilerCiz();vKontrol();kaydet();hepsiniCiz();sheetKapat();toast('Virman gönderildi');
     if(Math.random()<.5)setTimeout(()=>{akisEkle(`${OYUNCU[o].ad}: "Aldım, teşekkürler 👍"`,OYUNCU[o].renk);kaydet();akisCiz()},1500)};
 };
