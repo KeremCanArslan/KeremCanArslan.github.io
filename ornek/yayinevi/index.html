@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Yayınevi Sitesi — Örnek Tasarım</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f6fa;--kart:#fff;--lacivert:#1b2559;--mavi:#3f51d9;--turuncu:#ff8a3d;--sari:#ffd166;--metin:#232a45;--soluk:#6b7290;--cizgi:#e3e6f0;--yesil:#1f9d6b}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--metin);overflow-x:hidden}
+button,input,select,textarea{font:inherit}
+.serit{background:var(--lacivert);color:#c9cff0;font-size:13px;text-align:center;padding:8px 16px}
+.serit b{color:var(--sari)}
+header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--cizgi)}
+.ust{max-width:1140px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:18px}
+.logo{font:800 22px 'Plus Jakarta Sans',sans-serif;color:var(--lacivert);text-decoration:none;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.logo i{width:30px;height:30px;border-radius:9px;background:var(--turuncu);display:grid;place-items:center;color:#fff;font-style:normal;font-size:16px}
+nav{display:flex;gap:4px;flex:1;flex-wrap:wrap}
+nav a{color:var(--metin);text-decoration:none;font-weight:500;font-size:15px;padding:8px 12px;border-radius:10px}
+nav a:hover{background:var(--bg)}
+nav a.panel-link{color:var(--mavi)}
+.liste-btn{position:relative;background:var(--lacivert);color:#fff;border:0;border-radius:12px;padding:10px 16px;font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap}
+.liste-btn i{position:absolute;top:-7px;right:-7px;background:var(--turuncu);color:#fff;font-style:normal;font-size:12px;border-radius:999px;min-width:22px;height:22px;display:grid;place-items:center}
+.hero{max-width:1140px;margin:22px auto 0;padding:0 20px}
+.hero-ic{border-radius:24px;padding:44px 40px;color:#fff;background:linear-gradient(120deg,#1b2559 0%,#3f51d9 70%,#6b7cf0 100%);display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:center;overflow:hidden}
+.hero h1{font:800 38px/1.12 'Plus Jakarta Sans',sans-serif;margin:0 0 12px}
+.hero p{margin:0 0 22px;color:#d8ddfb;max-width:480px}
+.hero-kitaplar{display:flex;gap:12px;justify-content:center}
+.hero-kitaplar svg{width:110px;height:auto;filter:drop-shadow(0 14px 18px rgba(0,0,0,.25))}
+.hero-kitaplar svg:nth-child(2){transform:translateY(-16px)}
+.btn{display:inline-block;border:0;border-radius:12px;padding:12px 20px;font-weight:600;font-size:15px;cursor:pointer;text-decoration:none}
+.btn-turuncu{background:var(--turuncu);color:#fff}
+.btn-acik{background:rgba(255,255,255,.14);color:#fff;margin-left:8px}
+.btn-mavi{background:var(--mavi);color:#fff}
+.btn-cizgi{background:#fff;color:var(--lacivert);border:1px solid var(--cizgi)}
+main{max-width:1140px;margin:0 auto;padding:10px 20px 60px}
+section{padding-top:34px;scroll-margin-top:70px}
+.baslik{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.baslik h2{font:800 28px 'Plus Jakarta Sans',sans-serif;margin:0;color:var(--lacivert)}
+.baslik p{margin:4px 0 0;color:var(--soluk);font-size:14px}
+.filtreler{display:grid;grid-template-columns:repeat(3,1fr) auto;gap:10px;background:#fff;border:1px solid var(--cizgi);border-radius:16px;padding:12px;margin-bottom:16px}
+.filtreler label{font-size:12px;color:var(--soluk);font-weight:600;display:flex;flex-direction:column;gap:4px}
+select,input,textarea{border:1px solid var(--cizgi);border-radius:10px;padding:10px 12px;background:#fff;color:var(--metin);width:100%}
+textarea{resize:vertical;min-height:70px}
+.sonuc{align-self:end;font-size:13px;color:var(--soluk);padding-bottom:10px;white-space:nowrap}
+.urunler{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.urun{background:var(--kart);border:1px solid var(--cizgi);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+.kapak{aspect-ratio:4/3;display:grid;place-items:center;background:#eef0f8}
+.kapak svg,.kapak img{height:86%;width:auto;max-width:80%;object-fit:cover;border-radius:4px;box-shadow:0 8px 16px -6px rgba(0,0,0,.3)}
+.urun-ic{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.etiketler{display:flex;gap:6px;flex-wrap:wrap}
+.etiket{font-size:11px;font-weight:600;border-radius:999px;padding:3px 8px;background:#eef0fd;color:var(--mavi)}
+.etiket.tur{background:#fff1e7;color:#c75a14}
+.urun h3{margin:2px 0 0;font-size:16px;color:var(--lacivert)}
+.urun p{margin:0;font-size:13px;color:var(--soluk)}
+.fiyat{font:800 18px 'Plus Jakarta Sans',sans-serif;color:var(--lacivert);margin-top:auto;padding-top:6px}
+.urun-alt{display:flex;gap:8px;margin-top:6px}
+.urun-alt button{flex:1;padding:10px 8px;font-size:13px}
+.bos{grid-column:1/-1;text-align:center;color:var(--soluk);background:#fff;border:1px dashed var(--cizgi);border-radius:16px;padding:30px}
+.bayi-ust{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bayi-ust select{width:auto;min-width:200px}
+.bayiler{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.bayi{background:#fff;border:1px solid var(--cizgi);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.bayi h3{margin:0;font-size:16px;color:var(--lacivert)}
+.bayi span{color:var(--soluk)}
+.bayi a{color:var(--mavi);font-weight:600;text-decoration:none;margin-top:4px}
+.dok-ust{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:#fff;border:1px solid var(--cizgi);border-radius:16px;padding:12px 16px;margin-bottom:12px;font-size:14px}
+.rol{display:flex;background:var(--bg);border-radius:10px;padding:3px}
+.rol button{border:0;background:none;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:13px;color:var(--soluk)}
+.rol button.secili{background:#fff;color:var(--lacivert);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.doklar{background:#fff;border:1px solid var(--cizgi);border-radius:16px;overflow:hidden}
+.dok{display:grid;grid-template-columns:44px 1fr auto auto;gap:14px;align-items:center;padding:14px 16px;border-top:1px solid var(--cizgi)}
+.dok:first-child{border-top:0}
+.dok-ikon{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-weight:700;font-size:12px;color:#fff;background:#e5484d}
+.dok b{display:block;color:var(--lacivert);font-size:15px}
+.dok small{color:var(--soluk)}
+.erisim{font-size:12px;font-weight:600;border-radius:999px;padding:4px 10px;white-space:nowrap}
+.erisim.herkes{background:#e5f6ee;color:var(--yesil)}
+.erisim.bayi{background:#fff1e7;color:#c75a14}
+.dok button{padding:9px 14px;font-size:13px;white-space:nowrap}
+.kilit{color:var(--soluk);font-size:13px;white-space:nowrap}
+.panel{background:#fff;border:2px solid var(--mavi);border-radius:22px;overflow:hidden}
+.panel-bas{background:var(--lacivert);color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.panel-bas b{font:700 18px 'Plus Jakarta Sans',sans-serif}
+.panel-bas span{font-size:13px;color:#c9cff0}
+.sekmeler{display:flex;gap:4px;padding:10px 12px 0;border-bottom:1px solid var(--cizgi);overflow-x:auto}
+.sekmeler button{border:0;background:none;padding:10px 14px;border-bottom:3px solid transparent;cursor:pointer;font-weight:600;color:var(--soluk);white-space:nowrap}
+.sekmeler button.secili{color:var(--mavi);border-color:var(--mavi)}
+.sekmeler em{font-style:normal;background:var(--turuncu);color:#fff;border-radius:999px;font-size:11px;padding:1px 7px;margin-left:4px}
+.sekme{display:none;padding:20px}
+.sekme.acik{display:block}
+.form{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.form label{font-size:13px;font-weight:600;color:var(--metin);display:flex;flex-direction:column;gap:5px}
+.form .genis{grid-column:1/-1}
+.form .iki{grid-column:span 2}
+.form small{font-weight:400;color:var(--soluk)}
+.form-alt{grid-column:1/-1;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.tablo{width:100%;border-collapse:collapse;font-size:14px;margin-top:18px}
+.tablo th{text-align:left;font-size:12px;color:var(--soluk);font-weight:600;padding:8px;border-bottom:1px solid var(--cizgi)}
+.tablo td{padding:10px 8px;border-bottom:1px solid var(--cizgi);vertical-align:top}
+.tablo-kap{overflow-x:auto}
+.sil{background:none;border:0;color:#e5484d;cursor:pointer;font-weight:600;font-size:13px}
+.durum{font-size:12px;font-weight:600;border-radius:999px;padding:3px 9px;background:#fff1e7;color:#c75a14;border:0;cursor:pointer}
+.durum.tamam{background:#e5f6ee;color:var(--yesil)}
+.yedek{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.yedek div{background:var(--bg);border-radius:14px;padding:14px;font-size:14px}
+.yedek b{display:block;color:var(--lacivert);margin-bottom:4px}
+.cekmece{position:fixed;top:0;right:0;height:100%;width:min(400px,100%);background:#fff;z-index:30;transform:translateX(100%);visibility:hidden;transition:.25s;display:flex;flex-direction:column;box-shadow:-20px 0 40px -20px rgba(0,0,0,.3)}
+.cekmece.acik{transform:none;visibility:visible}
+.perde{position:fixed;inset:0;background:rgba(27,37,89,.45);z-index:25;display:none}
+.perde.acik{display:block}
+.c-ust{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid var(--cizgi)}
+.c-ust h3{margin:0;font:800 20px 'Plus Jakarta Sans',sans-serif;color:var(--lacivert)}
+.kapat{background:none;border:0;font-size:26px;cursor:pointer;color:var(--soluk);line-height:1}
+.c-ic{flex:1;overflow:auto;padding:12px 20px}
+.c-satir{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--cizgi);font-size:14px}
+.adet{display:flex;align-items:center;gap:6px}
+.adet button{width:28px;height:28px;border-radius:8px;border:1px solid var(--cizgi);background:#fff;cursor:pointer}
+.c-form{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.c-not{font-size:12px;color:var(--soluk);background:var(--bg);border-radius:10px;padding:10px}
+.modal{position:fixed;inset:0;z-index:40;display:none;place-items:center;padding:16px;background:rgba(27,37,89,.5)}
+.modal.acik{display:grid}
+.modal-ic{background:#fff;border-radius:18px;width:min(560px,100%);max-height:92vh;display:flex;flex-direction:column;overflow:hidden}
+.modal-ic .c-ust{padding:14px 18px}
+.modal-ic .c-ust h3{font-size:17px}
+.sayfa{flex:1;overflow:auto;background:#e9ebf2;padding:18px}
+.kagit{background:#fff;border-radius:4px;padding:26px 28px;box-shadow:0 4px 12px rgba(0,0,0,.08);font-size:14px;line-height:1.55}
+.kagit h4{margin:0 0 4px;font:800 16px 'Plus Jakarta Sans',sans-serif;color:var(--lacivert)}
+.kagit .ust-bilgi{font-size:12px;color:var(--soluk);border-bottom:2px solid var(--turuncu);padding-bottom:8px;margin-bottom:14px}
+.kagit ol{padding-left:18px;margin:0}
+.kagit li{margin-bottom:14px}
+.siklar{display:grid;grid-template-columns:1fr 1fr;gap:2px 16px;color:#444;margin-top:4px}
+.modal iframe{width:100%;height:70vh;border:0}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(120px);background:var(--lacivert);color:#fff;padding:12px 18px;border-radius:12px;font-size:14px;z-index:50;transition:.25s;max-width:calc(100% - 32px)}
+.toast.acik{transform:translateX(-50%)}
+footer{text-align:center;color:var(--soluk);font-size:13px;padding:24px 16px 40px}
+@media (max-width:960px){.urunler{grid-template-columns:repeat(3,1fr)}.bayiler{grid-template-columns:repeat(2,1fr)}.hero-ic{grid-template-columns:1fr}.hero-kitaplar{display:none}}
+@media (max-width:720px){
+.ust{flex-wrap:wrap;gap:10px}nav{order:3;flex-basis:100%;overflow-x:auto;flex-wrap:nowrap}.logo{flex:1}
+.hero-ic{padding:30px 22px}.hero h1{font-size:28px}.btn-acik{margin:8px 0 0}
+.urunler{grid-template-columns:repeat(2,1fr);gap:10px}.urun-ic{padding:12px}.urun-alt{flex-direction:column}
+.filtreler{grid-template-columns:1fr 1fr}.sonuc{grid-column:1/-1;padding:0}
+.bayiler{grid-template-columns:1fr}
+.dok{grid-template-columns:40px 1fr;gap:10px}.dok-ikon{width:40px;height:40px}.dok .erisim,.dok .eylem{grid-column:2;justify-self:start}
+.form{grid-template-columns:1fr}.form .iki{grid-column:auto}
+.yedek{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="serit"><b>Örnek tasarım:</b> ürünler, bayiler ve fiyatlar hayalîdir. Yönetim paneli bölümünden ekleme yapabilirsiniz.</div>
+<header>
+  <div class="ust">
+    <a class="logo" href="#"><i>Ö</i>Örnek Yayınları</a>
+    <nav>
+      <a href="#urunler">Ürünler</a>
+      <a href="#bayiler">Bayiler</a>
+      <a href="#dokumanlar">Dokümanlar</a>
+      <a href="#panel" class="panel-link">Yönetim paneli</a>
+    </nav>
+    <button class="liste-btn" id="listeAc">Sipariş listesi <i id="listeSay">0</i></button>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-ic">
+    <div>
+      <h1>LGS ve YKS'ye hazırlıkta deneme sınavları, dergiler ve kitaplar</h1>
+      <p>Sınıfa, derse ve ürün türüne göre arayın; örnek sayfaları inceleyin, size en yakın bayiyi bulun.</p>
+      <a class="btn btn-turuncu" href="#urunler">Ürünleri incele</a>
+      <a class="btn btn-acik" href="#bayiler">En yakın bayi</a>
+    </div>
+    <div class="hero-kitaplar" id="heroKitap"></div>
+  </div>
+</div>
+
+<main>
+  <section id="urunler">
+    <div class="baslik"><div><h2>Ürünler</h2><p>Deneme sınavı, aylık dergi ve kitaplar</p></div></div>
+    <div class="filtreler">
+      <label>Sınıf<select id="fSinif"></select></label>
+      <label>Ders<select id="fDers"></select></label>
+      <label>Ürün türü<select id="fTur"></select></label>
+      <div class="sonuc" id="sonuc"></div>
+    </div>
+    <div class="urunler" id="urunListe"></div>
+  </section>
+
+  <section id="bayiler">
+    <div class="baslik"><div><h2>Bayiler</h2><p>İlinizi seçin, size en yakın bayiyi görün</p></div></div>
+    <div class="bayi-ust"><select id="ilSec"></select><span id="bayiSay" style="color:var(--soluk);font-size:14px"></span></div>
+    <div class="bayiler" id="bayiListe"></div>
+  </section>
+
+  <section id="dokumanlar">
+    <div class="baslik"><div><h2>Dokümanlar</h2><p>Örnek kitapçıklar, cevap anahtarları ve sınav takvimleri</p></div></div>
+    <div class="dok-ust">
+      <span>Bazı dosyalar yalnız bayilere açıktır. Farkı görmek için görünümü değiştirin:</span>
+      <div class="rol"><button class="secili" data-rol="ziyaretci">Ziyaretçi</button><button data-rol="bayi">Bayi girişi yapmış</button></div>
+    </div>
+    <div class="doklar" id="dokListe"></div>
+  </section>
+
+  <section id="panel">
+    <div class="panel">
+      <div class="panel-bas"><b>Yönetim paneli</b><span>Ekledikleriniz anında sitede görünür. Gerçek sitede bu ekran şifreyle korunur.</span></div>
+      <div class="sekmeler">
+        <button class="secili" data-sekme="sUrun">Ürün ekle</button>
+        <button data-sekme="sBayi">Bayi ekle</button>
+        <button data-sekme="sDok">Doküman yükle</button>
+        <button data-sekme="sSip">Sipariş talepleri <em id="sipSay">0</em></button>
+        <button data-sekme="sYedek">Yedekleme</button>
+      </div>
+
+      <div class="sekme acik" id="sUrun">
+        <form class="form" id="urunForm">
+          <label class="iki">Ürün adı<input name="ad" required placeholder="Örn. LGS Fen Bilimleri Deneme Seti"></label>
+          <label>Fiyat (TL)<input name="fiyat" type="number" min="0" step="1" required placeholder="180"></label>
+          <label>Sınıf<select name="sinif" id="pSinif"></select></label>
+          <label>Ders<select name="ders" id="pDers"></select></label>
+          <label>Ürün türü<select name="tur" id="pTur"></select></label>
+          <label class="genis">Açıklama<textarea name="aciklama" placeholder="Kısa açıklama"></textarea></label>
+          <label>Kapak görseli <small>JPG/PNG, boş bırakılırsa otomatik kapak</small><input name="kapak" type="file" accept="image/*"></label>
+          <label class="iki">Örnek PDF <small>ürün kartında "Örnek sayfalar" düğmesiyle açılır</small><input name="pdf" type="file" accept="application/pdf"></label>
+          <div class="form-alt"><button class="btn btn-mavi" type="submit">Ürünü yayınla</button></div>
+        </form>
+        <div class="tablo-kap"><table class="tablo"><thead><tr><th>Ürün</th><th>Sınıf</th><th>Ders</th><th>Tür</th><th>Fiyat</th><th></th></tr></thead><tbody id="urunTablo"></tbody></table></div>
+      </div>
+
+      <div class="sekme" id="sBayi">
+        <form class="form" id="bayiForm">
+          <label class="iki">Bayi adı<input name="ad" required placeholder="Örn. Merkez Kitabevi"></label>
+          <label>İl<select name="il" id="pIl"></select></label>
+          <label class="genis">Adres<input name="adres" required placeholder="Mahalle, cadde, no, ilçe"></label>
+          <label>Telefon<input name="tel" required placeholder="0 (212) 000 00 00"></label>
+          <label class="iki">Konum bağlantısı <small>Google Haritalar'da "Paylaş"tan kopyalanan bağlantı</small><input name="konum" type="url" placeholder="https://maps.app.goo.gl/..."></label>
+          <div class="form-alt"><button class="btn btn-mavi" type="submit">Bayiyi ekle</button></div>
+        </form>
+        <div class="tablo-kap"><table class="tablo"><thead><tr><th>Bayi</th><th>İl</th><th>Telefon</th><th></th></tr></thead><tbody id="bayiTablo"></tbody></table></div>
+      </div>
+
+      <div class="sekme" id="sDok">
+        <form class="form" id="dokForm">
+          <label class="iki">Doküman adı<input name="ad" required placeholder="Örn. LGS Deneme 3 Cevap Anahtarı"></label>
+          <label>Tür<select name="tur"><option>Örnek kitapçık</option><option>Cevap anahtarı</option><option>Sınav takvimi</option><option>Diğer</option></select></label>
+          <label>Kimler görebilir?<select name="erisim"><option value="herkes">Herkes</option><option value="bayi">Yalnız bayiler</option></select></label>
+          <label class="iki">Dosya (PDF)<input name="dosya" type="file" accept="application/pdf"></label>
+          <div class="form-alt"><button class="btn btn-mavi" type="submit">Dokümanı yükle</button></div>
+        </form>
+        <div class="tablo-kap"><table class="tablo"><thead><tr><th>Doküman</th><th>Tür</th><th>Erişim</th><th></th></tr></thead><tbody id="dokTablo"></tbody></table></div>
+      </div>
+
+      <div class="sekme" id="sSip">
+        <p style="margin:0;color:var(--soluk);font-size:14px">Ziyaretçilerin "Sipariş listesi"nden gönderdiği talepler buraya düşer, aynı anda size e-posta bildirimi gider. Siteden bir talep göndererek deneyebilirsiniz.</p>
+        <div class="tablo-kap"><table class="tablo"><thead><tr><th>Tarih</th><th>Gönderen</th><th>Ürünler</th><th>Tutar</th><th>Durum</th></tr></thead><tbody id="sipTablo"></tbody></table></div>
+      </div>
+
+      <div class="sekme" id="sYedek">
+        <div class="yedek">
+          <div><b>Otomatik yedek</b>Her gece site dosyaları ve veritabanı yedeklenir, son 30 gün saklanır.</div>
+          <div><b>Yedek nerede?</b>Sunucunun dışında, sizin Google Drive hesabınızda durur; sunucuya bir şey olsa da kaybolmaz.</div>
+          <div><b>Geri yükleme</b>Tek tıkla istenen günün yedeğine dönülür. Teslimde birlikte deneriz.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>Örnek Yayınları · Örnek tasarım · keremcanarslan.github.io</footer>
+
+<div class="perde" id="perde"></div>
+<aside class="cekmece" id="cekmece" aria-label="Sipariş listesi">
+  <div class="c-ust"><h3>Sipariş listesi</h3><button class="kapat" id="listeKapat" aria-label="Kapat">×</button></div>
+  <div class="c-ic">
+    <div id="listeIc"></div>
+    <form class="c-form" id="sipForm">
+      <input name="ad" required placeholder="Ad soyad">
+      <input name="kurum" placeholder="Okul / kurum (varsa)">
+      <input name="tel" required placeholder="Telefon">
+      <select name="il" id="sipIl"></select>
+      <textarea name="not" placeholder="Not (adet, teslim tarihi vb.)"></textarea>
+      <button class="btn btn-turuncu" type="submit">Sipariş talebi gönder</button>
+      <div class="c-not">Talebiniz yayınevine iletilir, fiyat ve teslimat için sizi arıyoruz. İstenirse sepet ve kartla online ödeme de eklenebilir.</div>
+    </form>
+  </div>
+</aside>
+
+<div class="modal" id="modal"><div class="modal-ic"><div class="c-ust"><h3 id="mBaslik"></h3><button class="kapat" id="mKapat" aria-label="Kapat">×</button></div><div class="sayfa" id="mIc"></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const SINIF=['5. sınıf','6. sınıf','7. sınıf','8. sınıf (LGS)','11. sınıf','12. sınıf (YKS)'];
+const DERS=['Matematik','Türkçe','Fen Bilimleri','Sosyal Bilgiler','İngilizce','Karma'];
+const TUR=['Deneme sınavı','Aylık dergi','Kitap'];
+const ILLER=['Adana','Ankara','Antalya','Bursa','Diyarbakır','Erzurum','Eskişehir','Gaziantep','İstanbul','İzmir','Kayseri','Kocaeli','Konya','Malatya','Mersin','Samsun','Trabzon'];
+const RENK={'Deneme sınavı':['#3f51d9','#1b2559'],'Aylık dergi':['#ff8a3d','#c75a14'],'Kitap':['#1f9d6b','#11603f']};
+
+let urunler=[
+ {ad:'LGS Matematik Deneme Seti (5 deneme)',sinif:'8. sınıf (LGS)',ders:'Matematik',tur:'Deneme sınavı',fiyat:180,aciklama:'Yeni nesil sorularla 5 deneme, video çözümlü.'},
+ {ad:'LGS Genel Deneme 1-10',sinif:'8. sınıf (LGS)',ders:'Karma',tur:'Deneme sınavı',fiyat:420,aciklama:'Sınav formatında 10 deneme, optik form dahil.'},
+ {ad:'8. Sınıf Türkçe Paragraf Denemeleri',sinif:'8. sınıf (LGS)',ders:'Türkçe',tur:'Deneme sınavı',fiyat:160,aciklama:'Okuma ve paragraf odaklı 8 deneme.'},
+ {ad:'Ortaokul Aylık Dergi · Ekim',sinif:'7. sınıf',ders:'Karma',tur:'Aylık dergi',fiyat:95,aciklama:'Ayın konularına göre testler ve etkinlikler.'},
+ {ad:'7. Sınıf Fen Bilimleri Soru Bankası',sinif:'7. sınıf',ders:'Fen Bilimleri',tur:'Kitap',fiyat:240,aciklama:'Kazanım sırasıyla 1.200 soru.'},
+ {ad:'6. Sınıf Matematik Konu Anlatımı',sinif:'6. sınıf',ders:'Matematik',tur:'Kitap',fiyat:220,aciklama:'Konu anlatımı, çözümlü örnek ve tarama testleri.'},
+ {ad:'5. Sınıf İngilizce Çalışma Kitabı',sinif:'5. sınıf',ders:'İngilizce',tur:'Kitap',fiyat:185,aciklama:'Ünite sırasıyla kelime ve okuma çalışmaları.'},
+ {ad:'6. Sınıf Sosyal Bilgiler Yaprak Test',sinif:'6. sınıf',ders:'Sosyal Bilgiler',tur:'Kitap',fiyat:150,aciklama:'Koparılabilir 48 yaprak test.'},
+ {ad:'11. Sınıf Matematik Soru Bankası',sinif:'11. sınıf',ders:'Matematik',tur:'Kitap',fiyat:260,aciklama:'Temel ve ileri düzey ayrılmış sorular.'},
+ {ad:'TYT Türkçe Deneme (10\'lu)',sinif:'12. sınıf (YKS)',ders:'Türkçe',tur:'Deneme sınavı',fiyat:210,aciklama:'ÖSYM formatında 10 deneme, ayrıntılı çözüm.'},
+ {ad:'YKS Aylık Dergi · Ekim',sinif:'12. sınıf (YKS)',ders:'Karma',tur:'Aylık dergi',fiyat:110,aciklama:'TYT-AYT karma testler ve deneme takvimi.'},
+ {ad:'TYT Matematik Deneme (8\'li)',sinif:'12. sınıf (YKS)',ders:'Matematik',tur:'Deneme sınavı',fiyat:195,aciklama:'Zorluk seviyesi kademeli 8 deneme.'}
+];
+let bayiler=[
+ {ad:'Kadıköy Kitap Kırtasiye',il:'İstanbul',adres:'Caferağa Mah. Moda Cad. No:12, Kadıköy',tel:'0 (216) 000 00 01'},
+ {ad:'Bakırköy Eğitim Kitabevi',il:'İstanbul',adres:'Zeytinlik Mah. İstanbul Cad. No:40, Bakırköy',tel:'0 (212) 000 00 02'},
+ {ad:'Üsküdar Okul Kırtasiye',il:'İstanbul',adres:'Mimar Sinan Mah. Hakimiyeti Milliye Cad. No:8, Üsküdar',tel:'0 (216) 000 00 03'},
+ {ad:'Kızılay Kitap Dünyası',il:'Ankara',adres:'Kızılay Mah. Ziya Gökalp Cad. No:21, Çankaya',tel:'0 (312) 000 00 04'},
+ {ad:'Keçiören Eğitim Kırtasiye',il:'Ankara',adres:'Etlik Mah. Yunus Emre Cad. No:5, Keçiören',tel:'0 (312) 000 00 05'},
+ {ad:'Alsancak Kitabevi',il:'İzmir',adres:'Alsancak Mah. Kıbrıs Şehitleri Cad. No:30, Konak',tel:'0 (232) 000 00 06'},
+ {ad:'Bornova Okul Kitap',il:'İzmir',adres:'Kazımdirik Mah. Mustafa Kemal Cad. No:14, Bornova',tel:'0 (232) 000 00 07'},
+ {ad:'Nilüfer Kırtasiye',il:'Bursa',adres:'Beşevler Mah. Akçağlayan Cad. No:3, Nilüfer',tel:'0 (224) 000 00 08'},
+ {ad:'Selçuklu Eğitim Kitabevi',il:'Konya',adres:'Bosna Hersek Mah. Yeni İstanbul Cad. No:60, Selçuklu',tel:'0 (332) 000 00 09'}
+];
+let doklar=[
+ {ad:'LGS Deneme 1 · Örnek Kitapçık',tur:'Örnek kitapçık',erisim:'herkes'},
+ {ad:'LGS Deneme 1 · Cevap Anahtarı',tur:'Cevap anahtarı',erisim:'bayi'},
+ {ad:'2026-2027 Deneme Sınavı Takvimi',tur:'Sınav takvimi',erisim:'herkes'},
+ {ad:'TYT Deneme 3 · Cevap Anahtarı ve Çözümler',tur:'Cevap anahtarı',erisim:'bayi'},
+ {ad:'Ortaokul Dergi Ekim · Örnek Sayfalar',tur:'Örnek kitapçık',erisim:'herkes'},
+ {ad:'Bayi Fiyat Listesi · Ekim 2026',tur:'Diğer',erisim:'bayi'}
+];
+let liste=[],talepler=[],rol='ziyaretci';
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const tl=n=>Number(n).toLocaleString('tr-TR')+' TL';
+function doldur(sel,arr,ilk){sel.innerHTML=(ilk?`<option value="">${ilk}</option>`:'')+arr.map(x=>`<option>${esc(x)}</option>`).join('')}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('acik');clearTimeout(t._z);t._z=setTimeout(()=>t.classList.remove('acik'),2600)}
+
+function kapakSvg(u){
+  const [a,b]=RENK[u.tur]||RENK.Kitap;
+  const kelime=u.ad.replace(/\(.*?\)/g,'').split(' ');let s1='',s2='',s3='';
+  for(const k of kelime){if((s1+' '+k).length<=14&&!s2)s1=(s1+' '+k).trim();else if((s2+' '+k).length<=14&&!s3)s2=(s2+' '+k).trim();else s3=(s3+' '+k).trim()}
+  if(s3.length>14)s3=s3.slice(0,13)+'…';
+  return `<svg viewBox="0 0 150 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${esc(u.ad)} kapağı"><rect width="150" height="210" fill="${a}"/><rect width="14" height="210" fill="${b}"/><circle cx="125" cy="40" r="48" fill="#fff" opacity=".1"/><rect x="26" y="20" width="70" height="18" rx="9" fill="#fff" opacity=".9"/><text x="61" y="33" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="${b}" text-anchor="middle">${esc(u.sinif.split(' (')[0])}</text><text x="26" y="92" font-family="Plus Jakarta Sans,sans-serif" font-size="14" font-weight="800" fill="#fff">${esc(s1)}</text><text x="26" y="110" font-family="Plus Jakarta Sans,sans-serif" font-size="14" font-weight="800" fill="#fff">${esc(s2)}</text><text x="26" y="128" font-family="Plus Jakarta Sans,sans-serif" font-size="14" font-weight="800" fill="#fff">${esc(s3)}</text><rect x="26" y="146" width="40" height="4" rx="2" fill="#ffd166"/><text x="26" y="190" font-family="Inter,sans-serif" font-size="9" fill="#fff" opacity=".85">ÖRNEK YAYINLARI</text></svg>`;
+}
+function kapak(u){return u.kapakUrl?`<img src="${u.kapakUrl}" alt="${esc(u.ad)} kapağı">`:kapakSvg(u)}
+
+function urunCiz(){
+  const s=$('#fSinif').value,d=$('#fDers').value,t=$('#fTur').value;
+  const f=urunler.map((u,i)=>[u,i]).filter(([u])=>(!s||u.sinif===s)&&(!d||u.ders===d)&&(!t||u.tur===t));
+  $('#sonuc').textContent=f.length+' ürün';
+  $('#urunListe').innerHTML=f.length?f.map(([u,i])=>`<article class="urun"><div class="kapak">${kapak(u)}</div><div class="urun-ic"><div class="etiketler"><span class="etiket">${esc(u.sinif)}</span><span class="etiket">${esc(u.ders)}</span><span class="etiket tur">${esc(u.tur)}</span></div><h3>${esc(u.ad)}</h3><p>${esc(u.aciklama)}</p><div class="fiyat">${tl(u.fiyat)}</div><div class="urun-alt"><button class="btn btn-cizgi" data-ornek="${i}">Örnek sayfalar</button><button class="btn btn-mavi" data-ekle="${i}">Listeye ekle</button></div></div></article>`).join(''):'<div class="bos">Bu seçime uygun ürün yok. Filtreleri değiştirin.</div>';
+  $('#urunTablo').innerHTML=urunler.map((u,i)=>`<tr><td>${esc(u.ad)}</td><td>${esc(u.sinif)}</td><td>${esc(u.ders)}</td><td>${esc(u.tur)}</td><td>${tl(u.fiyat)}</td><td><button class="sil" data-usil="${i}">Kaldır</button></td></tr>`).join('');
+}
+function bayiCiz(){
+  const il=$('#ilSec').value;const f=bayiler.filter(b=>!il||b.il===il);
+  $('#bayiSay').textContent=il?`${il}: ${f.length} bayi`:`Toplam ${bayiler.length} bayi`;
+  $('#bayiListe').innerHTML=f.length?f.map(b=>{const k=b.konum||('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(b.adres+' '+b.il));return `<div class="bayi"><h3>${esc(b.ad)}</h3><span>${esc(b.adres)} / ${esc(b.il)}</span><span>${esc(b.tel)}</span><a href="${esc(k)}" target="_blank" rel="noopener">Haritada aç →</a></div>`}).join(''):`<div class="bos">${esc(il)} ilinde henüz bayimiz yok. Sipariş listesinden talep bırakırsanız size ulaşırız.</div>`;
+  $('#bayiTablo').innerHTML=bayiler.map((b,i)=>`<tr><td>${esc(b.ad)}</td><td>${esc(b.il)}</td><td>${esc(b.tel)}</td><td><button class="sil" data-bsil="${i}">Kaldır</button></td></tr>`).join('');
+}
+function dokCiz(){
+  $('#dokListe').innerHTML=doklar.map((d,i)=>{const acik=d.erisim==='herkes'||rol==='bayi';return `<div class="dok"><div class="dok-ikon">PDF</div><div><b>${esc(d.ad)}</b><small>${esc(d.tur)}</small></div><span class="erisim ${d.erisim}">${d.erisim==='herkes'?'Herkese açık':'Yalnız bayiler'}</span><div class="eylem">${acik?`<button class="btn btn-cizgi" data-dok="${i}">Görüntüle</button>`:'<span class="kilit">🔒 Bayi girişi gerekli</span>'}</div></div>`}).join('');
+  $('#dokTablo').innerHTML=doklar.map((d,i)=>`<tr><td>${esc(d.ad)}</td><td>${esc(d.tur)}</td><td>${d.erisim==='herkes'?'Herkes':'Yalnız bayiler'}</td><td><button class="sil" data-dsil="${i}">Kaldır</button></td></tr>`).join('');
+}
+function listeCiz(){
+  $('#listeSay').textContent=liste.reduce((a,x)=>a+x.adet,0);
+  const top=liste.reduce((a,x)=>a+x.adet*urunler[x.i].fiyat,0);
+  $('#listeIc').innerHTML=liste.length?liste.map((x,k)=>`<div class="c-satir"><span>${esc(urunler[x.i].ad)}<br><small style="color:var(--soluk)">${tl(urunler[x.i].fiyat)}</small></span><span class="adet"><button data-az="${k}" aria-label="Azalt">−</button>${x.adet}<button data-art="${k}" aria-label="Artır">+</button></span></div>`).join('')+`<div class="c-satir"><b>Tahmini toplam</b><b>${tl(top)}</b></div>`:'<p style="color:var(--soluk);font-size:14px">Listeniz boş. Ürün kartlarındaki "Listeye ekle" ile ekleyin.</p>';
+}
+function sipCiz(){
+  $('#sipSay').textContent=talepler.filter(t=>!t.tamam).length;
+  $('#sipTablo').innerHTML=talepler.length?talepler.map((t,i)=>`<tr><td>${esc(t.tarih)}</td><td>${esc(t.ad)}${t.kurum?'<br><small>'+esc(t.kurum)+'</small>':''}<br><small>${esc(t.tel)} · ${esc(t.il)}</small></td><td>${t.kalemler.map(esc).join('<br>')}${t.not?'<br><small>Not: '+esc(t.not)+'</small>':''}</td><td>${tl(t.tutar)}</td><td><button class="durum ${t.tamam?'tamam':''}" data-dur="${i}">${t.tamam?'Arandı':'Yeni'}</button></td></tr>`).join(''):'<tr><td colspan="5" style="color:var(--soluk)">Henüz talep yok.</td></tr>';
+}
+
+const SORU={
+ 'Matematik':[['Bir kitapçı 3 kutu deneme ve 2 paket dergi alıyor. Kutu 120 TL, paket 45 TL ise toplam ödeme kaç TL olur?',['450','420','390','360']],['√72 ifadesinin en sade hali aşağıdakilerden hangisidir?',['6√2','3√8','2√18','12√6']],['Bir sınıftaki 30 öğrencinin %40\'ı gözlüklüdür. Gözlüksüz öğrenci sayısı kaçtır?',['18','12','20','16']]],
+ 'Türkçe':[['"Kitap okumak, insanın dünyasını genişletir." cümlesinde vurgulanan düşünce nedir?',['Okumanın bakış açısını zenginleştirdiği','Kitapların pahalı olduğu','Okumanın zaman aldığı','Dünyanın büyük olduğu']],['Aşağıdaki sözcüklerden hangisi yapım eki almıştır?',['Kitaplık','Kitaplar','Kitabı','Kitapta']],['Hangi cümlede yazım yanlışı vardır?',['Herkez sınava hazırlandı.','Sınav yarın başlayacak.','Defterini masada unuttu.','Ödevini zamanında bitirdi.']]],
+ 'Fen Bilimleri':[['Bitkilerde fotosentez sonucu açığa çıkan gaz hangisidir?',['Oksijen','Azot','Karbondioksit','Hidrojen']],['Hangisi saf maddedir?',['Su','Hava','Tuzlu su','Toprak']],['Sesin en hızlı yayıldığı ortam hangisidir?',['Katı','Sıvı','Gaz','Boşluk']]],
+ 'Sosyal Bilgiler':[['Türkiye\'nin başkenti hangi ildir?',['Ankara','İstanbul','İzmir','Bursa']],['Haritalarda yükseltiyi göstermek için hangi yöntem kullanılır?',['Renklendirme','Ölçek','Lejant','Pusula']],['Hangisi temel haklardan biridir?',['Eğitim hakkı','Vergi verme','Askerlik','Oy kullanma zorunluluğu']]],
+ 'İngilizce':[['Choose the correct answer: She ___ to school every day.',['goes','go','going','gone']],['"Kitap" kelimesinin İngilizcesi hangisidir?',['Book','Desk','Pen','Bag']],['Which one is a day of the week?',['Monday','March','Summer','Morning']]]
+};
+function ornekAc(u){
+  if(u.pdfUrl){$('#mBaslik').textContent=u.ad+' · Örnek PDF';$('#mIc').innerHTML=`<iframe src="${u.pdfUrl}" title="Örnek PDF"></iframe>`;$('#modal').classList.add('acik');return}
+  const ders=SORU[u.ders]?u.ders:'Matematik';
+  $('#mBaslik').textContent=u.ad+' · Örnek sayfa';
+  $('#mIc').innerHTML=`<div class="kagit"><h4>${esc(u.ad)}</h4><div class="ust-bilgi">${esc(u.sinif)} · ${esc(ders)} · Örnek sayfa 1</div><ol>${SORU[ders].map(([s,k])=>`<li>${esc(s)}<div class="siklar">${k.map((x,j)=>`<span>${'ABCD'[j]}) ${esc(x)}</span>`).join('')}</div></li>`).join('')}</ol></div><p style="font-size:12px;color:var(--soluk);text-align:center;margin:10px 0 0">Gerçek sitede panelden yüklediğiniz PDF burada açılır.</p>`;
+  $('#modal').classList.add('acik');
+}
+function dokAc(d){
+  if(d.dosyaUrl){$('#mBaslik').textContent=d.ad;$('#mIc').innerHTML=`<iframe src="${d.dosyaUrl}" title="${esc(d.ad)}"></iframe>`;$('#modal').classList.add('acik');return}
+  let ic='';
+  if(d.tur==='Cevap anahtarı'){ic='<table style="width:100%;border-collapse:collapse;font-size:13px">'+Array.from({length:4},(_,r)=>'<tr>'+Array.from({length:5},(_,c)=>{const n=r*5+c+1;return `<td style="border:1px solid #e3e6f0;padding:6px">${n}. <b>${'ABCD'[(n*7)%4]}</b></td>`}).join('')+'</tr>').join('')+'</table>'}
+  else if(d.tur==='Sınav takvimi'){ic='<table style="width:100%;border-collapse:collapse;font-size:13px"><tr><th style="text-align:left;padding:6px">Deneme</th><th style="text-align:left;padding:6px">Tarih</th></tr>'+['LGS Deneme 1|18 Ekim 2026','LGS Deneme 2|15 Kasım 2026','TYT Deneme 1|22 Kasım 2026','LGS Deneme 3|13 Aralık 2026','TYT Deneme 2|20 Aralık 2026'].map(x=>{const [a,b]=x.split('|');return `<tr><td style="border-top:1px solid #e3e6f0;padding:6px">${a}</td><td style="border-top:1px solid #e3e6f0;padding:6px">${b}</td></tr>`}).join('')+'</table>'}
+  else if(d.ad.includes('Fiyat')){ic='<table style="width:100%;border-collapse:collapse;font-size:13px">'+urunler.slice(0,6).map(u=>`<tr><td style="border-top:1px solid #e3e6f0;padding:6px">${esc(u.ad)}</td><td style="border-top:1px solid #e3e6f0;padding:6px;text-align:right">${tl(Math.round(u.fiyat*.75))}</td></tr>`).join('')+'</table><p style="font-size:12px;color:#6b7290">Bayi fiyatlarıdır, yalnız bayilere açıktır.</p>'}
+  else{ic=`<ol>${SORU['Matematik'].map(([s,k])=>`<li>${esc(s)}<div class="siklar">${k.map((x,j)=>`<span>${'ABCD'[j]}) ${esc(x)}</span>`).join('')}</div></li>`).join('')}</ol>`}
+  $('#mBaslik').textContent=d.ad;
+  $('#mIc').innerHTML=`<div class="kagit"><h4>${esc(d.ad)}</h4><div class="ust-bilgi">${esc(d.tur)} · ${d.erisim==='herkes'?'Herkese açık':'Yalnız bayiler'}</div>${ic}</div>`;
+  $('#modal').classList.add('acik');
+}
+
+function listeAcKapa(a){$('#cekmece').classList.toggle('acik',a);$('#perde').classList.toggle('acik',a)}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('button');if(!t)return;const D=t.dataset;
+  if(D.ekle!=null){const i=+D.ekle;const v=liste.find(x=>x.i===i);v?v.adet++:liste.push({i,adet:1});listeCiz();toast('Sipariş listesine eklendi')}
+  else if(D.ornek!=null)ornekAc(urunler[+D.ornek]);
+  else if(D.dok!=null)dokAc(doklar[+D.dok]);
+  else if(D.art!=null){liste[+D.art].adet++;listeCiz()}
+  else if(D.az!=null){const k=+D.az;if(--liste[k].adet<=0)liste.splice(k,1);listeCiz()}
+  else if(D.usil!=null){const i=+D.usil;liste=liste.filter(x=>x.i!==i).map(x=>({i:x.i>i?x.i-1:x.i,adet:x.adet}));urunler.splice(i,1);urunCiz();listeCiz();toast('Ürün sitede gizlendi')}
+  else if(D.bsil!=null){bayiler.splice(+D.bsil,1);bayiCiz();toast('Bayi kaldırıldı')}
+  else if(D.dsil!=null){doklar.splice(+D.dsil,1);dokCiz();toast('Doküman kaldırıldı')}
+  else if(D.dur!=null){const x=talepler[+D.dur];x.tamam=!x.tamam;sipCiz()}
+  else if(D.rol){rol=D.rol;document.querySelectorAll('.rol button').forEach(b=>b.classList.toggle('secili',b===t));dokCiz()}
+  else if(D.sekme){document.querySelectorAll('.sekmeler button').forEach(b=>b.classList.toggle('secili',b===t));document.querySelectorAll('.sekme').forEach(s=>s.classList.toggle('acik',s.id===D.sekme))}
+});
+$('#listeAc').onclick=()=>listeAcKapa(true);
+$('#listeKapat').onclick=$('#perde').onclick=()=>listeAcKapa(false);
+$('#mKapat').onclick=()=>$('#modal').classList.remove('acik');
+$('#modal').onclick=e=>{if(e.target.id==='modal')$('#modal').classList.remove('acik')};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#modal').classList.remove('acik');listeAcKapa(false)}});
+['#fSinif','#fDers','#fTur'].forEach(s=>$(s).onchange=urunCiz);
+$('#ilSec').onchange=bayiCiz;
+
+$('#urunForm').onsubmit=e=>{
+  e.preventDefault();const f=e.target,v=Object.fromEntries(new FormData(f));
+  const u={ad:v.ad.trim(),sinif:v.sinif,ders:v.ders,tur:v.tur,fiyat:Math.max(0,Math.round(+v.fiyat||0)),aciklama:(v.aciklama||'').trim()||'Yeni ürün.'};
+  if(f.kapak.files[0])u.kapakUrl=URL.createObjectURL(f.kapak.files[0]);
+  if(f.pdf.files[0])u.pdfUrl=URL.createObjectURL(f.pdf.files[0]);
+  urunler.unshift(u);liste=liste.map(x=>({i:x.i+1,adet:x.adet}));
+  ['#fSinif','#fDers','#fTur'].forEach(s=>$(s).value='');urunCiz();listeCiz();f.reset();toast('Ürün yayınlandı, Ürünler bölümünün başında görünüyor');
+};
+$('#bayiForm').onsubmit=e=>{
+  e.preventDefault();const v=Object.fromEntries(new FormData(e.target));
+  bayiler.unshift({ad:v.ad.trim(),il:v.il,adres:v.adres.trim(),tel:v.tel.trim(),konum:/^https?:\/\//.test(v.konum)?v.konum.trim():''});
+  $('#ilSec').value=v.il;bayiCiz();e.target.reset();toast(v.il+' bayileri arasına eklendi');
+};
+$('#dokForm').onsubmit=e=>{
+  e.preventDefault();const f=e.target,v=Object.fromEntries(new FormData(f));
+  const d={ad:v.ad.trim(),tur:v.tur,erisim:v.erisim};if(f.dosya.files[0])d.dosyaUrl=URL.createObjectURL(f.dosya.files[0]);
+  doklar.unshift(d);dokCiz();f.reset();toast(d.erisim==='herkes'?'Doküman herkese açık olarak yüklendi':'Doküman yalnız bayilere açık olarak yüklendi');
+};
+$('#sipForm').onsubmit=e=>{
+  e.preventDefault();if(!liste.length){toast('Önce listeye ürün ekleyin');return}
+  const v=Object.fromEntries(new FormData(e.target));const n=new Date();
+  talepler.unshift({tarih:n.toLocaleDateString('tr-TR')+' '+n.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'}),ad:v.ad.trim(),kurum:v.kurum.trim(),tel:v.tel.trim(),il:v.il,not:v.not.trim(),kalemler:liste.map(x=>x.adet+' × '+urunler[x.i].ad),tutar:liste.reduce((a,x)=>a+x.adet*urunler[x.i].fiyat,0)});
+  liste=[];listeCiz();sipCiz();e.target.reset();listeAcKapa(false);toast('Talebiniz alındı. Yönetim paneli > Sipariş talepleri bölümünde görebilirsiniz.');
+};
+
+doldur($('#fSinif'),SINIF,'Tüm sınıflar');doldur($('#fDers'),DERS,'Tüm dersler');doldur($('#fTur'),TUR,'Tüm türler');
+doldur($('#pSinif'),SINIF);doldur($('#pDers'),DERS);doldur($('#pTur'),TUR);
+doldur($('#ilSec'),ILLER,'Tüm iller');doldur($('#pIl'),ILLER);doldur($('#sipIl'),ILLER,'İl seçin');$('#sipIl').required=true;
+$('#heroKitap').innerHTML=[urunler[1],urunler[4],urunler[10]].map(kapakSvg).join('');
+urunCiz();bayiCiz();dokCiz();listeCiz();sipCiz();
+</script>
+</body>
+</html>
