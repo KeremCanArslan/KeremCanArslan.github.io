@@ -1,4 +1,4 @@
-<!doctype html><html lang="tr"><head><title>e-ticaret.co Başlangıç Planı — Önizleme</title>
+<!doctype html><html lang="tr"><head><title>e-ticaret.co Danışmanlık Önizlemesi</title>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow">
 <style>
 :root{--bg:#f5f6f8;--k:#fff;--m:#1b2430;--s:#5e6b7a;--c:#e2e6ec;--a:#2563eb;--y:#16a34a}
@@ -11,22 +11,33 @@ th,td{text-align:left;padding:8px;border-top:1px solid var(--c);vertical-align:t
 .not{font-size:13px;color:var(--s)}ul{margin:0;padding-left:20px}
 </style>
 </head><body><div class="kap">
-<h1>e-ticaret.co · başlangıç planı önizlemesi</h1>
-<p class="alt">Teslim edilecek planın ilk sayfası. Tam planda her model için maliyet tablosu, güncel resmî fiyatlar ve 90 günlük takvim yer alır.</p>
-<div class="kutu"><h2>Alan adına uyan 3 model</h2>
-<table><tr><th>Model</th><th>Ne yapar</th><th>Gelir</th><th>Başlangıç zorluğu</th></tr>
-<tr><td>Karşılaştırma ve rehber</td><td>Altyapı, pazaryeri, kargo ve ödeme çözümlerini karşılaştırır, e-ticarete başlayana yol gösterir</td><td>Yönlendirme ortaklığı, reklam</td><td>Düşük</td></tr>
-<tr><td>Entegrasyon hizmet vitrini</td><td>Pazaryeri, e-fatura ve stok entegrasyonu hizmetlerini paketleyip satar</td><td>Kurulum + aylık hizmet</td><td>Orta</td></tr>
-<tr><td>Niş mağaza</td><td>Seçilecek tek kategoride kendi ürünleriyle mağaza</td><td>Ürün satışı</td><td>Orta-yüksek</td></tr></table></div>
-<div class="kutu"><h2>Altyapı karşılaştırması (özet)</h2>
-<table><tr><th>Seçenek</th><th>Kurulum</th><th>Türkiye ödeme / e-fatura</th><th>Esneklik</th></tr>
-<tr><td>ikas</td><td>Hızlı</td><td>Hazır</td><td>Orta</td></tr>
-<tr><td>IdeaSoft</td><td>Hızlı</td><td>Hazır</td><td>Orta</td></tr>
-<tr><td>Shopify</td><td>Hızlı</td><td>Uygulama ile</td><td>Yüksek</td></tr>
-<tr><td>WooCommerce</td><td>Orta</td><td>Eklenti ile</td><td>Yüksek</td></tr>
-<tr><td>Özel yazılım</td><td>Yavaş</td><td>Elle entegrasyon</td><td>Tam</td></tr></table></div>
-<div class="kutu"><h2>İlk 90 gün</h2><ul>
-<li><b>1-30. gün:</b> model seçimi, altyapı kurulumu, ödeme, kargo ve e-fatura bağlantıları</li>
-<li><b>31-60. gün:</b> içerik, ürün veya hizmet sayfaları, Search Console ve ölçüm kurulumu</li>
-<li><b>61-90. gün:</b> ilk trafik, reklam testi, dönüşüm takibi ve sonraki adım kararı</li></ul></div>
+<h1>e-ticaret.co · danışmanlık önizlemesi</h1>
+<p class="alt">İlanınızda istenen başlıklara sırayla kısa cevap. Tam plan bu başlıkların her birini maliyet, güncel resmî fiyat ve takvimle detaylandırır.</p>
+
+<div class="kutu"><h2>1 · Proje fikri: önerim</h2>
+<p style="margin:0 0 8px"><b>"e-ticarete başla" platformu:</b> alan adı zaten bunu söylüyor. Mağaza açmak isteyen esnafa altyapı, pazaryeri, kargo, ödeme ve e-fatura seçeneklerini karşılaştırır, sonra kurulumu paket olarak satar. Elinizdeki entegrasyon tecrübesi bu modelde doğrudan gelir kalemi olur.</p>
+<table><tr><th>Model</th><th>Gelir</th><th>Başlangıç zorluğu</th><th>Not</th></tr>
+<tr><td><b>Rehber + kurulum paketi</b> (önerilen)</td><td>Kurulum ücreti, aylık bakım, yönlendirme ortaklıkları</td><td>Düşük-orta</td><td>Stok riski yok, entegrasyon bilginizi kullanır</td></tr>
+<tr><td>Entegrasyon pazaryeri</td><td>Hizmet başına komisyon</td><td>Orta</td><td>Hizmet veren bulmak gerekir</td></tr>
+<tr><td>Kendi ürünlü niş mağaza</td><td>Ürün satışı</td><td>Orta-yüksek</td><td>Alan adı mağaza adından çok "konu" çağrıştırıyor</td></tr></table></div>
+
+<div class="kutu"><h2>2 · Altyapı önerisi</h2>
+<table><tr><th>Bölüm</th><th>Öneri</th><th>Neden</th></tr>
+<tr><td>Rehber ve karşılaştırma sayfaları</td><td>WordPress veya Next.js</td><td>Google'da üst sıralar için hızlı, içerik eklemesi kolay</td></tr>
+<tr><td>Paket satışı ve ödeme</td><td>iyzico / PayTR ödeme sayfası</td><td>Ayrı mağaza altyapısı gerekmeden kartla ödeme</td></tr>
+<tr><td>Müşteri mağazaları</td><td>ikas / IdeaSoft / Shopify / WooCommerce</td><td>Müşterinin bütçesine göre; hepsine kurulum paketi hazırlanır</td></tr>
+<tr><td>Başvuru ve takip</td><td>Basit panel + e-posta bildirimi</td><td>Gelen talepleri tek yerden görmek için</td></tr></table></div>
+
+<div class="kutu"><h2>3 · Başlangıç yol haritası</h2><ul>
+<li><b>1-30. gün:</b> ana sayfa, 3 kurulum paketi sayfası, ödeme, başvuru formu; Search Console ve ölçüm</li>
+<li><b>31-60. gün:</b> 10-15 karşılaştırma/rehber yazısı ("ikas mı Shopify mı" gibi aranan konular), ilk paket satışları</li>
+<li><b>61-90. gün:</b> reklam testi, dönüşüm takibi, en çok satan pakete göre sonraki adım kararı</li></ul></div>
+
+<div class="kutu"><h2>4 · Benzer işler</h2><ul>
+<li>Satış sitesi örneği (sepet, ürün listesi): <a href="https://keremcanarslan.github.io/ornek/satis-sitesi/">açık örnek</a></li>
+<li>e-Fatura XML → Excel aracı: <a href="https://keremcanarslan.github.io/e-fatura-excel/">açık sürüm</a></li>
+<li>Portly, canlı web + mobil uygulama: <a href="https://portly-app.onrender.com">portly-app.onrender.com</a></li></ul></div>
+
+<div class="kutu"><h2>5 · Süre ve ücret</h2>
+<p style="margin:0">Yazılı plan <b>3 gün, 3.000 TL</b>. Siteyi de bana yaptırırsanız bu ücret geliştirme fiyatından düşülür.</p></div>
 </div></body></html>
