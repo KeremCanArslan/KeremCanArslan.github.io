@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>aracbike — Reyon Önizlemesi</title>
+<style>
+:root{--koyu:#1d2329;--tur:#f26b1d;--bg:#f4f5f7;--kart:#fff;--metin:#1d2329;--soluk:#6a737d;--cizgi:#e3e6ea;--yesil:#1f8a4c;--kirmizi:#c0392b}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--metin);line-height:1.5}
+.taslak{background:var(--tur);color:#fff;font-size:12.5px;text-align:center;padding:6px 16px}
+header{background:var(--koyu);color:#fff}
+.kap{max-width:1180px;margin:0 auto;padding:0 16px}
+.ust{display:flex;align-items:center;justify-content:space-between;height:62px;gap:12px}
+.logo{font-weight:800;font-size:22px;letter-spacing:-.3px}.logo b{color:var(--tur)}
+.ust small{color:#aab3bc;font-size:13px}
+.notlar{background:#fff;border:1px solid var(--cizgi);border-left:4px solid var(--tur);border-radius:8px;padding:14px 18px;margin:18px 0}
+.notlar h2{font-size:15px;margin:0 0 8px}
+.notlar ul{margin:0;padding-left:18px;font-size:14px;color:#333}
+.notlar li{margin:3px 0}
+.duzen{display:grid;grid-template-columns:270px 1fr;gap:18px;margin-bottom:40px}
+nav{background:#fff;border:1px solid var(--cizgi);border-radius:8px;padding:8px 0;align-self:start;position:sticky;top:12px}
+nav h3{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--soluk);margin:12px 16px 4px}
+nav button{display:flex;justify-content:space-between;width:100%;border:0;background:none;text-align:left;padding:7px 16px;font:inherit;font-size:14.5px;color:var(--metin);cursor:pointer}
+nav button:hover{background:#f7f8fa}
+nav button.secili{background:#fff3ec;color:var(--tur);font-weight:600;box-shadow:inset 3px 0 0 var(--tur)}
+nav button span{color:var(--soluk);font-size:13px}
+.baslik{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:2px 0 12px}
+.baslik h1{font-size:21px;margin:0}
+.baslik p{margin:0;color:var(--soluk);font-size:14px}
+.izgara{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.urun{background:var(--kart);border:1px solid var(--cizgi);border-radius:8px;overflow:hidden;display:flex;flex-direction:column}
+.urun .gorsel{aspect-ratio:1;background:#fff;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--cizgi)}
+.urun img{width:100%;height:100%;object-fit:contain}
+.urun .bilgi{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;flex:1}
+.urun .ad{font-size:14px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.urun .alt{margin-top:auto;display:flex;justify-content:space-between;align-items:center}
+.fiyat{font-weight:700;font-size:16px}
+.stok{font-size:12px;color:var(--yesil)}.stok.yok{color:var(--kirmizi)}
+.dahasi{margin-top:14px;font-size:14px;color:var(--soluk);background:#fff;border:1px dashed var(--cizgi);border-radius:8px;padding:12px 14px;text-align:center}
+footer{color:var(--soluk);font-size:12.5px;text-align:center;padding:0 16px 30px}
+@media (max-width:760px){
+  .duzen{grid-template-columns:1fr}
+  nav{position:static;display:flex;overflow-x:auto;padding:6px;gap:4px}
+  nav h3{display:none}
+  nav button{width:auto;white-space:nowrap;border:1px solid var(--cizgi);border-radius:999px;padding:6px 12px;gap:6px}
+  nav button.secili{box-shadow:none;border-color:var(--tur)}
+  .izgara{grid-template-columns:repeat(2,1fr);gap:10px}
+  .ust small{display:none}
+}
+</style>
+</head>
+<body>
+<div class="taslak">Önizleme: sizin dosyanızdaki ürünlerle hazırlandı, siteye henüz bir şey yüklenmedi.</div>
+<header><div class="kap ust"><div class="logo">arac<b>bike</b></div><small>Reyon düzeni önerisi</small></div></header>
+<main class="kap">
+  <div class="notlar">
+    <h2>Dosyanıza baktım, aktarmadan önce bilmeniz gerekenler</h2>
+    <ul>
+      <li><strong>Harfler aslında bozuk değil.</strong> Dosya doğru (UTF-8) kaydedilmiş; Excel'de açınca ş, ğ, ı bozuk görünüyor. Excel'de kaydedilirse o zaman gerçekten bozulur, bu yüzden dosyayı Excel'den geçirmeden aktarmak gerekiyor.</li>
+      <li><strong>215 satırın 12'si aynı ürünün ikinci kaydı</strong> (aynı ad ve fiyat, farklı kimlik). Olduğu gibi yüklenirse mağazada 12 ürün iki kez görünür. Tekilleştirince 203 ürün kalıyor.</li>
+      <li><strong>Reyon bilgisi dosyada yok</strong> (ürün türü sütunu 215 üründen 214'ünde boş). Aşağıdaki reyonları ürün adlarından çıkardım.</li>
+      <li><strong>Resimler motobikeparca.com'dan çekiliyor.</strong> O site kapanırsa ya da adres değişirse resimler kaybolur; aktarırken sizin sitenize kopyalanmalı.</li>
+      <li><strong>Ağırlıklar 0</strong> (203 üründen 200'ünde) ve 1 ürünün fiyatı boş, 1 ürünün adı yalnız "Mavi". Kargo ücretini ağırlıkla hesaplayacaksanız bu ayrıca girilmeli.</li>
+    </ul>
+  </div>
+  <div class="duzen">
+    <nav id="nav"></nav>
+    <section>
+      <div class="baslik"><h1 id="rbaslik"></h1><p id="rsayi"></p></div>
+      <div class="izgara" id="izgara"></div>
+      <div class="dahasi" id="dahasi"></div>
+    </section>
+  </div>
+</main>
+<footer>Her reyonda birkaç örnek ürün gösteriliyor. Ürün adları, fiyatlar ve resimler sizin dosyanızdan.</footer>
+<script>
+const V=[{"ana": "Bisiklet", "alt": "Gidon, Maşa ve Sele", "n": 30, "ornek": [{"ad": "Bisan Standart Bisiklet Gidon Mili - Sağlam Vidalı Çektirme Vidası", "f": "199.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/140-gidon-1-500x500.jpg", "s": "stokta"}, {"ad": "Rbk Bisiklet Gidon Yükseltme Parçası - Siyah (gidon Uzatma)", "f": "320.00", "r": "https://www.motobikeparca.com/image/cache/catalog/gidon-yukseltme-18-500x500.jpg", "s": "stokta"}, {"ad": "Bisiklet Gidon Elcik Takımı Soft Çift Renk Mtb/bmx – Siyah/turuncu", "f": "140.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/175-elcik-1-500x500.jpg", "s": "stokta"}, {"ad": "Bisiklet Direksiyon Furş Bilyası - Kafesli Ön Maşa Rulmanı", "f": "75.00", "r": "https://www.motobikeparca.com/image/cache/catalog/bilyal-1-2-500x500.jpg", "s": "stokta"}]}, {"ana": "Bisiklet", "alt": "Vites ve Aktarma", "n": 20, "ornek": [{"ad": "Bisan Bmx Bisiklet Zinciri 114 Bakla Kutulu", "f": "380.00", "r": "https://www.motobikeparca.com/image/cache/catalog/zincir-bmx-18-500x500.jpg", "s": "stokta"}, {"ad": "Bisiklet Vites Kolu Saıgan Yeşil", "f": "500.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/62-5-500x500.jpg", "s": "stokta"}, {"ad": "Bisiklet Vites Kolu Mtb Sağ Sol", "f": "150.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/134-kol-vites-1-500x500.jpg", "s": "stokta"}, {"ad": "Mtb Tetik Vites Kolu 21 Vites Takım", "f": "420.00", "r": "https://www.motobikeparca.com/image/cache/catalog/sag-sol-vites18-500x500.jpg", "s": "stokta"}]}, {"ana": "Bisiklet", "alt": "Lastik ve İç Lastik", "n": 19, "ornek": [{"ad": "16 X 2.125 Bisiklet Dış Lastik – Butyl Yapı, Dayanıklı Ve Güvenli Sürüş", "f": "500.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/184-dis-lastik-16-x-2-125-500x500.jpg", "s": "stokta"}, {"ad": "Meghna 24 X 1.75–2.125 A/v Bisiklet İç Lastik – Dayanıklı Ve Güvenilir", "f": "195.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/219-buty-1-500x500.jpg", "s": "stokta"}, {"ad": "Elektrikli E-bike Dublex Lastik Sibopu Ince", "f": "34.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/64-2-500x500.jpg", "s": "stokta"}, {"ad": "Motobike 29x2.25 Şehir Dağ Bisikleti İç Lastik (oto)", "f": "210.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/185-ic-lastik-29-1-500x500.jpg", "s": "stokta"}]}, {"ana": "Bisiklet", "alt": "Ayak, Bagaj ve Aksesuar", "n": 16, "ornek": [{"ad": "Bisiklet Yan Ayak 16 Arkadan Nikel", "f": "185.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/136-ayak-16-1-500x500.jpg", "s": "stokta"}, {"ad": "Bisiklet Yan Ayak 20 Arkadan Kilitli Siyah", "f": "300.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/138-a-siyah-20-1-500x500.jpg", "s": "stokta"}, {"ad": "Bisiklet Yan Ayak 24-26 Arkadan Siyah", "f": "175.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/193-yan-ayak-24-26-1-500x500.jpg", "s": "stokta"}, {"ad": "Bisiklet Halat Kilit 12*80 Cm", "f": "195.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/204-kilit-1-500x500.jpg", "s": "stokta"}]}, {"ana": "Bisiklet", "alt": "Fren", "n": 14, "ornek": [{"ad": "Bisiklet Disk Fren Rotor Düzeltme Ve Hizalama Anahtarı", "f": "750.00", "r": "https://www.motobikeparca.com/image/cache/catalog/adsz-tasarm-1-500x500.jpg", "s": "stokta"}, {"ad": "Bisiklet V-fren Yönlendirme Piposu – Mtb / Şehir Uyumlu (gümüş)", "f": "75.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/173-pipo-1-500x500.jpg", "s": "stokta"}, {"ad": "Ön Fren Hortumu Hidrolik", "f": "540.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/91-frenteli-1-500x500.jpg", "s": "stokta"}, {"ad": "Mtb Uyumlu Bisiklet Ön Mekanik Disk Fren Seti – Kaliper + 160mm Rotor", "f": "1500.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/65-disk-fren-seti-komple-on-500x500.jpg", "s": "stokta"}]}, {"ana": "Bisiklet", "alt": "Jant, Göbek ve Disk", "n": 10, "ornek": [{"ad": "U-link Rulmanlı Mandallı 32 Delik Disk Uyumlu Bisiklet Arka Göbek - Siyah", "f": "450.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/67-16-500x500.jpg", "s": "stokta"}, {"ad": "Bisiklet Ön Tekerlek Göbeği - Siyah Vidalı Bilyalı Ön Göbek (36 Delik)", "f": "250.00", "r": "https://www.motobikeparca.com/image/cache/catalog/on-1200-x-1200-piksel-1-500x500.jpg", "s": "stokta"}, {"ad": "Göbek 36 Delik Ön Disk Uyumlu Rulmanlı Silver Renk", "f": "650.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/68-15-500x500.jpg", "s": "stokta"}, {"ad": "Drbk Alüminyum Arkadan Ayarlı 26 Jant Bisiklet Yan Ayak - Siyah", "f": "250.00", "r": "https://www.motobikeparca.com/image/cache/catalog/20-ayak-18-500x500.jpg", "s": "stokta"}]}, {"ana": "Motosiklet ve Scooter", "alt": "Motor ve Elektrik", "n": 39, "ornek": [{"ad": "Asya Efsane Nostalji 125cc Scooter Volan Manyeto - Hj125t", "f": "1420.00", "r": "https://www.motobikeparca.com/image/cache/catalog/volan2-1-500x500.jpg", "s": "stokta"}, {"ad": "Mondial Cup 100 Komple Yağ Pompası Seti - Ump0429 Orijinal", "f": "220.00", "r": "https://www.motobikeparca.com/image/cache/catalog/ypd1-1-500x500.jpg", "s": "stokta"}, {"ad": "Rbk-0278 Motosiklet Manyeto Volanı - Komple Elektronik Rotor", "f": "1800.00", "r": "https://www.motobikeparca.com/image/cache/catalog/rotor-1-500x500.jpg", "s": "stokta"}, {"ad": "Ncr 41046 Gy6 50 80 Scooter Yağ Pompası Ve Dişlisi", "f": "285.00", "r": "https://www.motobikeparca.com/image/cache/catalog/yptd-1-500x500.jpg", "s": "stokta"}]}, {"ana": "Motosiklet ve Scooter", "alt": "Lastik ve İç Lastik", "n": 16, "ornek": [{"ad": "Motosiklet İç Lastik Servis 2.50/2.75*18", "f": "348.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/155-tube-18-1-500x500.jpg", "s": "stokta"}, {"ad": "Motosiklet Iç Lastik 2.25/2.50*17", "f": "460.01", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/165-lastik-17-1-500x500.jpg", "s": "stokta"}, {"ad": "Motosiklet İç Lastik Anlaş 3.25/3.50*16", "f": "528.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/163-moto-16-1-500x500.jpg", "s": "stokta"}, {"ad": "Scooter E-bike Dublex Lastik Sibopu Eğri Kalın", "f": "34.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/63-1-500x500.jpg", "s": "stokta"}]}, {"ana": "Motosiklet ve Scooter", "alt": "Fren", "n": 11, "ornek": [{"ad": "Monero Scooter Ön Disk Fren Balatası (parça Kodu: 50336)", "f": "220.00", "r": "https://www.motobikeparca.com/image/cache/catalog/on-disk-1-500x500.jpg", "s": "stokta"}, {"ad": "Disk Balatası Ön Fren 125 Mh Drift", "f": "330.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/81-balata-drif1-500x500.jpg", "s": "stokta"}, {"ad": "Scooter 50 Revıval Ön Disk Balata", "f": "480.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/79-bala1-500x500.jpg", "s": "stokta"}, {"ad": "Disk Ön Fren Balatası Kn 150 Scooter", "f": "360.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/84-on-disk-150-kn-500x500.jpg", "s": "stokta"}]}, {"ana": "Motosiklet ve Scooter", "alt": "Vites ve Aktarma", "n": 7, "ornek": [{"ad": "53103 Arka Dişli Tamburu Çıplak Bilyalı Cub Sfc Seti", "f": "654.00", "r": "https://www.motobikeparca.com/image/cache/catalog/tamburu-1-500x500.jpg", "s": "stokta"}, {"ad": "Cup Modelleri Ön Dişli Sekmanı Orjin", "f": "220.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/104-sekman-1-500x500.jpg", "s": "stokta"}, {"ad": "Deltaforce Mondial Cup Sfc Ukh Mfh Zincir Gergi Takımı Sağ Sol", "f": "110.00", "r": "https://www.motobikeparca.com/image/cache/catalog/zincir-gergi-1-500x500.jpg", "s": "stokta"}, {"ad": "51012 Komple Şanzıman Dişli Seti - Cup Kh 100 Uyumlu", "f": "1100.00", "r": "https://www.motobikeparca.com/image/cache/catalog/sanzman-1-500x500.jpg", "s": "stokta"}]}, {"ana": "Motosiklet ve Scooter", "alt": "Teller ve Göstergeler", "n": 5, "ornek": [{"ad": "Kilometre Teli Komple Cup 100", "f": "360.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/199-kilometre-teli-1-500x500.jpg", "s": "stokta"}, {"ad": "Motosiklet Gaz Teli Komple 125 Agk Cg+cgl Modeller", "f": "264.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/205-gaz-teli-1-500x500.jpg", "s": "stokta"}, {"ad": "Mondial 100 Cup Hız ölçer", "f": "300.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/89-klm-1-500x500.jpg", "s": "stokta"}, {"ad": "Scooter Ve Moped Hız Göstergesi Kablosu | Gy6 125-150cc", "f": "480.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/200-hiz-olcer-kablo-2-500x500.jpg", "s": "stokta"}]}, {"ana": "Motosiklet ve Scooter", "alt": "Gidon, Maşa ve Sele", "n": 4, "ornek": [{"ad": "Motosiklet Plastik Şasi Tapası Ve Amortisör Cıvata Kapak Takımı", "f": "120.00", "r": "https://www.motobikeparca.com/image/cache/catalog/tapa-1-500x500.jpg", "s": "stokta"}, {"ad": "Deltaforce Mondial Drift 150 Kn Mh Mr Komple Furş Takımı", "f": "310.00", "r": "https://shopping.googleusercontent.com/image?q=AJqGhtVNX6IHDdw5ZKJpHO9H9rawKTZWhPGhj9qTQi0ecOfRydySDcvSlflmBPapvv8eZ6-NCc3Vk4LSyB1X", "s": "stokta"}, {"ad": "Rmg C100 Cup Alt Sele Kilidi Mekanizması - 542120240", "f": "444.00", "r": "https://www.motobikeparca.com/image/cache/catalog/sele-klit2-1-500x500.jpg", "s": "stokta"}, {"ad": "Furş Takımı Cup Serisi Mondial Deltaforce", "f": "456.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/105-furs-1-500x500.jpg", "s": "stokta"}]}, {"ana": "Motosiklet ve Scooter", "alt": "Ayak, Bagaj ve Aksesuar", "n": 1, "ornek": [{"ad": "Deltaforce Mondial Cup Ukh Mfh Mfm Komple Kilit Seti", "f": "875.00", "r": "https://www.motobikeparca.com/image/cache/catalog/kilit-set-2-1-500x500.jpg", "s": "stokta"}]}, {"ana": "Motosiklet ve Scooter", "alt": "Jant, Göbek ve Disk", "n": 1, "ornek": [{"ad": "Mafsal Mili Cup Serisi:", "f": "216.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/88-mafsal-1-500x500.jpg", "s": "stokta"}]}, {"ana": "Sürücü Ekipmanı", "alt": "Kask, Gözlük ve Çanta", "n": 9, "ornek": [{"ad": "Ozero Kontrol Dokunmatik Motosiklet Ve Bisiklet Eldiveni", "f": "1200.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/126-eldiven-5-500x500.jpg", "s": "stokta"}, {"ad": "Shimano Polarize Bisiklet Ve Sporcu Güneş Gözlüğü - Siyah Mavi", "f": "1800.00", "r": "https://www.motobikeparca.com/image/cache/catalog/shimano-gozluk-1-500x500.jpg", "s": "stokta"}, {"ad": "Maske Motosiklet Boyunluk çift Taraflı", "f": "660.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/131-maske-1-500x500.jpg", "s": "stokta"}, {"ad": "Eldiven Bisiklet Yetişkin Karışık Renkli", "f": "375.00", "r": "https://www.motobikeparca.com/image/cache/catalog/feed_4/181-rectus-1-500x500.jpg", "s": "stokta"}]}];
+const nav=document.getElementById('nav');let son='';
+V.forEach((r,i)=>{
+  if(r.ana!==son){const h=document.createElement('h3');h.textContent=r.ana;nav.appendChild(h);son=r.ana}
+  const b=document.createElement('button');b.innerHTML=`${r.alt}<span>${r.n}</span>`;b.onclick=()=>goster(i);nav.appendChild(b);
+});
+const tl=f=>f?Number(f).toLocaleString('tr-TR',{minimumFractionDigits:2})+' TL':'Fiyat yok';
+function goster(i){
+  const r=V[i];
+  [...nav.querySelectorAll('button')].forEach((b,k)=>b.classList.toggle('secili',k===i));
+  document.getElementById('rbaslik').textContent=r.ana+' › '+r.alt;
+  document.getElementById('rsayi').textContent=r.n+' ürün';
+  document.getElementById('izgara').innerHTML=r.ornek.map(u=>`<div class="urun"><div class="gorsel"><img loading="lazy" src="${u.r}" alt=""></div><div class="bilgi"><div class="ad">${u.ad}</div><div class="alt"><span class="fiyat">${tl(u.f)}</span><span class="stok ${u.s==='stokta'?'':'yok'}">${u.s==='stokta'?'Stokta':'Stokta yok'}</span></div></div></div>`).join('');
+  const kalan=r.n-r.ornek.length;
+  document.getElementById('dahasi').textContent=kalan>0?`Bu reyonda ${kalan} ürün daha var; aktarımda hepsi buraya yerleşir.`:'Bu reyondaki ürünlerin hepsi gösteriliyor.';
+}
+goster(0);
+</script>
+</body>
+</html>
