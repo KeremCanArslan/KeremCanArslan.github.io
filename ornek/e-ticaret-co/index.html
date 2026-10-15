@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>e-ticaret.co — Ana Sayfa Taslağı</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--tur:#ff5f00;--mor:#5c196a;--mor2:#7722db;--mavi:#48c7ec;--yesil:#45b695;--bg:#fbf9fc;--metin:#1e1424;--soluk:#6b6072;--cizgi:#ece6ef}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--metin);line-height:1.55}
+a{color:inherit;text-decoration:none}
+.taslak{background:var(--mor);color:#f3e8f7;font-size:12px;text-align:center;padding:6px 16px}
+.kap{max-width:1120px;margin:0 auto;padding:0 20px}
+header{background:#fff;border-bottom:1px solid var(--cizgi)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px}
+.logo{font-weight:800;font-size:24px;letter-spacing:-.5px}
+.logo b{color:var(--tur)}.logo span{color:var(--mor)}
+.menu{display:flex;gap:26px;font-weight:600;font-size:15px;color:var(--soluk)}
+.btn{display:inline-block;background:var(--tur);color:#fff;font-weight:700;border-radius:10px;padding:11px 18px;font-size:15px;border:0;cursor:pointer;font-family:inherit}
+.btn.ikinci{background:#fff;color:var(--mor);border:2px solid var(--mor)}
+.serit{height:5px;background:linear-gradient(90deg,var(--mor2) 0 25%,var(--mavi) 25% 50%,var(--tur) 50% 75%,var(--yesil) 75%)}
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center;padding-top:56px;padding-bottom:52px}
+.rozet{display:inline-block;background:#fff1e8;color:var(--tur);font-weight:700;font-size:13px;border-radius:30px;padding:5px 12px;margin-bottom:14px}
+h1{font-size:46px;line-height:1.1;letter-spacing:-1.2px;margin:0 0 16px}
+h1 em{font-style:normal;color:var(--mor)}
+.hero p{font-size:18px;color:var(--soluk);margin:0 0 24px;max-width:560px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.guven{display:flex;gap:22px;margin-top:26px;color:var(--soluk);font-size:14px;flex-wrap:wrap}
+.guven b{color:var(--metin);display:block;font-size:20px}
+.secici{background:#fff;border:1px solid var(--cizgi);border-radius:18px;padding:22px;box-shadow:0 24px 50px -28px rgba(92,25,106,.45)}
+.secici h3{margin:0 0 4px;font-size:19px}
+.secici .alt{color:var(--soluk);font-size:14px;margin:0 0 14px}
+.soru{margin-bottom:12px}
+.soru label{font-weight:600;font-size:14px;display:block;margin-bottom:6px}
+.sec{display:flex;gap:6px;flex-wrap:wrap}
+.sec button{border:1.5px solid var(--cizgi);background:#fff;border-radius:9px;padding:7px 11px;font:600 13px 'Plus Jakarta Sans',sans-serif;color:var(--soluk);cursor:pointer}
+.sec button.on{border-color:var(--mor);color:var(--mor);background:#f7eefa}
+.sonuc{margin-top:14px;background:linear-gradient(135deg,var(--mor),#7a2b8c);color:#fff;border-radius:12px;padding:14px 16px}
+.sonuc small{opacity:.8;font-size:12px}
+.sonuc b{display:block;font-size:20px;margin:2px 0}
+.sonuc p{margin:0;font-size:13.5px;opacity:.92}
+section{padding:54px 0}
+.bas{text-align:center;max-width:640px;margin:0 auto 32px}
+.bas h2{font-size:32px;letter-spacing:-.6px;margin:0 0 8px}
+.bas p{color:var(--soluk);margin:0}
+.adimlar{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.adim{background:#fff;border:1px solid var(--cizgi);border-radius:16px;padding:22px}
+.adim i{font-style:normal;display:inline-grid;place-items:center;width:36px;height:36px;border-radius:10px;background:#fff1e8;color:var(--tur);font-weight:800;margin-bottom:10px}
+.adim h3{margin:0 0 6px;font-size:18px}.adim p{margin:0;color:var(--soluk);font-size:15px}
+.paketler{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.paket{background:#fff;border:1px solid var(--cizgi);border-radius:18px;padding:24px;display:flex;flex-direction:column}
+.paket.one{border:2px solid var(--tur);position:relative}
+.paket.one:before{content:'En çok tercih edilen';position:absolute;top:-12px;left:22px;background:var(--tur);color:#fff;font-size:12px;font-weight:700;border-radius:20px;padding:3px 10px}
+.paket h3{margin:0 0 4px;font-size:20px}.paket .kim{color:var(--soluk);font-size:14px;margin:0 0 14px}
+.paket ul{list-style:none;padding:0;margin:0 0 20px;font-size:15px;flex:1}
+.paket li{padding:6px 0 6px 26px;position:relative}
+.paket li:before{content:'';position:absolute;left:0;top:11px;width:14px;height:8px;border-left:3px solid var(--yesil);border-bottom:3px solid var(--yesil);transform:rotate(-45deg)}
+.paket .btn{text-align:center}
+.entegre{background:#fff;border-top:1px solid var(--cizgi);border-bottom:1px solid var(--cizgi)}
+.cipler{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.cip{border:1px solid var(--cizgi);border-radius:30px;padding:9px 16px;font-weight:600;font-size:14px;background:var(--bg)}
+.rehber{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.yazi{background:#fff;border:1px solid var(--cizgi);border-radius:16px;overflow:hidden}
+.yazi .gorsel{height:110px}
+.yazi div.ic{padding:16px 18px}
+.yazi small{color:var(--tur);font-weight:700;font-size:12px}
+.yazi h3{margin:4px 0 0;font-size:17px}
+.son{background:var(--mor);color:#fff;border-radius:22px;padding:40px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.son h2{margin:0 0 6px;font-size:28px}.son p{margin:0;opacity:.85}
+footer{padding:28px 0 40px;color:var(--soluk);font-size:14px}
+footer .kap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer b{color:var(--tur)}footer span.m{color:var(--mor);font-weight:700}
+@media(max-width:860px){
+  .menu{display:none}
+  .hero{grid-template-columns:1fr;padding-top:34px;padding-bottom:34px;gap:28px}
+  h1{font-size:34px}.hero p{font-size:16px}
+  .adimlar,.paketler,.rehber{grid-template-columns:1fr}
+  .bas h2{font-size:26px}
+  .son{padding:26px}
+  .nav .btn{padding:9px 12px;font-size:13px}
+}
+</style>
+</head>
+<body>
+<div class="taslak">Taslak · e-ticaret.co için örnek ana sayfa</div>
+<header><div class="kap nav">
+  <a class="logo" href="#"><b>e-ticaret</b><span>.co</span></a>
+  <nav class="menu"><a href="#nasil">Nasıl çalışır</a><a href="#paketler">Paketler</a><a href="#entegrasyon">Entegrasyonlar</a><a href="#rehber">Rehber</a></nav>
+  <a class="btn" href="#son">Ücretsiz ön görüşme</a>
+</div></header>
+<div class="serit"></div>
+
+<div class="kap hero">
+  <div>
+    <span class="rozet">Mağaza · Pazaryeri · e-Fatura · Kargo</span>
+    <h1>E-ticarete başlamanın <em>en kısa yolu</em></h1>
+    <p>Hangi altyapı, hangi pazaryeri, hangi ödeme ve kargo? Size uygun olanı birlikte seçelim, kurulumu ve entegrasyonları biz yapalım. Siz satışa odaklanın.</p>
+    <div class="cta"><a class="btn" href="#secici">Bana uygun altyapıyı bul</a><a class="btn ikinci" href="#paketler">Paketleri gör</a></div>
+    <div class="guven"><div><b>3 adımda</b>yayında mağaza</div><div><b>Tek panel</b>sipariş ve stok</div><div><b>e-Fatura</b>otomatik kesim</div></div>
+  </div>
+  <div class="secici" id="secici">
+    <h3>Altyapı seçici</h3>
+    <p class="alt">3 soruyu cevaplayın, size uygun başlangıcı görün.</p>
+    <div class="soru"><label>Kaç ürün satacaksınız?</label><div class="sec" data-s="urun"><button data-v="az" class="on">1-50</button><button data-v="orta">50-1.000</button><button data-v="cok">1.000+</button></div></div>
+    <div class="soru"><label>Pazaryerlerinde de satacak mısınız?</label><div class="sec" data-s="pazar"><button data-v="hayir" class="on">Hayır</button><button data-v="evet">Evet</button></div></div>
+    <div class="soru"><label>Önceliğiniz ne?</label><div class="sec" data-s="oncelik"><button data-v="hiz" class="on">Hızlı açılış</button><button data-v="esnek">Esneklik</button><button data-v="maliyet">Düşük maliyet</button></div></div>
+    <div class="sonuc" id="sonuc"></div>
+  </div>
+</div>
+
+<section id="nasil" style="padding-top:20px"><div class="kap">
+  <div class="bas"><h2>Nasıl çalışır?</h2><p>Teknik işleri biz üstleniyoruz, siz yalnızca ürünlerinizi ve kararlarınızı getirin.</p></div>
+  <div class="adimlar">
+    <div class="adim"><i>1</i><h3>Ön görüşme</h3><p>Ürününüzü, hedefinizi ve bütçenizi dinliyoruz; altyapı ve pazaryeri önerisini yazılı veriyoruz.</p></div>
+    <div class="adim"><i>2</i><h3>Kurulum</h3><p>Mağaza, ödeme, kargo, e-Fatura ve pazaryeri bağlantıları kuruluyor, ürünleriniz yükleniyor.</p></div>
+    <div class="adim"><i>3</i><h3>Yayın ve takip</h3><p>Mağazanız açılıyor; sipariş, stok ve fatura tek panelden ilerliyor, ilk ay birlikte takip ediyoruz.</p></div>
+  </div>
+</div></section>
+
+<section id="paketler" style="padding-top:10px"><div class="kap">
+  <div class="bas"><h2>Paketler</h2><p>İhtiyacınıza göre başlayın, büyüdükçe bir üst pakete geçin.</p></div>
+  <div class="paketler">
+    <div class="paket"><h3>Başlangıç</h3><p class="kim">İlk kez online satışa geçenler</p>
+      <ul><li>Hazır altyapıda mağaza kurulumu</li><li>Ödeme ve kargo bağlantısı</li><li>50 ürüne kadar yükleme</li><li>Kullanım eğitimi</li></ul><a class="btn ikinci" href="#son">Teklif al</a></div>
+    <div class="paket one"><h3>Pazaryeri</h3><p class="kim">Trendyol, Hepsiburada, N11'de satmak isteyenler</p>
+      <ul><li>Mağaza + pazaryeri entegrasyonu</li><li>Ortak stok ve fiyat yönetimi</li><li>Siparişlerin tek panelde toplanması</li><li>e-Fatura / e-Arşiv kurulumu</li></ul><a class="btn" href="#son">Teklif al</a></div>
+    <div class="paket"><h3>Tam Entegre</h3><p class="kim">Büyüyen ve çok kanallı işletmeler</p>
+      <ul><li>Tüm kanallar tek merkezden</li><li>XML tedarikçi ve muhasebe bağlantısı</li><li>Otomatik fatura ve kargo etiketi</li><li>Aylık bakım ve raporlama</li></ul><a class="btn ikinci" href="#son">Teklif al</a></div>
+  </div>
+</div></section>
+
+<section id="entegrasyon" class="entegre"><div class="kap">
+  <div class="bas"><h2>Bağlandığımız kanallar</h2><p>Kullandığınız sistemle çalışır, yerine yenisini dayatmaz.</p></div>
+  <div class="cipler"><span class="cip">Trendyol</span><span class="cip">Hepsiburada</span><span class="cip">N11</span><span class="cip">Amazon Türkiye</span><span class="cip">Pazarama</span><span class="cip">ikas</span><span class="cip">Shopify</span><span class="cip">IdeaSoft</span><span class="cip">WooCommerce</span><span class="cip">e-Fatura / e-Arşiv</span><span class="cip">iyzico</span><span class="cip">PayTR</span><span class="cip">Yurtiçi · Aras · MNG</span></div>
+</div></section>
+
+<section id="rehber"><div class="kap">
+  <div class="bas"><h2>Başlamadan önce okuyun</h2><p>Karar vermenizi kolaylaştıran kısa rehberler.</p></div>
+  <div class="rehber">
+    <a class="yazi" href="#"><div class="gorsel" style="background:linear-gradient(135deg,var(--mor2),var(--mavi))"></div><div class="ic"><small>KARŞILAŞTIRMA</small><h3>ikas mı, Shopify mı, WooCommerce mu?</h3></div></a>
+    <a class="yazi" href="#"><div class="gorsel" style="background:linear-gradient(135deg,var(--tur),#ffb37a)"></div><div class="ic"><small>PAZARYERİ</small><h3>Pazaryerinde ilk 30 gün: nelere dikkat etmeli?</h3></div></a>
+    <a class="yazi" href="#"><div class="gorsel" style="background:linear-gradient(135deg,var(--yesil),#a6e3cf)"></div><div class="ic"><small>E-FATURA</small><h3>e-Fatura ve e-Arşiv'e geçiş adım adım</h3></div></a>
+  </div>
+</div></section>
+
+<section id="son" style="padding-top:10px"><div class="kap">
+  <div class="son"><div><h2>Mağazanızı birlikte planlayalım</h2><p>15 dakikalık ücretsiz ön görüşmede size uygun yolu yazılı olarak çıkaralım.</p></div><a class="btn" href="#">Ön görüşme talep et</a></div>
+</div></section>
+
+<footer><div class="kap"><div><b>e-ticaret</b><span class="m">.co</span> · e-ticarete başlamanın en kısa yolu</div><div>Altyapı ve entegrasyon: <span class="m">hepsi</span><b>entegre</b></div></div></footer>
+
+<script>
+const s={urun:'az',pazar:'hayir',oncelik:'hiz'};
+function oner(){
+  let ad,neden;
+  if(s.oncelik==='esnek'||s.urun==='cok'){ad=s.urun==='cok'?'Özel altyapı veya Shopify':'Shopify veya WooCommerce';neden='Büyük katalog ve özel ihtiyaçlar için genişletilebilir yapı; entegrasyonlar uygulama/eklentiyle eklenir.'}
+  else if(s.oncelik==='maliyet'&&s.pazar==='hayir'){ad='WooCommerce';neden='Abonelik yerine yalnız hosting maliyeti; az ürünle başlamak için ekonomik.'}
+  else {ad='ikas veya IdeaSoft';neden='Türkiye ödeme, kargo ve e-Fatura bağlantıları hazır geliyor; en hızlı açılış.'}
+  const paket=s.pazar==='evet'?'Pazaryeri paketi':(s.urun==='cok'?'Tam Entegre paketi':'Başlangıç paketi');
+  document.getElementById('sonuc').innerHTML='<small>Size uygun başlangıç</small><b>'+ad+'</b><p>'+neden+' Önerilen: <u>'+paket+'</u>.</p>';
+}
+document.querySelectorAll('.sec').forEach(g=>g.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;g.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');s[g.dataset.s]=b.dataset.v;oner()}));
+oner();
+</script>
+</body>
+</html>
