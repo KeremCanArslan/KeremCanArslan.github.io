@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Atölye — Örnek Mağaza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f4ef;--kart:#fff;--metin:#1d1b19;--soluk:#6f6a63;--cizgi:#e4ded5;--vurgu:#b5543a;--koyu:#1d1b19}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--metin);font:15px/1.55 Inter,system-ui,sans-serif}
+a{color:inherit}
+.kap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--cizgi);background:var(--bg);position:sticky;top:0;z-index:5}
+.ust{display:flex;align-items:center;gap:16px;height:64px}
+.logo{font:600 22px Fraunces,serif;letter-spacing:.2px}
+nav{display:flex;gap:18px;margin-left:24px;font-size:14px;color:var(--soluk)}
+nav a{text-decoration:none}nav a:hover{color:var(--metin)}
+.sag{margin-left:auto;display:flex;gap:10px;align-items:center}
+.para{display:flex;border:1px solid var(--cizgi);border-radius:8px;overflow:hidden;background:#fff}
+.para button{border:0;background:none;padding:7px 11px;font:500 13px Inter;cursor:pointer;color:var(--soluk)}
+.para button.secili{background:var(--koyu);color:#fff}
+.sepet-btn{border:1px solid var(--koyu);background:var(--koyu);color:#fff;border-radius:8px;padding:8px 14px;font:500 13px Inter;cursor:pointer}
+.giris{padding:56px 0 36px;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center}
+.giris h1{font:500 40px/1.15 Fraunces,serif;margin-bottom:14px}
+.giris p{color:var(--soluk);max-width:460px}
+.giris .tablo-buyuk{aspect-ratio:4/3;border-radius:4px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.08)}
+.filtre{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 22px}
+.filtre button{border:1px solid var(--cizgi);background:#fff;border-radius:20px;padding:6px 14px;font:500 13px Inter;cursor:pointer;color:var(--soluk)}
+.filtre button.secili{border-color:var(--koyu);color:var(--metin)}
+.urunler{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px;margin-bottom:56px}
+.urun{background:var(--kart);border:1px solid var(--cizgi);border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
+.gorsel{aspect-ratio:1/1;background:#efe9e0;display:flex;align-items:center;justify-content:center}
+.gorsel svg{width:100%;height:100%}
+.urun-ic{padding:14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.tur{font-size:12px;color:var(--soluk);text-transform:uppercase;letter-spacing:.6px}
+.ad{font:500 17px Fraunces,serif}
+.not{font-size:13px;color:var(--soluk)}
+.alt{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:10px}
+.fiyat{font-weight:600}
+.ekle{border:1px solid var(--koyu);background:#fff;border-radius:6px;padding:6px 12px;font:500 13px Inter;cursor:pointer}
+.ekle:hover{background:var(--koyu);color:#fff}
+.abonelik{background:var(--koyu);color:#f3eee6;border-radius:6px;padding:32px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;margin-bottom:56px}
+.abonelik h2{font:500 26px Fraunces,serif;margin-bottom:6px}
+.abonelik p{color:#c9c1b5;max-width:520px}
+.abonelik .secenek{display:flex;flex-direction:column;gap:8px;min-width:230px}
+.abonelik button{border:0;border-radius:6px;padding:10px 14px;font:500 14px Inter;cursor:pointer}
+.ab-1{background:#f3eee6;color:var(--koyu)}
+.ab-2{background:none;border:1px solid #6b645b!important;color:#f3eee6}
+footer{border-top:1px solid var(--cizgi);padding:24px 0 40px;font-size:13px;color:var(--soluk)}
+/* sepet */
+.perde{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;z-index:10}
+.cekmece{position:fixed;top:0;right:0;height:100%;width:min(400px,100%);background:#fff;z-index:11;transform:translateX(100%);transition:transform .25s;display:flex;flex-direction:column}
+.acik .perde{display:block}.acik .cekmece{transform:none}
+.c-ust{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid var(--cizgi);font:500 18px Fraunces,serif}
+.c-ust button{border:0;background:none;font-size:22px;cursor:pointer}
+.c-liste{flex:1;overflow:auto;padding:8px 20px}
+.satir{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--cizgi);font-size:14px}
+.satir .adet{display:flex;gap:6px;align-items:center;margin-top:4px}
+.satir .adet button{width:24px;height:24px;border:1px solid var(--cizgi);background:#fff;border-radius:4px;cursor:pointer}
+.c-alt{padding:18px 20px;border-top:1px solid var(--cizgi)}
+.toplam{display:flex;justify-content:space-between;font-weight:600;margin-bottom:12px}
+.odeme-btn{width:100%;border:0;background:var(--vurgu);color:#fff;border-radius:6px;padding:12px;font:600 14px Inter;cursor:pointer}
+.odeme{display:none;margin-top:12px;font-size:13px;color:var(--soluk)}
+.odeme label{display:flex;gap:8px;align-items:flex-start;padding:10px;border:1px solid var(--cizgi);border-radius:6px;margin-bottom:8px;color:var(--metin)}
+.odeme .uyari{background:#f7f4ef;border-radius:6px;padding:10px;margin-top:4px}
+.bos{color:var(--soluk);padding:24px 0;font-size:14px}
+@media(max-width:760px){
+  nav{display:none}
+  .giris{grid-template-columns:1fr;padding:32px 0 20px;gap:24px}
+  .giris h1{font-size:30px}
+  .abonelik{grid-template-columns:1fr;padding:24px}
+  .ust{gap:8px}.logo{font-size:19px}
+  .para button{padding:7px 8px}
+  .urunler{grid-template-columns:1fr 1fr;gap:12px}
+  .urun-ic{padding:10px}
+  .alt{flex-direction:column;align-items:stretch;gap:8px}
+}
+</style>
+</head>
+<body>
+<header><div class="kap ust">
+  <div class="logo">Atölye</div>
+  <nav><a href="#urunler">Ürünler</a><a href="#abonelik">Abonelik</a><a href="#hakkinda">Hakkında</a></nav>
+  <div class="sag">
+    <div class="para" id="para"><button data-p="TRY" class="secili">₺ TL</button><button data-p="USD">$ USD</button><button data-p="EUR">€ EUR</button></div>
+    <button class="sepet-btn" id="sepetAc">Sepet (<span id="sayi">0</span>)</button>
+  </div>
+</div></header>
+
+<main class="kap">
+  <section class="giris">
+    <div>
+      <h1>Elde yapılan tablolar, deri cüzdanlar ve defterler</h1>
+      <p>Her parça atölyede tek tek hazırlanıyor. Türkiye'den ve yurt dışından sipariş verebilirsiniz; fiyatlar seçtiğiniz para biriminde görünür.</p>
+    </div>
+    <div class="tablo-buyuk" id="buyukTablo"></div>
+  </section>
+
+  <div id="urunler" class="filtre">
+    <button data-k="hepsi" class="secili">Hepsi</button><button data-k="tablo">Tablolar</button><button data-k="cuzdan">Cüzdanlar</button><button data-k="defter">Defterler</button>
+  </div>
+  <div class="urunler" id="liste"></div>
+
+  <section class="abonelik" id="abonelik">
+    <div>
+      <h2>Süreli yayın aboneliği</h2>
+      <p>Üç ayda bir basılan dergi kapınıza gelsin. Yıllık abonelikte 4 sayı gönderilir; dijital sürüm ve atölyeden notlar için Patreon üzerinden de abone olabilirsiniz.</p>
+    </div>
+    <div class="secenek">
+      <button class="ab-1" id="abEkle">Yıllık abonelik · <span id="abFiyat"></span></button>
+      <button class="ab-2" id="abPatreon">Patreon'dan abone ol</button>
+    </div>
+  </section>
+
+  <footer id="hakkinda">Bu sayfa örnek tasarımdır; isim, ürünler ve fiyatlar yer tutucudur, ödeme alınmaz.</footer>
+</main>
+
+<div id="sepet">
+  <div class="perde" id="perde"></div>
+  <aside class="cekmece">
+    <div class="c-ust">Sepetiniz <button id="kapat" aria-label="Kapat">×</button></div>
+    <div class="c-liste" id="cListe"></div>
+    <div class="c-alt">
+      <div class="toplam"><span>Toplam</span><span id="toplam"></span></div>
+      <button class="odeme-btn" id="odemeBtn">Ödemeye geç</button>
+      <div class="odeme" id="odeme">
+        <label><input type="radio" name="y" checked> <span><b>Banka / kredi kartı</b><br>iyzico ile güvenli ödeme · TL, USD, EUR</span></label>
+        <label><input type="radio" name="y"> <span><b>Havale / EFT</b><br>Yalnız TL siparişlerde</span></label>
+        <div class="uyari">Örnek sayfa: gerçek sitede burada ödeme ekranı açılır ve sipariş size e-posta ile bildirilir.</div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<script>
+const S={
+ tablo1:`<svg viewBox="0 0 200 200"><rect width="200" height="200" fill="#efe9e0"/><rect x="38" y="30" width="124" height="140" fill="#3b3a36"/><rect x="44" y="36" width="112" height="128" fill="#e9dcc6"/><rect x="44" y="110" width="112" height="54" fill="#5b7f8c"/><rect x="44" y="124" width="112" height="40" fill="#3f6170"/><circle cx="118" cy="78" r="16" fill="#d58a52"/></svg>`,
+ tablo2:`<svg viewBox="0 0 200 200"><rect width="200" height="200" fill="#efe9e0"/><rect x="48" y="40" width="104" height="120" fill="#fff" stroke="#c9bfb0"/><path d="M62 128c14-30 28-46 38-46s20 16 38 46z" fill="#a9b98f" opacity=".8"/><path d="M62 128c10-14 20-22 28-22s16 8 26 22z" fill="#7d9468" opacity=".8"/><circle cx="126" cy="72" r="9" fill="#e7b46d" opacity=".9"/></svg>`,
+ cuzdan1:`<svg viewBox="0 0 200 200"><rect width="200" height="200" fill="#efe9e0"/><rect x="52" y="64" width="96" height="72" rx="6" fill="#8a5a3b"/><rect x="52" y="64" width="96" height="30" rx="6" fill="#9d6a48"/><line x1="60" y1="72" x2="140" y2="72" stroke="#c9a17f" stroke-dasharray="3 3"/><line x1="60" y1="128" x2="140" y2="128" stroke="#c9a17f" stroke-dasharray="3 3"/></svg>`,
+ cuzdan2:`<svg viewBox="0 0 200 200"><rect width="200" height="200" fill="#efe9e0"/><rect x="36" y="74" width="128" height="58" rx="5" fill="#2f2b28"/><rect x="36" y="74" width="128" height="22" rx="5" fill="#3d3833"/><circle cx="148" cy="103" r="5" fill="#b39b74"/><line x1="44" y1="126" x2="156" y2="126" stroke="#6b6157" stroke-dasharray="3 3"/></svg>`,
+ defter1:`<svg viewBox="0 0 200 200"><rect width="200" height="200" fill="#efe9e0"/><rect x="58" y="38" width="88" height="124" rx="3" fill="#d9cdb8"/><rect x="58" y="38" width="10" height="124" fill="#c3b498"/><g stroke="#8a7d68" stroke-width="2">${[0,1,2,3,4,5].map(i=>`<line x1="63" y1="${52+i*20}" x2="63" y2="${58+i*20}"/>`).join('')}</g><rect x="84" y="62" width="44" height="14" fill="#fff" opacity=".7"/></svg>`,
+ defter2:`<svg viewBox="0 0 200 200"><rect width="200" height="200" fill="#efe9e0"/><rect x="66" y="50" width="72" height="100" rx="4" fill="#6e4630"/><rect x="128" y="96" width="22" height="8" rx="3" fill="#6e4630"/><line x1="72" y1="56" x2="132" y2="56" stroke="#a87c5f" stroke-dasharray="3 3"/><line x1="72" y1="144" x2="132" y2="144" stroke="#a87c5f" stroke-dasharray="3 3"/></svg>`
+};
+const U=[
+ {id:1,k:'tablo',tur:'Tablo',ad:'Kıyı',not:'Tuval üzerine akrilik · 50×70 cm',g:'tablo1',f:{TRY:4800,USD:105,EUR:90}},
+ {id:2,k:'tablo',tur:'Tablo',ad:'Sabah',not:'Kâğıt üzerine suluboya · 30×40 cm',g:'tablo2',f:{TRY:2200,USD:48,EUR:42}},
+ {id:3,k:'cuzdan',tur:'Cüzdan',ad:'Kartlık',not:'Bitkisel tabaklanmış deri · 4 bölme',g:'cuzdan1',f:{TRY:850,USD:19,EUR:16}},
+ {id:4,k:'cuzdan',tur:'Cüzdan',ad:'Uzun cüzdan',not:'Deri · çıtçıtlı',g:'cuzdan2',f:{TRY:1350,USD:29,EUR:25}},
+ {id:5,k:'defter',tur:'Defter',ad:'El dikişi defter',not:'A5 · noktalı · 96 yaprak',g:'defter1',f:{TRY:420,USD:9,EUR:8}},
+ {id:6,k:'defter',tur:'Defter',ad:'Deri kaplı defter',not:'A6 · çizgisiz · yenilenebilir iç',g:'defter2',f:{TRY:690,USD:15,EUR:13}}
+];
+const AB={id:9,tur:'Abonelik',ad:'Yıllık abonelik (4 sayı)',f:{TRY:1200,USD:26,EUR:23}};
+let para='TRY',kat='hepsi',sepet={};
+const fmt=n=>para==='TRY'?n.toLocaleString('tr-TR')+' ₺':para==='USD'?'$'+n.toLocaleString('en-US'):n.toLocaleString('de-DE')+' €';
+const bul=id=>id===9?AB:U.find(u=>u.id===id);
+function ciz(){
+  document.getElementById('liste').innerHTML=U.filter(u=>kat==='hepsi'||u.k===kat).map(u=>`
+  <div class="urun"><div class="gorsel">${S[u.g]}</div><div class="urun-ic">
+   <span class="tur">${u.tur}</span><span class="ad">${u.ad}</span><span class="not">${u.not}</span>
+   <div class="alt"><span class="fiyat">${fmt(u.f[para])}</span><button class="ekle" onclick="ekle(${u.id})">Sepete ekle</button></div>
+  </div></div>`).join('');
+  document.getElementById('abFiyat').textContent=fmt(AB.f[para]);
+  sepetCiz();
+}
+function sepetCiz(){
+  const ids=Object.keys(sepet).map(Number);let t=0,s=0;
+  document.getElementById('cListe').innerHTML=ids.length?ids.map(id=>{const u=bul(id),a=sepet[id];t+=u.f[para]*a;s+=a;
+    return `<div class="satir"><div>${u.ad}<div class="adet"><button onclick="degis(${id},-1)">−</button>${a}<button onclick="degis(${id},1)">+</button></div></div><div>${fmt(u.f[para]*a)}</div></div>`}).join(''):'<div class="bos">Sepetiniz boş.</div>';
+  if(!ids.length)s=0;
+  document.getElementById('toplam').textContent=fmt(t);
+  document.getElementById('sayi').textContent=s;
+  document.getElementById('odemeBtn').disabled=!ids.length;
+}
+function ekle(id){sepet[id]=(sepet[id]||0)+1;sepetCiz();ac()}
+function degis(id,d){sepet[id]+=d;if(sepet[id]<=0)delete sepet[id];sepetCiz()}
+const kok=document.getElementById('sepet');
+function ac(){kok.classList.add('acik')}
+function kapa(){kok.classList.remove('acik');document.getElementById('odeme').style.display='none'}
+document.getElementById('sepetAc').onclick=ac;
+document.getElementById('kapat').onclick=kapa;
+document.getElementById('perde').onclick=kapa;
+document.getElementById('odemeBtn').onclick=()=>{document.getElementById('odeme').style.display='block'};
+document.getElementById('abEkle').onclick=()=>ekle(9);
+document.getElementById('abPatreon').onclick=e=>{e.target.textContent='Örnek: Patreon sayfanız açılır'};
+document.querySelectorAll('#para button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#para button').forEach(x=>x.classList.remove('secili'));b.classList.add('secili');para=b.dataset.p;ciz()});
+document.querySelectorAll('.filtre button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.filtre button').forEach(x=>x.classList.remove('secili'));b.classList.add('secili');kat=b.dataset.k;ciz()});
+document.getElementById('buyukTablo').innerHTML=S.tablo1.replace('viewBox="0 0 200 200"','viewBox="38 30 124 140" preserveAspectRatio="xMidYMid slice"');
+ciz();
+</script>
+</body>
+</html>
