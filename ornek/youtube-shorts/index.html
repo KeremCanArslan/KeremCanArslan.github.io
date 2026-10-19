@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Otomatik Shorts — Örnek</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--zemin:#f3f4f6;--kart:#fff;--metin:#111827;--soluk:#6b7280;--cizgi:#e5e7eb;--vurgu:#dc2626;--etiket:#f1f5f9}
+@media (prefers-color-scheme:dark){:root{--zemin:#0f1115;--kart:#181b21;--metin:#e5e7eb;--soluk:#9ca3af;--cizgi:#2a2f37;--vurgu:#f87171;--etiket:#232830}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--zemin);color:var(--metin);font:15px/1.55 Inter,system-ui,sans-serif;padding:28px 16px}
+.sar{max-width:1040px;margin:0 auto}
+h1{font-size:22px;font-weight:700;margin-bottom:4px}
+.alt{color:var(--soluk);margin-bottom:24px}
+.izgara{display:grid;grid-template-columns:340px 1fr;gap:24px;align-items:start}
+video{width:100%;aspect-ratio:9/16;border-radius:14px;background:#000;display:block}
+.kart{background:var(--kart);border:1px solid var(--cizgi);border-radius:12px;padding:18px 20px;margin-bottom:16px}
+.kart h2{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--soluk);margin-bottom:10px}
+.baslik{font-weight:600;font-size:16px;margin-bottom:8px}
+.aciklama{white-space:pre-line;color:var(--metin);font-size:14px}
+.etiketler{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.etiketler span{background:var(--etiket);border-radius:999px;padding:3px 10px;font-size:13px}
+.satir{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-top:1px solid var(--cizgi);font-size:14px}
+.satir:first-of-type{border-top:0}
+.satir b{font-weight:600;white-space:nowrap}
+ol{padding-left:20px;font-size:14px}
+ol li{margin:4px 0}
+.not{font-size:13px;color:var(--soluk);margin-top:10px}
+@media (max-width:760px){.izgara{grid-template-columns:1fr}video{max-width:360px;margin:0 auto}}
+</style>
+</head>
+<body>
+<div class="sar">
+  <h1>Otomatik YouTube Shorts üretimi — örnek çıktı</h1>
+  <p class="alt">Video, sistemin ilk sürümüyle tek komutla üretildi; senaryo ve yayın bilgileri yapay zekâyla yazıldı.</p>
+
+  <div class="izgara">
+    <video src="ornek.mp4" poster="kapak.jpg" controls playsinline preload="metadata"></video>
+
+    <div>
+      <div class="kart">
+        <h2>Videoyla birlikte hazırlanan yayın bilgileri</h2>
+        <div class="baslik">Okyanus Hakkında Sizi Şaşırtacak 3 Bilgi #shorts</div>
+        <div class="aciklama">Soluduğumuz oksijenin kaynağından Mariana Çukuru'nun derinliğine, okyanus hakkında kısa ve ilginç üç bilgi. Hangisini biliyordunuz? Yorumlarda buluşalım.
+
+Kaynak: NOAA Ulusal Okyanus Servisi
+Görüntüler: Mixkit (ücretsiz lisans)</div>
+        <div class="etiketler"><span>okyanus</span><span>ilginç bilgiler</span><span>bilim</span><span>deniz</span><span>mariana çukuru</span><span>plankton</span><span>doğa</span><span>shorts</span></div>
+      </div>
+
+      <div class="kart">
+        <h2>Akış</h2>
+        <ol>
+          <li>Konu listesinden daha önce kullanılmamış bir fikir seçilir, yapay zekâ Türkçe senaryoyu sahnelere bölerek yazar.</li>
+          <li>Her sahne Türkçe yapay zekâ sesiyle okunur, kelime zamanları kaydedilir.</li>
+          <li>Sahneye uygun, lisansı serbest görüntüler bulunur ve 9:16 olarak kırpılır.</li>
+          <li>Kurgu, ses ve kelimeyle eş zamanlı altyazı birleştirilir (15–60 sn).</li>
+          <li>Başlık, açıklama ve etiketler yazılır; video YouTube'un resmî API'siyle planlanan saate yüklenir.</li>
+          <li>Hata olursa işlem tekrar denenir, yine olmazsa Telegram'a bildirim gelir.</li>
+        </ol>
+      </div>
+
+      <div class="kart">
+        <h2>Aylık tahmini işletme gideri (günde 3 video)</h2>
+        <div class="satir"><span>Bulut sunucu (2 GB bellek)</span><b>6–12 $</b></div>
+        <div class="satir"><span>Senaryo, başlık, etiket (Google Gemini API)</span><b>ücretsiz kota / 1 $ altı</b></div>
+        <div class="satir"><span>Türkçe seslendirme (Microsoft Edge sesleri ya da Google Cloud TTS ücretsiz kotası)</span><b>0 $</b></div>
+        <div class="satir"><span>Görüntüler (Pexels API, Mixkit gibi ücretsiz lisanslı kaynaklar)</span><b>0 $</b></div>
+        <div class="satir"><span>YouTube Data API (günde 100 yükleme hakkı)</span><b>0 $</b></div>
+        <p class="not">Her sahnenin yapay zekâyla video olarak üretilmesi (Veo, Kling vb.) video başına ayrıca ücretlendirilir ve bu tabloya dahil değildir. Google Cloud'un ücretsiz kotasını kullanmak için hesaba kart tanımlanması gerekir.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
