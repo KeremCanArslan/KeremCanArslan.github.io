@@ -190,7 +190,7 @@ function sipCiz(yeniNo){
 $("#cek").onclick=async()=>{
  $("#cek").disabled=true;for(const p of ["ty","hb","n11"]){await bekle(400);yaz("bilgi",`${ad[p]}: siparişler çekildi`)}
  const s=yeniler.shift();
- if(s){s.t=saat().slice(0,5);siparisler.unshift(s);const u=urunler.find(x=>x.kod===s.u);if(u){u.stok=Math.max(0,u.stok-s.a);ciz();yaz("ok",`Yeni sipariş ${ad[s.p]} #${s.no} — ${s.u} stoğu ${u.stok}'e düştü, üç pazaryerine yansıtıldı`)}sipCiz(s.no)}
+ if(s){s.t=saat().slice(0,5);siparisler.unshift(s);const u=urunler.find(x=>x.kod===s.u);if(u){u.stok=Math.max(0,u.stok-s.a);ciz();yaz("ok",`Yeni sipariş ${ad[s.p]} #${s.no} — ${s.u} stoğu ${u.stok} adede indi, üç pazaryerine yansıtıldı`)}sipCiz(s.no)}
  else{yaz("bilgi","Yeni sipariş yok");sipCiz()}
  $("#sSon").textContent=saat().slice(0,5);$("#cek").disabled=false;
 };
