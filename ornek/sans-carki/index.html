@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Şans Çarkı — Örnek</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--zemin:#f4f4f5;--kart:#fff;--metin:#18181b;--soluk:#71717a;--cizgi:#e4e4e7;--ana:#e11d48;--koyu:#111827;--yesil:#16a34a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--zemin);color:var(--metin);font:14px/1.45 Inter,system-ui,sans-serif}
+button,input{font:inherit}
+button{cursor:pointer}
+.not{background:#fff7ed;border-bottom:1px solid #fed7aa;color:#9a3412;font-size:12.5px;padding:8px 16px;text-align:center}
+.ust{background:#fff;border-bottom:1px solid var(--cizgi)}
+.ust .ic{max-width:1100px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:22px}
+.logo{font-weight:800;font-size:19px;letter-spacing:-.3px}
+.menu{display:flex;gap:16px;color:var(--soluk);font-size:13px}
+.sepet{margin-left:auto;font-size:13px;color:var(--soluk)}
+.duzen{max-width:1100px;margin:0 auto;padding:18px 16px;display:grid;grid-template-columns:1fr 330px;gap:18px;align-items:start}
+.banner{background:linear-gradient(120deg,#111827,#374151);color:#fff;border-radius:14px;padding:26px;margin-bottom:16px}
+.banner h1{font-size:22px;margin-bottom:4px}
+.banner p{opacity:.8;font-size:13px}
+.urunler{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.urun{background:#fff;border:1px solid var(--cizgi);border-radius:12px;overflow:hidden}
+.urun .gorsel{aspect-ratio:1;background:#e5e7eb;display:grid;place-items:center;color:#a1a1aa;font-size:12px}
+.urun .b{padding:10px}
+.urun b{display:block;font-size:13px;font-weight:600}
+.urun span{color:var(--ana);font-weight:700}
+.panel{background:#fff;border:1px solid var(--cizgi);border-radius:12px;padding:14px;position:sticky;top:12px}
+.panel h2{font-size:14px;margin-bottom:2px}
+.panel .alt{color:var(--soluk);font-size:12px;margin-bottom:10px}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+td,th{padding:5px 4px;border-bottom:1px solid var(--cizgi);text-align:left}
+th{color:var(--soluk);font-weight:500;font-size:11.5px}
+td input{width:52px;padding:3px 5px;border:1px solid var(--cizgi);border-radius:6px;text-align:right}
+.toplam{font-size:12px;color:var(--soluk);margin-top:6px}
+.toplam.hata{color:var(--ana)}
+.kayit{margin-top:14px}
+.kayit h3{font-size:13px;margin-bottom:6px}
+.kayit ul{list-style:none;max-height:190px;overflow:auto;font-size:12px}
+.kayit li{padding:6px 0;border-bottom:1px dashed var(--cizgi);display:flex;justify-content:space-between;gap:8px}
+.kayit li em{font-style:normal;color:var(--soluk)}
+.bos{color:var(--soluk);font-size:12px}
+.dugmeler{display:flex;gap:8px;margin-top:12px}
+.dugme{border:1px solid var(--cizgi);background:#fff;border-radius:8px;padding:7px 10px;font-size:12.5px}
+.yuzen{position:fixed;left:16px;bottom:16px;background:var(--ana);color:#fff;border:0;border-radius:999px;padding:12px 18px;font-weight:700;box-shadow:0 10px 24px rgba(225,29,72,.35)}
+.perde{position:fixed;inset:0;background:rgba(15,23,42,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:10}
+.perde.acik{display:flex}
+.pencere{background:#fff;border-radius:18px;width:min(760px,100%);display:grid;grid-template-columns:1fr 1fr;overflow:hidden;position:relative;max-height:calc(100vh - 32px)}
+.kapat{position:absolute;right:10px;top:8px;border:0;background:none;font-size:22px;color:var(--soluk)}
+.cark-alani{background:#fff1f2;display:grid;place-items:center;padding:22px;position:relative}
+.cark-kutu{position:relative;width:min(300px,70vw);aspect-ratio:1}
+#cark{width:100%;height:100%;border-radius:50%;box-shadow:0 0 0 8px #fff,0 12px 30px rgba(0,0,0,.18);transition:transform 4.6s cubic-bezier(.12,.75,.12,1)}
+.ok{position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:13px solid transparent;border-right:13px solid transparent;border-top:24px solid var(--koyu);filter:drop-shadow(0 2px 2px rgba(0,0,0,.3))}
+.merkez{position:absolute;inset:0;margin:auto;width:46px;height:46px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.2);display:grid;place-items:center;font-weight:800;color:var(--ana);font-size:12px}
+.form{padding:26px 22px;display:flex;flex-direction:column;justify-content:center}
+.form h2{font-size:21px;line-height:1.2;margin-bottom:6px}
+.form p{color:var(--soluk);font-size:13px;margin-bottom:14px}
+.form input[type=text]{width:100%;border:1px solid #d4d4d8;border-radius:10px;padding:11px 12px;margin-bottom:10px}
+.onay{display:flex;gap:8px;font-size:11.5px;color:var(--soluk);margin-bottom:12px;align-items:flex-start}
+.onay input{margin-top:2px}
+.cevir{background:var(--ana);color:#fff;border:0;border-radius:10px;padding:12px;font-weight:700;font-size:15px}
+.cevir:disabled{opacity:.5;cursor:default}
+.uyari{color:var(--ana);font-size:12px;min-height:16px;margin-top:8px}
+.sonuc{display:none}
+.sonuc.acik{display:block}
+.kod{display:flex;gap:8px;margin:10px 0}
+.kod b{flex:1;border:2px dashed var(--ana);border-radius:10px;padding:10px;text-align:center;font-size:18px;letter-spacing:1px}
+.kod button{border:0;background:var(--koyu);color:#fff;border-radius:10px;padding:0 14px;font-weight:600}
+.sure{font-size:12.5px;color:var(--soluk)}
+.sure b{color:var(--metin)}
+@media (max-width:820px){.duzen{grid-template-columns:1fr}.panel{position:static}.urunler{grid-template-columns:repeat(2,1fr)}.menu{display:none}}
+@media (max-width:640px){.pencere{grid-template-columns:1fr;overflow:auto}.cark-alani{padding:22px 16px 14px}.cark-kutu{width:min(240px,64vw)}.form{padding:16px 18px 22px}}
+</style>
+</head>
+<body>
+<div class="not">Örnek sayfa: ikas mağazanıza eklenecek şans çarkının nasıl çalışacağını gösterir. Mağaza ve kodlar temsilîdir.</div>
+<header class="ust"><div class="ic"><div class="logo">MAĞAZANIZ</div><nav class="menu"><span>Yeni Gelenler</span><span>Kadın</span><span>Erkek</span><span>Aksesuar</span><span>İndirim</span></nav><div class="sepet">Sepet (0)</div></div></header>
+
+<main class="duzen">
+  <section>
+    <div class="banner"><h1>Sezon indirimi başladı</h1><p>Çarkı çevir, sepette geçerli indirim kodunu hemen kazan.</p></div>
+    <div class="urunler" id="urunler"></div>
+  </section>
+  <aside class="panel">
+    <h2>Yönetim ekranı</h2>
+    <div class="alt">Yalnız siz görürsünüz. Dilim oranlarını değiştirip çarkı tekrar deneyebilirsiniz.</div>
+    <table><thead><tr><th>Dilim</th><th>Çıkma oranı (%)</th></tr></thead><tbody id="oranlar"></tbody></table>
+    <div class="toplam" id="toplam"></div>
+    <div class="kayit"><h3>Son çevirmeler</h3><ul id="kayit"></ul></div>
+    <div class="dugmeler"><button class="dugme" id="ac">Çarkı aç</button><button class="dugme" id="sifirla">Denemeyi sıfırla</button></div>
+  </aside>
+</main>
+
+<button class="yuzen" id="yuzen">Çarkı çevir</button>
+
+<div class="perde" id="perde">
+  <div class="pencere">
+    <button class="kapat" id="kapat" aria-label="Kapat">×</button>
+    <div class="cark-alani"><div class="cark-kutu"><canvas id="cark" width="600" height="600"></canvas><div class="ok"></div><div class="merkez">ÇEVİR</div></div></div>
+    <div class="form">
+      <div id="giris">
+        <h2>Şansını dene, indirimini kap</h2>
+        <p>Telefon numaranı yaz, çarkı bir kez çevir. Kazandığın kod sepette geçerli.</p>
+        <input type="text" id="tel" inputmode="tel" placeholder="05xx xxx xx xx" maxlength="14">
+        <label class="onay"><input type="checkbox" id="kvkk"> Kampanya bildirimleri için ileti almayı ve Aydınlatma Metni'ni okuduğumu kabul ediyorum.</label>
+        <button class="cevir" id="cevir">Çarkı çevir</button>
+        <div class="uyari" id="uyari"></div>
+      </div>
+      <div class="sonuc" id="sonuc">
+        <h2 id="sonucBaslik"></h2>
+        <p id="sonucMetin"></p>
+        <div class="kod" id="kodKutu"><b id="kod"></b><button id="kopyala">Kopyala</button></div>
+        <div class="sure" id="sure"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const DILIMLER=[
+  {ad:"%5 indirim",oran:30,renk:"#fecdd3",kod:true},
+  {ad:"Ücretsiz kargo",oran:25,renk:"#fff",kod:true},
+  {ad:"%10 indirim",oran:20,renk:"#fda4af",kod:true},
+  {ad:"Tekrar dene",oran:12,renk:"#f4f4f5",kod:false},
+  {ad:"%15 indirim",oran:10,renk:"#fb7185",kod:true},
+  {ad:"%20 indirim",oran:3,renk:"#e11d48",kod:true,beyaz:true}
+];
+const $=s=>document.querySelector(s);
+const urunAd=["Basic tişört","Keten gömlek","Örme kazak","Jean pantolon","Spor ayakkabı","Deri kemer"],urunFiyat=[349,799,999,1199,1899,449];
+$("#urunler").innerHTML=urunAd.map((a,i)=>`<div class="urun"><div class="gorsel">ürün görseli</div><div class="b"><b>${a}</b><span>${urunFiyat[i].toLocaleString("tr-TR")} TL</span></div></div>`).join("");
+
+function oku(k,v){try{const x=localStorage.getItem(k);return x?JSON.parse(x):v}catch(e){return v}}
+function yaz(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+let kayitlar=oku("cark-kayit",[]);
+
+function ciz(){
+  const c=$("#cark"),x=c.getContext("2d"),r=300,n=DILIMLER.length,a=2*Math.PI/n;
+  x.clearRect(0,0,600,600);
+  DILIMLER.forEach((d,i)=>{
+    const b=-Math.PI/2+i*a-a/2;
+    x.beginPath();x.moveTo(r,r);x.arc(r,r,r,b,b+a);x.closePath();x.fillStyle=d.renk;x.fill();x.strokeStyle="#fda4af";x.lineWidth=2;x.stroke();
+    const m=b+a/2,ters=Math.cos(m)<0;x.save();x.translate(r,r);x.rotate(ters?m+Math.PI:m);x.textAlign=ters?"left":"right";x.fillStyle=d.beyaz?"#fff":"#111827";x.font="700 30px Inter, sans-serif";x.fillText(d.ad,ters?-(r-28):r-28,10);x.restore();
+  });
+}
+function oranTablo(){
+  $("#oranlar").innerHTML=DILIMLER.map((d,i)=>`<tr><td>${d.ad}</td><td><input type="number" min="0" max="100" value="${d.oran}" data-i="${i}"></td></tr>`).join("");
+  document.querySelectorAll("#oranlar input").forEach(g=>g.oninput=()=>{DILIMLER[g.dataset.i].oran=Math.max(0,+g.value||0);toplamYaz()});
+  toplamYaz();
+}
+function toplamYaz(){const t=DILIMLER.reduce((s,d)=>s+d.oran,0);const e=$("#toplam");e.textContent="Toplam: %"+t+(t===100?"":" (100 olmalı, şu an oranlar buna göre ölçekleniyor)");e.className="toplam"+(t===100?"":" hata")}
+function kayitYaz(){$("#kayit").innerHTML=kayitlar.length?kayitlar.slice(0,12).map(k=>`<li><span>${k.tel}<br><em>${k.saat}</em></span><b>${k.ad}${k.kod?"<br><em>"+k.kod+"</em>":""}</b></li>`).join(""):'<li class="bos">Henüz çeviren yok.</li>'}
+
+function sec(){
+  const t=DILIMLER.reduce((s,d)=>s+d.oran,0)||1;let r=Math.random()*t;
+  for(let i=0;i<DILIMLER.length;i++){r-=DILIMLER[i].oran;if(r<0)return i}
+  return 0;
+}
+function kodUret(){const h="ABCDEFGHJKLMNPRSTUVYZ23456789";let s="CARK-";for(let i=0;i<6;i++)s+=h[Math.floor(Math.random()*h.length)];return s}
+function maskele(t){const d=t.replace(/\D/g,"");return d.slice(0,4)+" *** ** "+d.slice(-2)}
+
+let aci=0,donuyor=false,sayac=null;
+$("#cevir").onclick=()=>{
+  if(donuyor)return;
+  const tel=$("#tel").value.replace(/\D/g,"");
+  const u=$("#uyari");
+  if(!/^05\d{9}$/.test(tel)){u.textContent="Geçerli bir cep telefonu numarası yazın (05xx...).";return}
+  if(!$("#kvkk").checked){u.textContent="Devam etmek için onay kutusunu işaretleyin.";return}
+  if(oku("cark-hak",null)===tel||kayitlar.some(k=>k.ham===tel)){u.textContent="Bu numara çarkı daha önce çevirdi. Her numara bir kez çevirebilir.";return}
+  u.textContent="";donuyor=true;$("#cevir").disabled=true;
+  const i=sec(),n=DILIMLER.length,dilimAci=360/n,sap=(Math.random()-.5)*dilimAci*.6;
+  const hedef=(360-i*dilimAci)%360;
+  aci+=360*6+((hedef-(aci%360))+360)%360+sap-(aci===0?0:0);
+  $("#cark").style.transform=`rotate(${aci}deg)`;
+  setTimeout(()=>{aci-=sap;bitir(i,tel)},4700);
+};
+function bitir(i,tel){
+  const d=DILIMLER[i];
+  if(!d.kod){
+    $("#uyari").textContent="Bu sefer olmadı, bir hak daha kazandın! Tekrar çevir.";
+    donuyor=false;$("#cevir").disabled=false;return;
+  }
+  const kod=kodUret(),simdi=new Date();
+  yaz("cark-hak",tel);
+  kayitlar.unshift({tel:maskele(tel),ham:tel,ad:d.ad,kod,saat:simdi.toLocaleTimeString("tr-TR",{hour:"2-digit",minute:"2-digit"})});
+  yaz("cark-kayit",kayitlar);kayitYaz();
+  $("#giris").style.display="none";$("#sonuc").classList.add("acik");
+  $("#sonucBaslik").textContent="Tebrikler, "+d.ad+" kazandın!";
+  $("#sonucMetin").textContent="Kod yalnız sana özel ve tek kullanımlık. Sepette İndirim Kodu alanına yapıştırman yeterli.";
+  $("#kod").textContent=kod;
+  const son=Date.now()+48*3600*1000;
+  clearInterval(sayac);
+  const guncelle=()=>{const k=Math.max(0,son-Date.now()),s=Math.floor(k/3600000),dk=Math.floor(k%3600000/60000),sn=Math.floor(k%60000/1000);$("#sure").innerHTML=`Kalan süre: <b>${s} sa ${String(dk).padStart(2,"0")} dk ${String(sn).padStart(2,"0")} sn</b>`};
+  guncelle();sayac=setInterval(guncelle,1000);
+  donuyor=false;
+}
+$("#kopyala").onclick=()=>{const k=$("#kod").textContent;try{navigator.clipboard.writeText(k)}catch(e){}$("#kopyala").textContent="Kopyalandı";setTimeout(()=>$("#kopyala").textContent="Kopyala",1500)};
+function ac(){$("#perde").classList.add("acik")}
+function kapat(){$("#perde").classList.remove("acik")}
+$("#yuzen").onclick=ac;$("#ac").onclick=ac;$("#kapat").onclick=kapat;
+$("#perde").onclick=e=>{if(e.target.id==="perde")kapat()};
+$("#sifirla").onclick=()=>{kayitlar=[];yaz("cark-kayit",[]);yaz("cark-hak",null);kayitYaz();$("#giris").style.display="";$("#sonuc").classList.remove("acik");$("#cevir").disabled=false;$("#tel").value="";$("#uyari").textContent="";clearInterval(sayac)};
+ciz();oranTablo();kayitYaz();
+setTimeout(()=>{if(!oku("cark-hak",null))ac()},2500);
+</script>
+</body>
+</html>
