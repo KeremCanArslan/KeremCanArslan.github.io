@@ -163,7 +163,7 @@ function nefesBaslat(){const h=$('halka');if(nz){clearInterval(nz);nz=null;h.sty
 // panik akışı
 const A=[
   ()=>`<h3>Güvendesin.<br>Bu his geçecek.</h3><p>Yaşadığın şey çok rahatsız edici ama tehlikeli değil. Birkaç dakika boyunca seninle birlikteyim.</p><button class="btn" onclick="ileri()">Devam</button>`,
-  ()=>`<h3>Benimle nefes al</h3><div class="halka" id="ph" style="margin:10px 0">Hazır</div><p id="pt">Üç tur birlikte nefes alalım.</p>`,
+  ()=>`<h3>Benimle nefes al</h3><div style="height:240px;display:grid;place-items:center"><div class="halka" id="ph">Hazır</div></div><p id="pt">Üç tur birlikte nefes alalım.</p>`,
   ()=>`<h3>Etrafına bak</h3><p>Görebildiğin <b>5</b> şeyi, dokunabildiğin <b>4</b> şeyi, duyabildiğin <b>3</b> sesi, kokusunu alabildiğin <b>2</b> şeyi ve tadını alabildiğin <b>1</b> şeyi say.</p><button class="btn" onclick="ileri()">Saydım</button>`,
   ()=>`<h3>Şimdi nasılsın?</h3><p>Biraz daha iyiysen bu anı kaydedelim. Hâlâ zorlanıyorsan nefese dönebilir ya da bir yakınını arayabilirsin.</p><button class="btn" onclick="panikBitir()">Daha iyiyim</button><button class="btn ikinci" onclick="adim=1;goster()">Bir tur daha nefes</button><button class="btn ikinci" onclick="bildir('Gerçek uygulamada seçtiğin kişi aranır.')">Yakınımı ara</button>`];
 let adim=0,pz=null;

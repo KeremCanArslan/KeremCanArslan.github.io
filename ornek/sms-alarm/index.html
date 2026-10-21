@@ -144,7 +144,7 @@ const saat=()=>new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-d
 const kisa=()=>new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
 function kaydet(m){const d=document.createElement('div');d.innerHTML='<time>'+saat()+'</time><span></span>';d.lastChild.textContent=m;$('kayit').prepend(d)}
 function balon(m,yon){const a=$('akis');const s=document.createElement('div');s.className='saat';s.textContent='Bugün '+kisa();const b=document.createElement('div');b.className='b '+yon;b.textContent=m;a.append(s,b);a.scrollTop=a.scrollHeight}
-function sms(m){setTimeout(()=>{balon(m,'gelen');kaydet('SMS gönderildi (2 numara): '+m.split('\n')[0])},1200)}
+function sms(m,yanit){setTimeout(()=>{balon(m,'gelen');kaydet((yanit?'Yanıt SMS\'i gönderildi: ':'SMS gönderildi (2 numara): ')+m.split('\n')[0])},1200)}
 function guncelle(){
   $('dSistem').textContent=S.kurulu?'Kurulu':'Kapalı';$('dSistem').className=S.kurulu?'yesil':'sari';
   $('dGuc').textContent=S.elektrik?'Elektrik var':'Kesik — pilde';$('dGuc').className=S.elektrik?'yesil':'kirmizi';
@@ -167,9 +167,9 @@ function guc(){S.elektrik=!S.elektrik;guncelle();
   else{clearInterval(pilZam);kaydet('Elektrik geri geldi');sms('Elektrik geri geldi. Pil %'+S.pil+', şarj ediliyor.');pilZam=setInterval(()=>{if(S.pil<100){S.pil++;guncelle()}else clearInterval(pilZam)},2000)}}
 function kurKapat(){S.kurulu=!S.kurulu;guncelle();kaydet(S.kurulu?'Sistem kuruldu (panelden)':'Sistem kapatıldı (panelden)')}
 function komut(k){balon(k,'giden');kaydet('Komut alındı: '+k+' (kayıtlı numara)');
-  if(k==='KUR'){S.kurulu=true;guncelle();sms('Sistem KURULDU. Hareket ve kapak olaylarında SMS gönderilecek.')}
-  else if(k==='KAPAT'){S.kurulu=false;guncelle();sms('Sistem KAPATILDI. Olaylar kaydedilir, SMS gönderilmez.')}
-  else sms('DURUM\nSistem: '+(S.kurulu?'Kurulu':'Kapalı')+'\nElektrik: '+(S.elektrik?'Var':'Kesik')+'\nPil: %'+S.pil+'\nKapak: '+(S.kapakAcik?'Açık':'Kapalı')+'\nSon olay: '+S.sonOlay)}
+  if(k==='KUR'){S.kurulu=true;guncelle();sms('Sistem KURULDU. Hareket ve kapak olaylarında SMS gönderilecek.',1)}
+  else if(k==='KAPAT'){S.kurulu=false;guncelle();sms('Sistem KAPATILDI. Olaylar kaydedilir, SMS gönderilmez.',1)}
+  else sms('DURUM\nSistem: '+(S.kurulu?'Kurulu':'Kapalı')+'\nElektrik: '+(S.elektrik?'Var':'Kesik')+'\nPil: %'+S.pil+'\nKapak: '+(S.kapakAcik?'Açık':'Kapalı')+'\nSon olay: '+S.sonOlay,1)}
 guncelle();kaydet('Cihaz açıldı, şebekeye bağlandı');balon('Alarm cihazı çalışıyor. Sistem KURULU.','gelen');
 </script>
 </body>
