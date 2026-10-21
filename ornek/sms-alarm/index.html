@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>SMS Alarm — Örnek</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--zemin:#eef1f5;--kart:#fff;--metin:#111827;--soluk:#6b7280;--cizgi:#e5e7eb;--mavi:#2563eb;--yesil:#16a34a;--sari:#ca8a04;--kirmizi:#dc2626;--balon:#e9e9eb}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--zemin);color:var(--metin);font:14px/1.45 Inter,system-ui,sans-serif;padding:20px 16px}
+button{font:inherit;cursor:pointer}
+.kutu{max-width:1080px;margin:0 auto}
+.baslik{margin-bottom:14px}
+.baslik h1{font-size:19px;font-weight:700}
+.baslik p{color:var(--soluk);font-size:13px;margin-top:2px}
+.izgara{display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start}
+.kart{background:var(--kart);border:1px solid #d1d5db;border-radius:12px;box-shadow:0 10px 30px rgba(15,23,42,.08);padding:16px}
+.kart h2{font-size:14px;font-weight:700;margin-bottom:10px}
+.durumlar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.durum{border:1px solid var(--cizgi);border-radius:10px;padding:8px 10px}
+.durum small{display:block;color:var(--soluk);font-size:11px}
+.durum b{font-size:14px}
+.yesil{color:var(--yesil)}.kirmizi{color:var(--kirmizi)}.sari{color:var(--sari)}
+.sensorler{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.sensor{border:1px solid var(--cizgi);border-radius:10px;padding:12px}
+.sensor .ad{font-weight:600}
+.sensor .yer{color:var(--soluk);font-size:12px;margin-bottom:8px}
+.sensor .hal{font-size:12px;margin-bottom:10px}
+.btns{display:flex;gap:6px;flex-wrap:wrap}
+.btn{border:1px solid var(--cizgi);background:#fff;border-radius:8px;padding:7px 11px;font-weight:500}
+.btn:hover{background:#f9fafb}
+.btn.ana{background:var(--mavi);border-color:var(--mavi);color:#fff}
+.btn.kir{border-color:#fecaca;color:var(--kirmizi)}
+.isik{display:inline-block;width:8px;height:8px;border-radius:50%;background:#d1d5db;margin-right:6px;vertical-align:middle}
+.isik.yan{background:var(--kirmizi);box-shadow:0 0 0 4px rgba(220,38,38,.18)}
+.kayit{border:1px solid var(--cizgi);border-radius:10px;max-height:190px;overflow:auto;font-size:12.5px}
+.kayit div{padding:7px 10px;border-bottom:1px solid #f3f4f6;display:flex;gap:10px}
+.kayit div:last-child{border-bottom:0}
+.kayit time{color:var(--soluk);font-variant-numeric:tabular-nums;flex:none}
+.ayar{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.ayar .s{border:1px solid var(--cizgi);border-radius:10px;padding:10px 12px;font-size:13px}
+.ayar .s small{display:block;color:var(--soluk);font-size:11px;margin-bottom:2px}
+.parca{margin-top:16px}
+.parca ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;font-size:13px}
+.parca li{padding-left:14px;position:relative}
+.parca li:before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--mavi)}
+.parca p{font-size:13px;color:var(--soluk);margin-top:10px}
+/* telefon */
+.tel{background:#111;border-radius:36px;padding:12px;box-shadow:0 16px 40px rgba(15,23,42,.25);position:sticky;top:16px}
+.ekran{background:#fff;border-radius:26px;height:620px;display:flex;flex-direction:column;overflow:hidden}
+.tust{padding:14px 16px 10px;border-bottom:1px solid var(--cizgi);text-align:center}
+.tust .av{width:38px;height:38px;border-radius:50%;background:#9ca3af;color:#fff;display:grid;place-items:center;margin:0 auto 4px;font-weight:700}
+.tust b{font-size:13px}
+.tust small{display:block;color:var(--soluk);font-size:11px}
+.akis{flex:1;overflow:auto;padding:12px 12px 6px;display:flex;flex-direction:column;gap:6px}
+.b{max-width:82%;padding:8px 11px;border-radius:16px;font-size:13px;line-height:1.35;white-space:pre-line}
+.b.gelen{background:var(--balon);align-self:flex-start;border-bottom-left-radius:4px}
+.b.giden{background:#0b84fe;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.saat{align-self:center;font-size:10.5px;color:var(--soluk);margin-top:4px}
+.talt{border-top:1px solid var(--cizgi);padding:10px 12px}
+.talt small{display:block;color:var(--soluk);font-size:11px;margin-bottom:6px}
+.komut{display:flex;gap:6px}
+.komut button{flex:1;border:1px solid #bfdbfe;background:#eff6ff;color:#1d4ed8;border-radius:999px;padding:7px 0;font-weight:600;font-size:12.5px}
+.altnot{max-width:1080px;margin:14px auto 0;color:var(--soluk);font-size:12px}
+@media (max-width:860px){.izgara{grid-template-columns:1fr}.tel{position:static;max-width:360px;margin:0 auto}.durumlar{grid-template-columns:1fr 1fr}.sensorler,.ayar,.parca ul{grid-template-columns:1fr}.ekran{height:520px}}
+</style>
+</head>
+<body>
+<div class="kutu">
+  <div class="baslik">
+    <h1>Hareket ve kapak sensörlü SMS alarm — örnek</h1>
+    <p>Cihazın nasıl çalışacağını tarayıcıda canlandıran örnek. Soldaki düğmelerle olay oluşturun, sağdaki telefona gelen SMS'leri görün. Gerçek cihazda bu mesajlar kayıtlı numaralara SIM kart üzerinden gider, internet gerekmez.</p>
+  </div>
+  <div class="izgara">
+    <div>
+      <div class="kart">
+        <div class="durumlar">
+          <div class="durum"><small>Sistem</small><b id="dSistem" class="yesil">Kurulu</b></div>
+          <div class="durum"><small>Güç</small><b id="dGuc" class="yesil">Elektrik var</b></div>
+          <div class="durum"><small>Yedek pil</small><b id="dPil">%100</b></div>
+          <div class="durum"><small>Şebeke</small><b class="yesil">4G · iyi</b></div>
+        </div>
+        <div class="sensorler">
+          <div class="sensor">
+            <div class="ad"><span class="isik" id="iHareket"></span>Hareket sensörü</div>
+            <div class="yer">Depo girişi</div>
+            <div class="hal" id="hHareket">Hareket yok</div>
+            <div class="btns"><button class="btn" onclick="hareket()">Hareket oluştur</button></div>
+          </div>
+          <div class="sensor">
+            <div class="ad"><span class="isik" id="iKapak"></span>Kapak sensörü</div>
+            <div class="yer">Pano kapağı</div>
+            <div class="hal" id="hKapak">Kapalı</div>
+            <div class="btns"><button class="btn" onclick="kapak(true)">Kapağı aç</button><button class="btn" onclick="kapak(false)">Kapağı kapat</button></div>
+          </div>
+        </div>
+        <div class="btns" style="margin-bottom:14px">
+          <button class="btn kir" id="bGuc" onclick="guc()">Elektriği kes</button>
+          <button class="btn" onclick="kurKapat()" id="bKur">Sistemi kapat</button>
+        </div>
+        <h2>Cihaz kaydı</h2>
+        <div class="kayit" id="kayit"></div>
+        <div class="ayar">
+          <div class="s"><small>SMS gidecek numaralar</small>0532 *** ** 41 · 0544 *** ** 07</div>
+          <div class="s"><small>Aynı sensör için tekrar uyarı</small>En erken 1 dakika sonra (SMS yağmuru olmaz)</div>
+          <div class="s"><small>Her sabah 09:00</small>"Sistem çalışıyor" kontrol mesajı</div>
+          <div class="s"><small>Komutlar (SMS ile)</small>KUR · KAPAT · DURUM — yalnız kayıtlı numaralardan</div>
+        </div>
+      </div>
+      <div class="kart parca">
+        <h2>Cihaz nelerden oluşur</h2>
+        <ul>
+          <li>Kontrol kartı (sensörleri dinler, SMS'i gönderir)</li>
+          <li>Hareket sensörü (kızılötesi, duvara vidalanır)</li>
+          <li>Manyetik kapak kontağı (iki parça, kapağa yapıştırılır)</li>
+          <li>SIM kartlı 4G modül (herhangi bir hattan kart)</li>
+          <li>Yedek pil (elektrik kesilince çalışmaya devam eder)</li>
+          <li>Kutu ve priz adaptörü</li>
+        </ul>
+        <p>Cihaz çalışır ve test edilmiş halde gelir. Yapılacak iş: sensörleri yerine takmak, SIM kartı yerleştirmek ve prize bağlamak. Numaralar ve sensör adları sonradan SMS ya da kısa bir ayarla değiştirilebilir.</p>
+      </div>
+    </div>
+    <div class="tel">
+      <div class="ekran">
+        <div class="tust"><div class="av">A</div><b>Alarm Cihazı</b><small>SMS</small></div>
+        <div class="akis" id="akis"></div>
+        <div class="talt">
+          <small>Telefondan cihaza komut gönderin:</small>
+          <div class="komut"><button onclick="komut('KUR')">KUR</button><button onclick="komut('KAPAT')">KAPAT</button><button onclick="komut('DURUM')">DURUM</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="altnot">Örnek sayfadır; gerçek bir cihaza ya da telefon numarasına bağlı değildir. Sensör adları, numaralar ve mesaj metinleri isteğinize göre ayarlanır.</p>
+</div>
+<script>
+const S={kurulu:true,elektrik:true,pil:100,kapakAcik:false,sonUyari:{},sonOlay:'—'};
+const $=id=>document.getElementById(id);
+const saat=()=>new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+const kisa=()=>new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
+function kaydet(m){const d=document.createElement('div');d.innerHTML='<time>'+saat()+'</time><span></span>';d.lastChild.textContent=m;$('kayit').prepend(d)}
+function balon(m,yon){const a=$('akis');const s=document.createElement('div');s.className='saat';s.textContent='Bugün '+kisa();const b=document.createElement('div');b.className='b '+yon;b.textContent=m;a.append(s,b);a.scrollTop=a.scrollHeight}
+function sms(m){setTimeout(()=>{balon(m,'gelen');kaydet('SMS gönderildi (2 numara): '+m.split('\n')[0])},1200)}
+function guncelle(){
+  $('dSistem').textContent=S.kurulu?'Kurulu':'Kapalı';$('dSistem').className=S.kurulu?'yesil':'sari';
+  $('dGuc').textContent=S.elektrik?'Elektrik var':'Kesik — pilde';$('dGuc').className=S.elektrik?'yesil':'kirmizi';
+  $('dPil').textContent='%'+S.pil;$('bGuc').textContent=S.elektrik?'Elektriği kes':'Elektriği geri ver';
+  $('bKur').textContent=S.kurulu?'Sistemi kapat':'Sistemi kur';
+  $('hKapak').textContent=S.kapakAcik?'Açık':'Kapalı';$('iKapak').classList.toggle('yan',S.kapakAcik);
+}
+function uyari(sensor,metin){
+  S.sonOlay=kisa()+' '+metin;
+  if(!S.kurulu){kaydet(metin+' — sistem kapalı, SMS gönderilmedi');return}
+  const t=Date.now();
+  if(S.sonUyari[sensor]&&t-S.sonUyari[sensor]<60000){kaydet(metin+' — 1 dk içinde tekrar, SMS gönderilmedi');return}
+  S.sonUyari[sensor]=t;kaydet(metin);sms('UYARI: '+metin+'\nSaat: '+kisa());
+}
+function hareket(){$('iHareket').classList.add('yan');$('hHareket').textContent='Hareket algılandı';setTimeout(()=>{$('iHareket').classList.remove('yan');$('hHareket').textContent='Hareket yok'},2500);uyari('hareket','Depo girişinde hareket algılandı')}
+function kapak(ac){if(S.kapakAcik===ac)return;S.kapakAcik=ac;guncelle();uyari('kapak'+(ac?'A':'K'),ac?'Pano kapağı açıldı':'Pano kapağı kapandı')}
+let pilZam=null;
+function guc(){S.elektrik=!S.elektrik;guncelle();
+  if(!S.elektrik){kaydet('Elektrik kesildi, yedek pile geçildi');sms('Elektrik kesildi. Cihaz yedek pille çalışıyor (pil %'+S.pil+').');pilZam=setInterval(()=>{if(S.pil>5){S.pil--;guncelle()}},4000)}
+  else{clearInterval(pilZam);kaydet('Elektrik geri geldi');sms('Elektrik geri geldi. Pil %'+S.pil+', şarj ediliyor.');pilZam=setInterval(()=>{if(S.pil<100){S.pil++;guncelle()}else clearInterval(pilZam)},2000)}}
+function kurKapat(){S.kurulu=!S.kurulu;guncelle();kaydet(S.kurulu?'Sistem kuruldu (panelden)':'Sistem kapatıldı (panelden)')}
+function komut(k){balon(k,'giden');kaydet('Komut alındı: '+k+' (kayıtlı numara)');
+  if(k==='KUR'){S.kurulu=true;guncelle();sms('Sistem KURULDU. Hareket ve kapak olaylarında SMS gönderilecek.')}
+  else if(k==='KAPAT'){S.kurulu=false;guncelle();sms('Sistem KAPATILDI. Olaylar kaydedilir, SMS gönderilmez.')}
+  else sms('DURUM\nSistem: '+(S.kurulu?'Kurulu':'Kapalı')+'\nElektrik: '+(S.elektrik?'Var':'Kesik')+'\nPil: %'+S.pil+'\nKapak: '+(S.kapakAcik?'Açık':'Kapalı')+'\nSon olay: '+S.sonOlay)}
+guncelle();kaydet('Cihaz açıldı, şebekeye bağlandı');balon('Alarm cihazı çalışıyor. Sistem KURULU.','gelen');
+</script>
+</body>
+</html>

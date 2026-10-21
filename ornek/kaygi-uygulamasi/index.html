@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Kaygı Uygulaması — Örnek</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--zemin:#eef2ef;--uy:#f7f5f0;--kart:#fff;--metin:#22302b;--soluk:#6d7a74;--ana:#2f6b5a;--ana2:#e3efe9;--vurgu:#e07a5f;--cizgi:#e6e2d9}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--zemin);color:var(--metin);font:15px/1.45 Nunito,system-ui,sans-serif;padding:20px 16px;display:flex;gap:28px;justify-content:center;align-items:flex-start;flex-wrap:wrap}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.yan{max-width:320px;padding-top:30px}
+.yan h1{font-size:20px;font-weight:800;margin-bottom:6px}
+.yan p{color:var(--soluk);font-size:14px;margin-bottom:10px}
+.yan ul{padding-left:18px;color:var(--soluk);font-size:14px}
+.yan li{margin-bottom:4px}
+.tel{width:360px;max-width:100%;background:#1c1c1e;border-radius:44px;padding:12px;box-shadow:0 20px 50px rgba(20,40,30,.25)}
+.ekran{background:var(--uy);border-radius:34px;height:720px;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.icerik{flex:1;overflow:auto;padding:22px 18px 12px}
+.sekme{display:none}.sekme.acik{display:block}
+h2{font-size:22px;font-weight:800;margin-bottom:4px}
+.alt{color:var(--soluk);font-size:14px;margin-bottom:18px}
+.panik{width:100%;aspect-ratio:1/1;max-width:230px;margin:6px auto 18px;display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle at 50% 40%,#f19a80,var(--vurgu));color:#fff;font-weight:800;font-size:20px;box-shadow:0 0 0 14px rgba(224,122,95,.15),0 0 0 28px rgba(224,122,95,.07);text-align:center;line-height:1.2}
+.panik small{display:block;font-weight:600;font-size:13px;opacity:.9;margin-top:4px}
+.kart{background:var(--kart);border:1px solid var(--cizgi);border-radius:18px;padding:14px 16px;margin-bottom:10px}
+.kart b{display:block;font-size:15px}
+.kart span{color:var(--soluk);font-size:13px}
+.satir{display:flex;gap:10px}
+.satir .kart{flex:1;text-align:center}
+.satir .kart b{font-size:22px;color:var(--ana)}
+.hiss{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:8px 0 12px}
+.hiss button{border:1px solid var(--cizgi);background:#fff;border-radius:12px;padding:10px 2px;font-size:12px;font-weight:700;color:var(--soluk)}
+.hiss button i{display:block;width:16px;height:16px;border-radius:50%;margin:0 auto 5px}
+.hiss button.sec{border-color:var(--ana);color:var(--ana);background:var(--ana2)}
+textarea{width:100%;min-height:80px;border:1px solid var(--cizgi);border-radius:14px;padding:10px 12px;font:inherit;resize:none;background:#fff}
+.btn{display:block;width:100%;background:var(--ana);color:#fff;border-radius:14px;padding:13px;font-weight:800;margin-top:10px}
+.btn.ikinci{background:var(--ana2);color:var(--ana)}
+.kayitlar .kart{display:flex;gap:10px;align-items:flex-start}
+.kayitlar i{flex:none;width:12px;height:12px;border-radius:50%;margin-top:5px}
+.bos{color:var(--soluk);font-size:13px;text-align:center;padding:14px 0}
+.nefes{display:grid;place-items:center;height:300px;margin:6px 0 10px}
+.halka{width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,#7fb3a2,var(--ana));display:grid;place-items:center;color:#fff;font-weight:800;font-size:16px;transition:transform 4s ease-in-out;text-align:center;white-space:pre-line;box-shadow:0 0 0 18px rgba(47,107,90,.10)}
+.sayac{text-align:center;color:var(--soluk);font-size:13px;margin-top:-4px}
+.ders{cursor:pointer}
+.ders .no{float:right;color:var(--ana);font-weight:800}
+.bar{display:flex;border-top:1px solid var(--cizgi);background:#fff;padding:8px 6px 14px}
+.bar button{flex:1;font-size:11.5px;font-weight:700;color:var(--soluk);padding:4px 0}
+.bar button svg{display:block;width:24px;height:24px;margin:0 auto 3px;fill:none;stroke:#a3aca7;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round}
+.bar button.acik{color:var(--ana)}.bar button.acik svg{stroke:var(--ana)}
+/* panik akışı */
+.ust{position:absolute;inset:0;background:#21463b;color:#fff;display:none;flex-direction:column;padding:28px 22px 22px;text-align:center;z-index:5}
+.ust.acik{display:flex}
+.ust .kapat{position:absolute;right:18px;top:16px;color:#cfe3db;font-weight:700;font-size:14px}
+.ust .adim{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:14px}
+.ust h3{font-size:24px;font-weight:800;line-height:1.25}
+.ust p{color:#cfe3db;font-size:15.5px;max-width:280px}
+.ust .halka{background:radial-gradient(circle,#a9d3c4,#5d9c87);box-shadow:0 0 0 18px rgba(255,255,255,.08)}
+.ust .btn{background:#fff;color:#21463b}
+.ust .btn.ikinci{background:rgba(255,255,255,.12);color:#fff}
+.nokta{display:flex;gap:6px;justify-content:center;margin-bottom:6px}
+.nokta i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.3)}.nokta i.a{background:#fff}
+.bildirim{position:absolute;left:16px;right:16px;bottom:86px;background:#22302b;color:#fff;border-radius:14px;padding:11px 14px;font-size:13.5px;text-align:center;opacity:0;transition:opacity .25s;pointer-events:none;z-index:9}.bildirim.acik{opacity:1}
+.uyari{font-size:12px;color:var(--soluk);margin-top:14px;text-align:center}
+@media (max-width:700px){.yan{padding-top:0}.ekran{height:640px}}
+</style>
+</head>
+<body>
+<div class="yan">
+  <h1>Türkçe kaygı ve panik uygulaması — örnek ekranlar</h1>
+  <p>Uygulamanın nasıl görüneceğini ve nasıl çalışacağını gösteren tıklanabilir örnek. Ad, renkler ve metinler size göre değişir.</p>
+  <ul>
+    <li>Panik düğmesi: adım adım sakinleşme akışı</li>
+    <li>Rehberli nefes egzersizi</li>
+    <li>Kaygı günlüğü ve ruh hali kaydı</li>
+    <li>Kısa dersler, acil durumda yakınını arama</li>
+    <li>Kayıtlar yalnız telefonda durur</li>
+  </ul>
+</div>
+<div class="tel"><div class="ekran">
+  <div class="icerik">
+    <section class="sekme acik" id="s-ana">
+      <h2 id="selam">Merhaba</h2>
+      <div class="alt">Zor bir an yaşıyorsan aşağıdaki düğmeye dokun.</div>
+      <button class="panik" onclick="panikAc()"><span>Panik anı<small>Birlikte geçirelim</small></span></button>
+      <div class="satir">
+        <div class="kart"><b id="stPanik">0</b><span>panik anı atlatıldı</span></div>
+        <div class="kart"><b id="stNefes">0</b><span>dk nefes egzersizi</span></div>
+        <div class="kart"><b id="stGunluk">0</b><span>günlük kaydı</span></div>
+      </div>
+      <div class="kart" onclick="git('nefes')" style="cursor:pointer"><b>Günün egzersizi: Sakinleştiren nefes</b><span>4 saniye al, 4 tut, 6 ver. 2 dakika.</span></div>
+    </section>
+    <section class="sekme" id="s-nefes">
+      <h2>Nefes</h2>
+      <div class="alt">Halka büyürken nefes al, küçülürken yavaşça ver.</div>
+      <div class="nefes"><div class="halka" id="halka">Hazır</div></div>
+      <div class="sayac" id="sayac">2 dakika · 4-4-6 düzeni</div>
+      <button class="btn" id="nBtn" onclick="nefesBaslat()">Başla</button>
+    </section>
+    <section class="sekme" id="s-gunluk">
+      <h2>Günlük</h2>
+      <div class="alt">Şu an nasıl hissediyorsun?</div>
+      <div class="hiss" id="hiss"></div>
+      <textarea id="not" placeholder="Bugün seni ne zorladı? Nerede, ne yapıyordun?"></textarea>
+      <button class="btn" onclick="kaydet()">Kaydet</button>
+      <div class="alt" style="margin:18px 0 8px">Son kayıtlar</div>
+      <div class="kayitlar" id="kayitlar"></div>
+    </section>
+    <section class="sekme" id="s-ders">
+      <h2>Dersler</h2>
+      <div class="alt">Kaygının nereden geldiğini anlamak, korkuyu azaltır.</div>
+      <div id="dersler"></div>
+      <div class="kart" style="margin-top:14px"><b>Yakınını ara</b><span>Konuşmak istediğin kişiyi önceden seç, tek dokunuşla ara.</span>
+        <button class="btn ikinci" onclick="bildir('Gerçek uygulamada seçtiğin kişi aranır.')">Annemi ara</button></div>
+      <div class="uyari">Bu uygulama tıbbi tedavinin yerini tutmaz. Acil durumda 112'yi arayın.</div>
+    </section>
+  </div>
+  <nav class="bar">
+    <button class="acik" data-s="ana" onclick="git('ana')"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/></svg>Ana sayfa</button>
+    <button data-s="nefes" onclick="git('nefes')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.5"/></svg>Nefes</button>
+    <button data-s="gunluk" onclick="git('gunluk')"><svg viewBox="0 0 24 24"><path d="M6 3h10l3 3v15H6z"/><path d="M9 10h7M9 14h7M9 18h4"/></svg>Günlük</button>
+    <button data-s="ders" onclick="git('ders')"><svg viewBox="0 0 24 24"><path d="M3 6l9-3 9 3-9 3z"/><path d="M7 8v6c0 2 10 2 10 0V8"/></svg>Dersler</button>
+  </nav>
+  <div class="bildirim" id="bildirim"></div>
+  <div class="ust" id="ust">
+    <button class="kapat" onclick="panikKapat()">Kapat</button>
+    <div class="nokta" id="nokta"></div>
+    <div class="adim" id="adim"></div>
+  </div>
+</div></div>
+<script>
+const $=id=>document.getElementById(id);
+const oku=(k,v)=>{try{const x=localStorage.getItem('ky-'+k);return x?JSON.parse(x):v}catch(e){return v}};
+const yaz=(k,v)=>{try{localStorage.setItem('ky-'+k,JSON.stringify(v))}catch(e){}};
+let st=oku('st',{panik:0,nefes:0}),kayit=oku('kayit',[]);
+const H=[['Sakin','#7fb3a2'],['İyi','#a8c98f'],['Orta','#e9c46a'],['Gergin','#f4a261'],['Kaygılı','#e07a5f']];
+let secili=null;
+const sa=new Date().getHours();$('selam').textContent=sa<12?'Günaydın':sa<18?'İyi günler':'İyi akşamlar';
+function sayilar(){$('stPanik').textContent=st.panik;$('stNefes').textContent=st.nefes;$('stGunluk').textContent=kayit.length}
+function git(s){document.querySelectorAll('.sekme').forEach(e=>e.classList.toggle('acik',e.id==='s-'+s));document.querySelectorAll('.bar button').forEach(b=>b.classList.toggle('acik',b.dataset.s===s))}
+// günlük
+$('hiss').innerHTML=H.map((h,i)=>`<button data-i="${i}"><i style="background:${h[1]}"></i>${h[0]}</button>`).join('');
+$('hiss').onclick=e=>{const b=e.target.closest('button');if(!b)return;secili=+b.dataset.i;[...$('hiss').children].forEach(x=>x.classList.toggle('sec',x===b))};
+function listele(){$('kayitlar').innerHTML=kayit.length?kayit.slice(0,5).map(k=>`<div class="kart"><i style="background:${H[k.h][1]}"></i><div><b>${H[k.h][0]} · ${k.t}</b><span></span></div></div>`).join(''):'<div class="bos">Henüz kayıt yok.</div>';
+  [...$('kayitlar').querySelectorAll('span')].forEach((s,i)=>s.textContent=kayit[i].n||'Not eklenmedi')}
+function kaydet(){if(secili===null){$('hiss').animate([{transform:'translateX(0)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}],{duration:250});return}
+  kayit.unshift({h:secili,n:$('not').value.trim(),t:new Date().toLocaleString('tr-TR',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'})});yaz('kayit',kayit);$('not').value='';secili=null;[...$('hiss').children].forEach(x=>x.classList.remove('sec'));listele();sayilar()}
+// dersler
+const D=[['Panik atak nedir?','Panik, bedenin tehlike alarmının yanlış zamanda çalmasıdır. Kalp çarpıntısı, nefes darlığı ve baş dönmesi korkutucudur ama zararsızdır ve birkaç dakika içinde azalır.'],['Neden bana oluyor?','Uzun süren stres, uykusuzluk ve kafeinle alarm sistemi daha kolay tetiklenir. Bu bir zayıflık değil, bedenin aşırı korumacı çalışmasıdır.'],['Kaçmak yerine kalmak','Korkulan yerden kaçmak kısa vadede rahatlatır ama korkuyu büyütür. Küçük adımlarla kalmayı denemek alarmı zamanla yatıştırır.']];
+$('dersler').innerHTML=D.map((d,i)=>`<div class="kart ders" data-i="${i}"><span class="no">${i+1}/${D.length}</span><b>${d[0]}</b><span>Okumak için dokun</span></div>`).join('');
+$('dersler').onclick=e=>{const k=e.target.closest('.ders');if(!k)return;const s=k.querySelectorAll('span')[1];s.textContent=s.textContent==='Okumak için dokun'?D[k.dataset.i][1]:'Okumak için dokun'};
+// nefes
+let nz=null;
+function nefesDongu(el,bitti){const fazlar=[['Nefes al',4,1.6],['Tut',4,1.6],['Ver',6,1]];let i=0,kalan=fazlar[0][1];
+  const uygula=()=>{const f=fazlar[i];el.textContent=f[0]+'\n'+kalan;el.style.transitionDuration=(i===1?0.3:f[1])+'s';el.style.transform='scale('+f[2]+')'};
+  uygula();return setInterval(()=>{kalan--;if(kalan<=0){i=(i+1)%3;kalan=fazlar[i][1];if(i===0&&bitti&&bitti())return}uygula()},1000)}
+function nefesBaslat(){const h=$('halka');if(nz){clearInterval(nz);nz=null;h.style.transform='scale(1)';h.textContent='Hazır';$('nBtn').textContent='Başla';return}
+  const bas=Date.now();$('nBtn').textContent='Durdur';
+  nz=nefesDongu(h,()=>{const dk=(Date.now()-bas)/60000;$('sayac').textContent='Geçen süre: '+Math.floor(dk*60)+' sn';if(dk>=2){clearInterval(nz);nz=null;st.nefes+=2;yaz('st',st);sayilar();h.textContent='Bitti';h.style.transform='scale(1)';$('nBtn').textContent='Tekrar başla';return true}})}
+// panik akışı
+const A=[
+  ()=>`<h3>Güvendesin.<br>Bu his geçecek.</h3><p>Yaşadığın şey çok rahatsız edici ama tehlikeli değil. Birkaç dakika boyunca seninle birlikteyim.</p><button class="btn" onclick="ileri()">Devam</button>`,
+  ()=>`<h3>Benimle nefes al</h3><div class="halka" id="ph" style="margin:10px 0">Hazır</div><p id="pt">Üç tur birlikte nefes alalım.</p>`,
+  ()=>`<h3>Etrafına bak</h3><p>Görebildiğin <b>5</b> şeyi, dokunabildiğin <b>4</b> şeyi, duyabildiğin <b>3</b> sesi, kokusunu alabildiğin <b>2</b> şeyi ve tadını alabildiğin <b>1</b> şeyi say.</p><button class="btn" onclick="ileri()">Saydım</button>`,
+  ()=>`<h3>Şimdi nasılsın?</h3><p>Biraz daha iyiysen bu anı kaydedelim. Hâlâ zorlanıyorsan nefese dönebilir ya da bir yakınını arayabilirsin.</p><button class="btn" onclick="panikBitir()">Daha iyiyim</button><button class="btn ikinci" onclick="adim=1;goster()">Bir tur daha nefes</button><button class="btn ikinci" onclick="bildir('Gerçek uygulamada seçtiğin kişi aranır.')">Yakınımı ara</button>`];
+let adim=0,pz=null;
+function goster(){clearInterval(pz);$('nokta').innerHTML=A.map((_,i)=>`<i class="${i<=adim?'a':''}"></i>`).join('');$('adim').innerHTML=A[adim]();
+  if(adim===1){let tur=0;const h=$('ph');pz=nefesDongu(h,()=>{tur++;$('pt').textContent=tur<3?'Tur '+(tur+1)+' / 3':'';if(tur>=3){clearInterval(pz);ileri();return true}})}}
+function ileri(){adim=Math.min(adim+1,A.length-1);goster()}
+function panikAc(){adim=0;$('ust').classList.add('acik');goster()}
+function panikKapat(){clearInterval(pz);$('ust').classList.remove('acik')}
+function panikBitir(){st.panik++;yaz('st',st);sayilar();panikKapat()}
+let bz=null;function bildir(m){$('bildirim').textContent=m;$('bildirim').classList.add('acik');clearTimeout(bz);bz=setTimeout(()=>$('bildirim').classList.remove('acik'),2200)}
+listele();sayilar();
+</script>
+</body>
+</html>
