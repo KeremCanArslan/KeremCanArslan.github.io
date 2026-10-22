@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Prefabrik SEO Planı — Örnek</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--zemin:#f3f4f6;--kart:#fff;--metin:#111827;--soluk:#6b7280;--cizgi:#e5e7eb;--vurgu:#1f3b2d;--acik:#eef3ef;--yesil:#166534}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--zemin);color:var(--metin);font:15px/1.55 Inter,system-ui,sans-serif;padding:24px 16px}
+.sayfa{max-width:900px;margin:0 auto}
+header{margin-bottom:18px}
+header h1{font-size:24px;line-height:1.25;color:var(--vurgu)}
+header p{color:var(--soluk);margin-top:6px;font-size:14px}
+.kart{background:var(--kart);border:1px solid var(--cizgi);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.kart h2{font-size:17px;color:var(--vurgu);margin-bottom:10px}
+.ikili{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ikili>div{min-width:0}
+@media (max-width:720px){.ikili{grid-template-columns:1fr}}
+.etiket{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--soluk);margin-bottom:6px}
+ul.aramalar{list-style:none}
+ul.aramalar li{font-size:14px;padding:4px 0;border-bottom:1px dashed var(--cizgi)}
+ul.aramalar li:last-child{border-bottom:0}
+ul.aramalar li::before{content:"⌕ ";color:var(--soluk)}
+.serp{background:var(--acik);border-radius:8px;padding:10px 12px;margin-bottom:10px}
+.serp .url{font-size:12px;color:#4b5563}
+.serp .t{font-size:16px;color:#1a0dab;font-weight:500;margin:2px 0}
+.serp .d{font-size:13px;color:#4d5156}
+ol.bolum{padding-left:18px;font-size:14px}
+ol.bolum li{padding:2px 0}
+.not{font-size:13px;color:var(--soluk);margin-top:8px}
+.sss{border-left:3px solid var(--vurgu);background:var(--acik);border-radius:0 8px 8px 0;padding:10px 12px;margin-bottom:10px}
+.sss .s{font-weight:600;font-size:15px}
+.sss .c{font-size:14px;margin-top:4px}
+.yer{background:#fff7d6;border-radius:4px;padding:0 4px}
+pre{background:#0f172a;color:#e2e8f0;border-radius:8px;padding:12px 14px;font:12px/1.55 ui-monospace,Menlo,monospace;overflow-x:auto}
+.tablo{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--cizgi);vertical-align:top}
+th{font-size:12px;color:var(--soluk);font-weight:600}
+td code{font:12px ui-monospace,Menlo,monospace;word-break:break-all}
+footer{font-size:12px;color:var(--soluk);text-align:center;margin-top:18px}
+</style>
+</head>
+<body>
+<div class="sayfa">
+<header>
+  <h1>İrem Prefabrik için SEO çalışma planı</h1>
+  <p>Örnek çalışma · Aramalar Google'ın otomatik tamamlamasından 22 Ekim 2026'da alındı; insanların Google'a gerçekten yazdığı ifadelerdir. Eski adresler iremprefabrik.com site haritasından alındı.</p>
+</header>
+
+<div class="kart">
+  <h2>1. Yeni siteye geçiş: eski adresler kaybolmasın</h2>
+  <p style="font-size:14px;margin-bottom:10px">Mevcut sitenin haritasında 100 adres var (50 Türkçe, 50 İngilizce). Yeni site yayına girdiğinde her eski adres, yeni sitedeki karşılığına kalıcı olarak (301) yönlendirilir. Böylece Google'ın bugüne kadar tanıdığı sayfalar ve onlara verilmiş bağlantılar boşa gitmez.</p>
+  <div class="tablo"><table>
+    <thead><tr><th>Eski adres</th><th>Yeni sitede gideceği yer</th></tr></thead>
+    <tbody>
+      <tr><td><code>/tr/prefabrik-evler/49m-prefabrik-ev-smg-2</code></td><td>Aynı modelin yeni sayfası (49 m², SMG-2)</td></tr>
+      <tr><td><code>/tr/celik-ev/129m-hafif-celik-yapi-clk-5</code></td><td>Aynı modelin yeni sayfası (129 m², CLK-5)</td></tr>
+      <tr><td><code>/tr/blog/prefabrik-ev-depreme-dayanikli-mi</code></td><td>Aynı yazının yeni adresi, içerik güncellenerek</td></tr>
+      <tr><td><code>/en/prefabricated-houses/…</code></td><td>Yeni sitenin İngilizce karşılığı; dil eşleşmesi (hreflang) korunur</td></tr>
+      <tr><td><code>/tr/haberler/web-sitemiz-yayinda</code></td><td>Kaldırılırsa en yakın sayfaya: haberler listesi</td></tr>
+    </tbody>
+  </table></div>
+  <p class="not">Yayın günü 100 adresin hepsi tek tek denenir. İlk iki hafta Search Console'da bulunamayan sayfa hatası her gün kontrol edilir. Mevcut sitedeki llms.txt dosyası da yeni siteye taşınıp güncellenir.</p>
+</div>
+
+<div class="kart">
+  <h2>2. Fiyat aramaları</h2>
+  <div class="ikili">
+    <div>
+      <div class="etiket">İnsanların yazdığı aramalar</div>
+      <ul class="aramalar">
+        <li>prefabrik ev fiyatları 2026</li>
+        <li>prefabrik ev 3+1 fiyatları</li>
+        <li>prefabrik ev fiyatları 2 katlı</li>
+        <li>prefabrik ev kaça mal olur</li>
+        <li>çelik ev fiyatları anahtar teslim</li>
+        <li>hafif çelik ev maliyeti</li>
+        <li>çelik konstrüksiyon ev metrekare fiyatı</li>
+      </ul>
+    </div>
+    <div>
+      <div class="etiket">Önerilen sayfa (Google'da böyle görünür)</div>
+      <div class="serp"><div class="url">iremprefabrik.com › prefabrik-ev-fiyatlari</div><div class="t">Prefabrik Ev Fiyatları 2026: 1+1, 2+1, 3+1 ve 2 Katlı</div><div class="d">Metrekareye göre prefabrik ve hafif çelik ev modelleri, anahtar teslim fiyata neyin dahil olduğu ve fiyatı belirleyen kalemler. Ücretsiz teklif alın.</div></div>
+      <div class="etiket">Sayfa bölümleri</div>
+      <ol class="bolum"><li>Oda sayısına göre modeller ve metrekareleri</li><li>Anahtar teslime neler dahil?</li><li>Fiyatı ne belirler: metrekare, kat, yalıtım, nakliye</li><li>Prefabrik ile hafif çelik arasındaki maliyet farkı</li><li>Teklif formu ve telefon</li></ol>
+      <p class="not">Fiyat listesi yayınlamak istemezseniz sayfa fiyatı neyin belirlediğini anlatır ve teklif formuna yönlendirir.</p>
+    </div>
+  </div>
+</div>
+
+<div class="kart">
+  <h2>3. Karşılaştırma ve güven soruları</h2>
+  <div class="ikili">
+    <div>
+      <div class="etiket">İnsanların yazdığı aramalar</div>
+      <ul class="aramalar">
+        <li>çelik ev mi prefabrik ev mi daha iyi</li>
+        <li>prefabrik ev mi betonarme ev mi daha sağlam</li>
+        <li>çelik ev mi beton ev mi pahalı</li>
+        <li>prefabrik ev depreme dayanıklı mı</li>
+        <li>prefabrik ev ömrü ne kadar</li>
+        <li>prefabrik ev kaç yıl garantili</li>
+        <li>prefabrik ev kaç derece soğuğa dayanır</li>
+      </ul>
+    </div>
+    <div>
+      <div class="etiket">Önerilen sayfa</div>
+      <div class="serp"><div class="url">iremprefabrik.com › celik-ev-mi-prefabrik-mi</div><div class="t">Çelik Ev mi, Prefabrik mi, Betonarme mi? Karşılaştırma</div><div class="d">Depreme dayanıklılık, ömür, ısı yalıtımı, kurulum süresi ve maliyet açısından üç yapı türünün karşılaştırması ve hangisinin kime uygun olduğu.</div></div>
+      <p class="not">Sitenizdeki "Prefabrik ev depreme dayanıklı mı" yazısı güncellenip bu sayfaya bağlanır. Garanti süresi ve sertifika bilgisi her model sayfasında görünür olur.</p>
+    </div>
+  </div>
+</div>
+
+<div class="kart">
+  <h2>4. Süreç, ruhsat ve kredi soruları</h2>
+  <div class="ikili">
+    <div>
+      <div class="etiket">İnsanların yazdığı aramalar</div>
+      <ul class="aramalar">
+        <li>prefabrik ev kaç günde kurulur</li>
+        <li>prefabrik ev ruhsata tabi mi</li>
+        <li>prefabrik ev ruhsatı için gerekli belgeler</li>
+        <li>prefabrik ev kaç metrekare arsa</li>
+        <li>prefabrik ev kredisi veren bankalar</li>
+        <li>prefabrik ev nasıl taşınır</li>
+      </ul>
+    </div>
+    <div>
+      <div class="etiket">Önerilen sayfa</div>
+      <div class="serp"><div class="url">iremprefabrik.com › prefabrik-ev-yaptirma-rehberi</div><div class="t">Prefabrik Ev Yaptırma Rehberi: Ruhsat, Kredi, Kurulum</div><div class="d">Arsa ve ruhsat şartları, gerekli belgeler, kredi seçenekleri, üretim ve kurulum süresi. Sipariş vermeden önce bilmeniz gerekenler adım adım.</div></div>
+      <p class="not">Bu sorular yapay zekâ cevaplarında en çok çıkan türden; bir sonraki bölümdeki soru-cevap düzeniyle yazılır.</p>
+    </div>
+  </div>
+</div>
+
+<div class="kart">
+  <h2>5. Bölgesel aramalar ve Google İşletme Profili</h2>
+  <div class="ikili">
+    <div>
+      <div class="etiket">İnsanların yazdığı aramalar</div>
+      <ul class="aramalar">
+        <li>prefabrik ev konya firmaları</li>
+        <li>çelik prefabrik ev konya</li>
+        <li>prefabrik ev fiyatları konya ereğli</li>
+        <li>prefabrik ev fiyatları hatay</li>
+        <li>prefabrik ev fiyatları izmir</li>
+        <li>çelik ev fiyatları sakarya</li>
+      </ul>
+    </div>
+    <div>
+      <div class="etiket">Ne yapılır</div>
+      <ol class="bolum">
+        <li>Google İşletme Profili: Karatay adresi, doğru kategori, çalışma saatleri, ürün ve proje fotoğrafları; bilgiler siteyle birebir aynı.</li>
+        <li>Konya sayfası: adres ve yol tarifi, Konya ve ilçelerine teslim.</li>
+        <li>Hatay ve Mersin yazıları şehir sayfasına dönüştürülür; diğer şehirler arama hacmine göre eklenir.</li>
+      </ol>
+      <p class="not">Şehir sayfaları yalnız şehir adı değiştirilmiş kopya olmaz; o bölgede yapılan proje, nakliye ve kurulum bilgisi girer. Kopya sayfalar Google'da işe yaramaz.</p>
+    </div>
+  </div>
+</div>
+
+<div class="kart">
+  <h2>6. Yapay zekâ cevaplarında görünmek</h2>
+  <p style="font-size:14px;margin-bottom:10px">Google'ın yapay zekâ özetleri ve ChatGPT gibi araçlar, soruya ilk cümlede net cevap veren, kimin yazdığı ve ne zaman güncellendiği belli olan sayfaları daha kolay kaynak gösterir. Her rehber sayfasının sonunda böyle bir soru-cevap bölümü olur:</p>
+  <div class="sss"><div class="s">Prefabrik ev kaç günde kurulur?</div><div class="c">Seçilen modele göre fabrikada üretim <span class="yer">[x]</span> gün, arsada montaj <span class="yer">[y]</span> gün sürer. Süreye zemin hazırlığı ve nakliye mesafesi de eklenir.</div></div>
+  <div class="sss"><div class="s">Prefabrik ev ruhsata tabi mi?</div><div class="c">Kalıcı olarak arsaya kurulan prefabrik ev, betonarme ev gibi yapı ruhsatına tabidir. Gerekli belgeler ve başvuru adımları aşağıda anlatılmıştır.</div></div>
+  <p class="not" style="margin-bottom:8px">Sarı alanlar sizin üretim bilgilerinizle doldurulur. Aynı sorular sayfa koduna da yazılır:</p>
+<pre>{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "Prefabrik ev kaç günde kurulur?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Seçilen modele göre fabrikada üretim [x] gün, arsada montaj [y] gün sürer."
+    }
+  }]
+}</pre>
+</div>
+
+<div class="kart">
+  <h2>Aylık rapor nasıl görünür</h2>
+  <div class="tablo"><table>
+    <thead><tr><th>Arama</th><th>Ortalama sıra</th><th>Gösterim</th><th>Tıklama</th></tr></thead>
+    <tbody>
+      <tr><td>prefabrik ev konya</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>prefabrik ev fiyatları 2026</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>çelik ev mi prefabrik ev mi</td><td>—</td><td>—</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+  <p class="not">Rakamlar Search Console'dan gelir ve her ay bir önceki ayla yan yana verilir. Teklif formu, telefon ve WhatsApp tıklamaları GA4'ten ayrıca sayılır; hangi sayfanın müşteri getirdiği görülür.</p>
+</div>
+
+<footer>Örnek çalışmadır · Aramalar Google otomatik tamamlama, 22.10.2026 · Eski adresler iremprefabrik.com/sitemap.xml</footer>
+</div>
+</body>
+</html>
