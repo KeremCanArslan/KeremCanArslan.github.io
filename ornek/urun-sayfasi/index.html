@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demli Çelik Termos 500 ml — Örnek Ürün Sayfası</title>
+<meta name="description" content="Kapıda ödemeli tek ürün satış sayfası örneği.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1d1b19;--ink2:#55504a;--line:#e7e1d8;--bg:#fbf8f3;--card:#fff;--acc:#d9531e;--acc2:#b9410f;--ok:#1f7a4d;--soft:#f3ece2}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+h1,h2{font-family:Fraunces,Georgia,serif;letter-spacing:-.01em;line-height:1.15}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+.ornek{background:#2b2724;color:#e9e2d6;font-size:12px;text-align:center;padding:6px 16px}
+.bant{background:var(--ink);color:#fff;font-size:12px;font-weight:600;letter-spacing:.08em;overflow:hidden;white-space:nowrap;padding:9px 0}
+.bant div{display:inline-block;animation:kay 28s linear infinite}
+.bant span{margin:0 18px}
+@keyframes kay{to{transform:translateX(-50%)}}
+header{background:var(--bg);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-family:Fraunces,serif;font-weight:700;font-size:24px;letter-spacing:.04em}
+.logo small{font-family:Inter;font-size:10px;font-weight:600;letter-spacing:.14em;color:var(--ink2);margin-left:6px}
+.destek{font-size:13px;color:var(--ink2);text-decoration:none}
+.urun{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;padding:28px 16px 48px}
+.urun>*{min-width:0}
+.galeri .ana{border-radius:14px;overflow:hidden;aspect-ratio:4/5;background:var(--soft)}
+.galeri .ana img{width:100%;height:100%;object-fit:cover}
+.kucuk{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
+.kucuk button{border:2px solid transparent;border-radius:10px;overflow:hidden;aspect-ratio:1;cursor:pointer;padding:0;background:none}
+.kucuk button.sec{border-color:var(--ink)}
+.kucuk img{width:100%;height:100%;object-fit:cover}
+.ust{font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--acc)}
+.urun h1{font-size:34px;margin:6px 0 10px}
+.alt{color:var(--ink2);font-size:15px}
+.fiyat{display:flex;align-items:baseline;gap:12px;margin:16px 0 4px}
+.fiyat b{font-size:30px}
+.fiyat s{color:#9a928a;font-size:18px}
+.fiyat em{font-style:normal;background:var(--acc);color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:99px}
+.artilar{list-style:none;margin:16px 0;display:grid;gap:7px;font-size:14.5px}
+.artilar li{display:flex;gap:9px}
+.artilar li:before{content:"";flex:none;width:18px;height:18px;margin-top:2px;border-radius:50%;background:var(--ok) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/12px no-repeat}
+.etiket{font-size:13px;font-weight:600;margin:18px 0 8px}
+.etiket span{font-weight:400;color:var(--ink2)}
+.renkler{display:flex;gap:10px}
+.renkler button{width:34px;height:34px;border-radius:50%;border:2px solid var(--bg);outline:2px solid transparent;cursor:pointer}
+.renkler button.sec{outline-color:var(--ink)}
+/* form */
+.form{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-top:20px;box-shadow:0 10px 30px -18px rgba(60,40,20,.35)}
+.form h2{font-family:Inter;font-size:17px;font-weight:800;display:flex;align-items:center;gap:8px}
+.form h2 i{font-style:normal;background:var(--soft);font-size:11px;font-weight:700;padding:3px 8px;border-radius:99px;color:var(--acc2)}
+.paket{display:grid;gap:8px;margin:14px 0}
+.paket label{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;position:relative;transition:border-color .15s,background .15s}
+.paket input{accent-color:var(--acc);width:18px;height:18px}
+.paket label:has(input:checked){border-color:var(--acc);background:#fff7f2}
+.paket .ad{font-weight:700;font-size:15px}
+.paket .not{font-size:12.5px;color:var(--ink2)}
+.paket .tut{margin-left:auto;text-align:right;font-weight:800}
+.paket .tut s{display:block;font-weight:400;font-size:12px;color:#9a928a}
+.rozet{position:absolute;top:-9px;right:12px;background:var(--ink);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.04em;padding:2px 8px;border-radius:99px}
+.alanlar{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.alanlar .tam{grid-column:1/-1}
+.alanlar label{font-size:12.5px;font-weight:600;display:grid;gap:4px}
+.alanlar input,.alanlar select,.alanlar textarea{font:inherit;font-size:15px;border:1.5px solid var(--line);border-radius:10px;padding:11px 12px;background:#fff;color:var(--ink);width:100%}
+.alanlar textarea{resize:vertical;min-height:70px}
+.alanlar input:focus,.alanlar select:focus,.alanlar textarea:focus{outline:none;border-color:var(--ink)}
+.alanlar .hata{border-color:#c62828!important}
+.hatamsj{color:#c62828;font-size:12px;font-weight:500;display:none}
+.hata+.hatamsj{display:block}
+.odeme{display:grid;gap:8px;margin:14px 0}
+.odeme label{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;font-size:14.5px;font-weight:600}
+.odeme label:has(input:checked){border-color:var(--ink)}
+.odeme input{accent-color:var(--ink);width:17px;height:17px}
+.odeme small{margin-left:auto;font-weight:500;color:var(--ink2)}
+.ek{display:flex;gap:10px;align-items:center;background:var(--soft);border:1.5px dashed #d9c9b3;border-radius:12px;padding:11px 14px;font-size:14px;cursor:pointer}
+.ek input{accent-color:var(--acc);width:17px;height:17px}
+.ek b{margin-left:auto}
+.ozet{margin:14px 0 12px;font-size:14px;display:grid;gap:5px}
+.ozet div{display:flex;justify-content:space-between}
+.ozet .top{font-size:17px;font-weight:800;border-top:1px solid var(--line);padding-top:8px;margin-top:3px}
+.btn{display:block;width:100%;border:0;border-radius:12px;background:var(--acc);color:#fff;font:inherit;font-size:17px;font-weight:800;padding:16px;cursor:pointer;box-shadow:0 8px 20px -10px var(--acc)}
+.btn:hover{background:var(--acc2)}
+.guven{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--ink2);margin-top:10px}
+/* bölümler */
+section{padding:56px 0}
+.baslik{text-align:center;max-width:620px;margin:0 auto 28px}
+.baslik h2{font-size:30px}
+.baslik p{color:var(--ink2);margin-top:8px}
+.durumlar{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.durum{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.durum img{aspect-ratio:4/3;width:100%;object-fit:cover}
+.durum div{padding:14px 16px 18px}
+.durum h3{font-size:16px;margin-bottom:4px}
+.durum p{font-size:14px;color:var(--ink2)}
+.koyu{background:var(--ink);color:#f3ede4}
+.koyu .baslik p{color:#bdb4a8}
+.adimlar{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.adim{border:1px solid #3a3531;border-radius:14px;padding:18px}
+.adim b{font-family:Fraunces,serif;font-size:28px;color:var(--acc)}
+.adim h3{font-size:15.5px;margin:6px 0 4px}
+.adim p{font-size:13.5px;color:#bdb4a8}
+.ozellik{max-width:640px;margin:0 auto;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card)}
+.ozellik div{display:flex;justify-content:space-between;padding:12px 16px;font-size:14.5px;border-top:1px solid var(--line)}
+.ozellik div:first-child{border-top:0}
+.ozellik span{color:var(--ink2)}
+.yorumlar{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.yorum{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;font-size:14px}
+.yorum .yildiz{color:#e0a100;letter-spacing:2px}
+.yorum p{margin:8px 0 10px;color:var(--ink2)}
+.yorum b{font-size:13px}
+.yorum i{font-style:normal;font-size:11px;color:#9a928a;margin-left:6px}
+.sss{max-width:720px;margin:0 auto}
+.sss details{border-bottom:1px solid var(--line);padding:4px 0}
+.sss summary{cursor:pointer;list-style:none;font-weight:600;padding:14px 28px 14px 0;position:relative}
+.sss summary::-webkit-details-marker{display:none}
+.sss summary:after{content:"+";position:absolute;right:4px;top:10px;font-size:22px;font-weight:400}
+.sss details[open] summary:after{content:"–"}
+.sss p{color:var(--ink2);font-size:14.5px;padding:0 0 14px}
+.rozetler{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;text-align:center;font-size:13px;font-weight:600}
+.rozetler div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 8px}
+.rozetler svg{width:26px;height:26px;margin:0 auto 6px;stroke:var(--acc);fill:none;stroke-width:1.8}
+footer{background:#161412;color:#a69d91;font-size:13px;padding:36px 0 110px}
+footer .wrap{display:grid;gap:14px}
+footer nav{display:flex;flex-wrap:wrap;gap:8px 18px}
+footer a{color:#d9d1c5;text-decoration:none}
+.yapiskan{position:fixed;left:0;right:0;bottom:0;background:rgba(251,248,243,.96);backdrop-filter:blur(6px);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:none;align-items:center;gap:12px;z-index:20;transform:translateY(110%);transition:transform .25s}
+.yapiskan.goster{transform:none}
+.yapiskan div{font-size:12px;color:var(--ink2);line-height:1.25}
+.yapiskan div b{display:block;color:var(--ink);font-size:16px}
+.yapiskan .btn{padding:13px;font-size:15.5px;flex:1}
+.modal{position:fixed;inset:0;background:rgba(20,16,12,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:30}
+.modal.ac{display:flex}
+.modal>div{background:#fff;border-radius:18px;max-width:420px;width:100%;padding:26px 22px;text-align:center}
+.modal .tik{width:56px;height:56px;border-radius:50%;background:var(--ok);margin:0 auto 12px;display:grid;place-items:center}
+.modal h3{font-size:20px;margin-bottom:6px}
+.modal p{color:var(--ink2);font-size:14.5px}
+.modal .not{background:var(--soft);border-radius:10px;padding:10px 12px;font-size:12.5px;margin:14px 0;text-align:left}
+.modal button{margin-top:4px}
+@media (max-width:860px){
+ .urun{grid-template-columns:1fr;gap:18px;padding:16px 16px 36px}
+ .urun h1{font-size:28px}
+ .durumlar,.yorumlar{grid-template-columns:1fr}
+ .adimlar,.rozetler{grid-template-columns:1fr 1fr}
+ .yapiskan{display:flex}
+ section{padding:44px 0}
+ .baslik h2{font-size:25px}
+}
+@media (max-width:380px){.alanlar{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="ornek">Örnek sayfadır: marka, ürün ve fiyatlar yer tutucudur, sipariş kaydedilmez.</div>
+<div class="bant" aria-hidden="true"><div>
+<span>★ ÜCRETSİZ KARGO</span><span>★ KAPIDA ÖDEME</span><span>★ AYNI GÜN KARGODA</span><span>★ 14 GÜN KOŞULSUZ İADE</span>
+<span>★ ÜCRETSİZ KARGO</span><span>★ KAPIDA ÖDEME</span><span>★ AYNI GÜN KARGODA</span><span>★ 14 GÜN KOŞULSUZ İADE</span>
+<span>★ ÜCRETSİZ KARGO</span><span>★ KAPIDA ÖDEME</span><span>★ AYNI GÜN KARGODA</span><span>★ 14 GÜN KOŞULSUZ İADE</span>
+<span>★ ÜCRETSİZ KARGO</span><span>★ KAPIDA ÖDEME</span><span>★ AYNI GÜN KARGODA</span><span>★ 14 GÜN KOŞULSUZ İADE</span>
+</div></div>
+
+<header><div class="wrap">
+ <div class="logo">DEMLİ<small>ÖRNEK MARKA</small></div>
+ <a class="destek" href="#sss">Yardım &amp; SSS</a>
+</div></header>
+
+<main>
+<div class="wrap urun">
+ <div class="galeri">
+  <div class="ana"><img id="anaGorsel" src="https://images.unsplash.com/photo-1581155203029-10e37ca5e006?w=900&q=70&auto=format&fit=crop" alt="Beş renkte çelik termos" fetchpriority="high"></div>
+  <div class="kucuk">
+   <button class="sec" data-src="https://images.unsplash.com/photo-1581155203029-10e37ca5e006?w=900&q=70&auto=format&fit=crop"><img src="https://images.unsplash.com/photo-1581155203029-10e37ca5e006?w=200&q=60&auto=format&fit=crop" alt="Renkler"></button>
+   <button data-src="https://images.unsplash.com/photo-1610399809302-f1dd7ec33187?w=900&q=70&auto=format&fit=crop"><img src="https://images.unsplash.com/photo-1610399809302-f1dd7ec33187?w=200&q=60&auto=format&fit=crop" alt="Masada termos" loading="lazy"></button>
+   <button data-src="https://images.unsplash.com/photo-1571162141779-2253174d5dc2?w=900&q=70&auto=format&fit=crop"><img src="https://images.unsplash.com/photo-1571162141779-2253174d5dc2?w=200&q=60&auto=format&fit=crop" alt="Doğada termos" loading="lazy"></button>
+   <button data-src="https://images.unsplash.com/photo-1613645540553-d98859ffeec5?w=900&q=70&auto=format&fit=crop"><img src="https://images.unsplash.com/photo-1613645540553-d98859ffeec5?w=200&q=60&auto=format&fit=crop" alt="Kampta termos" loading="lazy"></button>
+  </div>
+ </div>
+
+ <div class="bilgi">
+  <div class="ust">ÇİFT CİDARLI · PASLANMAZ ÇELİK</div>
+  <h1>Sabah koyduğun çay, akşam hâlâ sıcak.</h1>
+  <p class="alt">Demli 500 ml çelik termos; çantaya yatık koysan da sızdırmaz, tek elle açılır, bulaşık makinesinde yıkanır.</p>
+  <div class="fiyat"><b>449 TL</b><s>699 TL</s><em>%36 İNDİRİM</em></div>
+  <ul class="artilar">
+   <li>12 saat sıcak, 24 saat soğuk tutar</li>
+   <li>Sızdırmaz kilitli kapak, çantada açılmaz</li>
+   <li>Kokuyu ve tadı tutmayan 304 paslanmaz çelik</li>
+  </ul>
+
+  <div class="etiket">Renk: <span id="renkAd">Lacivert</span></div>
+  <div class="renkler" id="renkler">
+   <button class="sec" data-ad="Lacivert" style="background:#1d4fa3" aria-label="Lacivert"></button>
+   <button data-ad="Bronz" style="background:#b98a5e" aria-label="Bronz"></button>
+   <button data-ad="Gümüş" style="background:#c9c9c9" aria-label="Gümüş"></button>
+   <button data-ad="Kırmızı" style="background:#c0242c" aria-label="Kırmızı"></button>
+   <button data-ad="Siyah" style="background:#1b1b1b" aria-label="Siyah"></button>
+  </div>
+
+  <form class="form" id="siparis" novalidate>
+   <h2>Kapıda Ödeme ile Sipariş Ver <i>Kart bilgisi gerekmez</i></h2>
+
+   <div class="paket" id="paket">
+    <label><input type="radio" name="adet" value="1" data-tutar="449" data-eski="699" checked><div><div class="ad">1 Adet</div><div class="not">Kendin için</div></div><div class="tut">449 TL<s>699 TL</s></div></label>
+    <label><span class="rozet">EN ÇOK TERCİH EDİLEN</span><input type="radio" name="adet" value="2" data-tutar="799" data-eski="1398"><div><div class="ad">2 Adet</div><div class="not">Biri sana, biri hediye · adedi 399,50 TL</div></div><div class="tut">799 TL<s>1.398 TL</s></div></label>
+    <label><input type="radio" name="adet" value="3" data-tutar="1099" data-eski="2097"><div><div class="ad">3 Adet</div><div class="not">Aile paketi · adedi 366 TL</div></div><div class="tut">1.099 TL<s>2.097 TL</s></div></label>
+   </div>
+
+   <div class="alanlar">
+    <label class="tam">Ad Soyad<input name="ad" autocomplete="name" placeholder="Adınız ve soyadınız"><span class="hatamsj">Ad ve soyadınızı yazın.</span></label>
+    <label class="tam">Telefon<input name="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="05XX XXX XX XX"><span class="hatamsj">05 ile başlayan 11 haneli numara yazın.</span></label>
+    <label>İl<select name="il" id="il"><option value="">Seçin</option></select><span class="hatamsj">İl seçin.</span></label>
+    <label>İlçe<input name="ilce" placeholder="İlçe"><span class="hatamsj">İlçe yazın.</span></label>
+    <label class="tam">Açık adres<textarea name="adres" autocomplete="street-address" placeholder="Mahalle, sokak, bina ve daire no"></textarea><span class="hatamsj">Adresinizi yazın.</span></label>
+   </div>
+
+   <div class="odeme">
+    <label><input type="radio" name="odeme" value="nakit" data-ek="0" checked>Kapıda nakit ödeme<small>Ücretsiz</small></label>
+    <label><input type="radio" name="odeme" value="kart" data-ek="15">Kapıda kredi kartı ile ödeme<small>+15 TL</small></label>
+   </div>
+
+   <label class="ek"><input type="checkbox" id="ekUrun" data-tutar="49">Yedek sızdırmaz kapak ekle<b>+49 TL</b></label>
+
+   <div class="ozet" id="ozet"></div>
+   <button class="btn" type="submit">Siparişi Tamamla</button>
+   <div class="guven"><span>✓ Ödeme teslimatta</span><span>✓ Ücretsiz kargo</span><span>✓ 14 gün iade</span></div>
+  </form>
+ </div>
+</div>
+
+<section style="padding-top:12px">
+ <div class="wrap">
+  <div class="baslik"><h2>Gün boyu yanında</h2><p>En çok bu üç anda işe yarıyor.</p></div>
+  <div class="durumlar">
+   <div class="durum"><img src="https://images.unsplash.com/photo-1610399809302-f1dd7ec33187?w=700&q=65&auto=format&fit=crop" alt="Masada termos" loading="lazy"><div><h3>İş ve okul</h3><p>Sabah evde demlediğin çay öğle arasında da ilk bardaktaki gibi.</p></div></div>
+   <div class="durum"><img src="https://images.unsplash.com/photo-1571162141779-2253174d5dc2?w=700&q=65&auto=format&fit=crop" alt="Doğa yürüyüşünde termos" loading="lazy"><div><h3>Yürüyüş ve yol</h3><p>Çantanın yan cebine yatık sığar, kapak kilitli olduğu için damlatmaz.</p></div></div>
+   <div class="durum"><img src="https://images.unsplash.com/photo-1613645540553-d98859ffeec5?w=700&q=65&auto=format&fit=crop" alt="Karlı dağda termos" loading="lazy"><div><h3>Kamp ve kış</h3><p>Soğuk havada sıcak bir yudum, yazın ise buz gibi su.</p></div></div>
+  </div>
+ </div>
+</section>
+
+<section class="koyu">
+ <div class="wrap">
+  <div class="baslik"><h2>Uzun ömür için dört adım</h2><p>İlk kullanımdan önce bir kez okuyun.</p></div>
+  <div class="adimlar">
+   <div class="adim"><b>01</b><h3>Önce ısıt</h3><p>Sıcak içecekten önce bir dakika kaynar suyla çalkalayın; ısı daha uzun kalır.</p></div>
+   <div class="adim"><b>02</b><h3>Ağzına kadar doldurma</h3><p>Kapağın altında 1–2 cm boşluk bırakın, kapak rahat kapanır.</p></div>
+   <div class="adim"><b>03</b><h3>Kilidi çevir</h3><p>Çantaya koymadan önce kilidi kapalı konuma getirin.</p></div>
+   <div class="adim"><b>04</b><h3>Kapağı ayrı yıka</h3><p>Conta çıkarılır; haftada bir ayrı yıkamak koku birikmesini önler.</p></div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap">
+  <div class="baslik"><h2>Teknik özellikler</h2></div>
+  <div class="ozellik">
+   <div><span>Hacim</span><b>500 ml</b></div>
+   <div><span>Malzeme</span><b>304 paslanmaz çelik, çift cidar</b></div>
+   <div><span>Isı koruma</span><b>12 saat sıcak · 24 saat soğuk</b></div>
+   <div><span>Boyut / ağırlık</span><b>7 × 24 cm · 320 g</b></div>
+   <div><span>Bulaşık makinesi</span><b>Gövde ve kapak uygun</b></div>
+   <div><span>Kutu içeriği</span><b>Termos, yedek conta</b></div>
+  </div>
+ </div>
+</section>
+
+<section style="padding-top:0">
+ <div class="wrap">
+  <div class="baslik"><h2>Kullananlar ne diyor?</h2><p>Gerçek sayfada yorumlar yorum uygulamasından otomatik gelir.</p></div>
+  <div class="yorumlar">
+   <div class="yorum"><div class="yildiz">★★★★★</div><p>Sabah yedide koyduğum çayı öğleden sonra içiyorum, hâlâ sıcak. Çantada da hiç sızdırmadı.</p><b>Ayşe T.</b><i>örnek yorum</i></div>
+   <div class="yorum"><div class="yildiz">★★★★★</div><p>Kapıda kartla ödedim, ertesi gün geldi. Renk fotoğraftakiyle aynı.</p><b>Murat K.</b><i>örnek yorum</i></div>
+   <div class="yorum"><div class="yildiz">★★★★☆</div><p>İkili paketi aldım, birini babama verdim. Kapak biraz sıkı ama zamanla açılıyor.</p><b>Elif S.</b><i>örnek yorum</i></div>
+  </div>
+ </div>
+</section>
+
+<section id="sss" style="padding-top:0">
+ <div class="wrap">
+  <div class="baslik"><h2>Sıkça sorulanlar</h2></div>
+  <div class="sss">
+   <details><summary>Kapıda ödeme nasıl oluyor?</summary><p>Formu doldurmanız yeterli. Siparişinizi telefonla teyit ettikten sonra kargoya veririz; ödemeyi ürün elinize geçerken kargo görevlisine nakit ya da kartla yaparsınız.</p></details>
+   <details><summary>Kargo ne zaman gelir?</summary><p>Saat 15.00'e kadar verilen siparişler aynı gün kargoya verilir, genellikle 1–3 iş günü içinde teslim edilir.</p></details>
+   <details><summary>Beğenmezsem iade edebilir miyim?</summary><p>Teslimattan itibaren 14 gün içinde gerekçe göstermeden iade edebilirsiniz. İade kodu için bize yazmanız yeterli.</p></details>
+   <details><summary>Siparişimi nasıl takip ederim?</summary><p>Kargoya verildiğinde takip numarası SMS ile telefonunuza gelir.</p></details>
+  </div>
+ </div>
+</section>
+
+<section style="padding-top:0">
+ <div class="wrap rozetler">
+  <div><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg>Ücretsiz kargo</div>
+  <div><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></svg>Kapıda ödeme</div>
+  <div><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4"/></svg>14 gün iade</div>
+  <div><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/></svg>Güvenli alışveriş</div>
+ </div>
+</section>
+</main>
+
+<footer>
+ <div class="wrap">
+  <div class="logo" style="color:#fff">DEMLİ</div>
+  <nav><a href="#sss">Sıkça Sorulan Sorular</a><a href="#">Kargo ve Teslimat</a><a href="#">İade ve Değişim</a><a href="#">Mesafeli Satış Sözleşmesi</a><a href="#">KVKK Aydınlatma Metni</a><a href="#">İletişim</a></nav>
+  <p>Bu sayfa örnek tasarımdır; marka, ürün bilgisi, fiyatlar ve yorumlar yer tutucudur. Fotoğraflar: Unsplash.</p>
+ </div>
+</footer>
+
+<div class="yapiskan" id="yapiskan">
+ <div>Kapıda ödeme<b id="yapFiyat">449 TL</b></div>
+ <a class="btn" href="#siparis" style="text-align:center;text-decoration:none">Sipariş Ver</a>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+ <div>
+  <div class="tik"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+  <h3>Siparişiniz alındı</h3>
+  <p id="modalMetin"></p>
+  <div class="not">Örnek sayfa olduğu için sipariş kaydedilmedi. Gerçek sayfada bu sipariş Shopify panelinize "kapıda ödeme" olarak düşer ve reklam pikseline satın alma bildirimi gider.</div>
+  <button class="btn" id="kapat">Tamam</button>
+ </div>
+</div>
+
+<script>
+const iller=["Adana","Adıyaman","Afyonkarahisar","Ağrı","Aksaray","Amasya","Ankara","Antalya","Ardahan","Artvin","Aydın","Balıkesir","Bartın","Batman","Bayburt","Bilecik","Bingöl","Bitlis","Bolu","Burdur","Bursa","Çanakkale","Çankırı","Çorum","Denizli","Diyarbakır","Düzce","Edirne","Elazığ","Erzincan","Erzurum","Eskişehir","Gaziantep","Giresun","Gümüşhane","Hakkari","Hatay","Iğdır","Isparta","İstanbul","İzmir","Kahramanmaraş","Karabük","Karaman","Kars","Kastamonu","Kayseri","Kilis","Kırıkkale","Kırklareli","Kırşehir","Kocaeli","Konya","Kütahya","Malatya","Manisa","Mardin","Mersin","Muğla","Muş","Nevşehir","Niğde","Ordu","Osmaniye","Rize","Sakarya","Samsun","Şanlıurfa","Siirt","Sinop","Sivas","Şırnak","Tekirdağ","Tokat","Trabzon","Tunceli","Uşak","Van","Yalova","Yozgat","Zonguldak"];
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const ilSec=$('#il'); iller.forEach(i=>ilSec.add(new Option(i,i)));
+const tl=n=>n.toLocaleString('tr-TR',{minimumFractionDigits:n%1?2:0})+' TL';
+
+$$('.kucuk button').forEach(b=>b.onclick=()=>{$('#anaGorsel').src=b.dataset.src;$$('.kucuk button').forEach(x=>x.classList.toggle('sec',x===b))});
+let renk='Lacivert';
+$$('#renkler button').forEach(b=>b.onclick=()=>{renk=b.dataset.ad;$('#renkAd').textContent=renk;$$('#renkler button').forEach(x=>x.classList.toggle('sec',x===b));ozet()});
+
+function ozet(){
+ const p=$('input[name=adet]:checked'), o=$('input[name=odeme]:checked'), ek=$('#ekUrun');
+ const ara=+p.dataset.tutar, eski=+p.dataset.eski, odemeEk=+o.dataset.ek, ekT=ek.checked?+ek.dataset.tutar:0;
+ const top=ara+odemeEk+ekT;
+ $('#ozet').innerHTML=`<div><span>${p.value} adet · ${renk}</span><span>${tl(ara)}</span></div>`+
+  `<div><span>İndirim</span><span style="color:var(--ok)">−${tl(eski-ara)}</span></div>`+
+  (ekT?`<div><span>Yedek kapak</span><span>${tl(ekT)}</span></div>`:'')+
+  `<div><span>Kargo</span><span>Ücretsiz</span></div>`+
+  (odemeEk?`<div><span>Kapıda kart hizmet bedeli</span><span>${tl(odemeEk)}</span></div>`:'')+
+  `<div class="top"><span>Toplam</span><span>${tl(top)}</span></div>`;
+ $('#yapFiyat').textContent=tl(top);
+ return top;
+}
+$('#siparis').addEventListener('change',ozet); ozet();
+
+const tel=$('input[name=tel]');
+tel.addEventListener('input',()=>{let d=tel.value.replace(/\D/g,'').slice(0,11);if(d&&d[0]!=='0')d=('0'+d).slice(0,11);tel.value=[d.slice(0,4),d.slice(4,7),d.slice(7,9),d.slice(9,11)].filter(Boolean).join(' ')});
+
+$('#siparis').addEventListener('submit',e=>{
+ e.preventDefault();
+ const f=e.target, kontrol={ad:v=>v.trim().split(/\s+/).length>=2, tel:v=>/^05\d{9}$/.test(v.replace(/\D/g,'')), il:v=>!!v, ilce:v=>v.trim().length>1, adres:v=>v.trim().length>9};
+ let ilk=null;
+ for(const [ad,fn] of Object.entries(kontrol)){const el=f.elements[ad];const ok=fn(el.value);el.classList.toggle('hata',!ok);if(!ok&&!ilk)ilk=el}
+ if(ilk){ilk.focus();ilk.scrollIntoView({block:'center',behavior:'smooth'});return}
+ const p=$('input[name=adet]:checked'), o=$('input[name=odeme]:checked');
+ $('#modalMetin').textContent=`${f.elements.ad.value.trim().split(/\s+/)[0]}, ${p.value} adet ${renk} termos için siparişiniz bize ulaştı. Toplam ${tl(ozet())}, ödemeyi teslimatta ${o.value==='kart'?'kartla':'nakit'} yapacaksınız. Kargoya vermeden önce sizi arayıp teyit edeceğiz.`;
+ $('#modal').classList.add('ac');
+});
+$$('.alanlar input,.alanlar select,.alanlar textarea').forEach(el=>el.addEventListener('input',()=>el.classList.remove('hata')));
+$('#kapat').onclick=()=>$('#modal').classList.remove('ac');
+
+const yap=$('#yapiskan');
+new IntersectionObserver(es=>{const formGorunur=es[0].isIntersecting;yap.classList.toggle('goster',!formGorunur&&scrollY>300)},{threshold:.15}).observe($('#siparis'));
+addEventListener('scroll',()=>{const r=$('#siparis').getBoundingClientRect();const gor=r.top<innerHeight&&r.bottom>0;yap.classList.toggle('goster',!gor&&scrollY>300)},{passive:true});
+</script>
+</body>
+</html>
