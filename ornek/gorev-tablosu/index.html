@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Görev ve Puan Tablosu — Örnek</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--zemin:#e9edf2;--pencere:#f8fafc;--kart:#fff;--metin:#111827;--soluk:#6b7280;--cizgi:#e5e7eb;--mavi:#2563eb;--yesil:#16a34a;--turuncu:#ea580c;--mor:#7c3aed;--kirmizi:#dc2626}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--zemin);color:var(--metin);font:14px/1.45 Inter,system-ui,sans-serif;padding:24px 16px}
+button{font:inherit;cursor:pointer}
+input,select{font:inherit}
+.pencere{max-width:1180px;margin:0 auto;background:var(--pencere);border-radius:12px;box-shadow:0 20px 50px rgba(15,23,42,.18);overflow:hidden;border:1px solid #d1d5db}
+.baslik{display:flex;align-items:center;gap:12px;height:40px;padding:0 14px;background:#eef1f5;border-bottom:1px solid #d1d5db}
+.noktalar{display:flex;gap:7px}.noktalar i{width:12px;height:12px;border-radius:50%;display:block}
+.noktalar i:nth-child(1){background:#ff5f57}.noktalar i:nth-child(2){background:#febc2e}.noktalar i:nth-child(3){background:#28c840}
+.baslik b{font-weight:600;font-size:13px}
+.gorunum{margin-left:auto;white-space:nowrap;font-size:12px;border:1px solid #d1d5db;background:#fff;border-radius:7px;padding:4px 10px;font-weight:500}
+.sekmeler{display:flex;gap:4px;padding:10px 14px 0;border-bottom:1px solid var(--cizgi);background:#fff;overflow-x:auto}
+.sekmeler button{border:0;background:none;padding:9px 14px;border-bottom:2px solid transparent;color:var(--soluk);font-weight:500;white-space:nowrap}
+.sekmeler button.secili{color:var(--metin);border-color:var(--mavi)}
+.icerik{padding:16px}
+.serit{background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:13px}
+body.oyuncu .serit{background:#f5f3ff;border-color:#ddd6fe;color:#4c1d95}
+.uc{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.uc>*,.iki>*{min-width:0}
+.kart{background:var(--kart);border:1px solid var(--cizgi);border-radius:10px;padding:16px}
+.kart h2{font-size:15px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.kart .sure{font-size:12px;color:var(--soluk);margin-bottom:12px;font-variant-numeric:tabular-nums}
+.etiket{font-size:11px;font-weight:600;padding:2px 7px;border-radius:5px}
+.etiket.gun{background:#ecfdf5;color:#166534}.etiket.hafta{background:#eff6ff;color:#1e40af}.etiket.ay{background:#f5f3ff;color:#5b21b6}
+.gorev{border:1px solid var(--cizgi);border-radius:9px;padding:10px;margin-bottom:10px}
+.gorev .ust{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.gorev .ust b{font-weight:600}
+.puan{font-weight:700;font-variant-numeric:tabular-nums;color:var(--turuncu);white-space:nowrap}
+.cipler{display:flex;flex-wrap:wrap;gap:6px}
+.cip{border:1px solid #d1d5db;background:#fff;border-radius:999px;padding:3px 10px;font-size:12px;color:var(--soluk)}
+.cip.yapti{background:var(--yesil);border-color:var(--yesil);color:#fff;font-weight:500}
+body.oyuncu .cip{cursor:default}
+.sayac{font-size:12px;color:var(--soluk);margin-top:8px}
+.bos{color:var(--soluk);text-align:center;padding:20px 0;font-size:13px}
+.filtre{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.filtre button{border:1px solid #d1d5db;background:#fff;border-radius:8px;padding:6px 12px;font-weight:500;font-size:13px}
+.filtre button.secili{border-color:var(--mavi);background:#eff6ff;color:#1e40af}
+.filtre .sag{margin-left:auto}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:12px;color:var(--soluk);font-weight:500;padding:8px;border-bottom:1px solid var(--cizgi)}
+td{padding:10px 8px;border-bottom:1px solid #f1f5f9}
+td.sayi,th.sayi{text-align:right;font-variant-numeric:tabular-nums}
+.sira{display:inline-flex;width:26px;height:26px;border-radius:50%;align-items:center;justify-content:center;font-weight:700;font-size:12px;background:#f3f4f6;color:var(--soluk)}
+.sira.s1{background:#fde68a;color:#78350f}.sira.s2{background:#e5e7eb;color:#374151}.sira.s3{background:#fed7aa;color:#7c2d12}
+.cubuk{height:6px;background:#f1f5f9;border-radius:3px;margin-top:5px;overflow:hidden}
+.cubuk i{display:block;height:100%;background:var(--mavi);border-radius:3px}
+.iki{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+label{display:block;font-size:12px;color:var(--soluk);margin:10px 0 4px;font-weight:500}
+input[type=text],input[type=number],select{width:100%;padding:9px 10px;border:1px solid #d1d5db;border-radius:8px;background:#fff}
+input:focus,select:focus{outline:2px solid #bfdbfe;border-color:var(--mavi)}
+.satir3{display:grid;grid-template-columns:1fr 120px 90px;gap:8px}
+.btn{border:1px solid #d1d5db;background:#fff;border-radius:8px;padding:7px 11px;font-weight:500;font-size:13px;white-space:nowrap}
+.btn:hover{background:#f3f4f6}
+.btn.ana{background:var(--mavi);border-color:var(--mavi);color:#fff}.btn.ana:hover{background:#1d4ed8}
+.btn.genis{width:100%;margin-top:12px;padding:10px}
+.btn.kucuk{padding:3px 9px;font-size:12px}
+.hata{color:var(--kirmizi);font-size:12px;margin-top:6px;min-height:16px}
+.liste{margin-top:14px}
+.liste .oge{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid #f1f5f9}
+.liste .oge span{min-width:0;overflow-wrap:anywhere}
+.not{font-size:12px;color:var(--soluk);margin-top:14px;text-align:center}
+.gizli{display:none!important}
+body.oyuncu .yonetici{display:none!important}
+@media (max-width:900px){
+  body{padding:0}
+  .pencere{border-radius:0;border:0}
+  .noktalar{display:none}
+  .uc,.iki{grid-template-columns:1fr}
+  .satir3{grid-template-columns:1fr 1fr}
+  .satir3 .btn{grid-column:1/-1}
+  .filtre .sag{margin-left:0}
+}
+</style>
+</head>
+<body>
+<div class="pencere">
+  <div class="baslik">
+    <div class="noktalar"><i></i><i></i><i></i></div>
+    <b>Görev ve Puan Tablosu</b>
+    <button class="gorunum" id="gorunum">Oyuncu görünümüne geç</button>
+  </div>
+  <div class="sekmeler">
+    <button data-sekme="gorevler" class="secili">Görevler</button>
+    <button data-sekme="siralama">Puan sıralaması</button>
+    <button data-sekme="yonetim" class="yonetici">Görev ve oyuncu ekle</button>
+  </div>
+  <div class="icerik">
+    <div class="serit" id="serit"></div>
+
+    <section id="gorevler">
+      <div class="uc" id="gorev-kolonlari"></div>
+    </section>
+
+    <section id="siralama" class="gizli">
+      <div class="kart">
+        <div class="filtre" id="filtre">
+          <button data-aralik="gun">Bugün</button>
+          <button data-aralik="hafta" class="secili">Bu hafta</button>
+          <button data-aralik="ay">Bu ay</button>
+          <button data-aralik="tum">Tüm zamanlar</button>
+          <button class="btn sag yonetici" id="csv">Excel'e aktar</button>
+        </div>
+        <table>
+          <thead><tr><th style="width:48px">Sıra</th><th>Oyuncu</th><th class="sayi">Görev</th><th class="sayi">Puan</th></tr></thead>
+          <tbody id="tablo"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="yonetim" class="gizli">
+      <div class="iki">
+        <div class="kart">
+          <h2>Yeni görev</h2>
+          <div class="satir3">
+            <div><label for="g-ad">Görev adı</label><input type="text" id="g-ad" maxlength="60" placeholder="ör. 5 maç kazan"></div>
+            <div><label for="g-tur">Tür</label><select id="g-tur"><option value="gun">Günlük</option><option value="hafta">Haftalık</option><option value="ay">Aylık</option></select></div>
+            <div><label for="g-puan">Puan</label><input type="number" id="g-puan" min="1" max="100000" value="20"></div>
+            <button class="btn ana" id="g-ekle" style="align-self:end">Görevi ekle</button>
+          </div>
+          <div class="hata" id="g-hata"></div>
+          <div class="liste" id="g-liste"></div>
+        </div>
+        <div class="kart">
+          <h2>Yeni oyuncu</h2>
+          <label for="o-ad">Oyuncu adı</label>
+          <input type="text" id="o-ad" maxlength="30" placeholder="ör. Kartal">
+          <button class="btn ana genis" id="o-ekle">Oyuncuyu ekle</button>
+          <div class="hata" id="o-hata"></div>
+          <div class="liste" id="o-liste"></div>
+          <button class="btn genis" id="sifirla">Örnek verilere dön</button>
+        </div>
+      </div>
+    </section>
+
+    <p class="not">Örnek ekran: oyuncu adları, görevler ve puanlar hayalîdir. Veriler yalnızca bu tarayıcıda tutulur.</p>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var ANAHTAR = "gorev-tablosu-ornek-v1";
+  var TURLER = { gun: "Günlük", hafta: "Haftalık", ay: "Aylık" };
+  var YENILENME = { gun: "her gece 00:00", hafta: "her pazartesi 00:00", ay: "her ayın 1'i 00:00" };
+
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function ymd(d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+  function gunBasi(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+  function haftaBasi(d) { var g = gunBasi(d); g.setDate(g.getDate() - (g.getDay() + 6) % 7); return g; }
+  function ayBasi(d) { return new Date(d.getFullYear(), d.getMonth(), 1); }
+  function donemBasi(tur, d) { return tur === "gun" ? gunBasi(d) : tur === "hafta" ? haftaBasi(d) : ayBasi(d); }
+  function donemAnahtari(tur, d) { return tur.charAt(0) + ymd(donemBasi(tur, d)); }
+  function sonrakiYenilenme(tur, d) {
+    var b = donemBasi(tur, d);
+    if (tur === "gun") return new Date(b.getFullYear(), b.getMonth(), b.getDate() + 1);
+    if (tur === "hafta") return new Date(b.getFullYear(), b.getMonth(), b.getDate() + 7);
+    return new Date(b.getFullYear(), b.getMonth() + 1, 1);
+  }
+  function kalanYazi(ms) {
+    var dk = Math.max(0, Math.floor(ms / 60000)), g = Math.floor(dk / 1440), s = Math.floor(dk % 1440 / 60), d = dk % 60;
+    return (g ? g + " gün " : "") + (g || s ? s + " sa " : "") + d + " dk";
+  }
+  function kacis(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  var sayac = 0;
+  function yeniId(on) { sayac += 1; return on + Date.now().toString(36) + sayac; }
+
+  function ornekVeri() {
+    var oyuncular = ["Kartal", "Gölge", "Fırtına", "Kuzgun", "Yıldız", "Demir"].map(function (ad, i) { return { id: "o" + i, ad: ad }; });
+    var gorevler = [
+      { id: "g1", ad: "Günlük girişi yap", tur: "gun", puan: 10 },
+      { id: "g2", ad: "3 maç oyna", tur: "gun", puan: 20 },
+      { id: "g3", ad: "1 maç kazan", tur: "gun", puan: 30 },
+      { id: "g4", ad: "15 maç kazan", tur: "hafta", puan: 120 },
+      { id: "g5", ad: "Takım etkinliğine katıl", tur: "hafta", puan: 80 },
+      { id: "g6", ad: "Turnuvaya katıl", tur: "ay", puan: 250 },
+      { id: "g7", ad: "Ayda 60 galibiyet", tur: "ay", puan: 400 }
+    ];
+    var tohum = 20261024;
+    function rnd() { tohum = (tohum * 1103515245 + 12345) % 2147483648; return tohum / 2147483648; }
+    var beceri = [0.9, 0.75, 0.65, 0.55, 0.45, 0.35];
+    var oran = { gun: 0.8, hafta: 0.13, ay: 0.03 };
+    var kayitlar = [], var_ = {}, simdi = new Date();
+    for (var geri = 45; geri >= 0; geri--) {
+      var gun = gunBasi(simdi); gun.setDate(gun.getDate() - geri);
+      var gecenDk = geri === 0 ? Math.floor((simdi - gun) / 60000) : 1440;
+      oyuncular.forEach(function (o, i) {
+        gorevler.forEach(function (g) {
+          var k = g.id + "|" + o.id + "|" + donemAnahtari(g.tur, gun);
+          if (var_[k] || gecenDk < 2) return;
+          if (rnd() < oran[g.tur] * beceri[i] * (g.tur === "gun" && g.puan === 30 ? 0.7 : 1)) {
+            var t = new Date(gun.getTime() + Math.floor(rnd() * (gecenDk - 1)) * 60000);
+            var_[k] = 1;
+            kayitlar.push({ g: g.id, o: o.id, d: donemAnahtari(g.tur, gun), puan: g.puan, t: t.toISOString() });
+          }
+        });
+      });
+    }
+    return { oyuncular: oyuncular, gorevler: gorevler, kayitlar: kayitlar };
+  }
+
+  var veri;
+  try { veri = JSON.parse(localStorage.getItem(ANAHTAR)); } catch (e) { veri = null; }
+  if (!veri || !Array.isArray(veri.oyuncular) || !Array.isArray(veri.gorevler) || !Array.isArray(veri.kayitlar)) veri = ornekVeri();
+  function kaydet() { try { localStorage.setItem(ANAHTAR, JSON.stringify(veri)); } catch (e) { /* özel pencerede kayıt tutulmaz, ekran yine çalışır */ } }
+
+  var oyuncuModu = false, aralik = "hafta";
+
+  function tamamladi(g, o, simdi) {
+    var d = donemAnahtari(g.tur, simdi);
+    return veri.kayitlar.some(function (k) { return k.g === g.id && k.o === o.id && k.d === d; });
+  }
+
+  function gorevleriCiz() {
+    var simdi = new Date();
+    document.getElementById("gorev-kolonlari").innerHTML = ["gun", "hafta", "ay"].map(function (tur) {
+      var liste = veri.gorevler.filter(function (g) { return g.tur === tur; });
+      var govde = liste.length ? liste.map(function (g) {
+        var yapan = 0;
+        var cipler = veri.oyuncular.map(function (o) {
+          var y = tamamladi(g, o, simdi); if (y) yapan++;
+          return '<button class="cip' + (y ? " yapti" : "") + '" data-g="' + g.id + '" data-o="' + o.id + '"' + (oyuncuModu ? " disabled" : "") + ">" + kacis(o.ad) + "</button>";
+        }).join("");
+        return '<div class="gorev"><div class="ust"><b>' + kacis(g.ad) + '</b><span class="puan">+' + g.puan + ' puan</span></div><div class="cipler">' + (cipler || '<span class="sayac">Henüz oyuncu yok</span>') + '</div><div class="sayac">' + yapan + " / " + veri.oyuncular.length + " oyuncu tamamladı</div></div>";
+      }).join("") : '<div class="bos">Bu türde görev yok</div>';
+      return '<div class="kart"><h2><span class="etiket ' + tur + '">' + TURLER[tur] + "</span> görevler</h2>" +
+        '<div class="sure">Yenilenmesine ' + kalanYazi(sonrakiYenilenme(tur, simdi) - simdi) + " (" + YENILENME[tur] + ")</div>" + govde + "</div>";
+    }).join("");
+  }
+
+  function siralamaHesapla() {
+    var simdi = new Date();
+    var bas = aralik === "tum" ? new Date(0) : donemBasi(aralik, simdi);
+    var toplam = {};
+    veri.oyuncular.forEach(function (o) { toplam[o.id] = { ad: o.ad, puan: 0, adet: 0 }; });
+    veri.kayitlar.forEach(function (k) {
+      if (toplam[k.o] && new Date(k.t) >= bas) { toplam[k.o].puan += k.puan; toplam[k.o].adet += 1; }
+    });
+    return Object.keys(toplam).map(function (id) { return toplam[id]; })
+      .sort(function (a, b) { return b.puan - a.puan || b.adet - a.adet || a.ad.localeCompare(b.ad, "tr"); });
+  }
+
+  function siralamaCiz() {
+    var satirlar = siralamaHesapla(), enYuksek = satirlar.length ? Math.max(1, satirlar[0].puan) : 1;
+    document.getElementById("tablo").innerHTML = satirlar.length ? satirlar.map(function (s, i) {
+      return '<tr><td><span class="sira' + (i < 3 && s.puan > 0 ? " s" + (i + 1) : "") + '">' + (i + 1) + "</span></td><td>" + kacis(s.ad) +
+        '<div class="cubuk"><i style="width:' + Math.round(s.puan / enYuksek * 100) + '%"></i></div></td><td class="sayi">' + s.adet + '</td><td class="sayi"><b>' + s.puan.toLocaleString("tr-TR") + "</b></td></tr>";
+    }).join("") : '<tr><td colspan="4" class="bos">Henüz oyuncu yok</td></tr>';
+    document.querySelectorAll("#filtre [data-aralik]").forEach(function (b) { b.classList.toggle("secili", b.dataset.aralik === aralik); });
+  }
+
+  function yonetimCiz() {
+    document.getElementById("g-liste").innerHTML = veri.gorevler.map(function (g) {
+      return '<div class="oge"><span><span class="etiket ' + g.tur + '">' + TURLER[g.tur] + "</span> " + kacis(g.ad) + ' · <span class="puan">' + g.puan + '</span></span><button class="btn kucuk" data-sil-g="' + g.id + '">Sil</button></div>';
+    }).join("") || '<div class="bos">Görev yok</div>';
+    document.getElementById("o-liste").innerHTML = veri.oyuncular.map(function (o) {
+      return '<div class="oge"><span>' + kacis(o.ad) + '</span><button class="btn kucuk" data-sil-o="' + o.id + '">Sil</button></div>';
+    }).join("") || '<div class="bos">Oyuncu yok</div>';
+  }
+
+  function seritCiz() {
+    document.getElementById("serit").textContent = oyuncuModu
+      ? "Oyuncu görünümü: oyuncular görevleri ve sıralamayı görür, değiştiremez."
+      : "Yönetici görünümü: görevi tamamlayan oyuncunun adına tıklayın, puanı sıralamaya hemen işlenir. Yanlış tıklamayı aynı ada tekrar tıklayarak geri alabilirsiniz.";
+    document.getElementById("gorunum").textContent = oyuncuModu ? "Yönetici görünümüne dön" : "Oyuncu görünümüne geç";
+  }
+
+  function hepsiniCiz() { seritCiz(); gorevleriCiz(); siralamaCiz(); yonetimCiz(); }
+
+  document.querySelector(".sekmeler").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-sekme]"); if (!b) return;
+    sekmeAc(b.dataset.sekme);
+  });
+  function sekmeAc(ad) {
+    document.querySelectorAll("[data-sekme]").forEach(function (x) { x.classList.toggle("secili", x.dataset.sekme === ad); });
+    ["gorevler", "siralama", "yonetim"].forEach(function (id) { document.getElementById(id).classList.toggle("gizli", id !== ad); });
+  }
+
+  document.getElementById("gorunum").addEventListener("click", function () {
+    oyuncuModu = !oyuncuModu;
+    document.body.classList.toggle("oyuncu", oyuncuModu);
+    if (oyuncuModu && !document.getElementById("yonetim").classList.contains("gizli")) sekmeAc("gorevler");
+    hepsiniCiz();
+  });
+
+  document.getElementById("gorev-kolonlari").addEventListener("click", function (e) {
+    var c = e.target.closest(".cip"); if (!c || oyuncuModu) return;
+    var g = veri.gorevler.find(function (x) { return x.id === c.dataset.g; });
+    var o = veri.oyuncular.find(function (x) { return x.id === c.dataset.o; });
+    if (!g || !o) return;
+    var simdi = new Date(), d = donemAnahtari(g.tur, simdi);
+    var i = veri.kayitlar.findIndex(function (k) { return k.g === g.id && k.o === o.id && k.d === d; });
+    if (i >= 0) veri.kayitlar.splice(i, 1);
+    else veri.kayitlar.push({ g: g.id, o: o.id, d: d, puan: g.puan, t: simdi.toISOString() });
+    kaydet(); gorevleriCiz(); siralamaCiz();
+  });
+
+  document.getElementById("filtre").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-aralik]"); if (!b) return;
+    aralik = b.dataset.aralik; siralamaCiz();
+  });
+
+  document.getElementById("csv").addEventListener("click", function () {
+    var baslik = { gun: "Bugün", hafta: "Bu hafta", ay: "Bu ay", tum: "Tüm zamanlar" }[aralik];
+    var satirlar = [["Sıra", "Oyuncu", "Görev", "Puan"]].concat(siralamaHesapla().map(function (s, i) { return [i + 1, s.ad, s.adet, s.puan]; }));
+    var metin = "﻿" + satirlar.map(function (r) { return r.map(function (h) { return '"' + String(h).replace(/"/g, '""') + '"'; }).join(";"); }).join("\r\n");
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([metin], { type: "text/csv;charset=utf-8" }));
+    a.download = "puan-siralamasi-" + baslik.toLowerCase().replace(/ /g, "-") + "-" + ymd(new Date()) + ".csv";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  });
+
+  document.getElementById("g-ekle").addEventListener("click", function () {
+    var ad = document.getElementById("g-ad").value.trim(), tur = document.getElementById("g-tur").value;
+    var puan = parseInt(document.getElementById("g-puan").value, 10), hata = document.getElementById("g-hata");
+    if (!ad) { hata.textContent = "Görev adını yazın."; return; }
+    if (!(puan >= 1 && puan <= 100000)) { hata.textContent = "Puan 1 ile 100.000 arasında olmalı."; return; }
+    hata.textContent = "";
+    veri.gorevler.push({ id: yeniId("g"), ad: ad, tur: tur, puan: puan });
+    document.getElementById("g-ad").value = "";
+    kaydet(); gorevleriCiz(); yonetimCiz();
+  });
+
+  document.getElementById("o-ekle").addEventListener("click", function () {
+    var ad = document.getElementById("o-ad").value.trim(), hata = document.getElementById("o-hata");
+    if (!ad) { hata.textContent = "Oyuncu adını yazın."; return; }
+    if (veri.oyuncular.some(function (o) { return o.ad.toLocaleLowerCase("tr") === ad.toLocaleLowerCase("tr"); })) { hata.textContent = "Bu adda bir oyuncu zaten var."; return; }
+    hata.textContent = "";
+    veri.oyuncular.push({ id: yeniId("o"), ad: ad });
+    document.getElementById("o-ad").value = "";
+    kaydet(); hepsiniCiz();
+  });
+  ["g-ad", "o-ad"].forEach(function (id) {
+    document.getElementById(id).addEventListener("keydown", function (e) { if (e.key === "Enter") document.getElementById(id === "g-ad" ? "g-ekle" : "o-ekle").click(); });
+  });
+
+  document.getElementById("yonetim").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-sil-g],[data-sil-o]"); if (!b) return;
+    if (b.dataset.silG) {
+      veri.gorevler = veri.gorevler.filter(function (g) { return g.id !== b.dataset.silG; });
+    } else {
+      veri.oyuncular = veri.oyuncular.filter(function (o) { return o.id !== b.dataset.silO; });
+      veri.kayitlar = veri.kayitlar.filter(function (k) { return k.o !== b.dataset.silO; });
+    }
+    kaydet(); hepsiniCiz();
+  });
+
+  document.getElementById("sifirla").addEventListener("click", function () {
+    veri = ornekVeri(); kaydet(); hepsiniCiz();
+  });
+
+  hepsiniCiz();
+  setInterval(gorevleriCiz, 60000);
+})();
+</script>
+</body>
+</html>
