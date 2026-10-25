@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Moto Kurye — Örnek Fiyat Hesaplama</title>
+<meta name="description" content="Kilometreye göre kurye ücreti hesaplayıp WhatsApp'a yönlendiren örnek sayfa.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,500;0,600;0,700;1,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root{--ink:#161b2e;--ink2:#5a6075;--line:#e3e5ec;--bg:#f5f6f9;--card:#fff;--red:#d7262e;--red2:#b51d24;--org:#f08a1c;--wa:#1faa53;--wa2:#178d44;--soft:#fdf1f1}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased;padding-bottom:76px}
+.ornek{background:#20263b;color:#d6d9e4;font-size:12px;text-align:center;padding:6px 16px}
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:1000}
+header .in{max-width:1080px;margin:0 auto;padding:0 16px;height:62px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:8px;font-family:Barlow;font-style:italic;font-weight:800;font-size:24px;letter-spacing:.01em;color:var(--ink);text-decoration:none}
+.logo svg{width:38px;height:38px}
+.logo b{color:var(--red)}
+nav a{font-family:Barlow;font-weight:700;font-size:15px;color:var(--ink);text-decoration:none;margin-left:22px;text-transform:uppercase}
+@media(max-width:760px){nav{display:none}}
+.hero{background:linear-gradient(160deg,#1b2140 0%,#2a1f3a 60%,#4a1c25 100%);color:#fff}
+.hero .in{max-width:1080px;margin:0 auto;padding:36px 16px 120px}
+.hero h1{font-family:Barlow;font-style:italic;font-weight:800;font-size:clamp(32px,6vw,52px);line-height:1.02;text-transform:uppercase}
+.hero h1 span{color:var(--org)}
+.hero p{margin-top:12px;color:#cfd3e2;max-width:520px}
+.wrap{max-width:1080px;margin:-96px auto 0;padding:0 16px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:860px){.wrap{grid-template-columns:1fr}}
+.kart{background:var(--card);border-radius:16px;box-shadow:0 10px 30px rgba(20,25,50,.12);padding:22px}
+.kart h2{font-family:Barlow;font-weight:700;font-size:22px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.kart h2 i{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:8px;background:var(--red);color:#fff;font-style:normal;font-size:16px}
+label.l{display:block;font-size:13px;font-weight:600;color:var(--ink2);margin:16px 0 6px}
+.alan{position:relative}
+.alan input{width:100%;font:inherit;font-size:16px;padding:13px 14px 13px 40px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+.alan input:focus{outline:none;border-color:var(--ink)}
+.alan .nokta{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:14px;height:14px;border-radius:50%;border:4px solid var(--wa)}
+.alan.b .nokta{border-color:var(--red)}
+.konum{background:none;border:0;font:inherit;font-size:13px;font-weight:600;color:var(--red);cursor:pointer;margin-top:6px;padding:2px 0}
+.oneri{position:absolute;left:0;right:0;top:100%;margin-top:4px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(20,25,50,.14);z-index:20;overflow:hidden;display:none}
+.oneri button{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:10px 14px;font:inherit;font-size:14px;cursor:pointer;color:var(--ink)}
+.oneri button:last-child{border-bottom:0}
+.oneri button:hover,.oneri button:focus{background:var(--bg);outline:none}
+.oneri small{display:block;color:var(--ink2);font-size:12px}
+.tip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tip label{border:1.5px solid var(--line);border-radius:10px;padding:10px 8px;text-align:center;cursor:pointer;font-size:13px;color:var(--ink2)}
+.tip label b{display:block;font-family:Barlow;font-size:16px;color:var(--ink);text-transform:uppercase}
+.tip input{position:absolute;opacity:0;pointer-events:none}
+.tip input:checked+label{border-color:var(--red);background:var(--soft)}
+.tip input:focus-visible+label{outline:2px solid var(--ink)}
+.sonuc{margin-top:18px;border-radius:12px;background:var(--bg);padding:16px;display:none}
+.sonuc .sat{display:flex;justify-content:space-between;font-size:14px;color:var(--ink2);padding:3px 0}
+.sonuc .sat b{color:var(--ink);text-align:right;margin-left:12px}
+.sonuc .top{display:flex;justify-content:space-between;align-items:baseline;border-top:1px dashed #c9ccd6;margin-top:8px;padding-top:10px}
+.sonuc .top span{font-weight:600}
+.sonuc .top b{font-family:Barlow;font-size:34px;font-weight:700;color:var(--red)}
+.durum{margin-top:14px;font-size:14px;color:var(--ink2);min-height:21px}
+.durum.hata{color:var(--red2)}
+.wa{margin-top:14px;display:none;align-items:center;justify-content:center;gap:10px;width:100%;border:0;border-radius:12px;background:var(--wa);color:#fff;font:inherit;font-weight:700;font-size:17px;padding:15px;cursor:pointer;text-decoration:none}
+.wa:hover{background:var(--wa2)}
+.wa svg{width:24px;height:24px}
+#harita{height:100%;min-height:380px;border-radius:12px;background:#e9ebf0}
+.harita-kart{padding:10px;display:flex;flex-direction:column}
+.not{max-width:1080px;margin:22px auto 0;padding:0 16px;font-size:13px;color:var(--ink2)}
+.alt{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:flex-end;height:64px;z-index:1000}
+.alt a{flex:1;text-align:center;font-size:10px;font-weight:700;color:var(--ink2);text-decoration:none;letter-spacing:.04em;padding-bottom:9px}
+.alt a svg{display:block;margin:0 auto 3px;width:22px;height:22px}
+.alt a.fiyat{color:var(--red)}
+.alt a.fiyat span{display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:var(--red);color:#fff;margin:-26px auto 3px;box-shadow:0 6px 16px rgba(215,38,46,.4)}
+.alt a.fiyat span svg{margin:0}
+@media(min-width:861px){.alt{display:none}body{padding-bottom:30px}}
+.leaflet-container{font-family:Inter,sans-serif}
+</style>
+</head>
+<body>
+<div class="ornek">Örnek sayfadır. Fiyatlar ve marka temsilidir; WhatsApp mesajı bir kişiye gönderilmez, siz seçersiniz.</div>
+<header><div class="in">
+  <a class="logo" href="#"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="12" cy="34" r="7" fill="none" stroke="#161b2e" stroke-width="4"/><circle cx="37" cy="34" r="7" fill="none" stroke="#161b2e" stroke-width="4"/><path d="M12 34h12l6-12h8l-1 12" fill="none" stroke="#d7262e" stroke-width="4" stroke-linejoin="round"/><rect x="18" y="12" width="12" height="10" rx="2" fill="#f08a1c"/></svg>Moto<b>Kurye</b></a>
+  <nav><a href="#">Hizmetler</a><a href="#hesap">Fiyat Al</a><a href="#">Kurumsal</a><a href="#">İletişim</a></nav>
+</div></header>
+
+<section class="hero"><div class="in">
+  <h1>Paketiniz <span>dakikalar</span> içinde yolda</h1>
+  <p>Alış ve teslim adresini yazın, ücreti kilometreye göre hemen görün, tek dokunuşla WhatsApp'tan kurye çağırın.</p>
+</div></section>
+
+<main class="wrap" id="hesap">
+  <div class="kart">
+    <h2><i>₺</i>Fiyat Hesapla</h2>
+
+    <label class="l" for="a">Alış adresi</label>
+    <div class="alan a"><span class="nokta"></span><input id="a" autocomplete="off" placeholder="Mahalle, cadde ya da yer adı"><div class="oneri" id="aO"></div></div>
+    <button class="konum" id="konum" type="button">Bulunduğum konumu kullan</button>
+
+    <label class="l" for="b">Teslim adresi</label>
+    <div class="alan b"><span class="nokta"></span><input id="b" autocomplete="off" placeholder="Mahalle, cadde ya da yer adı"><div class="oneri" id="bO"></div></div>
+
+    <label class="l">Gönderi tipi</label>
+    <div class="tip">
+      <input type="radio" name="tip" id="t1" value="normal" checked><label for="t1"><b>Normal</b>2-3 saat</label>
+      <input type="radio" name="tip" id="t2" value="hizli"><label for="t2"><b>Hızlı</b>60-90 dk</label>
+      <input type="radio" name="tip" id="t3" value="express"><label for="t3"><b>Express</b>Direkt teslim</label>
+    </div>
+
+    <div class="sonuc" id="sonuc">
+      <div class="sat"><span>Mesafe (motosiklet rotası)</span><b id="rKm">-</b></div>
+      <div class="sat"><span>Tahmini yol süresi</span><b id="rSure">-</b></div>
+      <div class="sat"><span>Açılış + km ücreti</span><b id="rDetay">-</b></div>
+      <div class="top"><span>Toplam ücret</span><b id="rTutar">-</b></div>
+    </div>
+    <div class="durum" id="durum" role="status">İki adresi seçince ücret burada görünür.</div>
+    <a class="wa" id="wa" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4c-1-1.6-1.5-3.4-1.5-5.2 0-5.4 4.4-9.8 9.8-9.8 2.6 0 5.1 1 6.9 2.9 1.9 1.9 2.9 4.3 2.9 6.9 0 5.4-4.4 9.8-9.8 9.8zm8.4-18.2C18.1 1.3 15.2.1 12 .1 5.5.1.2 5.4.2 11.9c0 2.1.5 4.1 1.6 5.9L.1 24l6.3-1.7c1.7.9 3.7 1.4 5.6 1.4 6.5 0 11.8-5.3 11.8-11.8 0-3.2-1.2-6.1-3.4-8.3z"/></svg>WhatsApp'tan Kurye Çağır</a>
+  </div>
+
+  <div class="kart harita-kart"><div id="harita"></div></div>
+</main>
+
+<p class="not">Ücret: açılış 150 TL + km başı 22 TL, Hızlı ×1,4, Express ×1,8, en az 200 TL. Bu oranlar örnek; gerçek sitede sizin tarifeniz kullanılır.</p>
+
+<nav class="alt" aria-label="Alt menü">
+  <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>ANASAYFA</a>
+  <a href="#hesap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>KURYE ÇAĞIR</a>
+  <a href="#hesap" class="fiyat"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h2M12 11h2M16 11h0M8 15h2M12 15h2M8 18h2M12 18h2M16 15v3"/></svg></span>FİYAT AL</a>
+  <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>BLOG</a>
+  <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v11H8l-4 4z"/></svg>DESTEK</a>
+</nav>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const TARIFE = {acilis:150, km:22, min:200, carpan:{normal:1, hizli:1.4, express:1.8}, ad:{normal:'Normal', hizli:'Hızlı', express:'Express'}};
+const sec = {a:null, b:null};
+let rota = null, istekNo = 0;
+const $ = id => document.getElementById(id);
+const tl = n => n.toLocaleString('tr-TR', {maximumFractionDigits:0}) + ' TL';
+
+const harita = L.map('harita', {zoomControl:true}).setView([41.015, 28.98], 11);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:19, attribution:'&copy; OpenStreetMap'}).addTo(harita);
+const ikon = renk => L.divIcon({className:'', iconSize:[22,22], iconAnchor:[11,11], html:`<div style="width:22px;height:22px;border-radius:50%;background:#fff;border:6px solid ${renk};box-shadow:0 2px 6px rgba(0,0,0,.3)"></div>`});
+const isaret = {a:null, b:null};
+const cizgi = L.polyline([], {color:'#d7262e', weight:5, opacity:.85}).addTo(harita);
+
+function etiket(p){
+  const ad = p.name || [p.street, p.housenumber].filter(Boolean).join(' ');
+  const yer = [p.district || p.locality, p.city || p.county, p.state].filter((v,i,a) => v && a.indexOf(v) === i && v !== ad).join(', ');
+  return {ad: ad || yer, yer};
+}
+
+function adresAlani(k){
+  const inp = $(k), kutu = $(k + 'O');
+  let zaman, son = [];
+  inp.addEventListener('input', () => {
+    sec[k] = null; hesapla();
+    clearTimeout(zaman);
+    const q = inp.value.trim();
+    if (q.length < 3){ kutu.style.display = 'none'; return; }
+    zaman = setTimeout(async () => {
+      try {
+        const m = harita.getCenter();
+        const r = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=8&lang=default&lat=${m.lat}&lon=${m.lng}&bbox=25.6,35.8,44.9,42.2`);
+        const d = await r.json();
+        const gor = new Set();
+        son = d.features.filter(f => {
+          if (f.properties.countrycode !== 'TR') return false;
+          const e = etiket(f.properties), a = e.ad + e.yer;
+          if (gor.has(a)) return false;
+          gor.add(a); return true;
+        }).slice(0, 5);
+        kutu.innerHTML = '';
+        son.forEach((f, i) => {
+          const e = etiket(f.properties), btn = document.createElement('button');
+          btn.type = 'button';
+          btn.innerHTML = `${esc(e.ad)}<small>${esc(e.yer)}</small>`;
+          btn.onclick = () => adresSec(k, f, e);
+          kutu.appendChild(btn);
+        });
+        kutu.style.display = son.length ? 'block' : 'none';
+      } catch { kutu.style.display = 'none'; }
+    }, 350);
+  });
+  inp.addEventListener('blur', () => setTimeout(() => kutu.style.display = 'none', 200));
+}
+const esc = s => String(s || '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function adresSec(k, f, e){
+  const [lon, lat] = f.geometry.coordinates;
+  sec[k] = {lat, lon, metin: [e.ad, e.yer].filter(Boolean).join(', ')};
+  $(k).value = sec[k].metin;
+  $(k + 'O').style.display = 'none';
+  if (isaret[k]) harita.removeLayer(isaret[k]);
+  isaret[k] = L.marker([lat, lon], {icon: ikon(k === 'a' ? '#1faa53' : '#d7262e')}).addTo(harita);
+  if (!sec.a || !sec.b) harita.setView([lat, lon], 14);
+  rotaBul();
+}
+
+$('konum').onclick = () => {
+  if (!navigator.geolocation){ durum('Tarayıcınız konum vermiyor, adresi yazabilirsiniz.', true); return; }
+  durum('Konumunuz alınıyor...');
+  navigator.geolocation.getCurrentPosition(async p => {
+    const {latitude:lat, longitude:lon} = p.coords;
+    try {
+      const d = await (await fetch(`https://photon.komoot.io/reverse?lat=${lat}&lon=${lon}&lang=default`)).json();
+      const f = d.features[0] || {geometry:{coordinates:[lon, lat]}, properties:{name:'Bulunduğum konum'}};
+      f.geometry.coordinates = [lon, lat];
+      adresSec('a', f, etiket(f.properties));
+    } catch { adresSec('a', {geometry:{coordinates:[lon, lat]}}, {ad:'Bulunduğum konum', yer:''}); }
+  }, () => durum('Konum izni verilmedi, adresi yazabilirsiniz.', true), {timeout:10000});
+};
+
+function polyline6(s){
+  const o = []; let i = 0, lat = 0, lon = 0;
+  while (i < s.length){
+    for (const k of [0, 1]){
+      let b, sh = 0, r = 0;
+      do { b = s.charCodeAt(i++) - 63; r |= (b & 31) << sh; sh += 5; } while (b >= 32);
+      const v = (r & 1) ? ~(r >> 1) : (r >> 1);
+      if (k === 0) lat += v; else lon += v;
+    }
+    o.push([lat / 1e6, lon / 1e6]);
+  }
+  return o;
+}
+
+async function rotaBul(){
+  rota = null; hesapla();
+  if (!sec.a || !sec.b) return;
+  const no = ++istekNo;
+  durum('Motosiklet rotası hesaplanıyor...');
+  const j = {locations:[{lat:sec.a.lat, lon:sec.a.lon}, {lat:sec.b.lat, lon:sec.b.lon}], costing:'motorcycle', costing_options:{motorcycle:{use_ferry:0}}, units:'kilometers', directions_type:'none'};
+  try {
+    const r = await fetch('https://valhalla1.openstreetmap.de/route?json=' + encodeURIComponent(JSON.stringify(j)));
+    const d = await r.json();
+    if (no !== istekNo) return;
+    if (!d.trip) throw 0;
+    rota = {km: d.trip.summary.length, dk: Math.round(d.trip.summary.time / 60), yol: polyline6(d.trip.legs[0].shape), tahmin:false};
+  } catch {
+    if (no !== istekNo) return;
+    const km = kusUcusu(sec.a, sec.b) * 1.35;
+    rota = {km, dk: Math.round(km * 2.6), yol: [[sec.a.lat, sec.a.lon], [sec.b.lat, sec.b.lon]], tahmin:true};
+  }
+  cizgi.setLatLngs(rota.yol);
+  harita.fitBounds(cizgi.getBounds(), {padding:[30, 30]});
+  hesapla();
+}
+
+function kusUcusu(p, q){
+  const R = 6371, r = x => x * Math.PI / 180;
+  const h = Math.sin(r(q.lat - p.lat) / 2) ** 2 + Math.cos(r(p.lat)) * Math.cos(r(q.lat)) * Math.sin(r(q.lon - p.lon) / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(h));
+}
+
+function durum(m, hata){ const e = $('durum'); e.textContent = m; e.className = 'durum' + (hata ? ' hata' : ''); }
+
+function hesapla(){
+  const tip = document.querySelector('input[name=tip]:checked').value;
+  if (!rota){
+    $('sonuc').style.display = 'none'; $('wa').style.display = 'none';
+    if (!sec.a || !sec.b){ cizgi.setLatLngs([]); durum('İki adresi seçince ücret burada görünür.'); }
+    return;
+  }
+  const km = Math.round(rota.km * 10) / 10;
+  const ham = (TARIFE.acilis + km * TARIFE.km) * TARIFE.carpan[tip];
+  const tutar = Math.max(TARIFE.min, Math.ceil(ham / 10) * 10);
+  $('rKm').textContent = km.toLocaleString('tr-TR') + ' km' + (rota.tahmin ? ' (yaklaşık)' : '');
+  $('rSure').textContent = rota.dk + ' dk';
+  $('rDetay').textContent = `${tl(TARIFE.acilis)} + ${km.toLocaleString('tr-TR')} × ${TARIFE.km} TL` + (TARIFE.carpan[tip] > 1 ? ` × ${String(TARIFE.carpan[tip]).replace('.', ',')}` : '');
+  $('rTutar').textContent = tl(tutar);
+  $('sonuc').style.display = 'block';
+  durum(rota.tahmin ? 'Rota servisine ulaşılamadı, mesafe kuş uçuşundan yaklaşık hesaplandı.' : '');
+  const mesaj = `Merhaba, kurye çağırmak istiyorum.\n\nAlış: ${sec.a.metin}\nTeslim: ${sec.b.metin}\nGönderi tipi: ${TARIFE.ad[tip]}\nMesafe: ${km.toLocaleString('tr-TR')} km\nHesaplanan ücret: ${tl(tutar)}\n\nAlış konumu: https://maps.google.com/?q=${sec.a.lat},${sec.a.lon}\nTeslim konumu: https://maps.google.com/?q=${sec.b.lat},${sec.b.lon}`;
+  const wa = $('wa');
+  wa.href = 'https://wa.me/?text=' + encodeURIComponent(mesaj);
+  wa.style.display = 'flex';
+}
+
+adresAlani('a'); adresAlani('b');
+document.querySelectorAll('input[name=tip]').forEach(r => r.addEventListener('change', hesapla));
+</script>
+</body>
+</html>
