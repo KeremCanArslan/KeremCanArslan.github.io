@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>E-posta Otomasyonu — Örnek</title>
+<meta name="description" content="n8n, OpenAI ve IMAP/SMTP ile müşteri e-postalarını geçmişiyle birleştiren, sınıflandıran, kişisel yanıt hazırlayan ve aynı takibi iki kez göndermeyen sistemin örnek akışı.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#17181c;--ink2:#5f6470;--line:#e6e7ea;--bg:#f4f5f7;--card:#fff;--acc:#4f46e5;--ok:#16a34a;--warn:#d97706;--bad:#dc2626;--soft:#f3f4f6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased}
+.ornek{background:#1f2023;color:#e5e5e5;font-size:12px;text-align:center;padding:6px 16px}
+.ust{max-width:1240px;margin:0 auto;padding:28px 16px 10px;display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:flex-end}
+.ust h1{font-family:Fraunces,serif;font-size:32px;line-height:1.15}
+.ust p{color:var(--ink2);margin-top:6px;max-width:700px}
+.kontrol{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.anahtar{display:flex;background:#e5e7eb;border-radius:10px;padding:3px}
+.anahtar button{border:0;background:none;padding:8px 12px;border-radius:8px;font:600 13px Inter,sans-serif;color:var(--ink2);cursor:pointer}
+.anahtar button.sec{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.btn{border:0;border-radius:10px;padding:11px 18px;font:700 14px Inter,sans-serif;cursor:pointer;background:var(--acc);color:#fff}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.ikincil{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.izgara{max-width:1240px;margin:0 auto;padding:12px 16px 30px;display:grid;grid-template-columns:320px 1fr 360px;gap:16px}
+.kart{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;min-height:0}
+.kart>h2{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);padding:12px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.kart>h2 span{letter-spacing:0;text-transform:none;font-weight:600;color:var(--acc)}
+.gelen{overflow:auto;max-height:640px}
+.mus{padding:12px 14px;border-bottom:1px solid var(--line);cursor:pointer;display:grid;gap:3px}
+.mus:hover{background:#fafafa}
+.mus.sec{background:#eef2ff}
+.mus .ad{font-weight:700;font-size:14px;display:flex;justify-content:space-between;gap:8px}
+.mus .ad small{font-weight:500;color:var(--ink2);font-size:12px}
+.mus .son{font-size:13px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.etiket{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--soft);color:var(--ink2);width:max-content}
+.etiket.yes{background:#dcfce7;color:#166534}.etiket.feedback{background:#e0f2fe;color:#075985}.etiket.interested{background:#fef3c7;color:#92400e}
+.etiket.considering{background:#ffedd5;color:#9a3412}.etiket.purchased{background:#ede9fe;color:#5b21b6}.etiket.help{background:#fee2e2;color:#991b1b}
+.etiket.notint{background:#e5e7eb;color:#374151}.etiket.nosample{background:#fce7f3;color:#9d174d}
+.detay{padding:14px;overflow:auto;max-height:640px;display:grid;gap:12px;align-content:start}
+.bos{color:var(--ink2);font-size:14px;padding:30px 10px;text-align:center}
+.yazisma{display:grid;gap:8px}
+.ileti{border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13.5px;background:#fff}
+.ileti.biz{background:#f8fafc}
+.ileti .bas{font-size:12px;color:var(--ink2);margin-bottom:4px;display:flex;justify-content:space-between}
+.adimlar{display:grid;gap:8px}
+.adim{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;font-size:13.5px;opacity:.35;transition:opacity .25s}
+.adim.acik{opacity:1}
+.adim i{width:26px;height:26px;border-radius:50%;background:var(--soft);display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:800;color:var(--ink2)}
+.adim.acik i{background:var(--acc);color:#fff}
+.adim.dur i{background:var(--warn)}
+.adim.engel i{background:var(--bad)}
+.adim b{display:block}
+.adim span{color:var(--ink2)}
+.taslak{border:1px dashed #a5b4fc;background:#f5f7ff;border-radius:10px;padding:12px;font-size:13.5px;white-space:pre-wrap}
+.taslak .bas{font-size:12px;color:var(--acc);font-weight:700;margin-bottom:6px}
+.onay{display:flex;gap:8px}
+.kayit{overflow:auto;max-height:640px}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:#fafafa;position:sticky;top:0}
+td.durum{font-weight:700}
+td.durum.gitti{color:var(--ok)}td.durum.bekliyor{color:var(--warn)}td.durum.atlandi{color:var(--bad)}
+.akis{max-width:1240px;margin:0 auto;padding:0 16px 50px}
+.akis h2{font-family:Fraunces,serif;font-size:22px;margin-bottom:12px}
+.dugumler{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.dugum{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px;min-width:150px}
+.dugum b{display:block;font-size:13.5px}
+.dugum span{color:var(--ink2);font-size:12px}
+.ok{color:#9ca3af;font-weight:800}
+.not{margin-top:16px;color:var(--ink2);font-size:13.5px;max-width:900px}
+@media (max-width:1100px){.izgara{grid-template-columns:1fr}.gelen,.detay,.kayit{max-height:none}}
+</style>
+</head>
+<body>
+<div class="ornek">Örnek çalışma · müşteriler ve e-postalar uydurmadır · gerçek kurulumda sınıflandırma ve yanıtları OpenAI API hazırlar</div>
+
+<header class="ust">
+  <div>
+    <h1>Müşteri e-postaları: birleştir, sınıflandır, yanıtla</h1>
+    <p>Gelen kutusundaki yazışmalar müşteri bazında birleşir, her müşteri bir kategoriye ve klasöre ayrılır, geçmişe uygun İngilizce yanıt hazırlanır. Gönderim kaydı sayesinde aynı takip iki kez gitmez.</p>
+  </div>
+  <div class="kontrol">
+    <div class="anahtar" id="mod">
+      <button class="sec" data-mod="onay">Önce onayıma düşsün</button>
+      <button data-mod="oto">Tam otomatik</button>
+    </div>
+    <button class="btn" id="calistir">Akışı çalıştır</button>
+    <button class="btn ikincil" id="sifirla">Sıfırla</button>
+  </div>
+</header>
+
+<main class="izgara">
+  <section class="kart">
+    <h2>Gelen kutusu · müşteriler <span id="sayac"></span></h2>
+    <div class="gelen" id="gelen"></div>
+  </section>
+  <section class="kart">
+    <h2>Seçili müşteri <span id="secAd"></span></h2>
+    <div class="detay" id="detay"><div class="bos">Soldan bir müşteri seçin ya da “Akışı çalıştır”a basın.</div></div>
+  </section>
+  <section class="kart">
+    <h2>Gönderim kaydı</h2>
+    <div class="kayit"><table><thead><tr><th>Müşteri</th><th>E-posta</th><th>Durum</th></tr></thead><tbody id="kayit"></tbody></table></div>
+  </section>
+</main>
+
+<section class="akis">
+  <h2>n8n akışı</h2>
+  <div class="dugumler">
+    <div class="dugum"><b>E-posta tetikleyici</b><span>IMAP, 5 dk’da bir</span></div><span class="ok">→</span>
+    <div class="dugum"><b>Geçmişi birleştir</b><span>gönderen adresine göre</span></div><span class="ok">→</span>
+    <div class="dugum"><b>OpenAI · sınıflandır</b><span>8 kategori, JSON çıktı</span></div><span class="ok">→</span>
+    <div class="dugum"><b>Klasöre taşı</b><span>IMAP klasörü</span></div><span class="ok">→</span>
+    <div class="dugum"><b>Kural kontrolü</b><span>gönderim kaydı + son yanıt</span></div><span class="ok">→</span>
+    <div class="dugum"><b>OpenAI · yanıt yaz</b><span>geçmiş + ürün bilgisi</span></div><span class="ok">→</span>
+    <div class="dugum"><b>Onay ya da gönder</b><span>SMTP + kayda yaz</span></div>
+  </div>
+  <p class="not">Kural kontrolü yapay zekâya bırakılmaz, sabit kurallarla yapılır: aynı takip türü bu müşteriye daha önce gittiyse ya da müşterinin son e-postası işlenmediyse gönderim durur. Örnek rapor gerçekten gönderilmediyse yanıt metni “gönderdik” diyemez; rapor gönderim kaydında yoksa taslak bu cümleyi içermez.</p>
+</section>
+
+<script>
+const KAT={yes:["YES / Free Report","yes"],feedback:["Report Feedback","feedback"],interested:["Interested","interested"],considering:["Considering","considering"],purchased:["Purchased","purchased"],help:["Needs Help","help"],notint:["Not Interested","notint"],nosample:["No Sample Available","nosample"]};
+const MUSTERI=[
+ {id:1,ad:"Emily Carter",adres:"emily.c@example.com",kat:"yes",neden:"Ücretsiz örnek rapor teklifine “Yes please” yazmış.",
+  gecmis:[["biz","12 Eki","Would you like a free sample report for the CPA exam prep pack?"],["o","13 Eki","Yes please, that would be great!"]],
+  raporGitti:true,kural:"ok",tur:"rapor-geri-bildirim",
+  taslak:"Hi Emily,\n\nWe sent your free CPA sample report on Oct 14. Did you find it useful? If you have any questions about the full prep pack, just reply to this email.\n\nBest regards"},
+ {id:2,ad:"Daniel Okafor",adres:"d.okafor@example.com",kat:"interested",neden:"Tam paketin fiyatını soruyor.",
+  gecmis:[["o","20 Eki","How much is the full PMP practice set? Is there a discount for two people?"]],
+  kural:"ok",tur:"fiyat",
+  taslak:"Hi Daniel,\n\nThe full PMP practice set is $49. For two people we offer the team bundle at $85. Both include updates until your exam date.\n\nBest regards"},
+ {id:3,ad:"Sofia Rossi",adres:"sofia.r@example.com",kat:"purchased",neden:"Ödeme onayına teşekkür etmiş, satın alma tamamlanmış.",
+  gecmis:[["biz","18 Eki","Your order #4821 is confirmed."],["o","18 Eki","Thanks, downloaded it already."]],
+  kural:"engel",engel:"Satın alan müşteriye satış mesajı gönderilmez.",tur:"satis"},
+ {id:4,ad:"Liam Becker",adres:"liam.b@example.com",kat:"considering",neden:"“Bir düşüneyim” demiş, karar vermemiş.",
+  gecmis:[["biz","15 Eki","Here are the details of the CFA Level I pack."],["o","16 Eki","Thanks, I'll think about it."],["biz","19 Eki","Just checking in — any questions about the CFA pack?"]],
+  kural:"engel",engel:"Bu müşteriye 19 Eki’de takip gitmiş ve sonrasında yanıt gelmemiş; aynı takip tekrar gönderilmez.",tur:"takip"},
+ {id:5,ad:"Aisha Rahman",adres:"aisha.r@example.com",kat:"help",neden:"Rapordaki bir soruyu anlamadığını yazıyor.",
+  gecmis:[["o","22 Eki","In the sample report, question 14 says the answer is C but I think it should be B?"]],
+  kural:"dur",engel:"Teknik soru: taslak hazırlanır, gönderim her modda onaya düşer.",tur:"destek",
+  taslak:"Hi Aisha,\n\nThanks for pointing this out. We are checking question 14 with our content team and will get back to you within one business day.\n\nBest regards"},
+ {id:6,ad:"Noah Williams",adres:"noah.w@example.com",kat:"nosample",neden:"Örneği olmayan bir sınav için ücretsiz rapor istiyor.",
+  gecmis:[["o","23 Eki","Do you have a free sample for the AWS Solutions Architect exam?"]],
+  kural:"ok",tur:"ornek-yok",
+  taslak:"Hi Noah,\n\nWe don't have a free sample for the AWS Solutions Architect exam yet. You can see the full table of contents of the prep pack on our website, and we will let you know when a sample is available.\n\nBest regards"},
+ {id:7,ad:"Mia Jensen",adres:"mia.j@example.com",kat:"notint",neden:"Daha fazla e-posta istemediğini yazmış.",
+  gecmis:[["biz","10 Eki","Would you like a free sample report?"],["o","11 Eki","No thanks, please remove me from your list."]],
+  kural:"engel",engel:"İletişim istemiyor: listeden çıkarılır, hiçbir otomatik e-posta gitmez.",tur:"-"},
+ {id:8,ad:"Oliver Grant",adres:"oliver.g@example.com",kat:"yes",neden:"Örnek rapor istemiş.",
+  gecmis:[["biz","24 Eki","Would you like a free sample report for the PMP exam?"],["o","25 Eki","Yes!"]],
+  raporGitti:false,kural:"dur",engel:"Örnek rapor henüz gönderim kaydında yok: yanıt “raporu gönderdik” diyemez. Önce rapor gönderilir.",tur:"rapor-gonder",
+  taslak:"Hi Oliver,\n\nThanks for your interest! Your free PMP sample report is attached to this email.\n\nBest regards\n\n[Ek: PMP-sample.pdf — rapor dosyası eklenmeden gönderilmez]"}
+];
+const ONCEKI=[["Liam Becker","Takip (19 Eki)","gitti"],["Emily Carter","Örnek rapor (14 Eki)","gitti"]];
+let mod="onay",islendi={},secili=null,kayitlar=[...ONCEKI],calisiyor=false;
+
+const $=s=>document.querySelector(s);
+function etiket(k){const[a,c]=KAT[k];return `<span class="etiket ${c}">${a}</span>`}
+function gelenCiz(){
+  $("#gelen").innerHTML=MUSTERI.map(m=>`<div class="mus${secili===m.id?" sec":""}" data-id="${m.id}">
+   <div class="ad">${m.ad}<small>${m.gecmis.length} e-posta</small></div>
+   <div class="son">${m.gecmis[m.gecmis.length-1][2]}</div>
+   ${islendi[m.id]?etiket(m.kat):'<span class="etiket">işlenmedi</span>'}</div>`).join("");
+  $("#sayac").textContent=Object.keys(islendi).length+" / "+MUSTERI.length+" işlendi";
+  document.querySelectorAll(".mus").forEach(e=>e.onclick=()=>{secili=+e.dataset.id;gelenCiz();detayCiz()});
+}
+function kayitCiz(){
+  $("#kayit").innerHTML=kayitlar.map(([a,e,d])=>`<tr><td>${a}</td><td>${e}</td><td class="durum ${d==="gitti"?"gitti":d.startsWith("onay")?"bekliyor":"atlandi"}">${d}</td></tr>`).join("");
+}
+function detayCiz(){
+  const m=MUSTERI.find(x=>x.id===secili);
+  if(!m){$("#detay").innerHTML='<div class="bos">Soldan bir müşteri seçin ya da “Akışı çalıştır”a basın.</div>';$("#secAd").textContent="";return}
+  $("#secAd").textContent=m.ad;
+  const i=islendi[m.id];
+  let h=`<div class="yazisma">${m.gecmis.map(([k,t,y])=>`<div class="ileti${k==="biz"?" biz":""}"><div class="bas"><b>${k==="biz"?"Siz":m.ad}</b><span>${t}</span></div>${y}</div>`).join("")}</div>`;
+  if(!i){h+='<div class="bos">Bu müşteri henüz işlenmedi.</div>';$("#detay").innerHTML=h;return}
+  const sinif=m.kural==="engel"?"engel":m.kural==="dur"?"dur":"";
+  h+=`<div class="adimlar">
+   <div class="adim acik"><i>1</i><div><b>${m.gecmis.length} e-posta tek müşteride birleşti</b><span>${m.adres}</span></div></div>
+   <div class="adim acik"><i>2</i><div><b>Kategori: ${KAT[m.kat][0]}</b><span>${m.neden}</span></div></div>
+   <div class="adim acik"><i>3</i><div><b>“${KAT[m.kat][0]}” klasörüne taşındı</b><span>Hostinger Mail klasörü</span></div></div>
+   <div class="adim acik ${sinif}"><i>4</i><div><b>${m.kural==="ok"?"Kural kontrolü geçti":m.kural==="dur"?"Onaya düştü":"Gönderim durduruldu"}</b><span>${m.engel||"Bu türde daha önce e-posta gitmemiş, son yanıt işlendi."}</span></div></div>
+  </div>`;
+  if(m.taslak){
+    const durum=i.durum;
+    h+=`<div class="taslak"><div class="bas">Hazırlanan yanıt (İngilizce)${durum?" · "+durum:""}</div>${m.taslak.replace(/</g,"&lt;")}</div>`;
+    if(durum==="onay bekliyor") h+=`<div class="onay"><button class="btn" data-g="${m.id}">Onayla ve gönder</button><button class="btn ikincil" data-r="${m.id}">Reddet</button></div>`;
+  }
+  $("#detay").innerHTML=h;
+  const g=document.querySelector("[data-g]");if(g)g.onclick=()=>karar(m,"gitti");
+  const r=document.querySelector("[data-r]");if(r)r.onclick=()=>karar(m,"reddedildi");
+}
+function karar(m,s){
+  let son=-1;kayitlar.forEach((k,j)=>{if(k[0]===m.ad)son=j});
+  if(son>=0)kayitlar[son]=[m.ad,m.id===8&&s==="gitti"?"Örnek rapor + yanıt":kayitlar[son][1],s];
+  islendi[m.id].durum=s;kayitCiz();detayCiz();
+}
+function isle(m){
+  let durum=null;
+  if(m.kural==="engel"){kayitlar.push([m.ad,m.tur==="-"?"Listeden çıkarıldı":"Takip / satış",m.kural==="engel"?"atlandı":""])}
+  else if(m.kural==="dur"||mod==="onay"){durum="onay bekliyor";kayitlar.push([m.ad,m.tur==="fiyat"?"Fiyat yanıtı":m.tur==="ornek-yok"?"Örnek yok yanıtı":m.tur==="destek"?"Destek yanıtı":m.tur==="rapor-gonder"?"Örnek rapor":"Rapor geri bildirimi","onay bekliyor"])}
+  else{durum="gitti";kayitlar.push([m.ad,m.tur==="fiyat"?"Fiyat yanıtı":m.tur==="ornek-yok"?"Örnek yok yanıtı":"Rapor geri bildirimi","gitti"])}
+  islendi[m.id]={durum};
+}
+async function calistir(){
+  if(calisiyor)return;calisiyor=true;$("#calistir").disabled=true;
+  for(const m of MUSTERI){
+    if(islendi[m.id])continue;
+    secili=m.id;isle(m);gelenCiz();kayitCiz();detayCiz();
+    await new Promise(r=>setTimeout(r,650));
+  }
+  calisiyor=false;$("#calistir").disabled=false;
+}
+function sifirla(){islendi={};secili=null;kayitlar=[...ONCEKI];gelenCiz();kayitCiz();detayCiz()}
+document.querySelectorAll("#mod button").forEach(b=>b.onclick=()=>{mod=b.dataset.mod;document.querySelectorAll("#mod button").forEach(x=>x.classList.toggle("sec",x===b));sifirla()});
+$("#calistir").onclick=calistir;$("#sifirla").onclick=sifirla;
+gelenCiz();kayitCiz();
+</script>
+</body>
+</html>
