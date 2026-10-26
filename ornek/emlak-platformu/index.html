@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EmlakNet Salihli — Örnek İlk Sürüm</title>
+<meta name="description" content="Emlakçıların kendi ilanını girdiği, yöneticinin onayladığı yerel emlak platformu örneği.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#16211f;--ink2:#56625f;--line:#e2e6e3;--bg:#f7f8f6;--card:#fff;--acc:#0f766e;--acc2:#0b5c56;--sic:#e8f3f1;--uyari:#b45309;--kirmizi:#b3261e;--soft:#eef2ef}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;letter-spacing:-.01em;line-height:1.15}
+.wrap{max-width:1160px;margin:0 auto;padding:0 16px}
+.ornek{background:#1f2a28;color:#dfe7e4;font-size:12px;text-align:center;padding:6px 16px}
+header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:62px;gap:12px}
+.logo{font-family:Fraunces,serif;font-weight:700;font-size:23px;color:var(--ink);text-decoration:none}
+.logo span{color:var(--acc)}
+.logo small{font-family:Inter;font-size:11px;font-weight:600;color:var(--ink2);margin-left:6px}
+.rol{display:flex;background:var(--soft);border-radius:12px;padding:4px;gap:2px}
+.rol button{border:0;background:none;border-radius:9px;padding:8px 12px;font:600 13px Inter,sans-serif;color:var(--ink2);cursor:pointer;white-space:nowrap;position:relative}
+.rol button.sec{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.rol i{font-style:normal;background:var(--uyari);color:#fff;font-size:10px;font-weight:700;border-radius:99px;padding:1px 6px;margin-left:4px}
+.hero{background:linear-gradient(180deg,rgba(10,30,28,.55),rgba(10,30,28,.65)),url("https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1600&q=65&auto=format&fit=crop") center/cover;color:#fff;padding:54px 0 64px}
+.hero h1{font-size:42px;max-width:640px}
+.hero p{opacity:.9;margin-top:8px;max-width:560px}
+.filtre{background:#fff;color:var(--ink);border-radius:16px;padding:14px;margin-top:22px;display:grid;grid-template-columns:auto repeat(5,1fr) auto;gap:8px;align-items:end;box-shadow:0 18px 40px -20px rgba(0,0,0,.5)}
+.filtre label{font-size:11.5px;font-weight:700;color:var(--ink2);display:grid;gap:3px;min-width:0}
+.filtre select,.filtre input{font:inherit;font-size:14.5px;border:1.5px solid var(--line);border-radius:10px;padding:9px 10px;background:#fff;width:100%;color:var(--ink)}
+.tur{display:flex;background:var(--soft);border-radius:10px;padding:3px}
+.tur button{border:0;background:none;padding:9px 12px;border-radius:8px;font:700 13.5px Inter,sans-serif;cursor:pointer;color:var(--ink2)}
+.tur button.sec{background:var(--acc);color:#fff}
+.btn{border:0;border-radius:10px;background:var(--acc);color:#fff;font:700 14.5px Inter,sans-serif;padding:11px 16px;cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--acc2)}
+.btn.ikincil{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.btn.kirmizi{background:var(--kirmizi)}
+.sonucust{display:flex;justify-content:space-between;align-items:center;margin:26px 0 12px;gap:10px;flex-wrap:wrap}
+.sonucust h2{font-size:24px}
+.sonucust select{font:inherit;font-size:14px;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff}
+.izgara{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-bottom:40px}
+.kart{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .15s,box-shadow .15s;display:flex;flex-direction:column}
+.kart:hover{transform:translateY(-2px);box-shadow:0 14px 30px -20px rgba(0,0,0,.45)}
+.kart .foto{aspect-ratio:16/10;position:relative;background:var(--soft);overflow:hidden;flex:none}
+.kart .foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.etk{position:absolute;top:10px;left:10px;display:flex;gap:6px}
+.etk span{background:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:99px}
+.etk .vit{background:#f59e0b;color:#fff}
+.fav{position:absolute;top:8px;right:8px;width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.95);cursor:pointer;font-size:17px;line-height:1}
+.kart .govde{padding:12px 14px 14px;display:grid;gap:4px}
+.kart .fy{font-size:19px;font-weight:800}
+.kart h3{font-family:Inter;font-size:14.5px;font-weight:600}
+.kart .oz{font-size:12.5px;color:var(--ink2);display:flex;gap:10px;flex-wrap:wrap}
+.kart .ofis{font-size:12px;color:var(--acc);font-weight:600;border-top:1px solid var(--line);padding-top:8px;margin-top:4px}
+.bos{grid-column:1/-1;text-align:center;color:var(--ink2);padding:40px 0}
+.plan{background:var(--ink);color:#e6ecea;padding:52px 0}
+.plan .ust{font-size:12px;font-weight:700;letter-spacing:.14em;color:#5eead4}
+.plan h2{font-size:30px;margin:6px 0 20px}
+.asamalar{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.asama{border:1px solid #2f3d3a;border-radius:14px;padding:18px}
+.asama b{font-size:12px;letter-spacing:.1em;color:#5eead4}
+.asama h3{font-family:Inter;font-size:16px;margin:6px 0 8px}
+.asama ul{list-style:none;display:grid;gap:5px;font-size:13.5px;color:#b9c6c2}
+.asama li:before{content:"— ";color:#5eead4}
+.gider{margin-top:16px;font-size:13.5px;color:#b9c6c2;border-top:1px solid #2f3d3a;padding-top:14px}
+footer{background:#0d1514;color:#93a29e;font-size:13px;padding:26px 0}
+/* paneller */
+.sayfa{display:none;padding:26px 0 50px}
+.sayfa.ac{display:block}
+.sayfa h2{font-size:28px}
+.sayfa .acik{color:var(--ink2);margin:4px 0 18px;font-size:14.5px}
+.ikili{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;align-items:start}
+.ikili>*{min-width:0}
+.kutu{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}
+.kutu h3{font-family:Inter;font-size:16px;margin-bottom:12px}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form .tam{grid-column:1/-1}
+.form label{font-size:12.5px;font-weight:600;display:grid;gap:4px}
+.form input,.form select,.form textarea{font:inherit;font-size:14.5px;border:1.5px solid var(--line);border-radius:10px;padding:9px 11px;background:#fff;width:100%}
+.form textarea{min-height:70px;resize:vertical}
+.yukle{border:2px dashed #c9d4d0;border-radius:12px;padding:12px;text-align:center;font-size:14px;color:var(--ink2);cursor:pointer;display:block}
+.onizle{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.onizle img{width:58px;height:58px;object-fit:cover;border-radius:8px}
+.istat{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.istat div{background:var(--sic);border-radius:12px;padding:12px}
+.istat b{display:block;font-size:22px;font-family:Fraunces,serif}
+.istat span{font-size:12px;color:var(--ink2)}
+.satir{display:flex;gap:10px;align-items:center;border-top:1px solid var(--line);padding:10px 0}
+.satir:first-of-type{border-top:0}
+.satir img{width:64px;height:48px;object-fit:cover;border-radius:8px;flex:none}
+.satir .ad{flex:1;min-width:0;font-size:14px;font-weight:600}
+.satir .ad small{display:block;font-weight:400;color:var(--ink2);font-size:12px}
+.durum{font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:99px;white-space:nowrap}
+.d-yayinda{background:#dcfce7;color:#166534}.d-bekliyor{background:#fef3c7;color:#92400e}.d-red{background:#fee2e2;color:#991b1b}
+.mini{border:0;background:none;font:600 12.5px Inter,sans-serif;cursor:pointer;color:var(--acc);padding:4px}
+.mini.k{color:var(--kirmizi)}
+.bosnot{color:var(--ink2);font-size:14px;padding:6px 0}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(10,20,18,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:30}
+.modal.ac{display:flex}
+.mkutu{background:#fff;border-radius:18px;max-width:940px;width:100%;max-height:92vh;overflow:auto;position:relative}
+.kapat{position:absolute;top:10px;right:12px;width:34px;height:34px;border-radius:50%;border:0;background:#fff;font-size:22px;cursor:pointer;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.detay{display:grid;grid-template-columns:1.3fr 1fr}
+.detay>*{min-width:0}
+.detay .buyuk{aspect-ratio:4/3;background:var(--soft);position:relative;overflow:hidden}
+.detay .buyuk img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.kucuk{display:flex;gap:6px;padding:8px;flex-wrap:wrap}
+.kucuk img{width:64px;height:48px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid transparent}
+.kucuk img.sec{border-color:var(--ink)}
+.detay .bilgi{padding:24px 22px;display:grid;gap:10px;align-content:start}
+.detay .fy{font-size:28px;font-weight:800}
+.detay table{width:100%;border-collapse:collapse;font-size:14px}
+.detay td{padding:6px 0;border-top:1px solid var(--line)}
+.detay td:first-child{color:var(--ink2)}
+.ofiskart{background:var(--sic);border-radius:12px;padding:12px;display:grid;gap:8px}
+.ofiskart b{font-size:15px}
+.ofiskart small{color:var(--ink2)}
+.ofiskart .btnler{display:flex;gap:8px}
+.ofiskart .btn{flex:1;text-align:center;text-decoration:none}
+.bildir{font-size:12.5px;color:var(--kirmizi);background:none;border:0;cursor:pointer;text-align:left;font-weight:600}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;z-index:40;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw}
+.toast.ac{opacity:1}
+@media(max-width:980px){.filtre{grid-template-columns:1fr 1fr}.filtre .tur{grid-column:1/-1}.filtre .btn{grid-column:1/-1}.izgara{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){
+header .wrap{height:auto;padding-top:8px;padding-bottom:8px;flex-direction:column;align-items:stretch}
+.logo{text-align:center}.rol{justify-content:center}.rol button{flex:1;padding:8px 6px;font-size:12.5px}
+.hero{padding:30px 0 36px}.hero h1{font-size:30px}
+.izgara{grid-template-columns:1fr}.asamalar{grid-template-columns:1fr}
+.ikili{grid-template-columns:1fr}.detay{grid-template-columns:1fr}.form{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="ornek">Örnek ilk sürümdür. İlanlar, fotoğraflar ve emlak ofisleri temsilidir; yaptığınız değişiklikler yalnız sizin tarayıcınızda saklanır.</div>
+<header><div class="wrap">
+  <a class="logo" href="#">Emlak<span>Net</span><small>Salihli</small></a>
+  <div class="rol" id="rol">
+    <button data-r="ziyaretci" class="sec">İlan ara</button>
+    <button data-r="emlakci">Emlakçı paneli</button>
+    <button data-r="yonetici">Yönetici<i id="bekSay">0</i></button>
+  </div>
+</div></header>
+
+<!-- ZİYARETÇİ -->
+<div class="sayfa ac" id="s-ziyaretci" style="padding:0">
+  <div class="hero"><div class="wrap">
+    <h1>Salihli'de satılık ve kiralık ilanlar, doğrudan emlakçısından</h1>
+    <p>Yetki belgesi kontrol edilmiş yerel emlak ofislerinin güncel ilanları.</p>
+    <div class="filtre">
+      <div class="tur" id="tur"><button class="sec" data-t="Satılık">Satılık</button><button data-t="Kiralık">Kiralık</button></div>
+      <label>Emlak türü<select id="fTip"><option value="">Tümü</option><option>Daire</option><option>Müstakil ev</option><option>Arsa</option><option>İşyeri</option></select></label>
+      <label>Mahalle<select id="fMah"><option value="">Tümü</option></select></label>
+      <label>Oda<select id="fOda"><option value="">Tümü</option><option>1+1</option><option>2+1</option><option>3+1</option><option>4+1</option></select></label>
+      <label>En az (TL)<input id="fMin" type="number" inputmode="numeric" placeholder="0"></label>
+      <label>En çok (TL)<input id="fMax" type="number" inputmode="numeric" placeholder="Sınırsız"></label>
+      <button class="btn" id="araBtn">Ara</button>
+    </div>
+  </div></div>
+  <div class="wrap">
+    <div class="sonucust"><h2 id="sonucBaslik">İlanlar</h2>
+      <div style="display:flex;gap:8px;align-items:center"><label style="font-size:13.5px;display:flex;gap:6px;align-items:center"><input type="checkbox" id="fFav"> Favorilerim</label>
+      <select id="sira"><option value="yeni">En yeni</option><option value="ucuz">Fiyat (artan)</option><option value="pahali">Fiyat (azalan)</option></select></div></div>
+    <div class="izgara" id="izgara"></div>
+  </div>
+  <section class="plan"><div class="wrap">
+    <div class="ust">AŞAMALI GELİŞTİRME</div>
+    <h2>İlk sürümde ne var, sonra ne eklenir</h2>
+    <div class="asamalar">
+      <div class="asama"><b>1. AŞAMA · İLK SÜRÜM</b><h3>Çalışan ilan sitesi</h3><ul><li>Satılık/kiralık arama ve filtreler</li><li>Emlakçı üyeliği, giriş, şifre sıfırlama</li><li>Emlakçının kendi ilanını ekleyip düzenlemesi</li><li>Yönetici onayı, ilan bildirme, hesap kısıtlama</li><li>Yetki belgesi no. kaydı ve kontrolü</li><li>Fotoğrafların küçültülüp saklanması</li><li>SEO uyumlu ilan sayfaları, Analytics ve Search Console</li></ul></div>
+      <div class="asama"><b>2. AŞAMA</b><h3>Kullanıcıyı geri getiren özellikler</h3><ul><li>Harita üzerinde arama</li><li>Kayıtlı arama ve yeni ilan e-postası</li><li>Emlakçıya görüntülenme ve arama istatistiği</li><li>İlanı Instagram görseline çeviren paylaşım aracı</li></ul></div>
+      <div class="asama"><b>3. AŞAMA</b><h3>Gelir modeli</h3><ul><li>Öne çıkarılan ilan ve vitrin</li><li>Emlakçı üyelik paketleri ve ödeme altyapısı</li><li>Yeni ilçe ve şehir açma</li><li>Gerekirse mobil uygulama</li></ul></div>
+    </div>
+    <p class="gider">Kod, veritabanı, alan adı ve sunucu hesapları sizin adınıza açılır; ücretli lisans yok, başlangıçtaki tek giderler alan adı ve sunucu. Teslimde kullanım kılavuzu verilir, başka bir yazılımcı da devam edebilir.</p>
+  </div></section>
+</div>
+
+<!-- EMLAKÇI -->
+<div class="sayfa" id="s-emlakci"><div class="wrap">
+  <h2>Emlakçı paneli</h2>
+  <p class="acik">Giriş yapan ofis: <b id="ofisAd"></b> · Yetki belgesi no. kayıtlı. Eklediğiniz ilan önce yönetici onayına düşer.</p>
+  <div class="ikili">
+    <div class="kutu"><h3>Yeni ilan</h3>
+      <form class="form" id="ilanForm">
+        <label class="tam">İlan başlığı<input name="baslik" required placeholder="ör. Kurtuluş Mah. 3+1 doğalgazlı daire"></label>
+        <label>İlan türü<select name="islem"><option>Satılık</option><option>Kiralık</option></select></label>
+        <label>Emlak türü<select name="tip"><option>Daire</option><option>Müstakil ev</option><option>Arsa</option><option>İşyeri</option></select></label>
+        <label>Fiyat (TL)<input name="fiyat" type="number" required min="0"></label>
+        <label>m² (brüt)<input name="m2" type="number" required min="1"></label>
+        <label>Oda<select name="oda"><option>2+1</option><option>1+1</option><option>3+1</option><option>4+1</option><option value="">Yok (arsa/işyeri)</option></select></label>
+        <label>Mahalle<select name="mah" id="formMah"></select></label>
+        <label class="tam">Açıklama<textarea name="aciklama" placeholder="Kat, cephe, ısınma, aidat..."></textarea></label>
+        <div class="tam"><label class="yukle" for="ilanFoto">📷 Fotoğraf ekle (en fazla 6)</label><input type="file" id="ilanFoto" accept="image/*" multiple hidden><div class="onizle" id="onizle"></div></div>
+        <div class="tam"><button class="btn" type="submit">Onaya gönder</button></div>
+      </form>
+    </div>
+    <div class="kutu"><h3>İlanlarım</h3>
+      <div class="istat"><div><b id="iYay">0</b><span>yayında</span></div><div><b id="iBek">0</b><span>onay bekliyor</span></div><div><b id="iGor">0</b><span>görüntülenme</span></div></div>
+      <div id="ilanlarim"></div>
+    </div>
+  </div>
+</div></div>
+
+<!-- YÖNETİCİ -->
+<div class="sayfa" id="s-yonetici"><div class="wrap">
+  <h2>Yönetici paneli</h2>
+  <p class="acik">İlanlar sizin onayınızdan sonra yayına girer. Bildirilen ilanlar ve emlak ofisleri buradan yönetilir.</p>
+  <div class="ikili">
+    <div>
+      <div class="kutu" style="margin-bottom:16px"><h3>Onay bekleyen ilanlar</h3><div id="onayListe"></div></div>
+      <div class="kutu"><h3>Bildirilen ilanlar</h3><div id="bildirimListe"></div></div>
+    </div>
+    <div class="kutu"><h3>Emlak ofisleri</h3><div id="ofisListe"></div></div>
+  </div>
+</div></div>
+
+<footer><div class="wrap">EmlakNet örnek ilk sürüm · İlan bilgilerinden ilanı veren emlak ofisi sorumludur.</div></footer>
+
+<div class="modal" id="detayM"><div class="mkutu"><button class="kapat" data-kapat>×</button><div id="detay"></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const U=(id,w=900)=>`https://images.unsplash.com/photo-${id}?w=${w}&q=65&auto=format&fit=crop`;
+const MAH=['Atatürk','Barış','Beşeylül','Cumhuriyet','Dedetaşı','Eski Cami','Gaffar Okkan','Gaziler','Kocaçeşme','Kurtuluş','Mitatpaşa','Namık Kemal','Sağlık','Seyrantepe','Şehitler','Yeşilyurt','Zafer'];
+const OFIS={a:{ad:'Emlak Ofisi A',belge:'3500123',durum:'aktif'},b:{ad:'Emlak Ofisi B',belge:'3500456',durum:'aktif'},c:{ad:'Emlak Ofisi C',belge:'Belge bekleniyor',durum:'inceleme'}};
+const IC=['1583847268964-b28dc8f51f92','1600489000022-c2086d79f9d4','1758448511322-8bfc73daf606','1622372738946-62e02505feb3'];
+const HAZIR=[
+ {id:1,baslik:'Kurtuluş Mah. 3+1 doğalgazlı, asansörlü daire',islem:'Satılık',tip:'Daire',fiyat:2950000,m2:145,oda:'3+1',mah:'Kurtuluş',ofis:'a',vitrin:1,foto:['1545324418-cc1a3fa10c00',...IC.slice(0,3)],aciklama:'3. kat, güney cephe, kombili, kapalı otopark. Okul ve pazar yerine yürüme mesafesinde.',gor:214},
+ {id:2,baslik:'Cumhuriyet Mah. bahçeli müstakil ev',islem:'Satılık',tip:'Müstakil ev',fiyat:4600000,m2:180,oda:'4+1',mah:'Cumhuriyet',ofis:'b',foto:['1580587771525-78b9dba3b914',IC[2],IC[3]],aciklama:'350 m² arsa içinde, meyve ağaçlı bahçe, çift katlı.',gor:388},
+ {id:3,baslik:'Atatürk Mah. eşyalı 1+1 öğrenciye uygun',islem:'Kiralık',tip:'Daire',fiyat:9500,m2:60,oda:'1+1',mah:'Atatürk',ofis:'a',foto:['1612637968894-660373e23b03',IC[0]],aciklama:'Eşyalı, aidat dahil, depozito bir kira.',gor:157},
+ {id:4,baslik:'Beşeylül Mah. 2+1 ara kat daire',islem:'Satılık',tip:'Daire',fiyat:2150000,m2:110,oda:'2+1',mah:'Beşeylül',ofis:'b',foto:['1479839672679-a46483c0e7c8',IC[1]],aciklama:'Yeni bina, doğalgaz, balkonlu.',gor:96},
+ {id:5,baslik:'Mitatpaşa Mah. ana cadde üstü dükkân',islem:'Kiralık',tip:'İşyeri',fiyat:22000,m2:85,oda:'',mah:'Mitatpaşa',ofis:'a',foto:['1613490493576-7fde63acd811'],aciklama:'Cadde cepheli, asma katlı, wc ve depo mevcut.',gor:71},
+ {id:6,baslik:'Gaziler Mah. 3+1 site içinde, havuzlu',islem:'Kiralık',tip:'Daire',fiyat:16500,m2:140,oda:'3+1',mah:'Gaziler',ofis:'b',vitrin:1,foto:['1721815693498-cc28507c0ba2',IC[2],IC[1]],aciklama:'Site içi havuz, güvenlik, otopark. Aidat 1.200 TL.',gor:245},
+ {id:7,baslik:'Seyrantepe Mah. imarlı 500 m² arsa',islem:'Satılık',tip:'Arsa',fiyat:1750000,m2:500,oda:'',mah:'Seyrantepe',ofis:'a',foto:['1758448756207-54505680d130'],aciklama:'Konut imarlı, köşe parsel, elektrik ve su hattı yakın.',gor:132},
+ {id:8,baslik:'Zafer Mah. 2+1 bakımlı daire',islem:'Kiralık',tip:'Daire',fiyat:12000,m2:100,oda:'2+1',mah:'Zafer',ofis:'b',foto:['1612637968894-660373e23b03',IC[3]],aciklama:'Yeni boyalı, kombili, aileye uygun.',gor:84},
+ {id:9,baslik:'Sağlık Mah. 4+1 dubleks',islem:'Satılık',tip:'Daire',fiyat:3850000,m2:210,oda:'4+1',mah:'Sağlık',ofis:'a',foto:['1545324418-cc1a3fa10c00',IC[2],IC[0]],aciklama:'Çatı dubleksi, iki banyo, şehir manzaralı.',gor:173},
+].map(x=>({...x,durum:'yayinda',zaman:1000-x.id}));
+const KEY='emlaknet-ornek-v1';
+let D; try{D=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+if(!D)D={ekli:[],durum:{},fav:{},bildirim:[{id:5,neden:'Fiyat yanlış görünüyor'}],ofis:{},gor:{}};
+const kaydet=()=>{try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){toast('Depolama dolu, daha az fotoğraf deneyin')}};
+const ilanlar=()=>[...D.ekli,...HAZIR].map(i=>({...i,durum:D.durum[i.id]||i.durum,gor:(i.gor||0)+(D.gor[i.id]||0)}));
+const ofisDurum=k=>D.ofis[k]||OFIS[k].durum;
+const tl=n=>Number(n).toLocaleString('tr-TR')+' TL';
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const foto=(f,w)=>f.startsWith('data:')?f:U(f,w);
+const $=s=>document.querySelector(s);
+const OTURUM='a';
+// filtre
+$('#fMah').innerHTML+=MAH.map(m=>`<option>${m}</option>`).join('');
+$('#formMah').innerHTML=MAH.map(m=>`<option>${m}</option>`).join('');
+let islem='Satılık';
+$('#tur').onclick=e=>{const b=e.target.closest('button');if(!b)return;islem=b.dataset.t;$('#tur').querySelectorAll('button').forEach(x=>x.classList.toggle('sec',x===b));ciz()};
+['#fTip','#fMah','#fOda','#sira','#fFav'].forEach(s=>$(s).onchange=ciz);
+$('#araBtn').onclick=()=>{ciz();$('#sonucBaslik').scrollIntoView({behavior:'smooth'})};
+function ciz(){
+  const tip=$('#fTip').value,mah=$('#fMah').value,oda=$('#fOda').value,min=+$('#fMin').value||0,max=+$('#fMax').value||Infinity,fav=$('#fFav').checked;
+  let l=ilanlar().filter(i=>i.durum==='yayinda'&&ofisDurum(i.ofis)!=='kisitli'&&i.islem===islem&&(!tip||i.tip===tip)&&(!mah||i.mah===mah)&&(!oda||i.oda===oda)&&i.fiyat>=min&&i.fiyat<=max&&(!fav||D.fav[i.id]));
+  const s=$('#sira').value;
+  l.sort((a,b)=>s==='ucuz'?a.fiyat-b.fiyat:s==='pahali'?b.fiyat-a.fiyat:(b.vitrin||0)-(a.vitrin||0)||b.zaman-a.zaman);
+  $('#sonucBaslik').textContent=`${islem} ilanlar (${l.length})`;
+  $('#izgara').innerHTML=l.length?l.map(i=>`<div class="kart" data-id="${i.id}"><div class="foto"><img loading="lazy" src="${foto(i.foto[0],700)}" alt=""><div class="etk"><span>${i.islem}</span>${i.vitrin?'<span class="vit">Vitrin</span>':''}</div><button class="fav" data-fav aria-label="Favori">${D.fav[i.id]?'♥':'♡'}</button></div><div class="govde"><div class="fy">${tl(i.fiyat)}${i.islem==='Kiralık'?'<small style="font-size:12px;font-weight:500"> /ay</small>':''}</div><h3>${esc(i.baslik)}</h3><div class="oz"><span>${esc(i.tip)}</span>${i.oda?`<span>${i.oda}</span>`:''}<span>${i.m2} m²</span><span>${esc(i.mah)} Mah.</span></div><div class="ofis">${OFIS[i.ofis].ad}</div></div></div>`).join(''):'<div class="bos">Bu kriterlere uygun ilan yok. Filtreleri genişletmeyi deneyin.</div>';
+}
+$('#izgara').onclick=e=>{const k=e.target.closest('.kart');if(!k)return;const id=isNaN(+k.dataset.id)?k.dataset.id:+k.dataset.id;
+  if(e.target.closest('[data-fav]')){D.fav[id]?delete D.fav[id]:D.fav[id]=1;kaydet();ciz();return}
+  detayAc(id)};
+function detayAc(id){
+  const i=ilanlar().find(x=>x.id===id);if(!i)return;
+  D.gor[id]=(D.gor[id]||0)+1;kaydet();
+  const o=OFIS[i.ofis];
+  $('#detay').innerHTML=`<div class="detay"><div><div class="buyuk"><img id="dB" src="${foto(i.foto[0],1100)}" alt=""></div>${i.foto.length>1?`<div class="kucuk">${i.foto.map((f,n)=>`<img src="${foto(f,200)}" data-b="${foto(f,1100)}" class="${n?'':'sec'}" alt="">`).join('')}</div>`:''}</div>
+  <div class="bilgi"><div style="font-size:12px;font-weight:700;color:var(--acc);letter-spacing:.08em">${i.islem.toLocaleUpperCase('tr')} · ${esc(i.tip).toLocaleUpperCase('tr')}</div><h2 style="font-size:23px">${esc(i.baslik)}</h2><div class="fy">${tl(i.fiyat)}</div>
+  <table><tr><td>Mahalle</td><td>${esc(i.mah)}, Salihli</td></tr><tr><td>Brüt m²</td><td>${i.m2}</td></tr>${i.oda?`<tr><td>Oda</td><td>${i.oda}</td></tr>`:''}<tr><td>İlan no</td><td>EN-${String(i.id).slice(-6)}</td></tr></table>
+  <p style="font-size:14px;color:var(--ink2)">${esc(i.aciklama)}</p>
+  <div class="ofiskart"><b>${o.ad}</b><small>Yetkilendirme belge no: ${o.belge}</small><div class="btnler"><a class="btn" href="tel:+900000000000">Ara</a><a class="btn ikincil" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent('Merhaba, EmlakNet\'teki "'+i.baslik+'" ilanı (EN-'+String(i.id).slice(-6)+') hakkında bilgi almak istiyorum.')}">WhatsApp</a></div></div>
+  <button class="bildir" data-bildir="${i.id}">⚑ Bu ilanı bildir (yanlış, yanıltıcı ya da izinsiz)</button></div></div>`;
+  $('#detayM').classList.add('ac');
+  const k=$('#detay .kucuk');if(k)k.onclick=e=>{if(e.target.tagName==='IMG'){$('#dB').src=e.target.dataset.b;k.querySelectorAll('img').forEach(x=>x.classList.toggle('sec',x===e.target))}};
+  $('#detay [data-bildir]').onclick=()=>{D.bildirim.unshift({id,neden:'Ziyaretçi bildirimi'});kaydet();rozet();toast('Teşekkürler, ilan yönetici incelemesine gönderildi')};
+}
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m||e.target.hasAttribute('data-kapat'))m.classList.remove('ac')}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')$('#detayM').classList.remove('ac')});
+// roller
+$('#rol').onclick=e=>{const b=e.target.closest('button');if(!b)return;$('#rol').querySelectorAll('button').forEach(x=>x.classList.toggle('sec',x===b));document.querySelectorAll('.sayfa').forEach(s=>s.classList.toggle('ac',s.id==='s-'+b.dataset.r));window.scrollTo(0,0);
+  if(b.dataset.r==='emlakci')emlakciCiz();if(b.dataset.r==='yonetici')yoneticiCiz();if(b.dataset.r==='ziyaretci')ciz()};
+// emlakçı
+$('#ofisAd').textContent=OFIS[OTURUM].ad;
+let yeniFoto=[];
+function kucult(file){return new Promise(r=>{const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const m=1000,s=Math.min(1,m/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);c.getContext('2d').drawImage(im,0,0,c.width,c.height);r(c.toDataURL('image/jpeg',.75))};im.onerror=()=>r(null);im.src=fr.result};fr.readAsDataURL(file)})}
+$('#ilanFoto').onchange=async e=>{for(const f of [...e.target.files].slice(0,6-yeniFoto.length)){const d=await kucult(f);if(d)yeniFoto.push(d)}$('#onizle').innerHTML=yeniFoto.map(f=>`<img src="${f}" alt="">`).join('');e.target.value=''};
+$('#ilanForm').onsubmit=e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));
+  D.ekli.unshift({id:'y'+Date.now(),baslik:f.baslik.trim(),islem:f.islem,tip:f.tip,fiyat:+f.fiyat,m2:+f.m2,oda:f.oda,mah:f.mah,ofis:OTURUM,foto:yeniFoto.length?yeniFoto:[IC[0]],aciklama:f.aciklama.trim(),durum:'bekliyor',zaman:Date.now()});
+  kaydet();yeniFoto=[];$('#onizle').innerHTML='';e.target.reset();emlakciCiz();rozet();toast('İlan onaya gönderildi. Yönetici sekmesinden onaylayabilirsiniz.')};
+const DURUM={yayinda:['d-yayinda','Yayında'],bekliyor:['d-bekliyor','Onay bekliyor'],red:['d-red','Reddedildi'],kaldirildi:['d-red','Kaldırıldı']};
+function emlakciCiz(){
+  const l=ilanlar().filter(i=>i.ofis===OTURUM);
+  $('#iYay').textContent=l.filter(i=>i.durum==='yayinda').length;$('#iBek').textContent=l.filter(i=>i.durum==='bekliyor').length;$('#iGor').textContent=l.reduce((t,i)=>t+i.gor,0);
+  $('#ilanlarim').innerHTML=l.map(i=>`<div class="satir"><img src="${foto(i.foto[0],200)}" alt=""><div class="ad">${esc(i.baslik)}<small>${tl(i.fiyat)} · ${i.gor} görüntülenme</small></div><span class="durum ${DURUM[i.durum][0]}">${DURUM[i.durum][1]}</span></div>`).join('');
+}
+// yönetici
+function rozet(){$('#bekSay').textContent=ilanlar().filter(i=>i.durum==='bekliyor').length+D.bildirim.length}
+function yoneticiCiz(){
+  const b=ilanlar().filter(i=>i.durum==='bekliyor');
+  $('#onayListe').innerHTML=b.length?b.map(i=>`<div class="satir" data-id="${i.id}"><img src="${foto(i.foto[0],200)}" alt=""><div class="ad">${esc(i.baslik)}<small>${OFIS[i.ofis].ad} · ${tl(i.fiyat)}</small></div><button class="mini" data-a="onay">Onayla</button><button class="mini k" data-a="red">Reddet</button></div>`).join(''):'<p class="bosnot">Bekleyen ilan yok. Emlakçı panelinden bir ilan ekleyip burada onaylayabilirsiniz.</p>';
+  const all=ilanlar();
+  $('#bildirimListe').innerHTML=D.bildirim.length?D.bildirim.map((r,n)=>{const i=all.find(x=>x.id===r.id);return i?`<div class="satir" data-n="${n}" data-id="${i.id}"><img src="${foto(i.foto[0],200)}" alt=""><div class="ad">${esc(i.baslik)}<small>${esc(r.neden)}</small></div><button class="mini" data-a="tamam">Sorun yok</button><button class="mini k" data-a="kaldir">Kaldır</button></div>`:''}).join(''):'<p class="bosnot">Bildirilen ilan yok.</p>';
+  $('#ofisListe').innerHTML=Object.entries(OFIS).map(([k,o])=>{const d=ofisDurum(k);const n=all.filter(i=>i.ofis===k&&i.durum==='yayinda').length;return `<div class="satir" data-o="${k}"><div class="ad">${o.ad}<small>Belge: ${o.belge} · ${n} yayında ilan</small></div><span class="durum ${d==='aktif'?'d-yayinda':d==='kisitli'?'d-red':'d-bekliyor'}">${d==='aktif'?'Aktif':d==='kisitli'?'Kısıtlı':'Belge incelemede'}</span>${d==='kisitli'?'<button class="mini" data-a="ac">Aç</button>':'<button class="mini k" data-a="kisitla">Kısıtla</button>'}</div>`}).join('');
+}
+document.getElementById('s-yonetici').addEventListener('click',e=>{const a=e.target.dataset.a;if(!a)return;const s=e.target.closest('.satir');const raw=s.dataset.id;const id=raw&&(isNaN(+raw)?raw:+raw);
+  if(a==='onay'){D.durum[id]='yayinda';toast('İlan yayına alındı')}
+  if(a==='red'){D.durum[id]='red';toast('İlan reddedildi, emlakçıya bildirim gider')}
+  if(a==='tamam'){D.bildirim.splice(+s.dataset.n,1)}
+  if(a==='kaldir'){D.durum[id]='kaldirildi';D.bildirim.splice(+s.dataset.n,1);toast('İlan yayından kaldırıldı')}
+  if(a==='kisitla'){D.ofis[s.dataset.o]='kisitli';toast('Ofisin ilanları gizlendi')}
+  if(a==='ac'){D.ofis[s.dataset.o]='aktif'}
+  kaydet();yoneticiCiz();rozet()});
+let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('ac');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('ac'),2600)}
+ciz();rozet();
+</script>
+</body>
+</html>

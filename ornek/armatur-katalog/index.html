@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lümina Aydınlatma — Örnek Ürün Kataloğu</title>
+<meta name="description" content="Ödeme almayan, ürünleri WhatsApp'a yönlendiren armatür kataloğu ve ürün ekleme paneli örneği.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1d1b19;--ink2:#5d574f;--line:#e7e1d8;--bg:#fbf8f3;--card:#fff;--acc:#c8861d;--acc2:#a86d10;--wa:#1f9d55;--soft:#f3ece2}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;letter-spacing:-.01em;line-height:1.15}
+.wrap{max-width:1160px;margin:0 auto;padding:0 16px}
+.ornek{background:#2b2724;color:#e9e2d6;font-size:12px;text-align:center;padding:6px 16px}
+header{position:sticky;top:0;z-index:10;background:rgba(251,248,243,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:62px;gap:12px}
+.logo{font-family:Fraunces,serif;font-weight:700;font-size:23px;letter-spacing:.06em;text-decoration:none;color:var(--ink)}
+.logo small{font-family:Inter;font-size:10px;font-weight:600;letter-spacing:.16em;color:var(--ink2);margin-left:6px}
+.ustbtn{display:flex;gap:8px}
+.ghost{border:1.5px solid var(--ink);background:none;color:var(--ink);border-radius:10px;padding:8px 13px;font:600 13.5px Inter,sans-serif;cursor:pointer;text-decoration:none;white-space:nowrap}
+.ghost.koyu{background:var(--ink);color:#fff}
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:36px;align-items:center;padding:42px 16px 30px}
+.hero>*{min-width:0}
+.ust{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--acc)}
+.hero h1{font-size:44px;margin:8px 0 12px}
+.hero p{color:var(--ink2);font-size:16.5px;max-width:470px}
+.hero .gorsel{border-radius:18px;overflow:hidden;aspect-ratio:5/4;background:var(--soft)}
+.hero .gorsel img{width:100%;height:100%;object-fit:cover}
+.rakam{display:flex;gap:26px;margin-top:22px;flex-wrap:wrap}
+.rakam b{display:block;font-family:Fraunces,serif;font-size:24px}
+.rakam span{font-size:12.5px;color:var(--ink2)}
+.arac{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0 18px}
+.kat{display:flex;gap:8px;flex-wrap:wrap;flex:1}
+.kat button{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:7px 14px;font:600 13.5px Inter,sans-serif;cursor:pointer;color:var(--ink2)}
+.kat button.sec{border-color:var(--ink);background:var(--ink);color:#fff}
+.ara{border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;font:inherit;font-size:14.5px;min-width:220px;background:#fff}
+.ara:focus{outline:none;border-color:var(--ink)}
+.izgara{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding-bottom:56px}
+.kart{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.kart:hover{transform:translateY(-2px);box-shadow:0 12px 28px -18px rgba(60,40,20,.45)}
+.kart .foto{aspect-ratio:1;background:var(--soft);position:relative;overflow:hidden;flex:none}
+.kart .foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.kart .foto i{position:absolute;top:10px;left:10px;font-style:normal;background:rgba(255,255,255,.92);font-size:11px;font-weight:700;padding:3px 8px;border-radius:99px}
+.kart .govde{padding:12px 14px 14px;display:flex;flex-direction:column;gap:3px;flex:1}
+.kart h3{font-family:Inter;font-size:15px;font-weight:700}
+.kart .ozl{font-size:12.5px;color:var(--ink2)}
+.kart .alt{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:10px;gap:8px}
+.kart .fy{font-weight:800;font-size:17px}
+.wa{display:inline-flex;align-items:center;gap:6px;background:var(--wa);color:#fff;border:0;border-radius:10px;padding:8px 11px;font:700 13px Inter,sans-serif;cursor:pointer;text-decoration:none;white-space:nowrap}
+.wa svg{width:16px;height:16px;fill:#fff}
+.bos{grid-column:1/-1;text-align:center;color:var(--ink2);padding:40px 0}
+section.koyu{background:var(--ink);color:#f3ede4;padding:52px 0}
+.adimlar{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.adim{border:1px solid #3a3531;border-radius:14px;padding:18px}
+.adim b{font-family:Fraunces,serif;font-size:28px;color:var(--acc)}
+.adim h3{font-family:Inter;font-size:15.5px;margin:6px 0 4px}
+.adim p{font-size:13.5px;color:#bdb4a8}
+footer{background:#161412;color:#a69d91;font-size:13px;padding:30px 0 90px}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.yuzen{position:fixed;right:18px;bottom:18px;z-index:15;width:56px;height:56px;border-radius:50%;background:var(--wa);display:grid;place-items:center;box-shadow:0 10px 24px -8px rgba(0,0,0,.4)}
+.yuzen svg{width:28px;height:28px;fill:#fff}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(20,16,12,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:30}
+.modal.ac{display:flex}
+.kutu{background:#fff;border-radius:18px;max-width:880px;width:100%;max-height:92vh;overflow:auto;position:relative}
+.kapat{position:absolute;top:10px;right:12px;width:34px;height:34px;border-radius:50%;border:0;background:#fff;font-size:22px;cursor:pointer;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.detay{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.detay>*{min-width:0}
+.detay .foto{aspect-ratio:1;background:var(--soft);position:relative;overflow:hidden}
+.detay .foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.kucuk{display:flex;gap:6px;padding:8px}
+.kucuk img{width:58px;height:58px;object-fit:cover;border-radius:8px;cursor:pointer;border:2px solid transparent}
+.kucuk img.sec{border-color:var(--ink)}
+.detay .bilgi{padding:26px 24px;display:flex;flex-direction:column;gap:10px}
+.detay h2{font-size:28px}
+.detay .fy{font-size:28px;font-weight:800}
+.detay table{border-collapse:collapse;font-size:14px;width:100%}
+.detay td{padding:7px 0;border-top:1px solid var(--line)}
+.detay td:first-child{color:var(--ink2);width:45%}
+.detay .wa{justify-content:center;padding:14px;font-size:16px;margin-top:6px}
+.notk{font-size:12px;color:var(--ink2)}
+/* panel */
+.panel{padding:24px}
+.panel h2{font-size:26px;margin-bottom:4px}
+.panel .acik{color:var(--ink2);font-size:14px;margin-bottom:16px}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:10px;background:var(--soft);border-radius:14px;padding:16px}
+.form label{font-size:12.5px;font-weight:600;display:grid;gap:4px}
+.form .tam{grid-column:1/-1}
+.form input,.form select,.form textarea{font:inherit;font-size:15px;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;width:100%}
+.form textarea{min-height:64px;resize:vertical}
+.yukle{border:2px dashed #d9c9b3;border-radius:12px;padding:14px;text-align:center;font-size:14px;color:var(--ink2);cursor:pointer;background:#fff}
+.onizle{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.onizle img{width:64px;height:64px;object-fit:cover;border-radius:8px}
+.btn{border:0;border-radius:12px;background:var(--acc);color:#fff;font:800 15px Inter,sans-serif;padding:13px 18px;cursor:pointer}
+.btn:hover{background:var(--acc2)}
+.liste{margin-top:18px;display:grid;gap:8px}
+.satir{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:12px;padding:8px 10px;background:#fff}
+.satir img{width:48px;height:48px;border-radius:8px;object-fit:cover;flex:none}
+.satir .ad{flex:1;min-width:0;font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.satir .ad small{display:block;font-weight:400;color:var(--ink2)}
+.satir input{width:96px;font:inherit;font-size:14px;border:1.5px solid var(--line);border-radius:8px;padding:6px 8px}
+.satir button{border:0;background:none;color:#b3261e;font:600 13px Inter,sans-serif;cursor:pointer}
+.satir .gz{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--ink2)}
+.bildirim{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;z-index:40;opacity:0;transition:opacity .2s;pointer-events:none}
+.bildirim.ac{opacity:1}
+@media(max-width:960px){.izgara{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:760px){
+.hero{grid-template-columns:1fr;padding-top:24px;gap:20px}.hero h1{font-size:34px}
+.izgara{grid-template-columns:repeat(2,1fr);gap:10px}
+.kart .alt{flex-direction:column;align-items:stretch}.kart .wa{justify-content:center}
+.adimlar{grid-template-columns:1fr}
+.detay{grid-template-columns:1fr}.form{grid-template-columns:1fr}
+.ara{min-width:0;width:100%}
+.logo small{display:none}
+.ustbtn .ghost:not(.koyu){display:none}
+}
+</style>
+</head>
+<body>
+<div class="ornek">Örnek sayfadır. Marka, ürünler ve fiyatlar temsilidir; WhatsApp düğmesi mesajı hazırlar, kime gideceğini siz seçersiniz.</div>
+<header><div class="wrap">
+  <a class="logo" href="#">LÜMİNA<small>AYDINLATMA</small></a>
+  <div class="ustbtn"><a class="ghost" href="#urunler">Ürünler</a><button class="ghost koyu" id="panelAc">Ürün ekle / düzenle</button></div>
+</div></header>
+
+<div class="wrap hero">
+  <div>
+    <div class="ust">ARMATÜR · SARKIT · APLİK · LAMBADER</div>
+    <h1>Evinize ve işyerinize uygun armatürler</h1>
+    <p>Ürünü seçin, tek dokunuşla WhatsApp'tan sorun. Stok, renk ve toplu alım fiyatı için doğrudan bize yazabilirsiniz.</p>
+    <div class="rakam"><div><b id="say">12</b><span>ürün</span></div><div><b>5</b><span>kategori</span></div><div><b>WhatsApp</b><span>ile hızlı dönüş</span></div></div>
+  </div>
+  <div class="gorsel"><img src="https://images.unsplash.com/photo-1540932239986-30128078f3c5?w=1000&q=70&auto=format&fit=crop" alt="Yanan sarkıt armatürler"></div>
+</div>
+
+<div class="wrap" id="urunler">
+  <div class="arac">
+    <div class="kat" id="kat"></div>
+    <input class="ara" id="ara" type="search" placeholder="Ürün ara (ör. pirinç, LED)">
+  </div>
+  <div class="izgara" id="izgara"></div>
+</div>
+
+<section class="koyu"><div class="wrap">
+  <div class="ust">SİTEYİ NASIL YÖNETİRSİNİZ</div>
+  <h2 style="font-size:30px;margin-top:6px">Ürünleri telefonunuzdan siz eklersiniz</h2>
+  <div class="adimlar">
+    <div class="adim"><b>1</b><h3>Ürün ekle</h3><p>Ad, fiyat, kategori ve açıklamayı yazın, fotoğrafları telefondan seçin. Fotoğraflar otomatik küçültülür.</p></div>
+    <div class="adim"><b>2</b><h3>Fiyatı güncelle</h3><p>Listeden fiyatı değiştirin ya da ürünü gizleyin. Değişiklik sitede hemen görünür.</p></div>
+    <div class="adim"><b>3</b><h3>Müşteri WhatsApp'tan yazar</h3><p>Ürün adı, fiyatı ve linki hazır yazılmış mesajla size gelir; ödeme sitede alınmaz.</p></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap"><span>© Lümina Aydınlatma (örnek)</span><span>Adres, telefon ve Instagram bilgileri burada yer alır.</span></div></footer>
+
+<a class="yuzen" id="yuzen" target="_blank" rel="noopener" aria-label="WhatsApp ile yazın"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.5-.2z"/></svg></a>
+
+<div class="modal" id="detayM"><div class="kutu"><button class="kapat" data-kapat>×</button><div id="detay"></div></div></div>
+<div class="modal" id="panelM"><div class="kutu"><button class="kapat" data-kapat>×</button>
+  <div class="panel">
+    <h2>Ürün paneli</h2>
+    <p class="acik">Gerçek sitede bu sayfa şifreyle açılır. Bu örnekte eklediğiniz ürünler yalnız sizin tarayıcınızda saklanır.</p>
+    <form class="form" id="form">
+      <label class="tam">Ürün adı<input name="ad" required placeholder="ör. Pirinç Kubbe Sarkıt"></label>
+      <label>Fiyat (TL)<input name="fiyat" type="number" min="0" step="1" required placeholder="1450"></label>
+      <label>Kategori<select name="kat" id="katSec"></select></label>
+      <label>Ölçü / güç<input name="olcu" placeholder="ör. Ø30 cm · E27"></label>
+      <label>Renk / malzeme<input name="renk" placeholder="ör. Pirinç, mat siyah"></label>
+      <label class="tam">Açıklama<textarea name="aciklama" placeholder="Kısa bilgi, kullanım alanı"></textarea></label>
+      <div class="tam"><label class="yukle" for="dosya">📷 Fotoğraf seç (birden fazla seçebilirsiniz)</label><input id="dosya" type="file" accept="image/*" multiple hidden><div class="onizle" id="onizle"></div></div>
+      <div class="tam"><button class="btn" type="submit">Ürünü yayınla</button></div>
+    </form>
+    <div class="liste" id="liste"></div>
+  </div>
+</div></div>
+<div class="bildirim" id="bildirim"></div>
+
+<script>
+const U = id => `https://images.unsplash.com/photo-${id}?w=700&q=70&auto=format&fit=crop`;
+const KATLAR = ['Sarkıt','Aplik','Masa lambası','Lambader','Dış mekân'];
+const HAZIR = [
+ {id:'h1',ad:'Opal Kubbe Sarkıt',kat:'Sarkıt',fiyat:1450,olcu:'Ø35 cm · E27',renk:'Beyaz opal',aciklama:'Mutfak adası ve yemek masası üstü için yumuşak, dağınık ışık.',foto:[U('1565814329452-e1efa11c5b89'),U('1513506003901-1e6a229e2d15')]},
+ {id:'h2',ad:'Üçlü Siyah Sarkıt Seti',kat:'Sarkıt',fiyat:2890,olcu:'3 × Ø18 cm · E27',renk:'Mat siyah',aciklama:'Bar tezgâhı ve uzun masalar için üçlü takım, boyları ayrı ayrı ayarlanır.',foto:[U('1512418408532-5445158b1445')]},
+ {id:'h3',ad:'Pirinç Konik Sarkıt',kat:'Sarkıt',fiyat:1980,olcu:'Ø22 cm · E27',renk:'Antik pirinç',aciklama:'Sıcak tonlu, kafe ve restoran projelerinde sık tercih edilen model.',foto:[U('1568482224714-7843360d588a')]},
+ {id:'h4',ad:'Hasır Küre Sarkıt',kat:'Sarkıt',fiyat:1650,olcu:'Ø40 cm · E27',renk:'Doğal hasır',aciklama:'Salon ve yatak odasında desenli gölge bırakan el örgüsü küre.',foto:[U('1578678809569-1a8ead9cb802')]},
+ {id:'h5',ad:'Cam Fanuslu Aplik',kat:'Aplik',fiyat:890,olcu:'26 cm · E14',renk:'Pirinç, şeffaf cam',aciklama:'Koridor, banyo aynası yanı ve merdiven için duvar apliği.',foto:[U('1733061118163-d30da1b07507')]},
+ {id:'h6',ad:'Minimal Duvar Apliği',kat:'Aplik',fiyat:740,olcu:'18 cm · GU10',renk:'Mat beyaz',aciklama:'Yukarı-aşağı ışık veren sade model, otel ve ofis koridorlarına uygun.',foto:[U('1660659868997-b23a672ccbd6')]},
+ {id:'h7',ad:'Seramik Gövdeli Masa Lambası',kat:'Masa lambası',fiyat:1120,olcu:'H 48 cm · E27',renk:'Krem, keten abajur',aciklama:'Komodin ve konsol üstü için kumaş abajurlu masa lambası.',foto:[U('1517991104123-1d56a6e81ed9')]},
+ {id:'h8',ad:'Ayarlanabilir Çalışma Lambası',kat:'Masa lambası',fiyat:960,olcu:'Kol 40 cm · E27',renk:'Antrasit',aciklama:'Eklemli kol, çalışma masası ve okuma köşesi için.',foto:[U('1507473885765-e6ed057f782c')]},
+ {id:'h9',ad:'Tripod Lambader',kat:'Lambader',fiyat:2350,olcu:'H 155 cm · E27',renk:'Turuncu, ceviz ayak',aciklama:'Salon köşesine dekoratif lambader, ayak pedallı anahtar.',foto:[U('1621177555630-b861919c864f')]},
+ {id:'h10',ad:'Fener Tipi Dış Mekân Aplik',kat:'Dış mekân',fiyat:1290,olcu:'34 cm · E27 · IP44',renk:'Siyah',aciklama:'Bahçe kapısı, giriş ve balkon için suya dayanıklı fener aplik.',foto:[U('1691752361653-1c8aa2565530')]},
+];
+const KEY='lumina-urunler-v1';
+let ekli=[]; try{ekli=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){}
+let gizli={}; try{gizli=JSON.parse(localStorage.getItem(KEY+'-g')||'{}')}catch(e){}
+let fiyatDeg={}; try{fiyatDeg=JSON.parse(localStorage.getItem(KEY+'-f')||'{}')}catch(e){}
+const kaydet=()=>{try{localStorage.setItem(KEY,JSON.stringify(ekli));localStorage.setItem(KEY+'-g',JSON.stringify(gizli));localStorage.setItem(KEY+'-f',JSON.stringify(fiyatDeg))}catch(e){toast('Tarayıcı depolaması dolu, daha küçük fotoğraf deneyin')}};
+const tum=()=>[...ekli,...HAZIR].map(u=>({...u,fiyat:fiyatDeg[u.id]??u.fiyat}));
+const tl=n=>Number(n).toLocaleString('tr-TR')+' TL';
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const WA_SVG=document.querySelector('.yuzen svg').outerHTML;
+const waLink=u=>'https://wa.me/?text='+encodeURIComponent(u?`Merhaba, "${u.ad}" (${tl(u.fiyat)}) hakkında bilgi almak istiyorum. Stokta var mı?`:'Merhaba, ürünleriniz hakkında bilgi almak istiyorum.');
+document.getElementById('yuzen').href=waLink();
+let secKat='Tümü', aranan='';
+const $=s=>document.querySelector(s);
+function katCiz(){ $('#kat').innerHTML=['Tümü',...KATLAR].map(k=>`<button class="${k===secKat?'sec':''}">${k}</button>`).join(''); }
+$('#kat').onclick=e=>{if(e.target.tagName==='BUTTON'){secKat=e.target.textContent;katCiz();ciz()}};
+$('#ara').oninput=e=>{aranan=e.target.value.toLocaleLowerCase('tr');ciz()};
+function ciz(){
+  const l=tum().filter(u=>!gizli[u.id]);
+  $('#say').textContent=l.length;
+  const g=l.filter(u=>(secKat==='Tümü'||u.kat===secKat)&&(!aranan||(u.ad+' '+u.renk+' '+u.olcu).toLocaleLowerCase('tr').includes(aranan)));
+  $('#izgara').innerHTML=g.length?g.map(u=>`<div class="kart" data-id="${u.id}"><div class="foto"><img loading="lazy" src="${u.foto[0]||''}" alt="${esc(u.ad)}">${u.yeni?'<i>Yeni</i>':''}</div><div class="govde"><h3>${esc(u.ad)}</h3><div class="ozl">${esc(u.olcu)}${u.renk?' · '+esc(u.renk):''}</div><div class="alt"><span class="fy">${tl(u.fiyat)}</span><a class="wa" target="_blank" rel="noopener" href="${waLink(u)}" data-wa>${WA_SVG}Sor</a></div></div></div>`).join(''):'<div class="bos">Bu aramaya uygun ürün yok.</div>';
+}
+$('#izgara').onclick=e=>{ if(e.target.closest('[data-wa]'))return; const k=e.target.closest('.kart'); if(k)detayAc(k.dataset.id); };
+function detayAc(id){
+  const u=tum().find(x=>x.id===id); if(!u)return;
+  $('#detay').innerHTML=`<div class="detay"><div><div class="foto"><img id="dbuyuk" src="${u.foto[0]}" alt=""></div>${u.foto.length>1?`<div class="kucuk">${u.foto.map((f,i)=>`<img src="${f}" class="${i?'':'sec'}" alt="">`).join('')}</div>`:''}</div>
+  <div class="bilgi"><div class="ust">${esc(u.kat).toLocaleUpperCase('tr')}</div><h2>${esc(u.ad)}</h2><div class="fy">${tl(u.fiyat)}</div><p style="color:var(--ink2)">${esc(u.aciklama)}</p>
+  <table><tr><td>Ölçü / duy</td><td>${esc(u.olcu)||'-'}</td></tr><tr><td>Renk / malzeme</td><td>${esc(u.renk)||'-'}</td></tr><tr><td>Ödeme</td><td>WhatsApp'tan görüşerek</td></tr></table>
+  <a class="wa" target="_blank" rel="noopener" href="${waLink(u)}">${WA_SVG}WhatsApp'tan sor</a><div class="notk">Mesaj ürün adı ve fiyatıyla hazır yazılır.</div></div></div>`;
+  $('#detayM').classList.add('ac');
+  const k=$('#detay .kucuk'); if(k)k.onclick=e=>{if(e.target.tagName==='IMG'){$('#dbuyuk').src=e.target.src;k.querySelectorAll('img').forEach(i=>i.classList.toggle('sec',i===e.target))}};
+}
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m||e.target.hasAttribute('data-kapat'))m.classList.remove('ac')}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal.ac').forEach(m=>m.classList.remove('ac'))});
+// panel
+$('#katSec').innerHTML=KATLAR.map(k=>`<option>${k}</option>`).join('');
+$('#panelAc').onclick=()=>{listeCiz();$('#panelM').classList.add('ac')};
+let fotolar=[];
+function kucult(file){return new Promise(r=>{const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const m=900,s=Math.min(1,m/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);c.getContext('2d').drawImage(im,0,0,c.width,c.height);r(c.toDataURL('image/jpeg',.78))};im.onerror=()=>r(null);im.src=fr.result};fr.readAsDataURL(file)})}
+$('#dosya').onchange=async e=>{for(const f of [...e.target.files].slice(0,5)){const d=await kucult(f);if(d)fotolar.push(d)}$('#onizle').innerHTML=fotolar.map(f=>`<img src="${f}" alt="">`).join('');e.target.value=''};
+$('#form').onsubmit=e=>{
+  e.preventDefault(); const f=new FormData(e.target);
+  const u={id:'e'+Date.now(),ad:f.get('ad').trim(),fiyat:+f.get('fiyat'),kat:f.get('kat'),olcu:f.get('olcu').trim(),renk:f.get('renk').trim(),aciklama:f.get('aciklama').trim(),foto:fotolar.length?fotolar:[U('1559924508-1461423083c5')],yeni:true};
+  ekli.unshift(u); kaydet(); fotolar=[]; $('#onizle').innerHTML=''; e.target.reset();
+  listeCiz(); secKat='Tümü'; katCiz(); ciz(); toast('Ürün yayında, katalogun başında görünüyor');
+};
+function listeCiz(){
+  $('#liste').innerHTML=tum().map(u=>`<div class="satir" data-id="${u.id}"><img src="${u.foto[0]}" alt=""><div class="ad">${esc(u.ad)}<small>${esc(u.kat)}</small></div><input type="number" value="${u.fiyat}" data-f aria-label="Fiyat"><label class="gz"><input type="checkbox" style="width:auto" data-g ${gizli[u.id]?'':'checked'}>Yayında</label>${u.id[0]==='e'?'<button data-s>Sil</button>':''}</div>`).join('');
+}
+$('#liste').addEventListener('change',e=>{const id=e.target.closest('.satir').dataset.id;
+  if(e.target.hasAttribute('data-f')){const v=+e.target.value;const x=ekli.find(u=>u.id===id);if(x)x.fiyat=v;else fiyatDeg[id]=v;toast('Fiyat güncellendi')}
+  if(e.target.hasAttribute('data-g')){if(e.target.checked)delete gizli[id];else gizli[id]=1}
+  kaydet();ciz();});
+$('#liste').addEventListener('click',e=>{if(e.target.hasAttribute('data-s')){const id=e.target.closest('.satir').dataset.id;ekli=ekli.filter(u=>u.id!==id);kaydet();listeCiz();ciz()}});
+let tt;function toast(m){const b=$('#bildirim');b.textContent=m;b.classList.add('ac');clearTimeout(tt);tt=setTimeout(()=>b.classList.remove('ac'),2200)}
+katCiz();ciz();
+</script>
+</body>
+</html>
