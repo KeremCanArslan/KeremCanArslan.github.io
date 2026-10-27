@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Site Yönetim Sistemi — Örnek</title>
+<meta name="description" content="Blok ve daire sayılarının panelden tanımlandığı, aidat, duyuru ve arıza taleplerinin yönetici paneli ile sakin uygulaması arasında anında eşitlendiği site yönetimi örneği.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#17181c;--ink2:#5f6470;--line:#e6e7ea;--bg:#f2f4f3;--card:#fff;--acc:#0f766e;--acc2:#0d5f59;--ok:#15803d;--okbg:#e7f6ec;--bek:#b45309;--bekbg:#fdf2e3;--soft:#f3f5f6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+.ornek{background:#1f2023;color:#e5e5e5;font-size:12px;text-align:center;padding:6px 16px}
+.ust{max-width:1220px;margin:0 auto;padding:28px 16px 6px}
+.ust h1{font-family:Fraunces,serif;font-size:34px;line-height:1.15}
+.ust p{color:var(--ink2);margin-top:6px;max-width:720px}
+.sekme{display:none;background:#e3e7e5;border-radius:12px;padding:4px;margin:14px 16px 0;gap:4px}
+.sekme button{flex:1;border:0;background:none;border-radius:9px;padding:10px;font-weight:700;font-size:14px;color:var(--ink2);cursor:pointer}
+.sekme button.sec{background:#fff;color:var(--ink)}
+.sahne{max-width:1220px;margin:0 auto;padding:18px 16px 50px;display:flex;gap:32px;justify-content:center;align-items:flex-start}
+.kolon{display:flex;flex-direction:column;gap:10px;min-width:0}
+.kolon>b{font-size:12px;letter-spacing:.12em;color:var(--ink2);text-transform:uppercase}
+/* panel */
+.panel{width:720px;max-width:100%;background:var(--card);border-radius:18px;box-shadow:0 20px 50px -30px rgba(0,0,0,.35);overflow:hidden}
+.pust{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--line)}
+.pust .logo{font-weight:800;font-size:17px}
+.pust .logo span{background:var(--acc);color:#fff;padding:1px 7px;border-radius:6px;margin-right:6px}
+.pust small{color:var(--ink2)}
+.ozet{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:16px 20px}
+.ozet div{background:var(--soft);border-radius:12px;padding:10px 12px}
+.ozet small{display:block;color:var(--ink2);font-size:12px}
+.ozet b{font-size:20px}
+.bolum{padding:4px 20px 18px}
+.bolum h3{font-size:14px;margin:10px 0 8px;display:flex;justify-content:space-between;align-items:center}
+.bolum h3 small{font-weight:500;color:var(--ink2)}
+.bloklar{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:8px}
+.blk{border:1.5px solid var(--line);border-radius:12px;padding:8px 10px}
+.blk b{display:block;font-size:13px}
+.blk label{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink2)}
+.blk input{width:52px;border:1px solid var(--line);border-radius:7px;padding:3px 6px;font-size:14px;color:var(--ink)}
+.ekle{border:1.5px dashed #b9c2bf;border-radius:12px;background:none;color:var(--ink2);font-weight:600;font-size:13px;cursor:pointer;min-height:58px}
+.satir{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.satir input,.satir select{border:1.5px solid var(--line);border-radius:9px;padding:6px 9px;font-size:14px;background:#fff}
+.satir input[type=number]{width:110px}
+.tablo{max-height:260px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:8px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{position:sticky;top:0;background:#fafbfb;text-align:left;font-size:12px;color:var(--ink2);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:7px 10px;border-bottom:1px solid var(--line)}
+tr.vurgu td{background:#eef8f6}
+.etiket{border:0;border-radius:99px;padding:3px 10px;font-size:12px;font-weight:700;cursor:pointer}
+.etiket.odendi{background:var(--okbg);color:var(--ok)}
+.etiket.bekliyor{background:var(--bekbg);color:var(--bek)}
+textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;font-size:14px;resize:vertical;min-height:58px}
+.btn{border:0;background:var(--acc);color:#fff;border-radius:10px;padding:8px 14px;font-weight:700;font-size:14px;cursor:pointer}
+.btn:hover{background:var(--acc2)}
+.talep{display:flex;justify-content:space-between;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin-top:6px;font-size:13.5px}
+.talep small{display:block;color:var(--ink2);font-size:12px}
+.talep select{border:1.5px solid var(--line);border-radius:8px;padding:4px 6px;font-size:13px;background:#fff}
+.bos{color:var(--ink2);font-size:13px;padding:6px 0}
+/* telefon */
+.tel{width:370px;height:760px;background:#0d0d0f;border-radius:46px;padding:12px;box-shadow:0 30px 60px -30px rgba(0,0,0,.55);flex:none}
+.ekran{width:100%;height:100%;background:#f7f8f8;border-radius:36px;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.durum{height:34px;display:flex;justify-content:space-between;align-items:center;padding:0 26px;font-size:12.5px;font-weight:700;flex:none;background:#fff}
+.aust{background:#fff;padding:2px 18px 12px;flex:none;border-bottom:1px solid var(--line)}
+.aust b{font-size:18px}
+.aust small{display:block;color:var(--ink2);font-size:12.5px}
+.kaydir{flex:1;overflow-y:auto;padding:12px 14px 20px}
+.kart{background:#fff;border-radius:16px;padding:12px 14px;margin-bottom:10px;box-shadow:0 1px 0 var(--line)}
+.kart h4{font-size:12px;letter-spacing:.06em;color:var(--ink2);text-transform:uppercase;margin-bottom:6px}
+.aidat{display:flex;justify-content:space-between;align-items:center}
+.aidat b{font-size:22px}
+.duyuru{border-top:1px solid var(--line);padding:7px 0;font-size:13.5px}
+.duyuru:first-of-type{border-top:0}
+.duyuru small{display:block;color:var(--ink2);font-size:11.5px}
+.kart select,.kart textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:7px 9px;font-size:14px;background:#fff;margin-bottom:6px}
+.bildirim{position:absolute;left:10px;right:10px;top:40px;background:rgba(30,32,36,.95);color:#fff;border-radius:16px;padding:10px 12px;font-size:13px;transform:translateY(calc(-100% - 50px));transition:transform .35s;z-index:5}
+.bildirim.ac{transform:none}
+.bildirim b{display:block;font-size:12px;opacity:.8}
+.not{max-width:1220px;margin:0 auto;padding:0 16px 40px;color:var(--ink2);font-size:13px}
+@media (max-width:1100px){
+ .sekme{display:flex}
+ .sahne{flex-direction:column;align-items:center}
+ .kolon{display:none;width:100%;align-items:center}
+ .kolon.ac{display:flex}
+ .kolon>b{display:none}
+}
+@media (max-width:640px){
+ .ust h1{font-size:27px}
+ .ozet{grid-template-columns:repeat(2,1fr)}
+ .tel{width:100%;max-width:370px;height:720px}
+}
+</style>
+</head>
+<body>
+<div class="ornek">Örnek çalışma: veriler örnektir, sayfa yenilenince sıfırlanır.</div>
+<header class="ust">
+ <h1>Site yönetim sistemi</h1>
+ <p>Yönetici paneli ve sakinlerin kullandığı Android/iOS uygulaması aynı veriyi kullanır. Panelde blok ya da daire sayısını değiştirin, aidatı işaretleyin, duyuru gönderin; telefondaki uygulamaya hemen yansır. Telefondan açılan arıza talebi de panele düşer.</p>
+</header>
+<div class="sekme"><button class="sec" data-k="k-panel">Yönetici paneli</button><button data-k="k-tel">Sakin uygulaması</button></div>
+<main class="sahne">
+ <section class="kolon ac" id="k-panel">
+  <b>Yönetici paneli (web)</b>
+  <div class="panel">
+   <div class="pust"><div class="logo"><span>SY</span>Yeşilvadi Sitesi</div><small>Yönetici</small></div>
+   <div class="ozet">
+    <div><small>Toplam daire</small><b id="o-daire">0</b></div>
+    <div><small>Ekim tahsilatı</small><b id="o-tahsil">0</b></div>
+    <div><small>Bekleyen aidat</small><b id="o-bekleyen">0</b></div>
+    <div><small>Açık talep</small><b id="o-talep">0</b></div>
+   </div>
+   <div class="bolum">
+    <h3>Bloklar ve daire sayıları <small>Sonradan değiştirilebilir</small></h3>
+    <div class="bloklar" id="bloklar"></div>
+   </div>
+   <div class="bolum">
+    <h3>Ekim aidatı <small>Duruma tıklayınca değişir</small></h3>
+    <div class="satir">
+     <label>Aylık tutar <input type="number" id="tutar" min="0" step="50" value="1250"> TL</label>
+     <select id="filtre"></select>
+     <select id="durumfiltre"><option value="">Tüm durumlar</option><option value="bekliyor">Bekleyenler</option><option value="odendi">Ödeyenler</option></select>
+    </div>
+    <div class="tablo"><table><thead><tr><th>Daire</th><th>Sakin</th><th>Tutar</th><th>Durum</th></tr></thead><tbody id="aidatlar"></tbody></table></div>
+   </div>
+   <div class="bolum">
+    <h3>Duyuru gönder <small>Tüm sakinlere bildirim gider</small></h3>
+    <textarea id="duyurumetin" placeholder="Örnek: Cumartesi 10:00-14:00 arası B blok asansörü bakımda olacak."></textarea>
+    <div class="satir" style="margin-top:6px"><button class="btn" id="duyurugonder">Gönder</button></div>
+   </div>
+   <div class="bolum">
+    <h3>Arıza ve talepler</h3>
+    <div id="talepler"></div>
+   </div>
+  </div>
+ </section>
+ <section class="kolon" id="k-tel">
+  <b>Sakin uygulaması (Android ve iOS)</b>
+  <div class="tel"><div class="ekran">
+   <div class="durum"><span>9:41</span><span>5G ▮▮▮</span></div>
+   <div class="bildirim" id="bildirim"><b>Yeşilvadi Sitesi</b><span id="bildirimmetin"></span></div>
+   <div class="aust"><b>Merhaba, Ayşe</b><small id="sakinkonum">C Blok · Daire 7</small></div>
+   <div class="kaydir">
+    <div class="kart">
+     <h4>Ekim aidatı</h4>
+     <div class="aidat"><b id="a-tutar">1.250 TL</b><span class="etiket" id="a-durum"></span></div>
+    </div>
+    <div class="kart">
+     <h4>Duyurular</h4>
+     <div id="a-duyurular"></div>
+    </div>
+    <div class="kart">
+     <h4>Arıza ya da talep bildir</h4>
+     <select id="t-tur"><option>Asansör</option><option>Su ve tesisat</option><option>Elektrik</option><option>Ortak alan temizliği</option><option>Otopark</option><option>Diğer</option></select>
+     <textarea id="t-metin" placeholder="Kısaca yazın"></textarea>
+     <button class="btn" id="t-gonder" style="width:100%">Gönder</button>
+    </div>
+    <div class="kart">
+     <h4>Taleplerim</h4>
+     <div id="a-talepler"></div>
+    </div>
+   </div>
+  </div></div>
+ </section>
+</main>
+<p class="not">Bu sayfa çalışma şeklini göstermek için hazırlandı; gerçek sistemde veriler sunucudaki veritabanında tutulur, bildirimler telefona anlık gelir, aidat ödemesi istenirse kartla alınabilir.</p>
+<script>
+const ADLAR=["Ahmet K.","Elif S.","Mehmet T.","Zeynep A.","Mustafa Y.","Fatma D.","Emre B.","Ayşe Y.","Hasan Ç.","Selin Ö.","Burak E.","Merve K.","Can T.","Deniz A.","Ömer S.","Gizem U."];
+const S={bloklar:[["A",24],["B",24],["C",20],["D",20],["E",16],["F",16]],tutar:1250,odenen:new Set(),duyurular:[],talepler:[],benim:"C-7",vurgu:null};
+const tl=n=>n.toLocaleString("tr-TR")+" TL";
+const $=id=>document.getElementById(id);
+const esc=t=>t.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);
+function daireler(){const d=[];S.bloklar.forEach(([b,n])=>{for(let i=1;i<=n;i++)d.push(b+"-"+i)});return d}
+function sakin(k){if(k===S.benim)return "Ayşe Y.";let h=0;for(const c of k)h=(h*31+c.charCodeAt(0))%997;return ADLAR[h%ADLAR.length]}
+// başlangıç: dairelerin çoğu ödemiş, bir kısmı bekliyor
+daireler().forEach((k,i)=>{if(i%5!==2&&i%7!==4)S.odenen.add(k)});S.odenen.delete(S.benim);
+S.duyurular.push({m:"Ekim aidatlarının son ödeme günü 31 Ekim.",z:"25 Eki"});
+S.talepler.push({id:1,daire:"A-12",tur:"Asansör",m:"A blok asansörü 3. katta takılıyor.",durum:"İşlemde"});
+let sayac=2;
+function cizBloklar(){
+ $("bloklar").innerHTML=S.bloklar.map(([b,n],i)=>`<div class="blk"><b>${b} Blok</b><label>Daire <input type="number" min="1" max="200" value="${n}" data-i="${i}"></label></div>`).join("")+`<button class="ekle" id="blokekle">+ Blok ekle</button>`;
+ $("bloklar").querySelectorAll("input").forEach(inp=>inp.addEventListener("change",e=>{const v=Math.max(1,Math.min(200,parseInt(e.target.value)||1));e.target.value=v;S.bloklar[e.target.dataset.i][1]=v;hepsi()}));
+ $("blokekle").onclick=()=>{const harf=String.fromCharCode(65+S.bloklar.length);if(S.bloklar.length>=12)return;S.bloklar.push([harf,12]);cizBloklar();hepsi()};
+ const f=$("filtre"),sec=f.value;f.innerHTML=`<option value="">Tüm bloklar</option>`+S.bloklar.map(([b])=>`<option value="${b}">${b} Blok</option>`).join("");f.value=sec;
+}
+function cizAidat(){
+ const fb=$("filtre").value,fd=$("durumfiltre").value;
+ const satirlar=daireler().filter(k=>(!fb||k.startsWith(fb+"-"))&&(!fd||(fd==="odendi")===S.odenen.has(k)));
+ $("aidatlar").innerHTML=satirlar.map(k=>{const o=S.odenen.has(k);const[b,n]=k.split("-");return `<tr class="${k===S.vurgu?"vurgu":""}"><td>${b} Blok ${n}</td><td>${sakin(k)}</td><td>${tl(S.tutar)}</td><td><button class="etiket ${o?"odendi":"bekliyor"}" data-k="${k}">${o?"Ödendi":"Bekliyor"}</button></td></tr>`}).join("")||`<tr><td colspan="4" class="bos">Kayıt yok</td></tr>`;
+ $("aidatlar").querySelectorAll("button").forEach(b=>b.onclick=()=>{const k=b.dataset.k;S.odenen.has(k)?S.odenen.delete(k):S.odenen.add(k);hepsi()});
+}
+function cizOzet(){
+ const d=daireler(),ode=d.filter(k=>S.odenen.has(k)).length;
+ $("o-daire").textContent=d.length;$("o-tahsil").textContent=tl(ode*S.tutar);$("o-bekleyen").textContent=d.length-ode;
+ $("o-talep").textContent=S.talepler.filter(t=>t.durum!=="Çözüldü").length;
+}
+function cizTalepler(){
+ $("talepler").innerHTML=S.talepler.length?S.talepler.slice().reverse().map(t=>{const[b,n]=t.daire.split("-");return `<div class="talep"><div><b>${t.tur}</b> · ${b} Blok ${n}<small>${esc(t.m)}</small></div><select data-id="${t.id}">${["Yeni","İşlemde","Çözüldü"].map(s=>`<option ${s===t.durum?"selected":""}>${s}</option>`).join("")}</select></div>`}).join(""):`<div class="bos">Açık talep yok</div>`;
+ $("talepler").querySelectorAll("select").forEach(s=>s.onchange=()=>{const t=S.talepler.find(x=>x.id==s.dataset.id);t.durum=s.value;if(t.daire===S.benim)bildir(`Talebiniz: ${t.tur} → ${t.durum}`);hepsi()});
+}
+function cizTelefon(){
+ const var_=daireler().includes(S.benim);
+ $("sakinkonum").textContent=var_?"C Blok · Daire 7":"Daire bulunamadı (C blok daire sayısı azaldı)";
+ $("a-tutar").textContent=tl(S.tutar);
+ const o=S.odenen.has(S.benim),d=$("a-durum");d.className="etiket "+(o?"odendi":"bekliyor");d.textContent=o?"Ödendi":"Bekliyor";
+ $("a-duyurular").innerHTML=S.duyurular.slice().reverse().map(x=>`<div class="duyuru">${esc(x.m)}<small>${x.z}</small></div>`).join("");
+ const ben=S.talepler.filter(t=>t.daire===S.benim);
+ $("a-talepler").innerHTML=ben.length?ben.slice().reverse().map(t=>`<div class="duyuru"><b>${t.tur}</b>: ${esc(t.m)}<small>Durum: ${t.durum}</small></div>`).join(""):`<div class="bos">Henüz talebiniz yok</div>`;
+}
+let bt;
+function bildir(m){$("bildirimmetin").textContent=m;$("bildirim").classList.add("ac");clearTimeout(bt);bt=setTimeout(()=>$("bildirim").classList.remove("ac"),3200)}
+function hepsi(){cizOzet();cizAidat();cizTalepler();cizTelefon()}
+$("tutar").addEventListener("input",e=>{S.tutar=Math.max(0,parseInt(e.target.value)||0);hepsi()});
+$("filtre").onchange=cizAidat;$("durumfiltre").onchange=cizAidat;
+$("duyurugonder").onclick=()=>{const m=$("duyurumetin").value.trim();if(!m)return;const z=new Date();S.duyurular.push({m,z:"Bugün "+z.toTimeString().slice(0,5)});$("duyurumetin").value="";bildir(m);hepsi()};
+$("t-gonder").onclick=()=>{const m=$("t-metin").value.trim();if(!m)return;if(!daireler().includes(S.benim))return;S.talepler.push({id:sayac++,daire:S.benim,tur:$("t-tur").value,m,durum:"Yeni"});$("t-metin").value="";S.vurgu=null;hepsi()};
+document.querySelectorAll(".sekme button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".sekme button").forEach(x=>x.classList.toggle("sec",x===b));document.querySelectorAll(".kolon").forEach(k=>k.classList.toggle("ac",k.id===b.dataset.k))});
+S.vurgu=S.benim;cizBloklar();hepsi();
+</script>
+</body>
+</html>
