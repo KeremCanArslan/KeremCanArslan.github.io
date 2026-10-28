@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Örnek Gayrimenkul</title>
+<meta name="description" content="Kurumsal emlak ofisi web sitesi örneği: ilan yönetimi, danışman sayfaları, blog, iletişim ve yönetim paneli.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root{--ink:#18202b;--ink2:#5b6573;--line:#e3e6ea;--bg:#f6f5f2;--card:#fff;--lac:#1c2f4a;--lac2:#132238;--acc:#a77b3f;--soft:#efede8;--yesil:#1f7a4d;--kirmizi:#a8322b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;letter-spacing:-.01em;line-height:1.15;font-weight:700}
+.wrap{max-width:1160px;margin:0 auto;padding:0 16px}
+.ornek{background:#0e1726;color:#c9d2de;font-size:12px;text-align:center;padding:6px 16px}
+header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;gap:18px;height:64px}
+.logo{text-decoration:none;display:flex;flex-direction:column;line-height:1.05;margin-right:auto}
+.logo b{font-family:Fraunces,serif;font-size:21px;color:var(--lac)}
+.logo small{margin-top:4px;font-size:10.5px;font-weight:600;letter-spacing:.16em;color:var(--acc)}
+nav{display:flex;gap:2px;align-items:center}
+nav a{text-decoration:none;font-size:14px;font-weight:500;color:var(--ink2);padding:8px 10px;border-radius:8px;white-space:nowrap}
+nav a:hover{color:var(--ink);background:var(--soft)}
+nav a.sec{color:var(--lac);font-weight:700}
+nav a.panel{border:1.5px solid var(--lac);color:var(--lac);font-weight:600;margin-left:6px}
+nav a.panel.sec{background:var(--lac);color:#fff}
+.menuBtn{display:none;border:1.5px solid var(--line);background:#fff;border-radius:8px;padding:7px 12px;font:600 14px Inter,sans-serif;cursor:pointer}
+.btn{display:inline-block;border:0;border-radius:9px;background:var(--lac);color:#fff;font:600 14.5px Inter,sans-serif;padding:11px 16px;cursor:pointer;white-space:nowrap;text-decoration:none;text-align:center}
+.btn:hover{background:var(--lac2)}
+.btn.ac{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.btn.wa{background:var(--yesil)}
+.btn.k{background:none;color:var(--kirmizi);border:1.5px solid #e9c9c6}
+.hero{background:linear-gradient(rgba(14,23,38,.55),rgba(14,23,38,.62)),url("https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1600&q=65&auto=format&fit=crop") center/cover;color:#fff;padding:70px 0 80px}
+.hero .ust{font-size:12px;font-weight:600;letter-spacing:.18em;color:#e5c99c}
+.hero h1{font-size:44px;max-width:680px;margin-top:8px}
+.hero p{opacity:.9;margin-top:10px;max-width:560px}
+.hizli{background:#fff;color:var(--ink);border-radius:14px;padding:14px;margin-top:26px;display:grid;grid-template-columns:repeat(3,1fr) auto;gap:10px;align-items:end;max-width:820px}
+label{font-size:12px;font-weight:600;color:var(--ink2);display:grid;gap:4px;min-width:0}
+select,input,textarea{font:inherit;font-size:14.5px;color:var(--ink);border:1.5px solid var(--line);border-radius:9px;padding:9px 10px;background:#fff;width:100%}
+textarea{min-height:90px;resize:vertical}
+select:focus,input:focus,textarea:focus{outline:2px solid #c9a46d;outline-offset:0;border-color:transparent}
+.bolum{padding:46px 0}
+.bolum.beyaz{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.bbas{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.bbas h2{font-size:28px}
+.bbas a{font-size:14px;font-weight:600;color:var(--acc);text-decoration:none}
+.sayfabas{padding:34px 0 8px}
+.sayfabas h1{font-size:34px}
+.sayfabas p{color:var(--ink2);margin-top:6px;max-width:680px}
+.izgara{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.kart{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:box-shadow .15s}
+.kart:hover{box-shadow:0 12px 28px -18px rgba(0,0,0,.45)}
+.kart .foto{aspect-ratio:16/10;position:relative;background:var(--soft);overflow:hidden}
+.kart .foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.etk{position:absolute;top:10px;left:10px;background:#fff;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:6px}
+.etk.kir{background:var(--lac);color:#fff}
+.kart .govde{padding:13px 15px 15px;display:grid;gap:4px}
+.kart .fy{font-size:19px;font-weight:700;color:var(--lac)}
+.kart h3{font-family:Inter;font-size:14.5px;font-weight:600;line-height:1.35}
+.oz{font-size:12.5px;color:var(--ink2);display:flex;gap:12px;flex-wrap:wrap}
+.kart .yer{font-size:12.5px;color:var(--ink2)}
+.ilanlar{display:grid;grid-template-columns:270px 1fr;gap:22px;align-items:start;padding:18px 0 50px}
+.ilanlar>*{min-width:0}
+.filtre{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:12px;position:sticky;top:80px}
+.filtre h3{font-family:Inter;font-size:15px}
+.cift{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tur{display:flex;background:var(--soft);border-radius:9px;padding:3px}
+.tur button{flex:1;border:0;background:none;padding:8px 6px;border-radius:7px;font:600 13px Inter,sans-serif;cursor:pointer;color:var(--ink2)}
+.tur button.sec{background:#fff;color:var(--lac);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.sonuc{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.sonuc b{font-size:15px}
+.sonuc select{width:auto}
+.ilanlar .izgara{grid-template-columns:repeat(2,1fr)}
+.bos{grid-column:1/-1;background:#fff;border:1px dashed #cfd4da;border-radius:12px;text-align:center;color:var(--ink2);padding:36px 16px}
+.yol{font-size:13px;color:var(--ink2);padding:18px 0 10px}
+.yol a{text-decoration:none;color:var(--ink2)}
+.yol a:hover{color:var(--ink)}
+.detay{display:grid;grid-template-columns:1.45fr 1fr;gap:24px;align-items:start;padding-bottom:50px}
+.detay>*{min-width:0}
+.galeri .buyuk{aspect-ratio:3/2;border-radius:12px;overflow:hidden;background:var(--soft);position:relative}
+.galeri .buyuk img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.kucuk{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.kucuk img{width:78px;height:56px;object-fit:cover;border-radius:7px;cursor:pointer;border:2px solid transparent}
+.kucuk img.sec{border-color:var(--acc)}
+.kutu{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px}
+.kutu+.kutu{margin-top:16px}
+.kutu h3{font-family:Inter;font-size:16px;margin-bottom:10px}
+.dbas .tip{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--acc)}
+.dbas h1{font-size:26px;margin:4px 0 6px}
+.dbas .fy{font-size:28px;font-weight:700;color:var(--lac)}
+.dbas .url{font-size:12px;color:var(--ink2);margin-top:6px;word-break:break-all}
+table.oz2{width:100%;border-collapse:collapse;font-size:14px}
+.oz2 td{padding:7px 0;border-top:1px solid var(--line)}
+.oz2 tr:first-child td{border-top:0}
+.oz2 td:first-child{color:var(--ink2)}
+.oz2 td:last-child{text-align:right;font-weight:500}
+.metin{font-size:15px;color:#353d48}
+.metin p+p{margin-top:10px}
+.harita{height:300px;border-radius:10px;overflow:hidden;border:1px solid var(--line);z-index:0}
+.dkart{display:flex;gap:12px;align-items:center}
+.av{width:56px;height:56px;border-radius:50%;background:var(--lac);color:#fff;display:grid;place-items:center;font:600 18px Inter,sans-serif;flex:none}
+.av.b{width:84px;height:84px;font-size:26px}
+.dkart b{display:block;font-size:15.5px}
+.dkart small{color:var(--ink2);font-size:13px}
+.ikiB{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.dan{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;text-decoration:none;display:grid;gap:10px}
+.dan:hover{box-shadow:0 12px 28px -18px rgba(0,0,0,.45)}
+.dan p{font-size:14px;color:var(--ink2)}
+.dan .say{font-size:13px;font-weight:600;color:var(--acc)}
+.hizmet{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px}
+.hizmet .no{font:700 13px Inter,sans-serif;color:var(--acc);letter-spacing:.1em}
+.hizmet h3{font-size:19px;margin:6px 0 8px}
+.hizmet p{font-size:14.5px;color:var(--ink2)}
+.blog{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column}
+.blog img{aspect-ratio:16/9;object-fit:cover;width:100%}
+.blog div{padding:14px 16px 16px;display:grid;gap:6px}
+.blog small{color:var(--ink2);font-size:12.5px}
+.blog h3{font-size:18px}
+.blog p{font-size:14px;color:var(--ink2)}
+.yazi{max-width:760px;padding-bottom:50px}
+.yazi img{border-radius:12px;margin:18px 0;aspect-ratio:16/8;object-fit:cover;width:100%}
+.yazi .metin p+p{margin-top:14px}
+.iletisim{display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:18px 0 50px;align-items:start}
+.iletisim>*{min-width:0}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form .tam{grid-column:1/-1}
+.bilgi{display:grid;gap:8px;font-size:14.5px;margin-bottom:14px}
+.bilgi span{color:var(--ink2)}
+.pIzgara{display:grid;grid-template-columns:1.05fr 1fr;gap:22px;align-items:start;padding:18px 0 50px}
+.pIzgara>*{min-width:0}
+.panelnot{background:#fff8ec;border:1px solid #ecd9b8;color:#6b4e22;border-radius:10px;padding:11px 14px;font-size:13.5px;margin-top:14px}
+.secim{height:220px}
+.ipucu{font-size:12px;color:var(--ink2);font-weight:400}
+.yukle{border:2px dashed #cfd4da;border-radius:10px;padding:12px;text-align:center;font-size:14px;color:var(--ink2);cursor:pointer;display:block;font-weight:500}
+.onizle{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.onizle img{width:58px;height:58px;object-fit:cover;border-radius:7px}
+.satir{display:flex;gap:10px;align-items:center;border-top:1px solid var(--line);padding:10px 0}
+.satir:first-child{border-top:0}
+.satir img{width:66px;height:50px;object-fit:cover;border-radius:7px;flex:none}
+.satir .ad{flex:1;min-width:0;font-size:14px;font-weight:600;line-height:1.35}
+.satir .ad small{display:block;font-weight:400;color:var(--ink2);font-size:12.5px}
+.satir.pasif{opacity:.55}
+.mini{border:0;background:none;font:600 12.5px Inter,sans-serif;cursor:pointer;color:var(--lac);padding:4px 5px;white-space:nowrap}
+.mini.k{color:var(--kirmizi)}
+.istat{display:flex;gap:16px;font-size:13px;color:var(--ink2);margin-bottom:6px}
+.istat b{color:var(--ink);font-size:15px}
+footer{background:var(--lac2);color:#aab6c6;font-size:13.5px;padding:34px 0 22px;margin-top:0}
+footer .wrap{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:20px}
+footer b{color:#fff;font-family:Fraunces,serif;font-size:18px}
+footer a{display:block;text-decoration:none;color:#aab6c6;padding:2px 0}
+footer a:hover{color:#fff}
+footer .alt{grid-column:1/-1;border-top:1px solid #2a3c57;padding-top:14px;font-size:12px}
+.waSabit{position:fixed;right:18px;bottom:18px;z-index:1100;background:var(--yesil);color:#fff;text-decoration:none;font:600 14px Inter,sans-serif;padding:12px 16px;border-radius:99px;box-shadow:0 8px 22px -8px rgba(0,0,0,.45)}
+.toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:9px;font-size:14px;z-index:1200;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw;text-align:center}
+.toast.ac{opacity:1}
+.leaflet-container{font-family:Inter,sans-serif}
+@media(max-width:1020px){
+.menuBtn{display:block}
+nav{display:none;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;padding:8px 16px 14px}
+nav.ac{display:flex}
+nav a{padding:10px 8px}
+nav a.panel{margin:6px 0 0}
+.izgara{grid-template-columns:repeat(2,1fr)}
+.ilanlar{grid-template-columns:1fr}
+.filtre{position:static;grid-template-columns:1fr 1fr;gap:10px}
+.filtre h3,.filtre .tur,.filtre .cift{grid-column:1/-1}
+.filtre .cift{order:1}.filtre .m2,.filtre .btn{order:2;align-self:end}
+.detay,.iletisim,.pIzgara{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+.hero{padding:40px 0 46px}.hero h1{font-size:31px}
+.hizli{grid-template-columns:1fr 1fr}.hizli .btn{grid-column:1/-1}
+.izgara,.ilanlar .izgara{grid-template-columns:1fr}
+.sayfabas h1{font-size:28px}
+.form{grid-template-columns:1fr}
+footer .wrap{grid-template-columns:1fr}
+.waSabit{right:12px;bottom:12px;font-size:13px;padding:10px 14px}
+}
+</style>
+</head>
+<body>
+<div class="ornek">Örnek sitedir. İlanlar, danışmanlar ve fotoğraflar temsilidir; yönetim panelinde yaptığınız değişiklikler yalnız sizin tarayıcınızda saklanır.</div>
+<header><div class="wrap">
+  <a class="logo" href="#/"><b>Örnek Gayrimenkul</b><small>KURUMSAL EMLAK OFİSİ</small></a>
+  <button class="menuBtn" id="menuBtn" aria-expanded="false">Menü</button>
+  <nav id="nav">
+    <a href="#/" data-s="">Ana sayfa</a>
+    <a href="#/ilanlar" data-s="ilanlar">İlanlar</a>
+    <a href="#/danismanlar" data-s="danismanlar">Danışmanlar</a>
+    <a href="#/hizmetlerimiz" data-s="hizmetlerimiz">Hizmetlerimiz</a>
+    <a href="#/hakkimizda" data-s="hakkimizda">Hakkımızda</a>
+    <a href="#/blog" data-s="blog">Blog</a>
+    <a href="#/iletisim" data-s="iletisim">İletişim</a>
+    <a href="#/panel" data-s="panel" class="panel">Yönetim paneli</a>
+  </nav>
+</div></header>
+<main id="ana"></main>
+<footer><div class="wrap">
+  <div><b>Örnek Gayrimenkul</b><p style="margin-top:8px;max-width:340px">Kadıköy, Ataşehir, Üsküdar ve Maltepe bölgesinde satılık ve kiralık konut, işyeri ve arsa danışmanlığı.</p></div>
+  <div><a href="#/ilanlar">Satılık ve kiralık ilanlar</a><a href="#/danismanlar">Danışmanlarımız</a><a href="#/hizmetlerimiz">Hizmetlerimiz</a><a href="#/blog">Blog</a></div>
+  <div><a href="#/hakkimizda">Hakkımızda</a><a href="#/iletisim">İletişim</a><a href="tel:+905000000000">+90 500 000 00 00</a><a href="#/panel">Yönetim paneli</a></div>
+  <div class="alt">Örnek Gayrimenkul örnek sitedir · Taşınmaz ticareti yetki belgesi no: 0000000 (temsili)</div>
+</div></footer>
+<a class="waSabit" id="waSabit" target="_blank" rel="noopener" href="https://wa.me/905000000000">WhatsApp ile yazın</a>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const U=(id,w=900)=>`https://images.unsplash.com/photo-${id}?w=${w}&q=65&auto=format&fit=crop`;
+const IC=['1583847268964-b28dc8f51f92','1600489000022-c2086d79f9d4','1758448511322-8bfc73daf606','1622372738946-62e02505feb3'];
+const ILCE={'Kadıköy':['Moda','Göztepe','Fenerbahçe','Caddebostan'],'Ataşehir':['Barbaros','Atatürk','Küçükbakkalköy'],'Üsküdar':['Kuzguncuk','Altunizade','Acıbadem'],'Maltepe':['Bağlarbaşı','Cevizli','İdealtepe']};
+const MERKEZ={'Kadıköy':[40.982,29.040],'Ataşehir':[40.990,29.118],'Üsküdar':[41.024,29.035],'Maltepe':[40.935,29.133]};
+const TIP=['Daire','Villa','İşyeri','Arsa'];
+const ODA=['1+1','2+1','3+1','4+1','5+1'];
+const OFIS={tel:'+90 500 000 00 00',wa:'905000000000',adres:'Caferağa Mah. Örnek Sok. No: 1, Kadıköy / İstanbul',konum:[40.9874,29.0262]};
+const DAN=[
+ {id:'selin-aydin',ad:'Selin Aydın',unvan:'Kıdemli Gayrimenkul Danışmanı',bolge:'Kadıköy, Üsküdar',tel:'+90 500 000 00 01',wa:'905000000001',hak:'Konut satışı ve yatırım amaçlı alımlarda danışmanlık veriyor. Anadolu yakasında yeni projeleri ve ikinci el konut piyasasını yakından takip ediyor.'},
+ {id:'mert-kaya',ad:'Mert Kaya',unvan:'Gayrimenkul Danışmanı',bolge:'Ataşehir, Maltepe',tel:'+90 500 000 00 02',wa:'905000000002',hak:'Kiralık konut ve site içi daireler konusunda çalışıyor. Kiracı ve mülk sahibi arasındaki sözleşme ve teslim sürecini baştan sona yürütüyor.'},
+ {id:'derya-sahin',ad:'Derya Şahin',unvan:'Ticari Gayrimenkul Danışmanı',bolge:'Ataşehir, Kadıköy',tel:'+90 500 000 00 03',wa:'905000000003',hak:'Ofis, dükkân ve arsa portföyünü yönetiyor. Yatırımcılara kira getirisi ve imar durumu konusunda bilgi veriyor.'}
+];
+const HAZIR=[
+ {no:1001,islem:'Satılık',tip:'Daire',baslik:'Moda sahile yürüme mesafesinde 3+1 daire',fiyat:12750000,m2:135,oda:'3+1',ilce:'Kadıköy',mah:'Moda',dan:'selin-aydin',kat:'3',yas:'12',isitma:'Kombi',ll:[40.9845,29.0268],foto:['1545324418-cc1a3fa10c00',IC[0],IC[1],IC[2]],aciklama:'Güney cepheli, asansörlü binada 3. kat. Salon ve iki yatak odası balkonlu, mutfak ayrı. Sahile ve Moda Caddesine 5 dakika yürüme mesafesinde.',vitrin:1},
+ {no:1002,islem:'Kiralık',tip:'Daire',baslik:'Göztepe site içinde eşyasız 2+1',fiyat:42000,m2:95,oda:'2+1',ilce:'Kadıköy',mah:'Göztepe',dan:'selin-aydin',kat:'5',yas:'8',isitma:'Kombi',ll:[40.9787,29.0612],foto:['1612637968894-660373e23b03',IC[3]],aciklama:'Güvenlikli site içinde, kapalı otoparklı. Aidat 2.500 TL. Metrobüs ve Marmaray durağına yakın.'},
+ {no:1003,islem:'Satılık',tip:'Daire',baslik:'Ataşehir Barbaros rezidansta 1+1 yatırımlık',fiyat:6900000,m2:72,oda:'1+1',ilce:'Ataşehir',mah:'Barbaros',dan:'mert-kaya',kat:'14',yas:'6',isitma:'Merkezi',ll:[40.9858,29.1082],foto:['1721815693498-cc28507c0ba2',IC[1],IC[2]],aciklama:'Havuz, spor salonu ve 7/24 güvenlik. Finans merkezine yürüme mesafesinde, kiracılı satılık.',vitrin:1},
+ {no:1004,islem:'Kiralık',tip:'İşyeri',baslik:'Bağdat Caddesine yakın köşe dükkân',fiyat:95000,m2:120,oda:'',ilce:'Kadıköy',mah:'Caddebostan',dan:'derya-sahin',kat:'Zemin',yas:'20',isitma:'Klima',ll:[40.9684,29.0634],foto:['1613490493576-7fde63acd811'],aciklama:'Çift cepheli, vitrinli köşe dükkân. Asma kat ve depo mevcut, mağaza ya da kafe için uygun.'},
+ {no:1005,islem:'Satılık',tip:'Villa',baslik:'Kuzguncukta bahçeli tarihi müstakil ev',fiyat:38500000,m2:240,oda:'5+1',ilce:'Üsküdar',mah:'Kuzguncuk',dan:'selin-aydin',kat:'3 katlı',yas:'90',isitma:'Kombi',ll:[41.0357,29.0306],foto:['1580587771525-78b9dba3b914',IC[2],IC[3]],aciklama:'Restorasyonu tamamlanmış ahşap ev. 180 m² bahçe, Boğaz manzaralı teras, iki banyo.',vitrin:1},
+ {no:1006,islem:'Kiralık',tip:'Daire',baslik:'Altunizadede metroya yakın 3+1',fiyat:55000,m2:125,oda:'3+1',ilce:'Üsküdar',mah:'Altunizade',dan:'mert-kaya',kat:'2',yas:'15',isitma:'Kombi',ll:[41.0213,29.0447],foto:['1479839672679-a46483c0e7c8',IC[0]],aciklama:'Aileye uygun, okullara ve metroya yakın. Ebeveyn banyolu, iki balkonlu.'},
+ {no:1007,islem:'Satılık',tip:'Arsa',baslik:'Maltepe Cevizlide konut imarlı arsa',fiyat:21000000,m2:610,oda:'',ilce:'Maltepe',mah:'Cevizli',dan:'derya-sahin',kat:'',yas:'',isitma:'',ll:[40.9231,29.1612],foto:['1758448756207-54505680d130'],aciklama:'Konut imarlı, köşe parsel. Kat karşılığı ya da peşin satış görüşülür.'},
+ {no:1008,islem:'Satılık',tip:'Daire',baslik:'İdealtepe sahil tarafında 2+1 yeni bina',fiyat:8400000,m2:100,oda:'2+1',ilce:'Maltepe',mah:'İdealtepe',dan:'mert-kaya',kat:'4',yas:'2',isitma:'Yerden ısıtma',ll:[40.9384,29.1191],foto:['1600489000022-c2086d79f9d4',IC[0],IC[3]],aciklama:'2 yıllık binada, otoparklı ve asansörlü. Sahil parkına 3 dakika.'},
+ {no:1009,islem:'Kiralık',tip:'İşyeri',baslik:'Ataşehirde plaza katında 180 m² ofis',fiyat:120000,m2:180,oda:'',ilce:'Ataşehir',mah:'Atatürk',dan:'derya-sahin',kat:'9',yas:'10',isitma:'Merkezi',ll:[40.9921,29.1243],foto:['1622372738946-62e02505feb3',IC[1]],aciklama:'Toplantı odası ve 3 kapalı ofis bölümlü, mobilyasız. 2 araçlık otopark.'}
+];
+const BLOG=[
+ {id:'konut-kredisi-ile-ev-alirken-dikkat-edilecekler',baslik:'Konut kredisiyle ev alırken dikkat edilecek 5 nokta',tarih:'21 Ekim 2026',foto:IC[0],ozet:'Ekspertiz değeri, peşinat oranı ve tapu masrafları satın alma bütçenizi doğrudan etkiler.',metin:['Kredi ile ev alırken bankanın vereceği tutar, satış fiyatına değil ekspertiz değerine göre hesaplanır. Bu yüzden teklif vermeden önce bölgedeki benzer satışlara bakmak önemlidir.','Tapu harcı, döner sermaye ücreti ve kredi masrafları toplam bütçenin önemli bir kısmını oluşturur. Danışmanlarımız görüşme sırasında bu kalemleri tek tek hesaplar.']},
+ {id:'kiraci-ve-ev-sahibi-icin-sozlesme-rehberi',baslik:'Kiracı ve ev sahibi için kira sözleşmesi rehberi',tarih:'9 Ekim 2026',foto:IC[3],ozet:'Depozito, demirbaş listesi ve kira artış maddesi sözleşmede açıkça yazılmalı.',metin:['Kira sözleşmesinde depozito tutarı, demirbaş listesi ve aidatın kime ait olduğu açık yazılmazsa taraflar arasında anlaşmazlık çıkabilir.','Teslim sırasında dairenin fotoğraflarını çekmek ve tutanağa eklemek, çıkışta yaşanabilecek tartışmaları önler.']},
+ {id:'anadolu-yakasinda-yatirimlik-daire',baslik:'Anadolu yakasında yatırımlık daire seçerken',tarih:'27 Eylül 2026',foto:IC[2],ozet:'Raylı sisteme yakınlık ve kiralanma süresi, yatırımın getirisini belirleyen iki ana etken.',metin:['Yatırım amaçlı alımlarda dairenin ne kadar sürede kiralandığı, metrekare fiyatı kadar önemlidir. Metro ve Marmaray hattına yakın konutlar daha kısa sürede kiralanır.','Rezidans ve site içi dairelerde aidat tutarını kira getirisinden düşerek hesap yapmak gerekir.']}
+];
+const KEY='kurumsal-emlak-ornek-v1';
+let D=null;try{D=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+if(!D||!Array.isArray(D.ilanlar))D={ilanlar:HAZIR.map(x=>({...x,yayin:true})),sonNo:1009};
+const kaydet=()=>{try{localStorage.setItem(KEY,JSON.stringify(D));return true}catch(e){toast('Tarayıcı deposu doldu, daha az fotoğrafla deneyin');return false}};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const tl=n=>Number(n).toLocaleString('tr-TR')+' TL';
+const foto=(f,w)=>String(f).startsWith('data:')?f:U(f,w);
+const TRH={'ç':'c','ğ':'g','ı':'i','ö':'o','ş':'s','ü':'u','â':'a','î':'i','û':'u'};
+const slug=s=>String(s).toLocaleLowerCase('tr').replace(/[çğıöşüâîû]/g,c=>TRH[c]).replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const ilanSlug=i=>slug(`${i.ilce} ${i.mah} ${i.oda} ${i.islem} ${i.tip}`)+'-'+i.no;
+const danBul=id=>DAN.find(d=>d.id===id)||DAN[0];
+const bas=ad=>ad.split(' ').map(x=>x[0]).join('').slice(0,2);
+const yayinda=()=>D.ilanlar.filter(i=>i.yayin);
+const waLink=(no,metin)=>`https://wa.me/${no}?text=${encodeURIComponent(metin)}`;
+let haritalar=[];
+function haritaKur(el,ll,z){const m=L.map(el,{scrollWheelZoom:false}).setView(ll,z||15);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(m);haritalar.push(m);return m}
+function kart(i){return `<a class="kart" href="#/ilan/${ilanSlug(i)}"><div class="foto"><img loading="lazy" src="${foto(i.foto[0],700)}" alt=""><span class="etk ${i.islem==='Kiralık'?'kir':''}">${i.islem}</span></div><div class="govde"><div class="fy">${tl(i.fiyat)}${i.islem==='Kiralık'?' <small style="font-size:12px;font-weight:500;color:var(--ink2)">/ ay</small>':''}</div><h3>${esc(i.baslik)}</h3><div class="oz"><span>${esc(i.tip)}</span>${i.oda?`<span>${esc(i.oda)}</span>`:''}<span>${i.m2} m²</span></div><div class="yer">${esc(i.mah)}, ${esc(i.ilce)}</div></div></a>`}
+const opt=(l,sec,bos)=>(bos?`<option value="">${bos}</option>`:'')+l.map(x=>`<option${x===sec?' selected':''}>${esc(x)}</option>`).join('');
+
+// filtre durumu
+let F={islem:'',tip:'',ilce:'',mah:'',oda:'',m2:'',min:'',max:'',sira:'yeni'};
+
+const SAYFA={
+'':()=>({t:'Örnek Gayrimenkul | Kadıköy, Ataşehir, Üsküdar emlak ofisi',h:`
+<section class="hero"><div class="wrap"><div class="ust">KADIKÖY · ATAŞEHİR · ÜSKÜDAR · MALTEPE</div><h1>Doğru evi, doğru fiyata birlikte bulalım</h1><p>Satılık ve kiralık konut, işyeri ve arsa portföyümüzü inceleyin, ilgilendiğiniz ilanın danışmanına tek tıkla ulaşın.</p>
+<div class="hizli"><label>İlan tipi<select id="hIslem">${opt(['Satılık','Kiralık'],'', 'Tümü')}</select></label><label>Emlak türü<select id="hTip">${opt(TIP,'','Tümü')}</select></label><label>Konum<select id="hIlce">${opt(Object.keys(ILCE),'','Tüm ilçeler')}</select></label><button class="btn" id="hAra">İlanları göster</button></div></div></section>
+<section class="bolum"><div class="wrap"><div class="bbas"><h2>Öne çıkan ilanlar</h2><a href="#/ilanlar">Tüm ilanlar (${yayinda().length})</a></div><div class="izgara">${(()=>{const v=yayinda().filter(i=>i.vitrin);return (v.length?v:yayinda()).slice(0,3).map(kart).join('')||'<div class="bos">Yayında ilan yok. Yönetim panelinden ilan ekleyebilirsiniz.</div>'})()}</div></div></section>
+<section class="bolum beyaz"><div class="wrap"><div class="bbas"><h2>Hizmetlerimiz</h2><a href="#/hizmetlerimiz">Ayrıntılar</a></div><div class="izgara">${HIZMET.slice(0,3).map((h,n)=>`<div class="hizmet"><div class="no">0${n+1}</div><h3>${h[0]}</h3><p>${h[1]}</p></div>`).join('')}</div></div></section>
+<section class="bolum"><div class="wrap"><div class="bbas"><h2>Danışmanlarımız</h2><a href="#/danismanlar">Tüm danışmanlar</a></div><div class="izgara">${DAN.map(danKart).join('')}</div></div></section>
+<section class="bolum beyaz"><div class="wrap"><div class="bbas"><h2>Blogdan</h2><a href="#/blog">Tüm yazılar</a></div><div class="izgara">${BLOG.map(blogKart).join('')}</div></div></section>`,
+sonra:()=>{$('#hAra').onclick=()=>{F={...F,islem:$('#hIslem').value,tip:$('#hTip').value,ilce:$('#hIlce').value,mah:''};location.hash='#/ilanlar'}}}),
+
+'ilanlar':()=>({t:'Satılık ve Kiralık İlanlar | Örnek Gayrimenkul',h:`
+<div class="wrap"><div class="sayfabas"><h1>Satılık ve kiralık ilanlar</h1><p>Konum, fiyat, oda sayısı ve metrekareye göre filtreleyin.</p></div>
+<div class="ilanlar"><aside class="filtre" id="filtre"><h3>Filtrele</h3>
+<div class="tur" id="fIslem">${['','Satılık','Kiralık'].map(x=>`<button data-v="${x}" class="${F.islem===x?'sec':''}">${x||'Tümü'}</button>`).join('')}</div>
+<label>Emlak türü<select data-f="tip">${opt(TIP,F.tip,'Tümü')}</select></label>
+<label>İlçe<select data-f="ilce">${opt(Object.keys(ILCE),F.ilce,'Tüm ilçeler')}</select></label>
+<label>Mahalle<select data-f="mah" id="fMah">${opt(F.ilce?ILCE[F.ilce]:[],F.mah,'Tüm mahalleler')}</select></label>
+<label>Oda sayısı<select data-f="oda">${opt(ODA,F.oda,'Tümü')}</select></label>
+<label class="m2">En az m²<input data-f="m2" type="number" inputmode="numeric" min="0" value="${esc(F.m2)}" placeholder="ör. 90"></label>
+<div class="cift"><label>En az fiyat<input data-f="min" type="number" inputmode="numeric" min="0" value="${esc(F.min)}" placeholder="TL"></label><label>En çok fiyat<input data-f="max" type="number" inputmode="numeric" min="0" value="${esc(F.max)}" placeholder="TL"></label></div>
+<button class="btn ac" id="fTemizle">Filtreleri temizle</button></aside>
+<div><div class="sonuc"><b id="sSay"></b><select id="fSira"><option value="yeni"${F.sira==='yeni'?' selected':''}>En yeni</option><option value="ucuz"${F.sira==='ucuz'?' selected':''}>Fiyat (artan)</option><option value="pahali"${F.sira==='pahali'?' selected':''}>Fiyat (azalan)</option><option value="m2"${F.sira==='m2'?' selected':''}>m² (büyükten)</option></select></div><div class="izgara" id="sonuclar"></div></div></div></div>`,
+sonra:()=>{
+  const f=$('#filtre');
+  f.addEventListener('input',e=>{const k=e.target.dataset.f;if(!k)return;F[k]=e.target.value;if(k==='ilce'){F.mah='';$('#fMah').innerHTML=opt(F.ilce?ILCE[F.ilce]:[],'','Tüm mahalleler')}sonucCiz()});
+  $('#fIslem').onclick=e=>{const b=e.target.closest('button');if(!b)return;F.islem=b.dataset.v;$('#fIslem').querySelectorAll('button').forEach(x=>x.classList.toggle('sec',x===b));sonucCiz()};
+  $('#fSira').onchange=e=>{F.sira=e.target.value;sonucCiz()};
+  $('#fTemizle').onclick=()=>{F={islem:'',tip:'',ilce:'',mah:'',oda:'',m2:'',min:'',max:'',sira:F.sira};ciz()};
+  sonucCiz()}}),
+
+'ilan':a=>{const i=yayinda().find(x=>ilanSlug(x)===a||String(x.no)===a.split('-').pop());if(!i)return SAYFA['yok']();const d=danBul(i.dan);const adres=`orneggayrimenkul.com/ilan/${ilanSlug(i)}/`;
+  const satir=[['İlan no',i.no],['İlan tipi',i.islem],['Emlak türü',i.tip],['Brüt m²',i.m2],i.oda&&['Oda sayısı',i.oda],i.kat&&['Bulunduğu kat',i.kat],i.yas&&['Bina yaşı',i.yas],i.isitma&&['Isıtma',i.isitma],['Konum',`${i.mah}, ${i.ilce}`]].filter(Boolean);
+  return {t:`${i.baslik} | ${i.islem} ${i.tip} ${i.ilce}`,h:`
+<div class="wrap"><div class="yol"><a href="#/">Ana sayfa</a> / <a href="#/ilanlar">İlanlar</a> / ${esc(i.ilce)} / ${esc(i.mah)}</div>
+<div class="detay"><div>
+<div class="galeri"><div class="buyuk"><img id="dB" src="${foto(i.foto[0],1200)}" alt="${esc(i.baslik)}"></div>${i.foto.length>1?`<div class="kucuk" id="kucuk">${i.foto.map((f,n)=>`<img src="${foto(f,220)}" data-b="${foto(f,1200)}" class="${n?'':'sec'}" alt="">`).join('')}</div>`:''}</div>
+<div class="kutu" style="margin-top:18px"><h3>Açıklama</h3><div class="metin"><p>${esc(i.aciklama)}</p></div></div>
+<div class="kutu"><h3>Konum</h3><div class="harita" id="dHarita"></div></div></div>
+<div><div class="kutu dbas"><div class="tip">${i.islem.toLocaleUpperCase('tr')} · ${esc(i.tip).toLocaleUpperCase('tr')}</div><h1>${esc(i.baslik)}</h1><div class="fy">${tl(i.fiyat)}${i.islem==='Kiralık'?' <small style="font-size:14px;font-weight:500;color:var(--ink2)">/ ay</small>':''}</div><div class="url">Sayfa adresi: ${esc(adres)}</div></div>
+<div class="kutu"><h3>İlan danışmanı</h3><a class="dkart" href="#/danisman/${d.id}" style="text-decoration:none"><div class="av">${bas(d.ad)}</div><div><b>${esc(d.ad)}</b><small>${esc(d.unvan)}</small></div></a>
+<div class="ikiB"><a class="btn" href="tel:${d.tel.replace(/\s/g,'')}">Ara</a><a class="btn wa" target="_blank" rel="noopener" href="${waLink(d.wa,`Merhaba, ${i.no} numaralı "${i.baslik}" ilanı hakkında bilgi almak istiyorum. https://${adres}`)}">WhatsApp</a></div></div>
+<div class="kutu"><table class="oz2">${satir.map(r=>`<tr><td>${r[0]}</td><td>${esc(r[1])}</td></tr>`).join('')}</table></div></div></div></div>`,
+  sonra:()=>{const m=haritaKur('dHarita',i.ll,15);L.marker(i.ll).addTo(m).bindPopup(esc(i.mah)+', '+esc(i.ilce));const k=$('#kucuk');if(k)k.onclick=e=>{if(e.target.tagName==='IMG'){$('#dB').src=e.target.dataset.b;k.querySelectorAll('img').forEach(x=>x.classList.toggle('sec',x===e.target))}};
+    $('#waSabit').href=waLink(d.wa,`Merhaba, ${i.no} numaralı ilan hakkında bilgi almak istiyorum.`)}}},
+
+'danismanlar':()=>({t:'Danışmanlarımız | Örnek Gayrimenkul',h:`<div class="wrap"><div class="sayfabas"><h1>Danışmanlarımız</h1><p>Her danışmanımızın sayfasında kendi portföyündeki ilanlar listelenir.</p></div><div class="izgara" style="padding:18px 0 50px">${DAN.map(danKart).join('')}</div></div>`}),
+
+'danisman':a=>{const d=DAN.find(x=>x.id===a);if(!d)return SAYFA['yok']();const l=yayinda().filter(i=>i.dan===d.id);
+  return {t:`${d.ad} | Gayrimenkul Danışmanı`,h:`<div class="wrap"><div class="yol"><a href="#/">Ana sayfa</a> / <a href="#/danismanlar">Danışmanlar</a> / ${esc(d.ad)}</div>
+<div class="kutu" style="display:flex;gap:18px;align-items:center;flex-wrap:wrap"><div class="av b">${bas(d.ad)}</div><div style="flex:1;min-width:220px"><h1 style="font-size:28px">${esc(d.ad)}</h1><div style="color:var(--acc);font-weight:600;font-size:14px">${esc(d.unvan)} · ${esc(d.bolge)}</div><p class="metin" style="margin-top:8px">${esc(d.hak)}</p></div><div style="display:grid;gap:8px;min-width:180px"><a class="btn" href="tel:${d.tel.replace(/\s/g,'')}">${esc(d.tel)}</a><a class="btn wa" target="_blank" rel="noopener" href="${waLink(d.wa,'Merhaba, web sitenizden ulaşıyorum.')}">WhatsApp</a></div></div>
+<div class="bbas" style="margin-top:30px"><h2>Danışmanın ilanları (${l.length})</h2></div><div class="izgara" style="padding-bottom:50px">${l.map(kart).join('')||'<div class="bos">Bu danışmanın yayında ilanı yok.</div>'}</div></div>`}},
+
+'hizmetlerimiz':()=>({t:'Hizmetlerimiz | Örnek Gayrimenkul',h:`<div class="wrap"><div class="sayfabas"><h1>Hizmetlerimiz</h1><p>Alım, satım ve kiralama sürecinin her adımında yanınızdayız.</p></div><div class="izgara" style="padding:18px 0 50px;grid-template-columns:repeat(2,1fr)">${HIZMET.map((h,n)=>`<div class="hizmet"><div class="no">0${n+1}</div><h3>${h[0]}</h3><p>${h[1]}</p></div>`).join('')}</div></div>`}),
+
+'hakkimizda':()=>({t:'Hakkımızda | Örnek Gayrimenkul',h:`<div class="wrap"><div class="sayfabas"><h1>Hakkımızda</h1></div><div class="iletisim"><div class="metin"><p>Örnek Gayrimenkul, Kadıköy merkezli bir emlak ofisidir. Anadolu yakasında satılık ve kiralık konut, işyeri ve arsa portföyü yönetiyoruz.</p><p>Her ilanı yerinde görüp fotoğraflıyor, fiyatı bölgedeki gerçek satışlarla karşılaştırarak belirliyoruz. Alıcı ve kiracılarımıza tapu, kredi ve sözleşme süreçlerinde de destek oluyoruz.</p><p>Ofisimizde taşınmaz ticareti yetki belgesine sahip danışmanlar çalışır. Danışmanlarımızın her birinin sitede kendi sayfası ve portföyü bulunur.</p><p style="margin-top:18px"><a class="btn" href="#/iletisim">Bize ulaşın</a></p></div><img src="${U('1600489000022-c2086d79f9d4',900)}" alt="" style="border-radius:12px;aspect-ratio:4/3;object-fit:cover;width:100%"></div></div>`}),
+
+'blog':a=>{if(a){const b=BLOG.find(x=>x.id===a);if(!b)return SAYFA['yok']();return {t:`${b.baslik} | Blog`,h:`<div class="wrap"><div class="yol"><a href="#/">Ana sayfa</a> / <a href="#/blog">Blog</a></div><article class="yazi"><small style="color:var(--ink2)">${b.tarih}</small><h1 style="font-size:32px;margin-top:4px">${b.baslik}</h1><img src="${U(b.foto,1200)}" alt=""><div class="metin"><p>${b.ozet}</p>${b.metin.map(p=>`<p>${p}</p>`).join('')}</div></article></div>`}}
+  return {t:'Blog | Örnek Gayrimenkul',h:`<div class="wrap"><div class="sayfabas"><h1>Blog ve haberler</h1><p>Alım, satım ve kiralama üzerine kısa rehberler.</p></div><div class="izgara" style="padding:18px 0 50px">${BLOG.map(blogKart).join('')}</div></div>`}},
+
+'iletisim':()=>({t:'İletişim | Örnek Gayrimenkul',h:`<div class="wrap"><div class="sayfabas"><h1>İletişim</h1><p>Formu doldurun, danışmanlarımız aynı gün içinde size dönsün.</p></div><div class="iletisim">
+<div class="kutu"><h3>Mesaj gönderin</h3><form class="form" id="iForm"><label>Ad soyad<input name="ad" required autocomplete="name"></label><label>Telefon<input name="tel" required type="tel" autocomplete="tel"></label><label class="tam">Konu<select name="konu"><option>Satılık ilan</option><option>Kiralık ilan</option><option>Mülkümü satmak / kiralamak istiyorum</option><option>Değerleme</option><option>Diğer</option></select></label><label class="tam">Mesajınız<textarea name="mesaj" required></textarea></label><div class="tam"><button class="btn" type="submit">Gönder</button></div></form></div>
+<div class="kutu"><h3>Ofisimiz</h3><div class="bilgi"><div><span>Adres</span><br>${OFIS.adres}</div><div><span>Telefon</span><br><a href="tel:+905000000000">${OFIS.tel}</a></div><div><span>Çalışma saatleri</span><br>Hafta içi 09:00 - 19:00, cumartesi 10:00 - 17:00</div></div><a class="btn wa" target="_blank" rel="noopener" href="${waLink(OFIS.wa,'Merhaba, web sitenizden ulaşıyorum.')}" style="margin-bottom:14px">WhatsApp ile yazın</a><div class="harita" id="iHarita"></div></div></div></div>`,
+sonra:()=>{const m=haritaKur('iHarita',OFIS.konum,16);L.marker(OFIS.konum).addTo(m).bindPopup('Örnek Gayrimenkul');
+  $('#iForm').onsubmit=e=>{e.preventDefault();e.target.reset();toast('Mesajınız alındı. Gerçek sitede bu form ofisin e-postasına düşer.')}}}),
+
+'panel':()=>({t:'Yönetim paneli | Örnek Gayrimenkul',h:`<div class="wrap"><div class="sayfabas"><h1>Yönetim paneli</h1><div class="panelnot">Bu örnekte panel tarayıcınızda çalışır. Gerçek sitede ilanlar, danışmanlar, blog yazıları ve sayfalar WordPress yönetim panelinden, Türkçe olarak düzenlenir.</div></div>
+<div class="pIzgara"><div class="kutu"><h3 id="pBas">Yeni ilan ekle</h3><form class="form" id="pForm">
+<label class="tam">İlan başlığı<input name="baslik" required maxlength="90" placeholder="ör. Moda sahile yakın 3+1 daire"></label>
+<label>İlan tipi<select name="islem">${opt(['Satılık','Kiralık'],'Satılık')}</select></label>
+<label>Emlak türü<select name="tip">${opt(TIP,'Daire')}</select></label>
+<label>Fiyat (TL)<input name="fiyat" type="number" inputmode="numeric" required min="1"></label>
+<label>Brüt m²<input name="m2" type="number" inputmode="numeric" required min="1"></label>
+<label>Oda sayısı<select name="oda">${opt(ODA,'2+1','Yok (arsa / işyeri)')}</select></label>
+<label>Danışman<select name="dan">${DAN.map(d=>`<option value="${d.id}">${esc(d.ad)}</option>`).join('')}</select></label>
+<label>İlçe<select name="ilce" id="pIlce">${opt(Object.keys(ILCE),'Kadıköy')}</select></label>
+<label>Mahalle<select name="mah" id="pMah">${opt(ILCE['Kadıköy'])}</select></label>
+<label>Bulunduğu kat<input name="kat"></label>
+<label>Bina yaşı<input name="yas" type="number" inputmode="numeric" min="0"></label>
+<label class="tam">Açıklama<textarea name="aciklama" required placeholder="Cephe, ısınma, aidat, ulaşım..."></textarea></label>
+<div class="tam"><label>Haritada konum <span class="ipucu">Haritaya tıklayın ya da işareti sürükleyin</span></label><div class="harita secim" id="pHarita" style="margin-top:4px"></div></div>
+<div class="tam"><label class="yukle" for="pFoto">Fotoğraf ekle (en fazla 6)</label><input type="file" id="pFoto" accept="image/*" multiple hidden><div class="onizle" id="pOnizle"></div></div>
+<div class="tam" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="submit" id="pKaydet">Yayınla</button><button class="btn ac" type="button" id="pIptal" hidden>Vazgeç</button></div></form></div>
+<div class="kutu"><h3>İlanlar</h3><div class="istat" id="pIstat"></div><div id="pListe"></div></div></div></div>`,
+sonra:panelKur})
+,
+'yok':()=>({t:'Sayfa bulunamadı | Örnek Gayrimenkul',h:`<div class="wrap"><div class="sayfabas" style="padding-bottom:60px"><h1>Bu sayfa bulunamadı</h1><p>İlan yayından kaldırılmış olabilir.</p><p style="margin-top:16px"><a class="btn" href="#/ilanlar">İlanlara dön</a></p></div></div>`})
+};
+const HIZMET=[
+ ['Satış danışmanlığı','Mülkünüzün değerini bölgedeki gerçek satışlarla belirliyor, fotoğraflayıp ilana çıkarıyor, alıcı görüşmelerini ve tapu sürecini yürütüyoruz.'],
+ ['Kiralama','Kiracı adaylarını ön görüşmeyle eliyor, sözleşmeyi ve demirbaş tutanağını hazırlıyor, anahtar teslimine kadar süreci takip ediyoruz.'],
+ ['Değerleme','Alım ya da satım öncesinde konut, işyeri ve arsanız için bölge verilerine dayalı fiyat raporu hazırlıyoruz.'],
+ ['Yatırım danışmanlığı','Kira getirisi, ulaşım ve imar durumuna göre yatırımlık seçenekleri karşılaştırıp size uygun olanları sunuyoruz.']
+];
+function danKart(d){const n=yayinda().filter(i=>i.dan===d.id).length;return `<a class="dan" href="#/danisman/${d.id}"><div class="dkart"><div class="av">${bas(d.ad)}</div><div><b>${esc(d.ad)}</b><small>${esc(d.unvan)}</small></div></div><p>${esc(d.bolge)}</p><div class="say">${n} ilan</div></a>`}
+function blogKart(b){return `<a class="blog" href="#/blog/${b.id}"><img loading="lazy" src="${U(b.foto,700)}" alt=""><div><small>${b.tarih}</small><h3>${b.baslik}</h3><p>${b.ozet}</p></div></a>`}
+function sonucCiz(){
+  const mn=+F.min||0,mx=+F.max||Infinity,m2=+F.m2||0;
+  const l=yayinda().filter(i=>(!F.islem||i.islem===F.islem)&&(!F.tip||i.tip===F.tip)&&(!F.ilce||i.ilce===F.ilce)&&(!F.mah||i.mah===F.mah)&&(!F.oda||i.oda===F.oda)&&i.m2>=m2&&i.fiyat>=mn&&i.fiyat<=mx);
+  l.sort((a,b)=>F.sira==='ucuz'?a.fiyat-b.fiyat:F.sira==='pahali'?b.fiyat-a.fiyat:F.sira==='m2'?b.m2-a.m2:b.no-a.no);
+  $('#sSay').textContent=`${l.length} ilan bulundu`;
+  $('#sonuclar').innerHTML=l.map(kart).join('')||'<div class="bos">Bu kriterlere uygun ilan yok. Filtreleri genişletmeyi deneyin.</div>';
+}
+// panel
+let duzenNo=null,pFoto=[],pKonum=null,pPin=null,pMap=null;
+function kucult(file){return new Promise(r=>{const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,900/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);c.getContext('2d').drawImage(im,0,0,c.width,c.height);r(c.toDataURL('image/jpeg',.72))};im.onerror=()=>r(null);im.src=fr.result};fr.onerror=()=>r(null);fr.readAsDataURL(file)})}
+function pinKoy(ll,ortala){pKonum=[+ll[0].toFixed(5),+ll[1].toFixed(5)];if(pPin)pPin.setLatLng(pKonum);else{pPin=L.marker(pKonum,{draggable:true}).addTo(pMap);pPin.on('dragend',()=>{const p=pPin.getLatLng();pKonum=[+p.lat.toFixed(5),+p.lng.toFixed(5)]})}if(ortala)pMap.setView(pKonum,15)}
+function panelKur(){
+  duzenNo=null;pFoto=[];pKonum=null;pPin=null;
+  pMap=haritaKur('pHarita',MERKEZ['Kadıköy'],13);
+  pMap.on('click',e=>pinKoy([e.latlng.lat,e.latlng.lng]));
+  const form=$('#pForm');
+  $('#pIlce').onchange=e=>{$('#pMah').innerHTML=opt(ILCE[e.target.value]);if(!pKonum)pMap.setView(MERKEZ[e.target.value],14)};
+  $('#pFoto').onchange=async e=>{for(const f of [...e.target.files].slice(0,Math.max(0,6-pFoto.length))){const d=await kucult(f);if(d)pFoto.push(d)}fotoCiz();e.target.value=''};
+  $('#pOnizle').onclick=e=>{const n=e.target.dataset.n;if(n!==undefined){pFoto.splice(+n,1);fotoCiz()}};
+  $('#pIptal').onclick=()=>formSifirla();
+  form.onsubmit=e=>{e.preventDefault();const f=Object.fromEntries(new FormData(form));
+    if(!pKonum){toast('Haritaya tıklayıp ilanın konumunu işaretleyin');return}
+    const v={islem:f.islem,tip:f.tip,baslik:f.baslik.trim(),fiyat:+f.fiyat,m2:+f.m2,oda:f.oda,ilce:f.ilce,mah:f.mah,dan:f.dan,kat:f.kat.trim(),yas:f.yas,ll:pKonum,aciklama:f.aciklama.trim()};
+    const yeni=!duzenNo;
+    if(duzenNo){const i=D.ilanlar.find(x=>x.no===duzenNo);Object.assign(i,v);if(pFoto.length)i.foto=[...pFoto]}
+    else{D.sonNo=(D.sonNo||1009)+1;D.ilanlar.unshift({no:D.sonNo,...v,isitma:'',foto:pFoto.length?[...pFoto]:[IC[0]],yayin:true})}
+    if(!kaydet())return;formSifirla();listeCiz();
+    toast(yeni?'İlan yayında. İlanlar sayfasında ve danışmanın sayfasında görünüyor.':'İlan güncellendi.')};
+  $('#pListe').onclick=e=>{const a=e.target.dataset.a;if(!a)return;const no=+e.target.closest('.satir').dataset.no;const i=D.ilanlar.find(x=>x.no===no);if(!i)return;
+    if(a==='duzen'){duzenNo=no;pFoto=[];form.baslik.value=i.baslik;form.islem.value=i.islem;form.tip.value=i.tip;form.fiyat.value=i.fiyat;form.m2.value=i.m2;form.oda.value=i.oda;form.dan.value=i.dan;form.ilce.value=i.ilce;$('#pMah').innerHTML=opt(ILCE[i.ilce],i.mah);form.kat.value=i.kat||'';form.yas.value=i.yas||'';form.aciklama.value=i.aciklama;pinKoy(i.ll,true);fotoCiz(i.foto);$('#pBas').textContent=`İlanı düzenle (no ${i.no})`;$('#pKaydet').textContent='Kaydet';$('#pIptal').hidden=false;$('#pBas').scrollIntoView({behavior:'smooth',block:'start'});return}
+    if(a==='yayin'){i.yayin=!i.yayin;toast(i.yayin?'İlan yeniden yayında':'İlan yayından kaldırıldı, sitede görünmüyor')}
+    if(a==='sil'){D.ilanlar=D.ilanlar.filter(x=>x.no!==no);if(duzenNo===no)formSifirla();toast('İlan silindi')}
+    kaydet();listeCiz()};
+  listeCiz();
+}
+function fotoCiz(mevcut){$('#pOnizle').innerHTML=pFoto.length?pFoto.map((f,n)=>`<img src="${f}" data-n="${n}" title="Kaldırmak için tıklayın" alt="">`).join(''):(mevcut||[]).map(f=>`<img src="${foto(f,200)}" alt="">`).join('')}
+function formSifirla(){duzenNo=null;pFoto=[];pKonum=null;if(pPin){pPin.remove();pPin=null}$('#pForm').reset();$('#pMah').innerHTML=opt(ILCE['Kadıköy']);$('#pOnizle').innerHTML='';$('#pBas').textContent='Yeni ilan ekle';$('#pKaydet').textContent='Yayınla';$('#pIptal').hidden=true;pMap.setView(MERKEZ['Kadıköy'],13)}
+function listeCiz(){const l=D.ilanlar;$('#pIstat').innerHTML=`<span><b>${l.filter(i=>i.yayin).length}</b> yayında</span><span><b>${l.filter(i=>!i.yayin).length}</b> yayında değil</span>`;
+  $('#pListe').innerHTML=l.map(i=>`<div class="satir ${i.yayin?'':'pasif'}" data-no="${i.no}"><img src="${foto(i.foto[0],200)}" alt=""><div class="ad">${esc(i.baslik)}<small>${i.no} · ${tl(i.fiyat)} · ${esc(danBul(i.dan).ad)}</small></div><button class="mini" data-a="duzen">Düzenle</button><button class="mini" data-a="yayin">${i.yayin?'Kaldır':'Yayınla'}</button><button class="mini k" data-a="sil">Sil</button></div>`).join('')||'<p style="color:var(--ink2);font-size:14px">Henüz ilan yok.</p>'}
+// yönlendirme
+function ciz(){
+  haritalar.forEach(m=>m.remove());haritalar=[];pMap=null;
+  const h=decodeURIComponent(location.hash.replace(/^#\/?/,''));const [p,...r]=h.split('/');const a=r.join('/');
+  const s=(SAYFA[p]||SAYFA['yok'])(a);
+  $('#ana').innerHTML=s.h;document.title=s.t;
+  $('#waSabit').href=waLink(OFIS.wa,'Merhaba, web sitenizden ulaşıyorum.');
+  const aktif=p==='ilan'?'ilanlar':p==='danisman'?'danismanlar':p;
+  document.querySelectorAll('#nav a').forEach(x=>x.classList.toggle('sec',x.dataset.s===aktif));
+  $('#nav').classList.remove('ac');$('#menuBtn').setAttribute('aria-expanded','false');
+  window.scrollTo(0,0);
+  if(s.sonra)s.sonra();
+}
+$('#menuBtn').onclick=()=>{const ac=$('#nav').classList.toggle('ac');$('#menuBtn').setAttribute('aria-expanded',String(ac))};
+let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('ac');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('ac'),3200)}
+window.addEventListener('hashchange',ciz);
+ciz();
+</script>
+</body>
+</html>
