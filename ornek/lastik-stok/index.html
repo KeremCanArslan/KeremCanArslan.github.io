@@ -1,0 +1,821 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Lastik Stok ve Satış Takibi — Örnek Çalışma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--zemin:#f2f3f5;--kart:#fff;--koyu:#1c2026;--metin:#1c2026;--soluk:#667080;--cizgi:#e3e6ea;--kenar:#cdd2d9;--vurgu:#f2a516;--vurgu-acik:#fff4dc;--vurgu-koyu:#8a5700;--yesil:#16794a;--yesil-acik:#e6f4ec;--turuncu:#b45309;--turuncu-acik:#fdf0e1;--kirmizi:#b42318;--kirmizi-acik:#fdecea;--mavi:#1f5fa8;--mavi-acik:#e7f0fa}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--zemin);color:var(--metin);font-size:15px;line-height:1.45}
+button,input,select{font:inherit;color:inherit}
+input:focus,select:focus{outline:2px solid var(--vurgu);outline-offset:0;border-color:var(--vurgu)}
+.serit{background:var(--vurgu-acik);color:#6b4a00;font-size:13px;padding:7px 16px;text-align:center;border-bottom:1px solid #f1dfb5}
+.serit button{border:0;background:none;color:#6b4a00;text-decoration:underline;cursor:pointer;padding:0 0 0 4px;font-size:13px}
+header{background:var(--koyu);color:#fff;position:sticky;top:0;z-index:10}
+.ust{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;align-items:stretch;gap:28px;min-height:62px}
+.logo{display:flex;align-items:center;gap:11px;font-weight:700;font-size:18px;white-space:nowrap}
+.logo small{display:block;font-weight:400;font-size:12px;color:#a9b1bc;line-height:1.2}
+.teker{width:32px;height:32px;border-radius:50%;border:7px solid #4b535e;box-shadow:inset 0 0 0 3px var(--vurgu);flex:none}
+nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{border:0;background:none;color:#c3c9d1;padding:0 14px;cursor:pointer;font-weight:500;border-bottom:3px solid transparent;border-top:3px solid transparent;white-space:nowrap}
+nav button:hover{color:#fff}
+nav button.aktif{color:#fff;border-bottom-color:var(--vurgu)}
+.tarih{margin-left:auto;display:flex;align-items:center;font-size:13px;color:#a9b1bc;white-space:nowrap}
+main{max-width:1200px;margin:0 auto;padding:26px 20px 70px}
+.sayfa{display:none}
+.sayfa.aktif{display:block}
+.baslik{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+h1{font-size:23px;margin:0;letter-spacing:-.01em}
+.alt{color:var(--soluk);margin:3px 0 0;font-size:14.5px}
+.kpiler{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}
+.kpi{background:var(--kart);border:1px solid var(--cizgi);border-radius:12px;padding:16px 18px}
+.kpi span{display:block;color:var(--soluk);font-size:13.5px}
+.kpi b{display:block;font-size:26px;font-weight:700;margin-top:3px;font-variant-numeric:tabular-nums;letter-spacing:-.01em;white-space:nowrap}
+.kpi small{color:var(--soluk);font-size:13px}
+.kpi.uyari b{color:var(--turuncu)}
+.kart{background:var(--kart);border:1px solid var(--cizgi);border-radius:12px;overflow:hidden}
+.kart-bas{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid var(--cizgi);flex-wrap:wrap}
+.kart-bas h2{font-size:16px;margin:0}
+.kart-bas p{margin:2px 0 0;color:var(--soluk);font-size:13px}
+.izgara{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:18px;align-items:start}
+.sutun{display:grid;gap:18px;min-width:0}
+.liste{list-style:none;margin:0;padding:0}
+.liste li{display:flex;align-items:center;gap:14px;padding:12px 18px;border-top:1px solid var(--cizgi)}
+.liste li:first-child{border-top:0}
+.liste li.bos{display:block}
+.liste .orta{flex:1;min-width:0}
+.liste .orta b{display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.liste .orta small{display:block;color:var(--soluk);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.liste .sag{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.liste .sag small{display:block;color:var(--soluk);font-size:12.5px}
+.et{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:6px;white-space:nowrap;vertical-align:1px}
+.et.yaz{background:var(--vurgu-acik);color:var(--vurgu-koyu)}
+.et.kis{background:var(--mavi-acik);color:var(--mavi)}
+.et.dort{background:var(--yesil-acik);color:var(--yesil)}
+.et.az{background:var(--turuncu-acik);color:var(--turuncu)}
+.et.yok{background:var(--kirmizi-acik);color:var(--kirmizi)}
+.et.gri{background:#eef0f3;color:#4b5563}
+.bos{padding:28px 18px;text-align:center;color:var(--soluk)}
+.bos .btn{margin-top:12px}
+.cubuk{padding:8px 18px 16px}
+.cubuk div{display:grid;grid-template-columns:104px minmax(0,1fr) 54px;align-items:center;gap:10px;padding:6px 0;font-size:14px}
+.cubuk b{font-weight:600;font-variant-numeric:tabular-nums}
+.cubuk .yol{background:#f0f1f3;border-radius:5px;height:10px}
+.cubuk i{display:block;height:10px;border-radius:5px;background:var(--vurgu)}
+.cubuk em{font-style:normal;text-align:right;color:var(--soluk);font-variant-numeric:tabular-nums}
+.arac{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+.ara{flex:1 1 300px;min-width:0}
+.ara input{width:100%;padding:11px 14px;border:1px solid var(--kenar);border-radius:10px;background:#fff;font-size:15px}
+.cipler{display:flex;gap:6px;flex-wrap:wrap}
+.cip{border:1px solid var(--kenar);background:#fff;border-radius:999px;padding:7px 14px;cursor:pointer;font-size:14px}
+.cip.aktif{background:var(--koyu);border-color:var(--koyu);color:#fff}
+.btn{border:1px solid var(--kenar);background:#fff;border-radius:10px;padding:10px 16px;cursor:pointer;font-weight:600;font-size:14px;white-space:nowrap}
+.btn:hover{background:#f6f7f9}
+.btn.ana{background:var(--koyu);border-color:var(--koyu);color:#fff}
+.btn.ana:hover{background:#2c323b}
+.btn.vurgu{background:var(--vurgu);border-color:var(--vurgu);color:var(--koyu)}
+.btn.vurgu:hover{background:#e39a10}
+.btn.kucuk{padding:6px 12px;font-size:13px;border-radius:8px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.sil{color:var(--kirmizi);border-color:transparent;background:none;padding-left:4px}
+.ozetsatir{color:var(--soluk);font-size:13.5px;margin:0 0 10px}
+.tablo{width:100%;border-collapse:collapse}
+.tablo th{text-align:left;font-size:12.5px;font-weight:600;color:var(--soluk);padding:11px 16px;background:#f8f9fa;border-bottom:1px solid var(--cizgi);white-space:nowrap}
+.tablo td{padding:12px 16px;border-bottom:1px solid var(--cizgi);vertical-align:middle}
+.tablo tr:last-child td{border-bottom:0}
+.tablo tbody tr:hover{background:#fafbfc}
+.tablo td small{display:block;color:var(--soluk);font-size:12.5px}
+.sayi{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tablo th.sayi{text-align:right}
+.ebat{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.islem{text-align:right;white-space:nowrap}
+.satis{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:18px;align-items:start}
+.satis .ara{padding:14px 18px;border-bottom:1px solid var(--cizgi)}
+.not{padding:10px 18px 14px;color:var(--soluk);font-size:13px;margin:0}
+.sepet-satir{display:grid;grid-template-columns:minmax(0,1fr) auto 96px 30px;gap:10px;align-items:center;padding:12px 18px;border-top:1px solid var(--cizgi)}
+.sepet-satir:first-child{border-top:0}
+.sepet-satir b{display:block;font-weight:600}
+.sepet-satir small{display:block;color:var(--soluk);font-size:12.5px}
+.sepet-satir .sayi{font-weight:600}
+.adim{display:inline-flex;align-items:center;border:1px solid var(--kenar);border-radius:8px;overflow:hidden;background:#fff}
+.adim button{border:0;background:#f4f5f7;width:32px;height:32px;cursor:pointer;font-size:17px;line-height:1}
+.adim button:hover{background:#e9ebee}
+.adim span,.adim input{min-width:34px;width:44px;text-align:center;font-weight:600;border:0;padding:0;background:#fff;-moz-appearance:textfield}
+.adim input::-webkit-outer-spin-button,.adim input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.adim input:focus{outline:0}
+.adet-sabit{font-weight:600;color:var(--soluk);font-size:14px;text-align:center;min-width:76px}
+.kaldir{border:0;background:none;color:var(--soluk);font-size:20px;cursor:pointer;line-height:1;padding:4px}
+.kaldir:hover{color:var(--kirmizi)}
+.hizmetler{display:flex;gap:8px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--cizgi);background:#fafbfc}
+.alanlar{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px 18px;border-top:1px solid var(--cizgi)}
+.alan{min-width:0}
+.alan.genis{grid-column:1/-1}
+.alan label,.alan .etiket{display:block;font-size:13px;color:var(--soluk);margin-bottom:5px}
+.alan input,.alan select{width:100%;padding:10px 12px;border:1px solid var(--kenar);border-radius:9px;background:#fff}
+.alan .adim{width:100%}
+.alan .adim input{flex:1;width:auto;padding:10px 0}
+.ipucu{display:block;color:var(--soluk);font-size:12.5px;margin-top:4px}
+.odeme{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.odeme button{border:1px solid var(--kenar);background:#fff;border-radius:9px;padding:9px 4px;cursor:pointer;font-size:13.5px;font-weight:500}
+.odeme button.aktif{background:var(--koyu);border-color:var(--koyu);color:#fff}
+.toplam{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 18px;border-top:1px solid var(--cizgi);background:#fafbfc;flex-wrap:wrap}
+.toplam span{color:var(--soluk);font-size:14px}
+.toplam b{display:block;font-size:28px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.hata{color:var(--kirmizi);font-size:13.5px;margin:0;padding:0 18px 12px;display:none}
+.hata.acik{display:block}
+.perde{position:fixed;inset:0;background:rgba(20,24,30,.5);display:none;align-items:flex-start;justify-content:center;padding:6vh 16px;z-index:50;overflow-y:auto}
+.perde.acik{display:flex}
+.pencere{background:#fff;border-radius:14px;width:100%;max-width:560px;box-shadow:0 20px 50px rgba(0,0,0,.25);overflow:hidden}
+.pencere.dar{max-width:400px}
+.kapat{border:0;background:none;font-size:24px;cursor:pointer;color:var(--soluk);line-height:1;padding:0 2px}
+.form .alanlar{border-top:0}
+.form .hata{padding:0 18px 4px}
+.form-alt{display:flex;align-items:center;gap:8px;padding:14px 18px;border-top:1px solid var(--cizgi);background:#fafbfc}
+.form-alt .bosluk{flex:1}
+#fis{padding:22px 22px 6px;font-size:14px}
+.fis-bas{text-align:center;border-bottom:1px dashed var(--kenar);padding-bottom:12px;margin-bottom:12px}
+.fis-bas b{display:block;font-size:18px}
+.fis-bas small{display:block;color:var(--soluk)}
+.fis-musteri{margin-bottom:10px}
+.fis-tablo{width:100%;border-collapse:collapse}
+.fis-tablo td{padding:6px 0;vertical-align:top}
+.fis-tablo td.sayi{padding-left:14px}
+.fis-tablo td small{display:block;color:var(--soluk);font-size:12.5px}
+.fis-top{display:flex;justify-content:space-between;align-items:baseline;border-top:1px dashed var(--kenar);margin-top:8px;padding-top:10px}
+.fis-top b{font-size:20px}
+.fis-not{color:var(--soluk);font-size:12px;text-align:center;margin:14px 0 8px}
+.bildirim{position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);background:var(--koyu);color:#fff;padding:12px 18px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:60;font-size:14px;max-width:calc(100% - 32px)}
+.bildirim.acik{opacity:1;transform:translate(-50%,0)}
+@media (max-width:980px){
+ .izgara,.satis{grid-template-columns:minmax(0,1fr)}
+ .kpiler{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+ .ust{flex-wrap:wrap;gap:0;padding:0 16px}
+ .logo{padding:12px 0}
+ .tarih{padding:12px 0}
+ nav{order:3;width:calc(100% + 32px);margin:0 -16px;padding:0 6px;border-top:1px solid #2f353d}
+ nav button{padding:12px 12px}
+ main{padding:20px 16px 60px}
+ h1{font-size:21px}
+ .kpi{padding:14px}
+ .kpi b{font-size:21px}
+ .tablo thead{display:none}
+ .tablo,.tablo tbody,.tablo tr,.tablo td{display:block;width:100%}
+ .tablo tr{padding:12px 16px;border-bottom:1px solid var(--cizgi)}
+ .tablo tr:last-child{border-bottom:0}
+ .tablo td{border:0;padding:3px 0;display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:right}
+ .tablo td::before{content:attr(data-l);color:var(--soluk);font-size:13px;text-align:left;font-weight:400}
+ .tablo td small{display:inline;margin-left:6px}
+ .tablo td>span{min-width:0}
+ .tablo td.bas{display:block;text-align:left;font-size:16px;padding-bottom:6px}
+ .tablo td.bas::before,.tablo td.islem::before{content:none}
+ .tablo td.islem{justify-content:flex-end;padding-top:8px}
+ .sepet-satir{grid-template-columns:minmax(0,1fr) auto 30px}
+ .sepet-satir .sayi{grid-column:1/2;text-align:left}
+ .alanlar{grid-template-columns:minmax(0,1fr)}
+ .odeme{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:420px){.tarih{display:none}}
+@media print{
+ body *{visibility:hidden}
+ #fis,#fis *{visibility:visible}
+ #fis{position:absolute;left:0;top:0;width:80mm;padding:0}
+ .perde{position:static;background:none}
+}
+</style>
+</head>
+<body>
+<div class="serit" id="serit">Örnek çalışma. Veriler örnektir, yaptığınız değişiklikler yalnız bu tarayıcıda kalır.<button type="button" id="sifirla">Örnek veriye dön</button></div>
+<header>
+ <div class="ust">
+  <div class="logo"><span class="teker" aria-hidden="true"></span><div>Yol Lastik<small>Stok ve satış takibi</small></div></div>
+  <nav aria-label="Bölümler">
+   <button type="button" data-sayfa="ozet">Özet</button>
+   <button type="button" data-sayfa="stok">Stok</button>
+   <button type="button" data-sayfa="satis">Yeni satış</button>
+   <button type="button" data-sayfa="satislar">Satışlar</button>
+  </nav>
+  <div class="tarih" id="ust-tarih"></div>
+ </div>
+</header>
+
+<main>
+ <section class="sayfa" id="sayfa-ozet">
+  <div class="baslik">
+   <div><h1>Özet</h1><p class="alt">Bugünkü satışlar ve azalan stok tek bakışta.</p></div>
+   <button type="button" class="btn vurgu" data-git="satis">Yeni satış</button>
+  </div>
+  <div class="kpiler">
+   <div class="kpi"><span>Bugünkü satış</span><b id="k-bugun"></b><small id="k-bugun-alt"></small></div>
+   <div class="kpi"><span>Bu ay</span><b id="k-ay"></b><small id="k-ay-alt"></small></div>
+   <div class="kpi"><span>Stoktaki lastik</span><b id="k-stok"></b><small id="k-stok-alt"></small></div>
+   <div class="kpi uyari"><span>Azalan stok</span><b id="k-azalan"></b><small>4 adetin altına düşenler</small></div>
+  </div>
+  <div class="izgara">
+   <div class="kart">
+    <div class="kart-bas"><h2>Son satışlar</h2><button type="button" class="btn kucuk" data-git="satislar">Tümünü gör</button></div>
+    <ul class="liste" id="son-satislar"></ul>
+   </div>
+   <div class="sutun">
+    <div class="kart">
+     <div class="kart-bas"><div><h2>Azalan stok</h2><p>Takım (4 adet) tamamlanmayan lastikler</p></div></div>
+     <ul class="liste" id="azalan-liste"></ul>
+    </div>
+    <div class="kart">
+     <div class="kart-bas"><div><h2>Bu ay en çok satan ebatlar</h2><p>Satılan lastik adedi</p></div></div>
+     <div class="cubuk" id="cok-satan"></div>
+    </div>
+   </div>
+  </div>
+ </section>
+
+ <section class="sayfa" id="sayfa-stok">
+  <div class="baslik">
+   <div><h1>Stok</h1><p class="alt">Ebat yazarak arayın: 205/55 R16, 2055516 ya da 205 55 16 aynı sonucu verir.</p></div>
+   <button type="button" class="btn ana" id="yeni-lastik">Yeni lastik ekle</button>
+  </div>
+  <div class="arac">
+   <div class="ara"><input type="search" id="stok-ara" placeholder="Ebat, marka ya da model ara" autocomplete="off" aria-label="Stokta ara"></div>
+   <div class="cipler" id="mevsim-cip">
+    <button type="button" class="cip aktif" data-mevsim="Tümü">Tümü</button>
+    <button type="button" class="cip" data-mevsim="Yaz">Yaz</button>
+    <button type="button" class="cip" data-mevsim="Kış">Kış</button>
+    <button type="button" class="cip" data-mevsim="4 Mevsim">4 Mevsim</button>
+    <button type="button" class="cip" id="azalan-cip">Yalnız azalanlar</button>
+   </div>
+  </div>
+  <p class="ozetsatir" id="stok-ozet"></p>
+  <div class="kart">
+   <table class="tablo">
+    <thead><tr><th>Ebat</th><th>Marka ve model</th><th>Mevsim</th><th class="sayi">Üretim (DOT)</th><th class="sayi">Adet</th><th class="sayi">Satış fiyatı</th><th></th></tr></thead>
+    <tbody id="stok-tablo"></tbody>
+   </table>
+   <div class="bos" id="stok-bos" hidden>Aramanıza uygun lastik yok.<br><button type="button" class="btn" id="bos-ekle">Yeni lastik olarak ekle</button></div>
+  </div>
+ </section>
+
+ <section class="sayfa" id="sayfa-satis">
+  <div class="baslik">
+   <div><h1>Yeni satış</h1><p class="alt">Lastiği seçin, müşteriyi yazın, satışı tamamlayın. Stok kendiliğinden düşer.</p></div>
+  </div>
+  <div class="satis">
+   <div class="kart">
+    <div class="kart-bas"><h2>Lastik seçin</h2></div>
+    <div class="ara"><input type="search" id="secim-ara" placeholder="Ebat yazın, örnek 2055516" autocomplete="off" aria-label="Satış için lastik ara"></div>
+    <ul class="liste" id="secim-liste"></ul>
+    <p class="not" id="secim-not"></p>
+   </div>
+   <div class="kart">
+    <div class="kart-bas"><h2>Satış</h2><span class="et gri" id="sepet-adet">Boş</span></div>
+    <div id="sepet"></div>
+    <div class="hizmetler">
+     <button type="button" class="btn kucuk" data-hizmet="montaj">+ Montaj ve balans</button>
+     <button type="button" class="btn kucuk" data-hizmet="rot">+ Rot ayarı</button>
+    </div>
+    <div class="alanlar">
+     <div class="alan genis"><label for="m-ad">Müşteri</label><input id="m-ad" placeholder="Ad soyad ya da firma" autocomplete="off"></div>
+     <div class="alan"><label for="m-plaka">Plaka</label><input id="m-plaka" placeholder="06 ABC 123" autocomplete="off" style="text-transform:uppercase"></div>
+     <div class="alan"><label for="m-tel">Telefon</label><input id="m-tel" type="tel" placeholder="05xx xxx xx xx" autocomplete="off"></div>
+     <div class="alan genis"><span class="etiket">Ödeme</span><div class="odeme" id="odeme"></div></div>
+    </div>
+    <p class="hata" id="satis-hata"></p>
+    <div class="toplam"><div><span>Toplam</span><b id="sepet-toplam">0 TL</b></div><button type="button" class="btn vurgu" id="tamamla" disabled>Satışı tamamla</button></div>
+   </div>
+  </div>
+ </section>
+
+ <section class="sayfa" id="sayfa-satislar">
+  <div class="baslik">
+   <div><h1>Satışlar</h1><p class="alt">Tarih aralığı seçin, müşteri adı ya da plaka ile arayın.</p></div>
+  </div>
+  <div class="arac">
+   <div class="cipler" id="donem-cip">
+    <button type="button" class="cip" data-donem="bugun">Bugün</button>
+    <button type="button" class="cip" data-donem="hafta">Son 7 gün</button>
+    <button type="button" class="cip aktif" data-donem="ay">Bu ay</button>
+    <button type="button" class="cip" data-donem="tumu">Tümü</button>
+   </div>
+   <div class="ara"><input type="search" id="satis-ara" placeholder="Müşteri ya da plaka ara" autocomplete="off" aria-label="Satışlarda ara"></div>
+  </div>
+  <div class="kpiler">
+   <div class="kpi"><span>Satış sayısı</span><b id="s-sayi"></b></div>
+   <div class="kpi"><span>Satılan lastik</span><b id="s-lastik"></b></div>
+   <div class="kpi"><span>Toplam tutar</span><b id="s-toplam"></b></div>
+   <div class="kpi uyari"><span>Veresiye</span><b id="s-veresiye"></b></div>
+  </div>
+  <div class="kart">
+   <table class="tablo">
+    <thead><tr><th>Müşteri</th><th>Tarih</th><th>Ürünler</th><th>Ödeme</th><th class="sayi">Tutar</th><th></th></tr></thead>
+    <tbody id="satis-tablo"></tbody>
+   </table>
+   <div class="bos" id="satis-bos" hidden>Bu aralıkta satış yok.</div>
+  </div>
+ </section>
+</main>
+
+<datalist id="markalar"><option>Michelin</option><option>Bridgestone</option><option>Continental</option><option>Goodyear</option><option>Pirelli</option><option>Hankook</option><option>Lassa</option><option>Petlas</option></datalist>
+<div class="perde" id="perde"><div class="pencere" id="pencere" role="dialog" aria-modal="true"></div></div>
+<div class="bildirim" id="bildirim" role="status"></div>
+
+<script>
+(() => {
+const ANAHTAR = 'yol-lastik-ornek-v1';
+const ESIK = 4;
+const GUN = 864e5;
+const HIZMET = {montaj: {ad: 'Montaj ve balans', fiyat: 250}, rot: {ad: 'Rot ayarı', fiyat: 900}};
+const ODEMELER = ['Nakit', 'Kredi kartı', 'Havale', 'Veresiye'];
+const AYLAR = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'];
+const MEVSIM_SINIF = {'Yaz': 'yaz', 'Kış': 'kis', '4 Mevsim': 'dort'};
+
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const tl = n => Math.round(n).toLocaleString('tr-TR') + ' TL';
+const ebat = s => `${s.g}/${s.y} R${s.j}${s.c || ''}`;
+const norm = t => String(t).toLocaleLowerCase('tr').replace(/[^0-9a-zçğıöşü]/g, '');
+const kacis = t => String(t).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+const gunBasi = t => { const d = new Date(t); d.setHours(0, 0, 0, 0); return d.getTime(); };
+const ayBasi = () => { const d = new Date(); d.setDate(1); d.setHours(0, 0, 0, 0); return d.getTime(); };
+const mevsimEt = m => `<span class="et ${MEVSIM_SINIF[m] || 'gri'}">${kacis(m)}</span>`;
+
+// ebat, marka, model, mevsim, endeks, DOT, adet, satış fiyatı
+const ILK_STOK = [
+ [205,55,16,'','Michelin','Primacy 4+','Yaz','91V','1226',12,5950],
+ [205,55,16,'','Lassa','Driveways','Yaz','91V','0826',24,3450],
+ [205,55,16,'','Continental','PremiumContact 7','Yaz','91V','4525',8,5700],
+ [205,55,16,'','Petlas','Velox Sport PT741','Yaz','91V','1626',3,3150],
+ [205,55,16,'','Lassa','Snoways 4','Kış','91H','3426',16,3690],
+ [205,55,16,'','Michelin','Alpin 6','Kış','91H','3026',8,6250],
+ [205,55,16,'','Goodyear','Vector 4Seasons Gen-3','4 Mevsim','91V','2226',6,5100],
+ [195,65,15,'','Lassa','Driveways','Yaz','91H','1426',20,2850],
+ [195,65,15,'','Bridgestone','Turanza 6','Yaz','91H','4825',8,4350],
+ [195,65,15,'','Petlas','SnowMaster 2','Kış','91H','3626',12,2790],
+ [195,65,15,'','Michelin','CrossClimate 2','4 Mevsim','91H','1926',2,5350],
+ [185,65,15,'','Lassa','Greenways','Yaz','88H','0526',16,2590],
+ [185,65,15,'','Petlas','Multi Action PT565','4 Mevsim','88H','2826',8,2690],
+ [185,65,15,'','Lassa','Snoways 4','Kış','88T','3526',10,2750],
+ [175,65,14,'','Lassa','Greenways','Yaz','82T','0726',12,2190],
+ [175,65,14,'','Petlas','SnowMaster 2','Kış','82T','3426',3,2150],
+ [195,55,16,'','Goodyear','EfficientGrip Performance 2','Yaz','87V','1326',6,4700],
+ [215,60,16,'','Hankook','Ventus Prime 4','Yaz','99V','2026',8,4600],
+ [215,65,16,'','Lassa','Competus H/P 2','Yaz','98H','1526',8,4150],
+ [215,65,16,'','Bridgestone','Blizzak 6','Kış','98H','3126',4,5450],
+ [215,55,17,'','Bridgestone','Turanza 6','Yaz','98W','1126',4,6300],
+ [215,55,17,'','Goodyear','UltraGrip Performance 3','Kış','98V','3326',8,6600],
+ [225,45,17,'','Continental','PremiumContact 7','Yaz','94Y','0926',8,7400],
+ [225,45,17,'','Pirelli','Cinturato P7','Yaz','94Y','5025',4,7150],
+ [225,45,17,'','Hankook','Winter i*cept RS3','Kış','94V','3726',0,5600],
+ [225,40,18,'','Michelin','Pilot Sport 5','Yaz','92Y','2426',4,9800],
+ [215,65,16,'C','Petlas','Full Power PT835','Yaz','109/107T','4425',12,4250],
+ [195,75,16,'C','Lassa','Transway 2','Yaz','107/105R','2726',8,3950],
+ [195,75,16,'C','Lassa','Wintus 2','Kış','107/105R','3826',4,4100]
+];
+
+function rastgele(tohum) {
+ return () => {
+  tohum = tohum + 0x6D2B79F5 | 0;
+  let t = Math.imul(tohum ^ tohum >>> 15, 1 | tohum);
+  t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+  return ((t ^ t >>> 14) >>> 0) / 4294967296;
+ };
+}
+
+function ilkVeri() {
+ const stok = ILK_STOK.map((r, i) => ({id: i + 1, g: r[0], y: r[1], j: r[2], c: r[3], marka: r[4], model: r[5], mevsim: r[6], endeks: r[7], dot: r[8], adet: r[9], fiyat: r[10]}));
+ const r = rastgele(20261028);
+ const sec = a => a[Math.floor(r() * a.length)];
+ const adlar = ['Mehmet Kaya', 'Ayşe Demir', 'Hasan Yıldız', 'Murat Şahin', 'Elif Arslan', 'Emre Çelik', 'Fatma Aydın', 'Burak Öztürk', 'Serkan Koç', 'Zeynep Kurt', 'Okan Polat', 'Gökhan Aslan', 'Selin Erdem', 'Kemal Doğan', 'Hakan Güneş', 'Cem Yalçın', 'Derya Kılıç', 'Volkan Aksoy', 'Tuncay Özkan', 'Nur Çetin'];
+ const firmalar = ['Aksoy Nakliyat', 'Kuzey Lojistik', 'Demir Gıda Dağıtım'];
+ const iller = ['06', '06', '06', '06', '34', '42', '26', '71', '18'];
+ const harfler = 'ABCDEFGHJKLMNPRSTUVYZ';
+ const plaka = () => {
+  const n = 1 + Math.floor(r() * 3);
+  let h = '';
+  for (let i = 0; i < n; i++) h += harfler[Math.floor(r() * harfler.length)];
+  const sayi = n === 1 ? 1000 + Math.floor(r() * 9000) : n === 2 ? 100 + Math.floor(r() * 9900) : 10 + Math.floor(r() * 990);
+  return `${sec(iller)} ${h} ${sayi}`;
+ };
+ const satislar = [];
+ let no = 1000;
+ const simdi = new Date();
+ const bugun = gunBasi(simdi);
+ for (let d = 29; d >= 0; d--) {
+  const gun = new Date(bugun);
+  gun.setDate(gun.getDate() - d);
+  let dakikalar = [];
+  if (d === 0) {
+   const son = simdi.getHours() * 60 + simdi.getMinutes() - 20;
+   if (son > 570) {
+    const n = Math.min(3, Math.floor((son - 540) / 120) + 1);
+    for (let k = 0; k < n; k++) dakikalar.push(570 + Math.floor((son - 570) * (k + 0.5) / n));
+   }
+  } else {
+   const kac = gun.getDay() === 0 ? (r() < 0.4 ? 1 : 0) : 1 + Math.floor(r() * 3);
+   for (let k = 0; k < kac; k++) dakikalar.push(540 + Math.floor(r() * 570));
+   dakikalar.sort((a, b) => a - b);
+  }
+  for (const dk of dakikalar) {
+   const t = new Date(gun);
+   t.setHours(Math.floor(dk / 60), dk % 60, 0, 0);
+   const s = sec(stok);
+   const adet = r() < 0.7 ? 4 : 2;
+   const kalemler = [{ad: `${s.marka} ${s.model}`, ebat: ebat(s), stokId: s.id, adet, fiyat: s.fiyat}];
+   if (r() < 0.8) kalemler.push({ad: HIZMET.montaj.ad, ebat: null, stokId: null, adet, fiyat: HIZMET.montaj.fiyat});
+   if (r() < 0.2) kalemler.push({ad: HIZMET.rot.ad, ebat: null, stokId: null, adet: 1, fiyat: HIZMET.rot.fiyat});
+   const x = r();
+   const odeme = x < 0.48 ? 'Kredi kartı' : x < 0.76 ? 'Nakit' : x < 0.93 ? 'Havale' : 'Veresiye';
+   satislar.push({no: ++no, t: t.getTime(), musteri: s.c ? sec(firmalar) : sec(adlar), plaka: plaka(), tel: '', odeme, kalemler, toplam: kalemler.reduce((a, k) => a + k.adet * k.fiyat, 0)});
+  }
+ }
+ return {stok, satislar, sonId: stok.length, sonNo: no};
+}
+
+let kalici = true;
+let V = null;
+try {
+ const kayit = localStorage.getItem(ANAHTAR);
+ if (kayit) V = JSON.parse(kayit);
+} catch (e) {
+ kalici = false;
+}
+if (!V || !Array.isArray(V.stok) || !Array.isArray(V.satislar)) V = ilkVeri();
+
+function kaydet() {
+ try {
+  localStorage.setItem(ANAHTAR, JSON.stringify(V));
+ } catch (e) {
+  kalici = false;
+ }
+ if (!kalici) $('#serit').firstChild.textContent = 'Örnek çalışma. Veriler örnektir, bu tarayıcı kayıt tutmadığı için değişiklikler sayfa yenilenince sıfırlanır.';
+}
+
+const stokBul = id => V.stok.find(s => s.id === id);
+const lastikAdedi = l => l.reduce((a, s) => a + s.kalemler.reduce((b, k) => b + (k.ebat ? k.adet : 0), 0), 0);
+const ciro = l => l.reduce((a, s) => a + s.toplam, 0);
+
+function zaman(t) {
+ const d = new Date(t);
+ const bugun = gunBasi(Date.now());
+ const saat = d.toLocaleTimeString('tr-TR', {hour: '2-digit', minute: '2-digit'});
+ if (t >= bugun) return 'Bugün ' + saat;
+ if (t >= bugun - GUN) return 'Dün ' + saat;
+ return `${d.getDate()} ${AYLAR[d.getMonth()]} ${saat}`;
+}
+
+function urunOzet(s) {
+ const lastik = s.kalemler.filter(k => k.ebat);
+ const hizmet = s.kalemler.filter(k => !k.ebat);
+ const ilk = lastik[0] ? `${lastik[0].adet} × ${lastik[0].ebat} ${lastik[0].ad}` : hizmet.map(k => k.ad).join(', ');
+ const ek = [];
+ if (lastik.length > 1) ek.push(`+${lastik.length - 1} lastik daha`);
+ if (lastik.length && hizmet.length) ek.push(hizmet.map(k => k.ad.toLocaleLowerCase('tr')).join(', '));
+ return {ilk, ek: ek.join(' · ')};
+}
+
+function eslesir(s, q) {
+ const parcalar = String(q).split(/\s+/).map(norm).filter(Boolean);
+ if (!parcalar.length) return true;
+ const anahtar = norm(`${s.g}${s.y}${s.j}${s.c} ${s.g}${s.y}r${s.j}${s.c} ${s.marka} ${s.model} ${s.mevsim}`);
+ return parcalar.every(p => anahtar.includes(p));
+}
+const sirala = (a, b) => a.j - b.j || a.g - b.g || a.y - b.y || a.c.localeCompare(b.c) || a.marka.localeCompare(b.marka, 'tr');
+
+/* Özet */
+function ozetCiz() {
+ const bugun = gunBasi(Date.now());
+ const bs = V.satislar.filter(s => s.t >= bugun);
+ const ays = V.satislar.filter(s => s.t >= ayBasi());
+ const azalan = V.stok.filter(s => s.adet < ESIK).sort((a, b) => a.adet - b.adet || sirala(a, b));
+ $('#k-bugun').textContent = tl(ciro(bs));
+ $('#k-bugun-alt').textContent = `${bs.length} satış · ${lastikAdedi(bs)} lastik`;
+ $('#k-ay').textContent = tl(ciro(ays));
+ $('#k-ay-alt').textContent = `${ays.length} satış · ${lastikAdedi(ays)} lastik`;
+ $('#k-stok').textContent = V.stok.reduce((a, s) => a + s.adet, 0).toLocaleString('tr-TR') + ' adet';
+ $('#k-stok-alt').textContent = `${V.stok.length} çeşit`;
+ $('#k-azalan').textContent = `${azalan.length} çeşit`;
+
+ const son = [...V.satislar].sort((a, b) => b.t - a.t).slice(0, 7);
+ $('#son-satislar').innerHTML = son.length ? son.map(s => {
+  const u = urunOzet(s);
+  return `<li><div class="orta"><b>${kacis(s.musteri)}${s.plaka ? ` <span class="et gri">${kacis(s.plaka)}</span>` : ''}</b><small>${kacis(u.ilk)}</small></div><div class="sag"><b>${tl(s.toplam)}</b><small>${zaman(s.t)} · ${s.odeme}</small></div></li>`;
+ }).join('') : '<li class="bos">Henüz satış yok.</li>';
+
+ $('#azalan-liste').innerHTML = azalan.length ? azalan.map(s => `<li><div class="orta"><b>${ebat(s)}</b><small>${kacis(s.marka)} ${kacis(s.model)}</small></div>${s.adet ? `<span class="et az">${s.adet} adet</span>` : '<span class="et yok">Tükendi</span>'}<button type="button" class="btn kucuk" data-duzenle="${s.id}">Stok ekle</button></li>`).join('') : '<li class="bos">Azalan lastik yok.</li>';
+
+ const sayac = {};
+ ays.forEach(s => s.kalemler.forEach(k => { if (k.ebat) sayac[k.ebat] = (sayac[k.ebat] || 0) + k.adet; }));
+ const enCok = Object.entries(sayac).sort((a, b) => b[1] - a[1]).slice(0, 5);
+ const tepe = enCok.length ? enCok[0][1] : 1;
+ $('#cok-satan').innerHTML = enCok.length ? enCok.map(([e, n]) => `<div><b>${e}</b><span class="yol"><i style="width:${Math.max(4, Math.round(n / tepe * 100))}%"></i></span><em>${n} adet</em></div>`).join('') : '<p class="bos">Bu ay satış yok.</p>';
+}
+
+/* Stok */
+const SF = {q: '', mevsim: 'Tümü', azalan: false};
+function stokCiz() {
+ const l = V.stok.filter(s => eslesir(s, SF.q) && (SF.mevsim === 'Tümü' || s.mevsim === SF.mevsim) && (!SF.azalan || s.adet < ESIK)).sort(sirala);
+ $('#stok-ozet').textContent = `${l.length} çeşit · ${l.reduce((a, s) => a + s.adet, 0).toLocaleString('tr-TR')} adet`;
+ $('#stok-bos').hidden = l.length > 0;
+ $('#stok-tablo').innerHTML = l.map(s => {
+  const adet = s.adet === 0 ? '<span class="et yok">Tükendi</span>' : s.adet < ESIK ? `<span class="et az">${s.adet}</span>` : s.adet;
+  const dot = /^\d{4}$/.test(s.dot || '') ? `<span>20${s.dot.slice(2)}<small>${+s.dot.slice(0, 2)}. hafta</small></span>` : '—';
+  return `<tr><td class="bas" data-l="Ebat"><span class="ebat">${ebat(s)}</span> <small>${kacis(s.endeks || '')}</small></td><td data-l="Marka ve model"><span><b>${kacis(s.marka)}</b> ${kacis(s.model)}</span></td><td data-l="Mevsim">${mevsimEt(s.mevsim)}</td><td class="sayi" data-l="Üretim (DOT)">${dot}</td><td class="sayi" data-l="Adet">${adet}</td><td class="sayi" data-l="Satış fiyatı">${tl(s.fiyat)}</td><td class="islem"><button type="button" class="btn kucuk" data-duzenle="${s.id}">Düzenle</button></td></tr>`;
+ }).join('');
+}
+
+function ebatCoz(t) {
+ const m = String(t).toUpperCase().replace(/\s+/g, '').match(/^(\d{3})\/?(\d{2})(?:Z?R)?(\d{2})(C?)$/);
+ return m ? {g: +m[1], y: +m[2], j: +m[3], c: m[4]} : null;
+}
+
+function stokFormu(id, onEbat) {
+ const s = id ? stokBul(id) : null;
+ const d = s || {g: '', marka: '', model: '', mevsim: 'Yaz', endeks: '', dot: '', adet: 4, fiyat: ''};
+ modalAc(`<div class="kart-bas"><h2>${s ? 'Lastiği düzenle' : 'Yeni lastik'}</h2><button type="button" class="kapat" data-kapat aria-label="Kapat">×</button></div>
+ <form class="form" id="stok-form" novalidate>
+  <div class="alanlar">
+   <div class="alan genis"><label for="f-ebat">Ebat</label><input id="f-ebat" placeholder="205/55 R16" value="${s ? ebat(s) : kacis(onEbat || '')}" autocomplete="off"><span class="ipucu">205/55 R16 ya da 2055516 yazabilirsiniz. Hafif ticari için sonuna C ekleyin.</span></div>
+   <div class="alan"><label for="f-marka">Marka</label><input id="f-marka" list="markalar" value="${kacis(d.marka)}" autocomplete="off"></div>
+   <div class="alan"><label for="f-model">Model</label><input id="f-model" value="${kacis(d.model)}" autocomplete="off"></div>
+   <div class="alan"><label for="f-mevsim">Mevsim</label><select id="f-mevsim">${Object.keys(MEVSIM_SINIF).map(m => `<option${m === d.mevsim ? ' selected' : ''}>${m}</option>`).join('')}</select></div>
+   <div class="alan"><label for="f-endeks">Yük ve hız endeksi</label><input id="f-endeks" placeholder="91V" value="${kacis(d.endeks || '')}" autocomplete="off"></div>
+   <div class="alan"><label for="f-dot">DOT (üretim haftası ve yılı)</label><input id="f-dot" inputmode="numeric" maxlength="4" placeholder="3826" value="${kacis(d.dot || '')}" autocomplete="off"><span class="ipucu">3826 = 2026 yılının 38. haftası</span></div>
+   <div class="alan"><label for="f-fiyat">Satış fiyatı (adet, TL)</label><input id="f-fiyat" type="number" min="0" step="10" inputmode="numeric" value="${d.fiyat}"></div>
+   <div class="alan genis"><label for="f-adet">Stoktaki adet</label><div class="adim"><button type="button" data-f-adet="-1" aria-label="Azalt">−</button><input id="f-adet" type="number" min="0" inputmode="numeric" value="${d.adet}"><button type="button" data-f-adet="1" aria-label="Artır">+</button><button type="button" data-f-adet="4" style="width:auto;padding:0 12px;font-size:13px;font-weight:600;border-left:1px solid var(--kenar)">+4</button></div></div>
+  </div>
+  <p class="hata" id="f-hata"></p>
+  <div class="form-alt">${s ? '<button type="button" class="btn sil" id="f-sil">Sil</button>' : ''}<span class="bosluk"></span><button type="button" class="btn" data-kapat>Vazgeç</button><button type="submit" class="btn ana">Kaydet</button></div>
+ </form>`);
+ const form = $('#stok-form');
+ form.addEventListener('click', e => {
+  const b = e.target.closest('[data-f-adet]');
+  if (!b) return;
+  const inp = $('#f-adet');
+  inp.value = Math.max(0, (parseInt(inp.value, 10) || 0) + Number(b.dataset.fAdet));
+ });
+ form.addEventListener('submit', e => {
+  e.preventDefault();
+  const hata = m => { const h = $('#f-hata'); h.textContent = m; h.classList.add('acik'); };
+  const eb = ebatCoz($('#f-ebat').value);
+  const marka = $('#f-marka').value.trim();
+  const dot = $('#f-dot').value.trim();
+  const adet = parseInt($('#f-adet').value, 10);
+  const fiyat = Number($('#f-fiyat').value);
+  if (!eb) return hata('Ebatı 205/55 R16 biçiminde yazın.');
+  if (!marka) return hata('Marka yazın.');
+  if (dot && (!/^\d{4}$/.test(dot) || +dot.slice(0, 2) < 1 || +dot.slice(0, 2) > 53)) return hata('DOT dört rakam olmalı: önce hafta, sonra yılın son iki hanesi. Örnek 3826.');
+  if (!Number.isInteger(adet) || adet < 0) return hata('Adet 0 ya da daha büyük olmalı.');
+  if (!(fiyat > 0)) return hata('Satış fiyatını yazın.');
+  const yeni = {...eb, marka, model: $('#f-model').value.trim(), mevsim: $('#f-mevsim').value, endeks: $('#f-endeks').value.trim().toUpperCase(), dot, adet, fiyat};
+  if (s) Object.assign(s, yeni);
+  else V.stok.push({id: ++V.sonId, ...yeni});
+  kaydet();
+  modalKapat();
+  ciz();
+  bildir(s ? 'Lastik güncellendi.' : 'Lastik stoğa eklendi.');
+ });
+ const sil = $('#f-sil');
+ if (sil) sil.addEventListener('click', () => {
+  if (!sil.dataset.onay) { sil.dataset.onay = '1'; sil.textContent = 'Silmek için tekrar tıklayın'; return; }
+  V.stok = V.stok.filter(x => x.id !== s.id);
+  sepet = sepet.filter(k => k.stokId !== s.id);
+  kaydet();
+  modalKapat();
+  ciz();
+  bildir('Lastik stoktan silindi.');
+ });
+}
+
+/* Yeni satış */
+let sepet = [];
+let odeme = 'Kredi kartı';
+
+function secimCiz() {
+ const q = $('#secim-ara').value;
+ const l = V.stok.filter(s => eslesir(s, q)).sort((a, b) => (b.adet > 0) - (a.adet > 0) || sirala(a, b));
+ const gor = l.slice(0, 8);
+ $('#secim-liste').innerHTML = gor.length ? gor.map(s => {
+  const sepette = sepet.filter(k => k.stokId === s.id).reduce((a, k) => a + k.adet, 0);
+  const stokYazi = s.adet === 0 ? '<span class="et yok">Stokta yok</span>' : s.adet < ESIK ? `<span class="et az">${s.adet} adet</span>` : `${s.adet} adet stokta`;
+  return `<li><div class="orta"><b>${ebat(s)} · ${kacis(s.marka)} ${kacis(s.model)}</b><small>${mevsimEt(s.mevsim)} ${stokYazi}</small></div><div class="sag"><b>${tl(s.fiyat)}</b><small>adet</small></div><button type="button" class="btn kucuk${!sepette && s.adet ? ' ana' : ''}" data-ekle="${s.id}"${!sepette && s.adet ? '' : ' disabled'}>${sepette ? 'Sepette' : 'Ekle'}</button></li>`;
+ }).join('') : '<li class="bos">Bu ebatta lastik yok.</li>';
+ $('#secim-not').textContent = l.length > gor.length ? `${l.length} lastikten ${gor.length} tanesi gösteriliyor. Ebat yazarak daraltın.` : 'Lastik 4 adet eklenir, adedi sağdan değiştirebilirsiniz.';
+}
+
+function sepetLastik() { return sepet.filter(k => k.stokId).reduce((a, k) => a + k.adet, 0); }
+function kalemAdet(k) { return k.hizmet === 'montaj' ? (sepetLastik() || 4) : k.adet; }
+function kalemFiyat(k) { return k.stokId ? stokBul(k.stokId).fiyat : HIZMET[k.hizmet].fiyat; }
+function sepetToplam() { return sepet.reduce((a, k) => a + kalemAdet(k) * kalemFiyat(k), 0); }
+
+function sepetCiz() {
+ sepet = sepet.filter(k => !k.stokId || stokBul(k.stokId));
+ $('#sepet').innerHTML = sepet.length ? sepet.map((k, i) => {
+  const adet = kalemAdet(k);
+  const fiyat = kalemFiyat(k);
+  let ad, kontrol;
+  if (k.stokId) {
+   const s = stokBul(k.stokId);
+   ad = `<b>${ebat(s)} ${kacis(s.marka)}</b><small>${kacis(s.model)} · ${tl(fiyat)} adet</small>`;
+   kontrol = `<div class="adim"><button type="button" data-azal="${i}" aria-label="Azalt">−</button><span>${adet}</span><button type="button" data-art="${i}" aria-label="Artır"${adet >= s.adet ? ' disabled' : ''}>+</button></div>`;
+  } else {
+   ad = `<b>${HIZMET[k.hizmet].ad}</b><small>${k.hizmet === 'montaj' ? 'lastik başı ' : ''}${tl(fiyat)}</small>`;
+   kontrol = `<span class="adet-sabit">${adet} ${k.hizmet === 'montaj' ? 'lastik' : 'kez'}</span>`;
+  }
+  return `<div class="sepet-satir"><div>${ad}</div>${kontrol}<span class="sayi">${tl(adet * fiyat)}</span><button type="button" class="kaldir" data-kaldir="${i}" aria-label="Kaldır">×</button></div>`;
+ }).join('') : '<div class="bos">Soldan lastik seçin. Montaj ve rot ayarını aşağıdan ekleyebilirsiniz.</div>';
+ const n = sepetLastik();
+ $('#sepet-adet').textContent = sepet.length ? (n ? `${n} lastik` : 'Yalnız hizmet') : 'Boş';
+ $('#sepet-toplam').textContent = tl(sepetToplam());
+ $('#tamamla').disabled = !sepet.length;
+ $$('[data-hizmet]').forEach(b => { b.disabled = sepet.some(k => k.hizmet === b.dataset.hizmet); });
+ $('#odeme').innerHTML = ODEMELER.map(o => `<button type="button" data-odeme="${o}" class="${o === odeme ? 'aktif' : ''}">${o}</button>`).join('');
+}
+
+function satisHata(m) {
+ const h = $('#satis-hata');
+ h.textContent = m;
+ h.classList.toggle('acik', !!m);
+}
+
+function tamamla() {
+ if (!sepet.length) return;
+ const musteri = $('#m-ad').value.trim();
+ if (odeme === 'Veresiye' && !musteri) return satisHata('Veresiye satışta müşteri adını yazın, borç bu ada işlenir.');
+ for (const k of sepet) {
+  if (!k.stokId) continue;
+  const s = stokBul(k.stokId);
+  if (k.adet > s.adet) return satisHata(`${ebat(s)} ${s.marka} için stokta ${s.adet} adet var.`);
+ }
+ const kalemler = sepet.map(k => {
+  if (k.stokId) {
+   const s = stokBul(k.stokId);
+   return {ad: `${s.marka} ${s.model}`.trim(), ebat: ebat(s), stokId: s.id, adet: k.adet, fiyat: s.fiyat};
+  }
+  return {ad: HIZMET[k.hizmet].ad, ebat: null, stokId: null, adet: kalemAdet(k), fiyat: HIZMET[k.hizmet].fiyat};
+ });
+ kalemler.forEach(k => { if (k.stokId) stokBul(k.stokId).adet -= k.adet; });
+ const satis = {no: ++V.sonNo, t: Date.now(), musteri: musteri || 'Perakende müşteri', plaka: $('#m-plaka').value.trim().toLocaleUpperCase('tr'), tel: $('#m-tel').value.trim(), odeme, kalemler, toplam: kalemler.reduce((a, k) => a + k.adet * k.fiyat, 0)};
+ V.satislar.push(satis);
+ kaydet();
+ sepet = [];
+ ['#m-ad', '#m-plaka', '#m-tel', '#secim-ara'].forEach(s => { $(s).value = ''; });
+ satisHata('');
+ ciz();
+ fisGoster(satis);
+ bildir('Satış kaydedildi, stok güncellendi.');
+}
+
+/* Satışlar */
+const SL = {donem: 'ay', q: ''};
+function satislarCiz() {
+ const bugun = gunBasi(Date.now());
+ const bas = {bugun, hafta: bugun - 6 * GUN, ay: ayBasi(), tumu: 0}[SL.donem];
+ const q = norm(SL.q);
+ const l = V.satislar.filter(s => s.t >= bas && (!q || norm(s.musteri + s.plaka).includes(q))).sort((a, b) => b.t - a.t);
+ $('#s-sayi').textContent = l.length;
+ $('#s-lastik').textContent = lastikAdedi(l) + ' adet';
+ $('#s-toplam').textContent = tl(ciro(l));
+ $('#s-veresiye').textContent = tl(ciro(l.filter(s => s.odeme === 'Veresiye')));
+ $('#satis-bos').hidden = l.length > 0;
+ $('#satis-tablo').innerHTML = l.map(s => {
+  const u = urunOzet(s);
+  const odemeEt = s.odeme === 'Veresiye' ? '<span class="et az">Veresiye</span>' : `<span class="et gri">${s.odeme}</span>`;
+  return `<tr><td class="bas" data-l="Müşteri"><b>${kacis(s.musteri)}</b><small>${kacis(s.plaka || '')}</small></td><td data-l="Tarih">${zaman(s.t)}</td><td data-l="Ürünler"><span>${kacis(u.ilk)}${u.ek ? `<small>${kacis(u.ek)}</small>` : ''}</span></td><td data-l="Ödeme">${odemeEt}</td><td class="sayi" data-l="Tutar"><b>${tl(s.toplam)}</b></td><td class="islem"><button type="button" class="btn kucuk" data-fis="${s.no}">Fiş</button></td></tr>`;
+ }).join('');
+}
+
+function fisGoster(s) {
+ const tarih = new Date(s.t).toLocaleString('tr-TR', {day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'});
+ const musteri = [kacis(s.musteri), s.plaka && kacis(s.plaka), s.tel && kacis(s.tel)].filter(Boolean).join(' · ');
+ modalAc(`<div id="fis">
+  <div class="fis-bas"><b>Yol Lastik</b><small>Satış fişi no ${s.no}</small><small>${tarih}</small></div>
+  <div class="fis-musteri">${musteri}</div>
+  <table class="fis-tablo">${s.kalemler.map(k => `<tr><td>${k.adet} × ${k.ebat ? k.ebat + ' ' : ''}${kacis(k.ad)}<small>${tl(k.fiyat)}${k.ebat ? ' adet' : ''}</small></td><td class="sayi">${tl(k.adet * k.fiyat)}</td></tr>`).join('')}</table>
+  <div class="fis-top"><span>Toplam</span><b>${tl(s.toplam)}</b></div>
+  <div>Ödeme: ${s.odeme}</div>
+  <p class="fis-not">Bilgi fişidir, mali değeri yoktur.</p>
+ </div>
+ <div class="form-alt"><span class="bosluk"></span><button type="button" class="btn" data-kapat>Kapat</button><button type="button" class="btn ana" id="yazdir">Yazdır</button></div>`, 'dar');
+ $('#yazdir').addEventListener('click', () => window.print());
+}
+
+/* Ortak */
+const perde = $('#perde');
+const pencere = $('#pencere');
+function modalAc(html, sinif = '') {
+ pencere.className = 'pencere ' + sinif;
+ pencere.innerHTML = html;
+ perde.classList.add('acik');
+ document.body.style.overflow = 'hidden';
+}
+function modalKapat() {
+ perde.classList.remove('acik');
+ document.body.style.overflow = '';
+ pencere.innerHTML = '';
+}
+perde.addEventListener('click', e => { if (e.target === perde || e.target.closest('[data-kapat]')) modalKapat(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && perde.classList.contains('acik')) modalKapat(); });
+
+let bildirimZaman;
+function bildir(m) {
+ const b = $('#bildirim');
+ b.textContent = m;
+ b.classList.add('acik');
+ clearTimeout(bildirimZaman);
+ bildirimZaman = setTimeout(() => b.classList.remove('acik'), 2600);
+}
+
+const SAYFALAR = ['ozet', 'stok', 'satis', 'satislar'];
+function git(ad) {
+ if (!SAYFALAR.includes(ad)) ad = 'ozet';
+ $$('.sayfa').forEach(s => s.classList.toggle('aktif', s.id === 'sayfa-' + ad));
+ $$('nav button').forEach(b => b.classList.toggle('aktif', b.dataset.sayfa === ad));
+ if (location.hash !== '#' + ad) history.replaceState(null, '', '#' + ad);
+ window.scrollTo(0, 0);
+}
+
+function ciz() {
+ ozetCiz();
+ stokCiz();
+ secimCiz();
+ sepetCiz();
+ satislarCiz();
+}
+
+document.addEventListener('click', e => {
+ const b = e.target.closest('button');
+ if (!b || b.disabled) return;
+ const d = b.dataset;
+ if (d.sayfa) git(d.sayfa);
+ else if (d.git) git(d.git);
+ else if (d.duzenle) stokFormu(Number(d.duzenle));
+ else if (d.fis) fisGoster(V.satislar.find(s => s.no === Number(d.fis)));
+ else if (d.mevsim) {
+  SF.mevsim = d.mevsim;
+  $$('#mevsim-cip [data-mevsim]').forEach(c => c.classList.toggle('aktif', c === b));
+  stokCiz();
+ } else if (d.donem) {
+  SL.donem = d.donem;
+  $$('#donem-cip .cip').forEach(c => c.classList.toggle('aktif', c === b));
+  satislarCiz();
+ } else if (d.ekle) {
+  const s = stokBul(Number(d.ekle));
+  if (!sepet.some(k => k.stokId === s.id)) sepet.push({stokId: s.id, adet: Math.min(ESIK, s.adet)});
+  satisHata('');
+  secimCiz();
+  sepetCiz();
+ } else if (d.art || d.azal) {
+  const k = sepet[Number(d.art || d.azal)];
+  const s = stokBul(k.stokId);
+  k.adet = d.art ? Math.min(s.adet, k.adet + 1) : k.adet - 1;
+  if (k.adet < 1) sepet.splice(Number(d.azal), 1);
+  satisHata('');
+  secimCiz();
+  sepetCiz();
+ } else if (d.kaldir) {
+  sepet.splice(Number(d.kaldir), 1);
+  satisHata('');
+  secimCiz();
+  sepetCiz();
+ } else if (d.hizmet) {
+  sepet.push({hizmet: d.hizmet, adet: 1});
+  sepetCiz();
+ } else if (d.odeme) {
+  odeme = d.odeme;
+  satisHata('');
+  sepetCiz();
+ }
+});
+
+$('#azalan-cip').addEventListener('click', e => {
+ SF.azalan = !SF.azalan;
+ e.currentTarget.classList.toggle('aktif', SF.azalan);
+ stokCiz();
+});
+$('#stok-ara').addEventListener('input', e => { SF.q = e.target.value; stokCiz(); });
+$('#secim-ara').addEventListener('input', secimCiz);
+$('#satis-ara').addEventListener('input', e => { SL.q = e.target.value; satislarCiz(); });
+$('#yeni-lastik').addEventListener('click', () => stokFormu(null));
+$('#bos-ekle').addEventListener('click', () => stokFormu(null, ebatCoz(SF.q) ? ebat(ebatCoz(SF.q)) : ''));
+$('#tamamla').addEventListener('click', tamamla);
+$('#sifirla').addEventListener('click', () => {
+ V = ilkVeri();
+ sepet = [];
+ kaydet();
+ ciz();
+ bildir('Örnek veriye dönüldü.');
+});
+
+$('#ust-tarih').textContent = new Date().toLocaleDateString('tr-TR', {day: 'numeric', month: 'long', year: 'numeric', weekday: 'long'});
+ciz();
+git(location.hash.slice(1));
+})();
+</script>
+</body>
+</html>
