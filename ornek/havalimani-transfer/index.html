@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Antalya Havalimanı Transfer — Örnek</title>
+<meta name="description" content="Antalya havalimanı transfer sitesi örneği: bölgeye göre sabit fiyat, online rezervasyon ve işletme paneli.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0f2f3a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Semi+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f2ed;--ink:#13252c;--ink2:#5c6a6f;--line:#e2ddd3;--koyu:#0f2f3a;--sari:#f2b01e;--sari2:#d99a0f;--deniz:#1d6a7a;--ok:#2d6a45;--okbg:#e4f1e8;--bek:#8a5a0c;--bekbg:#fbf0dc;--ipt:#9b2f2a;--iptbg:#f8e5e3;--yol:#1d5f8a;--yolbg:#e3eef6}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+body{font-family:Barlow,system-ui,-apple-system,sans-serif;font-size:16px;color:var(--ink);background:var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+h1,h2,h3,.logo b{font-family:"Barlow Semi Condensed",Barlow,sans-serif;font-weight:700;line-height:1.1}
+.wrap{max-width:1140px;margin:0 auto;padding:0 16px}
+.ornek{background:#0a1f27;color:#b9c7cb;font-size:12.5px;text-align:center;padding:6px 16px}
+header{position:sticky;top:0;z-index:50;background:var(--koyu);color:#fff}
+header .wrap{display:flex;align-items:center;gap:12px;height:62px}
+.logo{text-decoration:none;display:flex;align-items:center;gap:10px;margin-right:auto}
+.logo i{width:34px;height:34px;border-radius:8px;background:var(--sari);color:var(--koyu);display:grid;place-items:center;font-style:normal;font-weight:700;font-family:"Barlow Semi Condensed";font-size:15px}
+.logo b{font-size:21px;display:block}
+.logo small{display:block;font-size:11px;letter-spacing:.14em;color:#9fb6bc;font-weight:600}
+nav{display:flex;gap:2px}
+nav a{text-decoration:none;font-weight:600;font-size:15px;color:#c8d6d9;padding:8px 10px;border-radius:7px;white-space:nowrap}
+nav a:hover{color:#fff;background:rgba(255,255,255,.08)}
+.gorunum{display:flex;border:1px solid rgba(255,255,255,.25);border-radius:8px;overflow:hidden}
+.gorunum button{background:none;border:0;color:#c8d6d9;padding:7px 12px;font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap}
+.gorunum button.sec{background:var(--sari);color:var(--koyu)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:8px;background:var(--sari);color:var(--koyu);font-weight:700;font-size:16px;padding:12px 18px;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn:hover{background:var(--sari2)}
+.btn.koyu{background:var(--koyu);color:#fff}
+.btn.koyu:hover{background:#0a232b}
+.btn.cizgi{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
+.btn.wa{background:#1f7a4d;color:#fff}
+.btn.kucuk{padding:7px 12px;font-size:14px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* kapak */
+.kapak{position:relative;color:#fff;background:#3d5560 url("konyaalti.jpg") center 62%/cover}
+.kapak::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(9,28,35,.8) 0%,rgba(9,28,35,.5) 48%,rgba(9,28,35,.12) 100%)}
+.kapak .wrap{position:relative;display:grid;grid-template-columns:1fr 430px;gap:40px;align-items:center;padding-top:56px;padding-bottom:56px}
+.kapak h1{font-size:46px;max-width:540px}
+.kapak p.alt{font-size:18px;color:#dbe6e8;margin:14px 0 22px;max-width:480px}
+.kapak ul{list-style:none;display:grid;gap:9px}
+.kapak li{display:flex;gap:10px;align-items:flex-start;font-weight:500}
+.kapak li::before{content:"";flex:0 0 18px;height:18px;margin-top:3px;border-radius:50%;background:var(--sari) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3 3 7-7' fill='none' stroke='%230f2f3a' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat}
+
+/* arama kutusu */
+.kutu{background:#fff;color:var(--ink);border-radius:12px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.kutu h2{font-size:22px;margin-bottom:12px}
+.yon{display:grid;grid-template-columns:repeat(3,1fr);background:#eef0ee;border-radius:8px;padding:3px;margin-bottom:14px}
+.yon button{border:0;background:none;padding:8px 4px;border-radius:6px;font-weight:600;font-size:14px;cursor:pointer;color:var(--ink2)}
+.yon button.sec{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.alan{display:flex;flex-direction:column;gap:4px;min-width:0}
+.alan label{font-size:13px;font-weight:600;color:var(--ink2)}
+.alan input,.alan select,.alan textarea{width:100%;border:1.5px solid var(--line);border-radius:8px;padding:10px 11px;background:#fff;font-size:16px;min-width:0}
+.alan input:focus,.alan select:focus,.alan textarea:focus{outline:none;border-color:var(--deniz)}
+.alan.hata input,.alan.hata select{border-color:var(--ipt)}
+.ikili{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kutu .alan{margin-bottom:10px}
+.kutu .btn{width:100%;margin-top:4px}
+.sabit{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);border-radius:8px;padding:10px 11px;background:#f7f7f4;font-weight:600}
+.sabit span{font-size:12px;font-weight:700;background:var(--koyu);color:#fff;border-radius:4px;padding:1px 6px}
+
+section.bolum{padding:52px 0;scroll-margin-top:62px}
+.kapak{scroll-margin-top:62px}
+.bolum h2{font-size:32px;margin-bottom:6px}
+.bolum p.ac{color:var(--ink2);margin-bottom:22px}
+
+/* araçlar */
+#araclar{display:none}
+.araclar{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.arac{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column}
+.arac.sec{border-color:var(--deniz);box-shadow:0 0 0 2px var(--deniz) inset}
+.arac svg{width:100%;height:74px;margin-bottom:10px}
+.arac h3{font-size:22px}
+.arac .oz{color:var(--ink2);font-size:14.5px;margin:4px 0 12px}
+.arac .kap{display:flex;gap:14px;font-size:14px;font-weight:600;margin-bottom:14px}
+.arac .fiyat{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+.arac .fiyat b{font-family:"Barlow Semi Condensed";font-size:28px;line-height:1}
+.arac .fiyat small{display:block;font-size:12.5px;color:var(--ink2)}
+.arac .uyari{font-size:13.5px;color:var(--ipt);font-weight:600}
+.ozet-cubuk{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin-bottom:18px;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:15px;align-items:center}
+.ozet-cubuk b{font-weight:700}
+.ozet-cubuk a{margin-left:auto;font-weight:600;color:var(--deniz);cursor:pointer;text-decoration:underline}
+
+/* bilgi formu */
+#bilgi{display:none;padding-top:0}
+.form-izgara{display:grid;grid-template-columns:1fr 340px;gap:24px;align-items:start}
+.kart{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px}
+.kart h3{font-size:21px;margin-bottom:14px}
+.form-izgara .alan{margin-bottom:12px}
+.secenek{display:flex;gap:10px;align-items:flex-start;border:1.5px solid var(--line);border-radius:8px;padding:11px 12px;margin-bottom:8px;cursor:pointer}
+.secenek input{margin-top:4px;accent-color:var(--deniz)}
+.secenek b{display:block}
+.secenek small{color:var(--ink2);font-size:13.5px}
+.secenek:has(input:checked){border-color:var(--deniz);background:#f2f8f9}
+.ozet dl{display:grid;grid-template-columns:auto 1fr;gap:7px 12px;font-size:15px}
+.ozet dt{color:var(--ink2)}
+.ozet dd{font-weight:600;text-align:right}
+.ozet .toplam{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);margin-top:14px;padding-top:12px}
+.ozet .toplam b{font-family:"Barlow Semi Condensed";font-size:30px}
+.onay{max-width:620px;margin:0 auto;text-align:center}
+.onay .kod{display:inline-block;font-family:"Barlow Semi Condensed";font-size:30px;font-weight:700;background:var(--bekbg);border:1px dashed var(--sari2);border-radius:8px;padding:6px 18px;margin:10px 0 14px;letter-spacing:.04em}
+.onay p{color:var(--ink2);margin-bottom:8px}
+.onay .dugmeler{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+
+/* fiyat tablosu */
+.tablo{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.tablo th,.tablo td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);font-size:15.5px}
+.tablo th{background:#ebe8e0;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2)}
+.tablo td.tl{font-weight:700;white-space:nowrap}
+.tablo tbody tr{cursor:pointer}
+.tablo tbody tr:hover{background:#faf8f3}
+.tablo tr:last-child td{border-bottom:0}
+.not{font-size:13.5px;color:var(--ink2);margin-top:10px}
+
+.neden{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.neden div{border-top:3px solid var(--sari);padding-top:12px}
+.neden h3{font-size:19px;margin-bottom:4px}
+.neden p{font-size:15px;color:var(--ink2)}
+
+details{background:#fff;border:1px solid var(--line);border-radius:10px;margin-bottom:8px}
+summary{padding:14px 16px;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px}
+summary::after{content:"+";font-size:20px;line-height:1;color:var(--ink2)}
+details[open] summary::after{content:"−"}
+details p{padding:0 16px 14px;color:var(--ink2)}
+
+footer{background:var(--koyu);color:#b9c9cd;padding:36px 0 26px;font-size:14.5px}
+footer .wrap{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:24px}
+footer b{color:#fff;display:block;margin-bottom:6px}
+footer .kredi{grid-column:1/-1;border-top:1px solid rgba(255,255,255,.12);padding-top:14px;font-size:12.5px;color:#89a0a6}
+
+/* panel */
+#panel{display:none;padding:28px 0 60px}
+.panel-ust{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.panel-ust h1{font-size:30px}
+.panel-ust p{color:var(--ink2);font-size:14.5px}
+.sayilar{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.sayi{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.sayi small{color:var(--ink2);font-size:13.5px;font-weight:600}
+.sayi b{display:block;font-family:"Barlow Semi Condensed";font-size:30px;line-height:1.1}
+.sekmeler{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.sekmeler button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font-weight:600;font-size:14.5px;cursor:pointer}
+.sekmeler button.sec{background:var(--koyu);border-color:var(--koyu);color:#fff}
+.rez{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:10px;display:grid;grid-template-columns:120px 1fr 210px;gap:16px;align-items:start}
+.rez .zaman b{display:block;font-family:"Barlow Semi Condensed";font-size:26px;line-height:1}
+.rez .zaman small{color:var(--ink2);font-size:13.5px;font-weight:600}
+.rez .zaman .bacak{display:inline-block;margin-top:6px;font-size:12px;font-weight:700;border-radius:4px;padding:1px 7px;background:#ebe8e0}
+.rez .bilgi b{font-size:17px}
+.rez .bilgi .rota{font-weight:600;margin:2px 0 4px}
+.rez .bilgi .det{font-size:14px;color:var(--ink2);display:flex;flex-wrap:wrap;gap:4px 14px}
+.rez .bilgi .det a{color:var(--deniz);font-weight:600;text-decoration:none}
+.rez .bilgi .musnot{font-size:14px;background:#faf6ea;border-radius:6px;padding:5px 9px;margin-top:6px}
+.rez .kontrol{display:grid;gap:8px}
+.rez .kontrol select{width:100%;border:1.5px solid var(--line);border-radius:7px;padding:7px 9px;font-size:14.5px;font-weight:600;background:#fff}
+.rez .kontrol .tutar{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--ink2)}
+.rez .kontrol .tutar b{font-family:"Barlow Semi Condensed";font-size:22px;color:var(--ink)}
+.durum-yeni{background:var(--bekbg)!important;color:var(--bek)}
+.durum-onay{background:var(--okbg)!important;color:var(--ok)}
+.durum-yolda{background:var(--yolbg)!important;color:var(--yol)}
+.durum-bitti{background:#eceeee!important;color:#4b5559}
+.durum-iptal{background:var(--iptbg)!important;color:var(--ipt)}
+.rez.yeni-gelen{animation:parla 2.4s ease-out}
+@keyframes parla{0%{box-shadow:0 0 0 3px var(--sari)}100%{box-shadow:0 0 0 0 transparent}}
+.bos{background:#fff;border:1px dashed var(--line);border-radius:10px;padding:26px;text-align:center;color:var(--ink2)}
+.fiyat-duzen{margin-top:34px}
+.fiyat-duzen h2{font-size:24px;margin-bottom:4px}
+.fiyat-duzen .tablo tbody tr{cursor:default}
+.fiyat-duzen input{width:100%;max-width:120px;border:1.5px solid var(--line);border-radius:7px;padding:7px 9px;font-weight:600;font-size:15px}
+.fiyat-duzen .alt{display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.tost{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(30px);background:var(--koyu);color:#fff;padding:11px 18px;border-radius:8px;font-weight:600;opacity:0;transition:.25s;z-index:99;max-width:calc(100% - 32px);text-align:center}
+.tost.acik{opacity:1;transform:translateX(-50%) translateY(0)}
+.panel-mod .site-ici{display:none!important}
+.panel-mod #panel{display:block}
+
+@media (max-width:980px){
+  nav{display:none}
+  .kapak .wrap{grid-template-columns:1fr;gap:26px;padding-top:34px;padding-bottom:34px}
+  .kapak h1{font-size:36px}
+  .araclar{grid-template-columns:1fr}
+  .form-izgara{grid-template-columns:1fr}
+  .neden{grid-template-columns:1fr 1fr}
+  .sayilar{grid-template-columns:1fr 1fr}
+  .rez{grid-template-columns:1fr;gap:10px}
+  .rez .zaman{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .rez .zaman .bacak{margin-top:0}
+  .rez .kontrol{grid-template-columns:1fr 1fr}
+  .rez .kontrol .tutar{grid-column:1/-1}
+  footer .wrap{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .logo small{display:none}
+  .logo b{font-size:18px}
+  .gorunum button{padding:7px 9px;font-size:13px}
+  .kapak h1{font-size:31px}
+  .kapak p.alt{font-size:16.5px}
+  .kutu{padding:16px}
+  .bolum h2{font-size:27px}
+  section.bolum{padding:40px 0}
+  .neden{grid-template-columns:1fr}
+  .tablo th,.tablo td{padding:10px 8px;font-size:14px}
+  .tablo .sure{display:none}
+  .fiyat-duzen input{max-width:86px;padding:6px}
+}
+</style>
+</head>
+<body>
+<div class="ornek">Bu sayfa örnek çalışmadır. Rezervasyonlar yalnızca sizin tarayıcınızda saklanır, ödeme alınmaz.</div>
+<header>
+  <div class="wrap">
+    <a class="logo" href="#" data-git="ust"><i>AYT</i><span><b>Örnek Transfer</b><small>ANTALYA HAVALİMANI</small></span></a>
+    <nav class="site-ici">
+      <a href="#fiyatlar">Fiyatlar</a>
+      <a href="#neden">Nasıl çalışır</a>
+      <a href="#sss">Sorular</a>
+      <a href="#iletisim">İletişim</a>
+    </nav>
+    <div class="gorunum" role="group" aria-label="Görünüm">
+      <button type="button" id="gSite" class="sec">Site</button>
+      <button type="button" id="gPanel">İşletme paneli</button>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="kapak site-ici" id="ust">
+  <div class="wrap">
+    <div>
+      <h1>Antalya Havalimanı'ndan otelinize sabit fiyatlı transfer</h1>
+      <p class="alt">Bölgenizi seçin, fiyatı hemen görün, iki dakikada rezervasyonunuzu yapın.</p>
+      <ul>
+        <li>Uçuşunuz takip edilir, rötarda ek ücret yok</li>
+        <li>Çıkış kapısında isminizin yazdığı tabelayla karşılama</li>
+        <li>Fiyat önceden belli, ödeme araçta nakit ya da kartla</li>
+      </ul>
+    </div>
+    <form class="kutu" id="arama" novalidate>
+      <h2>Transfer ara</h2>
+      <div class="yon" role="group" aria-label="Yön">
+        <button type="button" data-yon="gelis" class="sec">Havalimanı → Otel</button>
+        <button type="button" data-yon="gidis">Otel → Havalimanı</button>
+        <button type="button" data-yon="gd">Gidiş-dönüş</button>
+      </div>
+      <div class="alan" id="aNereden">
+        <label>Nereden</label>
+        <div class="sabit"><span>AYT</span> Antalya Havalimanı</div>
+      </div>
+      <div class="alan" id="aBolge">
+        <label for="bolge" id="bolgeEt">Nereye (otelinizin bölgesi)</label>
+        <select id="bolge"></select>
+      </div>
+      <div class="ikili">
+        <div class="alan" id="aTarih"><label for="tarih" id="tarihEt">Varış tarihi</label><input type="date" id="tarih"></div>
+        <div class="alan" id="aSaat"><label for="saat" id="saatEt">İniş saati</label><input type="time" id="saat" value="14:30"></div>
+      </div>
+      <div class="ikili" id="donusAlan" hidden>
+        <div class="alan" id="aDTarih"><label for="dtarih">Dönüş tarihi</label><input type="date" id="dtarih"></div>
+        <div class="alan" id="aDSaat"><label for="dsaat">Otelden alış saati</label><input type="time" id="dsaat" value="10:00"></div>
+      </div>
+      <div class="ikili">
+        <div class="alan"><label for="yetiskin">Yetişkin</label><select id="yetiskin"></select></div>
+        <div class="alan"><label for="cocuk">Çocuk</label><select id="cocuk"></select></div>
+      </div>
+      <button class="btn" type="submit">Araçları ve fiyatları gör</button>
+    </form>
+  </div>
+</section>
+
+<section class="bolum site-ici" id="araclar">
+  <div class="wrap">
+    <h2>Aracınızı seçin</h2>
+    <div class="ozet-cubuk" id="aramaOzet"></div>
+    <div class="araclar" id="aracListe"></div>
+  </div>
+</section>
+
+<section class="bolum site-ici" id="bilgi">
+  <div class="wrap" id="bilgiIc"></div>
+</section>
+
+<section class="bolum site-ici" id="fiyatlar">
+  <div class="wrap">
+    <h2>Bölgeler ve fiyatlar</h2>
+    <p class="ac">Fiyatlar araç başınadır, kişi sayısı fiyatı değiştirmez. Tek yön, KDV dahil. Satıra dokunursanız o bölge seçilir.</p>
+    <table class="tablo">
+      <thead><tr><th>Bölge</th><th class="sure">Yol süresi</th><th>Vito</th><th>VIP Vito</th><th>Sprinter</th></tr></thead>
+      <tbody id="fiyatTablo"></tbody>
+    </table>
+    <p class="not">Örnek fiyatlardır. İşletme panelinden değiştirildiğinde bu tablo ve rezervasyon ekranı birlikte güncellenir.</p>
+  </div>
+</section>
+
+<section class="bolum site-ici" id="neden" style="background:#fff">
+  <div class="wrap">
+    <h2>Nasıl çalışır</h2>
+    <p class="ac">Rezervasyondan otel kapısına kadar dört adım.</p>
+    <div class="neden">
+      <div><h3>1. Rezervasyon</h3><p>Bölgenizi, tarihi ve aracı seçin. Kodunuz ekranda ve e-postanızda.</p></div>
+      <div><h3>2. Onay</h3><p>Transferden bir gün önce şoförünüzün adı ve telefonu WhatsApp'tan gelir.</p></div>
+      <div><h3>3. Karşılama</h3><p>Dış hatlar çıkışında isminizin yazdığı tabelayla bekleriz. Uçuşunuz takip edilir.</p></div>
+      <div><h3>4. Yolculuk</h3><p>Klimalı araçla doğrudan otelinize. Ödeme araçta nakit ya da kartla.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="bolum site-ici" id="sss">
+  <div class="wrap" style="max-width:820px">
+    <h2>Sık sorulan sorular</h2>
+    <p class="ac">Aklınıza takılan başka bir şey varsa WhatsApp'tan yazın.</p>
+    <details><summary>Uçağım rötar yaparsa ne olur?</summary><p>Uçuş numaranızı takip ediyoruz. Şoförünüz yeni iniş saatine göre gelir, bekleme için ek ücret alınmaz.</p></details>
+    <details><summary>Havalimanında nerede karşılanacağım?</summary><p>Bagajınızı aldıktan sonra dış hatlar çıkış kapısında, üzerinde adınızın yazdığı tabelayla bekleriz.</p></details>
+    <details><summary>Çocuk koltuğu var mı?</summary><p>Var, ücretsizdir. Rezervasyon sırasında işaretlemeniz yeterli.</p></details>
+    <details><summary>Rezervasyonumu iptal edebilir miyim?</summary><p>Transfer saatinden 24 saat öncesine kadar ücretsiz iptal edebilirsiniz. Rezervasyon kodunuzla WhatsApp'tan yazmanız yeterli.</p></details>
+  </div>
+</section>
+
+<footer class="site-ici" id="iletisim">
+  <div class="wrap">
+    <div><b>Örnek Transfer</b>Antalya Havalimanı ile Lara, Belek, Side, Kemer, Alanya ve Kaş arası özel transfer.</div>
+    <div><b>İletişim</b>WhatsApp ve telefon: 0 242 000 00 00<br>E-posta: rezervasyon@ornek-transfer.com</div>
+    <div><b>Çalışma saatleri</b>7 gün 24 saat</div>
+    <div class="kredi">Kapak fotoğrafı: FingerWiki, Wikimedia Commons, CC BY-SA 4.0. Örnek çalışma: Kerem Can Arslan.</div>
+  </div>
+</footer>
+
+<section id="panel">
+  <div class="wrap">
+    <div class="panel-ust">
+      <div><h1>Rezervasyonlar</h1><p>Gerçek sitede bu sayfa şifreyle açılır. Yeni rezervasyon gelince size e-posta ya da WhatsApp bildirimi gider.</p></div>
+      <button class="btn cizgi kucuk" type="button" id="sifirla">Örnek verileri sıfırla</button>
+    </div>
+    <div class="sayilar" id="sayilar"></div>
+    <div class="sekmeler" id="sekmeler">
+      <button type="button" data-f="hepsi" class="sec">Tümü</button>
+      <button type="button" data-f="bugun">Bugün</button>
+      <button type="button" data-f="yarin">Yarın</button>
+      <button type="button" data-f="yeni">Onay bekleyen</button>
+    </div>
+    <div id="rezListe"></div>
+
+    <div class="fiyat-duzen">
+      <h2>Fiyat listesi</h2>
+      <p class="ac" style="color:var(--ink2);margin-bottom:12px">Bölge ve araç başına tek yön fiyat (TL). Kaydettiğinizde sitede hemen görünür.</p>
+      <table class="tablo">
+        <thead><tr><th>Bölge</th><th>Vito</th><th>VIP Vito</th><th>Sprinter</th></tr></thead>
+        <tbody id="fiyatDuzen"></tbody>
+      </table>
+      <div class="alt"><button class="btn koyu" type="button" id="fiyatKaydet">Fiyatları kaydet</button><span class="not" style="margin:0">Yeni bölge eklemek ya da bir bölgeyi kapatmak da buradan yapılır.</span></div>
+    </div>
+  </div>
+</section>
+</main>
+<div class="tost" id="tost"></div>
+
+<script>
+const BOLGELER = [
+  { id: 'kaleici',   ad: 'Kaleiçi / Merkez', sure: '20 dk' },
+  { id: 'lara',      ad: 'Lara / Kundu',     sure: '15 dk' },
+  { id: 'konyaalti', ad: 'Konyaaltı',        sure: '30 dk' },
+  { id: 'belek',     ad: 'Belek / Kadriye',  sure: '30 dk' },
+  { id: 'kemer',     ad: 'Kemer / Beldibi',  sure: '55 dk' },
+  { id: 'side',      ad: 'Side / Kumköy',    sure: '55 dk' },
+  { id: 'manavgat',  ad: 'Manavgat / Kızılağaç', sure: '65 dk' },
+  { id: 'alanya',    ad: 'Alanya',           sure: '1 sa 50 dk' },
+  { id: 'kas',       ad: 'Kaş',              sure: '3 sa 15 dk' }
+];
+const ARACLAR = [
+  { id: 'vito', ad: 'Mercedes Vito', kap: 6, bavul: 6, oz: 'Klimalı, geniş bagajlı, aile ve küçük gruplar için.' },
+  { id: 'vip', ad: 'VIP Vito', kap: 6, bavul: 5, oz: 'Deri koltuk, ekran, Wi-Fi ve ikram suyu.' },
+  { id: 'sprinter', ad: 'Mercedes Sprinter', kap: 14, bavul: 14, oz: 'Kalabalık aileler ve gruplar için yüksek tavanlı minibüs.' }
+];
+const VARSAYILAN_FIYAT = {
+  kaleici: [1100, 1700, 1900], lara: [1200, 1800, 2000], konyaalti: [1300, 1900, 2200],
+  belek: [1700, 2400, 2700], kemer: [2400, 3200, 3700], side: [2500, 3300, 3800],
+  manavgat: [2700, 3500, 4000], alanya: [3900, 4900, 5700], kas: [5800, 7000, 8200]
+};
+const SOFORLER = ['Mehmet Y.', 'Hasan K.', 'Ali D.', 'Murat S.'];
+const DURUMLAR = [
+  { id: 'yeni', ad: 'Onay bekliyor' }, { id: 'onay', ad: 'Onaylandı' }, { id: 'yolda', ad: 'Şoför yolda' },
+  { id: 'bitti', ad: 'Tamamlandı' }, { id: 'iptal', ad: 'İptal' }
+];
+const KEY = 'ornek-transfer-v1';
+const $ = s => document.querySelector(s);
+const tl = n => n.toLocaleString('tr-TR') + ' TL';
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const gun = (ek = 0) => { const d = new Date(); d.setDate(d.getDate() + ek); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
+const tarihYaz = t => new Date(t + 'T12:00').toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', weekday: 'short' });
+const bolgeAd = id => (BOLGELER.find(b => b.id === id) || {}).ad || id;
+const aracAd = id => (ARACLAR.find(a => a.id === id) || {}).ad || id;
+
+function ornekVeri() {
+  const r = (kod, bacak, tarih, saat, yon, bolge, arac, ad, tel, ucus, otel, kisi, durum, sofor, not) =>
+    ({ kod, bacak, tarih, saat, yon, bolge, arac, ad, tel, ucus, otel, kisi, durum, sofor, not, tutar: VARSAYILAN_FIYAT[bolge][ARACLAR.findIndex(a => a.id === arac)] });
+  return {
+    fiyat: JSON.parse(JSON.stringify(VARSAYILAN_FIYAT)),
+    sira: 1047,
+    rez: [
+      r('AT-1041', 'Geliş', gun(0), '09:40', 'gelis', 'belek', 'vito', 'Anna Schmidt', '+49 151 0000 0000', 'XQ 140', 'Belek, Kadriye', '2 yetişkin, 1 çocuk', 'bitti', 'Mehmet Y.', 'Çocuk koltuğu'),
+      r('AT-1042', 'Geliş', gun(0), '16:15', 'gelis', 'side', 'sprinter', 'Oleg Petrov', '+7 900 000 00 00', 'SU 2136', 'Side, Kumköy', '8 yetişkin', 'yolda', 'Hasan K.', ''),
+      r('AT-1043', 'Dönüş', gun(0), '21:00', 'gidis', 'lara', 'vip', 'Ayşe Demir', '0532 000 00 00', '', 'Lara, Güzeloba', '2 yetişkin', 'onay', 'Ali D.', 'Uçuş 00:30, iç hatlar'),
+      r('AT-1044', 'Geliş', gun(1), '11:05', 'gelis', 'kemer', 'vito', 'James Carter', '+44 7700 000000', 'BA 2650', 'Kemer merkez', '4 yetişkin', 'onay', 'Murat S.', ''),
+      r('AT-1045', 'Geliş', gun(1), '13:50', 'gelis', 'alanya', 'vito', 'Lena Johansson', '+46 70 000 00 00', 'DY 1720', 'Alanya, Kleopatra plajı yakını', '3 yetişkin', 'yeni', '', '2 büyük bavul, 1 bebek arabası'),
+      r('AT-1046', 'Geliş', gun(2), '08:20', 'gelis', 'konyaalti', 'vip', 'Mert Aydın', '0505 000 00 00', 'TK 2412', 'Konyaaltı, Liman Mah.', '2 yetişkin', 'yeni', '', '')
+    ]
+  };
+}
+
+let bellek = null;
+function oku() { try { const s = localStorage.getItem(KEY); if (s) return JSON.parse(s); } catch (e) {} return bellek || (bellek = ornekVeri()); }
+function yaz(d) { bellek = d; try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) {} }
+
+function tost(m) { const t = $('#tost'); t.textContent = m; t.classList.add('acik'); clearTimeout(tost.z); tost.z = setTimeout(() => t.classList.remove('acik'), 2600); }
+
+/* ---------- site: arama ---------- */
+const ara = { yon: 'gelis', bolge: 'lara', tarih: gun(1), saat: '14:30', dtarih: gun(8), dsaat: '10:00', yetiskin: 2, cocuk: 0, arac: null };
+
+function aramaKur() {
+  $('#bolge').innerHTML = BOLGELER.map(b => `<option value="${b.id}">${esc(b.ad)}</option>`).join('');
+  $('#bolge').value = ara.bolge;
+  $('#yetiskin').innerHTML = Array.from({ length: 14 }, (_, i) => `<option>${i + 1}</option>`).join('');
+  $('#yetiskin').value = 2;
+  $('#cocuk').innerHTML = Array.from({ length: 7 }, (_, i) => `<option>${i}</option>`).join('');
+  $('#tarih').min = gun(0); $('#dtarih').min = gun(0);
+  $('#tarih').value = ara.tarih; $('#dtarih').value = ara.dtarih;
+  document.querySelectorAll('.yon button').forEach(b => b.onclick = () => yonSec(b.dataset.yon));
+  $('#arama').onsubmit = e => { e.preventDefault(); aramaYap(); };
+}
+
+function yonSec(y) {
+  ara.yon = y;
+  document.querySelectorAll('.yon button').forEach(b => b.classList.toggle('sec', b.dataset.yon === y));
+  const otelden = y === 'gidis';
+  $('#aNereden').style.display = otelden ? 'none' : '';
+  $('#bolgeEt').textContent = otelden ? 'Nereden (otelinizin bölgesi)' : 'Nereye (otelinizin bölgesi)';
+  $('#tarihEt').textContent = otelden ? 'Tarih' : 'Varış tarihi';
+  $('#saatEt').textContent = otelden ? 'Otelden alış saati' : 'İniş saati';
+  $('#donusAlan').hidden = y !== 'gd';
+}
+
+function aramaYap() {
+  ara.bolge = $('#bolge').value; ara.tarih = $('#tarih').value; ara.saat = $('#saat').value;
+  ara.dtarih = $('#dtarih').value; ara.dsaat = $('#dsaat').value;
+  ara.yetiskin = +$('#yetiskin').value; ara.cocuk = +$('#cocuk').value;
+  let hata = false;
+  const isaretle = (id, kosul) => { $(id).classList.toggle('hata', kosul); if (kosul) hata = true; };
+  isaretle('#aTarih', !ara.tarih || ara.tarih < gun(0));
+  isaretle('#aSaat', !ara.saat);
+  if (ara.yon === 'gd') {
+    isaretle('#aDTarih', !ara.dtarih || ara.dtarih < ara.tarih);
+    isaretle('#aDSaat', !ara.dsaat);
+  }
+  if (hata) { tost('Tarih ve saati kontrol edin'); return; }
+  ara.arac = null;
+  $('#bilgi').style.display = 'none';
+  aracCiz();
+  $('#araclar').style.display = 'block';
+  $('#araclar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function rotaYaz(yon, bolge) { return yon === 'gidis' ? `${bolgeAd(bolge)} → Antalya Havalimanı` : `Antalya Havalimanı → ${bolgeAd(bolge)}`; }
+function kisiYaz() { return `${ara.yetiskin} yetişkin` + (ara.cocuk ? `, ${ara.cocuk} çocuk` : ''); }
+function aracFiyat(aracId) {
+  const f = oku().fiyat[ara.bolge][ARACLAR.findIndex(a => a.id === aracId)];
+  return ara.yon === 'gd' ? f * 2 : f;
+}
+
+const VAN_SVG = `<svg viewBox="0 0 220 74" aria-hidden="true"><path d="M14 52V30c0-6 4-10 10-12l34-10h92c10 0 18 3 24 10l24 24c4 4 6 7 6 12v6c0 3-2 5-5 5H19c-3 0-5-2-5-5z" fill="#e6ebec" stroke="#13252c" stroke-width="2.5"/><path d="M62 14h40v22H54l8-22zM110 14h40v22h-40zM158 14c7 0 12 2 17 7l15 15h-32z" fill="#bcd3d8" stroke="#13252c" stroke-width="2"/><circle cx="54" cy="62" r="10" fill="#13252c"/><circle cx="54" cy="62" r="4" fill="#e6ebec"/><circle cx="178" cy="62" r="10" fill="#13252c"/><circle cx="178" cy="62" r="4" fill="#e6ebec"/></svg>`;
+const BUS_SVG = `<svg viewBox="0 0 220 74" aria-hidden="true"><path d="M8 54V14c0-4 3-7 7-7h160c8 0 14 3 18 9l17 24c2 3 3 6 3 10v4c0 3-2 5-5 5H13c-3 0-5-2-5-5z" fill="#e6ebec" stroke="#13252c" stroke-width="2.5"/><path d="M20 14h34v22H20zM62 14h34v22H62zM104 14h34v22h-34zM146 14h28c6 0 10 2 13 6l12 16h-53z" fill="#bcd3d8" stroke="#13252c" stroke-width="2"/><circle cx="46" cy="62" r="10" fill="#13252c"/><circle cx="46" cy="62" r="4" fill="#e6ebec"/><circle cx="180" cy="62" r="10" fill="#13252c"/><circle cx="180" cy="62" r="4" fill="#e6ebec"/></svg>`;
+
+function aracCiz() {
+  const toplam = ara.yetiskin + ara.cocuk;
+  let ozet = `<span><b>${esc(rotaYaz(ara.yon === 'gidis' ? 'gidis' : 'gelis', ara.bolge))}</b></span><span>${tarihYaz(ara.tarih)}, ${ara.saat}</span>`;
+  if (ara.yon === 'gd') ozet += `<span>Dönüş: ${tarihYaz(ara.dtarih)}, ${ara.dsaat}</span>`;
+  ozet += `<span>${kisiYaz()}</span><a id="degistir">Değiştir</a>`;
+  $('#aramaOzet').innerHTML = ozet;
+  $('#degistir').onclick = () => $('#ust').scrollIntoView({ behavior: 'smooth' });
+  $('#aracListe').innerHTML = ARACLAR.map(a => {
+    const sigmaz = toplam > a.kap;
+    return `<div class="arac${ara.arac === a.id ? ' sec' : ''}">
+      ${a.id === 'sprinter' ? BUS_SVG : VAN_SVG}
+      <h3>${esc(a.ad)}</h3>
+      <p class="oz">${esc(a.oz)}</p>
+      <div class="kap"><span>En fazla ${a.kap} kişi</span><span>${a.bavul} bavul</span></div>
+      <div class="fiyat">
+        <div><b>${tl(aracFiyat(a.id))}</b><small>${ara.yon === 'gd' ? 'gidiş-dönüş toplam' : 'tek yön, araç başı'}</small></div>
+        ${sigmaz ? `<span class="uyari">${toplam} kişiye uygun değil</span>` : `<button class="btn kucuk${ara.arac === a.id ? ' koyu' : ''}" type="button" data-arac="${a.id}">${ara.arac === a.id ? 'Seçildi' : 'Seç'}</button>`}
+      </div>
+    </div>`;
+  }).join('');
+  document.querySelectorAll('[data-arac]').forEach(b => b.onclick = () => { ara.arac = b.dataset.arac; aracCiz(); formCiz(); });
+}
+
+/* ---------- site: bilgi formu ---------- */
+function formCiz() {
+  const gelisVar = ara.yon !== 'gidis';
+  $('#bilgiIc').innerHTML = `<div class="form-izgara">
+    <form class="kart" id="bilgiForm" novalidate>
+      <h3>Yolcu bilgileri</h3>
+      <div class="alan" id="fAd"><label for="ad">Ad soyad</label><input id="ad" autocomplete="name"></div>
+      <div class="ikili">
+        <div class="alan" id="fTel"><label for="tel">Telefon (WhatsApp)</label><input id="tel" type="tel" autocomplete="tel" placeholder="+90 5xx xxx xx xx"></div>
+        <div class="alan" id="fEposta"><label for="eposta">E-posta</label><input id="eposta" type="email" autocomplete="email"></div>
+      </div>
+      <div class="ikili">
+        ${gelisVar ? '<div class="alan"><label for="ucus">Uçuş numarası</label><input id="ucus" placeholder="Örn. TK 2412"></div>' : ''}
+        <div class="alan" id="fOtel"${gelisVar ? '' : ' style="grid-column:1/-1"'}><label for="otel">Otel adı ya da adres</label><input id="otel"></div>
+      </div>
+      <label class="secenek" style="margin-bottom:12px"><input type="checkbox" id="koltuk"><span><b>Çocuk koltuğu istiyorum</b><small>Ücretsiz</small></span></label>
+      <div class="alan"><label for="not">Notunuz (isteğe bağlı)</label><textarea id="not" rows="2" placeholder="Bavul sayısı, bebek arabası, ara durak..."></textarea></div>
+      <h3 style="margin-top:6px">Ödeme</h3>
+      <label class="secenek"><input type="radio" name="odeme" value="arac" checked><span><b>Araçta öde</b><small>Nakit (TL, EUR, USD) ya da kartla şoföre</small></span></label>
+      <label class="secenek"><input type="radio" name="odeme" value="online"><span><b>Şimdi kartla öde</b><small>Kurulumda sanal POS bağlanır, bu örnekte ödeme alınmaz</small></span></label>
+      <button class="btn" type="submit" style="width:100%;margin-top:8px">Rezervasyonu tamamla</button>
+    </form>
+    <aside class="kart ozet">
+      <h3>Özet</h3>
+      <dl>
+        <dt>Güzergah</dt><dd>${esc(rotaYaz(ara.yon === 'gidis' ? 'gidis' : 'gelis', ara.bolge))}</dd>
+        <dt>${ara.yon === 'gidis' ? 'Alış' : 'İniş'}</dt><dd>${tarihYaz(ara.tarih)}, ${ara.saat}</dd>
+        ${ara.yon === 'gd' ? `<dt>Dönüş</dt><dd>${tarihYaz(ara.dtarih)}, ${ara.dsaat}</dd>` : ''}
+        <dt>Yolcu</dt><dd>${kisiYaz()}</dd>
+        <dt>Araç</dt><dd>${esc(aracAd(ara.arac))}</dd>
+      </dl>
+      <div class="toplam"><span>Toplam</span><b>${tl(aracFiyat(ara.arac))}</b></div>
+    </aside>
+  </div>`;
+  $('#bilgi').style.display = 'block';
+  $('#bilgiForm').onsubmit = e => { e.preventDefault(); rezervasyonYap(); };
+  $('#bilgi').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function rezervasyonYap() {
+  const ad = $('#ad').value.trim(), tel = $('#tel').value.trim(), eposta = $('#eposta').value.trim(), otel = $('#otel').value.trim();
+  let hata = false;
+  const isaretle = (id, kosul) => { $(id).classList.toggle('hata', kosul); if (kosul) hata = true; };
+  isaretle('#fAd', ad.length < 3);
+  isaretle('#fTel', tel.replace(/\D/g, '').length < 10);
+  isaretle('#fEposta', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(eposta));
+  isaretle('#fOtel', otel.length < 2);
+  if (hata) { tost('Kırmızı alanları doldurun'); return; }
+  const ucus = $('#ucus') ? $('#ucus').value.trim().toUpperCase() : '';
+  const notlar = [$('#koltuk').checked ? 'Çocuk koltuğu' : '', $('#not').value.trim(), document.querySelector('input[name=odeme]:checked').value === 'online' ? 'Online ödeme seçti' : ''].filter(Boolean).join(' · ');
+  const d = oku();
+  const kod = 'AT-' + (++d.sira);
+  const tekFiyat = d.fiyat[ara.bolge][ARACLAR.findIndex(a => a.id === ara.arac)];
+  const ortak = { kod, bolge: ara.bolge, arac: ara.arac, ad, tel, eposta, otel, kisi: kisiYaz(), durum: 'yeni', sofor: '', not: notlar, tutar: tekFiyat, yeni: true };
+  if (ara.yon === 'gidis') d.rez.push({ ...ortak, bacak: 'Dönüş', yon: 'gidis', tarih: ara.tarih, saat: ara.saat, ucus: '' });
+  else d.rez.push({ ...ortak, bacak: 'Geliş', yon: 'gelis', tarih: ara.tarih, saat: ara.saat, ucus });
+  if (ara.yon === 'gd') d.rez.push({ ...ortak, bacak: 'Dönüş', yon: 'gidis', tarih: ara.dtarih, saat: ara.dsaat, ucus: '' });
+  yaz(d);
+
+  const toplam = aracFiyat(ara.arac);
+  const wa = `Merhaba, rezervasyonum: ${kod}\n${rotaYaz(ara.yon === 'gidis' ? 'gidis' : 'gelis', ara.bolge)}\n${tarihYaz(ara.tarih)} ${ara.saat}` + (ara.yon === 'gd' ? `\nDönüş: ${tarihYaz(ara.dtarih)} ${ara.dsaat}` : '') + `\n${aracAd(ara.arac)}, ${kisiYaz()}\nToplam: ${tl(toplam)}\n${ad}`;
+  $('#araclar').style.display = 'none';
+  $('#bilgiIc').innerHTML = `<div class="kart onay">
+    <h2 style="font-size:30px">Rezervasyonunuz alındı</h2>
+    <div class="kod">${kod}</div>
+    <p>${esc(rotaYaz(ara.yon === 'gidis' ? 'gidis' : 'gelis', ara.bolge))}, ${tarihYaz(ara.tarih)} ${ara.saat}${ara.yon === 'gd' ? `, dönüş ${tarihYaz(ara.dtarih)} ${ara.dsaat}` : ''}</p>
+    <p>${esc(aracAd(ara.arac))}, ${kisiYaz()}. Toplam <b style="color:var(--ink)">${tl(toplam)}</b>.</p>
+    <p>Rezervasyon özeti ${esc(eposta)} adresine gönderildi. Şoförünüzün adı ve telefonu transferden bir gün önce WhatsApp'tan gelir.</p>
+    <div class="dugmeler">
+      <a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(wa)}">WhatsApp'ta sakla</a>
+      <button class="btn koyu" type="button" id="panelde">İşletme panelinde gör</button>
+      <button class="btn cizgi" type="button" id="yeniRez">Yeni rezervasyon</button>
+    </div>
+  </div>`;
+  $('#panelde').onclick = () => gorunum('panel');
+  $('#yeniRez').onclick = () => { $('#bilgi').style.display = 'none'; $('#ust').scrollIntoView({ behavior: 'smooth' }); };
+  $('#bilgi').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function fiyatTabloCiz() {
+  const f = oku().fiyat;
+  $('#fiyatTablo').innerHTML = BOLGELER.map(b => `<tr data-b="${b.id}"><td>${esc(b.ad)}</td><td class="sure">${b.sure}</td>${f[b.id].map(x => `<td class="tl">${tl(x)}</td>`).join('')}</tr>`).join('');
+  document.querySelectorAll('#fiyatTablo tr').forEach(tr => tr.onclick = () => { $('#bolge').value = tr.dataset.b; $('#ust').scrollIntoView({ behavior: 'smooth' }); });
+}
+
+/* ---------- panel ---------- */
+let filtre = 'hepsi';
+function panelCiz() {
+  const d = oku();
+  const aktif = d.rez.filter(r => r.durum !== 'iptal');
+  const ay = gun(0).slice(0, 7);
+  $('#sayilar').innerHTML = [
+    ['Bugünkü transfer', aktif.filter(r => r.tarih === gun(0)).length],
+    ['Yarınki transfer', aktif.filter(r => r.tarih === gun(1)).length],
+    ['Onay bekleyen', d.rez.filter(r => r.durum === 'yeni').length],
+    ['Bu ay tutar', tl(aktif.filter(r => r.tarih.slice(0, 7) === ay).reduce((t, r) => t + r.tutar, 0))]
+  ].map(([e, s]) => `<div class="sayi"><small>${e}</small><b>${s}</b></div>`).join('');
+
+  let liste = d.rez.slice();
+  if (filtre === 'bugun') liste = liste.filter(r => r.tarih === gun(0));
+  if (filtre === 'yarin') liste = liste.filter(r => r.tarih === gun(1));
+  if (filtre === 'yeni') liste = liste.filter(r => r.durum === 'yeni');
+  liste.sort((a, b) => (a.tarih + a.saat).localeCompare(b.tarih + b.saat));
+  if (!liste.length) { $('#rezListe').innerHTML = '<div class="bos">Bu filtrede rezervasyon yok.</div>'; return; }
+
+  $('#rezListe').innerHTML = liste.map(r => {
+    const i = d.rez.indexOf(r);
+    const gunEt = r.tarih === gun(0) ? 'Bugün' : r.tarih === gun(1) ? 'Yarın' : tarihYaz(r.tarih);
+    return `<div class="rez${r.yeni ? ' yeni-gelen' : ''}">
+      <div class="zaman"><b>${r.saat}</b><small>${gunEt}</small><span class="bacak">${r.bacak}</span></div>
+      <div class="bilgi">
+        <b>${esc(r.ad)}</b> <small style="color:var(--ink2);font-weight:600">${r.kod}</small>
+        <div class="rota">${esc(rotaYaz(r.yon, r.bolge))}</div>
+        <div class="det">
+          <a href="tel:${esc(r.tel.replace(/\s/g, ''))}">${esc(r.tel)}</a>
+          ${r.ucus ? `<span>Uçuş ${esc(r.ucus)}</span>` : ''}
+          <span>${esc(r.kisi)}</span><span>${esc(aracAd(r.arac))}</span><span>${esc(r.otel)}</span>
+        </div>
+        ${r.not ? `<div class="musnot">${esc(r.not)}</div>` : ''}
+      </div>
+      <div class="kontrol">
+        <select data-i="${i}" data-k="durum" class="durum-${r.durum}" aria-label="Durum">${DURUMLAR.map(x => `<option value="${x.id}"${x.id === r.durum ? ' selected' : ''}>${x.ad}</option>`).join('')}</select>
+        <select data-i="${i}" data-k="sofor" aria-label="Şoför"><option value="">Şoför seçin</option>${SOFORLER.map(s => `<option${s === r.sofor ? ' selected' : ''}>${s}</option>`).join('')}</select>
+        <div class="tutar"><span>Tutar</span><b>${tl(r.tutar)}</b></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  if (d.rez.some(r => r.yeni)) { d.rez.forEach(r => delete r.yeni); yaz(d); }
+
+  document.querySelectorAll('#rezListe select').forEach(s => s.onchange = () => {
+    const d2 = oku(); const r = d2.rez[+s.dataset.i];
+    r[s.dataset.k] = s.value;
+    if (s.dataset.k === 'sofor' && s.value && r.durum === 'yeni') r.durum = 'onay';
+    yaz(d2); panelCiz();
+    tost(s.dataset.k === 'sofor' ? (s.value ? `${r.kod} ${s.value} adlı şoföre verildi` : 'Şoför kaldırıldı') : `${r.kod}: ${DURUMLAR.find(x => x.id === r.durum).ad}`);
+  });
+}
+
+function fiyatDuzenCiz() {
+  const f = oku().fiyat;
+  $('#fiyatDuzen').innerHTML = BOLGELER.map(b => `<tr><td>${esc(b.ad)}</td>${f[b.id].map((x, j) => `<td><input type="number" min="0" step="50" inputmode="numeric" value="${x}" data-b="${b.id}" data-j="${j}" aria-label="${esc(b.ad)} ${ARACLAR[j].ad}"></td>`).join('')}</tr>`).join('');
+}
+
+$('#fiyatKaydet').onclick = () => {
+  const d = oku(); let bozuk = false;
+  document.querySelectorAll('#fiyatDuzen input').forEach(inp => {
+    const v = Math.round(+inp.value);
+    if (!inp.value || !(v > 0)) { bozuk = true; inp.style.borderColor = 'var(--ipt)'; return; }
+    inp.style.borderColor = '';
+    d.fiyat[inp.dataset.b][+inp.dataset.j] = v;
+  });
+  if (bozuk) { tost('Boş ya da sıfır fiyat olamaz'); return; }
+  yaz(d); fiyatTabloCiz(); tost('Fiyatlar kaydedildi, sitede güncellendi');
+};
+$('#sekmeler').onclick = e => {
+  const b = e.target.closest('button'); if (!b) return;
+  filtre = b.dataset.f;
+  document.querySelectorAll('#sekmeler button').forEach(x => x.classList.toggle('sec', x === b));
+  panelCiz();
+};
+$('#sifirla').onclick = () => { yaz(ornekVeri()); panelCiz(); fiyatDuzenCiz(); fiyatTabloCiz(); tost('Örnek veriler geri yüklendi'); };
+
+/* ---------- görünüm ---------- */
+function gorunum(g) {
+  const panel = g === 'panel';
+  document.body.classList.toggle('panel-mod', panel);
+  $('#gSite').classList.toggle('sec', !panel);
+  $('#gPanel').classList.toggle('sec', panel);
+  if (panel) { panelCiz(); fiyatDuzenCiz(); }
+  else fiyatTabloCiz();
+  history.replaceState(null, '', panel ? '#panel' : location.pathname + location.search);
+  window.scrollTo(0, 0);
+}
+$('#gSite').onclick = () => gorunum('site');
+$('#gPanel').onclick = () => gorunum('panel');
+document.querySelector('[data-git="ust"]').onclick = e => { e.preventDefault(); gorunum('site'); };
+
+aramaKur();
+fiyatTabloCiz();
+if (location.hash === '#panel') gorunum('panel');
+</script>
+</body>
+</html>
