@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Örnek Güzellik Salonu</title>
+<meta name="description" content="Güzellik salonu web sitesi ve mobil uygulama örneği: hizmetler ve fiyatlar, online randevu, randevularım ve salon paneli.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#2a2220">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f8f4ef;--ink:#2a2220;--ink2:#6f6460;--line:#e9e0d7;--acc:#8c4f45;--acc2:#713c34;--kum:#f0e7dd;--ok:#2f6b4f;--okbg:#e6f2ea;--bek:#9a5b14;--bekbg:#fbf0e1;--ipt:#9b2f2a;--iptbg:#f8e6e4}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Manrope,system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+img{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3,.logo b{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;line-height:1.08}
+.wrap{max-width:1140px;margin:0 auto;padding:0 16px}
+.ornek{background:var(--ink);color:#d9cfc8;font-size:12px;text-align:center;padding:6px 16px}
+header{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;gap:14px;height:66px}
+.logo{text-decoration:none;display:flex;flex-direction:column;line-height:1;margin-right:auto}
+.logo b{font-size:26px}
+.logo small{font-size:10px;font-weight:700;letter-spacing:.24em;color:var(--acc);margin-top:4px}
+nav{display:flex;align-items:center;gap:2px}
+nav a{text-decoration:none;font-size:14px;font-weight:600;color:var(--ink2);padding:8px 10px;border-radius:8px;white-space:nowrap}
+nav a:hover{color:var(--ink);background:var(--kum)}
+nav a.v{border:1.5px solid var(--line);color:var(--ink);margin-left:4px}
+nav a.v.sec{background:var(--ink);border-color:var(--ink);color:#fff}
+.menuBtn{display:none;border:1.5px solid var(--line);background:#fff;border-radius:8px;padding:7px 12px;font-weight:700;font-size:14px;cursor:pointer}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:10px;background:var(--acc);color:#fff;font-weight:700;font-size:14.5px;padding:12px 18px;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn:hover{background:var(--acc2)}
+.btn.beyaz{background:#fff;color:var(--ink)}
+.btn.cizgi{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
+.btn.wa{background:#1f7a4d}
+.btn.kucuk{padding:7px 11px;font-size:13px;border-radius:8px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.hero{position:relative;color:#fff;background:#3a2f2b url("https://images.unsplash.com/photo-1746723378067-83a345ff3160?w=1800&q=65&auto=format&fit=crop") center/cover}
+.hero::before{content:"";position:absolute;inset:0;background:rgba(32,22,19,.56)}
+.hero .wrap{position:relative;padding:92px 16px 96px}
+.ust{font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--acc)}
+.hero .ust{color:#efd9cb}
+.hero h1{font-size:58px;max-width:640px;margin-top:10px}
+.hero p{max-width:520px;margin-top:14px;font-size:17px;opacity:.92}
+.btns{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
+.hbilgi{display:flex;gap:26px;margin-top:34px;font-size:14px;flex-wrap:wrap;opacity:.9}
+.hbilgi b{display:block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+.bolum{padding:68px 0;scroll-margin-top:66px}
+.bolum.beyaz{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.bbas{margin-bottom:24px}
+.bbas h2{font-size:42px;margin-top:6px}
+.bbas p{color:var(--ink2);max-width:620px;margin-top:8px}
+.hiz{display:grid;grid-template-columns:340px 1fr;gap:36px;align-items:start}
+.hiz .foto{border-radius:14px;overflow:hidden;aspect-ratio:4/5;background:var(--kum)}
+.hiz .foto img{width:100%;height:100%;object-fit:cover}
+.katlar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.kat{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 15px;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap}
+.kat.sec{background:var(--ink);color:#fff;border-color:var(--ink)}
+.satir{display:flex;align-items:center;gap:14px;padding:15px 2px;border-bottom:1px solid var(--line)}
+.satir .ad{font-weight:700}
+.satir .sure{font-size:13px;color:var(--ink2)}
+.satir .fiyat{margin-left:auto;font-weight:800;white-space:nowrap}
+.rdv{display:grid;grid-template-columns:1fr 330px;gap:24px;align-items:start}
+.kutu{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px}
+.adim{margin-bottom:22px}
+.adim>b{display:block;font-size:12.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);margin-bottom:9px}
+.cipler{display:flex;gap:8px;flex-wrap:wrap}
+.cip{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:8px 12px;font-weight:700;font-size:14px;cursor:pointer;min-width:66px;text-align:center;line-height:1.3}
+.cip small{display:block;font-size:11.5px;font-weight:600;color:var(--ink2)}
+.cip.sec{background:var(--ink);border-color:var(--ink);color:#fff}
+.cip.sec small{color:#d9cfc8}
+.cip:disabled{background:var(--bg);color:#bdb1ab;text-decoration:line-through;cursor:not-allowed}
+.bos{font-size:14px;color:var(--ink2)}
+.alanlar{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{display:grid;gap:5px;font-size:13px;font-weight:700;color:var(--ink2)}
+input,select{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;font-size:15px;width:100%;min-width:0}
+input:focus,select:focus{outline:2px solid #c99b8f;border-color:transparent}
+.hata{color:var(--ipt);font-size:13.5px;font-weight:600;margin-top:10px;min-height:1.2em}
+.ozet{position:sticky;top:86px}
+.ozet h3{font-size:26px;margin-bottom:12px}
+.ozet dl{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:14px;margin-bottom:16px}
+.ozet dt{color:var(--ink2)}
+.ozet dd{font-weight:700;text-align:right}
+.ozet .top{border-top:1px solid var(--line);padding-top:12px;display:flex;justify-content:space-between;font-weight:800;font-size:17px;margin-bottom:16px}
+.ozet .btn{width:100%}
+.ozet .not{font-size:12.5px;color:var(--ink2);margin-top:10px}
+.tamam{background:var(--okbg);border:1px solid #cfe3d6;border-radius:14px;padding:18px;color:#1e4a35}
+.tamam b{font-size:16px;display:block;margin-bottom:4px}
+.tamam .btns{margin-top:12px}
+.galeri{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:220px 220px;gap:10px}
+.galeri img{width:100%;height:100%;object-fit:cover;border-radius:12px}
+.galeri img:first-child{grid-row:span 2}
+.iletisim{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.iletisim .kutu b{display:block;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);margin-bottom:8px}
+.saatler{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;font-size:14.5px}
+.saatler span:nth-child(even){text-align:right;font-weight:700}
+footer{background:var(--ink);color:#cfc4bd;font-size:13.5px;padding:26px 0}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.waf{position:fixed;right:18px;bottom:18px;z-index:40;background:#1f7a4d;color:#fff;border:0;border-radius:999px;padding:13px 18px;font-weight:800;font-size:14px;cursor:pointer;box-shadow:0 10px 24px -12px rgba(0,0,0,.5)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-size:14px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:100;max-width:calc(100% - 32px);text-align:center}
+.toast.ac{opacity:1;transform:translate(-50%,0)}
+/* uygulama görünümü */
+.uyg{display:grid;grid-template-columns:1fr auto;gap:56px;align-items:center;padding:28px 16px 40px}
+.uyg h1{font-size:48px;margin-top:6px}
+.uyg p{color:var(--ink2);margin-top:12px;max-width:520px}
+.ozel{margin-top:22px;display:grid;gap:12px;max-width:520px}
+.ozel div{border-left:3px solid var(--acc);padding:2px 0 2px 14px;font-size:15px}
+.ozel div b{display:block}
+.telefon{width:399px;height:min(812px,calc(100vh - 150px));min-height:600px;background:#1c1716;border-radius:54px;padding:12px;box-shadow:0 30px 60px -30px rgba(0,0,0,.55)}
+.telefon iframe{width:375px;height:100%;border:0;border-radius:42px;background:#fff;display:block}
+/* panel */
+.pnl{padding:34px 16px 64px}
+.pust{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap}
+.pust h1{font-size:44px;margin-top:4px}
+.sayilar{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0 16px}
+.sayi{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.sayi b{font-size:28px;display:block;line-height:1.2}
+.sayi span{font-size:13px;color:var(--ink2);font-weight:600}
+.pgrid{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start}
+.liste{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.lsatir{display:grid;grid-template-columns:62px 1.3fr 1.4fr 82px 104px 170px;gap:12px;align-items:center;padding:13px 16px;border-bottom:1px solid var(--line);font-size:14px}
+.lsatir:last-child{border-bottom:0}
+.lsatir.bas{background:var(--bg);font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2)}
+.lsatir .saat{font-weight:800;font-size:15px}
+.lsatir small{display:block;color:var(--ink2);font-size:12.5px}
+.lsatir .islem{display:flex;gap:6px;justify-content:flex-end}
+.lsatir.yeni{animation:yeni 2.4s ease}
+@keyframes yeni{0%{background:#fbeee6}100%{background:#fff}}
+.etiket{display:inline-block;font-size:12px;font-weight:800;border-radius:999px;padding:3px 9px;white-space:nowrap}
+.etiket.bekliyor{background:var(--bekbg);color:var(--bek)}
+.etiket.onay{background:var(--okbg);color:var(--ok)}
+.etiket.iptal{background:var(--iptbg);color:var(--ipt)}
+.fyt{display:grid;grid-template-columns:1fr 92px;gap:8px;align-items:center;font-size:14px;padding:6px 0;border-bottom:1px solid var(--line)}
+.fyt input{padding:7px 9px;font-size:14px;text-align:right}
+.fyt.kb{border:0;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--acc);padding-top:12px}
+.fytkutu{max-height:520px;overflow:auto;margin:10px 0 14px}
+@media (max-width:980px){
+  .menuBtn{display:block}
+  nav{display:none;position:absolute;top:66px;left:0;right:0;background:var(--bg);flex-direction:column;align-items:stretch;padding:8px 16px 14px;border-bottom:1px solid var(--line)}
+  nav.ac{display:flex}
+  nav a.v{margin:4px 0 0}
+  .hiz,.rdv,.pgrid,.uyg{grid-template-columns:1fr}
+  .hiz .foto{aspect-ratio:16/9}
+  .ozet{position:static}
+  .uyg{justify-items:center}
+  .uyg>div:first-child{justify-self:stretch}
+  .lsatir{grid-template-columns:56px 1fr;row-gap:6px}
+  .lsatir.bas{display:none}
+  .lsatir>:nth-child(n+3){grid-column:2}
+  .lsatir .islem{justify-content:flex-start}
+}
+@media (max-width:640px){
+  .hero{background-position:15% center}
+  .hero .wrap{padding:60px 16px 64px}
+  .hero h1{font-size:40px}
+  .bbas h2,.uyg h1,.pust h1{font-size:34px}
+  .bolum{padding:48px 0}
+  .alanlar,.iletisim{grid-template-columns:1fr}
+  .sayilar{gap:8px}
+  .sayi{padding:10px 11px}
+  .sayi b{font-size:19px}
+  .sayi span{font-size:11.5px;line-height:1.3;display:block}
+  .galeri{grid-template-columns:1fr 1fr;grid-template-rows:180px 140px 140px}
+  .galeri img:first-child{grid-column:span 2;grid-row:auto}
+  .kutu{padding:18px}
+}
+@media (max-width:440px){
+  .telefon{width:100%;height:auto;padding:0;background:none;box-shadow:none;border-radius:0}
+  .telefon iframe{width:100%;height:740px;border-radius:18px;border:1px solid var(--line)}
+}
+/* telefon uygulaması (?app) */
+body.app{background:#fff;max-width:480px;margin:0 auto;min-height:100vh;padding-bottom:92px}
+.a-ust{padding:20px 18px 6px;display:flex;align-items:center;justify-content:space-between}
+.a-ust .logo b{font-size:22px}
+.a-ust .logo small{font-size:9px}
+.a-ic{padding:4px 18px 18px}
+.a-selam{color:var(--ink2);font-size:14px;font-weight:600}
+.a-baslik{font-size:34px;margin:2px 0 16px}
+.a-kart{background:var(--bg);border-radius:16px;padding:16px;margin-bottom:12px}
+.a-kart.koyu{background:var(--ink);color:#fff}
+.a-kart.koyu .k-ust{color:#d9cfc8}
+.k-ust{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin-bottom:6px}
+.a-kart h3{font-size:24px;margin-bottom:4px}
+.a-kart p{font-size:14px;color:var(--ink2)}
+.a-kart.koyu p{color:#e6dcd5}
+.a-kart .btn{margin-top:12px}
+.a-foto{border-radius:16px;overflow:hidden;height:150px;margin-bottom:12px;position:relative}
+.a-foto img{width:100%;height:100%;object-fit:cover}
+.a-foto span{position:absolute;left:14px;bottom:12px;color:#fff;font-weight:800;font-size:15px;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.a-kats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.a-kats button{border:0;padding:0;border-radius:14px;overflow:hidden;position:relative;height:96px;cursor:pointer;background:var(--kum)}
+.a-kats img{width:100%;height:100%;object-fit:cover}
+.a-kats span{position:absolute;inset:auto 0 0 0;padding:8px 10px;color:#fff;font-weight:800;font-size:14px;text-align:left;background:rgba(32,22,19,.5)}
+.a-bolum{font-size:12.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);margin:18px 0 9px}
+.yatay{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.yatay::-webkit-scrollbar{display:none}
+.yatay .cip{flex:0 0 auto}
+.a-hiz{display:flex;align-items:center;gap:12px;width:100%;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:11px 13px;margin-bottom:8px;cursor:pointer;text-align:left}
+.a-hiz .ad{font-weight:700;font-size:14.5px}
+.a-hiz .sure{font-size:12.5px;color:var(--ink2)}
+.a-hiz .fiyat{margin-left:auto;font-weight:800;font-size:14.5px}
+.a-hiz.sec{border-color:var(--ink);background:var(--bg);box-shadow:inset 0 0 0 1px var(--ink)}
+.saatgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.saatgrid .cip{min-width:0;padding:9px 4px}
+.a-onay{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(60px + env(safe-area-inset-bottom));width:100%;max-width:480px;padding:10px 18px;background:#fff;border-top:1px solid var(--line)}
+.a-onay .btn{width:100%;padding:14px}
+.a-onay .hata{margin:0 0 6px;min-height:0}
+.a-tab{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);padding:8px 0 calc(10px + env(safe-area-inset-bottom));z-index:20}
+.a-tab button{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11.5px;font-weight:700;color:#9b8f8a;cursor:pointer}
+.a-tab button.sec{color:var(--acc)}
+.a-tab svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.a-rdv{border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px}
+.a-rdv .ust2{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.a-rdv b{font-size:15.5px}
+.a-rdv p{font-size:13.5px;color:var(--ink2);margin-top:3px}
+.a-rdv.gecmis{opacity:.6}
+.a-iki{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.a-iki .btn{width:100%}
+</style>
+</head>
+<body>
+<div class="ornek">Örnek tasarımdır. Salon adı, adres, hizmetler, fiyatlar ve fotoğraflar temsilidir; gerçek sitede salonun kendi bilgileri olur.</div>
+<header>
+  <div class="wrap">
+    <a class="logo" href="#"><b>Örnek Güzellik</b><small>SAÇ · TIRNAK · CİLT</small></a>
+    <button class="menuBtn" id="menuBtn" type="button">Menü</button>
+    <nav id="nav">
+      <a href="#hizmetler">Hizmetler</a>
+      <a href="#randevu">Randevu</a>
+      <a href="#galeri">Salon</a>
+      <a href="#iletisim">İletişim</a>
+      <a class="v" href="#uygulama" data-v="uygulama">Mobil uygulama</a>
+      <a class="v" href="#panel" data-v="panel">Salon paneli</a>
+    </nav>
+  </div>
+</header>
+
+<main id="v-site">
+  <section class="hero">
+    <div class="wrap">
+      <div class="ust">Kadıköy · Randevulu çalışır</div>
+      <h1>Saç, tırnak ve cilt bakımında randevunuz bir dakikada</h1>
+      <p>Hizmeti ve saati seçin, randevunuz salona hemen düşsün. Telefonla aramanıza ya da mesaj beklemenize gerek kalmaz.</p>
+      <div class="btns">
+        <a class="btn" href="#randevu">Randevu al</a>
+        <a class="btn beyaz" href="#hizmetler">Hizmetler ve fiyatlar</a>
+      </div>
+      <div class="hbilgi">
+        <div><b>Çalışma saatleri</b>Salı - Pazar 10.00 - 20.00</div>
+        <div><b>Adres</b>Örnek Mah. Çiçek Sok. No: 12, Kadıköy</div>
+        <div><b>Telefon</b>0 (216) 000 00 00</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bolum" id="hizmetler">
+    <div class="wrap">
+      <div class="bbas"><div class="ust">Hizmetler</div><h2>Hizmetler ve fiyatlar</h2><p>Fiyatlar salon panelinden güncellenir; burada ve uygulamada hep aynı fiyat görünür.</p></div>
+      <div class="hiz">
+        <div class="foto"><img id="katFoto" alt=""></div>
+        <div>
+          <div class="katlar" id="katlar"></div>
+          <div id="hizListe"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bolum beyaz" id="randevu">
+    <div class="wrap">
+      <div class="bbas"><div class="ust">Online randevu</div><h2>Randevu alın</h2><p>Dolu saatler kapalı görünür. Randevunuz salon onaylayınca kesinleşir.</p></div>
+      <div class="rdv">
+        <div class="kutu" id="rForm">
+          <div class="adim"><b>1. Hizmet</b>
+            <select id="rHizmet"></select>
+          </div>
+          <div class="adim"><b>2. Uzman</b><div class="cipler" id="rUzman"></div></div>
+          <div class="adim"><b>3. Gün</b><div class="cipler" id="rGun"></div></div>
+          <div class="adim"><b>4. Saat</b><div class="cipler" id="rSaat"></div></div>
+          <div class="adim" style="margin-bottom:0"><b>5. Bilgileriniz</b>
+            <div class="alanlar">
+              <label>Ad soyad<input id="rAd" autocomplete="name" placeholder="Adınız ve soyadınız"></label>
+              <label>Cep telefonu<input id="rTel" inputmode="tel" autocomplete="tel" placeholder="05xx xxx xx xx"></label>
+            </div>
+          </div>
+        </div>
+        <div class="kutu ozet" id="rOzet"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bolum" id="galeri">
+    <div class="wrap">
+      <div class="bbas"><div class="ust">Salonumuz</div><h2>Salondan kareler</h2></div>
+      <div class="galeri">
+        <img src="https://images.unsplash.com/photo-1626383137804-ff908d2753a2?w=1000&q=65&auto=format&fit=crop" alt="Salonun iç görünümü" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1610992015762-45dca7fa3a85?w=600&q=65&auto=format&fit=crop" alt="Manikür" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=600&q=65&auto=format&fit=crop" alt="Fön" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=65&auto=format&fit=crop" alt="Cilt bakımı" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1781450090585-1a511b7066d9?w=600&q=65&auto=format&fit=crop" alt="Salon koltukları" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section class="bolum beyaz" id="iletisim">
+    <div class="wrap">
+      <div class="bbas"><div class="ust">İletişim</div><h2>Bize ulaşın</h2></div>
+      <div class="iletisim">
+        <div class="kutu"><b>Adres</b><p>Örnek Mah. Çiçek Sok. No: 12<br>Kadıköy / İstanbul</p><div class="btns" style="margin-top:14px"><button class="btn cizgi kucuk" data-bilgi="Gerçek sitede Google Haritalar yol tarifi açılır">Yol tarifi</button></div></div>
+        <div class="kutu"><b>Çalışma saatleri</b><div class="saatler"><span>Salı - Cumartesi</span><span>10.00 - 20.00</span><span>Pazar</span><span>10.00 - 20.00</span><span>Pazartesi</span><span>Kapalı</span></div></div>
+        <div class="kutu"><b>Telefon ve mesaj</b><p>0 (216) 000 00 00</p><div class="btns" style="margin-top:14px"><button class="btn wa kucuk" data-bilgi="Gerçek sitede salonun WhatsApp hattına mesaj açılır">WhatsApp</button><button class="btn cizgi kucuk" data-bilgi="Gerçek sitede salonun Instagram hesabı açılır">Instagram</button></div></div>
+      </div>
+    </div>
+  </section>
+  <footer><div class="wrap"><span>© Örnek Güzellik Salonu</span><span>Örnek tasarım</span></div></footer>
+  <button class="waf" type="button" data-bilgi="Gerçek sitede salonun WhatsApp hattına mesaj açılır">WhatsApp</button>
+</main>
+
+<section id="v-uygulama" hidden>
+  <div class="wrap uyg">
+    <div>
+      <div class="ust">Mobil uygulama</div>
+      <h1>Müşterinin telefonunda salonunuz</h1>
+      <p>Yandaki telefon gerçekten çalışıyor: hizmet seçip randevu alabilir, Randevularım sekmesinden görebilir ve iptal edebilirsiniz. Uygulamadan alınan randevu da siteden alınan gibi salon paneline düşer.</p>
+      <div class="ozel">
+        <div><b>Randevu al</b>Hizmet, uzman, gün ve boş saat seçilir; dolu saatler görünmez.</div>
+        <div><b>Randevularım</b>Müşteri yaklaşan randevusunu görür, gelemeyecekse kendisi iptal eder, o saat yeniden açılır.</div>
+        <div><b>Salon bilgileri</b>Fiyatlar, kampanya, adres ve çalışma saatleri tek yerde.</div>
+      </div>
+      <div class="btns"><a class="btn" href="#panel">Salon paneline geç</a><a class="btn cizgi" href="?app=1" target="_blank" rel="noopener">Tam ekran aç</a></div>
+    </div>
+    <div class="telefon"><iframe id="uygCerceve" title="Mobil uygulama örneği" loading="lazy"></iframe></div>
+  </div>
+</section>
+
+<section id="v-panel" hidden>
+  <div class="wrap pnl">
+    <div class="pust">
+      <div><div class="ust">Salon paneli</div><h1>Randevular</h1></div>
+      <div class="btns" style="margin-top:0"><a class="btn cizgi" href="#uygulama">Uygulamadan randevu al</a><a class="btn cizgi" href="#randevu">Siteden randevu al</a></div>
+    </div>
+    <div class="sayilar" id="pSayilar"></div>
+    <div class="cipler" id="pGun" style="margin-bottom:14px"></div>
+    <div class="pgrid">
+      <div class="liste" id="pListe"></div>
+      <div class="kutu">
+        <h3 style="font-size:26px">Hizmetler ve fiyatlar</h3>
+        <p class="bos" style="margin-top:4px">Fiyatı değiştirip kaydedin; sitede ve uygulamada hemen güncellenir.</p>
+        <div class="fytkutu" id="pFiyat"></div>
+        <button class="btn" id="pKaydet" type="button" style="width:100%">Fiyatları kaydet</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="toast" id="toast"></div>
+
+<template id="tplApp">
+  <div class="a-ust"><div class="logo"><b>Örnek Güzellik</b><small>SAÇ · TIRNAK · CİLT</small></div></div>
+  <div class="a-ic" id="aIc"></div>
+  <div class="a-onay" id="aOnay" hidden></div>
+  <div class="a-tab" id="aTab">
+    <button type="button" data-t="ana"><svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1z"/></svg>Ana sayfa</button>
+    <button type="button" data-t="al"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4M12 12.5v5M9.5 15h5"/></svg>Randevu al</button>
+    <button type="button" data-t="benim"><svg viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg>Randevularım</button>
+  </div>
+</template>
+
+<script>
+const APP = new URLSearchParams(location.search).has('app');
+const KEY = 'ornek-guzellik-v1';
+const IMG = id => 'https://images.unsplash.com/photo-' + id + '?w=900&q=62&auto=format&fit=crop';
+const KATLAR = [
+  {k:'sac', ad:'Saç', foto:'1580618672591-eb180b1a973f'},
+  {k:'tirnak', ad:'Tırnak', foto:'1632345031435-8727f6897d53'},
+  {k:'cilt', ad:'Cilt bakımı', foto:'1616394584738-fc6e612e71b9'},
+  {k:'kas', ad:'Kaş ve kirpik', foto:'1589710751893-f9a6770ad71b'}
+];
+const HIZMET0 = [
+  ['s1','sac','Kesim + fön',45,450],['s2','sac','Fön',30,250],['s3','sac','Dip boya',90,900],['s4','sac','Röfle / balyaj',180,2400],['s5','sac','Keratin bakımı',120,1800],
+  ['t1','tirnak','Manikür',40,350],['t2','tirnak','Pedikür',50,450],['t3','tirnak','Kalıcı oje',60,500],['t4','tirnak','Protez tırnak',120,1100],
+  ['c1','cilt','Klasik cilt bakımı',60,900],['c2','cilt','Hydrafacial',75,1500],['c3','cilt','Leke bakımı',60,1200],
+  ['k1','kas','Kaş alma',15,150],['k2','kas','Kaş laminasyonu',45,600],['k3','kas','Kirpik lifting',60,700],['k4','kas','İpek kirpik',90,1200]
+].map(([id,kat,ad,dk,fiyat]) => ({id,kat,ad,dk,fiyat}));
+const UZMANLAR = [
+  {ad:'Elif', is:'Saç, kaş ve kirpik', kat:['sac','kas']},
+  {ad:'Seda', is:'Tırnak, kaş ve kirpik', kat:['tirnak','kas']},
+  {ad:'Merve', is:'Cilt bakımı ve saç', kat:['cilt','sac']}
+];
+const ACILIS = 10*60, KAPANIS = 20*60;
+const GUNLER = ['Paz','Pzt','Sal','Çar','Per','Cum','Cmt'];
+const GUNTAM = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
+const AYLAR = ['Oca','Şub','Mar','Nis','May','Haz','Tem','Ağu','Eyl','Eki','Kas','Ara'];
+const AYTAM = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+
+let bellek = null;
+function oku(){ try { const s = localStorage.getItem(KEY); if (s) return JSON.parse(s); } catch(e) {} return bellek; }
+function yaz(d){ bellek = d; try { localStorage.setItem(KEY, JSON.stringify(d)); } catch(e) {} }
+function veri(){
+  let d = oku();
+  if (!d || !Array.isArray(d.randevular) || !Array.isArray(d.hizmetler)) { d = {hizmetler: HIZMET0, randevular: tohum(), profil: null}; yaz(d); }
+  return d;
+}
+const gunAnahtar = t => t.getFullYear() + '-' + String(t.getMonth()+1).padStart(2,'0') + '-' + String(t.getDate()).padStart(2,'0');
+const dk2saat = m => String(Math.floor(m/60)).padStart(2,'0') + ':' + String(m%60).padStart(2,'0');
+const saat2dk = s => { const [h,m] = s.split(':').map(Number); return h*60+m; };
+const tl = n => n.toLocaleString('tr-TR') + ' TL';
+function acikGunler(n){
+  const g = [], t = new Date(); t.setHours(12,0,0,0);
+  while (g.length < n) { if (t.getDay() !== 1) g.push(new Date(t)); t.setDate(t.getDate()+1); }
+  return g;
+}
+const gunEtiket = k => { const t = new Date(k + 'T12:00'); return GUNLER[t.getDay()] + ' ' + t.getDate() + ' ' + AYLAR[t.getMonth()]; };
+const gunUzun = k => { const t = new Date(k + 'T12:00'); return GUNTAM[t.getDay()] + ', ' + t.getDate() + ' ' + AYTAM[t.getMonth()]; };
+function tohum(){
+  const g = acikGunler(3).map(gunAnahtar);
+  const r = [
+    [0,'10:00','s2','Elif','Ayşe Y.','onay','Telefon'],[0,'11:30','t1','Seda','Zeynep K.','onay','Uygulama'],[0,'13:00','s3','Merve','Derya A.','onay','Site'],
+    [0,'15:00','c1','Merve','Selin Ç.','bekliyor','Uygulama'],[0,'17:30','k1','Seda','Büşra T.','bekliyor','Site'],
+    [1,'10:30','s1','Elif','Gamze Ö.','onay','Site'],[1,'12:00','t3','Seda','Esra D.','bekliyor','Uygulama'],[1,'14:00','s4','Merve','Melis S.','onay','Telefon'],
+    [2,'11:00','c2','Merve','Ceren B.','onay','Uygulama'],[2,'16:00','k3','Elif','Nur E.','bekliyor','Site']
+  ];
+  return r.map(([gi,saat,hizmet,uzman,ad,durum,kaynak], i) => ({id:'t'+i, gun:g[gi], saat, hizmet, uzman, ad, tel:'0532 *** ** ' + String(11 + i*7).slice(-2), durum, kaynak, benim:false}));
+}
+const hizmetBul = (d, id) => d.hizmetler.find(h => h.id === id);
+function bosUzman(d, gun, saat, hizmet, uzman){
+  const h = hizmetBul(d, hizmet); if (!h) return null;
+  const bas = saat2dk(saat), bit = bas + h.dk;
+  if (bit > KAPANIS) return null;
+  const simdi = new Date();
+  if (gun === gunAnahtar(simdi) && bas < simdi.getHours()*60 + simdi.getMinutes() + 30) return null;
+  const adaylar = UZMANLAR.filter(u => u.kat.includes(h.kat) && (uzman === 'farketmez' || u.ad === uzman));
+  return (adaylar.find(u => !d.randevular.some(r => r.durum !== 'iptal' && r.gun === gun && r.uzman === u.ad && (() => {
+    const rh = hizmetBul(d, r.hizmet), rb = saat2dk(r.saat), re = rb + (rh ? rh.dk : 30);
+    return bas < re && rb < bit;
+  })())) || {}).ad || null;
+}
+function saatler(d, gun, hizmet, uzman){
+  const l = [];
+  for (let m = ACILIS; m < KAPANIS; m += 30) { const s = dk2saat(m); l.push({s, u: bosUzman(d, gun, s, hizmet, uzman)}); }
+  return l;
+}
+function telTemiz(t){ const r = t.replace(/\D/g,''); if (/^05\d{9}$/.test(r)) return r; if (/^5\d{9}$/.test(r)) return '0' + r; return null; }
+function telGoster(r){ return r.slice(0,4) + ' ' + r.slice(4,7) + ' ' + r.slice(7,9) + ' ' + r.slice(9); }
+function rezerve(s){
+  const d = veri();
+  if (!s.hizmet) return {hata:'Hizmet seçin.'};
+  if (!s.gun || !s.saat) return {hata:'Gün ve saat seçin.'};
+  if (!s.ad || s.ad.trim().length < 3) return {hata:'Adınızı ve soyadınızı yazın.'};
+  const tel = telTemiz(s.tel || '');
+  if (!tel) return {hata:'Cep telefonunu 05xx xxx xx xx biçiminde yazın.'};
+  const u = bosUzman(d, s.gun, s.saat, s.hizmet, s.uzman);
+  if (!u) return {hata:'Bu saat az önce doldu, başka bir saat seçin.'};
+  const r = {id:'r' + Date.now(), gun:s.gun, saat:s.saat, hizmet:s.hizmet, uzman:u, ad:s.ad.trim(), tel:telGoster(tel), durum:'bekliyor', kaynak:s.kaynak, benim:true};
+  d.randevular.push(r); d.profil = {ad:r.ad, tel:r.tel}; yaz(d);
+  return {r};
+}
+const durumAd = {bekliyor:'Onay bekliyor', onay:'Onaylandı', iptal:'İptal'};
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let toastZ;
+function toast(m){ const t = document.getElementById('toast'); t.textContent = m; t.classList.add('ac'); clearTimeout(toastZ); toastZ = setTimeout(() => t.classList.remove('ac'), 2600); }
+
+/* ---------------- web sitesi ---------------- */
+const S = {kat:'sac', hizmet:'', uzman:'farketmez', gun:'', saat:'', bitti:null};
+function siteHizmetler(){
+  const d = veri(), k = KATLAR.find(x => x.k === S.kat);
+  document.getElementById('katFoto').src = IMG(k.foto);
+  document.getElementById('katFoto').alt = k.ad;
+  document.getElementById('katlar').innerHTML = KATLAR.map(x => `<button class="kat${x.k === S.kat ? ' sec' : ''}" data-k="${x.k}" type="button">${x.ad}</button>`).join('');
+  document.getElementById('hizListe').innerHTML = d.hizmetler.filter(h => h.kat === S.kat).map(h =>
+    `<div class="satir"><div><div class="ad">${esc(h.ad)}</div><div class="sure">${h.dk} dakika</div></div><div class="fiyat">${tl(h.fiyat)}</div><button class="btn cizgi kucuk" data-sec="${h.id}" type="button">Randevu al</button></div>`).join('');
+}
+function siteRandevu(){
+  const d = veri();
+  const sel = document.getElementById('rHizmet');
+  sel.innerHTML = '<option value="">Hizmet seçin</option>' + KATLAR.map(k => `<optgroup label="${k.ad}">` +
+    d.hizmetler.filter(h => h.kat === k.k).map(h => `<option value="${h.id}"${h.id === S.hizmet ? ' selected' : ''}>${esc(h.ad)} · ${h.dk} dk · ${tl(h.fiyat)}</option>`).join('') + '</optgroup>').join('');
+  const h = hizmetBul(d, S.hizmet);
+  const uz = h ? UZMANLAR.filter(u => u.kat.includes(h.kat)) : [];
+  if (S.uzman !== 'farketmez' && !uz.some(u => u.ad === S.uzman)) S.uzman = 'farketmez';
+  document.getElementById('rUzman').innerHTML = h ? [{ad:'farketmez', is:'İlk boş uzman'}].concat(uz).map(u =>
+    `<button class="cip${S.uzman === u.ad ? ' sec' : ''}" data-u="${u.ad}" type="button">${u.ad === 'farketmez' ? 'Fark etmez' : u.ad}<small>${u.is}</small></button>`).join('') : '<span class="bos">Önce hizmet seçin.</span>';
+  const gunler = acikGunler(7).map(gunAnahtar);
+  if (!S.gun) S.gun = gunler[0];
+  document.getElementById('rGun').innerHTML = gunler.map(g => `<button class="cip${S.gun === g ? ' sec' : ''}" data-g="${g}" type="button">${gunEtiket(g).split(' ')[0]}<small>${gunEtiket(g).split(' ').slice(1).join(' ')}</small></button>`).join('');
+  const sl = h ? saatler(d, S.gun, S.hizmet, S.uzman) : [];
+  if (S.saat && !sl.some(x => x.s === S.saat && x.u)) S.saat = '';
+  document.getElementById('rSaat').innerHTML = !h ? '<span class="bos">Önce hizmet seçin.</span>' :
+    (sl.some(x => x.u) ? sl.map(x => `<button class="cip${S.saat === x.s ? ' sec' : ''}" data-s="${x.s}" type="button"${x.u ? '' : ' disabled'}>${x.s}</button>`).join('') : '<span class="bos">Bu gün için boş saat kalmadı, başka bir gün seçin.</span>');
+  siteOzet();
+}
+function siteOzet(){
+  const d = veri(), h = hizmetBul(d, S.hizmet), o = document.getElementById('rOzet');
+  if (S.bitti) {
+    const r = S.bitti, rh = hizmetBul(d, r.hizmet);
+    o.innerHTML = `<div class="tamam"><b>Randevunuz salona iletildi</b>${gunUzun(r.gun)} saat ${r.saat}<br>${esc(rh.ad)} · ${r.uzman}<br>Salon onaylayınca kesinleşir.<div class="btns"><a class="btn kucuk" href="#panel">Salon panelinde gör</a><button class="btn cizgi kucuk" id="rYeni" type="button">Yeni randevu</button></div></div>`;
+    return;
+  }
+  const u = h && S.saat ? bosUzman(d, S.gun, S.saat, S.hizmet, S.uzman) : null;
+  o.innerHTML = `<h3>Randevu özeti</h3><dl><dt>Hizmet</dt><dd>${h ? esc(h.ad) : '-'}</dd><dt>Uzman</dt><dd>${u || (S.uzman === 'farketmez' ? 'Fark etmez' : S.uzman)}</dd><dt>Gün</dt><dd>${S.gun ? gunUzun(S.gun) : '-'}</dd><dt>Saat</dt><dd>${S.saat || '-'}</dd><dt>Süre</dt><dd>${h ? h.dk + ' dakika' : '-'}</dd></dl>
+    <div class="top"><span>Ücret</span><span>${h ? tl(h.fiyat) : '-'}</span></div>
+    <button class="btn" id="rGonder" type="button">Randevuyu gönder</button><div class="hata" id="rHata"></div>
+    <p class="not">Ödeme salonda yapılır. Gelemeyecekseniz uygulamadan ya da telefonla iptal edebilirsiniz.</p>`;
+}
+function siteKur(){
+  document.getElementById('menuBtn').onclick = () => document.getElementById('nav').classList.toggle('ac');
+  document.getElementById('nav').addEventListener('click', e => { if (e.target.tagName === 'A') document.getElementById('nav').classList.remove('ac'); });
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-bilgi]'); if (b) { toast(b.dataset.bilgi); return; }
+    const k = e.target.closest('[data-k]'); if (k) { S.kat = k.dataset.k; siteHizmetler(); return; }
+    const sc = e.target.closest('[data-sec]'); if (sc) { S.hizmet = sc.dataset.sec; S.bitti = null; siteRandevu(); document.getElementById('randevu').scrollIntoView({behavior:'smooth'}); return; }
+    const u = e.target.closest('#rUzman [data-u]'); if (u) { S.uzman = u.dataset.u; siteRandevu(); return; }
+    const g = e.target.closest('#rGun [data-g]'); if (g) { S.gun = g.dataset.g; siteRandevu(); return; }
+    const s = e.target.closest('#rSaat [data-s]'); if (s && !s.disabled) { S.saat = s.dataset.s; siteRandevu(); return; }
+    if (e.target.id === 'rYeni') { S.bitti = null; S.saat = ''; siteRandevu(); return; }
+    if (e.target.id === 'rGonder') {
+      const sonuc = rezerve({hizmet:S.hizmet, uzman:S.uzman, gun:S.gun, saat:S.saat, ad:document.getElementById('rAd').value, tel:document.getElementById('rTel').value, kaynak:'Site'});
+      if (sonuc.hata) { document.getElementById('rHata').textContent = sonuc.hata; if (/doldu/.test(sonuc.hata)) { S.saat = ''; siteRandevu(); document.getElementById('rHata').textContent = sonuc.hata; } return; }
+      S.bitti = sonuc.r; S.saat = ''; siteRandevu(); toast('Randevunuz salona iletildi');
+    }
+  });
+  document.getElementById('rHizmet').onchange = e => { S.hizmet = e.target.value; S.bitti = null; siteRandevu(); };
+  const p = veri().profil; if (p) { document.getElementById('rAd').value = p.ad; document.getElementById('rTel').value = p.tel; }
+  siteHizmetler(); siteRandevu();
+}
+
+/* ---------------- salon paneli ---------------- */
+const P = {gun:''};
+function panel(yeniId){
+  const d = veri(), gunler = acikGunler(7).map(gunAnahtar);
+  if (!P.gun || !gunler.includes(P.gun)) P.gun = gunler[0];
+  const say = g => d.randevular.filter(r => r.gun === g && r.durum !== 'iptal').length;
+  document.getElementById('pGun').innerHTML = gunler.map(g => `<button class="cip${P.gun === g ? ' sec' : ''}" data-pg="${g}" type="button">${gunEtiket(g).split(' ')[0]} ${gunEtiket(g).split(' ').slice(1).join(' ')}<small>${say(g)} randevu</small></button>`).join('');
+  const l = d.randevular.filter(r => r.gun === P.gun).sort((a,b) => a.saat.localeCompare(b.saat));
+  const aktif = l.filter(r => r.durum !== 'iptal');
+  const ciro = aktif.reduce((t,r) => t + ((hizmetBul(d, r.hizmet) || {}).fiyat || 0), 0);
+  document.getElementById('pSayilar').innerHTML = `<div class="sayi"><b>${aktif.length}</b><span>${gunUzun(P.gun)} randevu</span></div><div class="sayi"><b>${l.filter(r => r.durum === 'bekliyor').length}</b><span>Onay bekleyen</span></div><div class="sayi"><b>${tl(ciro)}</b><span>Günün tahmini cirosu</span></div>`;
+  document.getElementById('pListe').innerHTML = '<div class="lsatir bas"><span>Saat</span><span>Müşteri</span><span>Hizmet</span><span>Uzman</span><span>Durum</span><span></span></div>' +
+    (l.length ? l.map(r => { const h = hizmetBul(d, r.hizmet) || {ad:'-', dk:0};
+      return `<div class="lsatir${r.id === yeniId ? ' yeni' : ''}"><span class="saat">${r.saat}</span><span><b>${esc(r.ad)}</b><small>${esc(r.tel)} · ${r.kaynak}</small></span><span>${esc(h.ad)}<small>${h.dk} dk · ${tl(h.fiyat || 0)}</small></span><span>${r.uzman}</span><span><span class="etiket ${r.durum}">${durumAd[r.durum]}</span></span><span class="islem">${r.durum === 'bekliyor' ? `<button class="btn kucuk" data-onay="${r.id}" type="button">Onayla</button>` : ''}${r.durum !== 'iptal' ? `<button class="btn cizgi kucuk" data-iptal="${r.id}" type="button">İptal</button>` : ''}</span></div>`; }).join('')
+    : '<div class="lsatir"><span></span><span class="bos">Bu gün için randevu yok.</span></div>');
+  document.getElementById('pFiyat').innerHTML = KATLAR.map(k => `<div class="fyt kb"><span>${k.ad}</span><span></span></div>` +
+    d.hizmetler.filter(h => h.kat === k.k).map(h => `<div class="fyt"><span>${esc(h.ad)}</span><input type="number" min="0" step="10" data-f="${h.id}" value="${h.fiyat}" aria-label="${esc(h.ad)} fiyatı"></div>`).join('')).join('');
+}
+function panelKur(){
+  document.getElementById('v-panel').addEventListener('click', e => {
+    const g = e.target.closest('[data-pg]'); if (g) { P.gun = g.dataset.pg; panel(); return; }
+    const o = e.target.closest('[data-onay]'), i = e.target.closest('[data-iptal]');
+    if (o || i) {
+      const d = veri(), r = d.randevular.find(x => x.id === (o || i).dataset[o ? 'onay' : 'iptal']);
+      if (r) { r.durum = o ? 'onay' : 'iptal'; yaz(d); panel(); toast(o ? r.ad + ' için randevu onaylandı' : r.saat + ' randevusu iptal edildi, saat yeniden açıldı'); }
+    }
+  });
+  document.getElementById('pKaydet').onclick = () => {
+    const d = veri(); let hata = false;
+    document.querySelectorAll('#pFiyat [data-f]').forEach(inp => { const v = Math.round(Number(inp.value)); const h = hizmetBul(d, inp.dataset.f); if (!Number.isFinite(v) || v < 0 || inp.value === '') hata = true; else if (h) h.fiyat = v; });
+    if (hata) { toast('Fiyat alanları boş ya da eksi olamaz'); return; }
+    yaz(d); siteHizmetler(); siteRandevu(); toast('Fiyatlar sitede ve uygulamada güncellendi');
+  };
+}
+
+/* ---------------- görünüm geçişi ---------------- */
+function yonlendir(){
+  const h = location.hash.slice(1), v = (h === 'uygulama' || h === 'panel') ? h : 'site';
+  document.getElementById('v-site').hidden = v !== 'site';
+  document.getElementById('v-uygulama').hidden = v !== 'uygulama';
+  document.getElementById('v-panel').hidden = v !== 'panel';
+  document.querySelectorAll('nav a.v').forEach(a => a.classList.toggle('sec', a.dataset.v === v));
+  if (v === 'uygulama') { const f = document.getElementById('uygCerceve'); if (!f.src) f.src = '?app=1'; }
+  if (v === 'panel') panel();
+  if (v === 'site') { siteHizmetler(); siteRandevu(); const el = h && document.getElementById(h); if (el) el.scrollIntoView(); else scrollTo(0,0); }
+  else scrollTo(0,0);
+}
+
+/* ---------------- mobil uygulama (?app) ---------------- */
+const A = {t:'ana', kat:'sac', hizmet:'', uzman:'farketmez', gun:'', saat:''};
+function benimler(d){
+  const bugun = gunAnahtar(new Date());
+  return d.randevular.filter(r => r.benim).sort((a,b) => (a.gun + a.saat).localeCompare(b.gun + b.saat)).map(r => ({...r, gecmis: r.gun < bugun}));
+}
+function app(){
+  const d = veri(), ic = document.getElementById('aIc'), onay = document.getElementById('aOnay');
+  document.querySelectorAll('#aTab button').forEach(b => b.classList.toggle('sec', b.dataset.t === A.t));
+  onay.hidden = A.t !== 'al';
+  if (A.t === 'ana') {
+    const s = new Date().getHours(), selam = s < 12 ? 'Günaydın' : s < 18 ? 'İyi günler' : 'İyi akşamlar';
+    const yak = benimler(d).find(r => !r.gecmis && r.durum !== 'iptal');
+    const yh = yak && hizmetBul(d, yak.hizmet);
+    ic.innerHTML = `<div class="a-selam">${selam}${d.profil ? ', ' + esc(d.profil.ad.split(' ')[0]) : ''}</div><h2 class="a-baslik">Bugün kendinize vakit ayırın</h2>` +
+      (yak ? `<div class="a-kart koyu"><div class="k-ust">Yaklaşan randevunuz</div><h3>${gunUzun(yak.gun)} · ${yak.saat}</h3><p>${esc(yh.ad)} · ${yak.uzman} · ${durumAd[yak.durum]}</p><button class="btn beyaz kucuk" data-git="benim" type="button">Randevularım</button></div>`
+           : `<div class="a-kart koyu"><div class="k-ust">Randevu</div><h3>Boş saatleri görün</h3><p>Hizmetinizi seçin, size uyan saate bir dokunuşla randevu alın.</p><button class="btn beyaz kucuk" data-git="al" type="button">Randevu al</button></div>`) +
+      `<div class="a-kart"><div class="k-ust">Bu haftaya özel</div><h3>Manikür + pedikür 700 TL</h3><p>Salı, çarşamba ve perşembe günleri birlikte alındığında.</p></div>
+      <div class="a-bolum">Hizmetler</div>
+      <div class="a-kats">${KATLAR.map(k => `<button type="button" data-akat="${k.k}"><img src="${IMG(k.foto).replace('w=900','w=400')}" alt=""><span>${k.ad}</span></button>`).join('')}</div>
+      <div class="a-bolum">Salon</div>
+      <div class="a-kart"><p><b style="color:var(--ink)">Örnek Mah. Çiçek Sok. No: 12, Kadıköy</b><br>Salı - Pazar 10.00 - 20.00 · Pazartesi kapalı</p><div class="a-iki"><button class="btn cizgi kucuk" data-bilgi="Gerçek uygulamada salon aranır" type="button">Ara</button><button class="btn wa kucuk" data-bilgi="Gerçek uygulamada WhatsApp açılır" type="button">WhatsApp</button></div></div>`;
+  }
+  if (A.t === 'al') {
+    const h = hizmetBul(d, A.hizmet);
+    const uz = h ? UZMANLAR.filter(u => u.kat.includes(h.kat)) : [];
+    if (A.uzman !== 'farketmez' && !uz.some(u => u.ad === A.uzman)) A.uzman = 'farketmez';
+    const gunler = acikGunler(10).map(gunAnahtar); if (!A.gun) A.gun = gunler[0];
+    const sl = h ? saatler(d, A.gun, A.hizmet, A.uzman) : [];
+    if (A.saat && !sl.some(x => x.s === A.saat && x.u)) A.saat = '';
+    ic.innerHTML = `<h2 class="a-baslik">Randevu al</h2>
+      <div class="yatay">${KATLAR.map(k => `<button class="kat${A.kat === k.k ? ' sec' : ''}" data-akat2="${k.k}" type="button">${k.ad}</button>`).join('')}</div>
+      <div class="a-bolum">Hizmet</div>
+      ${d.hizmetler.filter(x => x.kat === A.kat).map(x => `<button class="a-hiz${A.hizmet === x.id ? ' sec' : ''}" data-ah="${x.id}" type="button"><span><span class="ad">${esc(x.ad)}</span><br><span class="sure">${x.dk} dakika</span></span><span class="fiyat">${tl(x.fiyat)}</span></button>`).join('')}
+      ${h ? `<div class="a-bolum">Uzman</div><div class="yatay">${[{ad:'farketmez'}].concat(uz).map(u => `<button class="cip${A.uzman === u.ad ? ' sec' : ''}" data-au="${u.ad}" type="button">${u.ad === 'farketmez' ? 'Fark etmez' : u.ad}</button>`).join('')}</div>
+      <div class="a-bolum">Gün</div><div class="yatay">${gunler.map(g => `<button class="cip${A.gun === g ? ' sec' : ''}" data-ag="${g}" type="button">${gunEtiket(g).split(' ')[0]}<small>${gunEtiket(g).split(' ').slice(1).join(' ')}</small></button>`).join('')}</div>
+      <div class="a-bolum">Saat</div>${sl.some(x => x.u) ? `<div class="saatgrid">${sl.map(x => `<button class="cip${A.saat === x.s ? ' sec' : ''}" data-as="${x.s}" type="button"${x.u ? '' : ' disabled'}>${x.s}</button>`).join('')}</div>` : '<p class="bos">Bu gün için boş saat kalmadı.</p>'}
+      ${d.profil ? `<div class="a-bolum">Bilgileriniz</div><div class="a-kart" style="padding:12px 14px"><p><b style="color:var(--ink)">${esc(d.profil.ad)}</b> · ${esc(d.profil.tel)}</p></div>` :
+        `<div class="a-bolum">Bilgileriniz</div><div style="display:grid;gap:10px"><label>Ad soyad<input id="aAd" autocomplete="name" placeholder="Adınız ve soyadınız"></label><label>Cep telefonu<input id="aTel" inputmode="tel" autocomplete="tel" placeholder="05xx xxx xx xx"></label></div>`}` : '<p class="bos" style="margin-top:6px">Bir hizmet seçin, boş saatler görünsün.</p>'}
+      <div style="height:90px"></div>`;
+    onay.innerHTML = `<div class="hata" id="aHata"></div><button class="btn" id="aGonder" type="button"${h && A.saat ? '' : ' disabled'}>${h && A.saat ? 'Randevuyu onayla · ' + A.saat + ' · ' + tl(h.fiyat) : 'Hizmet ve saat seçin'}</button>`;
+  }
+  if (A.t === 'benim') {
+    const l = benimler(d);
+    ic.innerHTML = `<h2 class="a-baslik">Randevularım</h2>` + (l.length ? l.map(r => { const h = hizmetBul(d, r.hizmet) || {ad:'-', fiyat:0};
+      return `<div class="a-rdv${r.gecmis || r.durum === 'iptal' ? ' gecmis' : ''}"><div class="ust2"><b>${gunUzun(r.gun)} · ${r.saat}</b><span class="etiket ${r.durum}">${durumAd[r.durum]}</span></div><p>${esc(h.ad)} · ${r.uzman} · ${tl(h.fiyat)}</p>${!r.gecmis && r.durum !== 'iptal' ? `<div class="a-iki"><button class="btn cizgi kucuk" data-aiptal="${r.id}" type="button">İptal et</button><button class="btn cizgi kucuk" data-bilgi="Gerçek uygulamada salonun konumu haritada açılır" type="button">Yol tarifi</button></div>` : ''}</div>`; }).join('')
+      : `<div class="a-kart"><h3>Henüz randevunuz yok</h3><p>Aldığınız randevular burada görünür, salon onaylayınca durumu değişir.</p><button class="btn kucuk" data-git="al" type="button">Randevu al</button></div>`);
+  }
+}
+function appKur(){
+  document.body.className = 'app';
+  document.body.innerHTML = document.getElementById('tplApp').innerHTML + '<div class="toast" id="toast"></div>';
+  document.body.addEventListener('click', e => {
+    const b = e.target.closest('[data-bilgi]'); if (b) { toast(b.dataset.bilgi); return; }
+    const t = e.target.closest('[data-t],[data-git]'); if (t) { A.t = t.dataset.t || t.dataset.git; app(); scrollTo(0,0); return; }
+    const k = e.target.closest('[data-akat]'); if (k) { A.kat = k.dataset.akat; A.hizmet = ''; A.t = 'al'; app(); scrollTo(0,0); return; }
+    const k2 = e.target.closest('[data-akat2]'); if (k2) { A.kat = k2.dataset.akat2; app(); return; }
+    const h = e.target.closest('[data-ah]'); if (h) { A.hizmet = h.dataset.ah; app(); return; }
+    const u = e.target.closest('[data-au]'); if (u) { A.uzman = u.dataset.au; app(); return; }
+    const g = e.target.closest('[data-ag]'); if (g) { A.gun = g.dataset.ag; app(); return; }
+    const s = e.target.closest('[data-as]'); if (s && !s.disabled) { A.saat = s.dataset.as; app(); return; }
+    const i = e.target.closest('[data-aiptal]');
+    if (i) { const d = veri(), r = d.randevular.find(x => x.id === i.dataset.aiptal); if (r) { r.durum = 'iptal'; yaz(d); app(); toast('Randevunuz iptal edildi'); } return; }
+    if (e.target.id === 'aGonder') {
+      const d = veri(), ad = d.profil ? d.profil.ad : (document.getElementById('aAd') || {}).value, tel = d.profil ? d.profil.tel : (document.getElementById('aTel') || {}).value;
+      const sonuc = rezerve({hizmet:A.hizmet, uzman:A.uzman, gun:A.gun, saat:A.saat, ad, tel, kaynak:'Uygulama'});
+      if (sonuc.hata) { if (/doldu/.test(sonuc.hata)) { A.saat = ''; app(); } document.getElementById('aHata').textContent = sonuc.hata; return; }
+      A.saat = ''; A.hizmet = ''; A.t = 'benim'; app(); scrollTo(0,0); toast('Randevunuz alındı, salon onaylayınca bildirilir');
+    }
+  });
+  addEventListener('storage', e => { if (e.key === KEY) app(); });
+  app();
+}
+
+if (APP) appKur();
+else {
+  siteKur(); panelKur();
+  addEventListener('hashchange', yonlendir);
+  addEventListener('storage', e => {
+    if (e.key !== KEY) return;
+    const once = JSON.parse(e.oldValue || '{"randevular":[]}').randevular.map(r => r.id);
+    const yeni = veri().randevular.find(r => !once.includes(r.id));
+    if (!document.getElementById('v-panel').hidden) panel(yeni && yeni.id); else { siteHizmetler(); siteRandevu(); }
+    if (yeni) toast('Yeni randevu: ' + gunEtiket(yeni.gun) + ' ' + yeni.saat + ', ' + (hizmetBul(veri(), yeni.hizmet) || {ad:''}).ad);
+  });
+  yonlendir();
+}
+</script>
+</body>
+</html>
