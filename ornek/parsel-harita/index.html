@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Parsel Harita — Örnek Çalışma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root{--kart:#fff;--koyu:#1d2630;--metin:#1d2630;--soluk:#68727e;--cizgi:#e2e5e9;--kenar:#c9ced5;--vurgu:#e8a400;--vurgu-acik:#fff5d6;--kirmizi:#b42318;--kirmizi-acik:#fdecea}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;background:#f4f5f6;color:var(--metin);font-size:14px;line-height:1.45;display:flex;overflow:hidden}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+input:focus{outline:2px solid var(--vurgu);outline-offset:-1px;border-color:var(--vurgu)}
+
+.panel{width:340px;flex:none;background:var(--kart);border-right:1px solid var(--cizgi);display:flex;flex-direction:column;z-index:2}
+.bas{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--cizgi)}
+.bas svg{flex:none}
+.bas b{font-size:16px;letter-spacing:-.01em}
+.bas .etiket{margin-left:auto;font-size:11.5px;color:var(--soluk);border:1px solid var(--cizgi);border-radius:4px;padding:2px 7px;white-space:nowrap}
+.icerik{padding:16px 18px 20px;overflow-y:auto;flex:1}
+.baslik{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--soluk);margin:0 0 8px}
+label{display:block;font-size:12.5px;color:var(--soluk);margin:0 0 4px}
+input[type=text]{width:100%;height:38px;border:1px solid var(--kenar);border-radius:6px;background:#fff;padding:0 10px}
+.yan{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.dugme{height:40px;border:0;border-radius:6px;background:var(--koyu);color:#fff;font-weight:600;width:100%}
+.ipucu{font-size:12.5px;color:var(--soluk);margin:10px 0 0}
+.hata{background:var(--kirmizi-acik);color:var(--kirmizi);border-radius:6px;padding:9px 11px;font-size:13px;margin-top:12px}
+.ayrac{height:1px;background:var(--cizgi);margin:18px 0 16px}
+.not{font-size:12px;color:var(--soluk);margin:16px 0 0}
+
+.sonuc{border:1px solid var(--cizgi);border-radius:8px;overflow:hidden}
+.sonuc-bas{background:var(--vurgu-acik);padding:11px 13px;border-bottom:1px solid #f0e2b3}
+.sonuc-bas .ozet{font-weight:700;font-size:15px}
+.sonuc-bas .yer{font-size:12.5px;color:#6b5a1c}
+.sonuc dl{margin:0;padding:2px 13px 4px}
+.sonuc .satir{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid var(--cizgi)}
+.sonuc .satir:last-child{border-bottom:0}
+.sonuc dt{color:var(--soluk)}
+.sonuc dd{margin:0;font-weight:500;text-align:right}
+.sonuc .ara{padding:8px 13px 0;font-size:12px;font-weight:600;color:var(--soluk);text-transform:uppercase;letter-spacing:.04em;border-top:1px solid var(--cizgi)}
+.bos{color:var(--soluk);font-size:13px;border:1px dashed var(--kenar);border-radius:8px;padding:14px;text-align:center}
+
+.harita-kap{flex:1;position:relative;min-width:0}
+#harita{position:absolute;inset:0;background:#dfe3e8}
+.arac{position:absolute;top:12px;right:12px;z-index:500;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.grup{background:#fff;border-radius:7px;box-shadow:0 1px 3px rgba(0,0,0,.25);display:flex;overflow:hidden}
+.grup button{border:0;background:#fff;height:34px;padding:0 12px;font-size:13px;font-weight:500;border-right:1px solid var(--cizgi);white-space:nowrap}
+.grup button:last-child{border-right:0}
+.grup button.secili{background:var(--koyu);color:#fff}
+.lejant{position:absolute;left:12px;bottom:38px;z-index:500;background:#fff;border-radius:7px;box-shadow:0 1px 3px rgba(0,0,0,.25);padding:8px 11px;font-size:12px}
+.lejant b{display:block;font-size:11.5px;color:var(--soluk);font-weight:600;margin-bottom:4px}
+.lejant span{display:flex;align-items:center;gap:7px;line-height:1.7}
+.lejant i{width:12px;height:12px;border-radius:2px;display:inline-block}
+.olcum-kutu{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);z-index:500;background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.25);padding:9px 14px;font-size:13px;display:none;text-align:center;max-width:calc(100% - 24px)}
+.olcum-kutu b{font-size:15px}
+.olcum-kutu small{display:block;color:var(--soluk)}
+.leaflet-container{font-family:inherit}
+.leaflet-control-attribution{font-size:10.5px}
+.olcum-modu .leaflet-container,.olcum-modu .leaflet-interactive{cursor:crosshair}
+
+@media (max-width:760px){
+  body{flex-direction:column}
+  .panel{width:auto;max-height:44vh;border-right:0;border-bottom:1px solid var(--cizgi)}
+  .bas{padding:10px 16px}
+  .icerik{padding:12px 16px 16px}
+  .harita-kap{flex:1;min-height:0}
+  .arac{top:10px;right:10px}
+  .grup button{padding:0 10px}
+  .lejant{bottom:30px;left:10px}
+  .olcum-kutu{bottom:auto;top:10px;left:10px;transform:none;max-width:calc(100% - 150px);text-align:left}
+}
+</style>
+</head>
+<body>
+
+<aside class="panel">
+  <div class="bas">
+    <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="5" fill="#1d2630"/><path d="M6 17 9 7l9 2.5 2 8.5-7.5 2z" fill="none" stroke="#ffd21f" stroke-width="2" stroke-linejoin="round"/></svg>
+    <b>Parsel Harita</b>
+    <span class="etiket">Örnek çalışma</span>
+  </div>
+
+  <div class="icerik">
+    <p class="baslik">Ada / parsel sorgula</p>
+    <form id="form" autocomplete="off">
+      <div class="yan">
+        <div><label for="ada">Ada</label><input type="text" id="ada" inputmode="numeric" placeholder="Örn. 101"></div>
+        <div><label for="parsel">Parsel</label><input type="text" id="parsel" inputmode="numeric" placeholder="Örn. 3"></div>
+      </div>
+      <button class="dugme" type="submit">Sorgula</button>
+    </form>
+    <p class="ipucu">Ya da haritada bir parselin üstüne tıklayın.</p>
+    <div id="hata" class="hata" hidden></div>
+
+    <div class="ayrac"></div>
+    <p class="baslik">Parsel bilgisi</p>
+    <div id="sonuc"><div class="bos">Henüz parsel seçilmedi.</div></div>
+    <p class="not">Bu sayfadaki parsel ve imar bilgileri örnek amaçlıdır, gerçek kayıt değildir.</p>
+  </div>
+</aside>
+
+<div class="harita-kap">
+  <div id="harita"></div>
+  <div class="arac">
+    <div class="grup" role="group" aria-label="Altlık">
+      <button id="k-uydu" class="secili" type="button">Uydu</button>
+      <button id="k-sokak" type="button">Harita</button>
+    </div>
+    <div class="grup" role="group" aria-label="Ölçüm">
+      <button id="o-mesafe" type="button">Mesafe</button>
+      <button id="o-alan" type="button">Alan</button>
+      <button id="o-temizle" type="button">Temizle</button>
+    </div>
+  </div>
+  <div class="lejant" id="lejant"></div>
+  <div class="olcum-kutu" id="olcum"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+(function(){
+"use strict";
+function $(id){ return document.getElementById(id); }
+var sayi = new Intl.NumberFormat("tr-TR", {maximumFractionDigits: 2});
+var sayi0 = new Intl.NumberFormat("tr-TR", {maximumFractionDigits: 0});
+
+/* ---------- örnek veri: iki ada, dokuz parsel ---------- */
+var IMAR = {
+  konut:   {ad: "Konut alanı",   renk: "#f2c230", emsal: "1,50", kat: "5 kat (Hmax 15,50 m)", cekme: "Ön 5 m, yan 3 m"},
+  ticaret: {ad: "Ticaret alanı", renk: "#e0533d", emsal: "2,00", kat: "4 kat (Hmax 14,00 m)", cekme: "Ön 5 m, yan 4 m"},
+  park:    {ad: "Park alanı",    renk: "#3fae5a", emsal: "-",    kat: "Yapılaşma yok",        cekme: "-"}
+};
+var BASLANGIC = [40.0462, 32.9196]; /* adaların sol üst köşesi */
+var mLat = 1 / 111320, mLng = 1 / (111320 * Math.cos(BASLANGIC[0] * Math.PI / 180));
+function nokta(x, y){ return [BASLANGIC[0] - y * mLat, BASLANGIC[1] + x * mLng]; } /* x doğuya, y güneye metre */
+
+/* [ada, parsel, x, y, genişlik, derinlik, imar] */
+var TANIM = [
+  [101, 1,   0,  0, 40, 50, "konut"], [101, 2,  40,  0, 38, 50, "konut"], [101, 3,  78,  0, 42, 50, "konut"],
+  [101, 4,   0, 50, 40, 48, "konut"], [101, 5,  40, 50, 38, 48, "konut"], [101, 6,  78, 50, 42, 48, "konut"],
+  [102, 1, 135,  0, 45, 50, "ticaret"], [102, 2, 180,  0, 45, 50, "ticaret"], [102, 3, 135, 50, 90, 48, "park"]
+];
+var PARSELLER = TANIM.map(function(t){
+  var x = t[2], y = t[3], w = t[4], h = t[5];
+  return {ada: t[0], parsel: t[1], imar: IMAR[t[6]], alan: w * h,
+    nitelik: t[6] === "park" ? "Park alanı (kamu)" : "Arsa",
+    koseler: [nokta(x, y), nokta(x + w, y), nokta(x + w, y + h), nokta(x, y + h)]};
+});
+
+/* ---------- harita ---------- */
+var harita = L.map("harita", {zoomControl: false, minZoom: 6, maxZoom: 20}).fitBounds([nokta(0, 0), nokta(225, 98)], {padding: [24, 24], maxZoom: 18});
+L.control.zoom({position: "bottomright", zoomInTitle: "Yakınlaştır", zoomOutTitle: "Uzaklaştır"}).addTo(harita);
+L.control.scale({position: "bottomleft", imperial: false}).addTo(harita);
+harita.attributionControl.setPrefix(false);
+
+var esri = "https://server.arcgisonline.com/ArcGIS/rest/services/";
+var uydu = L.layerGroup([
+  L.tileLayer(esri + "World_Imagery/MapServer/tile/{z}/{y}/{x}", {maxZoom: 20, maxNativeZoom: 19, attribution: "Uydu: Esri, Maxar, Earthstar Geographics"}),
+  L.tileLayer(esri + "Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}", {maxZoom: 20, maxNativeZoom: 19, opacity: .7}),
+  L.tileLayer(esri + "Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}", {maxZoom: 20, maxNativeZoom: 19})
+]).addTo(harita);
+var sokak = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {maxZoom: 20, maxNativeZoom: 19, attribution: "&copy; OpenStreetMap katkıcıları"});
+
+function altlik(uyduMu){
+  if (uyduMu){ harita.removeLayer(sokak); uydu.addTo(harita); } else { harita.removeLayer(uydu); sokak.addTo(harita); }
+  $("k-uydu").classList.toggle("secili", uyduMu); $("k-sokak").classList.toggle("secili", !uyduMu);
+  harita.getContainer().classList.toggle("acik-zemin", !uyduMu);
+}
+$("k-uydu").onclick = function(){ altlik(true); };
+$("k-sokak").onclick = function(){ altlik(false); };
+
+/* parseller */
+var secili = null;
+function stil(p, sec){
+  return sec ? {color: "#ffffff", weight: 3.5, fillColor: p.imar.renk, fillOpacity: .55}
+             : {color: "#1d2630", weight: 1.2, fillColor: p.imar.renk, fillOpacity: .32};
+}
+PARSELLER.forEach(function(p){
+  p.katman = L.polygon(p.koseler, stil(p, false)).addTo(harita);
+  p.katman.bindTooltip(p.ada + "/" + p.parsel, {permanent: true, direction: "center", className: "no-tip"});
+  p.katman.on("click", function(e){ if (olcumModu) return; L.DomEvent.stopPropagation(e); sec(p, false); });
+});
+/* parsel numarası etiketleri sade dursun */
+var st = document.createElement("style");
+st.textContent = ".no-tip{background:none;border:0;box-shadow:none;color:#fff;font-weight:600;font-size:11.5px;text-shadow:0 0 3px #000,0 0 2px #000;padding:0}.no-tip:before{display:none}.etiketsiz .no-tip{display:none}.acik-zemin .no-tip{color:#1d2630;text-shadow:0 0 3px #fff,0 0 2px #fff}";
+document.head.appendChild(st);
+
+$("lejant").innerHTML = "<b>İmar durumu</b>" + Object.keys(IMAR).map(function(k){
+  return '<span><i style="background:' + IMAR[k].renk + '"></i>' + IMAR[k].ad + "</span>";
+}).join("");
+
+function sec(p, yakinlas){
+  if (secili) secili.katman.setStyle(stil(secili, false));
+  secili = p;
+  p.katman.setStyle(stil(p, true)); p.katman.bringToFront();
+  if (yakinlas) harita.flyToBounds(p.katman.getBounds(), {padding: [80, 80], maxZoom: 19, duration: .7});
+  $("hata").hidden = true;
+  $("ada").value = p.ada; $("parsel").value = p.parsel;
+  var satir = function(a, b){ return '<div class="satir"><dt>' + a + "</dt><dd>" + b + "</dd></div>"; };
+  $("sonuc").innerHTML =
+    '<div class="sonuc"><div class="sonuc-bas"><div class="ozet">Ada ' + p.ada + " / Parsel " + p.parsel + "</div>" +
+    '<div class="yer">Ankara · Örnek mahalle</div></div><dl>' +
+    satir("Yüzölçümü", sayi.format(p.alan) + " m² (" + sayi.format(p.alan / 1000) + " dönüm)") +
+    satir("Nitelik", p.nitelik) +
+    "</dl><div class=\"ara\">İmar durumu</div><dl>" +
+    satir("Fonksiyon", p.imar.ad) +
+    satir("Emsal", p.imar.emsal) +
+    satir("Yükseklik", p.imar.kat) +
+    satir("Çekme mesafesi", p.imar.cekme) +
+    "</dl></div>";
+  $("sonuc").scrollIntoView({block: "nearest", behavior: "smooth"});
+}
+
+$("form").onsubmit = function(e){
+  e.preventDefault();
+  var ada = +$("ada").value.trim(), par = +$("parsel").value.trim();
+  var p = PARSELLER.filter(function(x){ return x.ada === ada && x.parsel === par; })[0];
+  if (p){ sec(p, true); return; }
+  var h = $("hata");
+  h.textContent = "Bu ada/parsel örnek bölgede yok. Ada 101 için parsel 1-6, ada 102 için parsel 1-3 deneyin.";
+  h.hidden = false;
+};
+
+/* ---------- ölçüm ---------- */
+var olcumModu = null, noktalar = [], olcumKatmani = L.layerGroup().addTo(harita);
+function mesafeYaz(m){ return m < 1000 ? sayi0.format(m) + " m" : sayi.format(m / 1000) + " km"; }
+function alanHesap(ll){
+  var R = 6378137, t = 0, n = ll.length, rad = Math.PI / 180;
+  if (n < 3) return 0;
+  for (var i = 0; i < n; i++){
+    var a = ll[i], b = ll[(i + 1) % n];
+    t += (b.lng - a.lng) * rad * (2 + Math.sin(a.lat * rad) + Math.sin(b.lat * rad));
+  }
+  return Math.abs(t * R * R / 2);
+}
+function olcumCiz(){
+  olcumKatmani.clearLayers();
+  var kutu = $("olcum"), renk = "#00b3ff", metin;
+  if (!noktalar.length){
+    kutu.innerHTML = "<small>Haritaya tıklayarak nokta ekleyin, bitirmek için çift tıklayın</small>";
+    kutu.style.display = olcumModu ? "block" : "none"; return;
+  }
+  if (noktalar.tur === "alan") L.polygon(noktalar, {color: renk, weight: 2.5, fillOpacity: .15, interactive: false}).addTo(olcumKatmani);
+  else L.polyline(noktalar, {color: renk, weight: 3, interactive: false}).addTo(olcumKatmani);
+  noktalar.forEach(function(n){ L.circleMarker(n, {radius: 4, color: "#fff", weight: 2, fillColor: renk, fillOpacity: 1, interactive: false}).addTo(olcumKatmani); });
+  if (noktalar.tur === "alan"){
+    var a = alanHesap(noktalar);
+    metin = noktalar.length < 3 ? "<small>En az 3 nokta ekleyin</small>" :
+      "<b>" + sayi0.format(a) + " m²</b> · " + sayi.format(a / 1000) + " dönüm" + (olcumModu ? "<small>Bitirmek için çift tıklayın</small>" : "");
+  } else {
+    var t = 0;
+    for (var j = 1; j < noktalar.length; j++) t += harita.distance(noktalar[j - 1], noktalar[j]);
+    metin = "<b>" + mesafeYaz(t) + "</b>" + (olcumModu ? "<small>Bitirmek için çift tıklayın</small>" : "");
+  }
+  kutu.innerHTML = metin; kutu.style.display = "block";
+}
+function olcumBaslat(tur){
+  if (olcumModu === tur){ olcumBitir(); return; }
+  olcumModu = tur; noktalar = []; noktalar.tur = tur;
+  harita.doubleClickZoom.disable();
+  document.body.classList.add("olcum-modu");
+  $("o-mesafe").classList.toggle("secili", tur === "mesafe");
+  $("o-alan").classList.toggle("secili", tur === "alan");
+  olcumCiz();
+}
+function olcumBitir(){
+  olcumModu = null;
+  document.body.classList.remove("olcum-modu");
+  $("o-mesafe").classList.remove("secili"); $("o-alan").classList.remove("secili");
+  setTimeout(function(){ harita.doubleClickZoom.enable(); }, 300);
+  olcumCiz();
+}
+/* parsel tıklaması ölçüm sırasında haritaya geçer, nokta orada eklenir */
+harita.on("click", function(e){ if (olcumModu){ noktalar.push(e.latlng); olcumCiz(); } });
+harita.on("dblclick", function(){ if (olcumModu){ noktalar.pop(); olcumBitir(); } });
+/* uzaktayken parsel numaraları üst üste binmesin */
+function etiketler(){ harita.getContainer().classList.toggle("etiketsiz", harita.getZoom() < 18); }
+harita.on("zoomend", etiketler); etiketler();
+$("o-mesafe").onclick = function(){ olcumBaslat("mesafe"); };
+$("o-alan").onclick = function(){ olcumBaslat("alan"); };
+$("o-temizle").onclick = function(){ noktalar = []; olcumBitir(); };
+document.addEventListener("keydown", function(e){ if (e.key === "Escape" && olcumModu) olcumBitir(); });
+})();
+</script>
+</body>
+</html>
