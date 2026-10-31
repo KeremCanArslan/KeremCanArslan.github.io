@@ -72,23 +72,18 @@ ul{list-style:none}
 .burger .ic{width:30px;height:30px;stroke-width:1.8}
 
 /* ---------- kapak ---------- */
-.kahraman{position:relative;min-height:610px;background:#20323a url(kapak.jpg) center 60%/cover;color:#fff;overflow:hidden}
-.kahraman::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,26,38,.9) 0%,rgba(6,26,38,.66) 30%,rgba(6,26,38,.16) 58%,rgba(6,26,38,0) 76%),linear-gradient(180deg,rgba(8,20,34,.62) 0%,rgba(8,20,34,0) 24%,rgba(8,20,34,0) 66%,rgba(6,26,38,.42) 100%)}
-.kahraman .kap{position:relative;padding-top:150px;padding-bottom:240px}
+.kahraman{position:relative;min-height:34vw;background:#0b1e2b url(kapak.jpg) center bottom/100% auto no-repeat;color:#fff;overflow:hidden}
+.kahraman::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,24,36,.55) 0%,rgba(8,24,36,.3) 30%,rgba(8,24,36,0) 50%),linear-gradient(180deg,rgba(8,20,32,.55) 0%,rgba(8,20,32,0) 22%)}
+.kahraman .kap{position:relative;padding-top:clamp(122px,calc(34vw - 345px),420px);padding-bottom:150px}
 .kicker{font-size:15px;letter-spacing:.42em;font-weight:500;text-transform:uppercase}
-h1{font-family:var(--serif);font-weight:600;font-size:clamp(40px,4.9vw,66px);line-height:1.05;margin-top:16px;letter-spacing:-.01em}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(40px,4vw,60px);line-height:1.05;margin-top:16px;letter-spacing:-.01em}
 h1 span{display:block}
 h1 em{font-style:normal;color:var(--tur)}
 .slogan{display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px;font-size:18px;font-weight:500;margin-top:20px}
 .slogan i{width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.9}
-.hero-arac{position:absolute;right:max(2.5%,calc(50% - 690px));bottom:150px;width:min(40vw,560px);pointer-events:none}
-.hero-arac img{position:relative;z-index:1;width:100%;filter:drop-shadow(0 22px 18px rgba(0,0,0,.42))}
-.hero-arac::after{content:'';position:absolute;left:6%;right:4%;bottom:-2%;height:12%;background:radial-gradient(closest-side,rgba(0,0,0,.6),transparent);filter:blur(4px)}
-.ucak{position:absolute;top:112px;left:63%;width:92px;opacity:.82;color:#fff;animation:sukun 9s ease-in-out infinite}
-@keyframes sukun{0%,100%{transform:translate(0,0) rotate(-8deg)}50%{transform:translate(14px,-8px) rotate(-10deg)}}
 
 /* ---------- arama ---------- */
-.arama-alan{position:relative;z-index:6;margin-top:-140px}
+.arama-alan{position:relative;z-index:6;margin-top:-60px}
 .arama{position:relative;background:#fff;border-radius:0 20px 20px 20px;box-shadow:var(--golge);padding:16px}
 .sekmeler{position:absolute;left:0;bottom:100%;display:flex;gap:10px;background:#fff;padding:10px 10px 6px;border-radius:16px 16px 0 0}
 .sekme{display:flex;align-items:center;justify-content:center;gap:10px;height:42px;padding:0 26px;border-radius:10px;border:1px solid var(--cizgi);font-weight:600;font-size:15px;color:var(--yazi);background:#fff;transition:background .2s,color .2s,border-color .2s}
@@ -162,13 +157,12 @@ h1 em{font-style:normal;color:var(--tur)}
 .rota-cip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rota-cip em{font-style:normal;color:var(--yazi2);font-weight:500;white-space:nowrap}
 .araclar{display:grid;grid-template-columns:1fr 1fr;gap:26px}
-.arac{display:grid;grid-template-columns:40% 1fr;background:#fff;border-radius:18px;overflow:hidden;box-shadow:var(--golge2);border:1.5px solid transparent;transition:border-color .2s,box-shadow .2s,transform .2s;position:relative}
+.arac{display:grid;grid-template-columns:47% 1fr;background:#fff;border-radius:18px;overflow:hidden;box-shadow:var(--golge2);border:1.5px solid transparent;transition:border-color .2s,box-shadow .2s,transform .2s;position:relative}
 .arac:hover{transform:translateY(-2px)}
 .arac.secili{border-color:var(--tur);box-shadow:0 22px 44px -24px rgba(247,133,46,.75)}
-.arac-foto{position:relative;background:#c7ad82 url(kart-zemin.jpg) center 35%/cover;display:flex;align-items:flex-end;justify-content:center;padding:18px 10px 22px;min-height:220px;overflow:hidden}
-.arac-foto::before{content:'';position:absolute;left:8%;right:8%;bottom:14px;height:22px;background:radial-gradient(closest-side,rgba(0,0,0,.55),transparent);z-index:1}
-.arac-foto::after{content:'';position:absolute;inset:auto 0 0;height:45%;background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.22))}
-.arac-foto img{position:relative;z-index:2;width:100%;filter:drop-shadow(0 12px 8px rgba(0,0,0,.4))}
+.arac-foto{position:relative;background:#1d2b30;min-height:230px;overflow:hidden}
+.arac-foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:55% 58%;transition:transform .5s ease}
+.arac:hover .arac-foto img{transform:scale(1.03)}
 .arac-foto .pax{display:none}
 .secim-tik{position:absolute;top:12px;left:12px;z-index:2;width:30px;height:30px;border-radius:50%;background:var(--tur);color:#fff;display:none;place-items:center;box-shadow:0 6px 14px -6px rgba(0,0,0,.5)}
 .secim-tik .ic{width:17px;height:17px;stroke-width:2.4}
@@ -183,7 +177,7 @@ h1 em{font-style:normal;color:var(--tur)}
 .ozellik{text-align:center;font-size:12px;line-height:1.3;padding:2px 5px}
 .ozellik+.ozellik{border-left:1px solid var(--cizgi2)}
 .ozellik .ic{width:26px;height:26px;margin:0 auto 7px;color:var(--koyu);stroke-width:1.5;display:block}
-.arac-bilgi{display:grid;grid-template-columns:1fr 1fr;background:#f1f4f5;border-radius:10px;margin-top:16px;padding:9px 12px;gap:8px 12px;font-size:12px;color:var(--yazi2)}
+.arac-bilgi{display:none;grid-template-columns:1fr 1fr;background:#f1f4f5;border-radius:10px;margin-top:16px;padding:9px 12px;gap:8px 12px;font-size:12px;color:var(--yazi2)}
 .arac-bilgi>div{display:flex;gap:9px;align-items:center;min-width:0}
 .arac-bilgi>div+div{border-left:1px solid #dbe3e4;padding-left:12px}
 .arac-bilgi .ic{width:20px;height:20px;color:var(--koyu)}
@@ -198,7 +192,7 @@ h1 em{font-style:normal;color:var(--tur)}
 .sec-btn:hover:not(:disabled){background:var(--tur-acik)}
 .secili .sec-btn{background:var(--tur);color:#fff}
 .sec-btn:disabled{border-color:var(--cizgi);color:var(--yazi3);cursor:not-allowed}
-.arac.pasif .arac-foto img{filter:grayscale(.7) drop-shadow(0 16px 10px rgba(0,0,0,.35));opacity:.75}
+.arac.pasif .arac-foto img{filter:grayscale(.75);opacity:.7}
 
 /* ---------- bilgi ---------- */
 .bilgi{display:grid;grid-template-columns:340px minmax(0,1fr) 370px;background:#fff;border-radius:18px;overflow:hidden;box-shadow:var(--golge2);margin-top:26px}
@@ -338,8 +332,8 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .menu{gap:24px;margin-left:4%}
   .destek small{display:none}
   .bilgi{grid-template-columns:290px minmax(0,1fr) 330px}
-  .arac{grid-template-columns:38% 1fr}
-  .arac-govde{padding:20px 18px}
+  .araclar{grid-template-columns:1fr}
+  .arac{grid-template-columns:36% 1fr}
   .alanlar,.alanlar.gd{grid-template-columns:repeat(4,minmax(0,1fr))}
   .alanlar .rota{grid-column:span 4}
   .alanlar .alan-tarih,.alanlar .alan-donus,.alanlar .alan-yolcu{grid-column:span 1}
@@ -350,7 +344,6 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .menu,.destek{display:none}
   .ust-sag .hesap-btn span{display:none}
   .burger{display:block}
-  .araclar{grid-template-columns:1fr}
   .bilgi{grid-template-columns:minmax(0,1fr) 340px}
   .bilgi-foto{display:none}
   .serit .kap{gap:24px;overflow-x:auto}
@@ -366,15 +359,13 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .logo b{font-size:24px}
   .logo small{font-size:9.5px;letter-spacing:.56em;margin-top:5px}
   .ust-sag .dil,.ust-sag .yuvarlak,.ust-sag .hesap-btn{display:none}
-  .kahraman{background-image:url(kapak-mobil.jpg);background-position:center 30%;min-height:0}
-  .kahraman::before{background:linear-gradient(180deg,rgba(10,22,36,.78) 0%,rgba(10,22,36,.5) 40%,rgba(10,22,36,.1) 66%,rgba(6,26,38,.3) 100%)}
-  .kahraman .kap{padding-top:112px;padding-bottom:236px}
+  .kahraman{background-image:url(kapak-mobil.jpg);min-height:118.5vw}
+  .kahraman::before{background:linear-gradient(180deg,rgba(8,20,32,.35) 0%,rgba(8,20,32,0) 40%)}
+  .kahraman .kap{padding-top:108px;padding-bottom:0}
   .kicker{font-size:12px;letter-spacing:.3em}
   h1{font-size:clamp(32px,9.4vw,44px);margin-top:10px}
   .slogan{font-size:15.5px;margin-top:12px;gap:4px 9px}
-  .hero-arac{width:min(70vw,310px);right:-3%;bottom:72px}
-  .ucak{top:150px;left:auto;right:5%;width:44px}
-  .arama-alan{margin-top:-74px}
+  .arama-alan{margin-top:-19vw}
   .arama{border-radius:20px;padding:14px}
   .sekmeler{position:static;display:grid;grid-template-columns:1fr 1fr;padding:0;margin-bottom:12px;border-radius:0;background:transparent;gap:8px}
   .sekme{padding:0 10px;height:46px;font-size:14.5px}
@@ -407,11 +398,11 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .bolum-ust h2{font-size:25px}
   .araclar{gap:16px}
   .arac{grid-template-columns:1fr}
-  .arac-foto{min-height:0;padding:16px 26px 10px}
-  .arac-foto img{width:84%}
+  .arac-foto{min-height:0;aspect-ratio:16/10}
   .arac-foto .pax{display:block;position:absolute;right:12px;top:12px;z-index:2}
   .arac-ust .rozet{display:none}
   .arac-govde{padding:16px 16px 16px}
+  .arac-bilgi{display:grid}
   .arac h3{font-size:25px}
   .ozellik{font-size:11.5px;padding:2px 3px}
   .ozellik .ic{width:23px;height:23px}
@@ -556,8 +547,8 @@ select.p-girdi{cursor:pointer}
 .test-sonuc small{display:block;color:var(--yazi2);font-size:12px}
 .test-sonuc b{font-size:19px;color:var(--koyu2)}
 .arac-p{display:grid;grid-template-columns:200px 1fr;gap:18px;align-items:start}
-.arac-p .foto-k{background:#c7ad82 url(kart-zemin.jpg) center/cover;border-radius:12px;padding:14px 8px 8px;display:flex;align-items:flex-end;justify-content:center;aspect-ratio:4/3}
-.arac-p .foto-k img{width:100%;filter:drop-shadow(0 10px 8px rgba(0,0,0,.4))}
+.arac-p .foto-k{background:#1d2b30;border-radius:12px;overflow:hidden;aspect-ratio:4/3}
+.arac-p .foto-k img{width:100%;height:100%;object-fit:cover}
 .foto-sec{display:block;margin-top:8px;font-size:12.5px;font-weight:700;color:var(--koyu);text-align:center;cursor:pointer}
 .foto-sec input{display:none}
 .not-kutu{background:#f4f7f7;border-radius:12px;padding:12px 14px;color:var(--yazi2);font-size:13px;display:flex;gap:10px;align-items:flex-start}
@@ -681,13 +672,11 @@ select.p-girdi{cursor:pointer}
 </header>
 
 <section class="kahraman" id="ana">
-  <svg class="ucak" viewBox="0 0 24 24" aria-hidden="true" style="transform:rotate(-8deg)"><g transform="rotate(68 12 12)"><use href="#i-ucak" style="fill:#fff;stroke:none"/></g></svg>
   <div class="kap">
     <div class="kicker" data-t="hero_kicker">Antalya Havalimanı Transferi</div>
     <h1><span data-t="hero_1">Yolculuğunuz.</span><span><span data-t="hero_2a" style="display:inline">Bizim </span><em data-t="hero_2b">Önceliğimiz.</em></span></h1>
     <div class="slogan" id="slogan"></div>
   </div>
-  <div class="hero-arac"><img src="minivan-buyuk.webp" alt="" width="1100" height="658" fetchpriority="high"></div>
 </section>
 
 <div class="arama-alan">
@@ -837,7 +826,7 @@ select.p-girdi{cursor:pointer}
     </div>
     <div class="kunye-k">
       <h4>ATALIA Transfer</h4>
-      <p class="kunye">Örnek çalışmadır; fiyatlar ve iletişim bilgileri örnek olarak girilmiştir. Gerçek sitede adres önerisi ve km hesabı Google Haritalar'dan gelir, bu örnekte açık harita servisi kullanılmıştır.<br>Fotoğraflar Wikimedia Commons, CC BY-SA 4.0: Roy Egloff (Konyaaltı), Alper Zafer Gündeş (Antalya), Ethan Llamas (Mercedes V-Class), Damian B Oh (Mercedes Sprinter), Alexey Komarov (Antalya). Araç fotoğraflarının arka planı kaldırılmış ve plakası bulanıklaştırılmıştır.</p>
+      <p class="kunye">Örnek çalışmadır; fiyatlar ve iletişim bilgileri örnek olarak girilmiştir. Gerçek sitede adres önerisi ve km hesabı Google Haritalar'dan gelir, bu örnekte açık harita servisi kullanılmıştır.</p>
     </div>
   </div>
 </footer>
