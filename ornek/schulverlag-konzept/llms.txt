@@ -1,0 +1,24 @@
+# Schule und Lehrkräfte (Konzept-Demo für Verlag J. Maiß)
+
+> Konzept-Demo von Kerem Can Arslan, keine offizielle Website. Zeigt, wie alle Angebote von Verlag J. Maiß für Schulverwaltung, Lehrkräfte und Schulleitung unter einer Domain gebündelt und für KI-Assistenten beschrieben werden können. Preise netto, Stand 3. November 2026.
+
+## Zielgruppen
+- [Schulverwaltung](index.html#zielgruppen): Prüfungsbögen, Drucksachen für Zeugnis und Prüfung, Bürobedarf
+- [Lehrkräfte](index.html#zielgruppen): Unterrichtsplaner, Lerntagebuch, Lehrer-App
+- [Schulleitung](index.html#zielgruppen): Schulleitungs-App, Schulrecht-Online
+
+## Produkte
+- [Prüfungsbögen mit Preisrechner](index.html#boegen): VE 250 Bögen, liniert oder kariert, mit Rand, Doppelrand oder ohne Rand, auch Recycling; Formate A3 gefalzt auf A4 und A4 gefalzt auf A5; Staffelpreise gelten auch beim Mischen verschiedener Sorten im gleichen Format; im November und Dezember 2026 10 % Rabatt
+- [Prüfungsbögen mit Schulnameneindruck](index.html#eindruck): Preis je Bogen mit Staffel, Druck 1-farbig schwarz, 90 g Schreibpapier
+
+## Apps und Portale
+- [Lehrer-App](index.html#apps): Stundenplan, Stoffplanung, Notenverwaltung, Sitzpläne, Klassenbuch
+- [Schul-Portal](index.html#apps): Module wie Klassenbuch, Kommunikation, Online-Formulare, Schulanmeldung
+- [Schulleitungs-App](index.html#apps): Organisation, Lehrkräfte-Beurteilung, schulrechtliche Inhalte
+- [Schulrecht-Online](index.html#apps): App für Abonnenten, alle Inhalte offline verfügbar
+
+## Daten
+- [Preisliste als JSON](preise.json): alle Sorten mit Artikelnummer, Staffeln in Cent netto, Misch- und Aktionsregel
+
+## Kontakt
+- [Anfrageformular](index.html#anfrage): Angebot, Schulnameneindruck, Beratung, Schulrecht-Online, Schulungstermin

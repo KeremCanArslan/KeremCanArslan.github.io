@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Schule und Lehrkräfte – Konzept-Demo für Verlag J. Maiß</title>
+<meta name="description" content="Konzept-Demo: alle Angebote für Schulverwaltung, Lehrkräfte und Schulleitung auf einer Website, mit Preisrechner für Prüfungsbögen, Anfrageformular und Suche.">
+<link rel="alternate" type="text/markdown" href="llms.txt" title="Zusammenfassung für KI-Assistenten">
+<style>
+:root{--rot:#e10a19;--rot-dunkel:#9f1923;--tinte:#1d1d1b;--text:#2b2b29;--grau:#6b7280;--linie:#e5e7eb;--flaeche:#f6f4f4;--weiss:#fff;--ok:#1f7a4d}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{font:16px/1.6 Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--text);background:var(--weiss)}
+a{color:var(--rot-dunkel)}
+[hidden]{display:none!important}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.hinweis{background:var(--tinte);color:#f2f2f2;font-size:13px;text-align:center;padding:7px 16px}
+.hinweis b{color:#fff}
+header{position:sticky;top:0;z-index:20;background:var(--weiss);border-bottom:1px solid var(--linie)}
+header .wrap{display:flex;align-items:center;gap:24px;height:64px}
+.marke{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tinte);font-weight:700;white-space:nowrap}
+.marke span{display:inline-block;width:10px;height:28px;background:var(--rot)}
+nav{flex:1}
+nav ul{display:flex;gap:22px;list-style:none;font-size:15px}
+nav a{color:var(--text);text-decoration:none}
+nav a:hover{color:var(--rot)}
+.suche{position:relative}
+.suche input{width:220px;padding:8px 12px;border:1px solid var(--linie);border-radius:4px;font:inherit;font-size:14px}
+.suche input:focus{outline:2px solid var(--rot);outline-offset:0;border-color:transparent}
+.treffer{position:absolute;right:0;top:42px;width:340px;background:#fff;border:1px solid var(--linie);border-radius:4px;box-shadow:0 8px 24px rgba(0,0,0,.08);display:none;max-height:360px;overflow:auto}
+.treffer a{display:block;padding:10px 14px;text-decoration:none;color:var(--text);border-bottom:1px solid var(--linie)}
+.treffer a:last-child{border-bottom:0}
+.treffer a small{display:block;color:var(--grau);font-size:12px}
+.treffer a:hover,.treffer a.aktiv{background:var(--flaeche)}
+.menue{display:none;background:none;border:1px solid var(--linie);border-radius:4px;padding:6px 10px;font:inherit}
+.held{background:var(--flaeche);border-bottom:1px solid var(--linie)}
+.held .wrap{padding:56px 20px 48px}
+.held h1{font-size:40px;line-height:1.15;color:var(--tinte);max-width:760px}
+.held p{font-size:19px;color:var(--grau);max-width:680px;margin-top:14px}
+.knoepfe{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.knopf{display:inline-block;padding:12px 20px;border-radius:4px;text-decoration:none;font:inherit;font-weight:600;font-size:15px;border:1px solid var(--rot);cursor:pointer}
+.knopf.voll{background:var(--rot);color:#fff}
+.knopf.voll:hover{background:var(--rot-dunkel);border-color:var(--rot-dunkel)}
+.knopf.leer{background:#fff;color:var(--rot-dunkel)}
+.knopf.klein{padding:8px 14px;font-size:14px}
+section{padding:56px 0}
+section h2{font-size:28px;color:var(--tinte);margin-bottom:8px}
+.unter{color:var(--grau);max-width:760px;margin-bottom:24px}
+.raster{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.kachel{border:1px solid var(--linie);border-top:4px solid var(--rot);border-radius:4px;padding:20px;text-decoration:none;color:var(--text);background:#fff}
+.kachel:hover{border-color:var(--rot)}
+.kachel h3{font-size:18px;color:var(--tinte);margin-bottom:6px}
+.kachel p{font-size:14px;color:var(--grau)}
+.kachel ul{margin:10px 0 0 18px;font-size:14px}
+.reiter{display:flex;gap:4px;margin-bottom:-1px;position:relative;z-index:1;flex-wrap:wrap}
+.reiter button{font:inherit;font-size:15px;font-weight:600;padding:10px 16px;border:1px solid var(--linie);border-bottom:0;border-radius:4px 4px 0 0;background:var(--flaeche);color:var(--grau);cursor:pointer}
+.reiter button[aria-selected=true]{background:#fff;color:var(--rot-dunkel);border-top:3px solid var(--rot)}
+.rechner{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:start}
+.formular{border:1px solid var(--linie);border-radius:0 4px 4px 4px;padding:24px;background:#fff}
+#anfrage .formular{border-radius:4px}
+.feld{margin-bottom:16px}
+.feld label,.feld legend{display:block;font-weight:600;font-size:14px;margin-bottom:6px;color:var(--tinte)}
+.feld select,.feld input[type=number],.feld input[type=text],.feld input[type=email],.feld textarea{width:100%;padding:10px 12px;border:1px solid #cfd3da;border-radius:4px;font:inherit;background:#fff}
+.feld textarea{min-height:110px;resize:vertical}
+.feld fieldset{border:0}
+.optionen{display:flex;gap:8px;flex-wrap:wrap}
+.optionen label{display:flex;align-items:center;gap:6px;border:1px solid #cfd3da;border-radius:4px;padding:8px 12px;font-weight:400;cursor:pointer;margin:0}
+.optionen input:checked+span{font-weight:600}
+.position{display:grid;grid-template-columns:1fr 96px auto;gap:10px;align-items:end;padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid var(--linie)}
+.position .feld{margin:0}
+.position .fehler{grid-column:1/-1;margin-top:-4px}
+.entfernen{font:inherit;font-size:13px;background:none;border:1px solid #cfd3da;border-radius:4px;padding:10px;cursor:pointer;color:var(--grau)}
+.entfernen:hover{border-color:var(--rot);color:var(--rot-dunkel)}
+.hilfe{font-size:13px;color:var(--grau);margin-top:10px}
+.ergebnis{border:1px solid var(--linie);border-radius:4px;background:#fff;padding:24px;position:sticky;top:84px}
+.ergebnis h3{font-size:14px;color:var(--grau);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.summe{font-size:36px;font-weight:700;color:var(--tinte);margin-bottom:8px}
+.zeile{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--linie);font-size:15px}
+.zeile small{display:block;color:var(--grau);font-size:13px}
+.zeile span:last-child{text-align:right;white-space:nowrap}
+.spar{color:var(--ok);font-weight:600}
+.tipp{margin-top:14px;padding:12px 14px;background:var(--flaeche);border-left:4px solid var(--rot);font-size:14px}
+.tipp p+p{margin-top:6px}
+table.staffel{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}
+table.staffel caption{text-align:left;font-weight:600;font-size:13px;color:var(--grau);padding-bottom:4px}
+table.staffel th,table.staffel td{padding:6px 10px;border-bottom:1px solid var(--linie);text-align:right}
+table.staffel th:first-child,table.staffel td:first-child{text-align:left}
+table.staffel tr.aktiv td{background:#fdecee;font-weight:600}
+.quelle{font-size:12px;color:var(--grau);margin-top:12px}
+.apps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.app{border:1px solid var(--linie);border-radius:4px;padding:20px}
+.app h3{font-size:17px;color:var(--tinte);margin-bottom:6px}
+.app p{font-size:14px;color:var(--grau);margin-bottom:12px}
+.grau{background:var(--flaeche);border-top:1px solid var(--linie);border-bottom:1px solid var(--linie)}
+.zwei{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.liste{list-style:none}
+.liste li{padding:10px 0 10px 26px;border-bottom:1px solid var(--linie);position:relative}
+.liste li:before{content:"";position:absolute;left:4px;top:21px;width:10px;height:2px;background:var(--rot)}
+.danke{display:none;margin-top:12px;padding:12px 14px;background:#eaf6ef;border-left:4px solid var(--ok);font-size:14px}
+.fehler{color:var(--rot-dunkel);font-size:13px;margin-top:4px;display:none}
+footer{background:var(--tinte);color:#cfcfcf;font-size:14px;padding:32px 0}
+footer p+p{margin-top:8px}
+@media (max-width:900px){
+ nav{display:none}nav.offen{display:block;position:absolute;left:0;right:0;top:64px;background:#fff;border-bottom:1px solid var(--linie);padding:12px 20px}
+ nav.offen ul{flex-direction:column;gap:12px}
+ .menue{display:block}.suche{margin-left:auto}.suche input{width:150px}.treffer{width:280px}
+ .raster,.apps{grid-template-columns:1fr 1fr}.rechner,.zwei{grid-template-columns:1fr}.ergebnis{position:static}
+ .held h1{font-size:30px}
+}
+@media (max-width:560px){
+ header .wrap{gap:12px}.marke b{display:none}.suche input{width:100%}.suche{flex:1}.treffer{width:calc(100vw - 32px);right:auto;left:0}
+ .raster,.apps{grid-template-columns:1fr}.position{grid-template-columns:1fr 80px}.position .entfernen{grid-column:1/-1}
+ .wrap{padding:0 16px}.held .wrap{padding:40px 16px 36px}
+ .reiter{flex-wrap:nowrap}.reiter button{flex:1;font-size:13px;padding:10px 8px;line-height:1.3}
+}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {"@type": "Organization", "name": "Verlag J. Maiß GmbH", "foundingDate": "1873",
+   "address": {"@type": "PostalAddress", "streetAddress": "Herrnstraße 26", "postalCode": "80539", "addressLocality": "München", "addressCountry": "DE"}},
+  {"@type": "Product", "name": "Prüfungsbögen, liniert, mit Rand, A3 gefalzt auf A4, VE 250", "sku": "ST50925",
+   "brand": {"@type": "Brand", "name": "Maiß"},
+   "offers": {"@type": "Offer", "priceCurrency": "EUR", "price": "12.40", "availability": "https://schema.org/InStock",
+    "priceSpecification": [
+     {"@type": "UnitPriceSpecification", "price": "12.40", "priceCurrency": "EUR", "valueAddedTaxIncluded": false, "eligibleQuantity": {"@type": "QuantitativeValue", "minValue": 1, "unitText": "VE"}},
+     {"@type": "UnitPriceSpecification", "price": "11.10", "priceCurrency": "EUR", "valueAddedTaxIncluded": false, "eligibleQuantity": {"@type": "QuantitativeValue", "minValue": 8, "unitText": "VE"}},
+     {"@type": "UnitPriceSpecification", "price": "9.90", "priceCurrency": "EUR", "valueAddedTaxIncluded": false, "eligibleQuantity": {"@type": "QuantitativeValue", "minValue": 24, "unitText": "VE"}},
+     {"@type": "UnitPriceSpecification", "price": "9.40", "priceCurrency": "EUR", "valueAddedTaxIncluded": false, "eligibleQuantity": {"@type": "QuantitativeValue", "minValue": 48, "unitText": "VE"}},
+     {"@type": "UnitPriceSpecification", "price": "8.90", "priceCurrency": "EUR", "valueAddedTaxIncluded": false, "eligibleQuantity": {"@type": "QuantitativeValue", "minValue": 96, "unitText": "VE"}},
+     {"@type": "UnitPriceSpecification", "price": "8.60", "priceCurrency": "EUR", "valueAddedTaxIncluded": false, "eligibleQuantity": {"@type": "QuantitativeValue", "minValue": 200, "unitText": "VE"}}
+    ]}}
+ ]
+}
+</script>
+<script type="application/json" id="preisdaten">
+{
+ "hinweis": "Konzept-Demo von Kerem Can Arslan, keine offizielle Preisliste von Verlag J. Maiß. staffel = [ab Menge, Preis in Cent netto], zzgl. MwSt. und Versandkosten.",
+ "quelle": "https://maiss-schulshop.de/nach-themen/rund-um-die-pruefung/kanzleipapier-pruefungsboegen",
+ "stand": "2026-11-03",
+ "regeln": {
+  "mischen": "Staffelpreise gelten auch beim Mischen verschiedener Sorten im gleichen Format.",
+  "aktion": {"text": "Im November und Dezember erhalten Sie 10% Rabatt auf alle Prüfungsbögen.", "von": "2026-11-01", "bis": "2026-12-31", "prozent": 10, "quelle": "https://maiss.de/"}
+ },
+ "formate": {
+  "a3a4": {"name": "A3 gefalzt auf A4", "einheit": "VE 250 Bögen", "staffel": [[1, 1240], [8, 1110], [24, 990], [48, 940], [96, 890], [200, 860]]},
+  "a4a5": {"name": "A4 gefalzt auf A5", "einheit": "VE 250 Bögen", "staffel": [[1, 1140], [8, 1040], [16, 980], [32, 940]]}
+ },
+ "sorten": [
+  {"nr": "ST50925", "format": "a3a4", "name": "liniert, mit Rand"},
+  {"nr": "ST50927", "format": "a3a4", "name": "liniert, mit Doppelrand"},
+  {"nr": "ST50921", "format": "a3a4", "name": "liniert, ohne Rand"},
+  {"nr": "ST63525", "format": "a3a4", "name": "liniert, mit Rand, Recycling"},
+  {"nr": "ST50926", "format": "a3a4", "name": "kariert, mit Rand"},
+  {"nr": "ST50928", "format": "a3a4", "name": "kariert, mit Doppelrand"},
+  {"nr": "ST50922", "format": "a3a4", "name": "kariert, ohne Rand"},
+  {"nr": "ST63526", "format": "a3a4", "name": "kariert, mit Rand, Recycling"},
+  {"nr": "ST63609", "format": "a4a5", "name": "liniert, mit Rand"},
+  {"nr": "ST63610", "format": "a4a5", "name": "kariert, mit Rand"}
+ ],
+ "schulnameneindruck": {"nr": "PB-EX", "name": "Prüfungsbogen mit Schulnameneindruck, DIN A3 gefalzt auf DIN A4", "einheit": "Bogen", "staffel": [[1, 37], [1000, 25], [1500, 19], [2000, 16], [5000, 13], [10000, 11]]}
+}
+</script>
+</head>
+<body>
+<div class="hinweis"><b>Konzept-Demo</b> von Kerem Can Arslan für die Ausschreibung von Verlag J. Maiß auf freelancermap. Keine offizielle Website des Verlags, nicht indexiert.</div>
+
+<header>
+ <div class="wrap">
+  <a class="marke" href="#top"><span></span><b>Maiß · Schule und Lehrkräfte</b></a>
+  <nav id="nav" aria-label="Hauptnavigation">
+   <ul>
+    <li><a href="#zielgruppen">Schulverwaltung</a></li>
+    <li><a href="#zielgruppen">Lehrkräfte</a></li>
+    <li><a href="#apps">Apps und Portale</a></li>
+    <li><a href="#rechner">Preisrechner</a></li>
+    <li><a href="#anfrage">Anfrage</a></li>
+   </ul>
+  </nav>
+  <div class="suche">
+   <label for="q" style="position:absolute;left:-9999px">Suche</label>
+   <input id="q" type="search" placeholder="Suchen, z. B. Klassenbuch" autocomplete="off" aria-controls="treffer">
+   <div class="treffer" id="treffer" role="listbox"></div>
+  </div>
+  <button class="menue" id="menue" aria-expanded="false" aria-controls="nav">Menü</button>
+ </div>
+</header>
+
+<main id="top">
+ <div class="held">
+  <div class="wrap">
+   <h1>Alles für Schule und Lehrkräfte an einem Ort</h1>
+   <p>Prüfungsbögen und Drucksachen, Lehrer-App, Schul-Portal, Schulleitungs-App und Schulrecht-Online: heute verteilt auf mehrere Websites, hier unter einer Adresse, mit einer Suche und klaren Wegen je Zielgruppe.</p>
+   <div class="knoepfe">
+    <a class="knopf voll" href="#rechner">Preis für Prüfungsbögen berechnen</a>
+    <a class="knopf leer" href="#apps">Apps und Portale ansehen</a>
+   </div>
+  </div>
+ </div>
+
+ <section id="zielgruppen">
+  <div class="wrap">
+   <h2>Für wen suchen Sie?</h2>
+   <p class="unter">Jede Zielgruppe bekommt eine eigene Einstiegsseite. Von dort führen Links direkt in die passenden Shop-Kategorien und Apps, statt auf verschiedene Domains.</p>
+   <div class="raster">
+    <a class="kachel" href="#rechner"><h3>Schulverwaltung</h3><p>Prüfungsbögen, Drucksachen für Zeugnis und Prüfung, Bürobedarf.</p><ul><li>Rund um die Prüfung</li><li>Rund ums Büro</li></ul></a>
+    <a class="kachel" href="#apps"><h3>Lehrkräfte</h3><p>Ideen für den Unterricht und einen leichteren Schulalltag.</p><ul><li>Unterrichtsplaner</li><li>Lehrer-App</li></ul></a>
+    <a class="kachel" href="#apps"><h3>Schulleitung</h3><p>Organisation, Beurteilungen und Schulrecht.</p><ul><li>Schulleitungs-App</li><li>Schulrecht-Online</li></ul></a>
+    <a class="kachel" href="#anfrage"><h3>Beratung und Schulung</h3><p>Schulungs- und Beratungstermine online buchen.</p><ul><li>Schulungstermine</li><li>Support</li></ul></a>
+   </div>
+  </div>
+ </section>
+
+ <section id="rechner" class="grau">
+  <div class="wrap">
+   <h2>Preisrechner: Prüfungsbögen</h2>
+   <p class="unter">Mit den Staffelpreisen aus dem Shop, Stand 3. November 2026. Staffelpreise gelten auch beim Mischen verschiedener Sorten im gleichen Format, deshalb zählt der Rechner die Mengen je Format zusammen.</p>
+   <div class="reiter" role="tablist">
+    <button type="button" role="tab" id="boegen" aria-selected="true" aria-controls="panelBoegen">Prüfungsbögen, VE 250</button>
+    <button type="button" role="tab" id="eindruck" aria-selected="false" aria-controls="panelEindruck">Mit Schulnameneindruck</button>
+   </div>
+   <div class="rechner">
+    <div class="formular">
+     <div id="panelBoegen" role="tabpanel" aria-labelledby="boegen">
+      <div id="positionen"></div>
+      <button type="button" class="knopf leer klein" id="neuePosition">Weitere Sorte hinzufügen</button>
+      <p class="hilfe">Tipp: Liniert und kariert im gleichen Format zusammen bestellen, dann gilt für alle Sorten die höhere Staffel.</p>
+     </div>
+     <div id="panelEindruck" role="tabpanel" aria-labelledby="eindruck" hidden>
+      <div class="feld"><fieldset><legend>Lineatur</legend><div class="optionen">
+       <label><input type="radio" name="e_lin" value="liniert" checked><span>liniert</span></label>
+       <label><input type="radio" name="e_lin" value="kariert"><span>kariert</span></label>
+      </div></fieldset></div>
+      <div class="feld"><fieldset><legend>Rand</legend><div class="optionen">
+       <label><input type="radio" name="e_rand" value="mit Rand" checked><span>mit Rand</span></label>
+       <label><input type="radio" name="e_rand" value="mit Doppelrand"><span>mit Doppelrand</span></label>
+       <label><input type="radio" name="e_rand" value="ohne Rand"><span>ohne Rand</span></label>
+      </div></fieldset></div>
+      <div class="feld"><label for="e_menge">Menge in Bogen</label>
+       <input id="e_menge" type="number" min="1" max="100000" step="1" value="2000" inputmode="numeric">
+       <div class="fehler" id="e_fehler">Bitte eine Menge von 1 bis 100000 eingeben.</div></div>
+      <p class="hilfe">Druck 1-farbig schwarz, zum Beispiel mit Schuladresse, Schullogo und Zeilen für Prüfungsfach, Klasse und Datum. 90 g Schreibpapier, DIN A3 auf DIN A4 gefalzt. Die Druckvorlage kommt per E-Mail.</p>
+     </div>
+    </div>
+    <div class="ergebnis" aria-live="polite">
+     <h3>Summe netto</h3>
+     <div class="summe" id="gesamt">0,00 €</div>
+     <div id="zeilen"></div>
+     <div class="zeile" id="aktionZeile"><span>Aktion November und Dezember</span><span class="spar">10 % Rabatt</span></div>
+     <div class="zeile"><span>Ersparnis gegenüber dem Einzelpreis</span><span class="spar" id="ersparnis">0,00 €</span></div>
+     <div class="tipp" id="tipp"></div>
+     <div id="staffeln"></div>
+     <p class="quelle">Alle Preise netto, zzgl. MwSt. und Versandkosten. Quelle: maiss-schulshop.de und maiss.de, Stand 3. November 2026. Maschinenlesbar als <a href="preise.json">preise.json</a>.</p>
+     <div class="knoepfe" style="margin-top:16px"><a class="knopf voll" href="#anfrage">Angebot anfragen</a></div>
+    </div>
+   </div>
+  </div>
+ </section>
+
+ <section id="apps">
+  <div class="wrap">
+   <h2>Apps und Portale</h2>
+   <p class="unter">Jede App bekommt eine eigene Unterseite auf derselben Domain, mit Funktionen, Preisen, FAQ und Link zum Login. Die bisherigen Adressen werden per 301 auf diese Seiten weitergeleitet.</p>
+   <div class="apps">
+    <div class="app"><h3>Lehrer-App</h3><p>Leichte und effiziente Organisation des Lehreralltags: Stundenplan, Stoffplanung, Notenverwaltung, Sitzpläne und Klassenbuch.</p><a href="#anfrage">Mehr erfahren</a></div>
+    <div class="app"><h3>Schul-Portal</h3><p>Digitale Unterstützung für alle Schularten, mit Modulen wie Klassenbuch, Kommunikation, Online-Formulare und Schulanmeldung.</p><a href="#anfrage">Mehr erfahren</a></div>
+    <div class="app"><h3>Schulleitungs-App</h3><p>Digitale Organisation, Lehrkräfte-Beurteilung und schulrechtliche Inhalte für die Schulleitung.</p><a href="#anfrage">Mehr erfahren</a></div>
+    <div class="app"><h3>Schulrecht-Online</h3><p>Immer aktuell, Gesetzesänderungen werden sofort eingearbeitet. In der App für Abonnenten sind alle Inhalte offline verfügbar.</p><a href="#anfrage">Mehr erfahren</a></div>
+   </div>
+  </div>
+ </section>
+
+ <section id="anfrage" class="grau">
+  <div class="wrap zwei">
+   <div>
+    <h2>Anfrage</h2>
+    <p class="unter">Ein Formular je Anliegen, mit den Feldern, die Ihr Innendienst wirklich braucht. Die Auswahl aus dem Preisrechner wird automatisch übernommen.</p>
+    <form class="formular" id="anfrageForm" novalidate>
+     <div class="feld"><label for="anliegen">Anliegen</label>
+      <select id="anliegen">
+       <option>Angebot Prüfungsbögen</option>
+       <option>Prüfungsbögen mit Schulnameneindruck</option>
+       <option>Beratung zu Lehrer-App, Schul-Portal oder Schulleitungs-App</option>
+       <option>Schulrecht-Online</option>
+       <option>Schulungs- oder Beratungstermin</option>
+      </select></div>
+     <div class="feld"><label for="schule">Schule</label><input id="schule" type="text" required autocomplete="organization"><div class="fehler">Bitte den Namen der Schule angeben.</div></div>
+     <div class="feld"><label for="mail">E-Mail</label><input id="mail" type="email" required autocomplete="email"><div class="fehler">Bitte eine gültige E-Mail-Adresse angeben.</div></div>
+     <div class="feld"><label for="nachricht">Nachricht</label><textarea id="nachricht"></textarea></div>
+     <button class="knopf voll" type="submit">Anfrage senden</button>
+     <div class="danke" id="danke">Demo: Es wurden keine Daten gesendet. In der echten Umsetzung geht die Anfrage mit Spamschutz ohne Cookies direkt an das passende Postfach.</div>
+    </form>
+   </div>
+   <div>
+    <h2>Für Suchmaschinen und KI-Assistenten</h2>
+    <ul class="liste">
+     <li>Eine Domain statt bisher getrennter Adressen wie lehrer-app.com, schulleitungs-app.com, maiss-schulportal.de und schulrecht-online.de. Jede alte Adresse bekommt eine 301-Weiterleitung auf die passende neue Seite.</li>
+     <li>Bestellungen laufen weiter über die Shops. Die Produktseiten der Website zeigen Preise und führen direkt in die passende Shop-Kategorie.</li>
+     <li>Strukturierte Daten (JSON-LD) für Organisation, Produkte mit Staffelpreisen, Apps und FAQ. Diese Seite enthält ein Beispiel im Quelltext.</li>
+     <li><a href="llms.txt">llms.txt</a> und eine maschinenlesbare Preisliste (<a href="preise.json">preise.json</a>), damit KI-Assistenten Produkte und Preise richtig wiedergeben.</li>
+     <li>Statisch ausgelieferte Seiten ohne Baukasten: Der Inhalt steht direkt im HTML, schnell und ohne JavaScript-Hürde für Crawler.</li>
+    </ul>
+   </div>
+  </div>
+ </section>
+</main>
+
+<footer>
+ <div class="wrap">
+  <p>Weitere Bereiche des Verlags (in der Demo nicht ausgeführt): Pfarrämter, Baugewerbe, weitere Fachsortimente.</p>
+  <p>Konzept-Demo von Kerem Can Arslan für die freelancermap-Ausschreibung von Verlag J. Maiß, erstellt am 3. November 2026. Keine offizielle Website. Inhalte und Preise nach maiss.de und den Maiß-Shops, Stand 3. November 2026.</p>
+ </div>
+</footer>
+
+<script>
+(function () {
+  var daten = JSON.parse(document.getElementById('preisdaten').textContent);
+  var eur = new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'});
+  var zahl = new Intl.NumberFormat('de-DE');
+  var $ = function (id) { return document.getElementById(id); };
+  var heute = new Date().toISOString().slice(0, 10);
+  var akt = daten.regeln.aktion;
+  var aktion = heute >= akt.von && heute <= akt.bis;
+  var sorten = {};
+  daten.sorten.forEach(function (s) { sorten[s.nr] = s; });
+
+  function cent(c) { return eur.format(c / 100); }
+  function preis(c) { return aktion ? Math.round(c * (100 - akt.prozent) / 100) : c; }
+  function stufe(staffel, menge) { var s = staffel[0]; staffel.forEach(function (x) { if (menge >= x[0]) s = x; }); return s; }
+  function naechste(staffel, menge) { return staffel.filter(function (x) { return x[0] > menge; })[0]; }
+  function ganzzahl(roh, max) { var n = Number(roh); return roh !== '' && Number.isInteger(n) && n >= 1 && n <= max ? n : 0; }
+  function tabelle(titel, einheit, staffel, menge) {
+    return '<table class="staffel"><caption>' + titel + '</caption><thead><tr><th>ab ' + einheit + '</th><th>regulär</th><th>' + (aktion ? 'mit Aktion' : 'Preis') + '</th></tr></thead><tbody>' +
+      staffel.map(function (x, i) {
+        var bis = staffel[i + 1] ? staffel[i + 1][0] : Infinity;
+        return '<tr' + (menge >= x[0] && menge < bis ? ' class="aktiv"' : '') + '><td>' + zahl.format(x[0]) + '</td><td>' + cent(x[1]) + '</td><td>' + cent(preis(x[1])) + '</td></tr>';
+      }).join('') + '</tbody></table>';
+  }
+
+  var positionen = [{nr: 'ST50925', ve: '14'}, {nr: 'ST50926', ve: '10'}];
+  var tab = 'boegen';
+
+  function optionen(gewaehlt) {
+    return Object.keys(daten.formate).map(function (f) {
+      return '<optgroup label="' + daten.formate[f].name + '">' + daten.sorten.filter(function (s) { return s.format === f; }).map(function (s) {
+        return '<option value="' + s.nr + '"' + (s.nr === gewaehlt ? ' selected' : '') + '>' + s.name + '</option>';
+      }).join('') + '</optgroup>';
+    }).join('');
+  }
+  function zeichnen() {
+    $('positionen').innerHTML = positionen.map(function (p, i) {
+      return '<div class="position" data-i="' + i + '">' +
+        '<div class="feld"><label for="sorte' + i + '">Sorte ' + (i + 1) + '</label><select id="sorte' + i + '" data-feld="nr">' + optionen(p.nr) + '</select></div>' +
+        '<div class="feld"><label for="ve' + i + '">VE</label><input id="ve' + i + '" data-feld="ve" type="number" min="1" max="5000" step="1" inputmode="numeric" value="' + p.ve + '"></div>' +
+        '<button type="button" class="entfernen"' + (positionen.length === 1 ? ' disabled' : '') + '>Entfernen</button>' +
+        '<div class="fehler">Bitte eine Menge von 1 bis 5000 VE eingeben.</div></div>';
+    }).join('');
+    rechnen();
+  }
+
+  function rechnenBoegen() {
+    var summen = {};
+    positionen.forEach(function (p, i) {
+      p.n = ganzzahl(String(p.ve).trim(), 5000);
+      document.querySelectorAll('.position')[i].querySelector('.fehler').style.display = p.n ? 'none' : 'block';
+      var f = sorten[p.nr].format;
+      summen[f] = (summen[f] || 0) + p.n;
+    });
+    var gesamt = 0, regulaer = 0, zeilen = '', tipps = [], staffeln = '', text = [];
+    positionen.forEach(function (p) {
+      if (!p.n) return;
+      var s = sorten[p.nr], fm = daten.formate[s.format], st = stufe(fm.staffel, summen[s.format]);
+      var je = preis(st[1]);
+      gesamt += je * p.n; regulaer += fm.staffel[0][1] * p.n;
+      zeilen += '<div class="zeile"><span>' + p.n + ' VE ' + s.name + '<small>' + fm.name + ', ' + cent(je) + ' je VE, Staffel ab ' + st[0] + ' VE</small></span><span>' + cent(je * p.n) + '</span></div>';
+      text.push(p.n + ' VE ' + s.name + ' (' + fm.name + ', Art.-Nr. ' + s.nr + ')');
+    });
+    Object.keys(summen).forEach(function (f) {
+      var fm = daten.formate[f], menge = summen[f];
+      if (!menge) return;
+      var st = stufe(fm.staffel, menge), nx = naechste(fm.staffel, menge);
+      var gemischt = positionen.filter(function (p) { return p.n && sorten[p.nr].format === f; });
+      var einzeln = Math.max.apply(null, gemischt.map(function (p) { return stufe(fm.staffel, p.n)[0]; }));
+      if (gemischt.length > 1 && st[0] > einzeln) tipps.push(fm.name + ': Durch das Mischen gilt für alle Sorten die Staffel ab ' + st[0] + ' VE.');
+      tipps.push(nx ? fm.name + ': Noch ' + (nx[0] - menge) + ' VE bis zur Staffel ab ' + nx[0] + ' VE (' + cent(preis(nx[1])) + ' je VE).' : fm.name + ': Sie haben die günstigste Staffel erreicht.');
+      staffeln += tabelle(fm.name + ', ' + menge + ' VE zusammen', 'VE', fm.staffel, menge);
+    });
+    return {gesamt: gesamt, regulaer: regulaer, zeilen: zeilen, tipps: tipps, staffeln: staffeln, anliegen: 'Angebot Prüfungsbögen',
+      nachricht: text.length ? 'Bitte um ein Angebot: ' + text.join('; ') + '.' : ''};
+  }
+
+  function rechnenEindruck() {
+    var e = daten.schulnameneindruck;
+    var menge = ganzzahl($('e_menge').value.trim(), 100000);
+    $('e_fehler').style.display = menge ? 'none' : 'block';
+    var art = document.querySelector('input[name=e_lin]:checked').value + ', ' + document.querySelector('input[name=e_rand]:checked').value;
+    if (!menge) return {gesamt: 0, regulaer: 0, zeilen: '', tipps: [], staffeln: tabelle('Staffel je Bogen', 'Bogen', e.staffel, 0), anliegen: 'Prüfungsbögen mit Schulnameneindruck', nachricht: ''};
+    var st = stufe(e.staffel, menge), nx = naechste(e.staffel, menge), je = preis(st[1]);
+    return {
+      gesamt: je * menge, regulaer: e.staffel[0][1] * menge,
+      zeilen: '<div class="zeile"><span>' + zahl.format(menge) + ' Bogen ' + art + '<small>mit Schulnameneindruck, ' + cent(je) + ' je Bogen, Staffel ab ' + zahl.format(st[0]) + ' Bogen</small></span><span>' + cent(je * menge) + '</span></div>',
+      tipps: [nx ? 'Noch ' + zahl.format(nx[0] - menge) + ' Bogen bis zur Staffel ab ' + zahl.format(nx[0]) + ' Bogen (' + cent(preis(nx[1])) + ' je Bogen).' : 'Sie haben die günstigste Staffel erreicht.', 'Die Druckvorlage (Schulname, Logo, Zeilen) senden Sie nach der Bestellung per E-Mail.'],
+      staffeln: tabelle('Staffel je Bogen', 'Bogen', e.staffel, menge),
+      anliegen: 'Prüfungsbögen mit Schulnameneindruck',
+      nachricht: 'Bitte um ein Angebot: ' + zahl.format(menge) + ' Prüfungsbögen ' + art + ', mit Schulnameneindruck (Art.-Nr. ' + e.nr + ').'
+    };
+  }
+
+  function rechnen() {
+    var r = tab === 'boegen' ? rechnenBoegen() : rechnenEindruck();
+    $('gesamt').textContent = cent(r.gesamt);
+    $('zeilen').innerHTML = r.zeilen;
+    $('aktionZeile').style.display = aktion ? 'flex' : 'none';
+    $('ersparnis').textContent = cent(Math.max(0, r.regulaer - r.gesamt));
+    $('tipp').innerHTML = r.tipps.map(function (t) { return '<p>' + t + '</p>'; }).join('');
+    $('tipp').style.display = r.tipps.length ? 'block' : 'none';
+    $('staffeln').innerHTML = r.staffeln;
+    $('anliegen').value = r.anliegen;
+    $('nachricht').value = r.nachricht ? r.nachricht + ' Richtpreis laut Rechner: ' + cent(r.gesamt) + ' netto' + (aktion ? ', inklusive Aktion November und Dezember' : '') + '.' : '';
+  }
+
+  $('positionen').addEventListener('input', function (e) {
+    var box = e.target.closest('.position'); if (!box) return;
+    positionen[+box.dataset.i][e.target.dataset.feld] = e.target.value; rechnen();
+  });
+  $('positionen').addEventListener('change', function (e) {
+    var box = e.target.closest('.position'); if (!box) return;
+    positionen[+box.dataset.i][e.target.dataset.feld] = e.target.value; rechnen();
+  });
+  $('positionen').addEventListener('click', function (e) {
+    if (!e.target.classList.contains('entfernen') || positionen.length === 1) return;
+    positionen.splice(+e.target.closest('.position').dataset.i, 1); zeichnen();
+  });
+  $('neuePosition').addEventListener('click', function () {
+    var vorhanden = positionen.map(function (p) { return p.nr; });
+    var frei = daten.sorten.filter(function (s) { return vorhanden.indexOf(s.nr) === -1; })[0] || daten.sorten[0];
+    positionen.push({nr: frei.nr, ve: '1'}); zeichnen();
+    $('ve' + (positionen.length - 1)).focus();
+  });
+  ['e_menge'].forEach(function (id) { $(id).addEventListener('input', rechnen); });
+  document.querySelectorAll('input[name=e_lin],input[name=e_rand]').forEach(function (el) { el.addEventListener('change', rechnen); });
+
+  function waehlen(name) {
+    tab = name;
+    $('boegen').setAttribute('aria-selected', name === 'boegen');
+    $('eindruck').setAttribute('aria-selected', name === 'eindruck');
+    $('panelBoegen').hidden = name !== 'boegen';
+    $('panelEindruck').hidden = name !== 'eindruck';
+    rechnen();
+  }
+  $('boegen').addEventListener('click', function () { waehlen('boegen'); });
+  $('eindruck').addEventListener('click', function () { waehlen('eindruck'); });
+  function hash() { if (location.hash === '#eindruck') waehlen('eindruck'); else if (location.hash === '#boegen') waehlen('boegen'); }
+  window.addEventListener('hashchange', hash);
+
+  $('anfrageForm').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var ok = true;
+    [['schule', function (v) { return v.trim().length > 1; }], ['mail', function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }]].forEach(function (f) {
+      var el = $(f[0]), gut = f[1](el.value);
+      el.nextElementSibling.style.display = gut ? 'none' : 'block'; if (!gut) ok = false;
+    });
+    $('danke').style.display = ok ? 'block' : 'none';
+  });
+
+  var index = [
+    ['Prüfungsbögen', 'Schulverwaltung · Rund um die Prüfung', '#boegen'],
+    ['Prüfungsbögen mit Schulnameneindruck', 'Schulverwaltung · Rund um die Prüfung', '#eindruck'],
+    ['Prüfungsblätter A4, VE 500', 'Schulverwaltung · Rund um die Prüfung', '#zielgruppen'],
+    ['Deckblatt Prüfungsarbeiten', 'Schulverwaltung · Rund um die Prüfung', '#zielgruppen'],
+    ['Zeugnis und Prüfung', 'Schulverwaltung · Drucksachen', '#zielgruppen'],
+    ['Ordner und Mappen', 'Schulverwaltung · Rund ums Büro', '#zielgruppen'],
+    ['Unterrichtsplaner', 'Lehrkräfte · Lehrershop', '#zielgruppen'],
+    ['Lerntagebuch', 'Lehrkräfte · Lehrershop', '#zielgruppen'],
+    ['Lehrer-App', 'Apps und Portale', '#apps'],
+    ['Notenverwaltung und Sitzpläne', 'Apps und Portale · Lehrer-App', '#apps'],
+    ['Schul-Portal', 'Apps und Portale', '#apps'],
+    ['Digitales Klassenbuch', 'Apps und Portale · Schul-Portal', '#apps'],
+    ['Digitale Schulanmeldung', 'Apps und Portale · Schul-Portal', '#apps'],
+    ['Schulleitungs-App', 'Apps und Portale', '#apps'],
+    ['Lehrkräfte-Beurteilungen', 'Apps und Portale · Schulleitungs-App', '#apps'],
+    ['Schulrecht-Online', 'Apps und Portale · mit App', '#apps'],
+    ['Schulungs- und Beratungstermine', 'Beratung und Schulung', '#anfrage']
+  ];
+  var q = $('q'), box = $('treffer'), pos = -1;
+  function norm(s) { return s.toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss'); }
+  function zeigen() {
+    var t = norm(q.value.trim()); pos = -1;
+    if (!t) { box.style.display = 'none'; return; }
+    var hits = index.filter(function (e) { return norm(e[0] + ' ' + e[1]).indexOf(t) !== -1; });
+    box.innerHTML = hits.length
+      ? hits.map(function (e) { return '<a role="option" href="' + e[2] + '">' + e[0] + '<small>' + e[1] + '</small></a>'; }).join('')
+      : '<a href="#anfrage">Nichts gefunden<small>Fragen Sie uns direkt</small></a>';
+    box.style.display = 'block';
+  }
+  q.addEventListener('input', zeigen);
+  q.addEventListener('keydown', function (e) {
+    var a = box.querySelectorAll('a'); if (!a.length || box.style.display === 'none') return;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault(); pos = (pos + (e.key === 'ArrowDown' ? 1 : -1) + a.length) % a.length;
+      a.forEach(function (x, i) { x.classList.toggle('aktiv', i === pos); });
+    } else if (e.key === 'Enter') { e.preventDefault(); (a[pos] || a[0]).click(); }
+    else if (e.key === 'Escape') { box.style.display = 'none'; }
+  });
+  box.addEventListener('click', function (e) {
+    var a = e.target.closest('a'); box.style.display = 'none'; q.value = '';
+    if (a && a.getAttribute('href') === location.hash) hash();
+  });
+  document.addEventListener('click', function (e) { if (!e.target.closest('.suche')) box.style.display = 'none'; });
+
+  $('menue').addEventListener('click', function () {
+    var offen = $('nav').classList.toggle('offen'); this.setAttribute('aria-expanded', offen ? 'true' : 'false');
+  });
+  $('nav').addEventListener('click', function (e) { if (e.target.tagName === 'A') { this.classList.remove('offen'); $('menue').setAttribute('aria-expanded', 'false'); } });
+
+  zeichnen();
+  hash();
+})();
+</script>
+</body>
+</html>
