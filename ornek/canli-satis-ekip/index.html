@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Canlı Satış Ekip Paneli — Örnek</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--side:#1b2430;--side2:#243040;--bg:#f3f4f6;--card:#fff;--ink:#1f2933;--mute:#6b7280;--line:#e5e7eb;--acc:#e8590c;--ok:#1e7f4f;--okz:#e3f5ea;--warn:#b45309;--warnz:#fef3c7;--bad:#b91c1c;--badz:#fee2e2;--blue:#1d4ed8;--bluez:#e0e7ff;--vio:#6d28d9;--vioz:#ede9fe}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:15px/1.5 "Source Sans 3",Arial,sans-serif;background:var(--bg);color:var(--ink);display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+button{font:inherit;cursor:pointer}input,select,textarea{font:inherit}
+aside{background:var(--side);color:#cbd5e1;padding:18px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;font-size:17px;padding:4px 8px 16px;border-bottom:1px solid #ffffff14;margin-bottom:12px}
+.brand i{width:30px;height:30px;background:var(--acc);border-radius:6px;display:grid;place-items:center;font-style:normal;font-size:14px}
+.brand small{display:block;font-weight:400;font-size:11px;color:#94a3b8;letter-spacing:.12em;text-transform:uppercase}
+aside nav button{display:flex;justify-content:space-between;align-items:center;width:100%;text-align:left;background:none;border:0;color:#cbd5e1;padding:9px 10px;border-radius:6px;font-weight:600;font-size:14px}
+aside nav button:hover{background:var(--side2);color:#fff}aside nav button.on{background:var(--acc);color:#fff}
+aside nav button b{font-size:11px;background:#ffffff22;padding:1px 7px;border-radius:10px}
+.who{margin-top:auto;border-top:1px solid #ffffff14;padding-top:12px;font-size:12px;color:#94a3b8}
+.who select{width:100%;margin-top:6px;background:var(--side2);color:#fff;border:1px solid #ffffff22;border-radius:6px;padding:7px 8px}
+.who p{margin-top:8px;line-height:1.4}
+main{padding:20px 24px 40px;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.top h1{font-size:22px}.top p{color:var(--mute);font-size:13px}
+.btn{border:1px solid var(--acc);background:var(--acc);color:#fff;padding:8px 14px;border-radius:6px;font-weight:600;font-size:14px}
+.btn:hover{background:#d14f0a}.btn.sec{background:#fff;color:var(--ink);border-color:var(--line)}.btn.sec:hover{background:#f9fafb}
+.btn.sm{padding:4px 9px;font-size:13px}.btn.ok{background:var(--ok);border-color:var(--ok)}.btn:disabled{opacity:.45;cursor:default}
+.view{display:none}.view.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+.card h2{font-size:15px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.card h2 span{font-weight:400;color:var(--mute);font-size:12px}
+.tag{display:inline-block;padding:2px 9px;border-radius:12px;font-size:12px;font-weight:600;white-space:nowrap}
+.t-gray{background:#e5e7eb;color:#374151}.t-blue{background:var(--bluez);color:var(--blue)}.t-warn{background:var(--warnz);color:var(--warn)}.t-vio{background:var(--vioz);color:var(--vio)}.t-ok{background:var(--okz);color:var(--ok)}.t-bad{background:var(--badz);color:var(--bad)}.t-cyan{background:#cffafe;color:#0e7490}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-size:12px;color:var(--mute);font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:7px 8px;border-bottom:1px solid var(--line)}
+td{padding:8px;border-bottom:1px solid #f1f3f5;vertical-align:middle}
+.note{font-size:12px;color:var(--mute)}
+.alert{border-left:3px solid var(--warn);background:var(--warnz);padding:8px 10px;border-radius:4px;font-size:13px;margin-bottom:12px}
+.alert.bad{border-color:var(--bad);background:var(--badz)}.alert.ok{border-color:var(--ok);background:var(--okz)}.alert.blue{border-color:var(--blue);background:var(--bluez)}
+.in{border:1px solid var(--line);border-radius:6px;padding:8px 10px;width:100%;background:#fff}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.live{display:grid;grid-template-columns:330px 1fr 300px;gap:14px;align-items:start}
+.queue{display:grid;gap:8px;max-height:640px;overflow:auto;align-content:start}
+.cm{border:1px solid var(--line);border-radius:8px;padding:9px 11px;background:#fff;animation:in .3s ease}
+@keyframes in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.cm.lock{background:#fafafa;border-style:dashed}.cm.done{opacity:.6}
+.cm .u{font-weight:700;font-size:14px;display:flex;justify-content:space-between;gap:6px}.cm .u span{color:var(--mute);font-weight:400;font-size:12px}
+.cm .txt{margin:1px 0 6px}
+.cm .p{display:flex;gap:5px;flex-wrap:wrap;align-items:center;font-size:12.5px}
+.cm .p i{font-style:normal;background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:0 6px}
+.cm .a{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;align-items:center}
+.kpi{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.kpi div{border:1px solid var(--line);border-radius:6px;padding:8px 10px}
+.kpi small{display:block;color:var(--mute);font-size:11.5px}.kpi b{font-size:19px}
+.stk td{padding:5px 6px;font-size:13px}.stk td.low{color:var(--bad);font-weight:700}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.chips button{border:1px solid var(--line);background:#fff;border-radius:14px;padding:3px 10px;font-size:13px}
+.chips button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.log{font-size:13px;max-height:520px;overflow:auto}.log div{padding:5px 0;border-bottom:1px solid #f1f3f5}.log b{font-weight:600}
+textarea.in{min-height:96px;resize:vertical;font-size:13px}
+.kbd{font:12px ui-monospace,Menlo,monospace;background:#f1f3f5;border:1px solid var(--line);border-radius:4px;padding:0 5px}
+.timer{font-variant-numeric:tabular-nums}
+@media (max-width:1180px){.live{grid-template-columns:1fr 1fr}.live>.card:last-child{grid-column:1/-1}}
+@media (max-width:820px){body{grid-template-columns:1fr}aside{position:static;height:auto}aside nav{display:flex;gap:4px;overflow:auto}aside nav button{white-space:nowrap}.live,.grid2{grid-template-columns:1fr}main{padding:14px}}
+</style>
+</head>
+<body>
+<aside>
+<div class="brand"><i>B</i><div>Butik Panel<small>ekip · canlı satış · örnek</small></div></div>
+<nav id="menu"></nav>
+<div class="who">Giriş yapan personel<select id="kim"></select><p id="rolNot"></p></div>
+</aside>
+<main>
+<div class="top"><div><h1 id="baslik">Canlı Yayın</h1><p id="alt">Instagram API kullanılmaz, hesap bağlanmaz. Yayını izleyen personel yorumu panele girer, gerisini sistem yapar.</p></div><div class="row"><button class="btn sec sm" id="sifirla">Örnek veriyi sıfırla</button></div></div>
+
+<section class="view" id="v-canli">
+<div class="alert blue" id="canliBilgi">Aynı anda birden fazla personel bu ekranda çalışabilir. Bir yorumu biri açtığında diğerlerinde kilitlenir, aynı ürünün son adedini iki kişi satamaz. Örnekte ikinci operatör (Mert) yayın başlayınca otomatik çalışır.</div>
+<div class="live">
+<div class="card"><h2>Yorum girişi <span>3 yol</span></h2>
+<p class="note" style="margin-bottom:6px">1. Hızlı satır: yazıp <span class="kbd">Enter</span>, stok uygunsa sipariş anında oluşur.</p>
+<input class="in" id="hizli" placeholder="@merve_s 1045 m siyah 2">
+<div id="hizliSonuc" class="note" style="margin:6px 0 12px;min-height:18px"></div>
+<p class="note" style="margin-bottom:6px">2. Toplu yapıştır: yayındaki yorumları kopyalayıp yapıştırın, satır satır kuyruğa düşer.</p>
+<textarea class="in" id="toplu" placeholder="elif.dmr 2210 L bej&#10;buse.yl 3307 xl siyah&#10;hande.t fiyat ne kadar"></textarea>
+<div class="row" style="margin-top:6px"><button class="btn sec sm" id="topluEkle">Kuyruğa ekle</button><span class="note" id="topluSonuc"></span></div>
+<p class="note" style="margin:14px 0 6px">3. Örnek akış: yayını simüle et (gerçekte yorumu personel girer).</p>
+<button class="btn" id="yayinBtn">Yayını başlat</button> <span class="tag t-gray" id="yayinDurum">yayın kapalı</span>
+</div>
+<div class="card"><h2>Yorum kuyruğu <span id="kuyrukSay"></span></h2><div class="chips" id="kFiltre"></div><div class="queue" id="kuyruk"></div></div>
+<div class="card"><h2>Bu yayın <span id="yayinSure">00:00</span></h2>
+<div class="kpi" id="yayinKpi"></div>
+<h2 style="margin-top:4px">Personel <span>bu yayında</span></h2><table><tbody id="opTablo"></tbody></table>
+<h2 style="margin-top:12px">Rezervasyonlar <span>30 dk içinde siparişe dönmezse açılır</span></h2><table><tbody id="rezTablo"></tbody></table>
+<h2 style="margin-top:12px">Yayın ürünleri <span>kalan</span></h2><table class="stk"><tbody id="yStok"></tbody></table>
+</div>
+</div>
+</section>
+
+<section class="view" id="v-siparis">
+<div class="chips" id="sFiltre"></div>
+<div class="card"><table><thead><tr><th>No</th><th>Müşteri</th><th>Kanal</th><th>Ürün</th><th>Tutar</th><th>Oluşturan</th><th>Durum</th><th></th></tr></thead><tbody id="sTablo"></tbody></table></div>
+</section>
+
+<section class="view" id="v-musteri">
+<div class="chips" id="mFiltre"></div>
+<div class="grid2">
+<div class="card"><h2>Müşteriler <span>telefon, ad ya da Instagram adı</span></h2><input class="in" id="mAra" placeholder="0532… ya da @kullanici"><table style="margin-top:8px"><thead><tr><th>Ad</th><th>Instagram</th><th>Sipariş</th><th>Son alışveriş</th><th>Borç</th></tr></thead><tbody id="mTablo"></tbody></table></div>
+<div class="card" id="mKart"><h2>Müşteri kartı</h2><p class="note">Listeden bir müşteri seçin.</p></div>
+</div>
+</section>
+
+<section class="view" id="v-personel">
+<div class="grid2">
+<div class="card"><h2>Personel ve yetkiler <span>her rol yalnız kendi ekranlarını görür</span></h2><table><thead><tr><th>Personel</th><th>Rol</th><th>Ekranlar</th></tr></thead><tbody id="pTablo"></tbody></table></div>
+<div class="card"><h2>Bugünkü performans</h2><table><thead><tr><th>Personel</th><th>İşlenen yorum</th><th>Sipariş</th><th>Ciro</th></tr></thead><tbody id="perfTablo"></tbody></table></div>
+</div>
+</section>
+
+<section class="view" id="v-kayit">
+<div class="card"><h2>İşlem kaydı <span>kim, ne zaman, ne yaptı; silinemez</span></h2><div class="log" id="log"></div></div>
+</section>
+</main>
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const PERSONEL=[{ad:'Ayşe Yılmaz',rol:'Yönetici'},{ad:'Mert Kaya',rol:'Yayın operatörü'},{ad:'Selin Ak',rol:'Müşteri hizmetleri'},{ad:'Burak Demir',rol:'Depo'},{ad:'Ece Tan',rol:'Paketleme'}];
+const EKRAN={canli:'Canlı Yayın',siparis:'Siparişler',musteri:'Müşteriler',personel:'Personel',kayit:'İşlem kaydı'};
+const YETKI={'Yönetici':['canli','siparis','musteri','personel','kayit'],'Yayın operatörü':['canli','siparis','musteri'],'Müşteri hizmetleri':['siparis','musteri'],'Depo':['siparis'],'Paketleme':['siparis']};
+const DURUM=['Yeni sipariş','Ödeme bekleniyor','Onaylandı','Hazırlanıyor','Paketlendi','Kargoya verildi','Tamamlandı','İptal edildi','İade edildi'];
+const DT={'Yeni sipariş':'t-gray','Ödeme bekleniyor':'t-warn','Onaylandı':'t-blue','Hazırlanıyor':'t-warn','Paketlendi':'t-vio','Kargoya verildi':'t-cyan','Tamamlandı':'t-ok','İptal edildi':'t-bad','İade edildi':'t-bad'};
+const BEDEN=['S','M','L','XL'],RENK=['siyah','beyaz','bej'];
+const tl=n=>n.toLocaleString('tr-TR')+' TL';
+const saat=()=>new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+function seed(){return{
+ urun:[{kod:'1045',ad:'Oversize Tişört',fiyat:650,stok:{S:{siyah:4,beyaz:6,bej:2},M:{siyah:2,beyaz:5,bej:3},L:{siyah:7,beyaz:2,bej:0},XL:{siyah:3,beyaz:3,bej:1}}},
+  {kod:'2210',ad:'Keten Pantolon',fiyat:1190,stok:{S:{siyah:2,beyaz:0,bej:5},M:{siyah:6,beyaz:4,bej:8},L:{siyah:5,beyaz:2,bej:1},XL:{siyah:1,beyaz:1,bej:4}}},
+  {kod:'3307',ad:'Triko Hırka',fiyat:890,stok:{S:{siyah:3,beyaz:2,bej:3},M:{siyah:9,beyaz:4,bej:1},L:{siyah:2,beyaz:6,bej:5},XL:{siyah:1,beyaz:2,bej:2}}}],
+ mus:[{id:1,ad:'Ayşe Kaya',tel:'0532 111 22 33',ig:'ayse.k',sip:12,tutar:14200,borc:0,son:3,kayit:400},{id:2,ad:'Merve Sarı',tel:'0541 222 33 44',ig:'merve_s',sip:4,tutar:3900,borc:1200,son:12,kayit:150},
+  {id:3,ad:'Elif Demir',tel:'0505 333 44 55',ig:'elif.dmr',sip:7,tutar:6100,borc:0,son:95,kayit:300},{id:4,ad:'Zeynep Ak',tel:'0555 444 55 66',ig:'zeynepak',sip:1,tutar:650,borc:650,son:6,kayit:9},
+  {id:5,ad:'Buse Yıldız',tel:'0533 555 66 77',ig:'buse.yl',sip:9,tutar:9800,borc:0,son:70,kayit:500},{id:6,ad:'Hande Tunç',tel:'0544 666 77 88',ig:'hande.t',sip:2,tutar:1780,borc:0,son:20,kayit:25}],
+ sip:[{no:1041,mid:1,kanal:'Canlı yayın',k:{kod:'1045',b:'M',r:'beyaz',a:1},durum:'Onaylandı',op:'Mert Kaya'},{no:1042,mid:2,kanal:'WhatsApp',k:{kod:'2210',b:'M',r:'bej',a:1},durum:'Ödeme bekleniyor',op:'Selin Ak'},{no:1043,mid:3,kanal:'Mağaza',k:{kod:'3307',b:'L',r:'beyaz',a:2},durum:'Kargoya verildi',op:'Ayşe Yılmaz'},{no:1044,mid:5,kanal:'Canlı yayın',k:{kod:'1045',b:'S',r:'siyah',a:1},durum:'Hazırlanıyor',op:'Mert Kaya'}],
+ kuyruk:[],rez:[],log:[],no:1044,perf:{},yayinBas:null};}
+let S=seed(),ben=PERSONEL[0],filtreK='Bekleyen',filtreS='Tümü',filtreM='Tümü',seciliM=null,akisT=null,mertT=null,akisI=0;
+const urun=k=>S.urun.find(u=>u.kod===k);const mus=id=>S.mus.find(m=>m.id===id);
+function kaydet(kim,m){S.log.unshift({t:saat(),kim,m});}
+function perf(kim,alan,v=1){S.perf[kim]=S.perf[kim]||{yorum:0,sip:0,ciro:0};S.perf[kim][alan]+=v;}
+function rezerveAdet(k,b,r){return S.rez.filter(x=>x.kod===k&&x.b===b&&x.r===r).reduce((t,x)=>t+x.a,0);}
+function satilabilir(k,b,r){const u=urun(k);return u.stok[b][r]-rezerveAdet(k,b,r);}
+function parse(t){const m=t.match(/\b(\d{4})\b/);if(!m||!urun(m[1]))return null;const b=(t.toUpperCase().match(/\b(XS|S|M|L|XL)\b/)||[])[1]||null;const r=(t.toLowerCase().match(/\b(siyah|beyaz|bej)\b/)||[])[1]||null;const a=parseInt((t.replace(/\b\d{4}\b/,'').match(/\b([1-9])\b/)||[])[1]||'1',10);return{kod:m[1],b,r,a};}
+function yorumEkle(ig,txt,kaynak){ig=ig.replace(/^@/,'');const p=parse(txt);const m=S.mus.find(x=>x.ig===ig);const y={id:Math.random().toString(36).slice(2),ig,txt,p,mid:m?m.id:null,durum:'Bekleyen',op:null,kaynak,t:saat()};S.kuyruk.unshift(y);return y;}
+function musteriBul(ig){let m=S.mus.find(x=>x.ig===ig);if(!m){m={id:S.mus.length+1,ad:'@'+ig,tel:'',ig,sip:0,tutar:0,borc:0,son:0,kayit:0};S.mus.push(m);}return m;}
+function siparisYap(y,kim){const p=y.p;if(!p||!p.b||!p.r)return'eksik';if(satilabilir(p.kod,p.b,p.r)<p.a)return'stok';const m=musteriBul(y.ig);S.no++;const u=urun(p.kod);u.stok[p.b][p.r]-=p.a;S.sip.unshift({no:S.no,mid:m.id,kanal:'Canlı yayın',k:{...p},durum:'Yeni sipariş',op:kim});m.sip++;m.tutar+=u.fiyat*p.a;m.borc+=u.fiyat*p.a;m.son=0;y.durum='Sipariş #'+S.no;y.op=kim;perf(kim,'yorum');perf(kim,'sip');perf(kim,'ciro',u.fiyat*p.a);kaydet(kim,'#'+S.no+' oluşturdu: @'+y.ig+' '+p.kod+' '+p.b+'/'+p.r+' × '+p.a+' (stoktan düştü)');return'ok';}
+function rezerveEt(y,kim){const p=y.p;if(satilabilir(p.kod,p.b,p.r)<p.a)return'stok';S.rez.push({id:y.id,ig:y.ig,...p,op:kim,bitis:Date.now()+30*60*1000});y.durum='Rezerve';y.op=kim;perf(kim,'yorum');kaydet(kim,'rezerve etti: @'+y.ig+' '+p.kod+' '+p.b+'/'+p.r+' × '+p.a+' (30 dk)');return'ok';}
+// ---- menü + rol
+function menu(){const izin=YETKI[ben.rol];$('#menu').innerHTML=Object.keys(EKRAN).filter(k=>izin.includes(k)).map(k=>`<button data-v="${k}">${EKRAN[k]}${k==='canli'?' <b id="nK">0</b>':''}</button>`).join('');
+ const acik=document.querySelector('.view.on');const acikV=acik?acik.id.slice(2):'canli';git(izin.includes(acikV)?acikV:izin[0]);
+ $('#rolNot').innerHTML='<b style="color:#fff">'+ben.rol+'</b><br>Görebildiği ekranlar: '+izin.map(k=>EKRAN[k]).join(', ');}
+function git(v){document.querySelectorAll('#menu button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));$('#baslik').textContent=EKRAN[v];render();}
+$('#menu').addEventListener('click',e=>{const b=e.target.closest('button[data-v]');if(b)git(b.dataset.v);});
+$('#kim').innerHTML=PERSONEL.map((p,i)=>`<option value="${i}">${p.ad} · ${p.rol}</option>`).join('');
+$('#kim').addEventListener('change',e=>{ben=PERSONEL[+e.target.value];kaydet(ben.ad,'oturum açtı');menu();});
+$('#sifirla').addEventListener('click',()=>{durdur();S=seed();render();});
+// ---- giriş yolları
+$('#hizli').addEventListener('keydown',e=>{if(e.key!=='Enter')return;const v=e.target.value.trim();const m=v.match(/^@?([\w.]+)\s+(.+)$/);const o=$('#hizliSonuc');if(!m){o.innerHTML='<span style="color:var(--bad)">Biçim: @kullanici ürünkodu beden renk adet</span>';return;}const y=yorumEkle(m[1],m[2],'Hızlı satır');const s=siparisYap(y,ben.ad);o.innerHTML=s==='ok'?`<span style="color:var(--ok)">✓ ${y.durum} oluşturuldu</span>`:s==='stok'?'<span style="color:var(--bad)">Stok yetersiz, yorum kuyrukta bekliyor</span>':'<span style="color:var(--warn)">Beden ya da renk eksik, kuyruğa alındı</span>';e.target.value='';render();});
+$('#topluEkle').addEventListener('click',()=>{const satir=$('#toplu').value.split('\n').map(x=>x.trim()).filter(Boolean);let n=0;satir.forEach(s=>{const m=s.match(/^@?([\w.]+)\s+(.+)$/);if(m){yorumEkle(m[1],m[2],'Toplu yapıştır');n++;}});$('#toplu').value='';$('#topluSonuc').textContent=n+' yorum kuyruğa eklendi';kaydet(ben.ad,n+' yorumu toplu yapıştırdı');render();});
+const AKIS=[['ayse.k','1045 M siyah'],['merve_s','1045 m siyah'],['nurcan_34','fiyatı ne kadar?'],['elif.dmr','2210 L bej'],['zeynepak','1045 M siyah'],['buse.yl','3307 xl siyah'],['hande.t','2210 s beyaz'],['selin_kr','1045 L beyaz'],['ayse.k','3307 M siyah 2'],['merve_s','2210 M bej'],['yeni.musteri','3307 S bej'],['elif.dmr','beden tablosu var mı']];
+function durdur(){clearInterval(akisT);clearInterval(mertT);akisT=mertT=null;$('#yayinBtn').textContent='Yayını başlat';$('#yayinDurum').textContent='yayın kapalı';$('#yayinDurum').className='tag t-gray';}
+$('#yayinBtn').addEventListener('click',()=>{if(akisT){durdur();kaydet(ben.ad,'yayını kapattı');render();return;}akisI=0;S.yayinBas=S.yayinBas||Date.now();$('#yayinBtn').textContent='Yayını durdur';$('#yayinDurum').textContent='CANLI';$('#yayinDurum').className='tag t-bad';kaydet(ben.ad,'yayını başlattı');
+ const adim=()=>{if(akisI>=AKIS.length){durdur();render();return;}const [u,t]=AKIS[akisI++];yorumEkle(u,t,'Yayın');render();};adim();akisT=setInterval(adim,2400);
+ mertT=setInterval(()=>{if(ben.ad==='Mert Kaya')return;const y=[...S.kuyruk].reverse().find(x=>x.durum==='Bekleyen'&&x.p&&x.p.b&&x.p.r);if(!y)return;y.durum='İşleniyor';y.op='Mert Kaya';render();setTimeout(()=>{if(y.durum!=='İşleniyor')return;const s=siparisYap(y,'Mert Kaya');if(s!=='ok'){y.durum='Bekleyen';y.op=null;}render();},1800);},5200);
+ render();});
+// ---- kuyruk
+$('#kuyruk').addEventListener('click',e=>{const b=e.target.closest('button[data-a]');if(!b)return;const y=S.kuyruk.find(x=>x.id===b.dataset.id);if(!y)return;const a=b.dataset.a;
+ if(y.durum==='İşleniyor'&&y.op!==ben.ad){alert(y.op+' bu yorumu şu an işliyor. Aynı yorum iki kez siparişe dönüşmez.');return;}
+ if(a==='sip'){const s=siparisYap(y,ben.ad);if(s==='stok'){alert('Son adet az önce satıldı ya da rezerve edildi. Yorumu bekleme listesine alabilirsiniz.');}}
+ else if(a==='rez'){if(rezerveEt(y,ben.ad)==='stok')alert('Satılabilir stok yok.');}
+ else if(a==='bek'){y.durum='Bekleme listesi';y.op=ben.ad;perf(ben.ad,'yorum');kaydet(ben.ad,'bekleme listesine aldı: @'+y.ig+' '+y.p.kod+' '+y.p.b+'/'+y.p.r);}
+ else if(a==='atla'){y.durum='Atlandı';y.op=ben.ad;kaydet(ben.ad,'atladı: @'+y.ig+' "'+y.txt+'"');}
+ else if(a==='sor'){y.durum='Yanıtlandı';y.op=ben.ad;perf(ben.ad,'yorum');kaydet(ben.ad,'@'+y.ig+' için hazır yanıt kopyaladı: "Hangi beden ve renk olsun?"');}
+ render();});
+$('#kFiltre').addEventListener('click',e=>{const b=e.target.closest('button');if(b){filtreK=b.dataset.f;render();}});
+function renderCanli(){
+ const say=d=>S.kuyruk.filter(y=>d==='Tümü'||(d==='Bekleyen'?(y.durum==='Bekleyen'||y.durum==='İşleniyor'):d==='Sipariş'?y.durum.startsWith('Sipariş'):y.durum===d)).length;
+ $('#kFiltre').innerHTML=['Bekleyen','Sipariş','Rezerve','Bekleme listesi','Tümü'].map(d=>`<button data-f="${d}" class="${filtreK===d?'on':''}">${d} (${say(d)})</button>`).join('');
+ const nK=$('#nK');if(nK)nK.textContent=say('Bekleyen');$('#kuyrukSay').textContent=S.kuyruk.length+' yorum';
+ const l=S.kuyruk.filter(y=>filtreK==='Tümü'||(filtreK==='Bekleyen'?(y.durum==='Bekleyen'||y.durum==='İşleniyor'):filtreK==='Sipariş'?y.durum.startsWith('Sipariş'):y.durum===filtreK));
+ $('#kuyruk').innerHTML=l.map(y=>{const p=y.p;const m=y.mid?mus(y.mid):null;let pr='',ac='';const kilit=y.durum==='İşleniyor'&&y.op!==ben.ad;
+  if(!p){pr='<span class="note">Sipariş bilgisi yok (soru ya da sohbet)</span>';}else{const u=urun(p.kod);const sv=(p.b&&p.r)?satilabilir(p.kod,p.b,p.r):null;pr=`<i>${p.kod} ${u.ad}</i><i>${p.b||'beden ?'}</i><i>${p.r||'renk ?'}</i><i>${p.a} adet</i>`+(m?`<span class="tag t-ok">Kayıtlı: ${m.ad}${m.borc?' · borç '+tl(m.borc):''}</span>`:'<span class="tag t-warn">Yeni müşteri</span>')+(sv===null?'':sv>=p.a?`<span class="tag t-ok">Satılabilir ${sv}</span>`:`<span class="tag t-bad">Stok yok (${sv})</span>`);}
+  if(y.durum==='Bekleyen'){if(!p)ac=`<button class="btn sec sm" data-a="sor" data-id="${y.id}">Hazır yanıt</button><button class="btn sec sm" data-a="atla" data-id="${y.id}">Atla</button>`;else if(!p.b||!p.r)ac=`<span class="note">Beden/renk eksik</span><button class="btn sec sm" data-a="sor" data-id="${y.id}">Hazır yanıt</button>`;else{const sv=satilabilir(p.kod,p.b,p.r);ac=sv>=p.a?`<button class="btn sm" data-a="sip" data-id="${y.id}">Sipariş</button><button class="btn sec sm" data-a="rez" data-id="${y.id}">Rezerve</button>`:`<button class="btn sec sm" data-a="bek" data-id="${y.id}">Bekleme listesi</button>`;ac+=`<button class="btn sec sm" data-a="atla" data-id="${y.id}">Atla</button>`;}}
+  else if(y.durum==='İşleniyor')ac=`<span class="tag t-vio">🔒 ${y.op} işliyor</span>`;else ac=`<span class="tag ${y.durum.startsWith('Sipariş')?'t-ok':y.durum==='Rezerve'?'t-warn':'t-gray'}">${y.durum}</span><span class="note">${y.op||''}</span>`;
+  return `<div class="cm ${kilit?'lock':''} ${y.durum!=='Bekleyen'&&y.durum!=='İşleniyor'?'done':''}"><div class="u">@${y.ig}<span>${y.kaynak} · ${y.t}</span></div><div class="txt">${y.txt}</div><div class="p">${pr}</div><div class="a">${ac}</div></div>`;}).join('')||'<p class="note">Kuyruk boş. Hızlı satırdan yazın, toplu yapıştırın ya da yayını başlatın.</p>';
+ const ys=S.sip.filter(s=>s.kanal==='Canlı yayın'&&s.no>1044);const ciro=ys.reduce((t,s)=>t+urun(s.k.kod).fiyat*s.k.a,0);
+ $('#yayinKpi').innerHTML=`<div><small>Canlı sipariş</small><b>${ys.length}</b></div><div><small>Yayın cirosu</small><b>${tl(ciro)}</b></div><div><small>Bekleyen yorum</small><b>${say('Bekleyen')}</b></div><div><small>Rezervasyon</small><b>${S.rez.length}</b></div>`;
+ const ops=[...new Set(ys.map(s=>s.op))];$('#opTablo').innerHTML=ops.map(o=>`<tr><td>${o}</td><td style="text-align:right"><b>${ys.filter(s=>s.op===o).length}</b> sipariş</td></tr>`).join('')||'<tr><td class="note">Henüz sipariş yok</td></tr>';
+ $('#rezTablo').innerHTML=S.rez.map(r=>{const k=Math.max(0,r.bitis-Date.now());const dk=String(Math.floor(k/60000)).padStart(2,'0'),sn=String(Math.floor(k/1000)%60).padStart(2,'0');return `<tr><td>@${r.ig}<div class="note">${r.kod} ${r.b}/${r.r} × ${r.a} · ${r.op}</div></td><td class="timer" style="text-align:right">${dk}:${sn}</td><td><button class="btn sm" data-rz="${r.id}">Siparişe çevir</button></td></tr>`;}).join('')||'<tr><td class="note">Rezervasyon yok</td></tr>';
+ $('#yStok').innerHTML=S.urun.map(u=>`<tr><td colspan="4"><b>${u.kod}</b> ${u.ad} · ${tl(u.fiyat)}</td></tr><tr>${['S','M','L','XL'].map(b=>{const t=RENK.reduce((x,r)=>x+satilabilir(u.kod,b,r),0);return `<td class="${t<=2?'low':''}">${b}: ${t}</td>`;}).join('')}</tr>`).join('');
+ if(S.yayinBas){const g=Math.floor((Date.now()-S.yayinBas)/1000);$('#yayinSure').textContent=String(Math.floor(g/60)).padStart(2,'0')+':'+String(g%60).padStart(2,'0');}
+}
+$('#rezTablo').addEventListener('click',e=>{const b=e.target.closest('button[data-rz]');if(!b)return;const r=S.rez.find(x=>x.id===b.dataset.rz);const y=S.kuyruk.find(x=>x.id===r.id);S.rez=S.rez.filter(x=>x!==r);if(y){y.durum='Bekleyen';siparisYap(y,ben.ad);}render();});
+// ---- siparişler
+function renderSip(){const say=d=>S.sip.filter(s=>d==='Tümü'||s.durum===d).length;$('#sFiltre').innerHTML=['Tümü',...DURUM].map(d=>`<button data-f="${d}" class="${filtreS===d?'on':''}">${d} (${say(d)})</button>`).join('');
+ const benimRol=ben.rol;const l=S.sip.filter(s=>filtreS==='Tümü'||s.durum===filtreS);
+ $('#sTablo').innerHTML=l.map(s=>{const m=mus(s.mid),u=urun(s.k.kod),i=DURUM.indexOf(s.durum);let ac='';
+  const ileri=i<6?DURUM[i+1]:null;const izin=benimRol==='Yönetici'||(benimRol==='Müşteri hizmetleri'&&i<=2)||(benimRol==='Yayın operatörü'&&i<=1)||(benimRol==='Depo'&&(i===2))||(benimRol==='Paketleme'&&(i===3||i===4));
+  if(ileri&&izin)ac+=`<button class="btn sec sm" data-n="${s.no}" data-d="${ileri}">→ ${ileri}</button>`;if(i<5&&(benimRol==='Yönetici'||benimRol==='Müşteri hizmetleri'))ac+=` <button class="btn sec sm" data-n="${s.no}" data-d="İptal edildi">İptal</button>`;if(i===6&&(benimRol==='Yönetici'||benimRol==='Müşteri hizmetleri'))ac+=` <button class="btn sec sm" data-n="${s.no}" data-d="İade edildi">İade</button>`;
+  return `<tr><td>#${s.no}</td><td>${m.ad}<div class="note">@${m.ig}</div></td><td>${s.kanal}</td><td>${s.k.kod} ${s.k.b}/${s.k.r} × ${s.k.a}</td><td>${tl(u.fiyat*s.k.a)}</td><td>${s.op}</td><td><span class="tag ${DT[s.durum]}">${s.durum}</span></td><td>${ac||'<span class="note">yetki yok</span>'}</td></tr>`;}).join('')||'<tr><td colspan="8" class="note">Bu durumda sipariş yok</td></tr>';}
+$('#sFiltre').addEventListener('click',e=>{const b=e.target.closest('button');if(b){filtreS=b.dataset.f;renderSip();}});
+$('#sTablo').addEventListener('click',e=>{const b=e.target.closest('button[data-n]');if(!b)return;const s=S.sip.find(x=>x.no==b.dataset.n);const eski=s.durum;s.durum=b.dataset.d;if(s.durum==='İptal edildi'||s.durum==='İade edildi'){urun(s.k.kod).stok[s.k.b][s.k.r]+=s.k.a;}kaydet(ben.ad,'#'+s.no+' durumunu değiştirdi: '+eski+' → '+s.durum+(s.durum.startsWith('İptal')||s.durum.startsWith('İade')?' (ürün stoğa döndü)':''));render();});
+// ---- müşteriler
+const GRUP={'Tümü':()=>true,'En çok alan':m=>m.tutar>=6000,'Uzun süredir almayan':m=>m.son>=60,'Borçlu':m=>m.borc>0,'Yeni':m=>m.kayit<=30};
+function renderMus(){$('#mFiltre').innerHTML=Object.keys(GRUP).map(g=>`<button data-f="${g}" class="${filtreM===g?'on':''}">${g} (${S.mus.filter(GRUP[g]).length})</button>`).join('');
+ const q=($('#mAra').value||'').toLowerCase().replace(/[\s@]/g,'');const l=S.mus.filter(GRUP[filtreM]).filter(m=>!q||m.tel.replace(/\s/g,'').includes(q)||m.ad.toLowerCase().includes(q)||m.ig.includes(q)).sort((a,b)=>b.tutar-a.tutar);
+ $('#mTablo').innerHTML=l.map(m=>`<tr data-m="${m.id}" style="cursor:pointer"><td>${m.ad}</td><td>@${m.ig}</td><td>${m.sip}</td><td>${m.son===0?'bugün':m.son+' gün önce'}</td><td>${m.borc?`<span class="tag t-bad">${tl(m.borc)}</span>`:'<span class="tag t-ok">0</span>'}</td></tr>`).join('');
+ const m=seciliM?mus(seciliM):null;$('#mKart').innerHTML=m?`<h2>${m.ad} <span>@${m.ig}</span></h2><table><tbody><tr><td>Telefon</td><td>${m.tel||'-'}</td></tr><tr><td>Toplam sipariş</td><td>${m.sip}</td></tr><tr><td>Toplam alışveriş</td><td>${tl(m.tutar)}</td></tr><tr><td>Borç</td><td>${m.borc?'<b style="color:var(--bad)">'+tl(m.borc)+'</b>':'0'}</td></tr><tr><td>Son alışveriş</td><td>${m.son===0?'bugün':m.son+' gün önce'}</td></tr></tbody></table><h2 style="margin-top:12px">Siparişleri</h2><table><tbody>${S.sip.filter(s=>s.mid===m.id).map(s=>`<tr><td>#${s.no}</td><td>${s.kanal}</td><td><span class="tag ${DT[s.durum]}">${s.durum}</span></td></tr>`).join('')||'<tr><td class="note">Sipariş yok</td></tr>'}</tbody></table>`:'<h2>Müşteri kartı</h2><p class="note">Listeden bir müşteri seçin.</p>';}
+$('#mFiltre').addEventListener('click',e=>{const b=e.target.closest('button');if(b){filtreM=b.dataset.f;renderMus();}});$('#mAra').addEventListener('input',renderMus);
+$('#mTablo').addEventListener('click',e=>{const tr=e.target.closest('tr[data-m]');if(tr){seciliM=+tr.dataset.m;renderMus();}});
+// ---- personel + kayıt
+function renderPer(){$('#pTablo').innerHTML=PERSONEL.map(p=>`<tr><td>${p.ad}</td><td>${p.rol}</td><td class="note">${YETKI[p.rol].map(k=>EKRAN[k]).join(', ')}</td></tr>`).join('');
+ $('#perfTablo').innerHTML=PERSONEL.map(p=>{const x=S.perf[p.ad]||{yorum:0,sip:0,ciro:0};return `<tr><td>${p.ad}</td><td>${x.yorum}</td><td>${x.sip}</td><td>${tl(x.ciro)}</td></tr>`;}).join('');
+ $('#log').innerHTML=S.log.map(l=>`<div><span class="note">${l.t}</span> · <b>${l.kim}</b> ${l.m}</div>`).join('')||'<div class="note">Henüz işlem yok.</div>';}
+function render(){renderCanli();renderSip();renderMus();renderPer();}
+setInterval(()=>{if(document.querySelector('#v-canli.on'))renderCanli();},1000);
+menu();
+})();
+</script>
+</body>
+</html>
