@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reklam Arenası — Örnek Platform</title>
+<meta name="description" content="Reklamların yarıştığı, izleyicilerin oy verip puan kazandığı ve reklamverenlerin kampanya açtığı platform örneği.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f5f2;--kart:#fff;--ink:#17191f;--ink2:#636874;--line:#e4e2dc;--vurgu:#d9480f;--vurgu2:#fde9df;--mor:#4c3fd9;--mor2:#e8e6fb;--ok:#1f8a4c;--sari:#f5c242}
+@media (prefers-color-scheme:dark){:root{--bg:#121318;--kart:#1a1c23;--ink:#eef0f4;--ink2:#a0a6b4;--line:#2b2e38;--vurgu:#ff7a3d;--vurgu2:#3a2418;--mor:#9b93f5;--mor2:#262347;--ok:#5bd38a;--sari:#f5c242}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:15px/1.5 Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+h1,h2,h3{font-family:Sora,Inter,sans-serif;line-height:1.2}
+.ornek{background:#1d2130;color:#c9cfdc;font-size:12px;text-align:center;padding:6px 16px}
+.kap{max-width:1100px;margin:0 auto;padding:0 16px}
+header{background:var(--kart);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.ust{display:flex;align-items:center;gap:14px;height:58px}
+.logo{font-family:Sora,sans-serif;font-weight:700;font-size:19px;color:var(--vurgu)}
+nav{display:flex;gap:4px;margin-left:auto}
+nav button{border:0;background:transparent;border-radius:8px;padding:8px 12px;font-weight:600;font-size:14px;color:var(--ink2)}
+nav button[aria-current="true"]{background:var(--vurgu2);color:var(--vurgu)}
+.puan{font-size:13px;font-weight:600;background:var(--mor2);color:var(--mor);border-radius:999px;padding:6px 10px;white-space:nowrap}
+@media(max-width:640px){nav button{padding:8px 7px;font-size:13px}.logo{font-size:16px}.puan{display:none}}
+main{padding:22px 0 60px}
+.sayfa{display:none}.sayfa[data-acik="true"]{display:block}
+.izgara{display:grid;grid-template-columns:1.5fr 1fr;gap:18px;align-items:start}
+@media(max-width:860px){.izgara{grid-template-columns:1fr}}
+.kart{background:var(--kart);border:1px solid var(--line);border-radius:14px;padding:16px}
+.kart h2{font-size:17px;margin-bottom:10px}
+.kart h3{font-size:13px;color:var(--ink2);font-weight:600;margin:14px 0 8px;text-transform:uppercase;letter-spacing:.04em}
+.not{font-size:13px;color:var(--ink2)}
+.sekmeler{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.sekmeler button{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600}
+.sekmeler button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.reklam{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:12px;background:var(--kart)}
+.afis{height:150px;display:flex;align-items:flex-end;padding:14px;color:#fff;font-family:Sora,sans-serif;font-weight:700;font-size:20px;text-shadow:0 1px 8px rgba(0,0,0,.35)}
+.govde{padding:12px 14px;display:grid;gap:8px}
+.govde .ad{display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:600}
+.govde .ad small{color:var(--ink2);font-weight:500}
+.govde p{font-size:14px;color:var(--ink2)}
+.oy{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.oy button{border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:7px 11px;font-size:13px;font-weight:600}
+.oy button[aria-pressed="true"]{background:var(--vurgu);color:#fff;border-color:var(--vurgu)}
+.oy button:disabled{opacity:.55;cursor:default}
+.oy .sayi{margin-left:auto;font-variant-numeric:tabular-nums;font-size:13px;color:var(--ink2)}
+.cubuk{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.cubuk i{display:block;height:100%;background:var(--vurgu);border-radius:4px;transition:width .4s}
+table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 6px;text-align:right;border-bottom:1px solid var(--line)}
+th{font-size:12px;color:var(--ink2);font-weight:600}
+th:nth-child(2),td:nth-child(2){text-align:left;width:100%}
+td:first-child{color:var(--ink2)}
+tr.lider td:nth-child(2)::before{content:"";display:inline-block;width:3px;height:14px;background:var(--vurgu);border-radius:2px;margin-right:8px;vertical-align:-2px}
+form{display:grid;gap:10px}
+label{display:grid;gap:4px;font-size:13px;font-weight:600;color:var(--ink2)}
+input,select,textarea{border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:9px 10px;font-size:14px;font-weight:500}
+textarea{min-height:70px;resize:vertical}
+.satir{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{border:0;background:var(--vurgu);color:#fff;border-radius:10px;padding:11px 16px;font-weight:600;font-size:14px}
+.btn.ikincil{background:var(--mor)}
+.ozet{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ozet div{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg)}
+.ozet b{display:block;font-family:Sora,sans-serif;font-size:22px}
+.ozet small{color:var(--ink2);font-size:12px}
+.liste{list-style:none;display:grid;gap:8px}
+.liste li{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:9px 10px;border:1px solid var(--line);border-radius:10px;font-size:14px}
+.liste li small{display:block;color:var(--ink2);font-size:12px}
+.liste li span{font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--mor2);color:var(--mor);white-space:nowrap}
+.liste li span.yayin{background:#e3f3ea;color:var(--ok)}
+.liste li span.bekle{background:var(--vurgu2);color:var(--vurgu)}
+.odul{display:grid;gap:8px}
+.odul div{display:grid;grid-template-columns:1fr auto;gap:8px;padding:9px 10px;border:1px solid var(--line);border-radius:10px;font-size:14px;align-items:center}
+.odul button{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 10px;font-size:13px;font-weight:600}
+.odul button:disabled{opacity:.5;cursor:default}
+.bildirim{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:13px;font-weight:600;opacity:0;transition:.25s;pointer-events:none;z-index:9}
+.bildirim[data-acik="true"]{opacity:1;transform:translateX(-50%)}
+.zaman{font-size:12px;color:var(--ink2);margin-bottom:10px}
+</style>
+</head>
+<body>
+<div class="ornek">Örnek ekran: markalar, reklamlar ve rakamlar temsilîdir. Oylar yalnız bu tarayıcıda tutulur, buradan bir yere veri gitmez.</div>
+<header><div class="kap ust">
+<div class="logo">Reklam Arenası</div>
+<div class="puan" id="puanim">Puanım: 120</div>
+<nav>
+<button data-sayfa="arena" aria-current="true">Arena</button>
+<button data-sayfa="liderlik">Liderlik</button>
+<button data-sayfa="oduller">Ödüller</button>
+<button data-sayfa="reklamveren">Reklamveren</button>
+</nav>
+</div></header>
+
+<main class="kap">
+
+<section class="sayfa" data-sayfa="arena" data-acik="true">
+<div class="izgara">
+<div class="kart">
+<h2>Bu haftanın yarışması</h2>
+<p class="zaman" id="geriSayim"></p>
+<div class="sekmeler" id="katSec"></div>
+<div id="reklamListesi"></div>
+</div>
+<div class="kart">
+<h2>Nasıl işliyor</h2>
+<ul class="liste">
+<li><div>Reklamveren kampanya açar<small>Görsel ya da video, hedef kategori, ödül havuzu</small></div><span>1</span></li>
+<li><div>İzleyici izler ve oy verir<small>Her oy puan kazandırır, günde en çok 20 oy</small></div><span>2</span></li>
+<li><div>Hafta sonu kazanan belli olur<small>Oy ve izlenme ağırlıklı puan</small></div><span>3</span></li>
+<li><div>Puanlar ödüle dönüşür<small>Hediye çeki, indirim kodu, çekiliş</small></div><span>4</span></li>
+</ul>
+<h3>Bugünkü durumun</h3>
+<div class="ozet"><div><b id="oyBugun">0</b><small>oy verdin</small></div><div><b>120</b><small>başlangıç puanı</small></div><div><b id="kalanOy">20</b><small>kalan oy hakkı</small></div></div>
+</div>
+</div>
+</section>
+
+<section class="sayfa" data-sayfa="liderlik">
+<div class="kart">
+<h2>Liderlik tablosu</h2>
+<p class="not" style="margin-bottom:10px">Puan = oy x 3 + izlenme / 100. Tablo her oyda yeniden sıralanır.</p>
+<table id="liderTablo"></table>
+</div>
+</section>
+
+<section class="sayfa" data-sayfa="oduller">
+<div class="izgara">
+<div class="kart">
+<h2>Ödül kataloğu</h2>
+<div class="odul" id="odulListesi"></div>
+</div>
+<div class="kart">
+<h2>Puan geçmişi</h2>
+<ul class="liste" id="puanGecmisi"></ul>
+</div>
+</div>
+</section>
+
+<section class="sayfa" data-sayfa="reklamveren">
+<div class="izgara">
+<div class="kart">
+<h2>Yeni kampanya</h2>
+<form id="kampanyaForm">
+<label>Marka<input id="kMarka" placeholder="Örn. Nova Kahve" required></label>
+<label>Reklam başlığı<input id="kBaslik" placeholder="Sloganınız" required></label>
+<div class="satir">
+<label>Kategori<select id="kKat"><option>Yiyecek</option><option>Teknoloji</option><option>Moda</option><option>Seyahat</option></select></label>
+<label>Ödül havuzu (TL)<input id="kOdul" type="number" min="500" step="100" value="1000"></label>
+</div>
+<label>Açıklama<textarea id="kAciklama" placeholder="Reklamın kısa açıklaması"></textarea></label>
+<button class="btn ikincil" type="submit">Onaya gönder</button>
+</form>
+<p class="not" style="margin-top:8px">Onaylanan kampanya bir sonraki yarışmada arenaya girer; izleyici oyu ve izlenme sayısı panelde anlık görünür.</p>
+</div>
+<div class="kart">
+<h2>Kampanyalarım</h2>
+<div class="ozet" style="margin-bottom:12px"><div><b id="rvIzlenme">48.200</b><small>toplam izlenme</small></div><div><b id="rvOy">3.410</b><small>toplam oy</small></div><div><b>2</b><small>aktif kampanya</small></div></div>
+<ul class="liste" id="kampanyaListesi"></ul>
+</div>
+</div>
+</section>
+
+</main>
+<div class="bildirim" id="bildirim"></div>
+
+<script>
+const KAT=['Hepsi','Yiyecek','Teknoloji','Moda','Seyahat'];
+const RENK=['linear-gradient(135deg,#d9480f,#f59f00)','linear-gradient(135deg,#4c3fd9,#1fb6d9)','linear-gradient(135deg,#1f8a4c,#a3d900)','linear-gradient(135deg,#c2255c,#ff8787)','linear-gradient(135deg,#1c3f60,#4dabf7)','linear-gradient(135deg,#5f3dc4,#f783ac)'];
+let REKLAMLAR=[
+ {id:1,marka:'Nova Kahve',baslik:'Sabahı uyandıran tek yudum',kat:'Yiyecek',oy:412,izlenme:9800,aciklama:'15 saniyelik ürün tanıtımı'},
+ {id:2,marka:'Kuzey Bisiklet',baslik:'Şehri yeniden keşfet',kat:'Seyahat',oy:388,izlenme:12100,aciklama:'Şehir içi elektrikli bisiklet'},
+ {id:3,marka:'Pixa Kulaklık',baslik:'Sessizliği kendin seç',kat:'Teknoloji',oy:457,izlenme:15400,aciklama:'Gürültü engelleme özelliği'},
+ {id:4,marka:'Atlas Ayakkabı',baslik:'Her adım sana ait',kat:'Moda',oy:301,izlenme:8700,aciklama:'Sonbahar koleksiyonu'},
+ {id:5,marka:'Lezzet Durağı',baslik:'Kapına 30 dakikada',kat:'Yiyecek',oy:276,izlenme:7600,aciklama:'Sipariş uygulaması tanıtımı'},
+ {id:6,marka:'Mavi Rota',baslik:'Hafta sonu kaçamağı',kat:'Seyahat',oy:224,izlenme:6900,aciklama:'Butik otel kampanyası'},
+];
+const ODULLER=[['500 TL hediye çeki',1500],['Kahve zinciri 1 ay ücretsiz',900],['%20 indirim kodu',300],['Aylık çekiliş bileti',100]];
+let kat='Hepsi',puan=120,oyBugun=0;const oylar=new Set();const gecmis=[];
+const $=s=>document.querySelector(s);
+const nf=n=>n.toLocaleString('tr-TR');
+const skor=r=>r.oy*3+Math.round(r.izlenme/100);
+function bildir(t){const b=$('#bildirim');b.textContent=t;b.dataset.acik='true';clearTimeout(b._t);b._t=setTimeout(()=>b.dataset.acik='false',2200)}
+function renderKat(){$('#katSec').innerHTML=KAT.map(k=>`<button type="button" data-k="${k}" aria-pressed="${k===kat}">${k}</button>`).join('')}
+function renderListe(){const list=REKLAMLAR.filter(r=>kat==='Hepsi'||r.kat===kat);const maxOy=Math.max(...REKLAMLAR.map(r=>r.oy));$('#reklamListesi').innerHTML=list.map(r=>`<article class="reklam"><div class="afis" style="background:${RENK[(r.id-1)%RENK.length]}">${r.baslik}</div><div class="govde"><div class="ad">${r.marka}<small>${r.kat} · ${nf(r.izlenme)} izlenme</small></div><p>${r.aciklama}</p><div class="oy"><button type="button" data-oy="${r.id}" aria-pressed="${oylar.has(r.id)}" ${oylar.has(r.id)||oyBugun>=20?'disabled':''}>${oylar.has(r.id)?'Oy verildi':'Oy ver (+5 puan)'}</button><button type="button" data-izle="${r.id}">İzle</button><span class="sayi">${nf(r.oy)} oy</span></div><div class="cubuk"><i style="width:${Math.round(r.oy/maxOy*100)}%"></i></div></div></article>`).join('')}
+function renderLider(){const s=REKLAMLAR.slice().sort((a,b)=>skor(b)-skor(a));$('#liderTablo').innerHTML='<thead><tr><th>#</th><th>Reklam</th><th>Oy</th><th>İzlenme</th><th>Puan</th></tr></thead><tbody>'+s.map((r,i)=>`<tr class="${i<3?'lider':''}"><td>${i+1}</td><td>${r.marka} <small style="color:var(--ink2)">· ${r.baslik}</small></td><td>${nf(r.oy)}</td><td>${nf(r.izlenme)}</td><td><b>${nf(skor(r))}</b></td></tr>`).join('')+'</tbody>'}
+function renderOdul(){$('#odulListesi').innerHTML=ODULLER.map(([ad,p],i)=>`<div><div>${ad}<br><small style="color:var(--ink2)">${nf(p)} puan</small></div><button type="button" data-odul="${i}" ${puan<p?'disabled':''}>${puan<p?'Puan yetersiz':'Kullan'}</button></div>`).join('');$('#puanGecmisi').innerHTML=gecmis.length?gecmis.slice().reverse().slice(0,8).map(g=>`<li><div>${g[0]}<small>${g[2]}</small></div><span class="${g[1]>0?'yayin':'bekle'}">${g[1]>0?'+':''}${g[1]}</span></li>`).join(''):'<li><div>Henüz hareket yok<small>Arenada oy verince burada görünür</small></div></li>'}
+function renderPuan(){$('#puanim').textContent='Puanım: '+nf(puan);$('#oyBugun').textContent=oyBugun;$('#kalanOy').textContent=20-oyBugun}
+let kampanyalar=[{marka:'Nova Kahve',baslik:'Sabahı uyandıran tek yudum',durum:'yayin'},{marka:'Nova Kahve',baslik:'Öğleden sonra molası',durum:'bekle'}];
+function renderKampanya(){$('#kampanyaListesi').innerHTML=kampanyalar.map(k=>`<li><div>${k.baslik}<small>${k.marka}</small></div><span class="${k.durum}">${k.durum==='yayin'?'yayında':'onay bekliyor'}</span></li>`).join('')}
+function geriSayim(){const bitis=new Date();bitis.setDate(bitis.getDate()+(7-bitis.getDay())%7||7);bitis.setHours(23,59,0,0);const f=bitis-new Date();const g=Math.floor(f/864e5),s=Math.floor(f%864e5/36e5),d=Math.floor(f%36e5/6e4);$('#geriSayim').textContent=`Yarışma bitimine ${g} gün ${s} saat ${d} dakika · ödül havuzu 12.500 TL`}
+document.addEventListener('click',e=>{const nb=e.target.closest('nav button');if(nb){document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-current',b===nb));document.querySelectorAll('.sayfa').forEach(s=>s.dataset.acik=String(s.dataset.sayfa===nb.dataset.sayfa));return}
+const kb=e.target.closest('#katSec button');if(kb){kat=kb.dataset.k;renderKat();renderListe();return}
+const ob=e.target.closest('[data-oy]');if(ob&&!ob.disabled){const r=REKLAMLAR.find(x=>x.id===+ob.dataset.oy);r.oy++;oylar.add(r.id);oyBugun++;puan+=5;gecmis.push([r.marka+' reklamına oy',5,new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'})]);renderListe();renderLider();renderOdul();renderPuan();bildir('Oyun sayıldı, +5 puan');return}
+const ib=e.target.closest('[data-izle]');if(ib){const r=REKLAMLAR.find(x=>x.id===+ib.dataset.izle);r.izlenme++;puan+=1;gecmis.push([r.marka+' reklamını izledin',1,new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'})]);renderListe();renderLider();renderOdul();renderPuan();bildir('İzlenme sayıldı, +1 puan');return}
+const odb=e.target.closest('[data-odul]');if(odb&&!odb.disabled){const [ad,p]=ODULLER[+odb.dataset.odul];puan-=p;gecmis.push([ad,-p,new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'})]);renderOdul();renderPuan();bildir(ad+' kodu hesabına tanımlandı');return}});
+$('#kampanyaForm').addEventListener('submit',e=>{e.preventDefault();const marka=$('#kMarka').value.trim(),baslik=$('#kBaslik').value.trim();if(!marka||!baslik)return;kampanyalar.unshift({marka,baslik,durum:'bekle'});renderKampanya();e.target.reset();$('#kOdul').value=1000;bildir('Kampanya onaya gönderildi')});
+renderKat();renderListe();renderLider();renderOdul();renderPuan();renderKampanya();geriSayim();setInterval(geriSayim,60000);
+</script>
+</body>
+</html>
