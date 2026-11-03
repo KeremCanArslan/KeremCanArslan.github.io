@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>Kullanıcı Portalı — Giden faturalar (örnek ekran)</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet">
+<style>
+:root{
+  --ink:#18212b; --ink-2:#47525e; --ink-3:#77818c;
+  --line:#e2e5e9; --line-2:#eef0f2; --bg:#f5f6f7; --white:#fff;
+  --brand:#0e5866; --brand-2:#e4eff1; --brand-ink:#0a4550;
+  --ok:#1b6e43; --ok-bg:#e5f3ea; --wait:#8a5700; --wait-bg:#fbf0d7;
+  --err:#ae2a1d; --err-bg:#fbe9e6; --q:#2a559e; --q-bg:#e7eef9; --mute-bg:#eef0f2;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:13px/1.45 "IBM Plex Sans",-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg);width:1440px;height:900px;overflow:hidden;display:flex}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12px;letter-spacing:-.1px}
+svg{display:block;flex:none}
+/* sidebar */
+.side{width:232px;background:#fbfbfc;border-right:1px solid var(--line);display:flex;flex-direction:column}
+.brand{height:56px;display:flex;align-items:center;gap:10px;padding:0 18px;border-bottom:1px solid var(--line)}
+.mark{width:26px;height:26px;border-radius:5px;background:var(--brand);color:#fff;font-weight:600;font-size:12px;display:grid;place-items:center}
+.brand b{font-weight:600;font-size:14px}
+.nav{padding:10px 10px;flex:1}
+.grp{font-size:11px;color:var(--ink-3);padding:14px 10px 6px}
+.it{display:flex;align-items:center;gap:10px;height:32px;padding:0 10px;border-radius:5px;color:var(--ink-2)}
+.it svg{stroke:var(--ink-3)}
+.it.on{background:var(--brand-2);color:var(--brand-ink);font-weight:500}
+.it.on svg{stroke:var(--brand)}
+.it .n{margin-left:auto;font-size:11px;color:var(--ink-3)}
+.it .n.r{color:var(--err);font-weight:500}
+.comp{margin:10px;border:1px solid var(--line);border-radius:6px;padding:10px 12px;background:#fff}
+.comp b{display:block;font-weight:500;font-size:12.5px}
+.comp span{font-size:11.5px;color:var(--ink-3)}
+/* main */
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.top{height:56px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:0 20px}
+.crumb{color:var(--ink-3)}
+.crumb b{color:var(--ink);font-weight:500}
+.search{margin-left:24px;width:380px;height:34px;border:1px solid var(--line);border-radius:6px;display:flex;align-items:center;gap:8px;padding:0 10px;color:var(--ink-3);background:var(--bg)}
+.search kbd{margin-left:auto;font:11px "IBM Plex Mono";border:1px solid var(--line);border-radius:4px;padding:1px 5px;background:#fff}
+.kontor{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--ink-2)}
+.bar{width:84px;height:6px;border-radius:3px;background:var(--line-2);overflow:hidden}
+.bar i{display:block;height:100%;width:22%;background:var(--wait)}
+.kontor a{color:var(--brand);font-weight:500;text-decoration:none}
+.av{width:30px;height:30px;border-radius:50%;background:#d9e3e5;color:var(--brand-ink);display:grid;place-items:center;font-size:11.5px;font-weight:600}
+.body{flex:1;display:flex;min-height:0}
+.content{flex:1;padding:20px 22px 0;min-width:0;display:flex;flex-direction:column}
+.head{display:flex;align-items:flex-end;gap:12px}
+.head h1{font-size:20px;font-weight:600;letter-spacing:-.2px}
+.head p{color:var(--ink-3);font-size:12.5px;margin-top:2px}
+.btn{height:32px;padding:0 12px;border-radius:6px;border:1px solid var(--line);background:#fff;display:inline-flex;align-items:center;gap:7px;font:500 12.5px "IBM Plex Sans";color:var(--ink)}
+.btn.p{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn.p svg{stroke:#fff}
+.sp{margin-left:auto;display:flex;gap:8px}
+/* status strip */
+.strip{margin-top:16px;display:flex;background:#fff;border:1px solid var(--line);border-radius:7px}
+.seg{flex:1;padding:10px 14px;border-right:1px solid var(--line-2)}
+.seg:last-child{border-right:0}
+.seg small{display:flex;align-items:center;gap:6px;color:var(--ink-3);font-size:11.5px}
+.seg b{display:block;font-size:17px;font-weight:600;margin-top:2px;font-variant-numeric:tabular-nums}
+.seg.on{box-shadow:inset 0 -2px 0 var(--brand)}
+.dot{width:7px;height:7px;border-radius:50%}
+/* alert */
+.alert{margin-top:12px;display:flex;align-items:center;gap:10px;border:1px solid #efc9c3;background:var(--err-bg);border-radius:7px;padding:9px 12px;color:#6d1d14}
+.alert svg{stroke:var(--err)}
+.alert a{margin-left:auto;color:var(--err);font-weight:500;white-space:nowrap}
+/* filters */
+.filters{margin-top:14px;display:flex;align-items:center;gap:8px}
+.segc{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#fff}
+.segc span{white-space:nowrap;padding:6px 12px;color:var(--ink-2);border-right:1px solid var(--line)}
+.segc span:last-child{border-right:0}
+.segc .on{background:var(--ink);color:#fff}
+.chip{white-space:nowrap;height:30px;display:inline-flex;align-items:center;gap:6px;padding:0 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink-2)}
+.chip.set{border-color:#b9d3d8;background:var(--brand-2);color:var(--brand-ink)}
+.chip svg{stroke:currentColor}
+.clear{color:var(--ink-3);margin-left:4px;text-decoration:underline;text-underline-offset:2px}
+/* table */
+.tbl{margin-top:12px;background:#fff;border:1px solid var(--line);border-radius:7px 7px 0 0;flex:1;overflow:hidden;display:flex;flex-direction:column}
+table{width:100%;border-collapse:collapse}
+th{font-weight:500;font-size:11.5px;color:var(--ink-3);text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);background:#fbfbfc;white-space:nowrap}
+td{padding:0 10px;height:41px;border-bottom:1px solid var(--line-2);white-space:nowrap}
+tr.sel td{background:#f2f8f9}
+tr.sel td:first-child{box-shadow:inset 3px 0 0 var(--brand)}
+.r{text-align:right;font-variant-numeric:tabular-nums}
+.cb{width:14px;height:14px;border:1px solid #c5cad0;border-radius:3px;background:#fff}
+.who b{font-weight:500;display:block;line-height:1.25}
+.who span{font-size:11.5px;color:var(--ink-3)}
+.sc{font-size:11.5px;color:var(--ink-2)}
+.pill{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:11px;font-size:11.5px;font-weight:500}
+.pill.ok{background:var(--ok-bg);color:var(--ok)} .pill.ok .dot{background:var(--ok)}
+.pill.wait{background:var(--wait-bg);color:var(--wait)} .pill.wait .dot{background:#c98a10}
+.pill.err{background:var(--err-bg);color:var(--err)} .pill.err .dot{background:var(--err)}
+.pill.q{background:var(--q-bg);color:var(--q)} .pill.q .dot{background:var(--q)}
+.pill.mute{background:var(--mute-bg);color:var(--ink-2)} .pill.mute .dot{background:#9aa3ad}
+.sub{display:block;font-size:11px;color:var(--ink-3);margin-top:1px}
+.foot{margin-top:auto;display:flex;align-items:center;gap:10px;padding:9px 12px;border-top:1px solid var(--line);color:var(--ink-3);font-size:12px}
+.pg{margin-left:auto;display:flex;gap:4px}
+.pg span{min-width:26px;height:26px;border:1px solid var(--line);border-radius:5px;display:grid;place-items:center;color:var(--ink-2)}
+.pg .on{background:var(--ink);color:#fff;border-color:var(--ink)}
+/* drawer */
+.drawer{width:372px;background:#fff;border-left:1px solid var(--line);display:flex;flex-direction:column}
+.dh{padding:16px 18px 14px;border-bottom:1px solid var(--line)}
+.dh .row{display:flex;align-items:center;gap:8px}
+.dh .x{margin-left:auto;stroke:var(--ink-3)}
+.dh h2{font-size:15px;font-weight:600;margin-top:8px}
+.dh p{color:var(--ink-3);font-size:12px}
+.sec{padding:14px 18px;border-bottom:1px solid var(--line-2)}
+.sec h3{font-size:11.5px;font-weight:500;color:var(--ink-3);margin-bottom:10px}
+.kv{display:grid;grid-template-columns:118px 1fr;row-gap:7px;font-size:12.5px}
+.kv dt{color:var(--ink-3)}
+.kv dd{display:flex;align-items:center;gap:6px}
+.sum{display:grid;grid-template-columns:1fr auto;row-gap:5px;font-size:12.5px}
+.sum span{color:var(--ink-2)} .sum b{font-weight:500;text-align:right;font-variant-numeric:tabular-nums}
+.sum .t{border-top:1px solid var(--line);padding-top:7px;margin-top:3px;font-weight:600;color:var(--ink)}
+.sum .t+b{border-top:1px solid var(--line);padding-top:7px;margin-top:3px;font-weight:600;font-size:14px}
+.tl{position:relative;padding-left:22px}
+.tl:before{content:"";position:absolute;left:5.5px;top:8px;bottom:40px;width:2px;background:#d3d9de}
+.st{position:relative;padding-bottom:12px}
+.st:before{content:"";position:absolute;left:-21px;top:4px;width:11px;height:11px;border-radius:50%;background:#fff;border:2px solid var(--ok)}
+.st.done:before{background:var(--ok)}
+.st.now:before{border-color:#c98a10;background:#fff;box-shadow:0 0 0 3px var(--wait-bg)}
+.st b{font-weight:500;font-size:12.5px;display:block}
+.st span{font-size:11.5px;color:var(--ink-3)}
+.note{margin-top:2px;background:var(--wait-bg);color:#6b4500;border-radius:5px;padding:7px 9px;font-size:11.5px}
+.da{margin-top:auto;padding:12px 18px;border-top:1px solid var(--line);display:flex;gap:8px}
+.da .btn{flex:1;justify-content:center}
+.da .btn.more{flex:none;width:32px;padding:0}
+</style>
+</head>
+<body>
+
+<aside class="side">
+  <div class="brand"><div class="mark">KP</div><b>Kullanıcı Portalı</b></div>
+  <nav class="nav">
+    <div class="it"><svg width="16" height="16" fill="none" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>Genel bakış</div>
+    <div class="grp">Faturalar</div>
+    <div class="it"><svg width="16" height="16" fill="none" stroke-width="1.5"><path d="M2 9.5h3.5l1 1.5h3l1-1.5H14V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V9.5zM2 9.5 4 3h8l2 6.5"/></svg>Gelen faturalar<span class="n">12 yeni</span></div>
+    <div class="it on"><svg width="16" height="16" fill="none" stroke-width="1.5"><path d="M14 2 7 9M14 2l-4.5 12L7 9 2 6.5 14 2z"/></svg>Giden faturalar</div>
+    <div class="it"><svg width="16" height="16" fill="none" stroke-width="1.5"><path d="M4 2h6l3 3v9H4z"/><path d="M10 2v3h3"/></svg>Taslaklar<span class="n">3</span></div>
+    <div class="it"><svg width="16" height="16" fill="none" stroke-width="1.5"><rect x="2" y="3" width="12" height="3" rx="1"/><path d="M3 6v7h10V6M6.5 9h3"/></svg>e-Arşiv faturalar</div>
+    <div class="grp">Diğer belgeler</div>
+    <div class="it"><svg width="16" height="16" fill="none" stroke-width="1.5"><path d="M1.5 4h8v7h-8zM9.5 7h3l2 2v2h-5"/><circle cx="4.5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/></svg>e-İrsaliye</div>
+    <div class="it"><svg width="16" height="16" fill="none" stroke-width="1.5"><path d="M8 14V7M8 7c0-3 2-5 5-5 0 3-2 5-5 5zM8 9C8 6.5 6.3 5 3.5 5 3.5 7.5 5 9 8 9z"/></svg>e-Müstahsil</div>
+    <div class="it"><svg width="16" height="16" fill="none" stroke-width="1.5"><circle cx="8" cy="5" r="2.5"/><path d="M3 14c.5-3 2.5-4.5 5-4.5s4.5 1.5 5 4.5"/></svg>e-SMM</div>
+    <div class="grp">Hesap</div>
+    <div class="it"><svg width="16" height="16" fill="none" stroke-width="1.5"><rect x="2" y="4" width="12" height="9" rx="1.5"/><path d="M2 7h12M10.5 10h1.5"/></svg>Kontör ve paketler<span class="n r">az kaldı</span></div>
+    <div class="it"><svg width="16" height="16" fill="none" stroke-width="1.5"><circle cx="6" cy="6" r="2.2"/><path d="M2 13c.4-2.4 1.9-3.6 4-3.6s3.6 1.2 4 3.6M10.5 4.2a2 2 0 0 1 0 3.6M12 9.8c1.2.5 1.9 1.6 2.1 3.2"/></svg>Kullanıcılar</div>
+    <div class="it"><svg width="16" height="16" fill="none" stroke-width="1.5"><path d="M6 5 3 8l3 3M10 5l3 3-3 3"/></svg>Entegrasyon ve API</div>
+    <div class="it"><svg width="16" height="16" fill="none" stroke-width="1.5"><circle cx="8" cy="8" r="2"/><path d="M8 1.8v2M8 12.2v2M1.8 8h2M12.2 8h2M3.6 3.6 5 5M11 11l1.4 1.4M3.6 12.4 5 11M11 5l1.4-1.4"/></svg>Ayarlar</div>
+  </nav>
+  <div class="comp"><b>Kaya Tekstil San. Ltd. Şti.</b><span>VKN 4810 552 937 · Merkez</span></div>
+</aside>
+
+<div class="main">
+  <header class="top">
+    <div class="crumb">Faturalar / <b>Giden faturalar</b></div>
+    <div class="search"><svg width="15" height="15" fill="none" stroke="#77818c" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="4.5"/><path d="m10 10 3.5 3.5"/></svg>Fatura no, ETTN, VKN/TCKN ya da alıcı adı<kbd>⌘K</kbd></div>
+    <div class="kontor"><span>Kontör <b style="color:var(--ink)">212</b> · yaklaşık 4 gün yeter</span><div class="bar"><i></i></div><a>Yükle</a></div>
+    <svg width="18" height="18" fill="none" stroke="#47525e" stroke-width="1.5"><path d="M4.5 13V8a4.5 4.5 0 0 1 9 0v5l1.2 1.5H3.3L4.5 13zM7.5 16h3"/></svg>
+    <div class="av">AK</div>
+  </header>
+
+  <div class="body">
+    <section class="content">
+      <div class="head">
+        <div><h1>Giden faturalar</h1><p>1 Ekim – 3 Kasım 2026 arası, e-Fatura ve e-Arşiv birlikte</p></div>
+        <div class="sp">
+          <span class="btn"><svg width="14" height="14" fill="none" stroke="#18212b" stroke-width="1.5"><path d="M7 2v7M4 6.5 7 9.5l3-3M2.5 11.5h9"/></svg>Excel'e aktar</span>
+          <span class="btn"><svg width="14" height="14" fill="none" stroke="#18212b" stroke-width="1.5"><path d="M2.5 4h9M2.5 7h9M2.5 10h5"/></svg>Toplu işlem</span>
+          <span class="btn p"><svg width="14" height="14" fill="none" stroke-width="1.7"><path d="M7 2.5v9M2.5 7h9"/></svg>Yeni fatura</span>
+        </div>
+      </div>
+
+      <div class="strip">
+        <div class="seg on"><small>Tümü</small><b>1.284</b></div>
+        <div class="seg"><small><i class="dot" style="background:var(--ok)"></i>Alıcıya ulaştı</small><b>1.198</b></div>
+        <div class="seg"><small><i class="dot" style="background:#c98a10"></i>Yanıt bekliyor</small><b>41</b></div>
+        <div class="seg"><small><i class="dot" style="background:var(--q)"></i>Kuyrukta</small><b>35</b></div>
+        <div class="seg"><small><i class="dot" style="background:#9aa3ad"></i>Reddedildi</small><b>6</b></div>
+        <div class="seg"><small><i class="dot" style="background:var(--err)"></i>Hata</small><b style="color:var(--err)">4</b></div>
+      </div>
+
+      <div class="alert">
+        <svg width="16" height="16" fill="none" stroke-width="1.6"><circle cx="8" cy="8" r="6.2"/><path d="M8 4.8v3.8M8 10.9v.2"/></svg>
+        <span><b>4 fatura gönderilemedi.</b> Üçünde alıcı e-Fatura kullanıcısı değil, e-Arşiv olarak yeniden düzenlenebilir.</span>
+        <a>Hatalıları göster</a>
+      </div>
+
+      <div class="filters">
+        <div class="segc"><span class="on">Tümü</span><span>e-Fatura</span><span>e-Arşiv</span></div>
+        <span class="chip set"><svg width="13" height="13" fill="none" stroke-width="1.5"><rect x="1.5" y="2.5" width="10" height="9" rx="1"/><path d="M1.5 5.5h10M4.5 1v3M8.5 1v3"/></svg>1 Eki – 3 Kas</span>
+        <span class="chip">Senaryo<svg width="10" height="10" fill="none" stroke-width="1.5"><path d="m2 4 3 3 3-3"/></svg></span>
+        <span class="chip">Fatura tipi<svg width="10" height="10" fill="none" stroke-width="1.5"><path d="m2 4 3 3 3-3"/></svg></span>
+        <span class="chip">Alıcı<svg width="10" height="10" fill="none" stroke-width="1.5"><path d="m2 4 3 3 3-3"/></svg></span>
+        <span class="chip">Tutar<svg width="10" height="10" fill="none" stroke-width="1.5"><path d="m2 4 3 3 3-3"/></svg></span>
+        <span class="clear">Temizle</span>
+      </div>
+
+      <div class="tbl">
+        <table>
+          <thead><tr>
+            <th style="width:30px"><div class="cb"></div></th>
+            <th>Fatura no</th><th>Alıcı</th><th>Tarih ↓</th><th>Senaryo / tip</th><th class="r">Tutar</th><th>Durum</th>
+          </tr></thead>
+          <tbody>
+            <tr><td><div class="cb"></div></td><td class="mono">KYT2026000004818</td><td class="who"><b>Doğanlar Hırdavat</b><span>VKN 2840 117 506</span></td><td>03.11.2026<span class="sub">10:41</span></td><td class="sc">Ticari · Satış</td><td class="r">18.420,00 ₺</td><td><span class="pill q"><i class="dot"></i>Kuyrukta</span></td></tr>
+            <tr><td><div class="cb"></div></td><td class="mono">KYA2026000012907</td><td class="who"><b>Selin Arıkan</b><span>TCKN ••••••••• 48</span></td><td>03.11.2026<span class="sub">10:22</span></td><td class="sc">e-Arşiv · Satış</td><td class="r">1.149,90 ₺</td><td><span class="pill ok"><i class="dot"></i>Raporlandı</span></td></tr>
+            <tr class="sel"><td><div class="cb" style="background:var(--brand);border-color:var(--brand)"></div></td><td class="mono">KYT2026000004812</td><td class="who"><b>Mavi Liman Lojistik A.Ş.</b><span>VKN 6120 384 451</span></td><td>03.11.2026<span class="sub">09:12</span></td><td class="sc">Ticari · Satış</td><td class="r">96.000,00 ₺</td><td><span class="pill wait"><i class="dot"></i>Yanıt bekliyor</span><span class="sub">Son gün 11.11</span></td></tr>
+            <tr><td><div class="cb"></div></td><td class="mono">KYT2026000004809</td><td class="who"><b>Ege Örme Konfeksiyon</b><span>VKN 3305 902 118</span></td><td>02.11.2026<span class="sub">17:55</span></td><td class="sc">Temel · Satış</td><td class="r">42.716,40 ₺</td><td><span class="pill ok"><i class="dot"></i>Alıcıya ulaştı</span></td></tr>
+            <tr><td><div class="cb"></div></td><td class="mono">KYT2026000004806</td><td class="who"><b>Atlas Ambalaj</b><span>VKN 1093 455 270</span></td><td>02.11.2026<span class="sub">16:08</span></td><td class="sc">Temel · Satış</td><td class="r">7.380,00 ₺</td><td><span class="pill err"><i class="dot"></i>Hata</span><span class="sub">Alıcı kayıtlı değil</span></td></tr>
+            <tr><td><div class="cb"></div></td><td class="mono">KYT2026000004801</td><td class="who"><b>Gürsoy Mobilya</b><span>VKN 4471 093 822</span></td><td>02.11.2026<span class="sub">11:30</span></td><td class="sc">Ticari · Satış</td><td class="r">63.250,00 ₺</td><td><span class="pill ok"><i class="dot"></i>Kabul edildi</span></td></tr>
+            <tr><td><div class="cb"></div></td><td class="mono">KYT2026000004797</td><td class="who"><b>Kuzey Yapı Market</b><span>VKN 5562 801 334</span></td><td>01.11.2026<span class="sub">15:47</span></td><td class="sc">Ticari · Tevkifat</td><td class="r">24.900,00 ₺</td><td><span class="pill mute"><i class="dot"></i>Reddedildi</span><span class="sub">Birim fiyat hatalı</span></td></tr>
+            <tr><td><div class="cb"></div></td><td class="mono">KYA2026000012884</td><td class="who"><b>Hakan Toprak</b><span>TCKN ••••••••• 06</span></td><td>01.11.2026<span class="sub">13:02</span></td><td class="sc">e-Arşiv · Satış</td><td class="r">389,00 ₺</td><td><span class="pill ok"><i class="dot"></i>Raporlandı</span></td></tr>
+            <tr><td><div class="cb"></div></td><td class="mono">KYT2026000004790</td><td class="who"><b>Pınar Tekstil Boya</b><span>VKN 7208 315 649</span></td><td>31.10.2026<span class="sub">18:20</span></td><td class="sc">Temel · İade</td><td class="r">−3.120,00 ₺</td><td><span class="pill ok"><i class="dot"></i>Alıcıya ulaştı</span></td></tr>
+            <tr><td><div class="cb"></div></td><td class="mono">KYT2026000004786</td><td class="who"><b>Mavi Liman Lojistik A.Ş.</b><span>VKN 6120 384 451</span></td><td>31.10.2026<span class="sub">10:15</span></td><td class="sc">Ticari · Satış</td><td class="r">96.000,00 ₺</td><td><span class="pill ok"><i class="dot"></i>Kabul edildi</span></td></tr>
+            <tr><td><div class="cb"></div></td><td class="mono">KYT2026000004781</td><td class="who"><b>Ercan Kırtasiye</b><span>VKN 3018 664 290</span></td><td>30.10.2026<span class="sub">14:44</span></td><td class="sc">Temel · Satış</td><td class="r">2.865,60 ₺</td><td><span class="pill ok"><i class="dot"></i>Alıcıya ulaştı</span></td></tr>
+          </tbody>
+        </table>
+        <div class="foot">1–11 / 1.284 fatura · seçili: 1<div class="pg"><span>‹</span><span class="on">1</span><span>2</span><span>3</span><span>…</span><span>117</span><span>›</span></div></div>
+      </div>
+    </section>
+
+    <aside class="drawer">
+      <div class="dh">
+        <div class="row"><span class="pill wait"><i class="dot"></i>Yanıt bekliyor</span><span class="sc">Ticari fatura</span>
+          <svg class="x" width="16" height="16" fill="none" stroke-width="1.6"><path d="m4 4 8 8M12 4l-8 8"/></svg></div>
+        <h2>Mavi Liman Lojistik A.Ş.</h2>
+        <p class="mono" style="font-size:12px">KYT2026000004812</p>
+      </div>
+      <div class="sec">
+        <h3>Tutar</h3>
+        <div class="sum">
+          <span>Mal ve hizmet toplamı</span><b>80.000,00 ₺</b>
+          <span>KDV (%20)</span><b>16.000,00 ₺</b>
+          <span class="t">Ödenecek tutar</span><b>96.000,00 ₺</b>
+        </div>
+      </div>
+      <div class="sec">
+        <h3>Belge bilgisi</h3>
+        <dl class="kv">
+          <dt>Düzenleme</dt><dd>03.11.2026 09:12</dd>
+          <dt>Alıcı VKN</dt><dd>6120 384 451</dd>
+          <dt>Alıcı etiketi</dt><dd class="mono" style="font-size:11.5px">urn:mail:defaultpk@…</dd>
+          <dt>ETTN</dt><dd class="mono" style="font-size:11.5px">7c1e94a2-5b0d-4f3e-…<svg width="13" height="13" fill="none" stroke="#77818c" stroke-width="1.4"><rect x="4.5" y="4.5" width="7" height="7" rx="1"/><path d="M2 8.5V2.5a.5.5 0 0 1 .5-.5h6"/></svg></dd>
+          <dt>Düzenleyen</dt><dd>Ayşe Kaya</dd>
+        </dl>
+      </div>
+      <div class="sec" style="border-bottom:0">
+        <h3>Gönderim adımları</h3>
+        <div class="tl">
+          <div class="st done"><b>Fatura oluşturuldu</b><span>03.11 09:12 · Ayşe Kaya</span></div>
+          <div class="st done"><b>GİB sistemine iletildi</b><span>03.11 09:12</span></div>
+          <div class="st done"><b>Alıcının posta kutusuna ulaştı</b><span>03.11 09:14</span></div>
+          <div class="st now"><b>Alıcının kabul ya da red yanıtı bekleniyor</b><span>Son gün 11.11.2026</span>
+            <div class="note">8 gün dolduktan sonra fatura sistem üzerinden reddedilemez. Yanıt gelince bildirim alırsınız.</div></div>
+        </div>
+      </div>
+      <div class="da">
+        <span class="btn"><svg width="14" height="14" fill="none" stroke="#18212b" stroke-width="1.5"><path d="M3.5 1.5h5l3 3v8h-8z"/><path d="M8.5 1.5v3h3"/></svg>PDF görüntüle</span>
+        <span class="btn"><svg width="14" height="14" fill="none" stroke="#18212b" stroke-width="1.5"><path d="M7 2v7M4 6.5 7 9.5l3-3M2.5 11.5h9"/></svg>XML indir</span>
+        <span class="btn more"><svg width="14" height="14" fill="#18212b"><circle cx="3" cy="7" r="1.2"/><circle cx="7" cy="7" r="1.2"/><circle cx="11" cy="7" r="1.2"/></svg></span>
+      </div>
+    </aside>
+  </div>
+</div>
+</body>
+</html>
