@@ -164,7 +164,7 @@ function git(v){document.querySelectorAll('#menu button').forEach(b=>b.classList
 $('#menu').addEventListener('click',e=>{const b=e.target.closest('button[data-v]');if(b)git(b.dataset.v);});
 $('#kim').innerHTML=PERSONEL.map((p,i)=>`<option value="${i}">${p.ad} · ${p.rol}</option>`).join('');
 $('#kim').addEventListener('change',e=>{ben=PERSONEL[+e.target.value];kaydet(ben.ad,'oturum açtı');menu();});
-$('#sifirla').addEventListener('click',()=>{durdur();S=seed();render();});
+$('#sifirla').addEventListener('click',()=>{durdur();S=seed();$('#hizli').value='';$('#hizliSonuc').textContent='';$('#toplu').value='';$('#topluSonuc').textContent='';$('#yayinSure').textContent='00:00';render();});
 // ---- giriş yolları
 $('#hizli').addEventListener('keydown',e=>{if(e.key!=='Enter')return;const v=e.target.value.trim();const m=v.match(/^@?([\w.]+)\s+(.+)$/);const o=$('#hizliSonuc');if(!m){o.innerHTML='<span style="color:var(--bad)">Biçim: @kullanici ürünkodu beden renk adet</span>';return;}const y=yorumEkle(m[1],m[2],'Hızlı satır');const s=siparisYap(y,ben.ad);o.innerHTML=s==='ok'?`<span style="color:var(--ok)">✓ ${y.durum} oluşturuldu</span>`:s==='stok'?'<span style="color:var(--bad)">Stok yetersiz, yorum kuyrukta bekliyor</span>':'<span style="color:var(--warn)">Beden ya da renk eksik, kuyruğa alındı</span>';e.target.value='';render();});
 $('#topluEkle').addEventListener('click',()=>{const satir=$('#toplu').value.split('\n').map(x=>x.trim()).filter(Boolean);let n=0;satir.forEach(s=>{const m=s.match(/^@?([\w.]+)\s+(.+)$/);if(m){yorumEkle(m[1],m[2],'Toplu yapıştır');n++;}});$('#toplu').value='';$('#topluSonuc').textContent=n+' yorum kuyruğa eklendi';kaydet(ben.ad,n+' yorumu toplu yapıştırdı');render();});
