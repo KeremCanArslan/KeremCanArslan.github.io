@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Video İndir — Örnek Arayüz</title>
+<meta name="description" content="Bağlantı yapıştırıp kalite seçerek video indirme sitesi arayüz örneği; çözümleme bu örnekte simüle edilir.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1116;--kart:#171a22;--ink:#eef0f5;--ink2:#9aa3b5;--line:#272c38;--vurgu:#22c55e;--vurgu2:#133a24;--mavi:#60a5fa;--mavi2:#162a44;--kirmizi:#f87171}
+@media (prefers-color-scheme:light){:root[data-theme="auto"]{--bg:#f4f6fa;--kart:#fff;--ink:#141821;--ink2:#5d6677;--line:#e2e6ee;--vurgu:#15803d;--vurgu2:#dcfce7;--mavi:#1d4ed8;--mavi2:#dbeafe;--kirmizi:#dc2626}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:15px/1.5 Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+h1,h2,h3{font-family:Sora,Inter,sans-serif;line-height:1.2}
+.ornek{background:#1b2230;color:#c6d0da;font-size:12px;text-align:center;padding:6px 16px}
+.kap{max-width:880px;margin:0 auto;padding:0 16px}
+header{display:flex;align-items:center;gap:12px;height:60px}
+.logo{font-family:Sora,sans-serif;font-weight:700;font-size:19px;color:var(--vurgu)}
+header nav{margin-left:auto;display:flex;gap:14px;font-size:14px;color:var(--ink2)}
+.hero{text-align:center;padding:44px 0 24px}
+.hero h1{font-size:34px}
+.hero p{color:var(--ink2);margin-top:10px;font-size:16px}
+@media(max-width:640px){.hero h1{font-size:26px}.hero{padding:28px 0 16px}}
+.kutu{display:flex;gap:8px;background:var(--kart);border:1px solid var(--line);border-radius:14px;padding:8px}
+.kutu input{flex:1;border:0;background:transparent;padding:12px;font-size:15px;min-width:0}
+.kutu input:focus{outline:none}
+.btn{border:0;background:var(--vurgu);color:#fff;border-radius:10px;padding:12px 18px;font-weight:600;font-size:15px;white-space:nowrap}
+.btn:disabled{opacity:.6;cursor:default}
+.platformlar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.platformlar span{font-size:12px;font-weight:600;color:var(--ink2);border:1px solid var(--line);border-radius:999px;padding:5px 10px}
+.sonuc{display:none;margin-top:22px;background:var(--kart);border:1px solid var(--line);border-radius:14px;padding:16px}
+.sonuc[data-acik="true"]{display:block}
+.video{display:grid;grid-template-columns:150px 1fr;gap:14px;align-items:center}
+@media(max-width:520px){.video{grid-template-columns:1fr}}
+.kapak{aspect-ratio:16/9;border-radius:10px;background:linear-gradient(135deg,#1f2937,#4b5563);display:grid;place-items:center;color:#cbd5e1;font-size:12px;font-weight:600}
+.video h2{font-size:17px}
+.video p{color:var(--ink2);font-size:13px;margin-top:4px}
+.secenek{display:grid;gap:8px;margin-top:14px}
+.secenek div{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px}
+.secenek small{color:var(--ink2)}
+.secenek button{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:7px 12px;font-size:13px;font-weight:600}
+.durum{margin-top:12px;font-size:13px;color:var(--ink2);min-height:18px}
+.ilerleme{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin-top:8px;display:none}
+.ilerleme i{display:block;height:100%;width:0;background:var(--vurgu);transition:width .3s}
+.hata{color:var(--kirmizi)}
+.adimlar{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:34px 0}
+@media(max-width:640px){.adimlar{grid-template-columns:1fr}}
+.adim{background:var(--kart);border:1px solid var(--line);border-radius:12px;padding:14px}
+.adim b{display:block;font-family:Sora,sans-serif;color:var(--mavi);margin-bottom:4px}
+.adim p{font-size:13px;color:var(--ink2)}
+.reklam{border:1px dashed var(--line);border-radius:10px;padding:14px;text-align:center;font-size:12px;color:var(--ink2);margin:10px 0 30px}
+.panel{background:var(--kart);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:40px}
+.panel h2{font-size:17px;margin-bottom:10px}
+.panel table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+.panel th,.panel td{padding:8px 6px;text-align:right;border-bottom:1px solid var(--line)}
+.panel th{font-size:12px;color:var(--ink2);font-weight:600}
+.panel th:first-child,.panel td:first-child{text-align:left}
+.ok{color:var(--vurgu);font-weight:600}
+</style>
+</head>
+<body>
+<div class="ornek">Örnek arayüz: bağlantı çözümleme bu sayfada simüle edilir, gerçek sitede sunucu bağlantıyı çözüp dosyayı doğrudan ziyaretçiye akıtır. Buradan hiçbir şey indirilmez.</div>
+<div class="kap">
+<header><div class="logo">HızlıİndirX</div><nav><span>Nasıl çalışır</span><span>SSS</span><span>İletişim</span></nav></header>
+<section class="hero">
+<h1>Bağlantıyı yapıştır, videoyu indir</h1>
+<p>Instagram, TikTok ve YouTube bağlantılarını kalite seçeneğiyle, filigransız indirir.</p>
+<form class="kutu" id="form" style="margin-top:22px">
+<input id="link" type="url" placeholder="https://www.instagram.com/reel/..." autocomplete="off" required>
+<button class="btn" id="coz" type="submit">İndir</button>
+</form>
+<div class="platformlar"><span>Instagram Reels</span><span>TikTok</span><span>YouTube Shorts</span><span>YouTube</span><span>Facebook</span></div>
+<div class="sonuc" id="sonuc">
+<div class="video"><div class="kapak" id="kapak">önizleme</div><div><h2 id="baslik"></h2><p id="meta"></p></div></div>
+<div class="secenek" id="secenek"></div>
+<div class="durum" id="durum"></div>
+<div class="ilerleme" id="ilerleme"><i></i></div>
+</div>
+</section>
+
+<div class="reklam">Reklam alanı 728x90 · AdSense yerine video sitelerini kabul eden reklam ağları için ayrıldı</div>
+
+<section class="adimlar">
+<div class="adim"><b>1. Bağlantıyı yapıştır</b><p>Site bağlantının hangi platforma ait olduğunu kendisi anlar, ek seçim gerekmez.</p></div>
+<div class="adim"><b>2. Kaliteyi seç</b><p>Sunucu bağlantıyı çözer, mevcut kaliteleri ve boyutları listeler; ses dosyası ayrı seçenek olarak gelir.</p></div>
+<div class="adim"><b>3. İndir</b><p>Dosya sunucuda tutulmaz, doğrudan ziyaretçiye akar; hız sunucuya değil ziyaretçinin bağlantısına bağlıdır.</p></div>
+</section>
+
+<section class="panel">
+<h2>Yönetim paneli (örnek)</h2>
+<table><thead><tr><th>Platform</th><th>Bugün istek</th><th>Başarılı</th><th>Çözümleyici</th></tr></thead>
+<tbody><tr><td>Instagram</td><td>1.240</td><td>%97</td><td class="ok">çalışıyor</td></tr><tr><td>TikTok</td><td>860</td><td>%98</td><td class="ok">çalışıyor</td></tr><tr><td>YouTube</td><td>2.115</td><td>%95</td><td class="ok">çalışıyor</td></tr><tr><td>Facebook</td><td>310</td><td>%91</td><td class="ok">çalışıyor</td></tr></tbody></table>
+<p style="font-size:13px;color:var(--ink2);margin-top:8px">Bir platform yapısını değiştirince başarı oranı düşer, panel uyarır; çözümleyici tek dosya güncellemesiyle düzeltilir, site kapanmaz.</p>
+</section>
+</div>
+
+<script>
+const PLAT=[[/instagram\.com/,'Instagram','Reels videosu','0:27'],[/tiktok\.com/,'TikTok','TikTok videosu','0:41'],[/youtu\.?be/,'YouTube','YouTube videosu','4:12'],[/facebook\.com|fb\.watch/,'Facebook','Facebook videosu','1:05']];
+const $=s=>document.querySelector(s);
+$('#form').addEventListener('submit',async e=>{e.preventDefault();const url=$('#link').value.trim();const p=PLAT.find(x=>x[0].test(url));const s=$('#sonuc');s.dataset.acik='true';$('#secenek').innerHTML='';$('#ilerleme').style.display='none';
+if(!p){$('#baslik').textContent='Bağlantı tanınmadı';$('#meta').textContent='';$('#durum').innerHTML='<span class="hata">Desteklenen platform bağlantısı yapıştırın (Instagram, TikTok, YouTube, Facebook).</span>';$('#kapak').textContent='?';return}
+$('#coz').disabled=true;$('#baslik').textContent='Çözümleniyor...';$('#meta').textContent=p[1];$('#kapak').textContent=p[1];$('#durum').textContent='Sunucu bağlantıyı çözüyor';
+await new Promise(r=>setTimeout(r,1200));$('#coz').disabled=false;
+$('#baslik').textContent=p[2];$('#meta').textContent=p[1]+' · süre '+p[3]+' · filigransız';
+const sec=p[1]==='YouTube'?[['1080p MP4','48,2 MB'],['720p MP4','26,9 MB'],['360p MP4','11,4 MB'],['Yalnız ses MP3','3,9 MB']]:[['HD MP4','9,8 MB'],['SD MP4','4,1 MB'],['Yalnız ses MP3','0,6 MB']];
+$('#secenek').innerHTML=sec.map(([k,b],i)=>`<div><span>${k}</span><small>${b}</small><button type="button" data-i="${i}">İndir</button></div>`).join('');$('#durum').textContent='Kalite seçin';});
+$('#secenek').addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;const il=$('#ilerleme');il.style.display='block';const bar=il.querySelector('i');$('#durum').textContent='İndiriliyor (örnekte simüle)';for(let i=0;i<=100;i+=10){bar.style.width=i+'%';await new Promise(r=>setTimeout(r,120))}$('#durum').textContent='Gerçek sitede dosya bu noktada tarayıcıya iner.';});
+</script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Klinik Aday Listesi — Örnek</title>
+<meta name="description" content="Web sitesi ihtiyacı olan klinikleri tespit eden, her biri için kişisel ilk mesaj üreten ve yazışma durumunu izleyen satış takip örneği.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f7f8;--kart:#fff;--ink:#16202a;--ink2:#5f6b78;--line:#e1e6ea;--vurgu:#0b7285;--vurgu2:#e1f2f5;--kirmizi:#c92a2a;--kirmizi2:#fdeaea;--sari:#e67700;--sari2:#fff1dc;--ok:#2b8a3e;--ok2:#e5f5e9}
+@media (prefers-color-scheme:dark){:root{--bg:#10151a;--kart:#171e25;--ink:#edf1f4;--ink2:#9aa7b3;--line:#283039;--vurgu:#4fb8cc;--vurgu2:#15303a;--kirmizi:#ff7b7b;--kirmizi2:#3a1d1d;--sari:#ffb04d;--sari2:#3a2a12;--ok:#69db7c;--ok2:#17301e}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:15px/1.5 Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+h1,h2,h3{font-family:Sora,Inter,sans-serif;line-height:1.2}
+.ornek{background:#1b2430;color:#c6d0da;font-size:12px;text-align:center;padding:6px 16px}
+.kap{max-width:1120px;margin:0 auto;padding:0 16px}
+header{background:var(--kart);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.ust{display:flex;align-items:center;gap:14px;height:58px}
+.logo{font-family:Sora,sans-serif;font-weight:700;font-size:18px;color:var(--vurgu)}
+.logo small{display:block;font:500 11px Inter;color:var(--ink2)}
+.ozet{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.ozet span{font-size:12px;font-weight:600;border:1px solid var(--line);border-radius:999px;padding:5px 10px;background:var(--bg)}
+@media(max-width:640px){.ozet{display:none}}
+main{padding:22px 0 60px}
+.izgara{display:grid;grid-template-columns:1.6fr 1fr;gap:18px;align-items:start}
+@media(max-width:900px){.izgara{grid-template-columns:1fr}}
+.kart{background:var(--kart);border:1px solid var(--line);border-radius:14px;padding:16px}
+.kart h2{font-size:17px;margin-bottom:10px}
+.kart h3{font-size:13px;color:var(--ink2);font-weight:600;margin:14px 0 8px;text-transform:uppercase;letter-spacing:.04em}
+.not{font-size:13px;color:var(--ink2)}
+.filtre{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.filtre button{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600}
+.filtre button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:9px 8px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;color:var(--ink2);font-weight:600}
+tr[role=button]{cursor:pointer}
+tr[role=button]:hover{background:var(--bg)}
+tr[aria-selected="true"]{background:var(--vurgu2)}
+td small{display:block;color:var(--ink2);font-size:12px}
+.etiket{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;white-space:nowrap;margin:2px 4px 2px 0}
+.e-yok{background:var(--kirmizi2);color:var(--kirmizi)}
+.e-mobil{background:var(--sari2);color:var(--sari)}
+.e-randevu{background:var(--vurgu2);color:var(--vurgu)}
+.e-eski{background:var(--sari2);color:var(--sari)}
+.durum{font-size:12px;font-weight:600;padding:3px 8px;border-radius:999px;white-space:nowrap}
+.d-yeni{background:var(--bg);border:1px solid var(--line);color:var(--ink2)}
+.d-gitti{background:var(--vurgu2);color:var(--vurgu)}
+.d-cevap{background:var(--sari2);color:var(--sari)}
+.d-sicak{background:var(--ok2);color:var(--ok)}
+.mesaj{white-space:pre-wrap;font-size:14px;border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--bg);line-height:1.55}
+.satir{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.btn{border:0;background:var(--vurgu);color:#fff;border-radius:10px;padding:10px 14px;font-weight:600;font-size:14px}
+.btn.ikincil{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+.btn:disabled{opacity:.5;cursor:default}
+.huni{display:grid;gap:8px}
+.huni div{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:10px;font-size:14px}
+.huni b{font-variant-numeric:tabular-nums}
+.gecmis{list-style:none;display:grid;gap:6px;font-size:13px}
+.gecmis li{display:grid;grid-template-columns:46px 1fr;gap:8px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.gecmis li b{color:var(--ink2);font-weight:600;font-variant-numeric:tabular-nums}
+.bildirim{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:13px;font-weight:600;opacity:0;transition:.25s;pointer-events:none;z-index:9}
+.bildirim[data-acik="true"]{opacity:1;transform:translateX(-50%)}
+@media(max-width:640px){th:nth-child(3),td:nth-child(3){display:none}}
+</style>
+</head>
+<body>
+<div class="ornek">Örnek ekran: klinik adları ve tespitler temsilîdir, gerçek işte liste sizin seçtiğiniz şehir ve branştan gerçek kliniklerle hazırlanır. Buradan bir yere mesaj gitmez.</div>
+<header><div class="kap ust">
+<div class="logo">Klinik Aday Listesi<small>Cidal Studio için satış takibi · Ankara, diş ve estetik</small></div>
+<div class="ozet" id="ozet"></div>
+</div></header>
+
+<main class="kap">
+<div class="izgara">
+<div class="kart">
+<h2>Adaylar</h2>
+<p class="not" style="margin-bottom:10px">Her klinik tek tek tarandı; eksiği olanlar listeye girdi, eksiği olmayanlar listeye girmedi.</p>
+<div class="filtre" id="filtre"></div>
+<table>
+<thead><tr><th>Klinik</th><th>Tespit</th><th>Kanal</th><th>Durum</th></tr></thead>
+<tbody id="liste"></tbody>
+</table>
+</div>
+<div>
+<div class="kart">
+<h2 id="secBaslik">Kişisel ilk mesaj</h2>
+<p class="not" id="secAlt" style="margin-bottom:10px"></p>
+<div class="mesaj" id="mesaj"></div>
+<div class="satir">
+<button class="btn" id="gonder" type="button">Gönderildi olarak işaretle</button>
+<button class="btn ikincil" id="cevap" type="button">Cevap geldi</button>
+<button class="btn ikincil" id="sicak" type="button">Sıcak aday, Cidal Studio ya aktar</button>
+</div>
+<h3>Yazışma geçmişi</h3>
+<ul class="gecmis" id="gecmis"></ul>
+</div>
+<div class="kart" style="margin-top:18px">
+<h2>Haftalık huni</h2>
+<div class="huni" id="huni"></div>
+<p class="not" style="margin-top:8px">Haftalık rapor bu tablodan çıkar: kaç klinik tarandı, kaçına yazıldı, kaçı cevap verdi, kaçı görüşmeye hazır.</p>
+</div>
+</div>
+</div>
+</main>
+<div class="bildirim" id="bildirim"></div>
+
+<script>
+const TESPIT={yok:['Web sitesi yok','e-yok'],mobil:['Mobilde bozuk','e-mobil'],randevu:['Online randevu yok','e-randevu'],eski:['Site 2017 tarihli','e-eski'],hiz:['Açılış 7 sn','e-mobil']};
+let K=[
+ {id:1,ad:'Çankaya Gülüş Diş Kliniği',brans:'Diş',semt:'Çankaya',tespit:['yok'],kanal:'Instagram',durum:'yeni',gecmis:[]},
+ {id:2,ad:'Kızılay Estetik Merkezi',brans:'Estetik',semt:'Kızılay',tespit:['mobil','randevu'],kanal:'WhatsApp',durum:'gitti',gecmis:[['Pzt','İlk mesaj gitti, mobil görüntü ekranı eklendi']]},
+ {id:3,ad:'Bahçelievler Ağız ve Diş Sağlığı',brans:'Diş',semt:'Bahçelievler',tespit:['eski','randevu'],kanal:'E-posta',durum:'cevap',gecmis:[['Pzt','İlk mesaj gitti'],['Sal','Klinik: fiyat ve örnek istedi, Cidal Studio örnekleri gönderildi']]},
+ {id:4,ad:'Ümitköy Dermatoloji ve Lazer',brans:'Estetik',semt:'Ümitköy',tespit:['hiz','mobil'],kanal:'Instagram',durum:'sicak',gecmis:[['Sal','İlk mesaj gitti'],['Çar','Klinik: görüşmek istiyor, telefon bıraktı'],['Çar','Cidal Studio ya aktarıldı']]},
+ {id:5,ad:'Eryaman Aile Diş Polikliniği',brans:'Diş',semt:'Eryaman',tespit:['yok'],kanal:'WhatsApp',durum:'yeni',gecmis:[]},
+ {id:6,ad:'Tunalı Saç Ekim Kliniği',brans:'Estetik',semt:'Tunalı',tespit:['randevu'],kanal:'E-posta',durum:'gitti',gecmis:[['Çar','İlk mesaj gitti']]},
+ {id:7,ad:'Batıkent Ortodonti',brans:'Diş',semt:'Batıkent',tespit:['mobil'],kanal:'Instagram',durum:'yeni',gecmis:[]},
+ {id:8,ad:'Keçiören Medikal Estetik',brans:'Estetik',semt:'Keçiören',tespit:['yok'],kanal:'WhatsApp',durum:'cevap',gecmis:[['Per','İlk mesaj gitti'],['Per','Klinik: bütçe sordu']]},
+];
+const DURUM={yeni:['Yazılacak','d-yeni'],gitti:['Mesaj gitti','d-gitti'],cevap:['Cevap geldi','d-cevap'],sicak:['Sıcak aday','d-sicak']};
+let filtre='Hepsi',secili=2;
+const $=s=>document.querySelector(s);
+function mesajMetni(k){const t=k.tespit[0];const giris=`Merhaba, ${k.ad} için yazıyorum. `;const govde={yok:'Google da ve Instagram da sizi bulan hastalar bir web siteniz olmadığı için bilgiyi başka kliniklerde arıyor. ',mobil:'Sitenize telefondan girdim, menü ve randevu düğmesi ekrana sığmıyor; hastaların büyük kısmı telefondan baktığı için bu doğrudan hasta kaybı demek. ',randevu:'Sitenizde online randevu yok, hasta aramak zorunda kalıyor; mesai dışı gelen talepler bu yüzden kaçıyor. ',eski:'Siteniz 2017 den kalma görünüyor, yeni hastada ilk izlenimi zayıflatıyor. ',hiz:'Siteniz 7 saniyede açılıyor, hastaların çoğu 3 saniyede vazgeçiyor. '}[t];const kapanis='Cidal Studio olarak yalnız kliniklere site yapıyoruz; size uygun 2 örneği ve kısa bir öneriyi göndereyim mi?';return giris+govde+kapanis}
+function bildir(t){const b=$('#bildirim');b.textContent=t;b.dataset.acik='true';clearTimeout(b._t);b._t=setTimeout(()=>b.dataset.acik='false',2200)}
+function renderFiltre(){$('#filtre').innerHTML=['Hepsi','Diş','Estetik','Yazılacak','Cevap geldi','Sıcak aday'].map(f=>`<button type="button" data-f="${f}" aria-pressed="${f===filtre}">${f}</button>`).join('')}
+function renderListe(){const list=K.filter(k=>filtre==='Hepsi'||k.brans===filtre||DURUM[k.durum][0]===filtre);$('#liste').innerHTML=list.map(k=>`<tr role="button" tabindex="0" data-id="${k.id}" aria-selected="${k.id===secili}"><td>${k.ad}<small>${k.brans} · ${k.semt}</small></td><td>${k.tespit.map(t=>`<span class="etiket ${TESPIT[t][1]}">${TESPIT[t][0]}</span>`).join('')}</td><td>${k.kanal}</td><td><span class="durum ${DURUM[k.durum][1]}">${DURUM[k.durum][0]}</span></td></tr>`).join('')}
+function renderSec(){const k=K.find(x=>x.id===secili);$('#secBaslik').textContent=k.ad;$('#secAlt').textContent=`${k.kanal} üzerinden, ${k.tespit.map(t=>TESPIT[t][0].toLowerCase()).join(' ve ')} tespitine göre yazıldı`;$('#mesaj').textContent=mesajMetni(k);$('#gonder').disabled=k.durum!=='yeni';$('#cevap').disabled=k.durum!=='gitti';$('#sicak').disabled=k.durum!=='cevap';$('#gecmis').innerHTML=k.gecmis.length?k.gecmis.map(g=>`<li><b>${g[0]}</b><span>${g[1]}</span></li>`).join(''):'<li><b>—</b><span>Henüz yazışma yok</span></li>'}
+function renderHuni(){const s={taranan:38,listede:K.length,gitti:K.filter(k=>k.durum!=='yeni').length,cevap:K.filter(k=>k.durum==='cevap'||k.durum==='sicak').length,sicak:K.filter(k=>k.durum==='sicak').length};$('#huni').innerHTML=`<div>Taranan klinik<b>${s.taranan}</b></div><div>Eksiği olup listeye giren<b>${s.listede}</b></div><div>İlk mesaj gönderilen<b>${s.gitti}</b></div><div>Cevap veren<b>${s.cevap}</b></div><div>Görüşmeye hazır, aktarılan<b>${s.sicak}</b></div>`;$('#ozet').innerHTML=`<span>${s.listede} aday</span><span>${s.gitti} mesaj gitti</span><span>${s.cevap} cevap</span><span>${s.sicak} sıcak</span>`}
+document.addEventListener('click',e=>{const fb=e.target.closest('#filtre button');if(fb){filtre=fb.dataset.f;renderFiltre();renderListe();return}const tr=e.target.closest('tr[data-id]');if(tr){secili=+tr.dataset.id;renderListe();renderSec();return}});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('tr[data-id]'))e.target.click()});
+const gun=()=>['Paz','Pzt','Sal','Çar','Per','Cum','Cmt'][new Date().getDay()];
+$('#gonder').addEventListener('click',()=>{const k=K.find(x=>x.id===secili);k.durum='gitti';k.gecmis.push([gun(),'İlk mesaj gitti ('+k.kanal+')']);renderListe();renderSec();renderHuni();bildir('Gönderildi olarak işaretlendi')});
+$('#cevap').addEventListener('click',()=>{const k=K.find(x=>x.id===secili);k.durum='cevap';k.gecmis.push([gun(),'Klinik cevap verdi, örnekler gönderildi']);renderListe();renderSec();renderHuni();bildir('Cevap kaydedildi')});
+$('#sicak').addEventListener('click',()=>{const k=K.find(x=>x.id===secili);k.durum='sicak';k.gecmis.push([gun(),'Görüşmeye hazır, Cidal Studio ya aktarıldı']);renderListe();renderSec();renderHuni();bildir('Sıcak aday olarak aktarıldı')});
+renderFiltre();renderListe();renderSec();renderHuni();
+</script>
+</body>
+</html>
