@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Kapalı Test Takibi — Örnek</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--zemin:#f8f9fa;--kart:#fff;--metin:#202124;--soluk:#5f6368;--cizgi:#dadce0;--mavi:#1a73e8;--maviz:#e8f0fe;--yesil:#1e8e3e;--yesilz:#e6f4ea;--sari:#b05a00;--sariz:#fef7e0;--kirmizi:#d93025;--kirmiziz:#fce8e6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--zemin);color:var(--metin);font:14px/1.5 Roboto,Arial,sans-serif}
+button{font:inherit;cursor:pointer}
+a{color:var(--mavi);text-decoration:none}
+a:hover{text-decoration:underline}
+.ust{background:#fff;border-bottom:1px solid var(--cizgi);padding:12px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.ust .simge{width:36px;height:36px;border-radius:8px;background:var(--mavi);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex:0 0 36px}
+.ust h1{font-size:18px;font-weight:500}
+.ust p{color:var(--soluk);font-size:12px}
+.ust .etiket{margin-left:auto;font-size:12px;color:var(--soluk)}
+.kutu{max-width:1100px;margin:0 auto;padding:20px 16px 40px}
+.izgara{display:grid;grid-template-columns:3fr 2fr;gap:16px;align-items:start}
+.izgara>div{min-width:0}
+.kart{background:var(--kart);border:1px solid var(--cizgi);border-radius:8px;padding:16px;margin-bottom:16px}
+.kart h2{font-size:15px;font-weight:500;margin-bottom:4px}
+.kart .alt{color:var(--soluk);font-size:12px;margin-bottom:12px}
+.ozet{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.oz{background:#fff;border:1px solid var(--cizgi);border-radius:8px;padding:12px 14px}
+.oz small{display:block;color:var(--soluk);font-size:12px}
+.oz b{font-size:22px;font-weight:500;display:block;margin-top:2px}
+.oz span{font-size:12px;color:var(--soluk)}
+.cubuk{height:6px;background:#e8eaed;border-radius:3px;overflow:hidden;margin-top:8px}
+.cubuk i{display:block;height:100%;background:var(--yesil)}
+.tablo{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:560px}
+th{text-align:left;color:var(--soluk);font-weight:500;font-size:12px;border-bottom:1px solid var(--cizgi);padding:8px 6px;white-space:nowrap}
+td{padding:8px 6px;border-bottom:1px solid #f1f3f4;vertical-align:middle;white-space:nowrap}
+.cip{display:inline-block;border-radius:12px;padding:2px 10px;font-size:12px;font-weight:500}
+.cip.yesil{background:var(--yesilz);color:var(--yesil)}
+.cip.sari{background:var(--sariz);color:var(--sari)}
+.cip.kirmizi{background:var(--kirmiziz);color:var(--kirmizi)}
+.cip.mavi{background:var(--maviz);color:var(--mavi)}
+.mini{height:5px;width:80px;background:#e8eaed;border-radius:3px;overflow:hidden;display:inline-block;vertical-align:middle;margin-right:6px}
+.mini i{display:block;height:100%;background:var(--mavi)}
+.mini i.tam{background:var(--yesil)}
+.dugme{border:1px solid var(--cizgi);background:#fff;color:var(--mavi);border-radius:4px;padding:4px 10px;font-size:12px;font-weight:500}
+.dugme:hover{background:var(--maviz)}
+.uyari{border-left:4px solid var(--sari);background:var(--sariz);padding:10px 12px;border-radius:4px;font-size:13px;margin-top:12px;display:none}
+.uyari.acik{display:block}
+.liste{list-style:none}
+.liste li{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #f1f3f4}
+.liste li:last-child{border-bottom:0}
+.liste input{margin-top:3px;width:16px;height:16px;accent-color:var(--mavi);flex:0 0 16px}
+.liste label{flex:1;cursor:pointer}
+.liste small{display:block;color:var(--soluk);font-size:12px}
+.adimlar{counter-reset:a;list-style:none}
+.adimlar li{counter-increment:a;display:flex;gap:10px;padding:7px 0;font-size:13px}
+.adimlar li::before{content:counter(a);width:22px;height:22px;border-radius:50%;background:var(--maviz);color:var(--mavi);font-weight:500;font-size:12px;display:flex;align-items:center;justify-content:center;flex:0 0 22px}
+.kod{font-family:ui-monospace,Menlo,monospace;font-size:12px;background:#f1f3f4;padding:2px 6px;border-radius:4px;word-break:break-all}
+.basvuru h3{font-size:13px;font-weight:500;margin:10px 0 2px}
+.basvuru p{font-size:13px;color:#3c4043}
+.not{font-size:12px;color:var(--soluk);margin-top:10px}
+@media(max-width:820px){.izgara{grid-template-columns:1fr}.ozet{grid-template-columns:repeat(2,1fr)}.ust{padding:12px 16px}.ust .etiket{margin-left:0}}
+</style>
+</head>
+<body>
+<header class="ust">
+  <div class="simge">S</div>
+  <div><h1>Su Takip (örnek) · Kapalı test takibi</h1><p>com.ornek.sutakip · Bireysel geliştirici hesabı · Kapalı test kanalı</p></div>
+  <div class="etiket">Şart: 12 test kullanıcısı, 14 gün kesintisiz · <a href="https://support.google.com/googleplay/android-developer/answer/14151465" target="_blank" rel="noopener">Google kaynağı</a></div>
+</header>
+<main class="kutu">
+  <div class="ozet" id="ozet"></div>
+  <div class="izgara">
+    <div>
+      <section class="kart">
+        <h2>Test kullanıcıları</h2>
+        <div class="alt">Katılım tarihi Play Console > Test ve yayınlama > Kapalı test > Test kullanıcıları listesinden alınır. 14 günü dolmadan ayrılan kullanıcı sayılmaz, yerine gelen kullanıcı için 14 gün baştan sayılır. "Ayrıldı" düğmesiyle deneyin.</div>
+        <div class="tablo"><table><thead><tr><th>#</th><th>Kullanıcı</th><th>Katılım</th><th>Gün</th><th>Son açılış</th><th>Durum</th><th></th></tr></thead><tbody id="tbody"></tbody></table></div>
+        <div class="uyari" id="uyari"></div>
+      </section>
+      <section class="kart">
+        <h2>Yayın öncesi ret kontrolü</h2>
+        <div class="alt">Üretim erişimi başvurusundan önce Console'da tamamlanması gerekenler. <b id="kcSayi"></b></div>
+        <ul class="liste" id="kontrol"></ul>
+      </section>
+    </div>
+    <div>
+      <section class="kart">
+        <h2>Test kullanıcısına giden mesaj</h2>
+        <div class="alt">Her kullanıcıya aynı 4 adım gönderilir, 3. ve 10. günde hatırlatılır.</div>
+        <ol class="adimlar">
+          <li>Gmail adresin test listesine eklendi, şu bağlantıyı aç ve Katıl de: <span class="kod">play.google.com/apps/testing/com.ornek.sutakip</span></li>
+          <li>Açılan sayfadan Play Store ile uygulamayı yükle.</li>
+          <li>14 gün boyunca uygulamayı silme ve testten ayrılma, arada bir açıp kullan.</li>
+          <li>Gördüğün hatayı ya da öneriyi kısa bir mesajla yaz, başvuru formunda kullanılacak.</li>
+        </ol>
+      </section>
+      <section class="kart basvuru">
+        <h2>Üretim erişimi başvurusu</h2>
+        <div class="alt">14 gün dolunca Console'daki form üç bölüm sorar, cevaplar İngilizce hazırlanır. <span class="cip sari">Taslak hazır</span></div>
+        <h3>1. Kapalı test hakkında</h3><p>Testers were recruited from the app's target users (friends, family and a small online group). All 12 used the reminder, history and settings screens; 3 bugs were reported and fixed.</p>
+        <h3>2. Uygulama hakkında</h3><p>Target audience and value proposition in two sentences.</p>
+        <h3>3. Üretime hazırlık</h3><p>Changes made after the test (notification timing, Turkish texts), crash-free sessions in Android vitals and how readiness was decided.</p>
+        <p class="not">İnceleme genelde 7 gün içinde sonuçlanır (Google kaynağı).</p>
+      </section>
+    </div>
+  </div>
+</main>
+<script>
+(function(){
+  var BUGUN=new Date(); BUGUN.setHours(0,0,0,0);
+  function gunOnce(n){var d=new Date(BUGUN); d.setDate(d.getDate()-n); return d;}
+  function gunSonra(d,n){var e=new Date(d); e.setDate(e.getDate()+n); return e;}
+  function tarih(d){return d.toLocaleDateString('tr-TR',{day:'2-digit',month:'long'});}
+  var ham=[['Ahmet K.',11,0],['Elif S.',11,0],['Mert D.',11,1],['Zeynep A.',10,0],['Burak T.',10,0],['Selin Y.',10,2],['Caner Ö.',9,0],['Derya M.',9,0],['Onur B.',8,1],['Gamze U.',8,0],['Emre Ç.',6,0],['Nisa K.',4,0]];
+  var K=ham.map(function(k,i){return {id:i+1,ad:k[0],kat:k[1],son:k[2],aktif:true};});
+  var durumKaydi={};
+  try{durumKaydi=JSON.parse(localStorage.getItem('pkt-ayrilan')||'{}');}catch(e){durumKaydi={};}
+  K.forEach(function(k){if(durumKaydi[k.id]===false)k.aktif=false;});
+  function kaydet(){try{var o={};K.forEach(function(k){if(!k.aktif)o[k.id]=false;});localStorage.setItem('pkt-ayrilan',JSON.stringify(o));}catch(e){}}
+
+  function ciz(){
+    var tb=document.getElementById('tbody'); tb.innerHTML='';
+    var aktif=0, enGec=null;
+    K.forEach(function(k){
+      var katilim=gunOnce(k.kat), gun=k.kat, hedef=gunSonra(katilim,14);
+      if(k.aktif){aktif++; if(!enGec||hedef>enGec)enGec=hedef;}
+      var durum=!k.aktif?'<span class="cip kirmizi">Ayrıldı</span>':(gun>=14?'<span class="cip yesil">14 gün doldu</span>':'<span class="cip mavi">Devam, '+(14-gun)+' gün kaldı</span>');
+      var son=k.son===0?'Bugün':(k.son+' gün önce');
+      var tr=document.createElement('tr');
+      tr.innerHTML='<td>'+k.id+'</td><td>'+k.ad+'</td><td>'+tarih(katilim)+'</td><td><span class="mini"><i class="'+(gun>=14?'tam':'')+'" style="width:'+Math.min(100,gun/14*100)+'%"></i></span>'+gun+' / 14</td><td>'+son+'</td><td>'+durum+'</td><td><button class="dugme" data-id="'+k.id+'">'+(k.aktif?'Ayrıldı':'Geri al')+'</button></td>';
+      tb.appendChild(tr);
+    });
+    var kalan=enGec?Math.max(0,Math.round((enGec-BUGUN)/86400000)):0;
+    var basvuru=aktif>=12?(kalan===0?'<span class="cip yesil">Başvuru yapılabilir</span>':'<span class="cip mavi">Bekliyor</span>'):'<span class="cip kirmizi">Eksik kullanıcı</span>';
+    document.getElementById('ozet').innerHTML=
+      '<div class="oz"><small>Testte kalan kullanıcı</small><b>'+aktif+' / 12</b><span>'+(aktif>=12?'Şart sağlanıyor':'En az 12 gerekli')+'</span><div class="cubuk"><i style="width:'+Math.min(100,aktif/12*100)+'%"></i></div></div>'+
+      '<div class="oz"><small>Başvuru için en erken tarih</small><b>'+(enGec?tarih(enGec):'-')+'</b><span>Son katılan kullanıcının 14. günü</span></div>'+
+      '<div class="oz"><small>Kalan gün</small><b>'+kalan+'</b><span>Bugün: '+tarih(BUGUN)+'</span></div>'+
+      '<div class="oz"><small>Üretim erişimi</small><b style="font-size:16px;margin-top:6px">'+basvuru+'</b><span>İnceleme genelde 7 gün</span></div>';
+    var u=document.getElementById('uyari');
+    if(aktif<12){
+      u.className='uyari acik';
+      u.textContent=(12-aktif)+' kullanıcı eksik. Yeni eklenen kullanıcı için 14 gün baştan sayılır, bugün eklenirse başvuru en erken '+tarih(gunSonra(BUGUN,14))+' tarihinde yapılabilir. Bu yüzden listede yedek olarak 14 kişi tutuluyor.';
+    } else { u.className='uyari'; u.textContent=''; }
+  }
+  document.getElementById('tbody').addEventListener('click',function(e){
+    var b=e.target.closest('button[data-id]'); if(!b)return;
+    var k=K[Number(b.getAttribute('data-id'))-1]; k.aktif=!k.aktif; kaydet(); ciz();
+  });
+
+  var KONTROL=[
+    ['Mağaza kaydı tam','Kısa ve uzun açıklama, 512x512 simge, 1024x500 öne çıkan görsel, en az 2 telefon ekran görüntüsü.',true],
+    ['Gizlilik politikası bağlantısı','Herkese açık sayfa, Console\'da ve uygulama içinde aynı adres.',true],
+    ['Veri güvenliği formu','Toplanan ve paylaşılan veriler, kullanılan SDK\'lar (Firebase, reklam) dahil; mağazada görünen bölüm.',true],
+    ['İçerik derecelendirmesi','IARC anketi dolduruldu, sertifika alındı.',true],
+    ['Hedef kitle ve içerik','Yaş grubu seçildi, çocuklara yönelik değil beyanı verildi.',true],
+    ['Reklam beyanı','Reklam SDK\'sı varsa Evet, yoksa Hayır; mağaza etiketiyle tutarlı.',true],
+    ['Uygulama erişimi','Giriş gerekiyorsa inceleme ekibi için demo hesap bilgisi; giriş yoksa Tüm işlevler erişilebilir.',false],
+    ['Hedef API seviyesi 36','31 Ağustos 2026 sonrası yeni uygulamalar ve güncellemeler Android 16 (API 36) hedeflemeli.',true],
+    ['Hassas izin beyanları','SMS, arama, arka plan konum, tüm dosyalar, erişilebilirlik izni varsa beyan formu ve video; gereksiz izin kaldırıldı.',false],
+    ['Hesap silme','Uygulama içinde hesap açılıyorsa web üzerinden silme bağlantısı beyan edildi.',false],
+    ['Play App Signing','Açık; imzalı AAB yüklendi, yükleme anahtarı yedeklendi.',true],
+    ['Kapalı test sürümü','AAB, sürüm notları ve test kullanıcıları listesi kaydedildi; sürüm incelemesi geçti.',true]
+  ];
+  var kc={}; try{kc=JSON.parse(localStorage.getItem('pkt-kontrol')||'{}');}catch(e){kc={};}
+  var ul=document.getElementById('kontrol');
+  KONTROL.forEach(function(k,i){
+    var li=document.createElement('li');
+    var secili=(i in kc)?kc[i]:k[2];
+    li.innerHTML='<input type="checkbox" id="k'+i+'" '+(secili?'checked':'')+'><label for="k'+i+'">'+k[0]+'<small>'+k[1]+'</small></label>';
+    ul.appendChild(li);
+  });
+  function kcSay(){
+    var n=0, t=KONTROL.length;
+    KONTROL.forEach(function(k,i){ if(document.getElementById('k'+i).checked)n++; });
+    document.getElementById('kcSayi').textContent=n+' / '+t+' tamam'+(n<t?', '+(t-n)+' madde açık':'');
+  }
+  ul.addEventListener('change',function(){
+    var o={}; KONTROL.forEach(function(k,i){o[i]=document.getElementById('k'+i).checked;});
+    try{localStorage.setItem('pkt-kontrol',JSON.stringify(o));}catch(e){}
+    kcSay();
+  });
+  ciz(); kcSay();
+})();
+</script>
+</body>
+</html>
