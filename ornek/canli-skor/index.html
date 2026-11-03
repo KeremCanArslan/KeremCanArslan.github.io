@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Canlı Skor — Örnek Platform</title>
+<meta name="description" content="Çok branşlı canlı skor platformu örneği: canlı liste, maç merkezi, puan durumu, yönetim paneli ve veri akışı mimarisi.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f6f9;--kart:#fff;--ink:#141a24;--ink2:#5c6678;--line:#e1e6ee;--vurgu:#0f7b4f;--vurgu2:#e3f3ea;--canli:#d23f31;--mavi:#1f4fa3;--mavi2:#e7eefb;--sari:#f3c13a;--mono:ui-monospace,SFMono-Regular,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1319;--kart:#171c24;--ink:#edf0f5;--ink2:#9aa5b8;--line:#28303c;--vurgu:#3fbf84;--vurgu2:#15302a;--canli:#ff6a5c;--mavi:#7fa6f0;--mavi2:#1b2740;--sari:#f3c13a}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:15px/1.5 Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+h1,h2,h3{font-family:Sora,Inter,sans-serif;line-height:1.2}
+.ornek{background:#1b2230;color:#c9d1de;font-size:12px;text-align:center;padding:6px 16px}
+.kap{max-width:1120px;margin:0 auto;padding:0 16px}
+header{background:var(--kart);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.ust{display:flex;align-items:center;gap:14px;height:58px}
+.logo{font-family:Sora,sans-serif;font-weight:700;font-size:19px;color:var(--vurgu);display:flex;align-items:center;gap:8px}
+.logo i{width:10px;height:10px;border-radius:50%;background:var(--canli);box-shadow:0 0 0 0 rgba(210,63,49,.5);animation:nab 1.6s infinite}
+@keyframes nab{0%{box-shadow:0 0 0 0 rgba(210,63,49,.45)}100%{box-shadow:0 0 0 9px rgba(210,63,49,0)}}
+nav{display:flex;gap:4px;margin-left:auto}
+nav button{border:0;background:transparent;border-radius:8px;padding:8px 12px;font-weight:600;font-size:14px;color:var(--ink2)}
+nav button[aria-current="true"]{background:var(--vurgu2);color:var(--vurgu)}
+@media(max-width:640px){nav button{padding:8px 8px;font-size:13px}.logo{font-size:16px}}
+.akis{font-size:12px;color:var(--ink2);display:flex;align-items:center;gap:6px;white-space:nowrap}
+.akis b{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--vurgu)}
+@media(max-width:760px){.akis{display:none}}
+main{padding:22px 0 60px}
+.sayfa{display:none}.sayfa[data-acik="true"]{display:block}
+.izgara{display:grid;grid-template-columns:1.6fr 1fr;gap:18px;align-items:start}
+@media(max-width:860px){.izgara{grid-template-columns:1fr}}
+.kart{background:var(--kart);border:1px solid var(--line);border-radius:14px;padding:16px}
+.kart h2{font-size:17px;margin-bottom:10px}
+.kart h3{font-size:14px;color:var(--ink2);font-weight:600;margin:14px 0 8px;text-transform:uppercase;letter-spacing:.04em}
+.brans{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.brans button{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600}
+.brans button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.lig{font-size:12px;font-weight:600;color:var(--ink2);margin:12px 0 6px;display:flex;align-items:center;gap:8px}
+.lig span{background:var(--mavi2);color:var(--mavi);padding:2px 8px;border-radius:999px}
+.mac{display:grid;grid-template-columns:56px 1fr auto;gap:10px;align-items:center;padding:10px 8px;border-radius:10px;border:1px solid transparent}
+.mac:hover{background:var(--bg);border-color:var(--line);cursor:pointer}
+.mac[aria-selected="true"]{background:var(--vurgu2);border-color:var(--vurgu)}
+.durum{font-size:12px;font-weight:700;color:var(--canli);font-variant-numeric:tabular-nums}
+.durum.bitti{color:var(--ink2)}.durum.bekliyor{color:var(--mavi)}
+.takimlar{display:grid;gap:4px;font-weight:500}
+.takimlar div{display:flex;align-items:center;gap:8px}
+.takimlar em{font-style:normal;width:22px;height:22px;border-radius:6px;display:grid;place-items:center;font-size:11px;font-weight:700;color:#fff}
+.skor{display:grid;gap:4px;text-align:right;font-weight:700;font-variant-numeric:tabular-nums;font-size:16px;min-width:28px}
+.skor span{transition:background .2s;border-radius:4px;padding:0 4px}
+.skor span.yeni{background:var(--sari);color:#1b2230}
+.set{font-size:11px;color:var(--ink2);font-weight:500;margin-left:6px}
+.olaylar{list-style:none;display:grid;gap:6px;font-family:var(--mono);font-size:12px;max-height:270px;overflow:auto}
+.olaylar li{display:grid;grid-template-columns:52px 1fr;gap:8px;padding:6px 8px;background:var(--bg);border-radius:8px;border:1px solid var(--line)}
+.olaylar li b{color:var(--vurgu)}
+.olaylar li.yeni{border-color:var(--vurgu)}
+.zaman{list-style:none;display:grid;gap:8px}
+.zaman li{display:grid;grid-template-columns:44px 24px 1fr;gap:8px;align-items:center;font-size:14px}
+.zaman li b{font-variant-numeric:tabular-nums;color:var(--ink2);font-weight:600}
+.zaman li i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;background:var(--vurgu2);color:var(--vurgu);font-weight:700}
+.ist{display:grid;gap:10px;margin-top:6px}
+.ist div{display:grid;grid-template-columns:40px 1fr 40px;gap:8px;align-items:center;font-size:13px;font-variant-numeric:tabular-nums}
+.ist div p{font-size:12px;color:var(--ink2);text-align:center}
+.cubuk{height:8px;border-radius:4px;background:var(--line);overflow:hidden;position:relative}
+.cubuk i{position:absolute;left:0;top:0;bottom:0;background:var(--vurgu);border-radius:4px}
+.cubuk i.b{left:auto;right:0;background:var(--mavi)}
+.basbas{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;text-align:center;padding:10px 0 4px}
+.basbas .ad{font-weight:600}
+.basbas .buyuk{font-family:Sora,sans-serif;font-size:34px;font-weight:700;font-variant-numeric:tabular-nums}
+.basbas small{display:block;color:var(--ink2);font-size:12px}
+table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 6px;text-align:right;border-bottom:1px solid var(--line)}
+th{font-size:12px;color:var(--ink2);font-weight:600}
+th:nth-child(2),td:nth-child(2){text-align:left;width:100%}
+td:first-child,th:first-child{color:var(--ink2)}
+tr.lider td:nth-child(2)::before{content:"";display:inline-block;width:3px;height:14px;background:var(--vurgu);border-radius:2px;margin-right:8px;vertical-align:-2px}
+tr.alt td:nth-child(2)::before{content:"";display:inline-block;width:3px;height:14px;background:var(--canli);border-radius:2px;margin-right:8px;vertical-align:-2px}
+form{display:grid;gap:10px}
+label{display:grid;gap:4px;font-size:13px;font-weight:600;color:var(--ink2)}
+select,input{border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:9px 10px;font-size:14px;font-weight:500}
+.satir{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{border:0;background:var(--vurgu);color:#fff;border-radius:10px;padding:11px 16px;font-weight:600;font-size:14px}
+.btn:disabled{opacity:.5;cursor:default}
+.not{font-size:13px;color:var(--ink2);margin-top:8px}
+.kaynak{display:grid;gap:8px}
+.kaynak div{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:9px 10px;border:1px solid var(--line);border-radius:10px;font-size:13px}
+.kaynak div small{display:block;color:var(--ink2);font-weight:400}
+.kaynak div span{font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--vurgu2);color:var(--vurgu);white-space:nowrap}
+.kaynak div span.elle{background:var(--mavi2);color:var(--mavi)}
+.mimari{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;align-items:stretch;margin-top:6px}
+@media(max-width:760px){.mimari{grid-template-columns:1fr 1fr}}
+.kutu{border:1px solid var(--line);border-radius:10px;padding:10px;font-size:13px;position:relative;background:var(--bg)}
+.kutu b{display:block;font-size:13px;margin-bottom:4px}
+.kutu small{color:var(--ink2);display:block;line-height:1.4}
+.kutu::after{content:"→";position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--ink2);font-size:14px}
+.kutu:last-child::after{content:""}
+@media(max-width:760px){.kutu::after{content:""}}
+.asama{list-style:none;display:grid;gap:8px;font-size:14px}
+.asama li{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:10px}
+.asama li i{font-style:normal;width:26px;height:26px;border-radius:50%;background:var(--vurgu2);color:var(--vurgu);display:grid;place-items:center;font-weight:700;font-size:12px}
+.asama li span{font-size:12px;color:var(--ink2);white-space:nowrap}
+.bildirim{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:13px;font-weight:600;opacity:0;transition:.25s;pointer-events:none;z-index:9}
+.bildirim[data-acik="true"]{opacity:1;transform:translateX(-50%)}
+</style>
+</head>
+<body>
+<div class="ornek">Örnek ekran: takımlar ve skorlar temsilîdir. Canlı akış bu örnekte tarayıcıda simüle edilir ve zaman hızlandırılmıştır; gerçek sistemde veri NestJS üzerinden Redis ve SSE ile dağıtılır.</div>
+<header><div class="kap ust">
+<div class="logo"><i></i>SkorMerkezi</div>
+<div class="akis"><b></b><span id="akisDurum">SSE bağlı · son olay az önce</span></div>
+<nav>
+<button data-sayfa="canli" aria-current="true">Canlı</button>
+<button data-sayfa="mac">Maç merkezi</button>
+<button data-sayfa="puan">Puan durumu</button>
+<button data-sayfa="panel">Yönetim</button>
+<button data-sayfa="mimari">Mimari</button>
+</nav>
+</div></header>
+
+<main class="kap">
+
+<section class="sayfa" data-sayfa="canli" data-acik="true">
+<div class="izgara">
+<div class="kart">
+<h2>Canlı maçlar</h2>
+<div class="brans" id="bransSec"></div>
+<div id="macListesi"></div>
+</div>
+<div class="kart">
+<h2>Olay akışı</h2>
+<p class="not" style="margin:0 0 10px">Sunucudan gelen her olay tek bir kanaldan dağıtılır; listeler yalnız değişen satırı günceller.</p>
+<ul class="olaylar" id="olayAkisi"></ul>
+</div>
+</div>
+</section>
+
+<section class="sayfa" data-sayfa="mac">
+<div class="izgara">
+<div class="kart">
+<h2 id="macBaslik">Maç merkezi</h2>
+<div class="basbas" id="basbas"></div>
+<h3>Olaylar</h3>
+<ul class="zaman" id="macOlaylar"></ul>
+</div>
+<div class="kart">
+<h2>İstatistik</h2>
+<div class="ist" id="macIst"></div>
+<h3>Karşılaştırma</h3>
+<p class="not" id="karsilastirma"></p>
+</div>
+</div>
+</section>
+
+<section class="sayfa" data-sayfa="puan">
+<div class="kart">
+<h2>Puan durumu</h2>
+<div class="brans" id="ligSec"></div>
+<table id="puanTablo"></table>
+<p class="not">Puan durumu, biten maçların sonuçlarından hesaplanır; canlı maçtaki değişiklikler maç bitince tabloya işlenir.</p>
+</div>
+</section>
+
+<section class="sayfa" data-sayfa="panel">
+<div class="izgara">
+<div class="kart">
+<h2>Elle skor girişi</h2>
+<p class="not" style="margin:0 0 12px">Veri sağlayıcısı olmayan branşlar için editör skoru buradan girer, canlı listeye aynı saniye düşer.</p>
+<form id="panelForm">
+<label>Maç<select id="panelMac"></select></label>
+<div class="satir">
+<label>Olay<select id="panelOlay"><option value="ev">Ev sahibi sayı</option><option value="dep">Deplasman sayı</option><option value="bitir">Maçı bitir</option></select></label>
+<label>Dakika<input id="panelDk" type="number" min="1" max="120" value="38"></label>
+</div>
+<button class="btn" type="submit">Yayınla</button>
+</form>
+</div>
+<div class="kart">
+<h2>Veri kaynakları</h2>
+<div class="kaynak" id="kaynaklar"></div>
+<p class="not">Sağlayıcı kesilirse son bilinen skor önbellekten sunulmaya devam eder, bağlantı dönünce fark alınıp yayınlanır.</p>
+</div>
+</div>
+</section>
+
+<section class="sayfa" data-sayfa="mimari">
+<div class="kart">
+<h2>Veri akışı</h2>
+<div class="mimari">
+<div class="kutu"><b>Sağlayıcı / editör</b><small>Branş API uçları ve yönetim paneli</small></div>
+<div class="kutu"><b>NestJS toplayıcı</b><small>Çekme, fark alma, doğrulama, kuyruk</small></div>
+<div class="kutu"><b>PostgreSQL + Redis</b><small>Kalıcı kayıt, sıcak veri ve yayın kanalı</small></div>
+<div class="kutu"><b>SSE yayın</b><small>Yalnız değişen satır gider, yeniden bağlanma otomatik</small></div>
+<div class="kutu"><b>Next.js arayüz</b><small>Sunucu tarafı ilk yükleme, sonra akış</small></div>
+</div>
+<h3>Geliştirme aşamaları</h3>
+<ul class="asama">
+<li><i>1</i><div>Veri modeli, sağlayıcı bağlantıları, toplayıcı servis</div><span>hafta 1-3</span></li>
+<li><i>2</i><div>Canlı liste, maç merkezi, fikstür ve sonuçlar</div><span>hafta 4-7</span></li>
+<li><i>3</i><div>Puan durumu, takım sayfaları, karşılaştırma</div><span>hafta 8-10</span></li>
+<li><i>4</i><div>Yönetim paneli, elle giriş, yetkiler</div><span>hafta 11-13</span></li>
+<li><i>5</i><div>Yük testi, Cloudflare önbellek kuralları, yayın</div><span>hafta 14-16</span></li>
+</ul>
+<p class="not">Süreler branş ve sağlayıcı sayısına göre netleşir; her aşama sonunda çalışan sürüm teslim edilir.</p>
+</div>
+</section>
+
+</main>
+<div class="bildirim" id="bildirim"></div>
+
+<script>
+const BRANSLAR=[['futbol','Futbol'],['basketbol','Basketbol'],['voleybol','Voleybol'],['tenis','Tenis'],['hentbol','Hentbol'],['masatenisi','Masa Tenisi']];
+const RENK={futbol:'#0f7b4f',basketbol:'#c2410c',voleybol:'#1f4fa3',tenis:'#6d28d9',hentbol:'#0e7490',masatenisi:'#b45309'};
+const KAYNAK={futbol:'api',basketbol:'api',voleybol:'api',tenis:'api',hentbol:'elle',masatenisi:'elle'};
+let sira=1;
+function M(b,lig,ev,dep,evS,depS,dk,durum,ek){return{id:sira++,brans:b,lig,ev,dep,evS,depS,dk,durum,ek:ek||null,olaylar:[]}}
+const MACLAR=[
+ M('futbol','1. Lig','Kuzey FK','Marmara SK',1,0,34,'canli'),
+ M('futbol','1. Lig','Ege Spor','Akdeniz SK',0,0,12,'canli'),
+ M('futbol','1. Lig','Karadeniz FK','Anadolu SK',2,2,90,'bitti'),
+ M('futbol','1. Lig','Boğaz FK','Toros SK',0,0,0,'bekliyor','20:30'),
+ M('basketbol','Basketbol Ligi','Ankara Basket','İzmir Basket',54,49,0,'canli','3. periyot 06:12'),
+ M('basketbol','Basketbol Ligi','Bursa Basket','Konya Basket',71,80,0,'bitti','Bitti'),
+ M('voleybol','Voleybol Ligi','Samsun Voleybol','Eskişehir Voleybol',1,1,0,'canli','3. set 18-16'),
+ M('tenis','Tenis Turu','A. Demir','E. Kaya',1,0,0,'canli','2. set 3-2'),
+ M('hentbol','Hentbol Ligi','Gaziantep Hentbol','Antalya Hentbol',21,19,41,'canli'),
+ M('hentbol','Hentbol Ligi','Denizli Hentbol','Sivas Hentbol',0,0,0,'bekliyor','19:00'),
+ M('masatenisi','Masa Tenisi Ligi','Mersin MT','Kocaeli MT',2,1,0,'canli','4. set 7-5'),
+];
+MACLAR[0].olaylar=[[9,'gol','Kuzey FK 1-0 (Yılmaz)'],[22,'sari','Marmara SK sarı kart (Aksoy)'],[31,'degisiklik','Marmara SK oyuncu değişikliği']];
+MACLAR[8].olaylar=[[2,'gol','Gaziantep 1-0'],[15,'gol','Antalya 5-5'],[28,'ceza','Antalya 2 dk ceza'],[39,'gol','Gaziantep 21-19']];
+const PUAN={
+ '1. Lig':[['Kuzey FK',10,7,2,1,19,8],['Boğaz FK',10,6,2,2,17,10],['Ege Spor',10,5,3,2,14,9],['Karadeniz FK',10,4,4,2,15,12],['Marmara SK',10,4,2,4,12,13],['Akdeniz SK',10,3,3,4,10,14],['Toros SK',10,2,3,5,8,16],['Anadolu SK',10,1,3,6,7,20]],
+ 'Basketbol Ligi':[['Ankara Basket',8,7,1],['İzmir Basket',8,6,2],['Konya Basket',8,4,4],['Bursa Basket',8,3,5],['Trakya Basket',8,0,8]],
+ 'Hentbol Ligi':[['Gaziantep Hentbol',6,5,0,1],['Antalya Hentbol',6,4,1,1],['Sivas Hentbol',6,2,1,3],['Denizli Hentbol',6,0,0,6]],
+};
+let brans='futbol',secili=MACLAR[0].id,lig='1. Lig';
+const $=s=>document.querySelector(s);
+const kisa=s=>s.split(' ').map(p=>p[0]).join('').slice(0,2).toUpperCase();
+function durumMetni(m){if(m.durum==='bitti')return m.ek||'MS';if(m.durum==='bekliyor')return m.ek;return m.ek||(m.dk+"'")}
+function renderBrans(){$('#bransSec').innerHTML=BRANSLAR.map(([k,a])=>`<button type="button" data-b="${k}" aria-pressed="${k===brans}">${a}</button>`).join('')}
+function renderListe(){const el=$('#macListesi');const ligler=[...new Set(MACLAR.filter(m=>m.brans===brans).map(m=>m.lig))];el.innerHTML=ligler.map(l=>`<div class="lig"><span>${l}</span>${KAYNAK[brans]==='elle'?'editör girişi':'sağlayıcı akışı'}</div>`+MACLAR.filter(m=>m.brans===brans&&m.lig===l).map(m=>`<div class="mac" data-id="${m.id}" aria-selected="${m.id===secili}" role="button" tabindex="0">
+<div class="durum ${m.durum}">${durumMetni(m)}</div>
+<div class="takimlar"><div><em style="background:${RENK[m.brans]}">${kisa(m.ev)}</em>${m.ev}</div><div><em style="background:${RENK[m.brans]}">${kisa(m.dep)}</em>${m.dep}</div></div>
+<div class="skor"><span data-s="ev-${m.id}">${m.durum==='bekliyor'?'-':m.evS}</span><span data-s="dep-${m.id}">${m.durum==='bekliyor'?'-':m.depS}</span></div></div>`).join('')).join('')}
+function renderMac(){const m=MACLAR.find(x=>x.id===secili);$('#macBaslik').textContent=m.lig+' · '+durumMetni(m);$('#basbas').innerHTML=`<div><div class="ad">${m.ev}</div><small>ev sahibi</small></div><div class="buyuk">${m.evS} : ${m.depS}</div><div><div class="ad">${m.dep}</div><small>deplasman</small></div>`;
+const ik={gol:'⚽',sari:'▮',ceza:'2',degisiklik:'⇄',sayi:'+'};$('#macOlaylar').innerHTML=m.olaylar.length?m.olaylar.slice().reverse().map(([dk,t,a])=>`<li><b>${dk}'</b><i>${ik[t]||'•'}</i><span>${a}</span></li>`).join(''):'<li><b>—</b><i>•</i><span>Henüz olay yok</span></li>';
+const top=m.evS+m.depS||1;const ev=Math.round(m.evS/top*100);const ist=[['Skor payı',ev,100-ev],['Hücum',52,48],['Topla oynama',55,45]];$('#macIst').innerHTML=ist.map(([a,x,y])=>`<div><span>${x}%</span><div><p>${a}</p><div class="cubuk"><i style="width:${x}%"></i></div></div><span>${y}%</span></div>`).join('');
+$('#karsilastirma').textContent=`${m.ev} son 5 maçta 3 galibiyet, ${m.dep} 2 galibiyet; aralarındaki son 3 karşılaşmada ev sahibi 2 kez kazandı.`}
+function renderPuan(){const ligler=Object.keys(PUAN);$('#ligSec').innerHTML=ligler.map(l=>`<button type="button" data-l="${l}" aria-pressed="${l===lig}">${l}</button>`).join('');const t=PUAN[lig];const fut=t[0].length===7;const sirali=t.slice().map(r=>fut?{ad:r[0],o:r[1],g:r[2],b:r[3],m:r[4],a:r[5],y:r[6],p:r[2]*3+r[3]}:{ad:r[0],o:r[1],g:r[2],m:r[3],p:r[2]*2+r[3]}).sort((a,b)=>b.p-a.p||((b.a-b.y)-(a.a-a.y)));
+$('#puanTablo').innerHTML=`<thead><tr><th>#</th><th>Takım</th><th>O</th><th>G</th>${fut?'<th>B</th>':''}<th>M</th>${fut?'<th>Av</th>':''}<th>P</th></tr></thead><tbody>`+sirali.map((r,i)=>`<tr class="${i<2?'lider':i>=sirali.length-1?'alt':''}"><td>${i+1}</td><td>${r.ad}</td><td>${r.o}</td><td>${r.g}</td>${fut?`<td>${r.b}</td>`:''}<td>${r.m}</td>${fut?`<td>${r.a-r.y>0?'+':''}${r.a-r.y}</td>`:''}<td><b>${r.p}</b></td></tr>`).join('')+'</tbody>'}
+function renderPanel(){$('#panelMac').innerHTML=MACLAR.filter(m=>KAYNAK[m.brans]==='elle'&&m.durum!=='bitti').map(m=>`<option value="${m.id}">${m.ev} - ${m.dep} (${m.lig})</option>`).join('');
+$('#kaynaklar').innerHTML=BRANSLAR.map(([k,a])=>`<div><div>${a}<small>${KAYNAK[k]==='api'?'Sağlayıcı API, 5 sn aralıkla çekme, Redis önbellek':'Yönetim panelinden editör girişi'}</small></div><span class="${KAYNAK[k]}">${KAYNAK[k]==='api'?'sağlayıcı':'elle giriş'}</span></div>`).join('')}
+function olay(m,metin,tip){const saat=new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});const li=document.createElement('li');li.className='yeni';li.innerHTML=`<b>${saat}</b><span>${m.brans}/${m.id} ${tip} · ${metin}</span>`;const ul=$('#olayAkisi');ul.prepend(li);while(ul.children.length>14)ul.lastChild.remove();setTimeout(()=>li.classList.remove('yeni'),1500);$('#akisDurum').textContent='SSE bağlı · son olay '+saat;}
+function skorGuncelle(m,taraf,kac,dk,aciklama){if(taraf==='ev')m.evS+=kac;else m.depS+=kac;if(dk)m.dk=dk;m.olaylar.push([m.dk||dk||0,m.brans==='futbol'||m.brans==='hentbol'?'gol':'sayi',aciklama||`${taraf==='ev'?m.ev:m.dep} ${m.evS}-${m.depS}`]);
+if(m.brans===brans)renderListe();const sp=document.querySelector(`[data-s="${taraf}-${m.id}"]`);if(sp){sp.classList.add('yeni');setTimeout(()=>sp.classList.remove('yeni'),1200)}if(m.id===secili)renderMac();olay(m,`${m.ev} ${m.evS}-${m.depS} ${m.dep}`,taraf==='ev'?'ev':'dep')}
+function bildir(t){const b=$('#bildirim');b.textContent=t;b.dataset.acik='true';clearTimeout(b._t);b._t=setTimeout(()=>b.dataset.acik='false',2200)}
+document.addEventListener('click',e=>{const nb=e.target.closest('nav button');if(nb){document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-current',b===nb));document.querySelectorAll('.sayfa').forEach(s=>s.dataset.acik=String(s.dataset.sayfa===nb.dataset.sayfa));return}
+const bb=e.target.closest('#bransSec button');if(bb){brans=bb.dataset.b;renderBrans();renderListe();return}
+const lb=e.target.closest('#ligSec button');if(lb){lig=lb.dataset.l;renderPuan();return}
+const mc=e.target.closest('.mac');if(mc){secili=+mc.dataset.id;renderListe();renderMac();document.querySelector('nav button[data-sayfa="mac"]').click()}});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.classList.contains('mac'))e.target.click()});
+$('#panelForm').addEventListener('submit',e=>{e.preventDefault();const m=MACLAR.find(x=>x.id===+$('#panelMac').value);if(!m)return;const tip=$('#panelOlay').value;const dk=Math.min(120,Math.max(1,+$('#panelDk').value||1));
+if(tip==='bitir'){m.durum='bitti';m.ek=null;m.olaylar.push([dk,'bitti','Maç bitti']);renderListe();renderMac();renderPanel();olay(m,`${m.ev} ${m.evS}-${m.depS} ${m.dep}`,'bitti');bildir('Maç sonucu yayınlandı')}else{skorGuncelle(m,tip,1,dk,`${tip==='ev'?m.ev:m.dep} ${tip==='ev'?m.evS+1:m.evS}-${tip==='ev'?m.depS:m.depS+1} (editör)`);bildir('Skor canlı listeye düştü')}$('#panelDk').value=Math.min(120,dk+1)});
+// simülasyon: hızlandırılmış zaman ve rastgele olaylar
+setInterval(()=>{MACLAR.forEach(m=>{if(m.durum!=='canli')return;if(m.brans==='futbol'||m.brans==='hentbol'){m.dk=Math.min(m.brans==='futbol'?90:60,m.dk+1);if(m.dk>=(m.brans==='futbol'?90:60)){m.durum='bitti';m.ek=null;olay(m,`${m.ev} ${m.evS}-${m.depS} ${m.dep}`,'bitti')}}});if(!document.hidden)renderListe()},3000);
+setInterval(()=>{const canli=MACLAR.filter(m=>m.durum==='canli'&&KAYNAK[m.brans]==='api');if(!canli.length)return;const m=canli[Math.floor(Math.random()*canli.length)];const taraf=Math.random()<.5?'ev':'dep';
+if(m.brans==='futbol'){if(Math.random()<.35)skorGuncelle(m,taraf,1,null,`${taraf==='ev'?m.ev:m.dep} gol`);else{m.olaylar.push([m.dk,'sari',`${taraf==='ev'?m.ev:m.dep} sarı kart`]);if(m.id===secili)renderMac();olay(m,`${taraf==='ev'?m.ev:m.dep} sarı kart ${m.dk}'`,'kart')}}
+else if(m.brans==='basketbol'){const p=Math.random()<.3?3:2;skorGuncelle(m,taraf,p,null,`${taraf==='ev'?m.ev:m.dep} +${p}`)}
+else if(m.brans==='voleybol'||m.brans==='tenis'){const [a,b]=(m.ek.match(/(\d+)-(\d+)/)||[0,0,0]).slice(1).map(Number);const na=taraf==='ev'?a+1:a,nb=taraf==='dep'?b+1:b;m.ek=m.ek.replace(/\d+-\d+/,`${na}-${nb}`);if(m.brans==='voleybol'&&(na>=25||nb>=25)&&Math.abs(na-nb)>=2){skorGuncelle(m,taraf,1,null,`${taraf==='ev'?m.ev:m.dep} seti aldı`);m.ek=`${m.evS+m.depS+1}. set 0-0`}else{if(m.brans===brans)renderListe();olay(m,`${m.ev} ${m.ek} ${m.dep}`,'sayı')}}},4200);
+renderBrans();renderListe();renderMac();renderPuan();renderPanel();olay(MACLAR[0],'Kuzey FK 1-0 Marmara SK','bağlantı');
+</script>
+</body>
+</html>
