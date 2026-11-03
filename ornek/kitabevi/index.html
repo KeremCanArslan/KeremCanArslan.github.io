@@ -475,7 +475,7 @@ function listeCiz(){
   $("#listeBaslik").textContent=filtre.ozel==="yeni"?t("yeniCikan"):filtre.ozel==="coksatan"?t("cokSatan"):filtre.kat?katAd(filtre.kat):t("kitaplar");
 }
 function goster(id){["vitrin","liste","odemeSayfa","basariSayfa","yonetim"].forEach(s=>$("#"+s).classList.toggle("gizli",s!==id)); window.scrollTo({top:0,behavior:"smooth"});}
-function listeAc(o={}){filtre={...filtre,kat:"",yazar:"",yayin:"",dil:"",ozel:"",...o}; aktifKat=filtre.kat; $("#fKat").value=filtre.kat; $("#fYazar").value=""; $("#fYayin").value=""; $("#fDil").value=""; katBarCiz(); listeCiz(); goster("liste");}
+function listeAc(o={}){filtre={...filtre,kat:"",yazar:"",yayin:"",dil:"",ozel:"",ara:"",...o}; if(!o.ara) $("#araKutu").value=""; aktifKat=filtre.kat; $("#fKat").value=filtre.kat; $("#fYazar").value=""; $("#fYayin").value=""; $("#fDil").value=""; katBarCiz(); listeCiz(); goster("liste");}
 /* ---------- detay ---------- */
 function detayAc(id){
   const k=KITAP.find(x=>x.id===id); const yok=toplamStok(k)===0;
