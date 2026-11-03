@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Örnek Medikal Estetik — Dört Dilli Kurumsal Site Örneği</title>
+<meta name="description" content="Medikal estetik hekimi için Türkçe, İngilizce, Rusça ve Almanca kurumsal site örneği.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap&subset=cyrillic" rel="stylesheet">
+<style>
+:root{--ink:#1c1d21;--ink2:#5d5f66;--line:#e6e1dc;--bg:#fff;--soft:#f6f2ee;--acc:#8a5a44;--acc2:#6f4634}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;font-size:16px}
+.ornek{background:#1c1d21;color:#cfd0d4;font-size:12px;text-align:center;padding:6px 16px}
+.w{max-width:1120px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:10}
+header .w{display:flex;align-items:center;height:68px;gap:28px}
+.logo{font-family:"Cormorant Garamond",serif;font-size:25px;font-weight:600;letter-spacing:.02em;white-space:nowrap}
+.logo span{color:var(--acc)}
+nav{display:flex;gap:22px;flex:1}
+nav a{color:var(--ink);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--acc)}
+.dil{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.dil button{border:0;background:#fff;font:inherit;font-size:12.5px;font-weight:600;padding:6px 9px;cursor:pointer;color:var(--ink2)}
+.dil button.on{background:var(--ink);color:#fff}
+.btn{display:inline-block;background:var(--acc);color:#fff;text-decoration:none;border:0;border-radius:6px;padding:12px 20px;font:inherit;font-weight:500;cursor:pointer}
+.btn:hover{background:var(--acc2)}
+.btn.ikinci{background:#fff;color:var(--ink);border:1px solid var(--ink)}
+.hero{padding:72px 0 64px;border-bottom:1px solid var(--line)}
+.hero .w{display:grid;grid-template-columns:1.25fr 1fr;gap:48px;align-items:center}
+.ust{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);font-weight:600}
+h1{font-family:"Cormorant Garamond",serif;font-weight:500;font-size:clamp(38px,5.4vw,62px);line-height:1.05;margin:14px 0 18px}
+.hero p{color:var(--ink2);max-width:520px;font-size:17px}
+.hero .dugme{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.kemer{aspect-ratio:4/5;border-radius:220px 220px 8px 8px;background:var(--soft);border:1px solid var(--line);display:flex;flex-direction:column;justify-content:flex-end;padding:28px;position:relative;overflow:hidden}
+.kemer:before{content:"";position:absolute;left:50%;top:18%;width:58%;aspect-ratio:1;transform:translateX(-50%);border-radius:50%;border:1px solid #d8cbc1}
+.kemer b{font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:500;position:relative}
+.kemer small{color:var(--ink2);position:relative}
+section{padding:68px 0}
+h2{font-family:"Cormorant Garamond",serif;font-weight:500;font-size:clamp(30px,3.6vw,42px);line-height:1.1;margin:10px 0 28px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.u{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:26px 24px 28px}
+.u h3{font-family:"Cormorant Garamond",serif;font-size:24px;font-weight:600;margin-bottom:8px}
+.u p{color:var(--ink2);font-size:14.5px}
+.u .sure{margin-top:14px;font-size:12.5px;color:var(--acc);font-weight:600}
+.hekim{background:var(--soft)}
+.hekim .w{display:grid;grid-template-columns:1fr 1.4fr;gap:48px;align-items:start}
+.portre{aspect-ratio:1;border:1px solid var(--line);background:#fff;border-radius:8px;display:grid;place-items:center;color:var(--ink2);font-size:13px;text-align:center;padding:20px}
+.hekim ul{list-style:none;margin-top:18px;border-top:1px solid var(--line)}
+.hekim li{padding:11px 0;border-bottom:1px solid var(--line);font-size:14.5px;display:flex;gap:14px}
+.hekim li b{min-width:130px;font-weight:600}
+.adim{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.adim div{border-top:2px solid var(--ink);padding-top:16px}
+.adim i{font-style:normal;font-family:"Cormorant Garamond",serif;font-size:34px;color:var(--acc)}
+.adim h3{font-size:16px;font-weight:600;margin:4px 0 6px}
+.adim p{color:var(--ink2);font-size:14px}
+.iletisim .w{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.bilgi p{margin-bottom:10px;color:var(--ink2)}
+.bilgi b{color:var(--ink);font-weight:600;display:block;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+form{display:grid;gap:12px}
+form label{font-size:13px;font-weight:600}
+form input,form select,form textarea{width:100%;border:1px solid var(--line);border-radius:6px;padding:11px 12px;font:inherit;font-size:15px;background:#fff}
+form textarea{min-height:96px;resize:vertical}
+.onay{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink2);font-weight:400}
+.onay input{width:auto;margin-top:4px}
+.tamam{display:none;border:1px solid #cfe3d3;background:#f2f8f3;color:#24573a;padding:12px 14px;border-radius:6px;font-size:14px}
+footer{border-top:1px solid var(--line);padding:28px 0 40px;color:var(--ink2);font-size:13px}
+footer .w{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+@media(max-width:900px){nav{display:none}.hero .w,.hekim .w,.iletisim .w{grid-template-columns:1fr}.kemer{max-width:360px}.grid{grid-template-columns:1fr 1fr}.adim{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){header .w{gap:12px}.logo{font-size:21px}.grid{grid-template-columns:1fr}.adim{grid-template-columns:1fr}.hekim li{flex-direction:column;gap:2px}section{padding:52px 0}.hero{padding:48px 0}}
+</style>
+</head>
+<body>
+<div class="ornek" data-t="ornek"></div>
+<header><div class="w">
+  <div class="logo">Örnek <span>Estetik</span></div>
+  <nav><a href="#uygulamalar" data-t="n1"></a><a href="#hekim" data-t="n2"></a><a href="#surec" data-t="n3"></a><a href="#iletisim" data-t="n4"></a></nav>
+  <div class="dil" id="dil"><button data-l="tr">TR</button><button data-l="en">EN</button><button data-l="ru">RU</button><button data-l="de">DE</button></div>
+</div></header>
+
+<div class="hero"><div class="w">
+  <div>
+    <div class="ust" data-t="h_ust"></div>
+    <h1 data-t="h1"></h1>
+    <p data-t="h_p"></p>
+    <div class="dugme"><a class="btn" href="#iletisim" data-t="h_b1"></a><a class="btn ikinci" href="#uygulamalar" data-t="h_b2"></a></div>
+  </div>
+  <div class="kemer"><b>Dr. Ad Soyad</b><small data-t="h_unvan"></small></div>
+</div></div>
+
+<section id="uygulamalar"><div class="w">
+  <div class="ust" data-t="u_ust"></div>
+  <h2 data-t="u_h"></h2>
+  <div class="grid" id="grid"></div>
+</div></section>
+
+<section id="hekim" class="hekim"><div class="w">
+  <div class="portre" data-t="portre"></div>
+  <div>
+    <div class="ust" data-t="k_ust"></div>
+    <h2>Dr. Ad Soyad</h2>
+    <p data-t="k_p"></p>
+    <ul id="kunye"></ul>
+  </div>
+</div></section>
+
+<section id="surec"><div class="w">
+  <div class="ust" data-t="s_ust"></div>
+  <h2 data-t="s_h"></h2>
+  <div class="adim" id="adim"></div>
+</div></section>
+
+<section id="iletisim" class="iletisim" style="background:var(--soft)"><div class="w">
+  <div class="bilgi">
+    <div class="ust" data-t="i_ust"></div>
+    <h2 data-t="i_h"></h2>
+    <p><b data-t="i_adres_b"></b><span data-t="i_adres"></span></p>
+    <p><b data-t="i_saat_b"></b><span data-t="i_saat"></span></p>
+    <p><b data-t="i_dil_b"></b>Türkçe, English, Русский, Deutsch</p>
+  </div>
+  <form id="form">
+    <label data-t="f_ad"></label><input required>
+    <label data-t="f_tel"></label><input required type="tel">
+    <label data-t="f_ilgi"></label><select id="ilgi"></select>
+    <label data-t="f_not"></label><textarea></textarea>
+    <label class="onay"><input type="checkbox" required><span data-t="f_kvkk"></span></label>
+    <button class="btn" type="submit" data-t="f_gonder"></button>
+    <div class="tamam" id="tamam" data-t="f_tamam"></div>
+  </form>
+</div></section>
+
+<footer><div class="w"><span data-t="alt"></span><span>© Örnek Estetik</span></div></footer>
+
+<script>
+const T={
+tr:{ornek:"Örnek tasarım: hekim adı, adres ve metinler temsilidir. Site dört dilde, dil düğmesinden değişir.",n1:"Uygulamalar",n2:"Hekim",n3:"Süreç",n4:"İletişim",
+h_ust:"Medikal estetik",h1:"Yüz ve cilt için medikal estetik uygulamaları",h_p:"Her uygulama öncesinde hekim muayenesi yapılır, size uygun olup olmadığı ve süreç birlikte konuşulur.",h_b1:"Muayene randevusu",h_b2:"Uygulamalar",h_unvan:"Medikal estetik hekimi",
+u_ust:"Uygulamalar",u_h:"Hangi uygulamaları yapıyoruz",
+u:[["Botulinum toksin","Mimik kaslarına bağlı çizgiler için uygulanır. Doz ve bölge muayenede belirlenir.","Seans: yaklaşık 20 dakika"],["Hyaluronik asit dolgu","Dudak, elmacık ve yüz hatlarında hacim kaybı için kullanılır.","Seans: 30-45 dakika"],["Mezoterapi","Cildin nem ve canlılığı için ince iğnelerle yapılan uygulamadır.","Seans: yaklaşık 30 dakika"],["PRP","Kişinin kendi kanından hazırlanan plazma cilde ya da saçlı deriye uygulanır.","Seans: 45-60 dakika"],["Kimyasal peeling","Cilt tonu ve yüzey düzensizlikleri için cilt tipine göre seçilen soyma işlemi.","Seans: 30 dakika"],["Lazer ile cilt yenileme","Leke ve cilt dokusu için uygulanır, seans sayısı cilde göre değişir.","Seans: 30-60 dakika"]],
+portre:"Hekim fotoğrafı buraya",k_ust:"Hekim",k_p:"Tıp fakültesinden sonra medikal estetik alanında eğitimlerini tamamladı. Muayenehanesinde yerli ve yabancı hastalarla dört dilde görüşüyor.",
+k:[["Diploma","Tıp Fakültesi, mezuniyet yılı"],["Eğitim","Medikal estetik sertifika programları"],["Üyelik","İlgili meslek dernekleri"],["Diller","Türkçe, İngilizce, Rusça, Almanca"]],
+s_ust:"Süreç",s_h:"Yurt dışından gelen hastalar için de aynı adımlar",
+s:[["Ön görüşme","Formu ya da WhatsApp mesajını aldıktan sonra sizi arar, sorularınızı yanıtlarız."],["Muayene","Hekim değerlendirmesi yapılır, uygun uygulama ve seans planı konuşulur."],["Uygulama","Uygulama günü ve sonrasında dikkat edilecekler yazılı olarak verilir."],["Kontrol","Gerekirse kontrol görüşmesi yapılır, yurt dışındaysanız görüntülü olur."]],
+i_ust:"İletişim",i_h:"Randevu ve bilgi",i_adres_b:"Adres",i_adres:"Örnek Mahallesi, Örnek Caddesi No: 1, İstanbul",i_saat_b:"Çalışma saatleri",i_saat:"Hafta içi 09:00-19:00, Cumartesi 10:00-16:00",i_dil_b:"Görüşme dilleri",
+f_ad:"Ad soyad",f_tel:"Telefon (WhatsApp)",f_ilgi:"İlgilendiğiniz uygulama",f_not:"Notunuz",f_kvkk:"Kişisel verilerimin randevu için işlenmesine dair aydınlatma metnini okudum.",f_gonder:"Gönder",f_tamam:"Teşekkürler, örnek formdur. Gerçek sitede mesaj kliniğe ve WhatsApp a düşer.",f_sec:"Seçiniz",
+alt:"Bu sitedeki bilgiler genel bilgilendirme amaçlıdır, tanı ve tedavi için hekim muayenesi gerekir."},
+en:{ornek:"Sample design: doctor name, address and texts are placeholders. The site is in four languages, switch with the language buttons.",n1:"Treatments",n2:"Doctor",n3:"Process",n4:"Contact",
+h_ust:"Medical aesthetics",h1:"Medical aesthetic treatments for face and skin",h_p:"Every treatment starts with a medical examination, where we discuss whether it suits you and what the process looks like.",h_b1:"Book a consultation",h_b2:"Treatments",h_unvan:"Medical aesthetic physician",
+u_ust:"Treatments",u_h:"What we offer",
+u:[["Botulinum toxin","Used for expression lines. Dose and areas are decided during the examination.","Session: about 20 minutes"],["Hyaluronic acid fillers","Used for volume loss in the lips, cheeks and facial contours.","Session: 30-45 minutes"],["Mesotherapy","Micro-injections to support skin hydration and radiance.","Session: about 30 minutes"],["PRP","Plasma prepared from your own blood, applied to the skin or scalp.","Session: 45-60 minutes"],["Chemical peel","A peel chosen for your skin type, for tone and surface irregularities.","Session: 30 minutes"],["Laser skin resurfacing","Used for pigmentation and texture; the number of sessions depends on the skin.","Session: 30-60 minutes"]],
+portre:"Doctor photo here",k_ust:"Doctor",k_p:"After medical school, completed further training in medical aesthetics. Sees local and international patients in four languages.",
+k:[["Degree","Faculty of Medicine, year of graduation"],["Training","Medical aesthetics certificate programmes"],["Membership","Relevant professional associations"],["Languages","Turkish, English, Russian, German"]],
+s_ust:"Process",s_h:"The same steps for patients travelling from abroad",
+s:[["First contact","After your form or WhatsApp message we call you back and answer your questions."],["Examination","The doctor assesses you and discusses a suitable treatment and session plan."],["Treatment","Aftercare instructions are given to you in writing."],["Follow-up","A follow-up is arranged if needed, by video call if you are abroad."]],
+i_ust:"Contact",i_h:"Appointments and information",i_adres_b:"Address",i_adres:"Sample District, Sample Street No: 1, Istanbul",i_saat_b:"Opening hours",i_saat:"Weekdays 09:00-19:00, Saturday 10:00-16:00",i_dil_b:"Languages",
+f_ad:"Full name",f_tel:"Phone (WhatsApp)",f_ilgi:"Treatment of interest",f_not:"Your note",f_kvkk:"I have read the privacy notice on processing my data for the appointment.",f_gonder:"Send",f_tamam:"Thank you, this is a sample form. On the real site the message goes to the clinic and WhatsApp.",f_sec:"Please select",
+alt:"Information on this site is general and does not replace a medical examination."},
+ru:{ornek:"Пример дизайна: имя врача, адрес и тексты условные. Сайт на четырёх языках, язык меняется кнопками.",n1:"Процедуры",n2:"Врач",n3:"Как проходит",n4:"Контакты",
+h_ust:"Медицинская эстетика",h1:"Процедуры медицинской эстетики для лица и кожи",h_p:"Перед каждой процедурой проводится осмотр врача: обсуждаем, подходит ли она вам и как проходит.",h_b1:"Записаться на консультацию",h_b2:"Процедуры",h_unvan:"Врач медицинской эстетики",
+u_ust:"Процедуры",u_h:"Что мы делаем",
+u:[["Ботулинотерапия","Применяется при мимических морщинах. Доза и зоны определяются на осмотре.","Сеанс: около 20 минут"],["Филлеры на основе гиалуроновой кислоты","Для восполнения объёма губ, скул и контуров лица.","Сеанс: 30-45 минут"],["Мезотерапия","Микроинъекции для увлажнения и сияния кожи.","Сеанс: около 30 минут"],["PRP","Плазма из вашей собственной крови вводится в кожу или кожу головы.","Сеанс: 45-60 минут"],["Химический пилинг","Пилинг подбирается по типу кожи для выравнивания тона и рельефа.","Сеанс: 30 минут"],["Лазерное омоложение кожи","При пигментации и неровной текстуре; число сеансов зависит от кожи.","Сеанс: 30-60 минут"]],
+portre:"Здесь фото врача",k_ust:"Врач",k_p:"После медицинского факультета: обучение в области медицинской эстетики. Приём местных и иностранных пациентов на четырёх языках.",
+k:[["Диплом","Медицинский факультет, год выпуска"],["Обучение","Сертификационные программы по медицинской эстетике"],["Членство","Профессиональные ассоциации"],["Языки","Турецкий, английский, русский, немецкий"]],
+s_ust:"Как проходит",s_h:"Те же шаги для пациентов из-за рубежа",
+s:[["Первый контакт","Получив форму или сообщение в WhatsApp, мы перезваниваем и отвечаем на вопросы."],["Осмотр","Врач проводит оценку и обсуждает подходящую процедуру и план сеансов."],["Процедура","Рекомендации после процедуры выдаются письменно."],["Контроль","При необходимости проводится контроль, если вы за рубежом, по видеосвязи."]],
+i_ust:"Контакты",i_h:"Запись и информация",i_adres_b:"Адрес",i_adres:"Район Пример, улица Пример, 1, Стамбул",i_saat_b:"Часы работы",i_saat:"Будни 09:00-19:00, суббота 10:00-16:00",i_dil_b:"Языки",
+f_ad:"Имя и фамилия",f_tel:"Телефон (WhatsApp)",f_ilgi:"Интересующая процедура",f_not:"Комментарий",f_kvkk:"Я ознакомился с уведомлением об обработке моих данных для записи.",f_gonder:"Отправить",f_tamam:"Спасибо, это пример формы. На реальном сайте сообщение приходит в клинику и в WhatsApp.",f_sec:"Выберите",
+alt:"Информация на сайте носит общий характер и не заменяет осмотр врача."},
+de:{ornek:"Beispieldesign: Name, Adresse und Texte sind Platzhalter. Die Seite ist viersprachig, Umschalten über die Sprachknöpfe.",n1:"Behandlungen",n2:"Zur Person",n3:"Ablauf",n4:"Kontakt",
+h_ust:"Medizinische Ästhetik",h1:"Medizinisch-ästhetische Behandlungen für Gesicht und Haut",h_p:"Vor jeder Behandlung findet eine ärztliche Untersuchung statt, in der wir besprechen, ob sie für Sie geeignet ist und wie sie abläuft.",h_b1:"Beratungstermin",h_b2:"Behandlungen",h_unvan:"Ästhetische Medizin",
+u_ust:"Behandlungen",u_h:"Was wir anbieten",
+u:[["Botulinumtoxin","Bei mimischen Falten. Dosis und Areale werden bei der Untersuchung festgelegt.","Sitzung: etwa 20 Minuten"],["Hyaluronsäure-Filler","Bei Volumenverlust an Lippen, Wangen und Gesichtskonturen.","Sitzung: 30-45 Minuten"],["Mesotherapie","Mikroinjektionen für Feuchtigkeit und Frische der Haut.","Sitzung: etwa 30 Minuten"],["PRP","Plasma aus Ihrem eigenen Blut wird in die Haut oder Kopfhaut eingebracht.","Sitzung: 45-60 Minuten"],["Chemisches Peeling","Ein auf den Hauttyp abgestimmtes Peeling für Hautton und Oberfläche.","Sitzung: 30 Minuten"],["Laser-Hauterneuerung","Bei Pigmentflecken und Hautstruktur; die Anzahl der Sitzungen hängt von der Haut ab.","Sitzung: 30-60 Minuten"]],
+portre:"Hier ein Foto",k_ust:"Zur Person",k_p:"Nach dem Medizinstudium Weiterbildung in medizinischer Ästhetik. In der Praxis werden einheimische und internationale Patienten in vier Sprachen betreut.",
+k:[["Abschluss","Medizinische Fakultät, Abschlussjahr"],["Weiterbildung","Zertifikatsprogramme medizinische Ästhetik"],["Mitgliedschaft","Fachgesellschaften"],["Sprachen","Türkisch, Englisch, Russisch, Deutsch"]],
+s_ust:"Ablauf",s_h:"Dieselben Schritte für Patienten aus dem Ausland",
+s:[["Erstkontakt","Nach Ihrem Formular oder Ihrer WhatsApp-Nachricht rufen wir zurück und beantworten Ihre Fragen."],["Untersuchung","Nach der ärztlichen Beurteilung werden Behandlung und Sitzungsplan besprochen."],["Behandlung","Hinweise für die Zeit danach erhalten Sie schriftlich."],["Kontrolle","Bei Bedarf eine Kontrolle, aus dem Ausland per Videoanruf."]],
+i_ust:"Kontakt",i_h:"Termine und Informationen",i_adres_b:"Adresse",i_adres:"Beispielviertel, Beispielstraße 1, Istanbul",i_saat_b:"Öffnungszeiten",i_saat:"Mo-Fr 09:00-19:00, Sa 10:00-16:00",i_dil_b:"Sprachen",
+f_ad:"Vor- und Nachname",f_tel:"Telefon (WhatsApp)",f_ilgi:"Gewünschte Behandlung",f_not:"Ihre Nachricht",f_kvkk:"Ich habe die Datenschutzhinweise zur Terminvereinbarung gelesen.",f_gonder:"Senden",f_tamam:"Danke, dies ist ein Beispielformular. Auf der echten Seite geht die Nachricht an die Praxis und an WhatsApp.",f_sec:"Bitte wählen",
+alt:"Die Informationen auf dieser Seite sind allgemein und ersetzen keine ärztliche Untersuchung."}
+};
+function uygula(l){ const t=T[l]; document.documentElement.lang=l;
+ document.querySelectorAll('[data-t]').forEach(e=>{const k=e.dataset.t; if(t[k]!==undefined) e.textContent=t[k];});
+ document.getElementById('grid').innerHTML=t.u.map(x=>`<div class="u"><h3>${x[0]}</h3><p>${x[1]}</p><div class="sure">${x[2]}</div></div>`).join('');
+ document.getElementById('kunye').innerHTML=t.k.map(x=>`<li><b>${x[0]}</b><span>${x[1]}</span></li>`).join('');
+ document.getElementById('adim').innerHTML=t.s.map((x,i)=>`<div><i>0${i+1}</i><h3>${x[0]}</h3><p>${x[1]}</p></div>`).join('');
+ document.getElementById('ilgi').innerHTML='<option>'+t.f_sec+'</option>'+t.u.map(x=>`<option>${x[0]}</option>`).join('');
+ document.querySelectorAll('#dil button').forEach(b=>b.classList.toggle('on',b.dataset.l===l));
+ document.title=(l==='tr'?'Örnek Medikal Estetik':l==='ru'?'Пример: медицинская эстетика':l==='de'?'Beispiel: Medizinische Ästhetik':'Sample Medical Aesthetics');
+ try{ history.replaceState(null,'','#'+l); }catch(e){}
+}
+document.getElementById('dil').addEventListener('click',e=>{const b=e.target.closest('button'); if(b) uygula(b.dataset.l);});
+document.getElementById('form').addEventListener('submit',e=>{e.preventDefault(); document.getElementById('tamam').style.display='block';});
+uygula(['tr','en','ru','de'].includes(location.hash.slice(1))?location.hash.slice(1):'tr');
+</script>
+</body>
+</html>
