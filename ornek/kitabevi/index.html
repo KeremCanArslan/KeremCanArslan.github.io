@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kitabevi — Örnek Mağaza</title>
+<meta name="description" content="Avrupa'ya Türkçe kitap satan çok dilli (TR, DE, EN), çok para birimli (EUR, CHF) e-ticaret mağazası örneği: arama, kitap alanları, kargo kuralı, üyeliksiz sipariş.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf8f4;--kart:#fff;--ink:#1e222b;--ink2:#636b78;--line:#e7e2d9;--vurgu:#8a3b12;--vurgu2:#f7e8de;--yesil:#2b7a4b;--yesil2:#e3f3e9;--lacivert:#22304a;--sari:#f3c13a}
+@media (prefers-color-scheme:dark){:root{--bg:#141619;--kart:#1c1f24;--ink:#eef0f4;--ink2:#a2a9b5;--line:#2d313a;--vurgu:#e0875c;--vurgu2:#3a2619;--yesil:#6fcf97;--yesil2:#17301f;--lacivert:#c8d4ee;--sari:#f3c13a}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:15px/1.5 Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+h1,h2,h3{font-family:"Source Serif 4",Georgia,serif;line-height:1.2}
+.ornek{background:#1f2633;color:#cdd4df;font-size:12px;text-align:center;padding:6px 16px}
+.kap{max-width:1140px;margin:0 auto;padding:0 16px}
+.ustbar{background:var(--lacivert);color:#fff;font-size:12px}
+.ustbar .kap{display:flex;gap:16px;align-items:center;height:32px}
+.ustbar .sag{margin-left:auto;display:flex;gap:6px}
+.ustbar select{background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:6px;padding:2px 6px;font-size:12px}
+.ustbar select option{color:#000}
+header{background:var(--kart);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.ust{display:flex;align-items:center;gap:16px;height:66px}
+.logo{font-family:"Source Serif 4",serif;font-weight:700;font-size:22px;color:var(--vurgu);white-space:nowrap}
+.ara{flex:1;display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg)}
+.ara input{flex:1;border:0;background:transparent;padding:10px 12px;min-width:0}
+.ara input:focus{outline:none}
+.ara button{border:0;background:var(--vurgu);color:#fff;padding:0 14px;font-weight:600}
+.sepet{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 12px;font-weight:600;font-size:14px;white-space:nowrap}
+.menu{display:flex;gap:18px;height:40px;align-items:center;font-size:14px;font-weight:500;color:var(--ink2);overflow:auto}
+.menu span{white-space:nowrap}
+@media(max-width:720px){.logo{font-size:18px}.sepet span.y{display:none}}
+main{padding:18px 0 60px}
+.slider{background:linear-gradient(120deg,#22304a,#8a3b12);color:#fff;border-radius:16px;padding:34px 28px;display:grid;grid-template-columns:1.4fr 1fr;gap:20px;align-items:center}
+.slider h1{font-size:32px}
+.slider p{opacity:.85;margin-top:8px}
+.slider .btn{margin-top:16px}
+.kitapyigin{display:flex;gap:10px;justify-content:center}
+.kitapyigin i{display:block;width:70px;height:100px;border-radius:4px;background:var(--sari);box-shadow:0 8px 20px rgba(0,0,0,.3)}
+.kitapyigin i:nth-child(2){background:#e8e2d5;transform:translateY(-10px)}.kitapyigin i:nth-child(3){background:#9fc5e8}
+@media(max-width:720px){.slider{grid-template-columns:1fr;padding:24px 18px}.slider h1{font-size:24px}.kitapyigin{display:none}}
+.btn{display:inline-block;border:0;background:var(--sari);color:#1e222b;border-radius:10px;padding:11px 16px;font-weight:700;font-size:14px}
+.btn.ikincil{background:var(--kart);color:var(--ink);border:1px solid var(--line)}
+section{margin-top:28px}
+.baslik{display:flex;align-items:baseline;gap:12px;margin-bottom:12px}
+.baslik h2{font-size:22px}
+.baslik span{color:var(--ink2);font-size:13px;margin-left:auto}
+.filtre{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.filtre button{border:1px solid var(--line);background:var(--kart);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600}
+.filtre button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.izgara{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+.kitap{background:var(--kart);border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:6px;position:relative}
+.kapak{aspect-ratio:2/3;border-radius:6px;display:flex;align-items:flex-end;padding:10px;color:#fff;font-family:"Source Serif 4",serif;font-weight:700;font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,.4)}
+.rozet{position:absolute;top:18px;left:18px;background:var(--sari);color:#1e222b;font-size:11px;font-weight:700;padding:3px 7px;border-radius:999px}
+.rozet.yeni{background:var(--yesil);color:#fff}
+.kitap h3{font-size:15px;font-family:Inter,sans-serif;font-weight:600}
+.kitap .yazar{font-size:13px;color:var(--ink2)}
+.kitap .meta{font-size:11px;color:var(--ink2)}
+.fiyat{display:flex;align-items:baseline;gap:8px;margin-top:auto}
+.fiyat b{font-size:17px}
+.fiyat s{color:var(--ink2);font-size:13px}
+.kitap button{border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:8px;font-weight:600;font-size:13px}
+.kitap button:hover{background:var(--vurgu2);border-color:var(--vurgu);color:var(--vurgu)}
+.ozellikler{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:860px){.ozellikler{grid-template-columns:1fr 1fr}}
+.oz{background:var(--kart);border:1px solid var(--line);border-radius:12px;padding:14px}
+.oz b{display:block;margin-bottom:4px}
+.oz p{font-size:13px;color:var(--ink2)}
+.cekmece{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--kart);border-left:1px solid var(--line);transform:translateX(100%);transition:.25s;z-index:20;display:flex;flex-direction:column}
+.cekmece[data-acik="true"]{transform:none}
+.cekmece header{position:static;display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--line)}
+.cekmece header h2{font-size:18px}
+.cekmece .ic{padding:16px;overflow:auto;flex:1;display:grid;gap:12px;align-content:start}
+.satir{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;font-size:14px;padding:8px 0;border-bottom:1px solid var(--line)}
+.satir small{display:block;color:var(--ink2);font-size:12px}
+.satir .adet{display:flex;gap:6px;align-items:center}
+.satir .adet button{width:26px;height:26px;border:1px solid var(--line);background:var(--bg);border-radius:6px}
+label{display:grid;gap:4px;font-size:13px;font-weight:600;color:var(--ink2)}
+select,input.giris{border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:9px 10px;font-size:14px;font-weight:500;width:100%}
+.toplam{display:grid;gap:6px;font-size:14px}
+.toplam div{display:flex;justify-content:space-between}
+.toplam .son{font-weight:700;font-size:17px;border-top:1px solid var(--line);padding-top:8px}
+.bilgi{font-size:12px;color:var(--ink2);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.bilgi.ok{color:var(--yesil);background:var(--yesil2);border-color:transparent}
+.cekmece footer{padding:16px;border-top:1px solid var(--line);display:grid;gap:8px}
+.odeme{display:grid;gap:8px}
+.odeme .kartkutu{border:1px solid var(--line);border-radius:9px;padding:10px;font-size:13px;color:var(--ink2);background:var(--bg)}
+.kapat{border:0;background:transparent;font-size:20px}
+.bildirim{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:13px;font-weight:600;opacity:0;transition:.25s;pointer-events:none;z-index:30}
+.bildirim[data-acik="true"]{opacity:1;transform:translateX(-50%)}
+.cerez{position:fixed;left:16px;right:16px;bottom:16px;background:var(--kart);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:13px;z-index:15;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+.cerez button{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:7px 12px;font-weight:600;font-size:13px}
+.cerez button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.cerez[hidden]{display:none}
+footer.alt{margin-top:40px;border-top:1px solid var(--line);padding:20px 0;font-size:13px;color:var(--ink2);display:flex;gap:16px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="ornek" data-t="ornek">Örnek mağaza: kitaplar, fiyatlar ve stoklar temsilîdir; ödeme adımı deneme amaçlıdır, buradan sipariş gitmez.</div>
+<div class="ustbar"><div class="kap">
+<span data-t="kargo">Almanya ve İsviçre deposundan tüm Avrupa'ya kargo</span>
+<div class="sag">
+<select id="dil" aria-label="Dil"><option value="tr">Türkçe</option><option value="de">Deutsch</option><option value="en">English</option></select>
+<select id="para" aria-label="Para birimi"><option value="EUR">EUR €</option><option value="CHF">CHF</option></select>
+</div></div></div>
+<header><div class="kap">
+<div class="ust">
+<div class="logo">Köprü Kitabevi</div>
+<form class="ara" id="araForm"><input id="araKutu" data-p="ara" placeholder="Kitap, yazar, yayınevi ya da ISBN ara"><button type="submit" data-t="araBtn">Ara</button></form>
+<button class="sepet" id="sepetBtn"><span class="y" data-t="sepet">Sepet</span> · <span id="sepetSayi">0</span></button>
+</div>
+<nav class="menu" id="menu"></nav>
+</div></header>
+
+<main class="kap">
+<div class="slider">
+<div><h1 data-t="sliderH">Gurbette Türkçe okumak artık iki günde kapınızda</h1><p data-t="sliderP">Yeni çıkanlar, çok satanlar ve okul kitapları; EUR ya da CHF ile ödeyin, Almanya ve İsviçre deposundan hızlı gönderim.</p><a class="btn" href="#liste" data-t="sliderBtn">Kampanyaları gör</a></div>
+<div class="kitapyigin"><i></i><i></i><i></i></div>
+</div>
+
+<section id="liste">
+<div class="baslik"><h2 data-t="listeH">Kitaplar</h2><span id="sonuc"></span></div>
+<div class="filtre" id="filtre"></div>
+<div class="izgara" id="izgara"></div>
+</section>
+
+<section>
+<div class="baslik"><h2 data-t="ozH">Gerçek mağazada neler olur</h2></div>
+<div class="ozellikler">
+<div class="oz"><b data-t="oz1b">Çok dil, çok para birimi</b><p data-t="oz1p">Türkçe varsayılan, Almanca ve İngilizce çeviri panelden; fiyatlar EUR ve CHF olarak ayrı ayrı belirlenir ya da kurdan çevrilir.</p></div>
+<div class="oz"><b data-t="oz2b">Stripe ile güvenli ödeme</b><p data-t="oz2p">Kart, Apple Pay ve Google Pay; webhook ile ödeme doğrulanır, iadeler panelden tek tıkla.</p></div>
+<div class="oz"><b data-t="oz3b">İki depo, kargo kuralları</b><p data-t="oz3p">Almanya ve İsviçre stoğu ayrı izlenir; kargo ücreti ülke, ağırlık ve sepet tutarına göre, ücretsiz kargo eşiğiyle.</p></div>
+<div class="oz"><b data-t="oz4b">Kitap alanları ve arama</b><p data-t="oz4p">ISBN, yazar, yayınevi, dil, sayfa, baskı yılı, kapak türü; arama ve filtre bu alanların hepsinde çalışır.</p></div>
+</div>
+</section>
+
+<footer class="alt"><span data-t="f1">Gizlilik</span><span data-t="f2">İade ve teslimat</span><span data-t="f3">Çerez ayarları</span><span data-t="f4">Impressum</span><span style="margin-left:auto" data-t="f5">GDPR uyumlu çerez onayı ve yasal sayfalar panelden düzenlenir</span></footer>
+</main>
+
+<aside class="cekmece" id="cekmece" aria-label="Sepet">
+<header><h2 data-t="sepetH">Sepet</h2><button class="kapat" id="kapat" aria-label="Kapat">×</button></header>
+<div class="ic">
+<div id="sepetListe"></div>
+<label><span data-t="ulke">Teslimat ülkesi</span><select id="ulke"><option value="DE">Almanya</option><option value="CH">İsviçre</option><option value="AT">Avusturya</option><option value="FR">Fransa</option><option value="NL">Hollanda</option></select></label>
+<div class="bilgi" id="kargoBilgi"></div>
+<div class="toplam" id="toplam"></div>
+<div class="odeme">
+<label><span data-t="eposta">E-posta (üyeliksiz sipariş)</span><input class="giris" placeholder="ornek@eposta.com"></label>
+<div class="kartkutu" data-t="kart">Kart bilgileri Stripe alanına girilir, sitede saklanmaz (örnekte kapalı).</div>
+</div>
+</div>
+<footer><button class="btn" id="ode" data-t="ode">Ödemeye geç</button><button class="btn ikincil" id="uyeOl" data-t="uye">Hesap açıp siparişlerimi takip etmek istiyorum</button></footer>
+</aside>
+<div class="bildirim" id="bildirim"></div>
+<div class="cerez" id="cerez"><span data-t="cerezT">Çerezleri yalnız sepet ve dil tercihi için kullanıyoruz; istatistik çerezleri onayınıza bağlı.</span><button id="cerezRed" data-t="cerezR">Yalnız gerekli</button><button class="on" id="cerezKabul" data-t="cerezK">Kabul et</button></div>
+
+<script>
+const T={
+ tr:{ornek:'Örnek mağaza: kitaplar, fiyatlar ve stoklar temsilîdir; ödeme adımı deneme amaçlıdır, buradan sipariş gitmez.',kargo:'Almanya ve İsviçre deposundan tüm Avrupa’ya kargo',ara:'Kitap, yazar, yayınevi ya da ISBN ara',araBtn:'Ara',sepet:'Sepet',sliderH:'Gurbette Türkçe okumak artık iki günde kapınızda',sliderP:'Yeni çıkanlar, çok satanlar ve okul kitapları; EUR ya da CHF ile ödeyin, Almanya ve İsviçre deposundan hızlı gönderim.',sliderBtn:'Kampanyaları gör',listeH:'Kitaplar',ozH:'Gerçek mağazada neler olur',oz1b:'Çok dil, çok para birimi',oz1p:'Türkçe varsayılan, Almanca ve İngilizce çeviri panelden; fiyatlar EUR ve CHF olarak ayrı ayrı belirlenir ya da kurdan çevrilir.',oz2b:'Stripe ile güvenli ödeme',oz2p:'Kart, Apple Pay ve Google Pay; webhook ile ödeme doğrulanır, iadeler panelden tek tıkla.',oz3b:'İki depo, kargo kuralları',oz3p:'Almanya ve İsviçre stoğu ayrı izlenir; kargo ücreti ülke, ağırlık ve sepet tutarına göre, ücretsiz kargo eşiğiyle.',oz4b:'Kitap alanları ve arama',oz4p:'ISBN, yazar, yayınevi, dil, sayfa, baskı yılı, kapak türü; arama ve filtre bu alanların hepsinde çalışır.',f1:'Gizlilik',f2:'İade ve teslimat',f3:'Çerez ayarları',f4:'Impressum',f5:'GDPR uyumlu çerez onayı ve yasal sayfalar panelden düzenlenir',sepetH:'Sepet',ulke:'Teslimat ülkesi',eposta:'E-posta (üyeliksiz sipariş)',kart:'Kart bilgileri Stripe alanına girilir, sitede saklanmaz (örnekte kapalı).',ode:'Ödemeye geç',uye:'Hesap açıp siparişlerimi takip etmek istiyorum',cerezT:'Çerezleri yalnız sepet ve dil tercihi için kullanıyoruz; istatistik çerezleri onayınıza bağlı.',cerezR:'Yalnız gerekli',cerezK:'Kabul et',hepsi:'Hepsi',yeni:'Yeni çıkanlar',cok:'Çok satanlar',kampanya:'Kampanya',ekle:'Sepete ekle',bos:'Sepetiniz boş',sonuc:'kitap',araToplam:'Ara toplam',kargoS:'Kargo',toplamS:'Toplam',ucretsiz:'Ücretsiz kargo',kalan:'ücretsiz kargoya',depo:'depodan',sayfa:'sayfa',stok:'stokta',eklendi:'Sepete eklendi',odemeMsg:'Gerçek sitede Stripe ödeme sayfası açılır.',uyeMsg:'Gerçek sitede hesap açma: favoriler, adres defteri, sipariş geçmişi ve kargo takibi.'},
+ de:{ornek:'Beispielshop: Bücher, Preise und Bestände sind fiktiv; der Bezahlschritt ist eine Demo, es wird nichts bestellt.',kargo:'Versand aus Deutschland und der Schweiz in ganz Europa',ara:'Buch, Autor, Verlag oder ISBN suchen',araBtn:'Suchen',sepet:'Warenkorb',sliderH:'Türkische Bücher in zwei Tagen an Ihrer Tür',sliderP:'Neuerscheinungen, Bestseller und Schulbücher; zahlen Sie in EUR oder CHF, schneller Versand aus dem Lager in Deutschland und der Schweiz.',sliderBtn:'Angebote ansehen',listeH:'Bücher',ozH:'Was der echte Shop kann',oz1b:'Mehrsprachig, mehrere Währungen',oz1p:'Türkisch als Standard, Deutsch und Englisch im Backend; Preise in EUR und CHF getrennt oder per Kurs.',oz2b:'Sichere Zahlung mit Stripe',oz2p:'Karte, Apple Pay und Google Pay; Zahlung per Webhook bestätigt, Erstattungen mit einem Klick.',oz3b:'Zwei Lager, Versandregeln',oz3p:'Bestand in Deutschland und der Schweiz getrennt; Versandkosten nach Land, Gewicht und Warenkorb, mit Gratisversand-Schwelle.',oz4b:'Buchfelder und Suche',oz4p:'ISBN, Autor, Verlag, Sprache, Seiten, Jahr, Einband; Suche und Filter arbeiten über alle Felder.',f1:'Datenschutz',f2:'Rückgabe und Versand',f3:'Cookie-Einstellungen',f4:'Impressum',f5:'DSGVO-konforme Cookie-Zustimmung und Rechtstexte im Backend',sepetH:'Warenkorb',ulke:'Lieferland',eposta:'E-Mail (Bestellung ohne Konto)',kart:'Kartendaten werden im Stripe-Feld eingegeben, nicht im Shop gespeichert (in der Demo deaktiviert).',ode:'Zur Kasse',uye:'Konto anlegen und Bestellungen verfolgen',cerezT:'Cookies nur für Warenkorb und Sprache; Statistik-Cookies nur mit Ihrer Zustimmung.',cerezR:'Nur notwendige',cerezK:'Akzeptieren',hepsi:'Alle',yeni:'Neu',cok:'Bestseller',kampanya:'Angebot',ekle:'In den Warenkorb',bos:'Ihr Warenkorb ist leer',sonuc:'Bücher',araToplam:'Zwischensumme',kargoS:'Versand',toplamS:'Gesamt',ucretsiz:'Gratisversand',kalan:'bis Gratisversand',depo:'Lager',sayfa:'Seiten',stok:'auf Lager',eklendi:'In den Warenkorb gelegt',odemeMsg:'Im echten Shop öffnet sich die Stripe-Zahlungsseite.',uyeMsg:'Im echten Shop: Konto mit Favoriten, Adressbuch, Bestellhistorie und Sendungsverfolgung.'},
+ en:{ornek:'Sample store: books, prices and stock are fictional; the checkout step is a demo, no order is placed.',kargo:'Shipping across Europe from warehouses in Germany and Switzerland',ara:'Search by title, author, publisher or ISBN',araBtn:'Search',sepet:'Cart',sliderH:'Turkish books at your door in two days',sliderP:'New releases, bestsellers and school books; pay in EUR or CHF, fast shipping from Germany and Switzerland.',sliderBtn:'See offers',listeH:'Books',ozH:'What the real store does',oz1b:'Multi-language, multi-currency',oz1p:'Turkish by default, German and English managed in the admin panel; prices set separately in EUR and CHF or converted by rate.',oz2b:'Secure payment with Stripe',oz2p:'Card, Apple Pay and Google Pay; payments confirmed by webhook, refunds in one click.',oz3b:'Two warehouses, shipping rules',oz3p:'German and Swiss stock tracked separately; shipping by country, weight and cart total with a free-shipping threshold.',oz4b:'Book fields and search',oz4p:'ISBN, author, publisher, language, pages, year, binding; search and filters work on all fields.',f1:'Privacy',f2:'Returns and delivery',f3:'Cookie settings',f4:'Imprint',f5:'GDPR cookie consent and legal pages managed in the panel',sepetH:'Cart',ulke:'Delivery country',eposta:'Email (guest checkout)',kart:'Card details go into the Stripe field, never stored on the site (disabled in demo).',ode:'Proceed to payment',uye:'Create an account to track my orders',cerezT:'We use cookies only for cart and language; analytics cookies need your consent.',cerezR:'Only necessary',cerezK:'Accept',hepsi:'All',yeni:'New',cok:'Bestseller',kampanya:'Offer',ekle:'Add to cart',bos:'Your cart is empty',sonuc:'books',araToplam:'Subtotal',kargoS:'Shipping',toplamS:'Total',ucretsiz:'Free shipping',kalan:'to free shipping',depo:'warehouse',sayfa:'pages',stok:'in stock',eklendi:'Added to cart',odemeMsg:'The real store opens the Stripe checkout page here.',uyeMsg:'Real store: account with favourites, address book, order history and tracking.'}};
+const KAT={tr:['Roman','Çocuk','Okul','Şiir','Tarih','Kişisel Gelişim'],de:['Roman','Kinder','Schule','Lyrik','Geschichte','Ratgeber'],en:['Novel','Children','School','Poetry','History','Self-help']};
+const RENK=['#8a3b12','#22304a','#2b7a4b','#6d28d9','#b45309','#0e7490','#9d174d','#374151'];
+const KITAP=[
+ {id:1,ad:'Boğaz Rüzgârı',yazar:'Leyla Aksu',yay:'Mavi Kapı',kat:0,isbn:'9786050001011',sayfa:312,yil:2026,kapak:'Karton',dil:'Türkçe',eur:14.9,chf:14.5,eski:null,rozet:'yeni',agir:0.42,depo:'DE'},
+ {id:2,ad:'Küçük Kedi Kömür',yazar:'Deniz Taş',yay:'Çocuk Bahçesi',kat:1,isbn:'9786050001028',sayfa:48,yil:2025,kapak:'Ciltli',dil:'Türkçe',eur:9.9,chf:9.6,eski:12.9,rozet:'kampanya',agir:0.35,depo:'CH'},
+ {id:3,ad:'Türkçe Okuma 3. Sınıf',yazar:'Kurul',yay:'Ders Evi',kat:2,isbn:'9786050001035',sayfa:160,yil:2026,kapak:'Karton',dil:'Türkçe',eur:11.5,chf:11.2,eski:null,rozet:'cok',agir:0.5,depo:'DE'},
+ {id:4,ad:'Yağmur Sonrası',yazar:'Murat Erdem',yay:'Mavi Kapı',kat:3,isbn:'9786050001042',sayfa:96,yil:2024,kapak:'Karton',dil:'Türkçe',eur:8.9,chf:8.7,eski:null,rozet:null,agir:0.2,depo:'DE'},
+ {id:5,ad:'Osmanlı Mutfağı',yazar:'Selin Kara',yay:'Tarih Yolu',kat:4,isbn:'9786050001059',sayfa:280,yil:2023,kapak:'Ciltli',dil:'Türkçe',eur:19.9,chf:19.4,eski:24.9,rozet:'kampanya',agir:0.8,depo:'CH'},
+ {id:6,ad:'Sabah Alışkanlıkları',yazar:'Can Yüce',yay:'Işık',kat:5,isbn:'9786050001066',sayfa:224,yil:2026,kapak:'Karton',dil:'Türkçe',eur:12.9,chf:12.6,eski:null,rozet:'cok',agir:0.33,depo:'DE'},
+ {id:7,ad:'Gurbet Mektupları',yazar:'Ayşe Demirci',yay:'Köprü',kat:0,isbn:'9786050001073',sayfa:368,yil:2025,kapak:'Karton',dil:'Türkçe',eur:15.9,chf:15.5,eski:null,rozet:'cok',agir:0.48,depo:'CH'},
+ {id:8,ad:'Deutsch-Türkisch Bildwörterbuch',yazar:'Kurul',yay:'Ders Evi',kat:1,isbn:'9786050001080',sayfa:120,yil:2026,kapak:'Ciltli',dil:'Almanca / Türkçe',eur:13.9,chf:13.5,eski:null,rozet:'yeni',agir:0.6,depo:'DE'},
+];
+const KARGO={DE:{temel:3.9,kgBasi:1,esik:39},CH:{temel:6.9,kgBasi:1.5,esik:60},AT:{temel:6.9,kgBasi:1.2,esik:59},FR:{temel:8.9,kgBasi:1.5,esik:69},NL:{temel:7.9,kgBasi:1.2,esik:59}};
+let dil='tr',para='EUR',filtre='hepsi',arama='';const sepet=new Map();
+const $=s=>document.querySelector(s);const t=k=>T[dil][k]||k;
+const fmt=v=>(para==='EUR'?'€ ':'CHF ')+v.toLocaleString(dil==='en'?'en-GB':'de-DE',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fiyat=k=>para==='EUR'?k.eur:k.chf;
+function cevir(){document.querySelectorAll('[data-t]').forEach(e=>e.textContent=t(e.dataset.t));document.querySelectorAll('[data-p]').forEach(e=>e.placeholder=t(e.dataset.p));document.documentElement.lang=dil}
+function renderMenu(){$('#menu').innerHTML=KAT[dil].map(k=>`<span>${k}</span>`).join('')}
+function renderFiltre(){$('#filtre').innerHTML=[['hepsi',t('hepsi')],['yeni',t('yeni')],['cok',t('cok')],['kampanya',t('kampanya')]].map(([k,a])=>`<button type="button" data-f="${k}" aria-pressed="${k===filtre}">${a}</button>`).join('')}
+function renderListe(){const q=arama.toLowerCase();const list=KITAP.filter(k=>(filtre==='hepsi'||k.rozet===filtre)&&(!q||[k.ad,k.yazar,k.yay,k.isbn].some(x=>x.toLowerCase().includes(q))));$('#sonuc').textContent=list.length+' '+t('sonuc');$('#izgara').innerHTML=list.map(k=>`<article class="kitap">${k.rozet?`<span class="rozet ${k.rozet}">${t(k.rozet)}</span>`:''}<div class="kapak" style="background:linear-gradient(160deg,${RENK[(k.id-1)%RENK.length]},#1e222b)">${k.ad}</div><h3>${k.ad}</h3><div class="yazar">${k.yazar} · ${k.yay}</div><div class="meta">ISBN ${k.isbn} · ${k.sayfa} ${t('sayfa')} · ${k.yil} · ${k.kapak}</div><div class="meta">${KAT[dil][k.kat]} · ${k.depo} ${t('depo')} · ${t('stok')}</div><div class="fiyat"><b>${fmt(fiyat(k))}</b>${k.eski?`<s>${fmt(para==='EUR'?k.eski:k.eski*0.97)}</s>`:''}</div><button type="button" data-ekle="${k.id}">${t('ekle')}</button></article>`).join('')}
+function renderSepet(){const ul=$('#ulke').value;const kural=KARGO[ul];let ara=0,agir=0,adet=0;const rows=[];for(const [id,n] of sepet){const k=KITAP.find(x=>x.id===id);ara+=fiyat(k)*n;agir+=k.agir*n;adet+=n;rows.push(`<div class="satir"><div>${k.ad}<small>${k.yazar} · ${fmt(fiyat(k))}</small></div><div class="adet"><button type="button" data-az="${id}">−</button><span>${n}</span><button type="button" data-cok="${id}">+</button></div></div>`)}
+$('#sepetSayi').textContent=adet;$('#sepetListe').innerHTML=rows.length?rows.join(''):`<p class="bilgi">${t('bos')}</p>`;
+if(!rows.length){$('#toplam').innerHTML='';$('#kargoBilgi').textContent='';return}
+const oran=para==='EUR'?1:0.97;const esik=kural.esik*(para==='EUR'?1:1.05);let kargo=ara>=esik?0:(kural.temel+kural.kgBasi*Math.max(0,agir-0.5))*oran;
+$('#kargoBilgi').className='bilgi'+(kargo===0?' ok':'');$('#kargoBilgi').textContent=kargo===0?t('ucretsiz')+' ✓':fmt(esik-ara)+' '+t('kalan')+' · '+agir.toFixed(2)+' kg';
+$('#toplam').innerHTML=`<div><span>${t('araToplam')}</span><span>${fmt(ara)}</span></div><div><span>${t('kargoS')} (${ul})</span><span>${kargo===0?t('ucretsiz'):fmt(kargo)}</span></div><div class="son"><span>${t('toplamS')}</span><span>${fmt(ara+kargo)}</span></div>`}
+function bildir(m){const b=$('#bildirim');b.textContent=m;b.dataset.acik='true';clearTimeout(b._t);b._t=setTimeout(()=>b.dataset.acik='false',2000)}
+function hepsiniCiz(){cevir();renderMenu();renderFiltre();renderListe();renderSepet()}
+$('#dil').addEventListener('change',e=>{dil=e.target.value;hepsiniCiz()});
+$('#para').addEventListener('change',e=>{para=e.target.value;renderListe();renderSepet()});
+$('#araForm').addEventListener('submit',e=>{e.preventDefault();arama=$('#araKutu').value.trim();renderListe();document.getElementById('liste').scrollIntoView({behavior:'smooth'})});
+$('#araKutu').addEventListener('input',e=>{arama=e.target.value.trim();renderListe()});
+document.addEventListener('click',e=>{const f=e.target.closest('#filtre button');if(f){filtre=f.dataset.f;renderFiltre();renderListe();return}
+const ek=e.target.closest('[data-ekle]');if(ek){const id=+ek.dataset.ekle;sepet.set(id,(sepet.get(id)||0)+1);renderSepet();bildir(t('eklendi'));return}
+const az=e.target.closest('[data-az]');if(az){const id=+az.dataset.az;const n=sepet.get(id)-1;n>0?sepet.set(id,n):sepet.delete(id);renderSepet();return}
+const cok=e.target.closest('[data-cok]');if(cok){const id=+cok.dataset.cok;sepet.set(id,sepet.get(id)+1);renderSepet();return}});
+$('#sepetBtn').addEventListener('click',()=>$('#cekmece').dataset.acik='true');
+$('#kapat').addEventListener('click',()=>$('#cekmece').dataset.acik='false');
+$('#ulke').addEventListener('change',renderSepet);
+$('#ode').addEventListener('click',()=>bildir(t('odemeMsg')));
+$('#uyeOl').addEventListener('click',()=>bildir(t('uyeMsg')));
+$('#cerezRed').addEventListener('click',()=>$('#cerez').hidden=true);$('#cerezKabul').addEventListener('click',()=>$('#cerez').hidden=true);
+hepsiniCiz();
+</script>
+</body>
+</html>
