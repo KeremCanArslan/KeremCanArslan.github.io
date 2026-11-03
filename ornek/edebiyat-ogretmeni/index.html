@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Edebiyat Öğretmeni — Örnek Site</title>
+<meta name="description" content="Türk Dili ve Edebiyatı öğretmeni için ders paketleri, online ders saati seçimi, kayıt formu ve yönetim ekranı olan örnek site.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbf8f3;--kart:#fff;--ink:#1d2433;--ink2:#5f6675;--line:#e8e1d6;--vurgu:#a5482b;--vurgu2:#f5e6df;--lacivert:#1f3150;--ok:#2e7d4f}
+@media (prefers-color-scheme:dark){:root{--bg:#14171d;--kart:#1c2028;--ink:#eef0f4;--ink2:#a3aab6;--line:#2c313b;--vurgu:#e08a6c;--vurgu2:#3a2620;--lacivert:#c9d6ef;--ok:#6fcf97}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:16px/1.55 Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+h1,h2,h3{font-family:"Source Serif 4",Georgia,serif;line-height:1.2}
+.ornek{background:#202633;color:#cfd5e0;font-size:12px;text-align:center;padding:6px 16px}
+.kap{max-width:1080px;margin:0 auto;padding:0 16px}
+header{background:var(--kart);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.ust{display:flex;align-items:center;gap:16px;height:62px}
+.logo{font-family:"Source Serif 4",Georgia,serif;font-weight:700;font-size:20px;color:var(--lacivert)}
+nav{display:flex;gap:18px;margin-left:auto;font-size:14px;font-weight:500}
+nav a{color:var(--ink2);text-decoration:none}
+nav a:hover{color:var(--ink)}
+.wa{border:0;background:#1f7a46;color:#fff;border-radius:999px;padding:8px 14px;font-weight:600;font-size:14px}
+.sekme{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:7px 12px;font-size:13px;font-weight:600}
+@media(max-width:760px){nav{display:none}.ust{gap:8px}.logo{font-size:17px}.wa{padding:7px 10px;font-size:13px;margin-left:auto}}
+.hero{padding:48px 0 32px;display:grid;grid-template-columns:1.3fr 1fr;gap:28px;align-items:center}
+@media(max-width:760px){.hero{grid-template-columns:1fr;padding:28px 0 16px}}
+.hero h1{font-size:40px;color:var(--lacivert)}
+@media(max-width:760px){.hero h1{font-size:30px}}
+.hero p{color:var(--ink2);margin-top:12px;font-size:17px}
+.cta{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.btn{border:0;background:var(--vurgu);color:#fff;border-radius:10px;padding:12px 18px;font-weight:600}
+.btn.ikincil{background:var(--kart);color:var(--ink);border:1px solid var(--line)}
+.ogretmen{background:var(--kart);border:1px solid var(--line);border-radius:16px;padding:22px}
+.ogretmen .av{width:64px;height:64px;border-radius:50%;background:var(--vurgu2);color:var(--vurgu);display:grid;place-items:center;font-family:"Source Serif 4",serif;font-weight:700;font-size:24px}
+.ogretmen h3{margin-top:12px;font-size:20px}
+.ogretmen ul{list-style:none;margin-top:10px;color:var(--ink2);font-size:14px;display:grid;gap:6px}
+.ogretmen li::before{content:"— ";color:var(--vurgu)}
+section{padding:34px 0}
+section h2{font-size:28px;color:var(--lacivert)}
+section .alt{color:var(--ink2);margin-top:6px}
+.paketler{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:18px}
+@media(max-width:900px){.paketler{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.paketler{grid-template-columns:1fr}}
+.paket{background:var(--kart);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column}
+.paket h3{font-size:19px}
+.etiketler{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.etiket{font-size:12px;font-weight:600;background:var(--vurgu2);color:var(--vurgu);border-radius:999px;padding:3px 9px}
+.paket p{font-size:14px;color:var(--ink2);flex:1}
+.paket button{margin-top:12px;border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:9px;font-weight:600;font-size:14px}
+.takvim{margin-top:18px;background:var(--kart);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+.gunler{display:grid;grid-template-columns:repeat(6,minmax(96px,1fr));gap:8px;min-width:620px}
+.gun h4{font-size:13px;color:var(--ink2);font-weight:600;margin-bottom:6px;text-align:center}
+.saat{display:block;width:100%;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:7px 0;margin-bottom:6px;font-size:14px;font-weight:600}
+.saat[aria-pressed="true"]{background:var(--lacivert);color:var(--bg);border-color:var(--lacivert)}
+.saat:disabled{opacity:.35;text-decoration:line-through;cursor:default}
+.bilgi{margin-top:12px;font-size:14px;color:var(--ink2)}
+.blog{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:18px}
+@media(max-width:760px){.blog{grid-template-columns:1fr}}
+.yazi{background:var(--kart);border:1px solid var(--line);border-radius:14px;padding:18px}
+.yazi small{color:var(--vurgu);font-weight:600;font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+.yazi h3{font-size:18px;margin-top:6px}
+.yazi p{font-size:14px;color:var(--ink2);margin-top:6px}
+.form{margin-top:18px;background:var(--kart);border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:620px){.form{grid-template-columns:1fr}}
+.form label{font-size:13px;color:var(--ink2);display:block;margin-bottom:4px}
+.form input,.form select,.form textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:var(--bg)}
+.form .tam{grid-column:1/-1}
+.tamam{display:none;margin-top:12px;background:var(--vurgu2);border-radius:10px;padding:12px 14px;font-size:14px}
+.panel{background:var(--kart);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:18px}
+.panel table{width:100%;border-collapse:collapse;font-size:14px;margin-top:10px}
+.panel th,.panel td{text-align:left;padding:8px;border-bottom:1px solid var(--line)}
+.panel th{color:var(--ink2);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+.bos{color:var(--ink2);font-size:14px;padding:8px 0}
+.notlar{margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:760px){.notlar{grid-template-columns:1fr}}
+.notlar div{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:14px}
+.notlar b{display:block;margin-bottom:4px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;display:none;z-index:30;max-width:90vw}
+footer{padding:26px 0 40px;color:var(--ink2);font-size:13px;border-top:1px solid var(--line);margin-top:20px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="ornek">Örnek site: öğretmen bilgileri temsilîdir, form ve WhatsApp düğmesi deneme amaçlıdır, buradan bir yere bilgi gitmez.</div>
+<header><div class="kap ust">
+ <div class="logo">Edebiyat Dersi</div>
+ <nav><a href="#dersler">Dersler</a><a href="#online">Online ders</a><a href="#blog">Blog</a><a href="#basvuru">Başvuru</a></nav>
+ <button class="sekme" type="button" id="yonetimAc">Yönetim</button>
+ <button class="wa" type="button" id="wa">WhatsApp</button>
+</div></header>
+<main id="site">
+ <div class="kap hero">
+  <div>
+   <h1>Türk Dili ve Edebiyatı özel ders</h1>
+   <p>LGS Türkçe, TYT Türkçe ve AYT Edebiyat için birebir ya da küçük grup dersleri. Online ya da yüz yüze, konu anlatımı, soru çözümü ve deneme analiziyle.</p>
+   <div class="cta"><button class="btn" type="button" data-git="basvuru">Ders talebi oluştur</button><button class="btn ikincil" type="button" data-git="dersler">Ders paketleri</button></div>
+  </div>
+  <div class="ogretmen">
+   <div class="av">AS</div>
+   <h3>Ad Soyad</h3>
+   <p style="color:var(--ink2);font-size:14px">Türk Dili ve Edebiyatı Öğretmeni</p>
+   <ul><li>Mezun olduğu üniversite ve bölüm</li><li>Öğretmenlik deneyimi ve çalıştığı kurumlar</li><li>Ders anlatım yaklaşımı, kısa tanıtım</li></ul>
+  </div>
+ </div>
+ <section id="dersler"><div class="kap">
+  <h2>Ders paketleri</h2><p class="alt">Paketler, süreler ve ücretler yönetim ekranından güncellenir.</p>
+  <div class="paketler" id="paketler"></div>
+ </div></section>
+ <section id="online"><div class="kap">
+  <h2>Online ders saatleri</h2><p class="alt">Uygun saati seçin, talebiniz onaylanınca ders bağlantısı size iletilir.</p>
+  <div class="takvim"><div class="gunler" id="gunler"></div></div>
+  <p class="bilgi" id="secilenSaat">Saat seçilmedi.</p>
+ </div></section>
+ <section id="blog"><div class="kap">
+  <h2>Blog</h2><p class="alt">Konu özetleri ve sınav önerileri, Google aramalarında öğrencinin karşısına çıkması için.</p>
+  <div class="blog">
+   <div class="yazi"><small>AYT Edebiyat</small><h3>Divan edebiyatında nazım biçimleri: kısa özet</h3><p>Gazel, kaside, mesnevi ve rubai; ayırt edici özellikleri ve sık sorulan soru tipleri.</p></div>
+   <div class="yazi"><small>TYT Türkçe</small><h3>Paragraf sorularında süre kazanmanın 5 yolu</h3><p>Ana düşünce, yardımcı düşünce ve anlatım biçimi sorularında dikkat edilecekler.</p></div>
+   <div class="yazi"><small>LGS Türkçe</small><h3>Fiilimsiler konusu nasıl çalışılır?</h3><p>İsim-fiil, sıfat-fiil ve zarf-fiil eklerini örnek cümlelerle ayırma.</p></div>
+  </div>
+ </div></section>
+ <section id="basvuru"><div class="kap">
+  <h2>Ders talebi</h2><p class="alt">Formu doldurun, en kısa sürede dönüş yapılır.</p>
+  <form class="form" id="form">
+   <div><label>Öğrencinin adı soyadı</label><input id="fAd" required placeholder="Ad Soyad"></div>
+   <div><label>Sınıf / sınav</label><select id="fSinif"><option>8. sınıf (LGS)</option><option>11. sınıf</option><option>12. sınıf / mezun (YKS)</option><option>Diğer</option></select></div>
+   <div><label>Ders paketi</label><select id="fPaket"></select></div>
+   <div><label>Ders şekli</label><select id="fSekil"><option>Online</option><option>Yüz yüze</option></select></div>
+   <div class="tam"><label>Seçilen saat</label><input id="fSaat" readonly placeholder="Yukarıdaki takvimden saat seçin (isteğe bağlı)"></div>
+   <div class="tam"><label>Not</label><textarea id="fNot" rows="3" placeholder="Hedef, zorlanılan konular"></textarea></div>
+   <div class="tam"><button class="btn" type="submit">Talebi gönder</button><div class="tamam" id="tamam"></div></div>
+  </form>
+ </div></section>
+</main>
+<section id="yonetim" hidden><div class="kap">
+ <h2>Yönetim ekranı</h2><p class="alt">Gelen ders talepleri, saatler ve içerik buradan yönetilir. Demoda bu tarayıcıdaki talepler görünür.</p>
+ <div class="panel"><b>Gelen ders talepleri</b><div id="talepler"><p class="bos">Henüz talep yok. Sitedeki formu doldurunca burada görünür.</p></div></div>
+ <div class="notlar">
+  <div><b>İçerik</b>Öğretmen tanıtımı, paketler, ücretler, fotoğraflar ve blog yazıları panelden eklenip değiştirilir.</div>
+  <div><b>Online ders</b>Onaylanan talebe Google Meet ya da Zoom bağlantısı gönderilir, takvimde saat dolu görünür.</div>
+  <div><b>Reklam sayfaları</b>Her paket için ayrı açılış sayfası (ör. AYT Edebiyat) Google Ads ve Instagram reklamlarına bağlanır, form gönderimi dönüşüm olarak ölçülür.</div>
+  <div><b>Bildirim</b>Yeni talep gelince e-posta ile bildirim gelir, WhatsApp düğmesi öğretmenin numarasına mesaj açar.</div>
+ </div>
+ <p style="margin-top:16px"><button class="btn ikincil" type="button" id="siteyeDon">Siteye dön</button></p>
+</div></section>
+<footer><div class="kap">Örnek site · Gerçek kurulumda öğretmenin bilgileri, fotoğrafları ve iletişim bağlantıları yer alır.</div></footer>
+<div class="toast" id="toast"></div>
+<script>
+const $=id=>document.getElementById(id);
+const PAKET=[
+ {ad:'AYT Edebiyat hazırlık',et:['12. sınıf','Online / yüz yüze'],ac:'Haftada 2 ders: konu anlatımı, soru çözümü ve deneme analizi.'},
+ {ad:'TYT Türkçe ve paragraf',et:['11-12. sınıf','Online'],ac:'Paragraf, dil bilgisi ve anlam bilgisi; süre yönetimi çalışması.'},
+ {ad:'LGS Türkçe',et:['8. sınıf','Online / yüz yüze'],ac:'Okuduğunu anlama, fiilimsiler, cümle türleri ve yeni nesil sorular.'},
+ {ad:'Birebir özel ders',et:['Tüm seviyeler','Saatlik'],ac:'İhtiyaca göre konu ya da ödev desteği, okul sınavlarına hazırlık.'}
+];
+const GUN=['Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'],SAAT=['15:00','16:30','18:00','19:30'];
+const DOLU=new Set(['Salı 16:30','Perşembe 18:00','Cumartesi 15:00']);
+function toast(t){const e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(()=>e.style.display='none',3200);}
+PAKET.forEach(p=>{const d=document.createElement('div');d.className='paket';d.innerHTML='<h3>'+p.ad+'</h3><div class="etiketler">'+p.et.map(e=>'<span class="etiket">'+e+'</span>').join('')+'</div><p>'+p.ac+'</p><button type="button">Bu paket için talep</button>';d.querySelector('button').onclick=()=>{$('fPaket').value=p.ad;git('basvuru');};$('paketler').appendChild(d);const o=document.createElement('option');o.textContent=p.ad;$('fPaket').appendChild(o);});
+let secili='';
+GUN.forEach(g=>{const k=document.createElement('div');k.className='gun';k.innerHTML='<h4>'+g+'</h4>';SAAT.forEach(s=>{const b=document.createElement('button');b.type='button';b.className='saat';b.textContent=s;const anahtar=g+' '+s;if(DOLU.has(anahtar)){b.disabled=true;b.title='Dolu';}b.setAttribute('aria-pressed','false');b.onclick=()=>{document.querySelectorAll('.saat').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');secili=anahtar;$('secilenSaat').textContent='Seçilen saat: '+anahtar+' (online)';$('fSaat').value=anahtar;$('fSekil').value='Online';};k.appendChild(b);});$('gunler').appendChild(k);});
+function git(id){$('site').hidden=false;$('yonetim').hidden=true;document.getElementById(id).scrollIntoView({behavior:'smooth'});}
+document.querySelectorAll('[data-git]').forEach(b=>b.onclick=()=>git(b.dataset.git));
+$('wa').onclick=()=>toast('Gerçek sitede bu düğme öğretmenin WhatsApp numarasına hazır bir mesajla açılır.');
+const talepler=[];
+$('form').onsubmit=e=>{e.preventDefault();const ad=$('fAd').value.trim();if(!ad){$('fAd').focus();return;}
+ talepler.unshift({ad,sinif:$('fSinif').value,paket:$('fPaket').value,sekil:$('fSekil').value,saat:$('fSaat').value||'—',zaman:new Date().toTimeString().slice(0,5)});
+ const t=$('tamam');t.style.display='block';t.textContent='Talebiniz alındı. Demoda bu talep "Yönetim" ekranında görünür; gerçek sitede öğretmene e-posta ile bildirim gelir.';
+ $('form').reset();$('fSaat').value='';document.querySelectorAll('.saat').forEach(x=>x.setAttribute('aria-pressed','false'));$('secilenSaat').textContent='Saat seçilmedi.';ciz();};
+function ciz(){if(!talepler.length)return;$('talepler').innerHTML='<table><thead><tr><th>Öğrenci</th><th>Sınıf</th><th>Paket</th><th>Şekil</th><th>Saat</th><th>Geldi</th></tr></thead><tbody>'+talepler.map(t=>'<tr><td>'+t.ad.replace(/[<>&]/g,'')+'</td><td>'+t.sinif+'</td><td>'+t.paket+'</td><td>'+t.sekil+'</td><td>'+t.saat+'</td><td>'+t.zaman+'</td></tr>').join('')+'</tbody></table>';}
+$('yonetimAc').onclick=()=>{$('site').hidden=true;$('yonetim').hidden=false;window.scrollTo(0,0);};
+$('siteyeDon').onclick=()=>{$('site').hidden=false;$('yonetim').hidden=true;window.scrollTo(0,0);};
+</script>
+</body>
+</html>
