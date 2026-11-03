@@ -192,11 +192,12 @@ function sutunBul(bas){const b=bas.map(KUC),bul=(re,haric)=>b.findIndex(x=>re.te
   fiyat:(()=>{let i=bul(/satılacak fiyat|satilacak fiyat/);if(i<0)i=bul(/satış fiyatı|satis fiyati/,/piyasa/);if(i<0)i=bul(/fiyat/);return i;})(),
   stok:bul(/stok adedi|stok miktarı|stok miktari|^stok$/),renk:bul(/^renk$|^ürün rengi|^renk /,/web color/),beden:bul(/beden|^boyut|ebat/),
   gorsel:b.map((x,i)=>/görsel|gorsel|resim|image/.test(x)&&!/paket|enerji/.test(x)?i:-1).filter(i=>i>=0)};}
+function ikonSec(ad){const t=KUC(ad);return /boxer|külot|kulot|slip|şort|sort/.test(t)?'alt':/sütyen|sutyen|bralet/.test(t)?'sutyen':/pijama|gecelik|sabahlık/.test(t)?'pijama':/çorap|corap/.test(t)?'corap':'ust';}
 function fiyatOku(v){if(typeof v==='number')return v;const t=String(v||'').replace(/[^0-9.,]/g,'');return (t.includes(',')?parseFloat(t.replace(/\./g,'').replace(',','.')):parseFloat(t))||0;}
 function satirlardan(satirlar){let h=satirlar.findIndex(r=>r.some(c=>/barkod|ürün adı|model kodu/i.test(String(c||''))));if(h<0)return null;
  const s=sutunBul(satirlar[h]),veri=satirlar.slice(h+1).filter(r=>r.some(c=>c!==''&&c!=null));const gr=new Map();let secenek=0,gorsel=0;
  for(const r of veri){const ad=s.ad>=0?String(r[s.ad]||'').trim():'';if(!ad)continue;const anahtar=(s.model>=0&&r[s.model])?String(r[s.model]):ad;
-  if(!gr.has(anahtar))gr.set(anahtar,{ad,kat:s.kat>=0&&r[s.kat]?String(r[s.kat]).split(/[>\/]/).pop().trim():'Ürünler',fiyat:0,renkler:[],bedenler:{},gorsel:'',ikon:'ust'});
+  if(!gr.has(anahtar))gr.set(anahtar,{ad,kat:s.kat>=0&&r[s.kat]?String(r[s.kat]).split(/[>\/]/).pop().trim():'Ürünler',fiyat:0,renkler:[],bedenler:{},gorsel:'',ikon:ikonSec(ad)});
   const u=gr.get(anahtar);const f=s.fiyat>=0?fiyatOku(r[s.fiyat]):0;if(f&&(!u.fiyat||f<u.fiyat))u.fiyat=f;
   const renk=s.renk>=0?String(r[s.renk]||'').trim():'';if(renk&&!u.renkler.includes(renk))u.renkler.push(renk);
   const beden=s.beden>=0?String(r[s.beden]||'').trim():'';const stok=s.stok>=0?parseInt(r[s.stok])||0:1;
