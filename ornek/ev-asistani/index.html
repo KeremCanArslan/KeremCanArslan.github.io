@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ev Asistanı — Örnek Ekran</title>
+<meta name="description" content="Evdeki ışık, bilgisayar, 3D yazıcı, televizyon ve müziği yazılı ya da sesli komutla yöneten asistanın örnek ekranı.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef0f2;--card:#fff;--ink:#1f2326;--ink2:#61676d;--line:#dde1e5;--pri:#1b74c9;--pri2:#155da3;--on:#f4b400;--ok:#2e8b57;--bad:#c4452f}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Roboto,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}
+.ornek{background:#262b30;color:#c9ced3;font-size:12px;text-align:center;padding:6px 16px}
+header{background:#fff;border-bottom:1px solid var(--line)}
+header .in{max-width:1180px;margin:0 auto;padding:0 16px;height:58px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px}
+.logo svg{width:30px;height:30px}
+.saat{font-family:"Roboto Mono",monospace;font-size:14px;color:var(--ink2)}
+main{max-width:1180px;margin:18px auto;padding:0 16px;display:grid;grid-template-columns:400px 1fr;gap:18px}
+@media(max-width:900px){main{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:560px){.saat{display:none}.sohbet h2 small{display:none}.kartlar{grid-template-columns:1fr 1fr;gap:8px;padding:10px}.kart{padding:10px}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px}
+.sohbet{display:flex;flex-direction:column;height:640px}
+@media(max-width:900px){.sohbet{height:520px}}
+.sohbet h2,.ev h2{font-size:15px;font-weight:500;padding:14px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.sohbet h2 small{font-weight:400;color:var(--ink2);font-size:12px}
+.mesajlar{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.m{max-width:85%;padding:9px 12px;border-radius:12px;font-size:14px}
+.m.ben{align-self:flex-end;background:var(--pri);color:#fff;border-bottom-right-radius:4px}
+.m.asistan{align-self:flex-start;background:#f1f3f5;border-bottom-left-radius:4px}
+.m .ses{display:block;font-size:11px;opacity:.75;margin-bottom:2px}
+.oneriler{display:flex;flex-wrap:wrap;gap:6px;padding:10px 16px;border-top:1px solid var(--line)}
+.oneriler button{border:1px solid var(--line);background:#fff;border-radius:16px;padding:5px 10px;font:inherit;font-size:12.5px;color:var(--ink);cursor:pointer}
+.oneriler button:hover{border-color:var(--pri);color:var(--pri)}
+form{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--line)}
+form input{flex:1;min-width:0;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;font-size:14px}
+form input:focus{outline:2px solid var(--pri);border-color:transparent}
+.btn{border:0;border-radius:8px;background:var(--pri);color:#fff;font:inherit;font-weight:500;padding:0 14px;cursor:pointer}
+.btn:hover{background:var(--pri2)}
+.mik{width:44px;padding:0;display:grid;place-items:center;background:#fff;border:1px solid var(--line);color:var(--ink)}
+.mik:hover{background:#f6f7f8}
+.mik.dinliyor{background:var(--bad);border-color:var(--bad);color:#fff;animation:nabiz 1.2s infinite}
+@keyframes nabiz{50%{box-shadow:0 0 0 6px rgba(196,69,47,.18)}}
+.mik svg{width:20px;height:20px}
+.ev{padding-bottom:6px}
+.kartlar{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;padding:14px 16px}
+.kart{border:1px solid var(--line);border-radius:10px;padding:14px;transition:border-color .3s,background .3s}
+.kart.acik{border-color:#e8c766;background:#fffbea}
+.kart .ust{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.kart .ad{font-weight:500;font-size:14.5px}
+.kart .oda{font-size:12px;color:var(--ink2)}
+.kart .ikon{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#eceff1;color:#8a9096;flex:none;transition:all .3s}
+.kart.acik .ikon{background:var(--on);color:#fff}
+.kart .ikon svg{width:20px;height:20px}
+.kart .durum{margin-top:10px;font-size:13px;color:var(--ink2);min-height:19px}
+.kart.acik .durum{color:#6b5300}
+.cubuk{height:6px;background:#e7eaed;border-radius:3px;margin-top:8px;overflow:hidden}
+.cubuk i{display:block;height:100%;width:0;background:var(--on);transition:width .4s}
+.kart.yazici.acik .cubuk i{background:var(--ok)}
+.anahtar{margin-top:10px;border:1px solid var(--line);background:#fff;border-radius:6px;font:inherit;font-size:12.5px;padding:4px 10px;cursor:pointer;color:var(--ink)}
+.kayit{margin:4px 16px 12px;border-top:1px solid var(--line);padding-top:10px}
+.kayit h3{font-size:13px;font-weight:500;color:var(--ink2);margin-bottom:6px}
+.kayit ol{list-style:none;font-family:"Roboto Mono",monospace;font-size:12px;color:var(--ink2);max-height:120px;overflow-y:auto}
+.kayit li{padding:2px 0}
+.nasil{max-width:1180px;margin:0 auto 28px;padding:0 16px}
+.nasil .panel{padding:16px 18px;font-size:14px;color:var(--ink2)}
+.nasil b{color:var(--ink);font-weight:500}
+.nasil p+p{margin-top:6px}
+</style>
+</head>
+<body>
+<div class="ornek">Örnek ekran: buradaki cihazlar sanal. Gerçek kurulumda komutlar evdeki cihazlara gider.</div>
+<header><div class="in">
+  <div class="logo"><svg viewBox="0 0 32 32" fill="none"><path d="M4 15 16 5l12 10" stroke="#1b74c9" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 13v13h16V13" stroke="#1f2326" stroke-width="2.6" stroke-linejoin="round"/><circle cx="16" cy="19" r="3" fill="#f4b400"/></svg>Ev Asistanı</div>
+  <div class="saat" id="saat"></div>
+</div></header>
+
+<main>
+  <section class="panel sohbet">
+    <h2>Komut <small id="sesDurum">Yazın ya da mikrofona basıp söyleyin</small></h2>
+    <div class="mesajlar" id="mesajlar"></div>
+    <div class="oneriler" id="oneriler"></div>
+    <form id="form" autocomplete="off">
+      <input id="girdi" placeholder="Örnek: salonun ışığını yüzde 40 yap">
+      <button type="button" class="btn mik" id="mik" title="Sesle komut"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+      <button class="btn" type="submit">Gönder</button>
+    </form>
+  </section>
+
+  <section class="panel ev">
+    <h2>Evdeki cihazlar</h2>
+    <div class="kartlar" id="kartlar"></div>
+    <div class="kayit"><h3>Komut kaydı</h3><ol id="kayit"></ol></div>
+  </section>
+</main>
+
+<div class="nasil"><div class="panel">
+  <p><b>Gerçek kurulumda:</b> komutu telefondan ya da bilgisayardan yazar veya söylersiniz, asistan ne istediğinizi anlayıp evdeki sunucuya iletir.</p>
+  <p>Işıklar Wi-Fi lamba ya da akıllı prizle, bilgisayar ağ üzerinden uyandırma ve kapatma ile, 3D yazıcı kendi ağ bağlantısıyla, televizyon ve müzik kendi uygulamalarıyla bağlanır. Cihaz markaları ve modellerine göre bağlantı seçilir.</p>
+</div></div>
+
+<script>
+const IK={
+ isik:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z"/></svg>',
+ pc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>',
+ yazici:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 4h16v4H4zM6 8v12h12V8M9 13h6l-1.5 4h-3z"/></svg>',
+ tv:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2.5" y="5" width="19" height="12" rx="1.5"/><path d="M8 21h8M9 2l3 3 3-3"/></svg>',
+ muzik:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></svg>'
+};
+const C={
+ salon:{tur:'isik',ad:'Salon ışığı',oda:'Salon',acik:false,deger:80},
+ yatak:{tur:'isik',ad:'Yatak odası ışığı',oda:'Yatak odası',acik:false,deger:60},
+ mutfak:{tur:'isik',ad:'Mutfak ışığı',oda:'Mutfak',acik:false,deger:100},
+ pc:{tur:'pc',ad:'Bilgisayar',oda:'Çalışma odası',acik:false,durum:'Kapalı'},
+ yazici:{tur:'yazici',ad:'3D yazıcı',oda:'Çalışma odası',acik:false,ilerleme:0,sicaklik:24,dosya:'telefon_standi.gcode'},
+ tv:{tur:'tv',ad:'Televizyon',oda:'Salon',acik:false,deger:18},
+ muzik:{tur:'muzik',ad:'Müzik',oda:'Salon hoparlörü',acik:false,deger:35,liste:'Akşam çalma listesi'}
+};
+const $=id=>document.getElementById(id);
+function durumYaz(k){const c=C[k];
+ if(c.tur==='isik') return c.acik?'Açık, parlaklık %'+c.deger:'Kapalı';
+ if(c.tur==='pc') return c.durum;
+ if(c.tur==='yazici') return c.acik?(c.sicaklik<205?'Isınıyor, uç '+Math.round(c.sicaklik)+' derece':'Basıyor: '+c.dosya+', %'+Math.round(c.ilerleme)):'Hazır, uç '+Math.round(c.sicaklik)+' derece';
+ if(c.tur==='tv') return c.acik?'Açık, ses '+c.deger:'Kapalı';
+ if(c.tur==='muzik') return c.acik?c.liste+', ses %'+c.deger:'Durdu';
+}
+function cubuk(k){const c=C[k]; if(c.tur==='isik'||c.tur==='muzik') return c.acik?c.deger:0; if(c.tur==='yazici') return c.ilerleme; if(c.tur==='tv') return c.acik?c.deger*2:0; return c.acik?100:0;}
+function ciz(){ $('kartlar').innerHTML=Object.keys(C).map(k=>{const c=C[k];return `<div class="kart ${c.tur} ${c.acik?'acik':''}" id="k-${k}"><div class="ust"><div><div class="ad">${c.ad}</div><div class="oda">${c.oda}</div></div><div class="ikon">${IK[c.tur]}</div></div><div class="durum">${durumYaz(k)}</div><div class="cubuk"><i style="width:${cubuk(k)}%"></i></div><button class="anahtar" data-k="${k}">${c.acik?'Kapat':'Aç'}</button></div>`}).join(''); }
+document.addEventListener('click',e=>{const b=e.target.closest('.anahtar'); if(!b) return; const k=b.dataset.k; komut((C[k].acik?'':'')+C[k].ad.toLocaleLowerCase('tr')+(C[k].acik?' kapat':' aç'),false);});
+function kayit(t){const d=new Date(); const s=d.toTimeString().slice(0,8); const li=document.createElement('li'); li.textContent=s+'  '+t; $('kayit').prepend(li);}
+function balon(t,kim,ses){const d=document.createElement('div'); d.className='m '+kim; d.innerHTML=(ses?'<span class="ses">sesli komut</span>':'')+t.replace(/</g,'&lt;'); $('mesajlar').appendChild(d); $('mesajlar').scrollTop=1e6;}
+let sesliCevap=false;
+function konus(t){ if(!sesliCevap||!('speechSynthesis' in window)) return; const u=new SpeechSynthesisUtterance(t); u.lang='tr-TR'; const v=speechSynthesis.getVoices().find(v=>/tr/i.test(v.lang)); if(v) u.voice=v; speechSynthesis.cancel(); speechSynthesis.speak(u); }
+function sayi(s){const m=s.match(/(\d{1,3})/); if(m) return Math.min(100,+m[1]); const y={'on':10,'yirmi':20,'otuz':30,'kırk':40,'elli':50,'altmış':60,'yetmiş':70,'seksen':80,'doksan':90,'yüz':100}; for(const [w,n] of Object.entries(y)){ if(new RegExp('(yüzde |%)'+w+'\\b').test(s)) return n;} return null;}
+const H='a-zçğıöşüâîû0-9';
+function kel(w){return new RegExp('(^|[^'+H+'])('+w+')($|[^'+H+'])');}
+function islem(s){
+ if(/kapat|söndür|durdur/.test(s)||kel('kes|dur').test(s)) return 'kapat';
+ if(/artır|arttır|yükselt|aç biraz|daha yüksek|daha parlak/.test(s)) return 'artir';
+ if(/kıs|azalt|düşür|daha az|loş/.test(s)) return 'azalt';
+ if(kel('aç|yak|çal|oynat').test(s)||/açar mısın|açsana|başlat|uyandır/.test(s)) return 'ac';
+ if(/durum|ne alemde|bitti mi|kaç derece|açık mı|kapalı mı|nasıl gidiyor|yüzde kaç/.test(s)) return 'sor';
+ if(sayi(s)!==null && /yap|ayarla|getir|olsun/.test(s)) return 'ayarla';
+ return null;
+}
+function cihazlar(s){
+ const l=[];
+ const isik=/ışı|ışık|lamba|aydınlat/.test(s);
+ if(isik||/\bsalon/.test(s)&&!/televizyon|tv|müzik/.test(s)){
+   if(/salon|oturma/.test(s)) l.push('salon');
+   if(/yatak/.test(s)) l.push('yatak');
+   if(/mutfak/.test(s)) l.push('mutfak');
+   if(isik&&/bütün|tüm|hepsi|her yer|evdeki/.test(s)) l.push('salon','yatak','mutfak');
+   if(isik&&!l.length){ if(/ışıklar|lambalar/.test(s)){ const acik=['salon','yatak','mutfak'].filter(k=>C[k].acik); l.push(...(acik.length?acik:['salon','yatak','mutfak'])); } else l.push('salon'); }
+ }
+ if(/bilgisayar|\bpc\b|kasa/.test(s)) l.push('pc');
+ if(/yazıcı|3d|3 d|baskı/.test(s)) l.push('yazici');
+ if(/televizyon|\btv\b|\btele\b/.test(s)) l.push('tv');
+ if(/müzi[kğ]|şarkı|spotify|hoparlör|çalma listesi/.test(s)) l.push('muzik');
+ return [...new Set(l)];
+}
+let yaziciZaman=null;
+function yaziciBaslat(){const c=C.yazici; c.acik=true; c.ilerleme=0; clearInterval(yaziciZaman); yaziciZaman=setInterval(()=>{ if(!c.acik){clearInterval(yaziciZaman);return;} if(c.sicaklik<210){c.sicaklik=Math.min(210,c.sicaklik+18);} else {c.ilerleme=Math.min(100,c.ilerleme+1.5); if(c.ilerleme>=100){c.acik=false; c.ilerleme=0; c.sicaklik=60; clearInterval(yaziciZaman); balon('3D yazıcıdaki baskı bitti: '+c.dosya+'.','asistan'); konus('Baskı bitti.'); kayit('yazici: baski bitti');}} ciz(); },700);}
+function uygula(k,is,s){
+ const c=C[k]; const n=sayi(s);
+ if(is==='sor') return c.ad+': '+durumYaz(k).toLocaleLowerCase('tr')+'.';
+ if(c.tur==='isik'){
+  if(is==='kapat'){c.acik=false; return c.ad+' kapandı.';}
+  if(is==='artir'){c.acik=true; c.deger=Math.min(100,c.deger+20); return c.ad+' %'+c.deger+' oldu.';}
+  if(is==='azalt'){c.acik=true; c.deger=Math.max(10,c.deger-20); return c.ad+' %'+c.deger+' oldu.';}
+  c.acik=true; if(n!==null) c.deger=Math.max(5,n); return c.ad+' açık, parlaklık %'+c.deger+'.';
+ }
+ if(c.tur==='pc'){
+  if(is==='kapat'){ if(!c.acik) return 'Bilgisayar zaten kapalı.'; c.durum='Kapanıyor'; setTimeout(()=>{c.acik=false;c.durum='Kapalı';ciz();},2500); c.acik=true; return 'Bilgisayara kapatma komutunu gönderdim.';}
+  if(c.acik) return 'Bilgisayar zaten açık.';
+  c.acik=true; c.durum='Açılıyor'; setTimeout(()=>{c.durum='Açık, Windows hazır';ciz();},3000); return 'Bilgisayarı ağ üzerinden uyandırdım, birkaç saniyede açılır.';
+ }
+ if(c.tur==='yazici'){
+  if(is==='kapat'){ if(!c.acik) return '3D yazıcı şu an baskı yapmıyor.'; c.acik=false; c.ilerleme=0; return 'Baskıyı durdurdum, uç soğumaya bırakıldı.';}
+  if(c.acik) return 'Yazıcı zaten çalışıyor: '+durumYaz(k).toLocaleLowerCase('tr')+'.';
+  yaziciBaslat(); return 'Son dosya '+c.dosya+' ile baskıyı başlattım, önce uç ısınıyor.';
+ }
+ if(c.tur==='tv'){
+  if(is==='kapat'){c.acik=false; return 'Televizyon kapandı.';}
+  if(/ses/.test(s)||is==='artir'||is==='azalt'){ const once=c.acik; c.acik=true; if(n!==null) c.deger=Math.min(50,n); else c.deger=Math.max(0,Math.min(50,c.deger+(is==='azalt'?-5:5))); return (once?'Televizyonun sesi ':'Televizyonu açtım, sesi ')+c.deger+'.';}
+  c.acik=true; return 'Televizyonu açtım.';
+ }
+ if(c.tur==='muzik'){
+  if(is==='kapat'){c.acik=false; return 'Müziği durdurdum.';}
+  if(is==='artir'||is==='azalt'||(/ses/.test(s)&&n!==null)){ c.acik=true; c.deger=n!==null?n:Math.max(0,Math.min(100,c.deger+(is==='azalt'?-15:15))); return 'Müziğin sesi %'+c.deger+'.';}
+  c.acik=true; if(n!==null) c.deger=n; return c.liste+' salon hoparlöründe çalıyor.';
+ }
+}
+function sahne(s){
+ if(/iyi geceler|yatıyorum|her şeyi kapat|hepsini kapat|tümünü kapat|evden çıkıyorum/.test(s)){
+  ['salon','yatak','mutfak','tv','muzik'].forEach(k=>C[k].acik=false);
+  let t='Işıkları, televizyonu ve müziği kapattım.';
+  if(C.yazici.acik) t+=' 3D yazıcıdaki baskı sürüyor, onu kapatmadım.';
+  if(C.pc.acik) t+=' Bilgisayar açık kaldı, isterseniz onu da kapatırım.';
+  return t;
+ }
+ if(/film modu|film izle/.test(s)){ C.salon.acik=true; C.salon.deger=20; C.tv.acik=true; C.muzik.acik=false; return 'Salon ışığını %20 yaptım, televizyonu açtım, müziği durdurdum.';}
+ if(/eve geldim|günaydın/.test(s)){ C.salon.acik=true; C.mutfak.acik=true; C.muzik.acik=true; return 'Salon ve mutfak ışığını açtım, müzik çalıyor.';}
+ return null;
+}
+function komut(ham,ses){
+ const s=ham.toLocaleLowerCase('tr').replace(/[.,!?]/g,' ').replace(/\s+/g,' ').trim(); if(!s) return;
+ balon(ham,'ben',ses); sesliCevap=!!ses;
+ let cevap=sahne(s);
+ if(!cevap){
+  const l=cihazlar(s), is=islem(s);
+  if(!l.length) cevap='Hangi cihaz için söylediğinizi anlayamadım. Örneğin “salonun ışığını yüzde 40 yap” ya da “3D yazıcıyı başlat” diyebilirsiniz.';
+  else if(!is) cevap=l.map(k=>C[k].ad).join(', ')+' için ne yapayım: açayım mı, kapatayım mı?';
+  else cevap=l.map(k=>uygula(k,is,s)).join(' ');
+ }
+ ciz(); kayit(s); setTimeout(()=>{balon(cevap,'asistan'); konus(cevap);},350);
+}
+$('form').addEventListener('submit',e=>{e.preventDefault(); komut($('girdi').value,false); $('girdi').value='';});
+['Salonun ışığını yüzde 40 yap','Bilgisayarı aç','3D yazıcıyı başlat','Yazıcı ne durumda?','Televizyonu aç, sesi 15 yap','Müzik aç','Film modu','İyi geceler'].forEach(t=>{const b=document.createElement('button'); b.type='button'; b.textContent=t; b.onclick=()=>komut(t,false); $('oneriler').appendChild(b);});
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition; let tanima=null;
+if(SR){ tanima=new SR(); tanima.lang='tr-TR'; tanima.interimResults=false; tanima.maxAlternatives=1;
+ tanima.onresult=e=>{ komut(e.results[0][0].transcript,true); };
+ tanima.onend=()=>{$('mik').classList.remove('dinliyor'); $('sesDurum').textContent='Yazın ya da mikrofona basıp söyleyin';};
+ tanima.onerror=e=>{$('sesDurum').textContent=e.error==='not-allowed'?'Mikrofon izni verilmedi':'Ses alınamadı, yeniden deneyin';};
+ $('mik').onclick=()=>{ if($('mik').classList.contains('dinliyor')){tanima.stop();return;} try{tanima.start(); $('mik').classList.add('dinliyor'); $('sesDurum').textContent='Dinliyorum...';}catch(e){} };
+} else { $('mik').onclick=()=>{$('sesDurum').textContent='Bu tarayıcıda sesli komut yok, Chrome ile deneyin';}; }
+function saat(){const d=new Date(); $('saat').textContent=d.toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long'})+'  '+d.toTimeString().slice(0,5);} saat(); setInterval(saat,20000);
+ciz(); balon('Merhaba. Evdeki ışıkları, bilgisayarı, 3D yazıcıyı, televizyonu ve müziği buradan yönetebilirsiniz. Yazabilir ya da mikrofona basıp söyleyebilirsiniz.','asistan');
+</script>
+</body>
+</html>
