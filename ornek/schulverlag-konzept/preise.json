@@ -1,0 +1,152 @@
+{
+ "hinweis": "Konzept-Demo von Kerem Can Arslan, keine offizielle Preisliste von Verlag J. Maiß. staffel = [ab Menge, Preis in Cent netto], zzgl. MwSt. und Versandkosten.",
+ "quelle": "https://maiss-schulshop.de/nach-themen/rund-um-die-pruefung/kanzleipapier-pruefungsboegen",
+ "stand": "2026-11-03",
+ "regeln": {
+  "mischen": "Staffelpreise gelten auch beim Mischen verschiedener Sorten im gleichen Format.",
+  "aktion": {
+   "text": "Im November und Dezember erhalten Sie 10% Rabatt auf alle Prüfungsbögen.",
+   "von": "2026-11-01",
+   "bis": "2026-12-31",
+   "prozent": 10,
+   "quelle": "https://maiss.de/"
+  }
+ },
+ "formate": {
+  "a3a4": {
+   "name": "A3 gefalzt auf A4",
+   "einheit": "VE 250 Bögen",
+   "staffel": [
+    [
+     1,
+     1240
+    ],
+    [
+     8,
+     1110
+    ],
+    [
+     24,
+     990
+    ],
+    [
+     48,
+     940
+    ],
+    [
+     96,
+     890
+    ],
+    [
+     200,
+     860
+    ]
+   ]
+  },
+  "a4a5": {
+   "name": "A4 gefalzt auf A5",
+   "einheit": "VE 250 Bögen",
+   "staffel": [
+    [
+     1,
+     1140
+    ],
+    [
+     8,
+     1040
+    ],
+    [
+     16,
+     980
+    ],
+    [
+     32,
+     940
+    ]
+   ]
+  }
+ },
+ "sorten": [
+  {
+   "nr": "ST50925",
+   "format": "a3a4",
+   "name": "liniert, mit Rand"
+  },
+  {
+   "nr": "ST50927",
+   "format": "a3a4",
+   "name": "liniert, mit Doppelrand"
+  },
+  {
+   "nr": "ST50921",
+   "format": "a3a4",
+   "name": "liniert, ohne Rand"
+  },
+  {
+   "nr": "ST63525",
+   "format": "a3a4",
+   "name": "liniert, mit Rand, Recycling"
+  },
+  {
+   "nr": "ST50926",
+   "format": "a3a4",
+   "name": "kariert, mit Rand"
+  },
+  {
+   "nr": "ST50928",
+   "format": "a3a4",
+   "name": "kariert, mit Doppelrand"
+  },
+  {
+   "nr": "ST50922",
+   "format": "a3a4",
+   "name": "kariert, ohne Rand"
+  },
+  {
+   "nr": "ST63526",
+   "format": "a3a4",
+   "name": "kariert, mit Rand, Recycling"
+  },
+  {
+   "nr": "ST63609",
+   "format": "a4a5",
+   "name": "liniert, mit Rand"
+  },
+  {
+   "nr": "ST63610",
+   "format": "a4a5",
+   "name": "kariert, mit Rand"
+  }
+ ],
+ "schulnameneindruck": {
+  "nr": "PB-EX",
+  "name": "Prüfungsbogen mit Schulnameneindruck, DIN A3 gefalzt auf DIN A4",
+  "einheit": "Bogen",
+  "staffel": [
+   [
+    1,
+    37
+   ],
+   [
+    1000,
+    25
+   ],
+   [
+    1500,
+    19
+   ],
+   [
+    2000,
+    16
+   ],
+   [
+    5000,
+    13
+   ],
+   [
+    10000,
+    11
+   ]
+  ]
+ }
+}
