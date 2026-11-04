@@ -84,40 +84,45 @@ h1 em{font-style:normal;color:var(--tur)}
 
 /* ---------- arama ---------- */
 .arama-alan{position:relative;z-index:6;margin-top:-60px}
-.arama{position:relative;background:#fff;border-radius:0 20px 20px 20px;box-shadow:var(--golge);padding:16px}
-.sekmeler{position:absolute;left:0;bottom:100%;display:flex;gap:10px;background:#fff;padding:10px 10px 6px;border-radius:16px 16px 0 0}
-.sekme{display:flex;align-items:center;justify-content:center;gap:10px;height:42px;padding:0 26px;border-radius:10px;border:1px solid var(--cizgi);font-weight:600;font-size:15px;color:var(--yazi);background:#fff;transition:background .2s,color .2s,border-color .2s}
-.sekme .ic{width:19px;height:19px}
-.sekme.aktif{background:var(--koyu);border-color:var(--koyu);color:#fff;box-shadow:0 8px 18px -10px rgba(2,53,56,.8)}
-.alanlar{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,1.42fr) minmax(0,1.5fr) auto;gap:12px;align-items:stretch}
-.alanlar.gd{grid-template-columns:minmax(0,2.3fr) minmax(0,1.25fr) minmax(0,1.25fr) minmax(0,1.35fr) auto}
-.rota{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.alan{position:relative;border:1px solid var(--cizgi);border-radius:12px;background:#fff;min-height:68px;padding:10px 14px;display:flex;align-items:center;gap:12px;transition:border-color .15s,box-shadow .15s;text-align:left;width:100%}
-.alan:hover{border-color:#cdc7bd}
-.alan:focus-within,.alan.acik{border-color:var(--koyu3);box-shadow:0 0 0 3px rgba(2,53,56,.08)}
-.alan.hata{border-color:var(--kirmizi);box-shadow:0 0 0 3px rgba(217,71,47,.1)}
+.arama{position:relative;background:#fff;border-radius:20px;box-shadow:var(--golge);padding:16px}
+/* tek parça form: alanlar tek kutuda, aralarında ince çizgi; Ara düğmesi yanında */
+.arama-satir{display:flex;gap:12px;align-items:stretch}
+.alanlar{flex:1;min-width:0;display:grid;grid-template-columns:minmax(0,2.4fr) minmax(0,1.1fr) minmax(0,1.25fr) minmax(0,1.25fr);border:1px solid var(--cizgi);border-radius:14px;background:#fff}
+.rota{position:relative;display:grid;grid-template-columns:1fr 1fr}
+.alan{position:relative;border:0;border-radius:0;background:transparent;min-height:68px;padding:10px 14px;display:flex;align-items:center;gap:12px;transition:background .15s,box-shadow .15s;text-align:left;width:100%}
+#alanNereye,.alan-tarih,.alan-donus,.alan-yolcu{border-left:1px solid var(--cizgi)}
+#alanNereden{border-radius:13px 0 0 13px}
+.alan-yolcu{border-radius:0 13px 13px 0}
+.alan:hover{background:#fafbfb}
+.alan:focus-within,.alan.acik{background:#f6f9f9;box-shadow:inset 0 -2px 0 var(--tur)}
+.alan.hata{background:#fff6f4;box-shadow:inset 0 0 0 2px var(--kirmizi)}
+.donus-ekle{flex:1;display:flex;align-items:center;gap:12px;align-self:stretch;font-weight:700;font-size:14.5px;line-height:1.25;color:var(--koyu);text-align:left}
+.donus-ekle .ic{width:22px;height:22px;flex:none}
+.donus-ekle .arti{width:18px;height:18px;margin-left:auto;color:var(--tur)}
+.alanlar:not(.gd) .alan-donus>:not(.donus-ekle),.alanlar.gd .donus-ekle{display:none}
+.donus-kaldir{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:var(--yazi2);flex:none;transition:background .2s,color .2s}
+.donus-kaldir:hover{background:#eef2f2;color:var(--kirmizi)}
+.donus-kaldir .ic{width:15px;height:15px}
 .alan>.ic{color:var(--koyu);width:22px;height:22px}
 .alan .ok{color:var(--yazi2);width:17px;height:17px;margin-left:auto}
 .ak{flex:1;min-width:0}
 .ak label,.ak .et{display:block;font-size:12.5px;color:var(--yazi2);font-weight:500;line-height:1.25}
+.et .ks{display:none}
+@media (max-width:1400px){.et .uz{display:none}.et .ks{display:inline}}
 .ak input{display:block;border:0;outline:0;background:transparent;width:100%;font-size:14.5px;font-weight:700;color:var(--yazi);padding:3px 0 0;text-overflow:ellipsis}
 .ak input::placeholder{color:var(--yazi3);font-weight:500}
 .degistir{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;width:30px;height:30px;border-radius:50%;background:#fff;border:1px solid var(--cizgi);display:grid;place-items:center;color:var(--koyu);transition:transform .25s,background .2s}
 .degistir:hover{background:var(--koyu-acik)}
 .degistir .ic{width:15px;height:15px}
-.zaman{display:flex;align-items:center;gap:10px;margin-top:3px}
+.zaman{display:flex;flex-direction:column;align-items:stretch;gap:1px;margin-top:2px}
 .zk{position:relative;flex:1;min-width:0}
-.zk input{position:relative;font-size:14px;font-weight:700;border:0;outline:0;background:transparent;width:100%;padding:0;min-height:22px;color:var(--yazi);cursor:pointer}
+.zk input{position:relative;min-width:0;font-size:14px;font-weight:700;border:0;outline:0;background:transparent;width:100%;padding:0;min-height:22px;color:var(--yazi);cursor:pointer}
 .zk input::-webkit-calendar-picker-indicator{position:absolute;inset:0;width:auto;height:auto;opacity:0;cursor:pointer}
 .zk input:invalid{color:transparent}
-.zk .yt{position:absolute;left:0;top:50%;transform:translateY(-50%);font-size:14px;color:var(--yazi3);font-weight:500;pointer-events:none;white-space:nowrap}
+.zk .yt{position:absolute;left:0;top:50%;transform:translateY(-50%);font-size:14px;color:var(--yazi3);font-weight:500;pointer-events:none;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
 .zk input:valid+.yt{display:none}
-.zaman .ayrac{width:1px;height:22px;background:var(--cizgi)}
-.zaman .ic{width:18px;height:18px;color:var(--yazi2)}
-.yolcu-ozet{display:flex;gap:14px;margin-top:3px;font-size:13.5px;color:var(--yazi);white-space:nowrap}
+.yolcu-ozet{display:flex;flex-wrap:wrap;gap:2px 12px;margin-top:3px;font-size:13.5px;color:var(--yazi)}
 .yolcu-ozet b{font-weight:800;margin-left:3px}
-.yolcu-ozet .yo-k{display:none}
-.alan-bavul{display:none}
 .ara-btn{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--tur);color:#fff;border-radius:12px;padding:0 34px;font-weight:700;font-size:17px;min-height:68px;box-shadow:0 12px 24px -12px rgba(247,133,46,.9);transition:background .2s,transform .15s}
 .ara-btn:hover{background:var(--tur2)}
 .ara-btn:active{transform:scale(.98)}
@@ -147,6 +152,11 @@ h1 em{font-style:normal;color:var(--tur)}
 .adim button:disabled{opacity:.35;cursor:default}
 .adim output{min-width:18px;text-align:center;font-weight:800}
 .tamam-btn{width:100%;margin-top:6px;background:var(--koyu);color:#fff;border-radius:10px;padding:10px;font-weight:700}
+.yaslar{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:4px 8px 12px}
+.yas{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:600;color:var(--yazi2)}
+.yas select{border:1px solid var(--cizgi);border-radius:9px;padding:8px 10px;font-size:14px;font-weight:700;color:var(--yazi);background:#fff;cursor:pointer}
+.yas select.bos{border-color:var(--tur);color:var(--yazi2)}
+.yaslar+.sayac{border-top:1px solid var(--cizgi2)}
 
 /* ---------- araçlar ---------- */
 .bolum{padding-top:34px}
@@ -378,11 +388,16 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .bilgi{grid-template-columns:290px minmax(0,1fr) 330px}
   .araclar{grid-template-columns:1fr}
   .arac{grid-template-columns:36% 1fr}
-  .alanlar,.alanlar.gd{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .alanlar .rota{grid-column:span 4}
-  .alanlar .alan-tarih,.alanlar .alan-donus,.alanlar .alan-yolcu{grid-column:span 1}
-  .alanlar:not(.gd) .alan-tarih{grid-column:span 2}
-  .alanlar .ara-btn{grid-column:span 1}
+  .arama-satir{flex-direction:column}
+  .alanlar{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .alanlar .rota{grid-column:span 3}
+  .alan-tarih,.alan-donus,.alan-yolcu{border-top:1px solid var(--cizgi)}
+  .alan-tarih{border-left:0}
+  #alanNereden{border-radius:13px 0 0 0}
+  #alanNereye{border-radius:0 13px 0 0}
+  .alan-tarih{border-radius:0 0 0 13px}
+  .alan-yolcu{border-radius:0 0 13px 0}
+  .ara-btn{min-height:56px}
 }
 @media (max-width:1060px){
   .menu,.destek{display:none}
@@ -416,28 +431,23 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .slogan{font-size:14px;margin-top:8px;gap:4px 9px}
   .arama-alan{margin-top:-19vw}
   .arama{border-radius:20px;padding:12px}
-  .sekmeler{position:static;display:grid;grid-template-columns:1fr 1fr;padding:0;margin-bottom:8px;border-radius:0;background:transparent;gap:8px}
-  .sekme{padding:0 8px;height:42px;font-size:14px;gap:8px}
-  .alanlar,.alanlar.gd{grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
-  .alanlar .rota,.alanlar.gd .rota{grid-column:span 6;grid-template-columns:minmax(0,1fr);gap:8px}
+  .arama-satir{gap:8px}
+  .alanlar{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .alanlar .rota{grid-column:span 2;grid-template-columns:minmax(0,1fr)}
+  #alanNereye{border-left:0;border-top:1px solid var(--cizgi)}
+  .alan-donus{border-left:1px solid var(--cizgi)}
+  .alan-yolcu{grid-column:span 2;border-left:0}
+  #alanNereden{border-radius:13px 13px 0 0}
+  #alanNereye,.alan-tarih{border-radius:0}
+  .alan-yolcu{border-radius:0 0 13px 13px}
   .degistir{left:auto;right:46px;transform:translateY(-50%) rotate(90deg)}
   .alan{min-height:52px;padding:7px 12px;gap:9px}
-  .alanlar .alan-tarih,.alanlar:not(.gd) .alan-tarih,.alanlar .alan-donus,.alanlar:not(.gd) .alan-yolcu{grid-column:span 3}
-  .alanlar.gd .alan-yolcu{grid-column:span 6}
-  .alanlar .zaman{flex-direction:column;align-items:stretch;gap:1px;margin-top:2px}
-  .alanlar .zaman .ayrac,.alanlar .zaman>.ic{display:none}
+  .donus-ekle{font-size:14px;gap:9px}
   .zk input{font-size:13.5px;min-height:20px}
   .zk .yt{font-size:13px}
-  .alan-bavul{display:none}
-  .alanlar .ara-btn{grid-column:span 6;min-height:50px;font-size:16px;letter-spacing:.06em;text-transform:uppercase}
-  .yolcu-ozet{gap:2px 9px;font-size:13px;flex-wrap:wrap;white-space:normal}
-  .yolcu-ozet .yo-u{display:none}
-  .yolcu-ozet .yo-k{display:block;white-space:normal;line-height:1.4}
-  .yolcu-ozet .yo-k span{display:block}
-  .alan-yolcu .ok{display:none}
+  .ara-btn{min-height:50px;font-size:16px;letter-spacing:.06em;text-transform:uppercase}
   .sayac-liste{width:min(300px,calc(100vw - 64px))}
   .alan-yolcu .acilir{left:-1px}
-  .alanlar:not(.gd) .alan-yolcu .acilir{left:auto;right:-1px}
   .oneriler{width:calc(100vw - 58px)}
   .guven-serit{display:none}
   .neden{padding-top:34px}
@@ -759,10 +769,7 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
 <div class="arama-alan">
   <div class="kap">
     <form class="arama" id="aramaForm" novalidate autocomplete="off">
-      <div class="sekmeler" role="tablist">
-        <button type="button" class="sekme aktif" data-tip="tek" role="tab"><svg class="ic"><use href="#i-degistir"/></svg><span data-t="one_way">Tek Yön</span></button>
-        <button type="button" class="sekme" data-tip="gd" role="tab"><svg class="ic"><use href="#i-gd"/></svg><span data-t="round_trip">Gidiş-Dönüş</span></button>
-      </div>
+      <div class="arama-satir">
       <div class="alanlar" id="alanlar">
         <div class="rota">
           <div class="alan" id="alanNereden">
@@ -785,21 +792,21 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
             <span class="et" id="tarihEt" data-t="date_time">Tarih & Saat</span>
             <div class="zaman">
               <div class="zk"><input type="date" id="tarih" required aria-labelledby="tarihEt"><span class="yt" data-t="select_date">Tarih seçin</span></div>
-              <span class="ayrac"></span><svg class="ic"><use href="#i-saat"/></svg>
               <div class="zk"><input type="time" id="saat" required step="300" aria-labelledby="tarihEt"><span class="yt" data-t="select_time">Saat seçin</span></div>
             </div>
           </div>
         </div>
-        <div class="alan alan-donus" id="alanDonus" hidden>
+        <div class="alan alan-donus" id="alanDonus">
+          <button type="button" class="donus-ekle" id="donusEkle"><svg class="ic"><use href="#i-gd"/></svg><span data-t="add_return">Dönüş Ekle</span><svg class="ic arti"><use href="#i-arti"/></svg></button>
           <svg class="ic"><use href="#i-takvim"/></svg>
           <div class="ak">
-            <span class="et" id="donusEt" data-t="return">Dönüş Tarihi & Saati</span>
+            <span class="et" id="donusEt"><span class="uz" data-t="return">Dönüş Tarihi & Saati</span><span class="ks" data-t="return_s">Dönüş</span></span>
             <div class="zaman">
               <div class="zk"><input type="date" id="dTarih" required aria-labelledby="donusEt"><span class="yt" data-t="select_date">Tarih seçin</span></div>
-              <span class="ayrac"></span><svg class="ic"><use href="#i-saat"/></svg>
               <div class="zk"><input type="time" id="dSaat" required step="300" aria-labelledby="donusEt"><span class="yt" data-t="select_time">Saat seçin</span></div>
             </div>
           </div>
+          <button type="button" class="donus-kaldir" id="donusKaldir" aria-label="Dönüşü kaldır"><svg class="ic"><use href="#i-kapat"/></svg></button>
         </div>
         <div class="alan alan-yolcu" id="alanYolcu" tabindex="0" role="button" aria-haspopup="true">
           <svg class="ic"><use href="#i-kisi"/></svg>
@@ -807,12 +814,7 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
           <svg class="ic ok"><use href="#i-asagi"/></svg>
           <div class="acilir sayac-liste" id="sayacListe"></div>
         </div>
-        <div class="alan alan-bavul" id="alanBavul" tabindex="0" role="button" aria-haspopup="true">
-          <svg class="ic"><use href="#i-bavul"/></svg>
-          <div class="ak"><span class="et"><span class="bags-uzun" data-t="bags">Toplam Bavul</span><span class="bags-kisa" data-t="bags_short" style="display:none">Bavul</span></span><div class="yolcu-ozet"><b id="bavulOzet" style="margin:0">2</b></div></div>
-          <svg class="ic ok"><use href="#i-asagi"/></svg>
-          <div class="acilir sayac-liste" id="bavulListe"></div>
-        </div>
+      </div>
         <button type="submit" class="ara-btn" id="araBtn"><svg class="ic"><use href="#i-ara"/></svg><span data-t="search">Ara</span></button>
       </div>
       <div class="guven-serit">
@@ -993,8 +995,8 @@ const HAVALIMANI = {lat:36.8987, lon:30.8005};
 const D = {
 tr:{nav_home:'Ana Sayfa',nav_fleet:'Araç Filomuz',nav_services:'Hizmetler',nav_why:'Neden Atalia?',nav_contact:'İletişim',support:'Müşteri Desteği',signin:'Giriş',
 hero_kicker:'Antalya Havalimanı Transferi',hero_1:'Yolculuğunuz.',hero_2a:'Bizim ',hero_2b:'Önceliğimiz.',hero_sub:'Konforlu|Güvenli|Zamanında',
-one_way:'Tek Yön',round_trip:'Gidiş-Dönüş',from:'Nereden',to:'Nereye',addr_ph:'Otel / Tatil köyü / Adres',date_time:'Tarih & Saat',pickup:'Alış Tarihi & Saati',return:'Dönüş Tarihi & Saati',select_date:'Tarih seçin',select_time:'Saat seçin',
-passengers:'Yolcular',adult:'Yetişkin',child:'Çocuk',infant:'Bebek',adult_s:'12 yaş ve üstü',child_s:'2-11 yaş',infant_s:'0-2 yaş, ücretsiz',bags:'Toplam Bavul',bags_short:'Bavul',bags_s:'Valiz ve büyük çanta',done:'Tamam',search:'Ara',
+add_return:'Dönüş Ekle',remove_return:'Dönüşü kaldır',return_s:'Dönüş',pickup_s:'Alış',landing:'Uçak İniş',child_age:'{n}. Çocuk Yaşı',age_pick:'Seçin',err_age:'Lütfen çocukların yaşını seçin.',ages:'yaş',from:'Nereden',to:'Nereye',addr_ph:'Otel / Tatil köyü / Adres',date_time:'Tarih & Saat',pickup:'Alış Tarihi & Saati',return:'Dönüş Tarihi & Saati',select_date:'Tarih seçin',select_time:'Saat seçin',
+passengers:'Yolcular',adult:'Yetişkin',child:'Çocuk',adult_s:'12 yaş ve üstü',child_s:'0-11 yaş',bags:'Toplam Bavul',bags_short:'Bavul',bags_s:'Valiz ve büyük çanta',done:'Tamam',search:'Ara',
 free_cancel:'24 saate kadar ücretsiz iptal',support247:'7/24 Müşteri Desteği',options_title:'Transfer Seçenekleriniz',options_sub:'Konforunuz, bizim aracımız.',
 pax_badge:'{a} – {b} Yolcu',pax_short:'{a}–{b} Kişi',suitcases:'{n} Bavul (yaklaşık)',wifi:'Ücretsiz Wi‑Fi',ac:'Klima',pro_driver:'Profesyonel Şoför',service:'Hizmet',service_val:'Havalimanı ↔ Otel / Tatil Köyü',service_route:'Kapıdan kapıya',km_time:'Km & Süre',
 select:'Seç',selected:'Seçildi',total:'Toplam',total_rt:'Toplam (gidiş-dönüş)',max_pax:'En fazla {n} yolcu',price_hint:'Fiyatı görmek için güzergâh seçip arayın',over_range:'Bu mesafe için fiyat almak üzere bize yazın',min:'dk',approx:'yaklaşık',
@@ -1016,8 +1018,8 @@ fav_title:'Favori Transferler',rev_title:'Misafirler Ne Diyor?',fav_pick:'Güzer
 flight:'Uçuş Numarası',flight_ph:'Örn. TK 2412',hotel:'Otel Adı / Adres',hotel_ph:'Otel adı ya da açık adres',seat:'Çocuk Koltuğu',seat_none:'Gerek yok',seat_1:'1 koltuk',seat_n:'{n} koltuk',err_hotel:'Lütfen otel adını ya da adresi yazın.'},
 en:{nav_home:'Home',nav_fleet:'Our Fleet',nav_services:'Services',nav_why:'Why Atalia?',nav_contact:'Contact',support:'Customer Support',signin:'Sign in',
 hero_kicker:'Antalya Airport Transfer',hero_1:'Your Journey.',hero_2a:'Our ',hero_2b:'Priority.',hero_sub:'Comfortable|Safe|On Time',
-one_way:'One Way',round_trip:'Round Trip',from:'From',to:'To',addr_ph:'Hotel / Resort / Address',date_time:'Date & Time',pickup:'Pick-up Date & Time',return:'Return Date & Time',select_date:'Select date',select_time:'Select time',
-passengers:'Passengers',adult:'Adult',child:'Child',infant:'Infant',adult_s:'Age 12+',child_s:'Age 2-11',infant_s:'Age 0-2, free',bags:'Total Bags',bags_short:'Bags',bags_s:'Suitcases and large bags',done:'Done',search:'Search',
+add_return:'Add Return',remove_return:'Remove return',return_s:'Return',pickup_s:'Pick-up',landing:'Flight Landing',child_age:'Child {n} age',age_pick:'Select',err_age:'Please select the age of each child.',ages:'ages',from:'From',to:'To',addr_ph:'Hotel / Resort / Address',date_time:'Date & Time',pickup:'Pick-up Date & Time',return:'Return Date & Time',select_date:'Select date',select_time:'Select time',
+passengers:'Passengers',adult:'Adult',child:'Child',adult_s:'Age 12+',child_s:'Age 0-11',bags:'Total Bags',bags_short:'Bags',bags_s:'Suitcases and large bags',done:'Done',search:'Search',
 free_cancel:'Free cancellation up to 24h',support247:'24/7 Customer Support',options_title:'Your Transfer Options',options_sub:'Your comfort, our vehicle.',
 pax_badge:'{a} – {b} Passengers',pax_short:'{a}–{b} Pax',suitcases:'{n} Suitcases (approx.)',wifi:'Free WiFi',ac:'Air Condition',pro_driver:'Professional Driver',service:'Service',service_val:'Airport ↔ Hotel / Resort',service_route:'Door to door',km_time:'Km & Time',
 select:'Select',selected:'Selected',total:'Total',total_rt:'Total (round trip)',max_pax:'Max. {n} passengers',price_hint:'Choose your route and search to see the price',over_range:'Please contact us for a quote for this distance',min:'min',approx:'approx.',
@@ -1039,8 +1041,8 @@ fav_title:'Favourite Transfers',rev_title:'What Our Guests Say',fav_pick:'Route 
 flight:'Flight Number',flight_ph:'e.g. TK 2412',hotel:'Hotel Name / Address',hotel_ph:'Hotel name or full address',seat:'Child Seat',seat_none:'Not needed',seat_1:'1 seat',seat_n:'{n} seats',err_hotel:'Please enter your hotel name or address.'},
 ru:{nav_home:'Главная',nav_fleet:'Автопарк',nav_services:'Услуги',nav_why:'Почему Atalia?',nav_contact:'Контакты',support:'Поддержка клиентов',signin:'Войти',
 hero_kicker:'Трансфер из аэропорта Анталии',hero_1:'Ваша поездка —',hero_2a:'наш ',hero_2b:'приоритет.',hero_sub:'Комфортно|Безопасно|Вовремя',
-one_way:'В одну сторону',round_trip:'Туда и обратно',from:'Откуда',to:'Куда',addr_ph:'Отель / Курорт / Адрес',date_time:'Дата и время',pickup:'Дата и время подачи',return:'Дата и время обратно',select_date:'Выберите дату',select_time:'Выберите время',
-passengers:'Пассажиры',adult:'Взрослые',child:'Дети',infant:'Младенцы',adult_s:'От 12 лет',child_s:'2–11 лет',infant_s:'0–2 года, бесплатно',bags:'Всего багажа',bags_short:'Багаж',bags_s:'Чемоданы и большие сумки',done:'Готово',search:'Найти',
+add_return:'Обратный трансфер',remove_return:'Убрать обратный трансфер',return_s:'Обратно',pickup_s:'Подача',landing:'Посадка рейса',child_age:'Возраст ребёнка {n}',age_pick:'Выбрать',err_age:'Укажите возраст каждого ребёнка.',ages:'возраст',from:'Откуда',to:'Куда',addr_ph:'Отель / Курорт / Адрес',date_time:'Дата и время',pickup:'Дата и время подачи',return:'Дата и время обратно',select_date:'Выберите дату',select_time:'Выберите время',
+passengers:'Пассажиры',adult:'Взрослые',child:'Дети',adult_s:'От 12 лет',child_s:'0–11 лет',bags:'Всего багажа',bags_short:'Багаж',bags_s:'Чемоданы и большие сумки',done:'Готово',search:'Найти',
 free_cancel:'Бесплатная отмена за 24 ч',support247:'Поддержка 24/7',options_title:'Варианты трансфера',options_sub:'Ваш комфорт — наш автомобиль.',
 pax_badge:'{a} – {b} пассажиров',pax_short:'{a}–{b} чел.',suitcases:'{n} чемоданов (прибл.)',wifi:'Бесплатный Wi‑Fi',ac:'Кондиционер',pro_driver:'Опытный водитель',service:'Услуга',service_val:'Аэропорт ↔ Отель / Курорт',service_route:'От двери до двери',km_time:'Км и время',
 select:'Выбрать',selected:'Выбрано',total:'Итого',total_rt:'Итого (туда и обратно)',max_pax:'Макс. {n} пассажиров',price_hint:'Выберите маршрут и нажмите «Найти», чтобы увидеть цену',over_range:'Для этого расстояния уточните цену у нас',min:'мин',approx:'прибл.',
@@ -1062,8 +1064,8 @@ fav_title:'Популярные трансферы',rev_title:'Что говор
 flight:'Номер рейса',flight_ph:'напр. SU 2136',hotel:'Отель / Адрес',hotel_ph:'Название отеля или точный адрес',seat:'Детское кресло',seat_none:'Не нужно',seat_1:'1 кресло',seat_n:'{n} кресла',err_hotel:'Укажите название отеля или адрес.'},
 de:{nav_home:'Startseite',nav_fleet:'Unsere Flotte',nav_services:'Leistungen',nav_why:'Warum Atalia?',nav_contact:'Kontakt',support:'Kundenservice',signin:'Anmelden',
 hero_kicker:'Antalya Flughafentransfer',hero_1:'Ihre Reise.',hero_2a:'Unsere ',hero_2b:'Priorität.',hero_sub:'Komfortabel|Sicher|Pünktlich',
-one_way:'Einfache Fahrt',round_trip:'Hin & Zurück',from:'Von',to:'Nach',addr_ph:'Hotel / Resort / Adresse',date_time:'Datum & Uhrzeit',pickup:'Abholung Datum & Uhrzeit',return:'Rückfahrt Datum & Uhrzeit',select_date:'Datum wählen',select_time:'Uhrzeit wählen',
-passengers:'Fahrgäste',adult:'Erwachsene',child:'Kinder',infant:'Babys',adult_s:'Ab 12 Jahren',child_s:'2–11 Jahre',infant_s:'0–2 Jahre, kostenlos',bags:'Gepäckstücke',bags_short:'Gepäck',bags_s:'Koffer und große Taschen',done:'Fertig',search:'Suchen',
+add_return:'Rückfahrt hinzufügen',remove_return:'Rückfahrt entfernen',return_s:'Rückfahrt',pickup_s:'Abholung',landing:'Landung',child_age:'Alter Kind {n}',age_pick:'Wählen',err_age:'Bitte wählen Sie das Alter jedes Kindes.',ages:'Alter',from:'Von',to:'Nach',addr_ph:'Hotel / Resort / Adresse',date_time:'Datum & Uhrzeit',pickup:'Abholung Datum & Uhrzeit',return:'Rückfahrt Datum & Uhrzeit',select_date:'Datum wählen',select_time:'Uhrzeit wählen',
+passengers:'Fahrgäste',adult:'Erwachsene',child:'Kinder',adult_s:'Ab 12 Jahren',child_s:'0–11 Jahre',bags:'Gepäckstücke',bags_short:'Gepäck',bags_s:'Koffer und große Taschen',done:'Fertig',search:'Suchen',
 free_cancel:'Kostenlose Stornierung bis 24 Std.',support247:'24/7 Kundenservice',options_title:'Ihre Transferoptionen',options_sub:'Ihr Komfort, unser Fahrzeug.',
 pax_badge:'{a} – {b} Fahrgäste',pax_short:'{a}–{b} Pers.',suitcases:'{n} Koffer (ca.)',wifi:'Gratis WLAN',ac:'Klimaanlage',pro_driver:'Profi-Fahrer',service:'Service',service_val:'Flughafen ↔ Hotel / Resort',service_route:'Von Tür zu Tür',km_time:'Km & Zeit',
 select:'Auswählen',selected:'Ausgewählt',total:'Gesamt',total_rt:'Gesamt (Hin & Zurück)',max_pax:'Max. {n} Fahrgäste',price_hint:'Wählen Sie Ihre Strecke und suchen Sie, um den Preis zu sehen',over_range:'Für diese Strecke erhalten Sie ein Angebot von uns',min:'Min.',approx:'ca.',
@@ -1187,6 +1189,7 @@ function varsayilan() {
         uyeId: uye ? uye.id : null, sofor: durum === 'onay' || durum === 'tamam' ? soforler[Math.floor(rnd() * 4)] : '', plaka:'', ic:'', kodKul:''};
       r.ucus = gelis ? ucuslar[Math.floor(rnd() * ucuslar.length)] : '';
       r.otel = yer; r.koltuk = coc && rnd() < .5 ? 1 : 0;
+      r.yaslar = [...Array.from({length:r.cocuk}, (_, i) => 2 + (Math.round(r.km) + i * 4) % 10), ...Array(r.bebek).fill(1)];
       const brut = fiyatEurHam(S, r.km, top + (S.fiyat.bebekUcretsiz ? 0 : r.bebek), arac, gd);
       const ind = uye ? brut * S.uyelik.indirim / 100 : 0;
       r.brut = brut; r.indirim = Math.round(ind * 100) / 100; r.eur = Math.round((brut - ind) * 100) / 100; r.durum = durum;
@@ -1256,7 +1259,8 @@ function dilUygula() {
   $('#dilKod').textContent = dil.toUpperCase();
   $('#dilListe').innerHTML = aktifDiller().map(d => `<button type="button" data-dil="${d}" class="${d === dil ? 'secili' : ''}">${DIL_AD[d]}<span>${PARA[d].isaret}</span></button>`).join('');
   $('#cekDil').innerHTML = aktifDiller().map(d => `<button type="button" data-dil="${d}" class="${d === dil ? 'secili' : ''}">${d.toUpperCase()}</button>`).join('');
-  $('#tarihEt').textContent = t(A.tip === 'gd' ? 'pickup' : 'date_time');
+  tarihEtCiz();
+  $('#donusKaldir').setAttribute('aria-label', t('remove_return'));
   document.title = 'ATALIA Transfer · ' + t('hero_kicker');
   if (A.nereden && A.nereden.hid) A.nereden.ad = HAVALIMANLARI.find(h => h.id === A.nereden.hid).ad[dil];
   if (A.nereye && A.nereye.hid) A.nereye.ad = HAVALIMANLARI.find(h => h.id === A.nereye.hid).ad[dil];
@@ -1270,7 +1274,14 @@ function dilSec(d) {
 }
 
 /* ---------------- arama durumu ---------------- */
-const A = {tip:'tek', nereden:null, nereye:null, yetiskin:2, cocuk:0, bebek:0, bavul:2, rota:null, aranan:false, arac:null, kod:null};
+// yaslar: her çocuğun yaşı (0-11, seçilmemişse ''); cocuk ve bebek (2 yaş altı) bu listeden hesaplanır
+const A = {tip:'tek', nereden:null, nereye:null, yetiskin:2, cocuk:0, bebek:0, yaslar:[], bavul:2, rota:null, aranan:false, arac:null, kod:null};
+function yasGuncelle() { A.bebek = A.yaslar.filter(y => y !== '' && y < 2).length; A.cocuk = A.yaslar.length - A.bebek; }
+// havalimanından alışta tarih alanı "Uçak İniş" olur; dar ekranda uzun etiket yerine kısası (ks) görünür
+function tarihEtCiz() {
+  const k = A.nereden && A.nereden.hid ? 'landing' : A.tip === 'gd' ? 'pickup' : 'date_time';
+  $('#tarihEt').innerHTML = k === 'pickup' ? `<span class="uz">${esc(t(k))}</span><span class="ks">${esc(t('pickup_s'))}</span>` : esc(t(k));
+}
 let filoAcik = false; // araç listesi aramadan önce yalnız menüden "Araç Filomuz" ile açılır
 function havalimaniYer(id) { const h = HAVALIMANLARI.find(x => x.id === id); return {ad:h.ad[dil], lat:h.lat, lon:h.lon, hid:id}; }
 A.nereden = havalimaniYer('ayt');
@@ -1339,14 +1350,14 @@ function yerSec(k, o) {
   A[k] = {ad:o.ad, lat:o.lat, lon:o.lon, hid:o.hid || null};
   $('#' + k).value = o.ad;
   $('#' + k).closest('.alan').classList.remove('acik', 'hata');
-  rotaSifirla();
+  tarihEtCiz(); rotaSifirla();
   if (k === 'nereden' && !A.nereye) setTimeout(() => $('#nereye').focus(), 30);
 }
 function rotaSifirla() { if (A.aranan) { A.aranan = false; A.rota = null; aracCiz(); ozetCiz(); } }
 ['nereden', 'nereye'].forEach(k => {
   const inp = $('#' + k);
   inp.addEventListener('focus', () => { inp.select(); oneriAc(k); });
-  inp.addEventListener('input', () => { A[k] = null; rotaSifirla(); oneriAc(k); });
+  inp.addEventListener('input', () => { A[k] = null; tarihEtCiz(); rotaSifirla(); oneriAc(k); });
   inp.addEventListener('keydown', e => {
     const kutu = $('#' + k + 'O'), btn = [...kutu.querySelectorAll('.oneri')];
     if (!btn.length) return;
@@ -1369,19 +1380,28 @@ function rotaSifirla() { if (A.aranan) { A.aranan = false; A.rota = null; aracCi
 $('#degistir').addEventListener('click', () => {
   [A.nereden, A.nereye] = [A.nereye, A.nereden];
   $('#nereden').value = A.nereden ? A.nereden.ad : ''; $('#nereye').value = A.nereye ? A.nereye.ad : '';
-  rotaSifirla();
+  tarihEtCiz(); rotaSifirla();
 });
 
 /* yolcu sayaçları */
+const SAYAC_SINIR = {yetiskin:[1, 12], cocuk:[0, 8], bavul:[0, 20]};
+const sayacDeger = k => k === 'cocuk' ? A.yaslar.length : A[k];
 function sayacHTML(alanlar) {
-  return alanlar.map(([k, et, alt, min, max]) => `<div class="sayac"><div><b>${esc(t(et))}</b><small>${esc(t(alt))}</small></div><div class="adim"><button type="button" data-k="${k}" data-y="-1" aria-label="-" ${A[k] <= min ? 'disabled' : ''}>−</button><output>${A[k]}</output><button type="button" data-k="${k}" data-y="1" aria-label="+" ${A[k] >= max ? 'disabled' : ''}>+</button></div></div>`).join('') + `<button type="button" class="tamam-btn" data-kapat>${esc(t('done'))}</button>`;
+  return alanlar.map(([k, et, alt]) => { const [min, max] = SAYAC_SINIR[k], v = sayacDeger(k);
+    return `<div class="sayac"><div><b>${esc(t(et))}</b><small>${esc(t(alt))}</small></div><div class="adim"><button type="button" data-k="${k}" data-y="-1" aria-label="-" ${v <= min ? 'disabled' : ''}>−</button><output>${v}</output><button type="button" data-k="${k}" data-y="1" aria-label="+" ${v >= max ? 'disabled' : ''}>+</button></div></div>`; }).join('');
+}
+// her çocuk için ayrı yaş seçimi (0-11)
+function yasHTML() {
+  if (!A.yaslar.length) return '';
+  return `<div class="yaslar">${A.yaslar.map((y, i) => `<label class="yas"><span>${esc(t('child_age', {n:i + 1}))}</span><select data-yas="${i}"${y === '' ? ' class="bos"' : ''}><option value="">${esc(t('age_pick'))}</option>${Array.from({length:12}, (_, a) => `<option value="${a}"${y === a ? ' selected' : ''}>${a}</option>`).join('')}</select></label>`).join('')}</div>`;
+}
+function yolcuOzetCiz() {
+  $('#yolcuOzet').innerHTML = `<span>${esc(t('adult'))}<b>${A.yetiskin}</b></span><span>${esc(t('child'))}<b>${A.yaslar.length}</b></span><span>${esc(t('bags_short'))}<b>${A.bavul}</b></span>`;
 }
 function yolcuCiz() {
-  const kisa = [['adult', A.yetiskin], ['child', A.cocuk], ['infant', A.bebek]].filter(([k, n]) => k === 'adult' || n).map(([k, n]) => `${esc(t(k))}<b>${n}</b>`).join(', ');
-  $('#yolcuOzet').innerHTML = `<span class="yo-u">${esc(t('adult'))}<b>${A.yetiskin}</b></span><span class="yo-u">${esc(t('child'))}<b>${A.cocuk}</b></span><span class="yo-u">${esc(t('infant'))}<b>${A.bebek}</b></span><span class="yo-k"><span>${kisa}</span><span>${esc(t('bags_short'))}<b>${A.bavul}</b></span></span>`;
-  $('#bavulOzet').textContent = A.bavul;
-  $('#sayacListe').innerHTML = sayacHTML([['yetiskin','adult','adult_s',1,12],['cocuk','child','child_s',0,8],['bebek','infant','infant_s',0,4],['bavul','bags','bags_s',0,20]]);
-  $('#bavulListe').innerHTML = sayacHTML([['bavul','bags','bags_s',0,20]]);
+  yolcuOzetCiz();
+  $('#sayacListe').innerHTML = sayacHTML([['yetiskin', 'adult', 'adult_s'], ['cocuk', 'child', 'child_s']]) + yasHTML()
+    + sayacHTML([['bavul', 'bags', 'bags_s']]) + `<button type="button" class="tamam-btn" data-kapat>${esc(t('done'))}</button>`;
 }
 function koltukCiz() {
   const s = $('#koltuk'), v = s.value || '0';
@@ -1416,41 +1436,59 @@ $('#favListe').addEventListener('click', e => {
   A.nereden = havalimaniYer('ayt'); A.nereye = {ad:p.ad, lat:p.lat, lon:p.lon, hid:null};
   $('#nereden').value = A.nereden.ad; $('#nereye').value = A.nereye.ad;
   $$('.alan.hata').forEach(a => a.classList.remove('hata'));
-  rotaSifirla();
+  tarihEtCiz(); rotaSifirla();
   const zamanTam = $('#tarih').value && $('#saat').value && (A.tip !== 'gd' || ($('#dTarih').value && $('#dSaat').value));
   if (zamanTam) { $('#araBtn').click(); return; }
   tost(t('fav_pick'));
   $('.arama-alan').scrollIntoView({behavior:'smooth', block:'center'});
 });
-['#alanYolcu', '#alanBavul'].forEach(s => {
-  const alan = $(s);
+{
+  const alan = $('#alanYolcu');
   alan.addEventListener('click', e => {
     const b = e.target.closest('button[data-k]');
-    if (b) { e.stopPropagation(); const k = b.dataset.k; const lim = {yetiskin:[1,12], cocuk:[0,8], bebek:[0,4], bavul:[0,20]}[k];
-      A[k] = Math.min(lim[1], Math.max(lim[0], A[k] + +b.dataset.y)); yolcuCiz(); aracCiz(); ozetCiz(); return; }
+    if (b) {
+      e.stopPropagation(); const k = b.dataset.k, y = +b.dataset.y, [min, max] = SAYAC_SINIR[k];
+      if (k === 'cocuk') { if (y > 0 && A.yaslar.length < max) A.yaslar.push(''); else if (y < 0 && A.yaslar.length > min) A.yaslar.pop(); yasGuncelle(); }
+      else A[k] = Math.min(max, Math.max(min, A[k] + y));
+      alan.classList.remove('hata'); yolcuCiz(); aracCiz(); ozetCiz(); return;
+    }
     if (e.target.closest('[data-kapat]')) { e.stopPropagation(); alan.classList.remove('acik'); return; }
     if (e.target.closest('.acilir')) return;
     const acik = alan.classList.contains('acik');
     $$('.alan.acik').forEach(a => a.classList.remove('acik'));
     if (!acik) alan.classList.add('acik');
   });
+  alan.addEventListener('change', e => {
+    const s = e.target.closest('select[data-yas]'); if (!s) return;
+    A.yaslar[+s.dataset.yas] = s.value === '' ? '' : Number(s.value);
+    s.classList.toggle('bos', s.value === '');
+    yasGuncelle(); if (!A.yaslar.includes('')) alan.classList.remove('hata');
+    yolcuOzetCiz(); aracCiz(); ozetCiz();
+  });
   alan.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target === alan) { e.preventDefault(); alan.click(); } if (e.key === 'Escape') alan.classList.remove('acik'); });
-});
+}
 document.addEventListener('click', e => {
-  if (!e.target.closest('.alan-yolcu, .alan-bavul')) $$('.alan-yolcu.acik, .alan-bavul.acik').forEach(a => a.classList.remove('acik'));
+  if (!e.target.closest('.alan-yolcu')) $$('.alan-yolcu.acik').forEach(a => a.classList.remove('acik'));
   if (!e.target.closest('#dil')) $('#dil').classList.remove('acik');
 });
 
-/* sekme */
+/* tek yön / dönüş: "Dönüş Ekle" ile dönüş tarihi açılır, çarpı ile kalkar */
 function tipSec(tip) {
   A.tip = tip;
-  $$('.sekme').forEach(s => s.classList.toggle('aktif', s.dataset.tip === tip));
   $('#alanlar').classList.toggle('gd', tip === 'gd');
-  $('#alanDonus').hidden = tip !== 'gd';
-  $('#tarihEt').textContent = t(tip === 'gd' ? 'pickup' : 'date_time');
-  aracCiz(); ozetCiz();
+  $('#alanDonus').classList.remove('hata');
+  tarihEtCiz(); aracCiz(); ozetCiz();
 }
-$$('.sekme').forEach(s => s.addEventListener('click', () => tipSec(s.dataset.tip)));
+$('#alanDonus').addEventListener('click', e => {
+  if (A.tip === 'gd') return;
+  tipSec('gd');
+  if (e.target.closest('#donusEkle')) try { $('#dTarih').showPicker(); } catch (err) { $('#dTarih').focus(); }
+});
+$('#donusKaldir').addEventListener('click', e => {
+  e.stopPropagation();
+  $('#dTarih').value = ''; $('#dSaat').value = '';
+  tipSec('tek');
+});
 const simdi = new Date();
 ['#tarih', '#dTarih'].forEach(s => $(s).min = isoGun(simdi));
 $('#tarih').addEventListener('change', () => { $('#dTarih').min = $('#tarih').value || isoGun(simdi); $('#alanTarih').classList.remove('hata'); ozetCiz(); });
@@ -1488,6 +1526,12 @@ function zamanGecerli() {
   }
   return true;
 }
+function yaslarTam() {
+  if (!A.yaslar.includes('')) return true;
+  // pencere tıklama olayı bittikten sonra açılır; yoksa sayfanın "dışarı tıklandı" kapatması hemen kapatır
+  setTimeout(() => $('#alanYolcu').classList.add('acik'), 0);
+  return hataGoster('#alanYolcu', t('err_age'));
+}
 $('#aramaForm').addEventListener('submit', async e => {
   e.preventDefault();
   $$('.alan.hata').forEach(a => a.classList.remove('hata'));
@@ -1495,6 +1539,7 @@ $('#aramaForm').addEventListener('submit', async e => {
   if (!A.nereye) return hataGoster('#alanNereye', t('err_to'));
   if (kusUcusu(A.nereden, A.nereye) < .2) return hataGoster('#alanNereye', t('err_same'));
   if (!zamanGecerli()) return;
+  if (!yaslarTam()) return;
   const btn = $('#araBtn'); btn.classList.add('yukleniyor');
   btn.querySelector('span').textContent = t('calc');
   A.rota = await rotaBul(A.nereden, A.nereye);
@@ -1650,6 +1695,7 @@ function rezervasyonYap() {
   if (!a) { tost(t('err_vehicle')); $('#filo').scrollIntoView({behavior:'smooth'}); return; }
   if (koltukSayisi() > a.max) { tost(t('err_cap', {n:a.max})); $('#filo').scrollIntoView({behavior:'smooth'}); return; }
   if (!zamanGecerli()) return;
+  if (!yaslarTam()) return;
   const h = hesapla(a.id); if (!h || h.asim) { tost(t('over_range')); return; }
   $('#bilgi').classList.add('acik');
   const ad = $('#ad').value.trim(), tel = $('#tel').value.trim(), ep = $('#eposta').value.trim();
@@ -1664,14 +1710,14 @@ function rezervasyonYap() {
   const u = oturum();
   const r = {kod:'AT-' + (S.sira++), olus:new Date().toISOString().slice(0, 16), tarih:$('#tarih').value, saat:$('#saat').value, gd:A.tip === 'gd',
     dTarih:A.tip === 'gd' ? $('#dTarih').value : '', dSaat:A.tip === 'gd' ? $('#dSaat').value : '',
-    nereden:A.nereden.ad, nereye:A.nereye.ad, km:A.rota.km, dk:A.rota.dk, yetiskin:A.yetiskin, cocuk:A.cocuk, bebek:A.bebek, bavul:A.bavul,
+    nereden:A.nereden.ad, nereye:A.nereye.ad, km:A.rota.km, dk:A.rota.dk, yetiskin:A.yetiskin, cocuk:A.cocuk, bebek:A.bebek, yaslar:A.yaslar.slice(), bavul:A.bavul,
     arac:a.id, ad, tel, eposta:ep, dil, not:$('#not').value.trim(), ucus:$('#ucus').value.trim().toUpperCase(), otel, koltuk:Number($('#koltuk').value) || 0, uyeId:u ? u.id : null, sofor:'', plaka:'', ic:'', kodKul:A.kod ? A.kod.kod : '',
     brut:h.brut, indirim:Math.round((h.uyeE + h.kodE) * 100) / 100, eur:Math.round(h.net * 100) / 100, durum:'yeni', gosterim:paraYaz(h.net)};
   if (A.kod) { const k = S.kodlar.find(x => x.kod === A.kod.kod); if (k) k.kullanim = Number(k.kullanim || 0) + 1; }
   S.rez.push(r); kaydet();
   const mesaj = [t('wa_hello'), `${t('booking_no')}: ${r.kod}`, `${t('route')}: ${r.nereden} → ${r.nereye} (${kmF(r.km)} km)`,
     `${t('date')}: ${tarihYaz(r.tarih)} ${r.saat}` + (r.gd ? ` / ${t('return_d')}: ${tarihYaz(r.dTarih)} ${r.dSaat}` : ''),
-    `${t('pax')}: ${t('adult')} ${r.yetiskin}, ${t('child')} ${r.cocuk}, ${t('infant')} ${r.bebek} · ${t('bags')} ${r.bavul}`,
+    `${t('pax')}: ${t('adult')} ${r.yetiskin}, ${t('child')} ${r.yaslar.length}${r.yaslar.length ? ` (${t('ages')}: ${r.yaslar.join(', ')})` : ''} · ${t('bags')} ${r.bavul}`,
     `${t('vehicle')}: ${a.ad}`, `${t('total')}: ${r.gosterim}`, `${t('name')}: ${r.ad} · ${r.tel}`, `${t('hotel')}: ${r.otel}`,
     r.ucus ? `${t('flight')}: ${r.ucus}` : '', r.koltuk ? `${t('seat')}: ${r.koltuk}` : ''].filter(Boolean).join('\n') + (r.not ? '\n' + t('note') + ': ' + r.not : '');
   const no = (S.ayar.whatsapp || '').replace(/\D/g, '');
@@ -1939,7 +1985,7 @@ function rezDetay(kod) {
       <div class="tam"><small>Güzergâh</small>${esc(r.nereden)} → ${esc(r.nereye)} · ${kmF(r.km, 'tr')} km · ${r.dk} dk</div>
       <div><small>Transfer</small>${trTarih(r.tarih)} ${esc(r.saat)}</div>
       <div><small>Dönüş</small>${r.gd ? trTarih(r.dTarih) + ' ' + esc(r.dSaat) : '–'}</div>
-      <div><small>Yolcu</small>${r.yetiskin} yetişkin, ${r.cocuk} çocuk, ${r.bebek} bebek · ${r.bavul} bavul</div>
+      <div><small>Yolcu</small>${r.yetiskin} yetişkin, ${r.yaslar ? `${r.yaslar.length} çocuk${r.yaslar.length ? ` (yaş ${r.yaslar.join(', ')})` : ''}` : `${r.cocuk} çocuk, ${r.bebek} bebek`} · ${r.bavul} bavul</div>
       <div><small>Araç</small>${esc(aracAd(r.arac))}</div>
       <div><small>Müşteri</small>${esc(r.ad)}${r.uyeId ? '<span class="uye-rozet">Üye</span>' : ''}</div>
       <div><small>Telefon / e-posta</small>${esc(r.tel)}<br>${esc(r.eposta)}</div>
