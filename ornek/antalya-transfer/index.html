@@ -224,6 +224,13 @@ h1 em{font-style:normal;color:var(--tur)}
 .form-izgara{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;margin-top:16px}
 .girdi label{font-size:13px;font-weight:600;display:block;margin-bottom:6px}
 .girdi label i{color:var(--kirmizi);font-style:normal;margin-left:2px}
+/* alan başlığı kutunun içinde durur, alan doldurulunca kendiliğinden gizlenir (alıcı: 'Form doldurulunca otomatik gizli') */
+.kutu.ic-et{position:relative}
+.kutu.ic-et>label{position:absolute;left:41px;right:13px;top:0;bottom:0;margin:0;display:flex;align-items:center;font-size:14px;font-weight:400;color:var(--yazi3);pointer-events:none;white-space:nowrap;overflow:hidden}
+.kutu.ic-et>input:not(:placeholder-shown)+label{opacity:0}
+.kutu.ic-et>input:-webkit-autofill+label{opacity:0}
+.sr,.alan.dolu .ak>label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;margin:0;padding:0}
+.alan-tarih:has(#tarih:valid):has(#saat:valid) .ak>.et,.alan-donus:has(#dTarih:valid):has(#dSaat:valid) .ak>.et,.alan-yolcu:has(.yolcu-ozet:not(:empty)) .ak>.et{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;margin:0;padding:0}
 .kutu{display:flex;align-items:center;gap:10px;border:1px solid var(--cizgi);border-radius:10px;padding:0 13px;min-height:47px;background:#fff;transition:border-color .15s,box-shadow .15s}
 .kutu:focus-within{border-color:var(--koyu3);box-shadow:0 0 0 3px rgba(2,53,56,.08)}
 .kutu.hata{border-color:var(--kirmizi);box-shadow:0 0 0 3px rgba(217,71,47,.1)}
@@ -257,18 +264,14 @@ input::-webkit-date-and-time-value{text-align:left}
 .uye-not button{color:var(--tur2);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .uye-not.var{color:var(--yesil);font-weight:600}
 .uye-not.var .ic{color:var(--yesil)}
-/* Detay: otel, indirim kodu, güven maddeleri ve özet tek bölümde, isteğe bağlı açılır (sade ve hızlı rezervasyon) */
+/* Detay: özet ve indirim kodu tek bölümde, isteğe bağlı açılır (sade ve hızlı rezervasyon) */
 .bilgi-detay{display:none;margin-top:16px;border:1px solid var(--cizgi2);border-radius:14px;padding:16px 18px;background:#fafbfb}
 .bilgi.detay-acik .bilgi-detay{display:block}
-.bd-izgara{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px 18px;align-items:end}
+.bd-izgara{display:grid;grid-template-columns:minmax(0,1fr)}
 .bilgi-detay .kod-alan{margin-top:0}
-/* Detay tek ekrana sığar: özet en üstte, güven maddeleri yalnız simge, tek satır (alıcı isteği) */
+/* Detay tek ekrana sığar: özet en üstte (alıcı isteği) */
 .bilgi-detay .ozet{margin-top:0;border-top:0;padding-top:0}
 .bilgi-detay .bd-izgara{margin-top:12px;padding-top:12px;border-top:1px dashed var(--cizgi)}
-.bilgi-detay .guven{display:flex;justify-content:space-around;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--cizgi2)}
-.bilgi-detay .guven li{display:block}
-.bilgi-detay .guven .ic{display:block;width:24px;height:24px;margin:0}
-.bilgi-detay .guven div{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 /* mesafeli satış sözleşmesi onayı (metin panelden) */
 .onay-satir{display:flex;align-items:flex-start;gap:10px;margin-top:16px;font-size:13.5px;line-height:1.45;color:var(--yazi);cursor:pointer}
 .onay-satir input{width:20px;height:20px;flex:0 0 20px;margin-top:1px;accent-color:var(--koyu);cursor:pointer}
@@ -288,11 +291,6 @@ input::-webkit-date-and-time-value{text-align:left}
 .tb-detay .ic{width:18px;height:18px;transform:rotate(180deg);transition:transform .2s}
 [aria-expanded="true"] .tb-detay .ic{transform:none}
 .toplam-bar .rez-btn{width:auto;flex:0 0 auto;margin-top:0;padding:0 30px}
-.guven{display:grid;gap:9px}
-.guven li{display:flex;gap:14px;align-items:flex-start}
-.guven .ic{width:24px;height:24px;color:var(--koyu);stroke-width:1.5;margin-top:1px}
-.guven b{font-size:14.5px;font-weight:600;display:block;line-height:1.3}
-.guven small{font-size:12px;color:var(--yazi2)}
 .ozet{margin-top:16px;border-top:1px dashed var(--cizgi);padding-top:12px;font-size:13.5px}
 .ozet-satir{display:flex;justify-content:space-between;gap:12px;padding:3px 0;color:var(--yazi2)}
 .ozet-satir span:last-child{color:var(--yazi);font-weight:600;text-align:right}
@@ -537,10 +535,6 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .donus-uc .kutu{padding:0 9px;gap:6px}
   .donus-uc .kutu .ic{display:none}
   .bilgi-detay{padding:14px 12px}
-  .bd-izgara{grid-template-columns:minmax(0,1fr);gap:12px}
-  .guven .ic{width:21px;height:21px}
-  .guven b{font-size:13px}
-  .guven small{font-size:11px}
   /* telefonda da çubuk formun içinde, formun hemen altında (alıcı: 'form ile beraber olsun ayırmayalım') */
   .toplam-bar{gap:12px}
   .toplam-bar .tb-fiyat{gap:0 8px;flex-wrap:wrap}
@@ -912,10 +906,10 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
         <svg class="ic ok"><use href="#i-sag"/></svg>
       </button>
       <div class="form-izgara">
-        <div class="girdi"><label for="ad"><span data-t="name">Ad Soyad</span><i>*</i></label><div class="kutu"><svg class="ic"><use href="#i-kisi"/></svg><input id="ad" autocomplete="name" data-tp="name_ph" placeholder="Adınızı girin"></div></div>
-        <div class="girdi"><label for="tel"><span data-t="phone">Cep Telefonu</span><i>*</i></label><div class="kutu"><svg class="ic"><use href="#i-telefon"/></svg><input id="tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="+90 5xx xxx xx xx"></div></div>
-        <div class="girdi"><label for="eposta"><span data-t="email">E-posta Adresi</span><i>*</i></label><div class="kutu"><svg class="ic"><use href="#i-posta"/></svg><input id="eposta" type="email" autocomplete="email" data-tp="email_ph" placeholder="E-postanızı girin"></div></div>
-        <div class="girdi"><label for="ucus" data-t="flight">Uçuş Numarası</label><div class="kutu"><svg class="ic" style="transform:rotate(45deg)"><use href="#i-ucak"/></svg><input id="ucus" autocapitalize="characters" autocomplete="off" data-tp="flight_ph" placeholder="Örn. TK 2412"></div></div>
+        <div class="girdi"><div class="kutu ic-et"><svg class="ic"><use href="#i-kisi"/></svg><input id="ad" autocomplete="name" placeholder=" "><label for="ad"><span data-t="name">Ad Soyad</span><i>*</i></label></div></div>
+        <div class="girdi"><div class="kutu ic-et"><svg class="ic"><use href="#i-telefon"/></svg><input id="tel" type="tel" autocomplete="tel" inputmode="tel" placeholder=" "><label for="tel"><span data-t="phone">Cep Telefonu</span><i>*</i></label></div></div>
+        <div class="girdi"><div class="kutu ic-et"><svg class="ic"><use href="#i-posta"/></svg><input id="eposta" type="email" autocomplete="email" placeholder=" "><label for="eposta"><span data-t="email">E-posta Adresi</span><i>*</i></label></div></div>
+        <div class="girdi"><div class="kutu ic-et"><svg class="ic" style="transform:rotate(45deg)"><use href="#i-ucak"/></svg><input id="ucus" autocapitalize="characters" autocomplete="off" placeholder=" "><label for="ucus" data-t="flight">Uçuş Numarası</label></div></div>
         <div class="girdi"><label for="koltuk" data-t="seat">Çocuk Koltuğu</label><div class="kutu"><svg class="ic"><use href="#i-koltuk"/></svg><select id="koltuk" class="kutu-sec"></select></div></div>
         <div class="donus-bilgi" id="donusBilgi" hidden>
           <div class="donus-bas"><svg class="ic"><use href="#i-gd"/></svg><span data-t="ret_info">Dönüş Transferi</span></div>
@@ -925,24 +919,17 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
             <div class="girdi"><label for="dAlis"><span data-t="pickup_time">Pickup Saati</span><i>*</i></label><div class="kutu"><svg class="ic"><use href="#i-saat"/></svg><input id="dAlis" type="time" step="300"></div></div>
           </div>
         </div>
-        <div class="girdi tam"><label for="not" data-t="note">Özel Not</label><div class="kutu uzun"><svg class="ic"><use href="#i-not"/></svg><textarea id="not" rows="2" data-tp="note_ph" placeholder=""></textarea></div></div>
+        <div class="girdi tam"><label for="not" class="sr" data-t="note">Özel Not</label><div class="kutu uzun"><svg class="ic"><use href="#i-not"/></svg><textarea id="not" rows="2" data-tp="note_ph" placeholder=""></textarea></div></div>
       </div>
       <div class="bilgi-detay" id="detay">
         <div class="ozet" id="ozet"></div>
         <div class="bd-izgara">
-          <div class="girdi"><label for="otel"><span data-t="hotel">Otel Adı / Adres</span><i>*</i></label><div class="kutu"><svg class="ic"><use href="#i-otel"/></svg><input id="otel" autocomplete="off" data-tp="hotel_ph" placeholder="Otel adı ya da açık adres"></div></div>
           <div class="kod-alan">
             <div class="girdi"><label for="kod" data-t="code">İndirim kodu</label><div class="kutu"><svg class="ic"><use href="#i-etiket"/></svg><input id="kod" autocapitalize="characters" data-tp="code_ph" placeholder="Kodunuz varsa girin"></div></div>
             <button type="button" class="kod-btn" id="kodBtn" data-t="apply">Uygula</button>
           </div>
         </div>
         <div class="uye-not" id="uyeNot"></div>
-        <ul class="guven">
-          <li><svg class="ic"><use href="#i-kalkan-tik"/></svg><div><b data-t="fixed">Sabit Fiyatlar</b><small data-t="fixed_s">Gizli ücret yok</small></div></li>
-          <li><svg class="ic"><use href="#i-destek"/></svg><div><b data-t="s247">7/24 Destek</b><small data-t="s247_s">Her zaman yanınızdayız</small></div></li>
-          <li><svg class="ic"><use href="#i-yildiz"/></svg><div><b data-t="drivers">Profesyonel Şoförler</b><small data-t="drivers_s">Güler yüzlü ve deneyimli</small></div></li>
-          <li><svg class="ic"><use href="#i-elmas"/></svg><div><b data-t="vehicles">Premium Araçlar</b><small data-t="vehicles_s">Temiz, konforlu, lüks</small></div></li>
-        </ul>
         <p class="yonlendirme" data-t="redirect">Onay için WhatsApp'a yönlendirileceksiniz.</p>
       </div>
       <label class="onay-satir" id="onaySatir"><input type="checkbox" id="onay"><span id="onayYazi"></span></label>
@@ -1058,9 +1045,8 @@ passengers:'Yolcular',adult:'Yetişkin',child:'Çocuk',adult_s:'12 yaş ve üst�
 free_cancel:'24 saate kadar ücretsiz iptal',support247:'7/24 Müşteri Desteği',options_title:'Transfer Seçenekleriniz',options_sub:'Konforunuz, bizim aracımız.',
 pax_badge:'{a} – {b} Yolcu',pax_short:'{a}–{b} Kişi',suitcases:'{n} Bavul (yaklaşık)',wifi:'Ücretsiz Wi‑Fi',ac:'Klima',pro_driver:'Profesyonel Şoför',service:'Hizmet',service_val:'Havalimanı ↔ Otel / Tatil Köyü',service_route:'Kapıdan kapıya',km_time:'Km & Süre',
 select:'Seç',selected:'Seçildi',total:'Toplam',total_rt:'Toplam (gidiş-dönüş)',max_pax:'En fazla {n} yolcu',price_hint:'Fiyatı görmek için güzergâh seçip arayın',over_range:'Bu mesafe için fiyat almak üzere bize yazın',min:'dk',approx:'yaklaşık',
-your_info:'Bilgileriniz',info_sub:'Rezervasyonu tamamlamak için bilgilerinizi girin.',name:'Ad Soyad',name_ph:'Adınızı girin',phone:'Cep Telefonu',email:'E-posta Adresi',email_ph:'E-postanızı girin',note:'Özel Not',note_ph:'Özel bir isteğiniz var mı? (ör. bebek koltuğu, isimle karşılama vb.)',
+your_info:'Bilgileriniz',info_sub:'Rezervasyonu tamamlamak için bilgilerinizi girin.',name:'Ad Soyad',phone:'Cep Telefonu',email:'E-posta Adresi',note:'Özel Not',note_ph:'Özel bir isteğiniz var mı? (ör. bebek koltuğu, isimle karşılama vb.)',
 code:'İndirim kodu',code_ph:'Kodunuz varsa girin',apply:'Uygula',special_kicker:'Özel Transfer Hizmeti',special_title:'Yolculuktan fazlası,<br>bir deneyim.',
-fixed:'Sabit Fiyatlar',fixed_s:'Gizli ücret yok',s247:'7/24 Destek',s247_s:'Her zaman yanınızdayız',drivers:'Profesyonel Şoförler',drivers_s:'Güler yüzlü ve deneyimli',vehicles:'Premium Araçlar',vehicles_s:'Temiz, konforlu, lüks',
 book:'Rezervasyon Yap',redirect:'Onay için WhatsApp\'a yönlendirileceksiniz.',summary_empty:'Güzergâhı arayıp aracınızı seçtiğinizde özet burada görünür.',vehicle:'Araç',route:'Güzergâh',date:'Tarih',return_d:'Dönüş',pax:'Yolcu',subtotal:'Ara toplam',member_disc:'Üye indirimi',code_disc:'Kod',details:'Detay',consent:'{mss} ve {obf} okudum, onaylıyorum.',mss:'Mesafeli Satış Sözleşmesini',obf:'Ön Bilgilendirme Formunu',mss_t:'Mesafeli Satış Sözleşmesi',obf_t:'Ön Bilgilendirme Formu',consent_ok:'Okudum, onaylıyorum',err_consent:'Lütfen sözleşmeyi onaylayın.',doc_demo:'Örnek metindir; maddeleri panelde Ayarlar bölümünden siz yazarsınız.',
 login_hint:'Giriş yapın, üyelere özel %{p} indirimden yararlanın.',login_link:'Giriş yap / Üye ol',guest_ok:'Üye olmadan da rezervasyon yapabilirsiniz.',member_on:'Üye girişi yapıldı: %{p} üye indirimi uygulanıyor.',
 airport_short:'Antalya Havalimanı',your_dest:'Varış Noktanız',hotel_t:'Otel Transferi',shop_t:'Alışveriş Transferi',city_t:'Şehir Transferi',private_t:'Özel Transfer',explore:'Antalya\'yı Keşfedin!',
@@ -1073,7 +1059,7 @@ st_yeni:'Onay bekliyor',st_onay:'Onaylandı',st_tamam:'Tamamlandı',st_iptal:'İ
 wa_hello:'Merhaba, rezervasyonumu onaylamak istiyorum.',wa_demo:'Örnek sitede işletmenin WhatsApp numarası henüz girilmedi.',search_first:'Önce güzergâhınızı arayın, sonra aracınızı seçin.',
 why_title:'Neden Atalia Tour?',w1:'7/24 Destek',w1s:'Her an yanınızdayız.',w2:'Anında Onay',w2s:'Rezervasyonunuz anında onaylanır.',w3:'Güvenli Ödeme',w3s:'Ödemeniz güvende ve şifreli.',w4:'Profesyonel Şoförler',w4s:'Deneyimli ve güler yüzlü şoförler.',w5:'Ücretsiz İptal',w5s:'24 saat öncesine kadar ücretsiz iptal.',w6:'Çok Dilli Hizmet',w6s:'Sizin dilinizi konuşuyoruz.',
 fav_title:'Favori Transferler',rev_title:'Misafirler Ne Diyor?',fav_pick:'Güzergâh seçildi, şimdi tarih ve saati seçin.',choose_title:'Aracınızı Seçin',fit_sub:'{n} yolcu için uygun araçlar',no_vehicle:'Bu yolcu sayısı için sitede uygun araç yok. Size uygun aracı ayarlamamız için WhatsApp\'tan yazın.',
-flight:'Uçuş Numarası',ret_info:'Dönüş Transferi',ret_flight:'Dönüş Uçuş No',ret_flight_time:'Uçuş Saati',pickup_time:'Pickup Saati',err_ret_flight:'Lütfen dönüş uçuş saatini girin.',err_pickup:'Lütfen pickup saatini girin.',flight_ph:'Örn. TK 2412',hotel:'Otel Adı / Adres',hotel_ph:'Otel adı ya da açık adres',seat:'Çocuk Koltuğu',seat_none:'Gerek yok',seat_1:'1 koltuk',seat_n:'{n} koltuk',err_hotel:'Lütfen otel adını ya da adresi yazın.'},
+flight:'Uçuş Numarası',ret_info:'Dönüş Transferi',ret_flight:'Dönüş Uçuş No',ret_flight_time:'Uçuş Saati',pickup_time:'Pickup Saati',err_ret_flight:'Lütfen dönüş uçuş saatini girin.',err_pickup:'Lütfen pickup saatini girin.',flight_ph:'Örn. TK 2412',seat:'Çocuk Koltuğu',seat_none:'Gerek yok',seat_1:'1 koltuk',seat_n:'{n} koltuk'},
 en:{nav_home:'Home',nav_fleet:'Our Fleet',nav_services:'Services',nav_why:'Why Atalia?',nav_contact:'Contact',support:'Customer Support',signin:'Sign in',
 hero_kicker:'Antalya Airport Transfer',hero_1:'Your Journey.',hero_2a:'Our ',hero_2b:'Priority.',hero_sub:'Comfortable|Safe|On Time',
 add_return:'Add Return',remove_return:'Remove return',return_s:'Return',pickup_s:'Pick-up',landing:'Flight Landing',child_age:'Child {n} age',age_pick:'Select',err_age:'Please select the age of each child.',ages:'ages',from:'From',to:'To',addr_ph:'Hotel / Resort / Address',date_time:'Date & Time',pickup:'Pick-up Date & Time',return:'Return Date & Time',select_date:'Select date',select_time:'Select time',
@@ -1081,9 +1067,8 @@ passengers:'Passengers',adult:'Adult',child:'Child',adult_s:'Age 12+',child_s:'A
 free_cancel:'Free cancellation up to 24h',support247:'24/7 Customer Support',options_title:'Your Transfer Options',options_sub:'Your comfort, our vehicle.',
 pax_badge:'{a} – {b} Passengers',pax_short:'{a}–{b} Pax',suitcases:'{n} Suitcases (approx.)',wifi:'Free WiFi',ac:'Air Condition',pro_driver:'Professional Driver',service:'Service',service_val:'Airport ↔ Hotel / Resort',service_route:'Door to door',km_time:'Km & Time',
 select:'Select',selected:'Selected',total:'Total',total_rt:'Total (round trip)',max_pax:'Max. {n} passengers',price_hint:'Choose your route and search to see the price',over_range:'Please contact us for a quote for this distance',min:'min',approx:'approx.',
-your_info:'Your Information',info_sub:'Please enter your details to complete the booking.',name:'Name Surname',name_ph:'Enter your name',phone:'Mobile Phone',email:'Email Address',email_ph:'Enter your email',note:'Special Note',note_ph:'Any special request? (e.g. baby seat, meet & greet, etc.)',
+your_info:'Your Information',info_sub:'Please enter your details to complete the booking.',name:'Name Surname',phone:'Mobile Phone',email:'Email Address',note:'Special Note',note_ph:'Any special request? (e.g. baby seat, meet & greet, etc.)',
 code:'Discount code',code_ph:'Enter your code if you have one',apply:'Apply',special_kicker:'Special Transfer Service',special_title:'More than a ride,<br>it\'s an experience.',
-fixed:'Fixed Prices',fixed_s:'No hidden costs',s247:'24/7 Support',s247_s:'We are always here for you',drivers:'Professional Drivers',drivers_s:'Friendly & experienced',vehicles:'Premium Vehicles',vehicles_s:'Clean, comfortable, luxury',
 book:'Book Now',redirect:'You will be redirected to WhatsApp for confirmation.',summary_empty:'Search your route and choose a vehicle to see your booking summary here.',vehicle:'Vehicle',route:'Route',date:'Date',return_d:'Return',pax:'Passengers',subtotal:'Subtotal',member_disc:'Member discount',code_disc:'Code',details:'Details',consent:'I have read and accept the {mss} and the {obf}.',mss:'Distance Sales Agreement',obf:'Preliminary Information Form',mss_t:'Distance Sales Agreement',obf_t:'Preliminary Information Form',consent_ok:'I have read and accept',err_consent:'Please accept the agreement.',doc_demo:'Sample text; the business writes the terms in the panel under Settings.',
 login_hint:'Sign in to get the {p}% member discount.',login_link:'Sign in / Sign up',guest_ok:'You can also book as a guest.',member_on:'Signed in: {p}% member discount applied.',
 airport_short:'Antalya Airport',your_dest:'Your Destination',hotel_t:'Hotel Transfer',shop_t:'Shopping Transfer',city_t:'City Transfer',private_t:'Private Transfer',explore:'Let\'s Explore Antalya!',
@@ -1096,7 +1081,7 @@ st_yeni:'Awaiting confirmation',st_onay:'Confirmed',st_tamam:'Completed',st_ipta
 wa_hello:'Hello, I would like to confirm my booking.',wa_demo:'The business WhatsApp number has not been entered in this sample site yet.',search_first:'Search your route first, then choose your vehicle.',
 why_title:'Why Choose Atalia Tour?',w1:'24/7 Support',w1s:'We are here for you anytime.',w2:'Instant Confirmation',w2s:'Get your booking confirmed instantly.',w3:'Secure Payment',w3s:'Your payment is safe and encrypted.',w4:'Professional Drivers',w4s:'Experienced & friendly drivers.',w5:'Free Cancellation',w5s:'Cancel up to 24 hours in advance.',w6:'Multilingual Service',w6s:'We speak your language.',
 fav_title:'Favourite Transfers',rev_title:'What Our Guests Say',fav_pick:'Route selected, now choose the date and time.',choose_title:'Choose Your Vehicle',fit_sub:'Vehicles suitable for {n} passengers',no_vehicle:'There is no vehicle on the site for this number of passengers. Message us on WhatsApp and we will arrange the right vehicle.',
-flight:'Flight Number',ret_info:'Return Transfer',ret_flight:'Return Flight No',ret_flight_time:'Flight Time',pickup_time:'Pickup Time',err_ret_flight:'Please enter your return flight time.',err_pickup:'Please enter the pickup time.',flight_ph:'e.g. TK 2412',hotel:'Hotel Name / Address',hotel_ph:'Hotel name or full address',seat:'Child Seat',seat_none:'Not needed',seat_1:'1 seat',seat_n:'{n} seats',err_hotel:'Please enter your hotel name or address.'},
+flight:'Flight Number',ret_info:'Return Transfer',ret_flight:'Return Flight No',ret_flight_time:'Flight Time',pickup_time:'Pickup Time',err_ret_flight:'Please enter your return flight time.',err_pickup:'Please enter the pickup time.',flight_ph:'e.g. TK 2412',seat:'Child Seat',seat_none:'Not needed',seat_1:'1 seat',seat_n:'{n} seats'},
 ru:{nav_home:'Главная',nav_fleet:'Автопарк',nav_services:'Услуги',nav_why:'Почему Atalia?',nav_contact:'Контакты',support:'Поддержка клиентов',signin:'Войти',
 hero_kicker:'Трансфер из аэропорта Анталии',hero_1:'Ваша поездка —',hero_2a:'наш ',hero_2b:'приоритет.',hero_sub:'Комфортно|Безопасно|Вовремя',
 add_return:'Обратный трансфер',remove_return:'Убрать обратный трансфер',return_s:'Обратно',pickup_s:'Подача',landing:'Посадка рейса',child_age:'Возраст ребёнка {n}',age_pick:'Выбрать',err_age:'Укажите возраст каждого ребёнка.',ages:'возраст',from:'Откуда',to:'Куда',addr_ph:'Отель / Курорт / Адрес',date_time:'Дата и время',pickup:'Дата и время подачи',return:'Дата и время обратно',select_date:'Выберите дату',select_time:'Выберите время',
@@ -1104,9 +1089,8 @@ passengers:'Пассажиры',adult:'Взрослые',child:'Дети',adult_
 free_cancel:'Бесплатная отмена за 24 ч',support247:'Поддержка 24/7',options_title:'Варианты трансфера',options_sub:'Ваш комфорт — наш автомобиль.',
 pax_badge:'{a} – {b} пассажиров',pax_short:'{a}–{b} чел.',suitcases:'{n} чемоданов (прибл.)',wifi:'Бесплатный Wi‑Fi',ac:'Кондиционер',pro_driver:'Опытный водитель',service:'Услуга',service_val:'Аэропорт ↔ Отель / Курорт',service_route:'От двери до двери',km_time:'Км и время',
 select:'Выбрать',selected:'Выбрано',total:'Итого',total_rt:'Итого (туда и обратно)',max_pax:'Макс. {n} пассажиров',price_hint:'Выберите маршрут и нажмите «Найти», чтобы увидеть цену',over_range:'Для этого расстояния уточните цену у нас',min:'мин',approx:'прибл.',
-your_info:'Ваши данные',info_sub:'Укажите данные, чтобы завершить бронирование.',name:'Имя и фамилия',name_ph:'Введите имя',phone:'Мобильный телефон',email:'Эл. почта',email_ph:'Введите e-mail',note:'Особые пожелания',note_ph:'Есть пожелания? (напр. детское кресло, встреча с табличкой)',
+your_info:'Ваши данные',info_sub:'Укажите данные, чтобы завершить бронирование.',name:'Имя и фамилия',phone:'Мобильный телефон',email:'Эл. почта',note:'Особые пожелания',note_ph:'Есть пожелания? (напр. детское кресло, встреча с табличкой)',
 code:'Промокод',code_ph:'Введите промокод, если он есть',apply:'Применить',special_kicker:'Индивидуальный трансфер',special_title:'Больше, чем поездка, —<br>это впечатление.',
-fixed:'Фиксированные цены',fixed_s:'Без скрытых платежей',s247:'Поддержка 24/7',s247_s:'Мы всегда на связи',drivers:'Опытные водители',drivers_s:'Вежливые и внимательные',vehicles:'Премиальные автомобили',vehicles_s:'Чистые, комфортные, роскошные',
 book:'Забронировать',redirect:'Для подтверждения вы перейдёте в WhatsApp.',summary_empty:'Найдите маршрут и выберите автомобиль — здесь появится сводка бронирования.',vehicle:'Автомобиль',route:'Маршрут',date:'Дата',return_d:'Обратно',pax:'Пассажиры',subtotal:'Промежуточный итог',member_disc:'Скидка участника',code_disc:'Промокод',details:'Детали',consent:'Я прочитал(а) и принимаю {mss} и {obf}.',mss:'Договор дистанционной продажи',obf:'Форму предварительной информации',mss_t:'Договор дистанционной продажи',obf_t:'Форма предварительной информации',consent_ok:'Прочитал(а) и принимаю',err_consent:'Пожалуйста, примите условия договора.',doc_demo:'Пример текста; условия компания пишет в панели, в разделе «Настройки».',
 login_hint:'Войдите и получите скидку {p}% для участников.',login_link:'Войти / Регистрация',guest_ok:'Можно забронировать и без регистрации.',member_on:'Вы вошли: применена скидка участника {p}%.',
 airport_short:'Аэропорт Анталии',your_dest:'Ваш пункт назначения',hotel_t:'Трансфер в отель',shop_t:'Шопинг-трансфер',city_t:'Городской трансфер',private_t:'Индивидуальный трансфер',explore:'Откройте Анталью!',
@@ -1119,7 +1103,7 @@ st_yeni:'Ожидает подтверждения',st_onay:'Подтвержд�
 wa_hello:'Здравствуйте, хочу подтвердить бронирование.',wa_demo:'В демо-версии номер WhatsApp компании ещё не указан.',search_first:'Сначала найдите маршрут, затем выберите автомобиль.',
 why_title:'Почему Atalia Tour?',w1:'Поддержка 24/7',w1s:'Мы на связи в любое время.',w2:'Мгновенное подтверждение',w2s:'Бронирование подтверждается сразу.',w3:'Безопасная оплата',w3s:'Ваш платёж защищён и зашифрован.',w4:'Опытные водители',w4s:'Опытные и доброжелательные водители.',w5:'Бесплатная отмена',w5s:'Отмена не позднее чем за 24 часа.',w6:'Сервис на вашем языке',w6s:'Мы говорим на вашем языке.',
 fav_title:'Популярные трансферы',rev_title:'Что говорят гости',fav_pick:'Маршрут выбран, теперь выберите дату и время.',choose_title:'Выберите автомобиль',fit_sub:'Автомобили для {n} пассажиров',no_vehicle:'Для такого числа пассажиров на сайте нет автомобиля. Напишите нам в WhatsApp, и мы подберём подходящий.',
-flight:'Номер рейса',ret_info:'Обратный трансфер',ret_flight:'Обратный рейс',ret_flight_time:'Время рейса',pickup_time:'Подача',err_ret_flight:'Укажите время обратного рейса.',err_pickup:'Укажите время подачи.',flight_ph:'напр. SU 2136',hotel:'Отель / Адрес',hotel_ph:'Название отеля или точный адрес',seat:'Детское кресло',seat_none:'Не нужно',seat_1:'1 кресло',seat_n:'{n} кресла',err_hotel:'Укажите название отеля или адрес.'},
+flight:'Номер рейса',ret_info:'Обратный трансфер',ret_flight:'Обратный рейс',ret_flight_time:'Время рейса',pickup_time:'Подача',err_ret_flight:'Укажите время обратного рейса.',err_pickup:'Укажите время подачи.',flight_ph:'напр. SU 2136',seat:'Детское кресло',seat_none:'Не нужно',seat_1:'1 кресло',seat_n:'{n} кресла'},
 de:{nav_home:'Startseite',nav_fleet:'Unsere Flotte',nav_services:'Leistungen',nav_why:'Warum Atalia?',nav_contact:'Kontakt',support:'Kundenservice',signin:'Anmelden',
 hero_kicker:'Antalya Flughafentransfer',hero_1:'Ihre Reise.',hero_2a:'Unsere ',hero_2b:'Priorität.',hero_sub:'Komfortabel|Sicher|Pünktlich',
 add_return:'Rückfahrt hinzufügen',remove_return:'Rückfahrt entfernen',return_s:'Rückfahrt',pickup_s:'Abholung',landing:'Landung',child_age:'Alter Kind {n}',age_pick:'Wählen',err_age:'Bitte wählen Sie das Alter jedes Kindes.',ages:'Alter',from:'Von',to:'Nach',addr_ph:'Hotel / Resort / Adresse',date_time:'Datum & Uhrzeit',pickup:'Abholung Datum & Uhrzeit',return:'Rückfahrt Datum & Uhrzeit',select_date:'Datum wählen',select_time:'Uhrzeit wählen',
@@ -1127,9 +1111,8 @@ passengers:'Fahrgäste',adult:'Erwachsene',child:'Kinder',adult_s:'Ab 12 Jahren'
 free_cancel:'Kostenlose Stornierung bis 24 Std.',support247:'24/7 Kundenservice',options_title:'Ihre Transferoptionen',options_sub:'Ihr Komfort, unser Fahrzeug.',
 pax_badge:'{a} – {b} Fahrgäste',pax_short:'{a}–{b} Pers.',suitcases:'{n} Koffer (ca.)',wifi:'Gratis WLAN',ac:'Klimaanlage',pro_driver:'Profi-Fahrer',service:'Service',service_val:'Flughafen ↔ Hotel / Resort',service_route:'Von Tür zu Tür',km_time:'Km & Zeit',
 select:'Auswählen',selected:'Ausgewählt',total:'Gesamt',total_rt:'Gesamt (Hin & Zurück)',max_pax:'Max. {n} Fahrgäste',price_hint:'Wählen Sie Ihre Strecke und suchen Sie, um den Preis zu sehen',over_range:'Für diese Strecke erhalten Sie ein Angebot von uns',min:'Min.',approx:'ca.',
-your_info:'Ihre Angaben',info_sub:'Bitte geben Sie Ihre Daten ein, um die Buchung abzuschließen.',name:'Vor- und Nachname',name_ph:'Ihr Name',phone:'Mobiltelefon',email:'E-Mail-Adresse',email_ph:'Ihre E-Mail',note:'Besondere Wünsche',note_ph:'Besondere Wünsche? (z. B. Babysitz, Empfang mit Namensschild)',
+your_info:'Ihre Angaben',info_sub:'Bitte geben Sie Ihre Daten ein, um die Buchung abzuschließen.',name:'Vor- und Nachname',phone:'Mobiltelefon',email:'E-Mail-Adresse',note:'Besondere Wünsche',note_ph:'Besondere Wünsche? (z. B. Babysitz, Empfang mit Namensschild)',
 code:'Rabattcode',code_ph:'Code eingeben, falls vorhanden',apply:'Anwenden',special_kicker:'Exklusiver Transferservice',special_title:'Mehr als eine Fahrt,<br>ein Erlebnis.',
-fixed:'Festpreise',fixed_s:'Keine versteckten Kosten',s247:'24/7 Support',s247_s:'Wir sind immer für Sie da',drivers:'Professionelle Fahrer',drivers_s:'Freundlich & erfahren',vehicles:'Premium-Fahrzeuge',vehicles_s:'Sauber, komfortabel, luxuriös',
 book:'Jetzt buchen',redirect:'Zur Bestätigung werden Sie zu WhatsApp weitergeleitet.',summary_empty:'Suchen Sie Ihre Strecke und wählen Sie ein Fahrzeug, um die Buchungsübersicht zu sehen.',vehicle:'Fahrzeug',route:'Strecke',date:'Datum',return_d:'Rückfahrt',pax:'Fahrgäste',subtotal:'Zwischensumme',member_disc:'Mitgliederrabatt',code_disc:'Code',details:'Details',consent:'Ich habe den {mss} und das {obf} gelesen und akzeptiere sie.',mss:'Fernabsatzvertrag',obf:'Vorabinformationsformular',mss_t:'Fernabsatzvertrag',obf_t:'Vorabinformationsformular',consent_ok:'Gelesen und akzeptiert',err_consent:'Bitte akzeptieren Sie den Vertrag.',doc_demo:'Beispieltext; die Bedingungen schreibt das Unternehmen im Panel unter Einstellungen.',
 login_hint:'Melden Sie sich an und erhalten Sie {p} % Mitgliederrabatt.',login_link:'Anmelden / Registrieren',guest_ok:'Sie können auch als Gast buchen.',member_on:'Angemeldet: {p} % Mitgliederrabatt wird angewendet.',
 airport_short:'Flughafen Antalya',your_dest:'Ihr Ziel',hotel_t:'Hoteltransfer',shop_t:'Shopping-Transfer',city_t:'Stadttransfer',private_t:'Privattransfer',explore:'Entdecken Sie Antalya!',
@@ -1142,7 +1125,7 @@ st_yeni:'Wartet auf Bestätigung',st_onay:'Bestätigt',st_tamam:'Abgeschlossen',
 wa_hello:'Hallo, ich möchte meine Buchung bestätigen.',wa_demo:'Die WhatsApp-Nummer des Unternehmens ist in dieser Beispielseite noch nicht eingetragen.',search_first:'Suchen Sie zuerst Ihre Strecke und wählen Sie dann Ihr Fahrzeug.',
 why_title:'Warum Atalia Tour?',w1:'24/7 Support',w1s:'Wir sind jederzeit für Sie da.',w2:'Sofortige Bestätigung',w2s:'Ihre Buchung wird sofort bestätigt.',w3:'Sichere Zahlung',w3s:'Ihre Zahlung ist sicher und verschlüsselt.',w4:'Professionelle Fahrer',w4s:'Erfahrene & freundliche Fahrer.',w5:'Kostenlose Stornierung',w5s:'Stornierung bis 24 Stunden vorher.',w6:'Mehrsprachiger Service',w6s:'Wir sprechen Ihre Sprache.',
 fav_title:'Beliebte Transfers',rev_title:'Was unsere Gäste sagen',fav_pick:'Strecke gewählt, wählen Sie jetzt Datum und Uhrzeit.',choose_title:'Wählen Sie Ihr Fahrzeug',fit_sub:'Passende Fahrzeuge für {n} Fahrgäste',no_vehicle:'Für diese Personenzahl gibt es auf der Seite kein Fahrzeug. Schreiben Sie uns per WhatsApp, wir organisieren das passende Fahrzeug.',
-flight:'Flugnummer',ret_info:'Rücktransfer',ret_flight:'Rückflug-Nr.',ret_flight_time:'Flugzeit',pickup_time:'Abholzeit',err_ret_flight:'Bitte geben Sie die Zeit Ihres Rückflugs ein.',err_pickup:'Bitte geben Sie die Abholzeit ein.',flight_ph:'z. B. TK 2412',hotel:'Hotel / Adresse',hotel_ph:'Hotelname oder genaue Adresse',seat:'Kindersitz',seat_none:'Nicht nötig',seat_1:'1 Sitz',seat_n:'{n} Sitze',err_hotel:'Bitte geben Sie Ihr Hotel oder die Adresse ein.'}
+flight:'Flugnummer',ret_info:'Rücktransfer',ret_flight:'Rückflug-Nr.',ret_flight_time:'Flugzeit',pickup_time:'Abholzeit',err_ret_flight:'Bitte geben Sie die Zeit Ihres Rückflugs ein.',err_pickup:'Bitte geben Sie die Abholzeit ein.',flight_ph:'z. B. TK 2412',seat:'Kindersitz',seat_none:'Nicht nötig',seat_1:'1 Sitz',seat_n:'{n} Sitze'}
 };
 const HAVALIMANLARI = [
   {id:'ayt', ad:{tr:'Antalya Havalimanı (AYT)', en:'Antalya Airport (AYT)', ru:'Аэропорт Анталии (AYT)', de:'Flughafen Antalya (AYT)'}, alt:'Muratpaşa, Antalya', lat:36.8987, lon:30.8005},
@@ -1329,7 +1312,6 @@ function dilUygula() {
   $$('[data-t]').forEach(e => e.textContent = t(e.dataset.t));
   $$('[data-th]').forEach(e => e.innerHTML = t(e.dataset.th));
   $$('[data-tp]').forEach(e => e.placeholder = t(e.dataset.tp));
-  $$('.bilgi-detay .guven li').forEach(li => li.title = li.querySelector('b').textContent);
   $('#slogan').innerHTML = t('hero_sub').split('|').map(esc).join('<i></i>');
   $('#dilKod').textContent = dil.toUpperCase();
   $('#dilListe').innerHTML = aktifDiller().map(d => `<button type="button" data-dil="${d}" class="${d === dil ? 'secili' : ''}">${DIL_AD[d]}<span>${PARA[d].isaret}</span></button>`).join('');
@@ -1363,6 +1345,9 @@ function rotaAlanCiz() {
   $('#tarihEt').innerHTML = k === 'pickup' ? `<span class="uz">${esc(t(k))}</span><span class="ks">${esc(t('pickup_s'))}</span>` : esc(t(k));
   yerIkon('#alanNereden', !A.nereden || !!A.nereden.hid);
   yerIkon('#alanNereye', !!(A.nereye && A.nereye.hid));
+  // yer seçilince Nereden / Nereye başlığı gizlenir (tarih, dönüş ve yolcu başlıkları CSS ile)
+  $('#alanNereden').classList.toggle('dolu', !!A.nereden);
+  $('#alanNereye').classList.toggle('dolu', !!A.nereye);
   const hv = havalimaniVar();
   $('#ucus').closest('.girdi').hidden = !hv;
   formDuzen();
@@ -1730,8 +1715,7 @@ $('#araclar').addEventListener('click', e => {
   if (koltukSayisi() > a.max) { tost(t('err_cap', {n:a.max})); return; }
   const h = hesapla(id); if (h && h.asim) { tost(t('over_range')); return; }
   A.arac = id; aracCiz(); ozetCiz();
-  // araç seçilince ayrıntılı form açılır; otel alanı aramadaki adresle dolar (boşsa)
-  if (!$('#otel').value.trim()) { const yer = A.nereden && A.nereden.hid ? A.nereye : A.nereden; if (yer && !yer.hid) $('#otel').value = yer.ad; }
+  // araç seçilince ayrıntılı form açılır
   $('#bilgi').classList.add('acik');
   setTimeout(() => $('#rezervasyon').scrollIntoView({behavior:'smooth', block:'start'}), 120);
 });
@@ -1842,8 +1826,8 @@ function rezervasyonYap() {
   if (ad.length < 3 || !ad.includes(' ')) return isaretle('#ad', t('err_name'));
   if (tel.replace(/\D/g, '').length < 10) return isaretle('#tel', t('err_phone'));
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(ep)) return isaretle('#eposta', t('err_email'));
-  const otel = $('#otel').value.trim();
-  if (otel.length < 3) { detayAc(true); return isaretle('#otel', t('err_hotel')); }
+  // otel / adres ayrıca sorulmaz, aramadaki yerden gelir: havalimanından alışta varış yeri, diğerlerinde alış yeri
+  const otel = (A.nereden.hid ? A.nereye : A.nereden).ad;
   const hv = havalimaniVar(), donusUcus = A.tip === 'gd' && hv;
   if (donusUcus && !$('#dUcusSaat').value) return isaretle('#dUcusSaat', t('err_ret_flight'));
   if (donusUcus && !$('#dAlis').value) return isaretle('#dAlis', t('err_pickup'));
@@ -1861,7 +1845,7 @@ function rezervasyonYap() {
   const mesaj = [t('wa_hello'), `${t('booking_no')}: ${r.kod}`, `${t('route')}: ${r.nereden} → ${r.nereye} (${kmF(r.km)} km)`,
     `${t('date')}: ${tarihYaz(r.tarih)} ${r.saat}` + (r.gd ? ` / ${t('return_d')}: ${tarihYaz(r.dTarih)} ${r.dSaat}` : ''),
     `${t('pax')}: ${t('adult')} ${r.yetiskin}, ${t('child')} ${r.yaslar.length}${r.yaslar.length ? ` (${t('ages')}: ${r.yaslar.join(', ')})` : ''}${hv ? ` · ${t('bags')} ${r.bavul}` : ''}`,
-    `${t('vehicle')}: ${a.ad}`, `${t('total')}: ${r.gosterim}`, `${t('name')}: ${r.ad} · ${r.tel}`, `${t('hotel')}: ${r.otel}`,
+    `${t('vehicle')}: ${a.ad}`, `${t('total')}: ${r.gosterim}`, `${t('name')}: ${r.ad} · ${r.tel}`,
     r.ucus ? `${t('flight')}: ${r.ucus}` : '',
     r.dAlis ? `${t('ret_flight')}: ${r.dUcus || '–'} · ${t('ret_flight_time')} ${r.dUcusSaat} · ${t('pickup_time')} ${r.dAlis}` : '',
     r.koltuk ? `${t('seat')}: ${r.koltuk}` : ''].filter(Boolean).join('\n') + (r.not ? '\n' + t('note') + ': ' + r.not : '');
@@ -1875,7 +1859,6 @@ function rezervasyonYap() {
       <div><span>${esc(t('date'))}</span><span>${esc(tarihYaz(r.tarih))} · ${esc(r.saat)}</span></div>
       ${r.gd ? `<div><span>${esc(t('return_d'))}</span><span>${esc(tarihYaz(r.dTarih))} · ${esc(r.dSaat)}</span></div>` : ''}
       <div><span>${esc(t('vehicle'))}</span><span>${esc(a.ad)} · ${koltukSayisi()} ${esc(t('pax'))}</span></div>
-      <div><span>${esc(t('hotel'))}</span><span>${esc(r.otel)}</span></div>
       ${r.ucus ? `<div><span>${esc(t('flight'))}</span><span>${esc(r.ucus)}</span></div>` : ''}
       ${r.dAlis ? `<div><span>${esc(t('ret_flight'))}</span><span>${esc(r.dUcus || '–')} · ${esc(r.dUcusSaat)} · ${esc(t('pickup_time'))} ${esc(r.dAlis)}</span></div>` : ''}
       <div><span>${esc(t('total'))}</span><span>${esc(r.gosterim)}</span></div>
@@ -1894,7 +1877,7 @@ $('#mbRez').addEventListener('click', () => {
   rezervasyonYap();
 });
 $('#bilgiBas').addEventListener('click', () => { if (matchMedia('(max-width:760px)').matches) $('#bilgi').classList.toggle('acik'); });
-['#ad', '#tel', '#eposta', '#otel'].forEach(s => $(s).addEventListener('input', () => $(s).closest('.kutu').classList.remove('hata')));
+['#ad', '#tel', '#eposta'].forEach(s => $(s).addEventListener('input', () => $(s).closest('.kutu').classList.remove('hata')));
 // telefonda alttaki sabit "Rezervasyon Yap" çubuğu arama kutusu ekrandayken gizlenir, ilk ekran tek ekrana sığar
 if ('IntersectionObserver' in window) {
   document.body.classList.add('arama-gorunur');
