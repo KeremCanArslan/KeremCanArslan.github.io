@@ -1301,7 +1301,7 @@ function dilSec(d) {
 
 /* ---------------- arama durumu ---------------- */
 // yaslar: her çocuğun yaşı (0-11, seçilmemişse ''); cocuk ve bebek (2 yaş altı) bu listeden hesaplanır
-const A = {tip:'tek', nereden:null, nereye:null, yetiskin:2, cocuk:0, bebek:0, yaslar:[], bavul:2, rota:null, aranan:false, arac:null, kod:null};
+const A = {tip:'tek', nereden:null, nereye:null, yetiskin:1, cocuk:0, bebek:0, yaslar:[], bavul:0, rota:null, aranan:false, arac:null, kod:null};
 function yasGuncelle() { A.bebek = A.yaslar.filter(y => y !== '' && y < 2).length; A.cocuk = A.yaslar.length - A.bebek; koltukCiz(); }
 // havalimanından alışta tarih alanı "Uçak İniş" olur; dar ekranda uzun etiket yerine kısası (ks) görünür
 function tarihEtCiz() {
