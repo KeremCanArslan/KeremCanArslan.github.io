@@ -209,13 +209,13 @@ h1 em{font-style:normal;color:var(--tur)}
 .arac.pasif .arac-foto img{filter:grayscale(.75);opacity:.7}
 
 /* ---------- bilgi ---------- */
-.bilgi{display:grid;grid-template-columns:340px minmax(0,1fr) 370px;background:#fff;border-radius:18px;overflow:hidden;box-shadow:var(--golge2);margin-top:26px}
+.bilgi{display:grid;grid-template-columns:340px minmax(0,1fr);background:#fff;border-radius:18px;overflow:hidden;box-shadow:var(--golge2);margin-top:26px}
 .bilgi-foto{position:relative;background:#16323a url(deneyim.jpg) center/cover;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:34px 32px;min-height:260px}
 .bilgi-foto::before{content:'';position:absolute;inset:0;background:linear-gradient(100deg,rgba(2,30,38,.82),rgba(2,30,38,.35) 70%,rgba(2,30,38,.15))}
 .bilgi-foto>*{position:relative}
 .bilgi-foto small{color:var(--tur);letter-spacing:.22em;font-size:12px;font-weight:700;text-transform:uppercase}
 .bilgi-foto h3{font-family:var(--serif);font-size:33px;font-weight:500;line-height:1.16;margin-top:12px}
-.bilgi-form{padding:28px 30px 26px;border-right:1px solid var(--cizgi2);min-width:0}
+.bilgi-form{padding:28px 30px 24px;min-width:0}
 .bilgi-bas{display:flex;align-items:center;gap:14px;width:100%;text-align:left}
 .bilgi-bas>.ic{display:none}
 .bilgi-bas h3{font-size:19px;font-weight:700;color:var(--koyu2)}
@@ -253,10 +253,35 @@ input::-webkit-date-and-time-value{text-align:left}
 .kod-btn:hover{background:var(--koyu-acik)}
 .uye-not{margin-top:12px;font-size:13px;color:var(--yazi2);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .uye-not .ic{width:17px;height:17px;color:var(--tur)}
+.uye-not .ic+span{flex:1 1 200px;min-width:0}
 .uye-not button{color:var(--tur2);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .uye-not.var{color:var(--yesil);font-weight:600}
 .uye-not.var .ic{color:var(--yesil)}
-.bilgi-yan{padding:26px 28px 24px;display:flex;flex-direction:column;gap:4px}
+/* Detay: otel, indirim kodu, güven maddeleri ve özet tek bölümde, isteğe bağlı açılır (sade ve hızlı rezervasyon) */
+.bilgi-detay{display:none;margin-top:16px;border:1px solid var(--cizgi2);border-radius:14px;padding:16px 18px;background:#fafbfb}
+.bilgi.detay-acik .bilgi-detay{display:block}
+.bd-izgara{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px 18px;align-items:end}
+.bilgi-detay .kod-alan{margin-top:0}
+.bilgi-detay .guven{grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px 18px;margin-top:14px;padding-top:14px;border-top:1px solid var(--cizgi2)}
+/* mesafeli satış sözleşmesi onayı (metin panelden) */
+.onay-satir{display:flex;align-items:flex-start;gap:10px;margin-top:16px;font-size:13.5px;line-height:1.45;color:var(--yazi);cursor:pointer}
+.onay-satir input{width:20px;height:20px;flex:0 0 20px;margin-top:1px;accent-color:var(--koyu);cursor:pointer}
+.onay-satir.hata{color:var(--kirmizi)}
+.onay-satir.hata input{outline:2px solid var(--kirmizi);outline-offset:1px}
+.onay-satir button{color:var(--koyu3);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.belge-liste{margin:14px 0 10px;padding-left:20px;display:grid;gap:8px;font-size:14px;line-height:1.5;list-style:decimal}
+/* alt toplam çubuğu: solda toplam tutar + Detay, sağda Rezervasyon Yap */
+.toplam-bar{display:flex;align-items:center;gap:18px;margin-top:16px;padding-top:16px;border-top:1px solid var(--cizgi2)}
+.tb-sol{flex:1;min-width:0;display:block;text-align:left}
+.tb-sol[hidden]{display:none}
+.tb-sol[hidden]+button{flex:1}
+.tb-et{display:block;font-size:12.5px;color:var(--yazi2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-fiyat{display:flex;align-items:center;gap:12px;margin-top:1px}
+.tb-fiyat b{font-size:24px;font-weight:800;color:var(--koyu);line-height:1.2}
+.tb-detay{display:inline-flex;align-items:center;gap:2px;font-size:13px;font-weight:700;color:var(--koyu3)}
+.tb-detay .ic{width:18px;height:18px;transform:rotate(180deg);transition:transform .2s}
+[aria-expanded="true"] .tb-detay .ic{transform:none}
+.toplam-bar .rez-btn{width:auto;flex:0 0 auto;margin-top:0;padding:0 30px}
 .guven{display:grid;gap:9px}
 .guven li{display:flex;gap:14px;align-items:flex-start}
 .guven .ic{width:24px;height:24px;color:var(--koyu);stroke-width:1.5;margin-top:1px}
@@ -266,15 +291,11 @@ input::-webkit-date-and-time-value{text-align:left}
 .ozet-satir{display:flex;justify-content:space-between;gap:12px;padding:3px 0;color:var(--yazi2)}
 .ozet-satir span:last-child{color:var(--yazi);font-weight:600;text-align:right}
 .ozet-satir.ind span:last-child{color:var(--yesil)}
-.ozet-toplam{display:flex;justify-content:space-between;align-items:baseline;margin-top:6px;padding-top:8px;border-top:1px solid var(--cizgi2)}
-.ozet-toplam span{font-weight:700}
-.ozet-toplam b{font-size:24px;font-weight:800;color:var(--koyu)}
 .ozet-bos{color:var(--yazi2);font-size:13px}
 .rez-btn{display:flex;align-items:center;justify-content:center;gap:12px;background:var(--koyu);color:#fff;border-radius:999px;min-height:56px;font-weight:700;font-size:16.5px;width:100%;margin-top:16px;box-shadow:0 14px 26px -14px rgba(2,53,56,.9);transition:background .2s,transform .15s}
 .rez-btn:hover{background:var(--koyu3)}
 .rez-btn:active{transform:scale(.99)}
 .rez-btn .ic{width:19px;height:19px}
-.rez-btn svg.wa-ic{width:23px;height:23px}
 .yonlendirme{font-size:11.5px;color:var(--yazi2);text-align:center;margin-top:8px}
 
 /* ---------- neden biz, favori transferler, yorumlar ---------- */
@@ -397,7 +418,7 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
 @media (max-width:1240px){
   .menu{gap:24px;margin-left:4%}
   .destek small{display:none}
-  .bilgi{grid-template-columns:290px minmax(0,1fr) 330px}
+  .bilgi{grid-template-columns:290px minmax(0,1fr)}
   .araclar{grid-template-columns:1fr}
   .arac{grid-template-columns:36% 1fr}
   .arama-satir{flex-direction:column}
@@ -415,7 +436,7 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .menu,.destek{display:none}
   .ust-sag .hesap-btn span{display:none}
   .burger{display:block}
-  .bilgi{grid-template-columns:minmax(0,1fr) 340px}
+  .bilgi{grid-template-columns:minmax(0,1fr)}
   .bilgi-foto{display:none}
   .serit .kap{gap:24px;overflow-x:auto}
   .serit-ilk{padding-right:24px}
@@ -502,19 +523,20 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .bilgi-bas p{display:block}
   .bilgi-bas .ok{display:block;margin-left:auto;width:20px;height:20px;color:var(--yazi);transition:transform .2s}
   .bilgi.acik .bilgi-bas .ok{transform:rotate(90deg)}
-  .bilgi:not(.acik) .form-izgara,.bilgi:not(.acik) .kod-alan,.bilgi:not(.acik) .uye-not,.bilgi:not(.acik) .bilgi-yan{display:none}
+  .bilgi:not(.acik) .form-izgara,.bilgi:not(.acik) .bilgi-detay,.bilgi:not(.acik) .onay-satir{display:none}
   .form-izgara{grid-template-columns:1fr;gap:12px}
   .donus-bilgi{padding:10px 10px 12px}
   .donus-uc{gap:6px}
   .donus-uc .girdi label{font-size:12px;margin-bottom:4px}
   .donus-uc .kutu{padding:0 9px;gap:6px}
   .donus-uc .kutu .ic{display:none}
-  .bilgi-yan{padding:0 16px 18px}
-  .guven{grid-template-columns:1fr 1fr;gap:12px;border-top:1px solid var(--cizgi2);padding-top:14px}
+  .bilgi-detay{padding:14px 12px}
+  .bd-izgara{grid-template-columns:minmax(0,1fr);gap:12px}
+  .bilgi-detay .guven{grid-template-columns:1fr 1fr;gap:12px}
   .guven .ic{width:21px;height:21px}
   .guven b{font-size:13px}
   .guven small{font-size:11px}
-  .bilgi-yan .rez-btn,.bilgi-yan .yonlendirme{display:none}
+  .bilgi .toplam-bar{display:none}
   .serit{margin-top:30px;background:var(--koyu2) url(kesfet.jpg) center 40%/cover}
   .serit::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(1,35,38,.35),rgba(1,35,38,.86) 62%)}
   .serit .kap{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:16px 4px;padding-top:30px;padding-bottom:22px;overflow:visible}
@@ -526,15 +548,12 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .alt .kap{grid-template-columns:1fr;gap:20px}
   .alt .kunye-k{grid-column:auto}
   .panel-pill{display:none}
-  .mobil-bar{display:flex;position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:60;background:var(--koyu);color:#fff;border-radius:18px;min-height:64px;padding:8px 18px;align-items:center;gap:14px;box-shadow:0 16px 34px -12px rgba(1,35,38,.7);width:auto;text-align:left;transition:transform .25s ease,opacity .25s ease}
+  .mobil-bar{display:flex;position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:60;background:#fff;color:var(--yazi);border:1px solid var(--cizgi2);border-radius:18px;min-height:68px;padding:9px 9px 9px 16px;align-items:center;gap:12px;box-shadow:0 16px 34px -14px rgba(1,35,38,.45);transition:transform .25s ease,opacity .25s ease}
   body.arama-gorunur .mobil-bar{transform:translateY(140%);opacity:0;pointer-events:none}
-  .mobil-bar svg.wa-ic{width:30px;height:30px}
-  .mobil-bar .ayr{width:1px;align-self:stretch;margin:6px 0;background:rgba(255,255,255,.22)}
-  .mobil-bar .mb-y{flex:1;min-width:0;line-height:1.2}
-  .mobil-bar .mb-y b{display:block;font-size:17px}
-  .mobil-bar .mb-y small{font-size:13px;opacity:.85}
-  .mobil-bar .mb-f{font-weight:800;font-size:16px;white-space:nowrap}
-  .mobil-bar .ic{width:22px;height:22px}
+  .mobil-bar .tb-et{font-size:11.5px}
+  .mobil-bar .tb-fiyat{gap:0 8px;flex-wrap:wrap}
+  .mobil-bar .tb-fiyat b{font-size:20px}
+  .mb-rez{flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:var(--koyu);color:#fff;border-radius:13px;min-height:50px;padding:0 18px;font-weight:700;font-size:15.5px;white-space:nowrap}
   .tost{bottom:94px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
@@ -887,7 +906,6 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
         <div class="girdi"><label for="tel"><span data-t="phone">Cep Telefonu</span><i>*</i></label><div class="kutu"><svg class="ic"><use href="#i-telefon"/></svg><input id="tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="+90 5xx xxx xx xx"></div></div>
         <div class="girdi"><label for="eposta"><span data-t="email">E-posta Adresi</span><i>*</i></label><div class="kutu"><svg class="ic"><use href="#i-posta"/></svg><input id="eposta" type="email" autocomplete="email" data-tp="email_ph" placeholder="E-postanızı girin"></div></div>
         <div class="girdi"><label for="ucus" data-t="flight">Uçuş Numarası</label><div class="kutu"><svg class="ic" style="transform:rotate(45deg)"><use href="#i-ucak"/></svg><input id="ucus" autocapitalize="characters" autocomplete="off" data-tp="flight_ph" placeholder="Örn. TK 2412"></div></div>
-        <div class="girdi"><label for="otel"><span data-t="hotel">Otel Adı / Adres</span><i>*</i></label><div class="kutu"><svg class="ic"><use href="#i-otel"/></svg><input id="otel" autocomplete="off" data-tp="hotel_ph" placeholder="Otel adı ya da açık adres"></div></div>
         <div class="girdi"><label for="koltuk" data-t="seat">Çocuk Koltuğu</label><div class="kutu"><svg class="ic"><use href="#i-koltuk"/></svg><select id="koltuk" class="kutu-sec"></select></div></div>
         <div class="donus-bilgi" id="donusBilgi" hidden>
           <div class="donus-bas"><svg class="ic"><use href="#i-gd"/></svg><span data-t="ret_info">Dönüş Transferi</span></div>
@@ -899,22 +917,29 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
         </div>
         <div class="girdi tam"><label for="not" data-t="note">Özel Not</label><div class="kutu uzun"><svg class="ic"><use href="#i-not"/></svg><textarea id="not" rows="2" data-tp="note_ph" placeholder=""></textarea></div></div>
       </div>
-      <div class="kod-alan">
-        <div class="girdi"><label for="kod" data-t="code">İndirim kodu</label><div class="kutu"><svg class="ic"><use href="#i-etiket"/></svg><input id="kod" autocapitalize="characters" data-tp="code_ph" placeholder="Kodunuz varsa girin"></div></div>
-        <button type="button" class="kod-btn" id="kodBtn" data-t="apply">Uygula</button>
+      <div class="bilgi-detay" id="detay">
+        <div class="bd-izgara">
+          <div class="girdi"><label for="otel"><span data-t="hotel">Otel Adı / Adres</span><i>*</i></label><div class="kutu"><svg class="ic"><use href="#i-otel"/></svg><input id="otel" autocomplete="off" data-tp="hotel_ph" placeholder="Otel adı ya da açık adres"></div></div>
+          <div class="kod-alan">
+            <div class="girdi"><label for="kod" data-t="code">İndirim kodu</label><div class="kutu"><svg class="ic"><use href="#i-etiket"/></svg><input id="kod" autocapitalize="characters" data-tp="code_ph" placeholder="Kodunuz varsa girin"></div></div>
+            <button type="button" class="kod-btn" id="kodBtn" data-t="apply">Uygula</button>
+          </div>
+        </div>
+        <div class="uye-not" id="uyeNot"></div>
+        <ul class="guven">
+          <li><svg class="ic"><use href="#i-kalkan-tik"/></svg><div><b data-t="fixed">Sabit Fiyatlar</b><small data-t="fixed_s">Gizli ücret yok</small></div></li>
+          <li><svg class="ic"><use href="#i-destek"/></svg><div><b data-t="s247">7/24 Destek</b><small data-t="s247_s">Her zaman yanınızdayız</small></div></li>
+          <li><svg class="ic"><use href="#i-yildiz"/></svg><div><b data-t="drivers">Profesyonel Şoförler</b><small data-t="drivers_s">Güler yüzlü ve deneyimli</small></div></li>
+          <li><svg class="ic"><use href="#i-elmas"/></svg><div><b data-t="vehicles">Premium Araçlar</b><small data-t="vehicles_s">Temiz, konforlu, lüks</small></div></li>
+        </ul>
+        <div class="ozet" id="ozet"></div>
+        <p class="yonlendirme" data-t="redirect">Onay için WhatsApp'a yönlendirileceksiniz.</p>
       </div>
-      <div class="uye-not" id="uyeNot"></div>
-    </div>
-    <div class="bilgi-yan">
-      <ul class="guven">
-        <li><svg class="ic"><use href="#i-kalkan-tik"/></svg><div><b data-t="fixed">Sabit Fiyatlar</b><small data-t="fixed_s">Gizli ücret yok</small></div></li>
-        <li><svg class="ic"><use href="#i-destek"/></svg><div><b data-t="s247">7/24 Destek</b><small data-t="s247_s">Her zaman yanınızdayız</small></div></li>
-        <li><svg class="ic"><use href="#i-yildiz"/></svg><div><b data-t="drivers">Profesyonel Şoförler</b><small data-t="drivers_s">Güler yüzlü ve deneyimli</small></div></li>
-        <li><svg class="ic"><use href="#i-elmas"/></svg><div><b data-t="vehicles">Premium Araçlar</b><small data-t="vehicles_s">Temiz, konforlu, lüks</small></div></li>
-      </ul>
-      <div class="ozet" id="ozet"></div>
-      <button type="button" class="rez-btn" id="rezBtn"><svg class="wa-ic"><use href="#i-wa"/></svg><span data-t="book">Rezervasyon Yap</span><svg class="ic"><use href="#i-ok-sag"/></svg></button>
-      <p class="yonlendirme" data-t="redirect">Onay için WhatsApp'a yönlendirileceksiniz.</p>
+      <label class="onay-satir" id="onaySatir"><input type="checkbox" id="onay"><span id="onayYazi"></span></label>
+      <div class="toplam-bar">
+        <button type="button" class="tb-sol" aria-expanded="false" aria-controls="detay" hidden><span class="tb-et"></span><span class="tb-fiyat"><b></b><span class="tb-detay"><span data-t="details">Detay</span><svg class="ic"><use href="#i-asagi"/></svg></span></span></button>
+        <button type="button" class="rez-btn" id="rezBtn"><span data-t="book">Rezervasyon Yap</span><svg class="ic"><use href="#i-ok-sag"/></svg></button>
+      </div>
     </div>
   </div>
 </section>
@@ -956,12 +981,10 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
   </div>
 </footer>
 
-<button type="button" class="mobil-bar" id="mobilBar">
-  <svg class="wa-ic"><use href="#i-wa"/></svg><span class="ayr"></span>
-  <span class="mb-y"><b data-t="book">Rezervasyon Yap</b><small data-t="via_wa">WhatsApp ile</small></span>
-  <span class="mb-f" id="mbFiyat"></span>
-  <svg class="ic"><use href="#i-ok-sag"/></svg>
-</button>
+<div class="mobil-bar" id="mobilBar">
+  <button type="button" class="tb-sol" aria-expanded="false" aria-controls="detay" hidden><span class="tb-et"></span><span class="tb-fiyat"><b></b><span class="tb-detay"><span data-t="details">Detay</span><svg class="ic"><use href="#i-asagi"/></svg></span></span></button>
+  <button type="button" class="mb-rez" id="mbRez"><span data-t="book">Rezervasyon Yap</span></button>
+</div>
 <a class="panel-pill" href="#panel"><svg class="ic"><use href="#i-pano"/></svg>Yönetim Paneli</a>
 
 <div class="cekmece" id="cekmece">
@@ -1028,7 +1051,7 @@ select:'Seç',selected:'Seçildi',total:'Toplam',total_rt:'Toplam (gidiş-dönü
 your_info:'Bilgileriniz',info_sub:'Rezervasyonu tamamlamak için bilgilerinizi girin.',name:'Ad Soyad',name_ph:'Adınızı girin',phone:'Cep Telefonu',email:'E-posta Adresi',email_ph:'E-postanızı girin',note:'Özel Not',note_ph:'Özel bir isteğiniz var mı? (ör. bebek koltuğu, isimle karşılama vb.)',
 code:'İndirim kodu',code_ph:'Kodunuz varsa girin',apply:'Uygula',special_kicker:'Özel Transfer Hizmeti',special_title:'Yolculuktan fazlası,<br>bir deneyim.',
 fixed:'Sabit Fiyatlar',fixed_s:'Gizli ücret yok',s247:'7/24 Destek',s247_s:'Her zaman yanınızdayız',drivers:'Profesyonel Şoförler',drivers_s:'Güler yüzlü ve deneyimli',vehicles:'Premium Araçlar',vehicles_s:'Temiz, konforlu, lüks',
-book:'Rezervasyon Yap',via_wa:'WhatsApp ile',redirect:'Onay için WhatsApp\'a yönlendirileceksiniz.',summary_empty:'Güzergâhı arayıp aracınızı seçtiğinizde özet burada görünür.',vehicle:'Araç',route:'Güzergâh',date:'Tarih',return_d:'Dönüş',pax:'Yolcu',subtotal:'Ara toplam',member_disc:'Üye indirimi',code_disc:'Kod',
+book:'Rezervasyon Yap',redirect:'Onay için WhatsApp\'a yönlendirileceksiniz.',summary_empty:'Güzergâhı arayıp aracınızı seçtiğinizde özet burada görünür.',vehicle:'Araç',route:'Güzergâh',date:'Tarih',return_d:'Dönüş',pax:'Yolcu',subtotal:'Ara toplam',member_disc:'Üye indirimi',code_disc:'Kod',details:'Detay',consent:'{mss} ve {obf} okudum, onaylıyorum.',mss:'Mesafeli Satış Sözleşmesini',obf:'Ön Bilgilendirme Formunu',mss_t:'Mesafeli Satış Sözleşmesi',obf_t:'Ön Bilgilendirme Formu',consent_ok:'Okudum, onaylıyorum',err_consent:'Lütfen sözleşmeyi onaylayın.',doc_demo:'Örnek metindir; maddeleri panelde Ayarlar bölümünden siz yazarsınız.',
 login_hint:'Giriş yapın, üyelere özel %{p} indirimden yararlanın.',login_link:'Giriş yap / Üye ol',guest_ok:'Üye olmadan da rezervasyon yapabilirsiniz.',member_on:'Üye girişi yapıldı: %{p} üye indirimi uygulanıyor.',
 airport_short:'Antalya Havalimanı',your_dest:'Varış Noktanız',hotel_t:'Otel Transferi',shop_t:'Alışveriş Transferi',city_t:'Şehir Transferi',private_t:'Özel Transfer',explore:'Antalya\'yı Keşfedin!',
 popular:'Popüler bölgeler',airports:'Havalimanları',results:'Adres sonuçları',no_result:'Sonuç bulunamadı, farklı yazmayı deneyin.',searching:'Aranıyor...',calc:'Rota hesaplanıyor...',
@@ -1051,7 +1074,7 @@ select:'Select',selected:'Selected',total:'Total',total_rt:'Total (round trip)',
 your_info:'Your Information',info_sub:'Please enter your details to complete the booking.',name:'Name Surname',name_ph:'Enter your name',phone:'Mobile Phone',email:'Email Address',email_ph:'Enter your email',note:'Special Note',note_ph:'Any special request? (e.g. baby seat, meet & greet, etc.)',
 code:'Discount code',code_ph:'Enter your code if you have one',apply:'Apply',special_kicker:'Special Transfer Service',special_title:'More than a ride,<br>it\'s an experience.',
 fixed:'Fixed Prices',fixed_s:'No hidden costs',s247:'24/7 Support',s247_s:'We are always here for you',drivers:'Professional Drivers',drivers_s:'Friendly & experienced',vehicles:'Premium Vehicles',vehicles_s:'Clean, comfortable, luxury',
-book:'Book Now',via_wa:'Via WhatsApp',redirect:'You will be redirected to WhatsApp for confirmation.',summary_empty:'Search your route and choose a vehicle to see your booking summary here.',vehicle:'Vehicle',route:'Route',date:'Date',return_d:'Return',pax:'Passengers',subtotal:'Subtotal',member_disc:'Member discount',code_disc:'Code',
+book:'Book Now',redirect:'You will be redirected to WhatsApp for confirmation.',summary_empty:'Search your route and choose a vehicle to see your booking summary here.',vehicle:'Vehicle',route:'Route',date:'Date',return_d:'Return',pax:'Passengers',subtotal:'Subtotal',member_disc:'Member discount',code_disc:'Code',details:'Details',consent:'I have read and accept the {mss} and the {obf}.',mss:'Distance Sales Agreement',obf:'Preliminary Information Form',mss_t:'Distance Sales Agreement',obf_t:'Preliminary Information Form',consent_ok:'I have read and accept',err_consent:'Please accept the agreement.',doc_demo:'Sample text; the business writes the terms in the panel under Settings.',
 login_hint:'Sign in to get the {p}% member discount.',login_link:'Sign in / Sign up',guest_ok:'You can also book as a guest.',member_on:'Signed in: {p}% member discount applied.',
 airport_short:'Antalya Airport',your_dest:'Your Destination',hotel_t:'Hotel Transfer',shop_t:'Shopping Transfer',city_t:'City Transfer',private_t:'Private Transfer',explore:'Let\'s Explore Antalya!',
 popular:'Popular areas',airports:'Airports',results:'Address results',no_result:'No results, please try another spelling.',searching:'Searching...',calc:'Calculating route...',
@@ -1074,7 +1097,7 @@ select:'Выбрать',selected:'Выбрано',total:'Итого',total_rt:'�
 your_info:'Ваши данные',info_sub:'Укажите данные, чтобы завершить бронирование.',name:'Имя и фамилия',name_ph:'Введите имя',phone:'Мобильный телефон',email:'Эл. почта',email_ph:'Введите e-mail',note:'Особые пожелания',note_ph:'Есть пожелания? (напр. детское кресло, встреча с табличкой)',
 code:'Промокод',code_ph:'Введите промокод, если он есть',apply:'Применить',special_kicker:'Индивидуальный трансфер',special_title:'Больше, чем поездка, —<br>это впечатление.',
 fixed:'Фиксированные цены',fixed_s:'Без скрытых платежей',s247:'Поддержка 24/7',s247_s:'Мы всегда на связи',drivers:'Опытные водители',drivers_s:'Вежливые и внимательные',vehicles:'Премиальные автомобили',vehicles_s:'Чистые, комфортные, роскошные',
-book:'Забронировать',via_wa:'Через WhatsApp',redirect:'Для подтверждения вы перейдёте в WhatsApp.',summary_empty:'Найдите маршрут и выберите автомобиль — здесь появится сводка бронирования.',vehicle:'Автомобиль',route:'Маршрут',date:'Дата',return_d:'Обратно',pax:'Пассажиры',subtotal:'Промежуточный итог',member_disc:'Скидка участника',code_disc:'Промокод',
+book:'Забронировать',redirect:'Для подтверждения вы перейдёте в WhatsApp.',summary_empty:'Найдите маршрут и выберите автомобиль — здесь появится сводка бронирования.',vehicle:'Автомобиль',route:'Маршрут',date:'Дата',return_d:'Обратно',pax:'Пассажиры',subtotal:'Промежуточный итог',member_disc:'Скидка участника',code_disc:'Промокод',details:'Детали',consent:'Я прочитал(а) и принимаю {mss} и {obf}.',mss:'Договор дистанционной продажи',obf:'Форму предварительной информации',mss_t:'Договор дистанционной продажи',obf_t:'Форма предварительной информации',consent_ok:'Прочитал(а) и принимаю',err_consent:'Пожалуйста, примите условия договора.',doc_demo:'Пример текста; условия компания пишет в панели, в разделе «Настройки».',
 login_hint:'Войдите и получите скидку {p}% для участников.',login_link:'Войти / Регистрация',guest_ok:'Можно забронировать и без регистрации.',member_on:'Вы вошли: применена скидка участника {p}%.',
 airport_short:'Аэропорт Анталии',your_dest:'Ваш пункт назначения',hotel_t:'Трансфер в отель',shop_t:'Шопинг-трансфер',city_t:'Городской трансфер',private_t:'Индивидуальный трансфер',explore:'Откройте Анталью!',
 popular:'Популярные районы',airports:'Аэропорты',results:'Найденные адреса',no_result:'Ничего не найдено, попробуйте иначе.',searching:'Поиск...',calc:'Расчёт маршрута...',
@@ -1097,7 +1120,7 @@ select:'Auswählen',selected:'Ausgewählt',total:'Gesamt',total_rt:'Gesamt (Hin 
 your_info:'Ihre Angaben',info_sub:'Bitte geben Sie Ihre Daten ein, um die Buchung abzuschließen.',name:'Vor- und Nachname',name_ph:'Ihr Name',phone:'Mobiltelefon',email:'E-Mail-Adresse',email_ph:'Ihre E-Mail',note:'Besondere Wünsche',note_ph:'Besondere Wünsche? (z. B. Babysitz, Empfang mit Namensschild)',
 code:'Rabattcode',code_ph:'Code eingeben, falls vorhanden',apply:'Anwenden',special_kicker:'Exklusiver Transferservice',special_title:'Mehr als eine Fahrt,<br>ein Erlebnis.',
 fixed:'Festpreise',fixed_s:'Keine versteckten Kosten',s247:'24/7 Support',s247_s:'Wir sind immer für Sie da',drivers:'Professionelle Fahrer',drivers_s:'Freundlich & erfahren',vehicles:'Premium-Fahrzeuge',vehicles_s:'Sauber, komfortabel, luxuriös',
-book:'Jetzt buchen',via_wa:'Über WhatsApp',redirect:'Zur Bestätigung werden Sie zu WhatsApp weitergeleitet.',summary_empty:'Suchen Sie Ihre Strecke und wählen Sie ein Fahrzeug, um die Buchungsübersicht zu sehen.',vehicle:'Fahrzeug',route:'Strecke',date:'Datum',return_d:'Rückfahrt',pax:'Fahrgäste',subtotal:'Zwischensumme',member_disc:'Mitgliederrabatt',code_disc:'Code',
+book:'Jetzt buchen',redirect:'Zur Bestätigung werden Sie zu WhatsApp weitergeleitet.',summary_empty:'Suchen Sie Ihre Strecke und wählen Sie ein Fahrzeug, um die Buchungsübersicht zu sehen.',vehicle:'Fahrzeug',route:'Strecke',date:'Datum',return_d:'Rückfahrt',pax:'Fahrgäste',subtotal:'Zwischensumme',member_disc:'Mitgliederrabatt',code_disc:'Code',details:'Details',consent:'Ich habe den {mss} und das {obf} gelesen und akzeptiere sie.',mss:'Fernabsatzvertrag',obf:'Vorabinformationsformular',mss_t:'Fernabsatzvertrag',obf_t:'Vorabinformationsformular',consent_ok:'Gelesen und akzeptiert',err_consent:'Bitte akzeptieren Sie den Vertrag.',doc_demo:'Beispieltext; die Bedingungen schreibt das Unternehmen im Panel unter Einstellungen.',
 login_hint:'Melden Sie sich an und erhalten Sie {p} % Mitgliederrabatt.',login_link:'Anmelden / Registrieren',guest_ok:'Sie können auch als Gast buchen.',member_on:'Angemeldet: {p} % Mitgliederrabatt wird angewendet.',
 airport_short:'Flughafen Antalya',your_dest:'Ihr Ziel',hotel_t:'Hoteltransfer',shop_t:'Shopping-Transfer',city_t:'Stadttransfer',private_t:'Privattransfer',explore:'Entdecken Sie Antalya!',
 popular:'Beliebte Orte',airports:'Flughäfen',results:'Adressen',no_result:'Keine Ergebnisse, bitte anders schreiben.',searching:'Suche...',calc:'Route wird berechnet...',
@@ -1145,7 +1168,21 @@ function varsayilanIcerik() {
       {id:'y1', ad:'Anna K.', ulke:'DE', puan:5, aktif:true, metin:{tr:'Uçuşum rötar yaptı ama şoför bizi bekliyordu. Çok profesyonel bir hizmet.', en:'My flight was delayed, but the driver was waiting for us. A very professional service.', ru:'Рейс задержали, но водитель нас дождался. Очень профессиональный сервис.', de:'Mein Flug hatte Verspätung, aber der Fahrer hat auf uns gewartet. Ein sehr professioneller Service.'}},
       {id:'y2', ad:'Mark T.', ulke:'GB', puan:5, aktif:true, metin:{tr:'Araç tertemizdi, çocuk koltuğu hazırdı. Kesinlikle tavsiye ederim.', en:'The car was spotless and the child seat was ready. Highly recommended.', ru:'Машина была идеально чистой, детское кресло уже стояло. Однозначно рекомендую.', de:'Das Auto war blitzsauber, der Kindersitz war bereit. Absolut empfehlenswert.'}},
       {id:'y3', ad:'Elif Y.', ulke:'TR', puan:4.5, aktif:true, metin:{tr:'Fiyat baştan belliydi, ekstra ücret yoktu.', en:'The price was clear from the start, no extra charges.', ru:'Цена была известна заранее, никаких доплат.', de:'Der Preis stand von Anfang an fest, keine Extrakosten.'}}
-    ]
+    ],
+    sozlesme:varsayilanSozlesme()
+  };
+}
+// sözleşme metinleri: her satır bir madde; işletme panelde Ayarlar'dan yazar (bunlar örnek)
+function varsayilanSozlesme() {
+  return {
+    mss:{tr:'Rezervasyon, WhatsApp üzerinden onaylandığında kesinleşir.\nRezervasyon özetinde gösterilen toplam tutar kesindir, gizli ücret yoktur.\nTransferden 24 saat öncesine kadar ücretsiz iptal edilebilir.',
+      en:'The booking is final once it is confirmed via WhatsApp.\nThe total shown in the booking summary is final; there are no hidden costs.\nFree cancellation up to 24 hours before the transfer.',
+      ru:'Бронирование считается окончательным после подтверждения в WhatsApp.\nИтоговая сумма в сводке бронирования окончательная, скрытых платежей нет.\nБесплатная отмена не позднее чем за 24 часа до трансфера.',
+      de:'Die Buchung ist verbindlich, sobald sie über WhatsApp bestätigt wurde.\nDer in der Buchungsübersicht angezeigte Gesamtpreis ist endgültig, es gibt keine versteckten Kosten.\nKostenlose Stornierung bis 24 Stunden vor dem Transfer.'},
+    obf:{tr:'Hizmet: seçtiğiniz güzergâhta özel transfer.\nÜcret: rezervasyon özetinde gösterilen toplam tutar.\nBilgileriniz yalnız bu transfer için kullanılır.',
+      en:'Service: private transfer on the route you choose.\nPrice: the total shown in the booking summary.\nYour details are used only for this transfer.',
+      ru:'Услуга: индивидуальный трансфер по выбранному маршруту.\nСтоимость: итоговая сумма в сводке бронирования.\nВаши данные используются только для этого трансфера.',
+      de:'Leistung: privater Transfer auf der von Ihnen gewählten Strecke.\nPreis: der in der Buchungsübersicht angezeigte Gesamtpreis.\nIhre Daten werden nur für diesen Transfer verwendet.'}
   };
 }
 
@@ -1244,6 +1281,7 @@ function icerikTamamla() {
   const v = varsayilanIcerik();
   if (!Array.isArray(S.favori)) S.favori = v.favori;
   if (!Array.isArray(S.yorumlar)) S.yorumlar = v.yorumlar;
+  if (!S.sozlesme) S.sozlesme = v.sozlesme;
 }
 function kaydet() { bellek = S; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
 yukle();
@@ -1292,7 +1330,7 @@ function dilUygula() {
   if (A.nereye && A.nereye.hid) A.nereye.ad = HAVALIMANLARI.find(h => h.id === A.nereye.hid).ad[dil];
   $('#nereden').value = A.nereden ? A.nereden.ad : '';
   $('#nereye').value = A.nereye ? A.nereye.ad : '';
-  iletisimCiz(); yolcuCiz(); koltukCiz(); vitrinCiz(); hesapCiz(); aracCiz(); ozetCiz();
+  iletisimCiz(); yolcuCiz(); koltukCiz(); vitrinCiz(); hesapCiz(); aracCiz(); ozetCiz(); onayCiz();
 }
 function dilSec(d) {
   dil = d; try { localStorage.setItem(DILK, d); } catch (e) {}
@@ -1316,7 +1354,7 @@ function rotaAlanCiz() {
   yerIkon('#alanNereye', !!(A.nereye && A.nereye.hid));
   const hv = havalimaniVar();
   $('#ucus').closest('.girdi').hidden = !hv;
-  $('#eposta').closest('.girdi').classList.toggle('tam', !hv);
+  formDuzen();
   $('#donusBilgi').hidden = !(A.tip === 'gd' && hv);
   yolcuCiz();
 }
@@ -1445,9 +1483,15 @@ function yolcuCiz() {
 function koltukCiz() {
   const s = $('#koltuk'), en = A.yaslar.filter(y => y !== '' && y <= 3).length, v = Math.min(Number(s.value) || 0, en);
   s.closest('.girdi').hidden = !en;
-  $('#otel').closest('.girdi').classList.toggle('tam', !en);
   s.innerHTML = Array.from({length:en + 1}, (_, n) => `<option value="${n}">${esc(n === 0 ? t('seat_none') : n === 1 ? t('seat_1') : t('seat_n', {n}))}</option>`).join('');
   s.value = String(v);
+  formDuzen();
+}
+// masaüstündeki iki sütunlu formda tek kalan alan tam genişlik olur
+function formDuzen() {
+  const hv = havalimaniVar(), en = !$('#koltuk').closest('.girdi').hidden;
+  $('#eposta').closest('.girdi').classList.toggle('tam', !hv && !en);
+  $('#koltuk').closest('.girdi').classList.toggle('tam', hv && en);
 }
 
 /* ana sayfa: favori transferler + misafir yorumları (panelden düzenlenir) */
@@ -1663,7 +1707,7 @@ function aracCiz() {
     cip.hidden = false;
     cip.innerHTML = `<svg class="ic"><use href="#i-yol"/></svg><span>${esc(A.nereden.ad)} → ${esc(A.nereye.ad)}</span><em>${A.rota.tahmin ? '~' : ''}${kmF(A.rota.km)} km · ${A.rota.dk} ${esc(t('min'))}</em>`;
   } else cip.hidden = true;
-  mobilBarCiz();
+  toplamCiz();
 }
 $('#araclar').addEventListener('click', e => {
   const b = e.target.closest('[data-sec]');
@@ -1691,7 +1735,7 @@ function ozetCiz() {
   const oz = $('#ozet');
   const a = S.araclar.find(x => x.id === A.arac);
   const h = a ? hesapla(a.id) : null;
-  if (!A.aranan || !a || !h || h.asim || koltukSayisi() > a.max) { oz.innerHTML = `<p class="ozet-bos">${esc(t('summary_empty'))}</p>`; mobilBarCiz(); return; }
+  if (!A.aranan || !a || !h || h.asim || koltukSayisi() > a.max) { oz.innerHTML = `<p class="ozet-bos">${esc(t('summary_empty'))}</p>`; toplamCiz(); return; }
   const tarih = $('#tarih').value ? tarihYaz($('#tarih').value) + ' · ' + $('#saat').value : '–';
   let s = `<div class="ozet-satir"><span>${esc(t('vehicle'))}</span><span>${esc(a.ad)}</span></div>
     <div class="ozet-satir"><span>${esc(t('route'))}</span><span>${A.rota.tahmin ? '~' : ''}${kmF(A.rota.km)} km · ${A.rota.dk} ${esc(t('min'))}</span></div>
@@ -1701,15 +1745,53 @@ function ozetCiz() {
   if (h.uyeE || h.kodE) s += `<div class="ozet-satir"><span>${esc(t('subtotal'))}</span><span>${paraYaz(h.brut)}</span></div>`;
   if (h.uyeE) s += `<div class="ozet-satir ind"><span>${esc(t('member_disc'))} (%${h.uyeP})</span><span>−${paraYaz(h.uyeE)}</span></div>`;
   if (h.kodE) s += `<div class="ozet-satir ind"><span>${esc(t('code_disc'))} ${esc(A.kod.kod)} <button type="button" id="kodKaldir" style="color:var(--yazi3);text-decoration:underline;font-size:12px">${esc(t('remove'))}</button></span><span>−${paraYaz(h.kodE)}</span></div>`;
-  s += `<div class="ozet-toplam"><span>${esc(t(A.tip === 'gd' ? 'total_rt' : 'total'))}</span><b>${paraYaz(h.net)}</b></div>`;
   oz.innerHTML = s;
-  mobilBarCiz();
+  toplamCiz();
 }
-function mobilBarCiz() {
+// alttaki toplam çubuğu (kartta ve telefonda sabit): toplam tutar + Detay, yanında Rezervasyon Yap
+function toplamCiz() {
   const a = S.araclar.find(x => x.id === A.arac);
   const h = a && A.aranan ? hesapla(a.id) : null;
-  $('#mbFiyat').textContent = h && !h.asim && koltukSayisi() <= a.max ? paraYaz(h.net) : '';
+  const fiyatVar = !!(h && !h.asim && koltukSayisi() <= a.max);
+  $$('.tb-sol').forEach(b => {
+    b.hidden = !fiyatVar;
+    if (!fiyatVar) return;
+    b.querySelector('.tb-et').textContent = t(A.tip === 'gd' ? 'total_rt' : 'total') + ' · ' + a.ad;
+    b.querySelector('b').textContent = paraYaz(h.net);
+  });
 }
+function detayAc(ac) {
+  $('#bilgi').classList.toggle('detay-acik', ac);
+  $$('.tb-sol').forEach(b => b.setAttribute('aria-expanded', String(ac)));
+}
+$$('.tb-sol').forEach(b => b.addEventListener('click', () => {
+  const ac = !$('#bilgi').classList.contains('detay-acik');
+  detayAc(ac);
+  if (!ac) return;
+  $('#bilgi').classList.add('acik');
+  const tel = matchMedia('(max-width:760px)').matches;
+  setTimeout(() => $('#detay').scrollIntoView({behavior:'smooth', block:tel ? 'start' : 'nearest'}), 60);
+}));
+// mesafeli satış sözleşmesi + ön bilgilendirme: bağlantı metni açar, "Okudum, onaylıyorum" kutuyu işaretler
+function onayCiz() {
+  $('#onayYazi').innerHTML = t('consent').split(/(\{mss\}|\{obf\})/).map(p => p === '{mss}' || p === '{obf}'
+    ? `<button type="button" data-belge="${p.slice(1, -1)}">${esc(t(p.slice(1, -1)))}</button>` : esc(p)).join('');
+}
+$('#onayYazi').addEventListener('click', e => {
+  const b = e.target.closest('[data-belge]');
+  if (!b) return;
+  e.preventDefault();
+  const k = b.dataset.belge, m = S.sozlesme[k] || {};
+  const metin = m[dil] || m.en || m.tr || '';
+  const ornek = metin === varsayilanSozlesme()[k][m[dil] ? dil : m.en ? 'en' : 'tr'];
+  const maddeler = metin.split('\n').map(x => x.trim()).filter(Boolean);
+  modalAc(`<button class="modal-kapat" data-mkapat aria-label="${esc(t('close'))}"><svg class="ic"><use href="#i-kapat"/></svg></button>
+    <h3>${esc(t(k + '_t'))}</h3>
+    <ol class="belge-liste">${maddeler.map(x => `<li>${esc(x)}</li>`).join('')}</ol>
+    ${ornek ? `<p class="demo-hesap" style="margin-bottom:12px">${esc(t('doc_demo'))}</p>` : ''}
+    <button type="button" class="ana-btn" data-onayla>${esc(t('consent_ok'))}</button>`, true);
+});
+$('#onay').addEventListener('change', () => $('#onaySatir').classList.remove('hata'));
 $('#ozet').addEventListener('click', e => { if (e.target.id === 'kodKaldir') { A.kod = null; $('#kod').value = ''; tost(t('code_removed')); aracCiz(); ozetCiz(); } });
 
 /* indirim kodu */
@@ -1750,10 +1832,11 @@ function rezervasyonYap() {
   if (tel.replace(/\D/g, '').length < 10) return isaretle('#tel', t('err_phone'));
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(ep)) return isaretle('#eposta', t('err_email'));
   const otel = $('#otel').value.trim();
-  if (otel.length < 3) return isaretle('#otel', t('err_hotel'));
+  if (otel.length < 3) { detayAc(true); return isaretle('#otel', t('err_hotel')); }
   const hv = havalimaniVar(), donusUcus = A.tip === 'gd' && hv;
   if (donusUcus && !$('#dUcusSaat').value) return isaretle('#dUcusSaat', t('err_ret_flight'));
   if (donusUcus && !$('#dAlis').value) return isaretle('#dAlis', t('err_pickup'));
+  if (!$('#onay').checked) { const o = $('#onaySatir'); o.classList.add('hata'); tost(t('err_consent')); o.scrollIntoView({behavior:'smooth', block:'center'}); return; }
   if (A.kod) { const r = kodBul(A.kod.kod); if (r.hata) { A.kod = null; ozetCiz(); tost(t(r.hata)); return; } }
   const u = oturum();
   const r = {kod:'AT-' + (S.sira++), olus:new Date().toISOString().slice(0, 16), tarih:$('#tarih').value, saat:$('#saat').value, gd:A.tip === 'gd',
@@ -1789,11 +1872,11 @@ function rezervasyonYap() {
     <a class="ana-btn wa-renk" href="${esc(link)}" target="_blank" rel="noopener"><svg class="ic" style="width:22px;height:22px"><use href="#i-wa"/></svg>${esc(t('confirm_wa'))}</a>
     ${no ? '' : `<p class="demo-hesap" style="margin-top:8px">${esc(t('wa_demo'))}</p>`}
     <button class="ikincil-btn" data-mkapat>${esc(t('close'))}</button>`);
-  A.kod = null; $('#kod').value = ''; $('#not').value = '';
+  A.kod = null; $('#kod').value = ''; $('#not').value = ''; $('#onay').checked = false;
   ozetCiz();
 }
 $('#rezBtn').addEventListener('click', rezervasyonYap);
-$('#mobilBar').addEventListener('click', () => {
+$('#mbRez').addEventListener('click', () => {
   const bilgi = $('#bilgi');
   if (!A.aranan || !A.arac) { rezervasyonYap(); return; }
   if (!bilgi.classList.contains('acik') || !$('#ad').value.trim()) { bilgi.classList.add('acik'); $('#rezervasyon').scrollIntoView({behavior:'smooth', block:'start'}); setTimeout(() => $('#ad').focus({preventScroll:true}), 500); return; }
@@ -1811,6 +1894,7 @@ if ('IntersectionObserver' in window) {
 function modalAc(html, genis) { $('#modalKart').className = 'modal-kart' + (genis ? ' genis' : ''); $('#modalKart').innerHTML = html; $('#modal').classList.add('acik'); document.body.style.overflow = 'hidden'; document.body.classList.add('modal-acik'); }
 function modalKapat() { $('#modal').classList.remove('acik'); document.body.style.overflow = ''; document.body.classList.remove('modal-acik'); }
 $('#modal').addEventListener('click', e => { if (e.target.id === 'modal' || e.target.closest('[data-mkapat]')) modalKapat(); });
+$('#modal').addEventListener('click', e => { if (e.target.closest('[data-onayla]')) { $('#onay').checked = true; $('#onaySatir').classList.remove('hata'); modalKapat(); } });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') { modalKapat(); $('#cekmece').classList.remove('acik'); } });
 
 /* hesap */
@@ -2298,6 +2382,9 @@ function pAyar() {
     <div style="display:flex;gap:22px;flex-wrap:wrap;margin-bottom:16px">${DILLER.map(d => `<label class="anahtar"><input type="checkbox" data-dl="${d}" ${a.diller[d] !== false ? 'checked' : ''}><i></i>${DIL_AD[d]} (${PARA[d].isaret})</label>`).join('')}</div>
     <div class="tablo-k"><table class="tablo"><thead><tr><th>Alan</th>${DILLER.map(d => `<th>${d.toUpperCase()}</th>`).join('')}</tr></thead><tbody>${METIN_ALAN.map(([k, ad]) => `<tr><td class="nw" style="font-weight:600">${ad}</td>${DILLER.map(d => `<td><input class="p-girdi" style="min-width:150px" data-mt="${d}|${k}" value="${esc((S.metin[d] || {})[k] || '')}" placeholder="${esc(D[d][k])}"></td>`).join('')}</tr>`).join('')}</tbody></table></div>
   </div>
+  <div class="p-kart"><h2>Mesafeli Satış Sözleşmesi ve Ön Bilgilendirme Formu</h2><p class="acik-y">Rezervasyondaki onay kutusundan açılır, müşteri onaylamadan rezervasyon yapılamaz. Her satır bir madde olarak görünür; bir dili boş bırakırsanız İngilizcesi gösterilir.</p>
+    ${[['mss', 'Mesafeli Satış Sözleşmesi'], ['obf', 'Ön Bilgilendirme Formu']].map(([k, ad]) => `<h3 style="font-size:14.5px;margin:14px 0 8px">${ad}</h3><div class="izgara-2">${DILLER.map(d => `<div class="p-alan"><label for="soz-${k}-${d}">${DIL_AD[d]}</label><textarea class="p-girdi" id="soz-${k}-${d}" rows="4" data-soz="${k}|${d}">${esc((S.sozlesme[k] || {})[d] || '')}</textarea></div>`).join('')}</div>`).join('')}
+  </div>
   <div class="p-kart"><h2>Google Haritalar</h2><p class="acik-y">Adres önerisi ve km hesabı için işletmenin kendi Google hesabından alınan anahtar girilir (Google aylık ücretsiz kullanım tanıyor).</p>
     <div class="izgara-2"><div class="p-alan"><label for="aG">API anahtarı</label><input class="p-girdi" id="aG" data-ay="mapsAnahtar" value="${esc(a.mapsAnahtar)}" placeholder="AIza..."></div></div>
     <div class="not-kutu" style="margin-top:12px"><svg class="ic"><use href="#i-dunya"/></svg><span>Bu örnekte anahtar yerine açık harita servisi (OpenStreetMap) kullanılıyor; gerçek sitede Google Haritalar bağlanır.</span></div>
@@ -2311,6 +2398,7 @@ function pAyarBagla() {
     if (g.dataset.ay) { S.ayar[g.dataset.ay] = g.value.trim(); kaydet(); iletisimCiz(); tost('Kaydedildi'); }
     else if (g.dataset.kur) { const v = Number(g.value); if (!(v > 0)) { g.value = S.ayar.kur[g.dataset.kur]; tost('Geçerli bir kur girin'); return; } S.ayar.kur[g.dataset.kur] = v; S.ayar.kurTarih = new Date().toLocaleDateString('tr-TR') + ' (elle)'; kaydet(); aracCiz(); ozetCiz(); tost('Kur kaydedildi'); }
     else if (g.dataset.dl) { const d = g.dataset.dl; if (!g.checked && aktifDiller().length < 2) { g.checked = true; tost('En az bir dil açık kalmalı'); return; } S.ayar.diller[d] = g.checked; kaydet(); dilUygula(); tost('Kaydedildi'); }
+    else if (g.dataset.soz) { const [k, d] = g.dataset.soz.split('|'); S.sozlesme[k] = S.sozlesme[k] || {}; S.sozlesme[k][d] = g.value.trim(); kaydet(); tost('Kaydedildi'); }
     else if (g.dataset.mt) { const [d, k] = g.dataset.mt.split('|'); S.metin[d] = S.metin[d] || {}; if (g.value.trim()) S.metin[d][k] = g.value.trim(); else delete S.metin[d][k]; kaydet(); dilUygula(); tost('Metin kaydedildi'); }
   };
   $('#sifirla').onclick = e => { const b = e.currentTarget; if (!b.dataset.emin) { b.dataset.emin = 1; b.lastChild.textContent = 'Emin misiniz? Tekrar basın'; return; } try { localStorage.removeItem(KEY); localStorage.removeItem(OTURUM); } catch (x) {} bellek = null; S = varsayilan(); kaydet(); A.kod = null; dilUygula(); panelCiz(); tost('Örnek veriler geri yüklendi'); };
