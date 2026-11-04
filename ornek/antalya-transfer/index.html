@@ -536,7 +536,12 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .guven .ic{width:21px;height:21px}
   .guven b{font-size:13px}
   .guven small{font-size:11px}
-  .bilgi .toplam-bar{display:none}
+  /* telefonda da çubuk formun içinde, formun hemen altında (alıcı: 'form ile beraber olsun ayırmayalım') */
+  .toplam-bar{gap:12px}
+  .toplam-bar .tb-fiyat{gap:0 8px;flex-wrap:wrap}
+  .toplam-bar .tb-fiyat b{font-size:21px}
+  .toplam-bar .rez-btn{padding:0 18px;min-height:50px;font-size:15.5px}
+  .toplam-bar .rez-btn .ic{display:none}
   .serit{margin-top:30px;background:var(--koyu2) url(kesfet.jpg) center 40%/cover}
   .serit::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(1,35,38,.35),rgba(1,35,38,.86) 62%)}
   .serit .kap{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:16px 4px;padding-top:30px;padding-bottom:22px;overflow:visible}
@@ -549,7 +554,7 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .alt .kunye-k{grid-column:auto}
   .panel-pill{display:none}
   .mobil-bar{display:flex;position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:60;background:#fff;color:var(--yazi);border:1px solid var(--cizgi2);border-radius:18px;min-height:68px;padding:9px 9px 9px 16px;align-items:center;gap:12px;box-shadow:0 16px 34px -14px rgba(1,35,38,.45);transition:transform .25s ease,opacity .25s ease}
-  body.arama-gorunur .mobil-bar{transform:translateY(140%);opacity:0;pointer-events:none}
+  body.arama-gorunur .mobil-bar,body.form-gorunur .mobil-bar{transform:translateY(140%);opacity:0;pointer-events:none}
   .mobil-bar .tb-et{font-size:11.5px}
   .mobil-bar .tb-fiyat{gap:0 8px;flex-wrap:wrap}
   .mobil-bar .tb-fiyat b{font-size:20px}
@@ -1756,7 +1761,7 @@ function toplamCiz() {
   $$('.tb-sol').forEach(b => {
     b.hidden = !fiyatVar;
     if (!fiyatVar) return;
-    b.querySelector('.tb-et').textContent = t(A.tip === 'gd' ? 'total_rt' : 'total') + ' · ' + a.ad;
+    b.querySelector('.tb-et').textContent = t(A.tip === 'gd' ? 'total_rt' : 'total');
     b.querySelector('b').textContent = paraYaz(h.net);
   });
 }
@@ -1888,6 +1893,8 @@ $('#bilgiBas').addEventListener('click', () => { if (matchMedia('(max-width:760p
 if ('IntersectionObserver' in window) {
   document.body.classList.add('arama-gorunur');
   new IntersectionObserver(g => document.body.classList.toggle('arama-gorunur', g[0].isIntersecting)).observe($('.arama-alan'));
+  // form ekrandayken çubuk formun içinde görünür, ayrı yüzen çubuk gizlenir
+  new IntersectionObserver(g => document.body.classList.toggle('form-gorunur', g[0].isIntersecting)).observe($('#bilgi'));
 }
 
 /* modal */
