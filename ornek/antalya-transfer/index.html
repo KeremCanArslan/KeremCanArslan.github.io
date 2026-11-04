@@ -262,7 +262,13 @@ input::-webkit-date-and-time-value{text-align:left}
 .bilgi.detay-acik .bilgi-detay{display:block}
 .bd-izgara{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px 18px;align-items:end}
 .bilgi-detay .kod-alan{margin-top:0}
-.bilgi-detay .guven{grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px 18px;margin-top:14px;padding-top:14px;border-top:1px solid var(--cizgi2)}
+/* Detay tek ekrana sığar: özet en üstte, güven maddeleri yalnız simge, tek satır (alıcı isteği) */
+.bilgi-detay .ozet{margin-top:0;border-top:0;padding-top:0}
+.bilgi-detay .bd-izgara{margin-top:12px;padding-top:12px;border-top:1px dashed var(--cizgi)}
+.bilgi-detay .guven{display:flex;justify-content:space-around;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--cizgi2)}
+.bilgi-detay .guven li{display:block}
+.bilgi-detay .guven .ic{display:block;width:24px;height:24px;margin:0}
+.bilgi-detay .guven div{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 /* mesafeli satış sözleşmesi onayı (metin panelden) */
 .onay-satir{display:flex;align-items:flex-start;gap:10px;margin-top:16px;font-size:13.5px;line-height:1.45;color:var(--yazi);cursor:pointer}
 .onay-satir input{width:20px;height:20px;flex:0 0 20px;margin-top:1px;accent-color:var(--koyu);cursor:pointer}
@@ -532,7 +538,6 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .donus-uc .kutu .ic{display:none}
   .bilgi-detay{padding:14px 12px}
   .bd-izgara{grid-template-columns:minmax(0,1fr);gap:12px}
-  .bilgi-detay .guven{grid-template-columns:1fr 1fr;gap:12px}
   .guven .ic{width:21px;height:21px}
   .guven b{font-size:13px}
   .guven small{font-size:11px}
@@ -923,6 +928,7 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
         <div class="girdi tam"><label for="not" data-t="note">Özel Not</label><div class="kutu uzun"><svg class="ic"><use href="#i-not"/></svg><textarea id="not" rows="2" data-tp="note_ph" placeholder=""></textarea></div></div>
       </div>
       <div class="bilgi-detay" id="detay">
+        <div class="ozet" id="ozet"></div>
         <div class="bd-izgara">
           <div class="girdi"><label for="otel"><span data-t="hotel">Otel Adı / Adres</span><i>*</i></label><div class="kutu"><svg class="ic"><use href="#i-otel"/></svg><input id="otel" autocomplete="off" data-tp="hotel_ph" placeholder="Otel adı ya da açık adres"></div></div>
           <div class="kod-alan">
@@ -937,7 +943,6 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
           <li><svg class="ic"><use href="#i-yildiz"/></svg><div><b data-t="drivers">Profesyonel Şoförler</b><small data-t="drivers_s">Güler yüzlü ve deneyimli</small></div></li>
           <li><svg class="ic"><use href="#i-elmas"/></svg><div><b data-t="vehicles">Premium Araçlar</b><small data-t="vehicles_s">Temiz, konforlu, lüks</small></div></li>
         </ul>
-        <div class="ozet" id="ozet"></div>
         <p class="yonlendirme" data-t="redirect">Onay için WhatsApp'a yönlendirileceksiniz.</p>
       </div>
       <label class="onay-satir" id="onaySatir"><input type="checkbox" id="onay"><span id="onayYazi"></span></label>
@@ -1324,6 +1329,7 @@ function dilUygula() {
   $$('[data-t]').forEach(e => e.textContent = t(e.dataset.t));
   $$('[data-th]').forEach(e => e.innerHTML = t(e.dataset.th));
   $$('[data-tp]').forEach(e => e.placeholder = t(e.dataset.tp));
+  $$('.bilgi-detay .guven li').forEach(li => li.title = li.querySelector('b').textContent);
   $('#slogan').innerHTML = t('hero_sub').split('|').map(esc).join('<i></i>');
   $('#dilKod').textContent = dil.toUpperCase();
   $('#dilListe').innerHTML = aktifDiller().map(d => `<button type="button" data-dil="${d}" class="${d === dil ? 'secili' : ''}">${DIL_AD[d]}<span>${PARA[d].isaret}</span></button>`).join('');
@@ -1742,11 +1748,11 @@ function ozetCiz() {
   const h = a ? hesapla(a.id) : null;
   if (!A.aranan || !a || !h || h.asim || koltukSayisi() > a.max) { oz.innerHTML = `<p class="ozet-bos">${esc(t('summary_empty'))}</p>`; toplamCiz(); return; }
   const tarih = $('#tarih').value ? tarihYaz($('#tarih').value) + ' · ' + $('#saat').value : '–';
+  // özet sırası (alıcı): araç en üstte, sonra nereden → nereye, tarih saat, dönüş varsa dönüş tarih saat
   let s = `<div class="ozet-satir"><span>${esc(t('vehicle'))}</span><span>${esc(a.ad)}</span></div>
-    <div class="ozet-satir"><span>${esc(t('route'))}</span><span>${A.rota.tahmin ? '~' : ''}${kmF(A.rota.km)} km · ${A.rota.dk} ${esc(t('min'))}</span></div>
+    <div class="ozet-satir"><span>${esc(t('route'))}</span><span>${esc(A.nereden.ad)} → ${esc(A.nereye.ad)}</span></div>
     <div class="ozet-satir"><span>${esc(t('date'))}</span><span>${esc(tarih)}</span></div>`;
   if (A.tip === 'gd') s += `<div class="ozet-satir"><span>${esc(t('return_d'))}</span><span>${esc($('#dTarih').value ? tarihYaz($('#dTarih').value) + ' · ' + ($('#dAlis').value || $('#dSaat').value) : '–')}</span></div>`;
-  s += `<div class="ozet-satir"><span>${esc(t('pax'))}</span><span>${A.yetiskin + A.cocuk + A.bebek}${havalimaniVar() ? ` · ${esc(t('bags'))} ${A.bavul}` : ''}</span></div>`;
   if (h.uyeE || h.kodE) s += `<div class="ozet-satir"><span>${esc(t('subtotal'))}</span><span>${paraYaz(h.brut)}</span></div>`;
   if (h.uyeE) s += `<div class="ozet-satir ind"><span>${esc(t('member_disc'))} (%${h.uyeP})</span><span>−${paraYaz(h.uyeE)}</span></div>`;
   if (h.kodE) s += `<div class="ozet-satir ind"><span>${esc(t('code_disc'))} ${esc(A.kod.kod)} <button type="button" id="kodKaldir" style="color:var(--yazi3);text-decoration:underline;font-size:12px">${esc(t('remove'))}</button></span><span>−${paraYaz(h.kodE)}</span></div>`;
