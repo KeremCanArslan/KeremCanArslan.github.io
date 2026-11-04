@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Örnek Berber</title>
+<meta name="description" content="Berber ve erkek kuaförü web sitesi, mobil uygulama ve dükkan paneli örneği: online randevu, usta takvimi, adisyon ve usta başına kasa, müşteri geçmişi ve raporlar.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#161412">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../randevu-ortak/randevu.css?v=2">
+<style>
+:root{--bg:#f2ede4;--ink:#161412;--ink2:#5f5951;--line:#dcd3c5;--acc:#a3241b;--acc2:#841b14;--kum:#e9e1d4;--kart:#fffdf9;--fb:"Big Shoulders Display",Impact,"Arial Narrow",sans-serif;--fg:Archivo,system-ui,-apple-system,sans-serif;--fbw:800;--hero:rgba(14,10,8,.62)}
+</style>
+<script>
+window.ISLETME = {
+  anahtar: 'ornek-berber-v1', tohum: 23,
+  ad: 'Örnek Berber', altyazi: 'SAÇ · SAKAL · BAKIM',
+  ornekNot: 'Örnek tasarımdır. Dükkan adı, adres, hizmetler, fiyatlar ve fotoğraflar temsilidir; gerçek sitede dükkanın kendi bilgileri olur.',
+  semt: 'Beşiktaş',
+  hero: {foto: '1585747860715-2ba37e788b70', baslik: 'Sıra beklemeden tıraş olun', metin: 'Ustanızı ve saatinizi seçin, randevunuz dükkana anında düşsün. Telefonla aramanıza, sıra beklemenize gerek kalmaz.'},
+  saat: {acilis: '09:00', kapanis: '21:00', kapali: [0], gunMetin: 'Pazartesi - Cumartesi', kapaliMetin: 'Pazar'},
+  adres: 'Örnek Mah. Berber Sok. No: 7, Beşiktaş / İstanbul', adresKisa: 'Örnek Mah. Berber Sok. No: 7, Beşiktaş', telefon: '0 (212) 000 00 00',
+  kategoriler: [
+    {k: 'sac', ad: 'Saç', foto: '1593702275687-f8b402bf1fb5'},
+    {k: 'sakal', ad: 'Sakal ve tıraş', foto: '1733995471058-3d6ff2013de3'},
+    {k: 'bakim', ad: 'Bakım', foto: '1621605815971-fbc98d665033'},
+    {k: 'paket', ad: 'Paketler', foto: '1599011176306-4a96f1516d4d'}
+  ],
+  hizmetler: [
+    ['s1','sac','Saç kesimi',30,400,7],['s2','sac','Fade kesim',45,450,4],['s3','sac','Makas kesim',45,450,2],['s4','sac','Çocuk tıraşı',30,300,2],['s5','sac','Yıkama + fön',15,150,1],
+    ['k1','sakal','Sakal tıraşı',20,200,3],['k2','sakal','Sakal şekillendirme',30,250,2],['k3','sakal','Ustura tıraşı',30,300,1.2],['k4','sakal','Sakal boyama',30,350,.4],
+    ['b1','bakim','Cilt bakımı',45,500,.6],['b2','bakim','Siyah maske',20,200,.8],['b3','bakim','Kulak ve burun ağdası',15,150,.6],['b4','bakim','Kaş alma',15,100,.5],
+    ['p1','paket','Saç + sakal',45,550,6],['p2','paket','Saç + sakal + bakım',75,900,.8],['p3','paket','Baba + oğul',60,650,.5],['p4','paket','Damat tıraşı',120,2500,.06]
+  ],
+  uzmanlar: [
+    {ad: 'Murat', is: 'Saç, sakal ve damat tıraşı', kat: ['sac','sakal','paket'], prim: 40, mola: ['13:00','14:00']},
+    {ad: 'Emre', is: 'Fade, çocuk tıraşı ve bakım', kat: ['sac','bakim','paket'], prim: 40},
+    {ad: 'Can', is: 'Sakal, ustura ve cilt bakımı', kat: ['sakal','bakim','paket'], prim: 35}
+  ],
+  urunler: [['Wax',350],['Sakal yağı',300],['Şampuan',280],['Saç spreyi',260],['Tıraş sonrası losyon',320]],
+  musteriler: ['Burak T.','Mert A.','Onur Y.','Serkan D.','Kaan Ö.','Barış Ç.','Hakan S.','Tolga B.','Uğur E.','Cem G.','Oğuz P.','Furkan M.','Yusuf R.','Arda N.','Sinan L.','Volkan F.','Batuhan İ.','Ozan V.','Efe Z.','Tuncay U.','Gökhan A.','Alper T.','Deniz K.','Berk Y.','Selim Ö.','İlker D.','Ercan C.','Çağlar Ş.','Mehmet K.','Ali R.','Hasan B.','Yiğit E.'],
+  populer: 'p1',
+  galeri: [['1536520002442-39764a41e987','Dükkanın iç görünümü'],['1648221122323-572c13a31663','Makineyle kesim'],['1621645582931-d1d3e6564943','Berber koltuğu'],['1701891123509-e983d6c45259','Sakal düzeltme'],['1657105052497-f996284ffff8','Makasla kesim']],
+  kampanya: {baslik: 'Saç + sakal 450 TL', metin: 'Salı ve çarşamba günleri 12.00 - 16.00 arası.'},
+  app: {baslik: 'Bugün tıraş günü'},
+  notOrnek: 'Yanlar 1 numara, üstü makasla; sakal kısa',
+  soz: {
+    uzman: 'Usta', uzmanKucuk: 'usta', ekipMenu: 'Ustalar', ekipUst: 'Ekibimiz', ekipBaslik: 'Ustalarımız',
+    ekipMetin: 'Her ustanın kendi takvimi var. Ustanızı seçin, yalnızca onun boş saatleri görünsün.',
+    isletme: 'Dükkan', isletmeKucuk: 'dükkan', isletmeye: 'dükkana', isletmede: 'dükkanda', isletmenin: 'dükkanın',
+    panel: 'Dükkan paneli', panelde: 'Dükkan panelinde', panelden: 'dükkan panelinden', paneline: 'dükkan paneline',
+    uygBaslik: 'Müşterinin telefonunda dükkanınız', galeriUst: 'Dükkanımız', galeriBaslik: 'Dükkandan kareler'
+  }
+};
+</script>
+</head>
+<body class="buyuk">
+<script src="../randevu-ortak/randevu.js?v=2"></script>
+</body>
+</html>
