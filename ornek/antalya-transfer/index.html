@@ -636,34 +636,38 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .toplam-bar .rez-btn{padding:0 18px;min-height:50px;font-size:15.5px}
   .toplam-bar .rez-btn .ic{display:none}
   .alt{margin-top:30px;margin-bottom:-96px}
-  .ab-foto{height:72vw;background-image:url(kapak-mobil.jpg);background-position:center 78%}
-  .ab-foto::after{background:linear-gradient(180deg,rgba(2,33,40,.2),rgba(2,33,40,0) 20%,rgba(2,33,40,0) 72%,#022128)}
-  .ab-serit{gap:16px 4px;margin-top:-16px;padding:0 0 22px}
-  .ab-serit .kesfet{font-size:34px;margin:0 0 10px}
-  .ab-serit .serit-oge{gap:7px;font-size:11px}
+  .ab-foto{position:absolute;inset:0;height:auto;background-image:url(kapak-mobil.jpg);background-position:center 100%}
+  .ab-foto::after{background:linear-gradient(180deg,rgba(2,33,40,.45),rgba(2,33,40,.08) 30%,rgba(2,33,40,.08) 58%,rgba(2,33,40,.88) 82%,#022128)}
+  .ab-serit{gap:16px 4px;margin-top:0;padding:28px 0 20px}
+  .ab-serit .kesfet{font-size:34px;margin:0 0 31vw}
+  .ab-serit .serit-oge{gap:7px;font-size:11px;min-width:0;overflow-wrap:anywhere;-webkit-hyphens:auto;hyphens:auto}
   .kesfet{grid-column:1/-1;grid-row:1;justify-self:center;margin:0 0 10px;font-size:34px}
   .serit-oge{flex-direction:column;gap:7px;font-size:11px;white-space:normal;text-align:center;line-height:1.25}
   .serit-oge .ic{width:24px;height:24px}
   .serit-ilk{padding-right:0;border-right:0}
   .serit-ilk .ok-s,.serit-ilk .ilk-hedef{display:none}
-  .alt-ana{grid-template-columns:1fr 1fr;grid-template-areas:"hl he" "il il" "bu bu";gap:20px 16px;padding-top:20px;padding-bottom:18px}
-  .alt-sut{padding:0;border:0}
+  .alt-ana{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"hl il" "he bu";gap:20px 0;padding-top:20px;padding-bottom:18px}
+  .alt-sut{padding:0 12px 0 0;border:0}
+  .as-il,.as-bu{padding:0 0 0 12px;border-left:1px solid rgba(255,255,255,.1)}
   .as-hl{grid-area:hl}.as-he{grid-area:he}.as-il{grid-area:il}.as-bu{grid-area:bu}
-  .alt h4{font-size:12.5px;padding-bottom:9px;margin-bottom:10px}
-  .alt h4::after{width:28px;height:2.5px}
-  .alt li{padding:3px 0;gap:10px;font-size:13.5px}
-  .alt li .ic{width:18px;height:18px}
-  .alt-sut p{font-size:13.5px;margin-bottom:10px}
-  .alt-yuv{gap:10px;margin-bottom:8px}
-  .alt-yuv a{width:40px;height:40px}
-  .alt-yuv .ic{width:20px;height:20px}
-  .bulten input{padding:11px 10px}
+  .alt h4{font-size:12px;letter-spacing:.1em;padding-bottom:8px;margin-bottom:10px}
+  .alt h4::after{width:26px;height:2.5px}
+  .alt li{padding:3px 0;gap:8px;font-size:12.5px;line-height:1.35}
+  .alt li .ic{width:16px;height:16px}
+  .alt-sut p{font-size:12px;line-height:1.45;margin-bottom:9px}
+  .alt-yuv{gap:7px;margin-bottom:7px}
+  .alt-yuv a{width:34px;height:34px}
+  .alt-yuv .ic{width:17px;height:17px}
+  .bulten>.ic{width:17px;height:17px;margin-left:9px}
+  .bulten input{padding:10px 8px;font-size:12.5px}
+  .bulten button{width:38px}
+  .bulten button .ic{width:17px;height:17px}
   .alt-ozl{grid-template-columns:repeat(5,minmax(0,1fr));gap:0 4px;padding-top:16px;padding-bottom:16px}
-  .ao{padding:0;border:0}
+  .ao{padding:0 3px}
   .ao-hal{width:42px;height:42px;border-width:1.5px;margin-bottom:7px}
   .ao-hal .ic{width:20px;height:20px}
-  .ao b{font-size:10.5px;line-height:1.25;margin:0;overflow-wrap:anywhere;hyphens:auto}
-  .ao p{display:none}
+  .ao b{font-size:10.5px;line-height:1.25;margin:0 0 3px;overflow-wrap:anywhere;-webkit-hyphens:auto;hyphens:auto}
+  .ao p{font-size:9.5px;line-height:1.3;overflow-wrap:anywhere;-webkit-hyphens:auto}
   .alt-son{flex-direction:column-reverse;gap:10px;text-align:center;padding-top:14px;padding-bottom:12px}
   .alt-son-sag{margin:0}
   .alt-not{justify-content:center;text-align:center;padding-bottom:124px}
