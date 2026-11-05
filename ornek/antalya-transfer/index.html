@@ -367,21 +367,72 @@ input::-webkit-date-and-time-value{text-align:left}
 .bayrak svg{width:100%;height:100%;display:block}
 
 /* ---------- şerit + alt ---------- */
-.serit{background:var(--koyu2);color:#fff;margin-top:44px;position:relative;overflow:hidden}
-.serit .kap{display:flex;align-items:center;gap:38px;min-height:84px}
 .serit-oge{display:flex;align-items:center;gap:12px;font-size:14px;white-space:nowrap}
 .serit-oge .ic{width:26px;height:26px;stroke-width:1.4}
 .serit-ilk{padding-right:38px;border-right:1px solid rgba(255,255,255,.18)}
 .serit-ilk .ok-s{width:16px;height:16px;opacity:.8}
 .kesfet{margin-left:auto;font-family:var(--el);font-size:36px;line-height:1;position:relative;padding-bottom:8px;white-space:nowrap}
 .kesfet svg{position:absolute;left:4%;right:0;bottom:-4px;width:96%;height:12px;color:var(--tur)}
-.alt{background:#011a1c;color:rgba(255,255,255,.72);font-size:13px;padding:30px 0 34px}
-.alt .kap{display:grid;grid-template-columns:1.2fr 1fr 1.6fr;gap:28px}
-.alt h4{color:#fff;font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
-.alt li{padding:3px 0;display:flex;gap:9px;align-items:center}
-.alt li .ic{width:16px;height:16px;color:var(--tur)}
-.alt a:hover{color:#fff}
-.alt .kunye{font-size:11.5px;line-height:1.6;color:rgba(255,255,255,.5)}
+/* alt bölüm: Keşfedin şeridi + bilgiler tek parça */
+.alt{background:#011a1c;color:rgba(255,255,255,.72);font-size:14px;margin-top:44px}
+.alt-bant{position:relative;color:#fff;background:#011a1c url(kapak.jpg) 70% 42%/cover no-repeat;overflow:hidden}
+.alt-bant::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(1,26,28,.94),rgba(1,26,28,.7) 34%,rgba(1,26,28,.1) 62%,rgba(1,26,28,0)),linear-gradient(0deg,#011a1c,rgba(1,26,28,.8) 26%,rgba(1,26,28,0) 54%)}
+.alt-bant .kap{position:relative;min-height:410px;display:flex;flex-direction:column;justify-content:space-between;padding-top:50px}
+.ab-marka .logo svg{width:92px;height:76px}
+.ab-marka .logo b{font-size:44px}
+.ab-marka .logo small{font-size:15px;margin-top:9px}
+.ab-slogan{font-family:var(--serif);font-weight:600;font-size:34px;line-height:1.15;margin-top:18px}
+.ab-slogan em{font-style:normal;color:var(--tur)}
+.ab-serit{display:flex;flex-wrap:wrap;align-items:center;gap:8px 38px;min-height:84px;padding:18px 0}
+.alt-ana{display:grid;grid-template-columns:1fr 1.3fr 1fr 1.25fr;padding-top:34px;padding-bottom:32px}
+.alt-sut{padding:0 28px;border-left:1px solid rgba(255,255,255,.1);min-width:0}
+.alt-sut:first-child{padding-left:0;border-left:0}
+.alt-sut:last-child{padding-right:0}
+.alt h4{position:relative;color:#fff;font-size:14px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding-bottom:12px;margin-bottom:20px}
+.alt h4::after{content:'';position:absolute;left:0;bottom:0;width:34px;height:3px;border-radius:2px;background:var(--tur)}
+.alt li{padding:6px 0;display:flex;gap:12px;align-items:center}
+.alt li .ic{width:20px;height:20px;color:var(--tur);stroke-width:1.6}
+.alt li a,.alt li button{color:inherit;text-align:left;overflow-wrap:anywhere}
+.alt li a:hover,.alt li button:hover{color:var(--tur)}
+.alt-sut p{line-height:1.6;margin-bottom:16px}
+.alt-yuv{display:flex;gap:12px;margin-bottom:14px}
+.alt-yuv a{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;color:#fff;transition:transform .15s}
+.alt-yuv a:hover{transform:translateY(-2px)}
+.alt-yuv a[hidden]{display:none}
+.alt-yuv .ic{width:22px;height:22px}
+.yv-wa{background:#25d366}.yv-tg{background:#2aabee}.yv-ms{background:#8b3dff}.yv-tel{background:var(--tur)}
+.bulten{display:flex;border:1px solid rgba(255,255,255,.22);border-radius:10px;overflow:hidden;background:rgba(255,255,255,.04)}
+.bulten:focus-within{border-color:var(--tur)}
+.bulten>.ic{width:20px;height:20px;align-self:center;margin-left:14px;color:rgba(255,255,255,.7)}
+.bulten input{flex:1;min-width:0;background:none;border:0;color:#fff;padding:13px 12px;font-size:14px;outline:none}
+.bulten input::placeholder{color:rgba(255,255,255,.55)}
+.bulten button{flex:none;width:52px;background:var(--tur);color:#fff;display:grid;place-items:center}
+.bulten button:hover{background:var(--tur2)}
+.bulten button .ic{width:20px;height:20px}
+.alt-ozl{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid rgba(255,255,255,.1);padding-top:30px;padding-bottom:30px}
+.ao{text-align:center;padding:0 14px;border-left:1px solid rgba(255,255,255,.1)}
+.ao:first-child{border-left:0}
+.ao-hal{width:64px;height:64px;border-radius:50%;border:2px solid var(--tur);display:grid;place-items:center;margin:0 auto 14px;color:#fff}
+.ao-hal .ic{width:28px;height:28px;stroke-width:1.5}
+.ao b{display:block;color:#fff;font-size:15px;margin-bottom:6px}
+.ao p{font-size:13.5px;line-height:1.5;hyphens:auto}
+.alt-son{display:flex;align-items:center;gap:22px;border-top:1px solid rgba(255,255,255,.1);padding-top:22px;padding-bottom:22px}
+.alt-son-sag{margin-left:auto;display:flex;align-items:center;gap:22px}
+.tursab{display:flex;flex-direction:column;align-items:flex-start;color:#fff;line-height:1.05;padding-right:22px;border-right:1px solid rgba(255,255,255,.18)}
+.tursab b{font-size:22px;font-weight:800;letter-spacing:.02em}
+.tursab small{font-size:10.5px;color:rgba(255,255,255,.6);margin-top:3px}
+.tursab small:empty{display:none}
+.sosyal{display:flex;gap:18px}
+.sosyal a{color:#fff;display:grid;place-items:center}
+.sosyal a:hover,.tursab:hover b{color:var(--tur)}
+.sosyal .ic{width:24px;height:24px}
+.alt-not{display:flex;align-items:center;gap:8px 18px;flex-wrap:wrap;padding-bottom:78px}
+.alt-not .panel-link{margin-top:0}
+.alt .kunye{font-size:11.5px;line-height:1.6;color:rgba(255,255,255,.45);flex:1;min-width:240px}
+@media (max-width:1400px){
+  .ab-serit{display:grid;grid-template-columns:repeat(5,auto);justify-content:space-between;gap:12px 20px}
+  .ab-serit .kesfet{grid-column:1/-1;grid-row:1;justify-self:start;margin:0 0 6px}
+}
 .panel-link{display:inline-flex;align-items:center;gap:8px;margin-top:10px;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:7px 14px;color:#fff;font-weight:600}
 .panel-link .ic{width:16px;height:16px}
 .panel-pill{position:fixed;left:18px;bottom:18px;z-index:45;display:flex;align-items:center;gap:8px;background:#fff;color:var(--koyu);border:1px solid var(--cizgi);border-radius:999px;padding:9px 16px 9px 12px;font-size:13px;font-weight:700;box-shadow:0 12px 28px -14px rgba(1,35,38,.5);transition:transform .2s}
@@ -468,10 +519,15 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .burger{display:block}
   .bilgi{grid-template-columns:minmax(0,1fr)}
   .bilgi-foto{display:none}
-  .serit .kap{gap:24px;overflow-x:auto}
-  .serit-ilk{padding-right:24px}
-  .alt .kap{grid-template-columns:1fr 1fr}
-  .alt .kunye-k{grid-column:span 2}
+  .ab-serit{grid-template-columns:repeat(5,minmax(0,1fr));gap:12px 6px}
+  .serit-oge{flex-direction:column;gap:7px;font-size:12.5px;white-space:normal;text-align:center;line-height:1.25}
+  .serit-ilk{padding-right:0;border-right:0}
+  .serit-ilk .ok-s,.serit-ilk .ilk-hedef{display:none}
+  .alt-ana{grid-template-columns:1fr 1fr;row-gap:30px}
+  .alt-sut:nth-child(3){padding-left:0;border-left:0}
+  .alt-sut:nth-child(2){padding-right:0}
+  .ao{padding:0 8px}
+  .ab-slogan{font-size:28px}
 }
 @media (max-width:760px){
   body{font-size:14.5px;padding-bottom:96px}
@@ -587,16 +643,35 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .toplam-bar .tb-fiyat b{font-size:21px}
   .toplam-bar .rez-btn{padding:0 18px;min-height:50px;font-size:15.5px}
   .toplam-bar .rez-btn .ic{display:none}
-  .serit{margin-top:30px;background:var(--koyu2) url(kesfet.jpg) center 40%/cover}
-  .serit::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(1,35,38,.35),rgba(1,35,38,.86) 62%)}
-  .serit .kap{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:16px 4px;padding-top:30px;padding-bottom:22px;overflow:visible}
+  .alt{margin-top:30px;margin-bottom:-96px}
+  .alt-bant{background-image:url(kesfet.jpg);background-position:center 40%}
+  .alt-bant::before{background:linear-gradient(180deg,rgba(1,35,38,.45),rgba(1,35,38,.86) 58%,#011a1c)}
+  .alt-bant .kap{min-height:0;padding-top:30px;align-items:center;text-align:center}
+  .ab-marka{display:flex;flex-direction:column;align-items:center}
+  .ab-marka .logo svg{width:58px;height:48px}
+  .ab-marka .logo b{font-size:28px}
+  .ab-marka .logo small{font-size:10.5px;margin-top:6px}
+  .ab-slogan{font-size:22px;margin-top:10px}
+  .ab-serit{display:grid;grid-template-columns:repeat(5,1fr);gap:16px 4px;width:100%;padding:24px 0 22px;overflow:visible}
   .kesfet{grid-column:1/-1;grid-row:1;justify-self:center;margin:0 0 10px;font-size:34px}
   .serit-oge{flex-direction:column;gap:7px;font-size:11px;white-space:normal;text-align:center;line-height:1.25}
   .serit-oge .ic{width:24px;height:24px}
   .serit-ilk{padding-right:0;border-right:0}
   .serit-ilk .ok-s,.serit-ilk .ilk-hedef{display:none}
-  .alt .kap{grid-template-columns:1fr;gap:20px}
-  .alt .kunye-k{grid-column:auto}
+  .alt-ana{grid-template-columns:1fr 1fr;grid-template-areas:"hl he" "il il" "bu bu";gap:28px 18px;padding-top:28px;padding-bottom:26px}
+  .alt-sut{padding:0;border:0}
+  .as-hl{grid-area:hl}.as-he{grid-area:he}.as-il{grid-area:il}.as-bu{grid-area:bu}
+  .alt h4{font-size:13px;margin-bottom:14px}
+  .alt li{padding:5px 0}
+  .alt-ozl{display:flex;flex-wrap:wrap;justify-content:center;row-gap:22px;padding-top:24px;padding-bottom:24px}
+  .ao{flex:0 0 33.333%;padding:0 6px;border:0}
+  .ao-hal{width:52px;height:52px;margin-bottom:10px}
+  .ao-hal .ic{width:24px;height:24px}
+  .ao b{font-size:13px;margin-bottom:4px}
+  .ao p{font-size:12px}
+  .alt-son{flex-direction:column-reverse;gap:16px;text-align:center}
+  .alt-son-sag{margin:0}
+  .alt-not{justify-content:center;text-align:center;padding-bottom:124px}
   .panel-pill{display:none}
   .mobil-bar{display:flex;position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:60;background:#fff;color:var(--yazi);border:1px solid var(--cizgi2);border-radius:18px;min-height:68px;padding:9px 9px 9px 16px;align-items:center;gap:12px;box-shadow:0 16px 34px -14px rgba(1,35,38,.45);transition:transform .25s ease,opacity .25s ease}
   body.arama-gorunur .mobil-bar,body.form-gorunur .mobil-bar{transform:translateY(140%);opacity:0;pointer-events:none}
@@ -804,6 +879,13 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
     <symbol id="i-dunya" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.7"/><path d="M3.3 12h17.4M12 3.3c2.4 2.4 3.6 5.3 3.6 8.7s-1.2 6.3-3.6 8.7c-2.4-2.4-3.6-5.3-3.6-8.7s1.2-6.3 3.6-8.7z"/></symbol>
     <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 2.6a9.3 9.3 0 0 0-8 14.1L2.7 21.3l4.7-1.2A9.3 9.3 0 1 0 12 2.6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8.9 7.6c.2-.4.4-.4.7-.4h.5c.2 0 .4 0 .6.4l.8 1.9c.1.2.1.4 0 .6l-.5.7c-.1.2-.2.4-.1.6.5 1 1.4 1.8 2.4 2.3.3.1.5.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.8.9c.2.1.4.2.4.4.1.5-.2 1.4-.9 1.9-.6.4-1.5.6-2.7.1-1.8-.6-3.6-2.2-4.5-3.8-.8-1.4-.9-2.7-.4-3.7z" fill="currentColor" stroke="none"/></symbol>
     <symbol id="i-tg" viewBox="0 0 24 24"><path d="M20.6 4.3L3.5 10.9c-1.1.4-1.1 1.1-.2 1.4l4.4 1.4 1.7 5.2c.2.6.4.8.8.8s.6-.2.9-.4l2.1-2 4.4 3.2c.8.5 1.4.2 1.6-.7l2.9-13.6c.3-1.3-.5-1.8-1.5-1.5zM9.2 14.1l7.8-4.9c.4-.2.7-.1.4.2l-6.5 5.9-.3 2.7z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-ms" viewBox="0 0 24 24"><path d="M12 3C7 3 3 6.7 3 11.4c0 2.6 1.2 4.9 3.2 6.4V21l2.9-1.6c.9.3 1.9.4 2.9.4 5 0 9-3.7 9-8.4S17 3 12 3z"/><path d="M7.2 14.2l3.3-3.6 2.6 2.4 3.7-3.6"/></symbol>
+    <symbol id="i-ev" viewBox="0 0 24 24"><path d="M3.5 11.2L12 4l8.5 7.2"/><path d="M5.8 9.5V20h4.4v-5.6h3.6V20h4.4V9.5"/></symbol>
+    <symbol id="i-belge" viewBox="0 0 24 24"><path d="M14 3.5H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8.5z"/><path d="M14 3.5v5h5M8.8 12.5h6.4M8.8 16h6.4"/></symbol>
+    <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".7" fill="currentColor"/></symbol>
+    <symbol id="i-fb" viewBox="0 0 24 24"><path d="M12 2.5a9.5 9.5 0 0 0-1.5 18.9v-6.6H8.1V12h2.4V9.9c0-2.4 1.4-3.7 3.6-3.7 1 0 2.1.2 2.1.2v2.3h-1.2c-1.2 0-1.5.7-1.5 1.5V12h2.6l-.4 2.8h-2.2v6.6A9.5 9.5 0 0 0 12 2.5z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-yt" viewBox="0 0 24 24"><path d="M21.6 7.2a2.6 2.6 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4a2.6 2.6 0 0 0-1.8 1.8A27 27 0 0 0 2 12a27 27 0 0 0 .4 4.8 2.6 2.6 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.6 2.6 0 0 0 1.8-1.8A27 27 0 0 0 22 12a27 27 0 0 0-.4-4.8z" fill="currentColor" stroke="none"/><path d="M10 15.2V8.8l5.4 3.2z" fill="#011a1c" stroke="none"/></symbol>
+    <symbol id="i-tt" viewBox="0 0 24 24"><path d="M16.6 3h-3.2v12.2a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .9.1V9.1a6.2 6.2 0 1 0 5.2 6.1V9.1a7.6 7.6 0 0 0 4.2 1.3V7.2a4.3 4.3 0 0 1-4.2-4.2z" fill="currentColor" stroke="none"/></symbol>
     <symbol id="i-simsek" viewBox="0 0 24 24"><path d="M13.2 2.6L4.6 13.4h6.6l-1.2 8 8.6-11h-6.6z"/></symbol>
     <symbol id="i-sofor" viewBox="0 0 24 24"><circle cx="12" cy="10.2" r="3.3"/><path d="M7 7.6c.6-2.5 2.6-4.1 5-4.1s4.4 1.6 5 4.1zM4.5 20.5c0-4.1 3.3-6.6 7.5-6.6s7.5 2.5 7.5 6.6M10.3 14.1l1.7 2.6 1.7-2.6"/></symbol>
     <symbol id="i-iptal" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.7"/><path d="M9 9l6 6M15 9l-6 6"/></symbol>
@@ -1004,40 +1086,94 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
   </div>
 </section>
 
-<section class="serit" id="hizmetler">
-  <div class="kap">
-    <div class="serit-oge serit-ilk"><svg class="ic"><use href="#i-konum"/></svg><span class="ilk-yazi"><span data-t="airport_short">Antalya Havalimanı</span></span><svg class="ic ok-s"><use href="#i-ok-sag"/></svg><span class="ilk-hedef" data-t="your_dest">Varış Noktanız</span></div>
-    <div class="serit-oge"><svg class="ic"><use href="#i-otel"/></svg><span data-t="hotel_t">Otel Transferi</span></div>
-    <div class="serit-oge"><svg class="ic"><use href="#i-canta"/></svg><span data-t="shop_t">Alışveriş Transferi</span></div>
-    <div class="serit-oge"><svg class="ic"><use href="#i-sehir"/></svg><span data-t="city_t">Şehir Transferi</span></div>
-    <div class="serit-oge"><svg class="ic"><use href="#i-kisi"/></svg><span data-t="private_t">Özel Transfer</span></div>
-    <div class="kesfet"><span data-t="explore">Antalya'yı Keşfedin!</span><svg viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 9C50 3 120 2 198 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></div>
+<footer class="alt">
+  <div class="alt-bant" id="hizmetler">
+    <div class="kap">
+      <div class="ab-marka">
+        <a href="#ana" class="logo" aria-label="ATALIA Transfer">
+          <svg viewBox="0 0 70 58" aria-hidden="true">
+            <path d="M5 55L27.5 6.5h6.6L13.2 55z" fill="#f7852e"/>
+            <path d="M29.3 12.5l3.6-5.3L45 55h-6.6z" fill="#f7852e"/>
+            <path d="M1 39.5C17 31 37 25.5 57 20.8" fill="none" stroke="#f7852e" stroke-width="3.2" stroke-linecap="round"/>
+            <g transform="translate(55.5 11.5) rotate(62) scale(.62)" fill="#f7852e"><use href="#i-ucak" width="24" height="24" x="-12" y="-12" style="fill:#f7852e;stroke:none"/></g>
+          </svg>
+          <span><b>ATALIA</b><small>TRANSFER</small></span>
+        </a>
+        <p class="ab-slogan"><span data-t="hero_1">Yolculuğunuz.</span> <span data-t="hero_2a">Bizim </span><em data-t="hero_2b">Önceliğimiz.</em></p>
+      </div>
+      <div class="ab-serit">
+        <div class="serit-oge serit-ilk"><svg class="ic"><use href="#i-konum"/></svg><span class="ilk-yazi"><span data-t="airport_short">Antalya Havalimanı</span></span><svg class="ic ok-s"><use href="#i-ok-sag"/></svg><span class="ilk-hedef" data-t="your_dest">Varış Noktanız</span></div>
+        <div class="serit-oge"><svg class="ic"><use href="#i-otel"/></svg><span data-t="hotel_t">Otel Transferi</span></div>
+        <div class="serit-oge"><svg class="ic"><use href="#i-canta"/></svg><span data-t="shop_t">Alışveriş Transferi</span></div>
+        <div class="serit-oge"><svg class="ic"><use href="#i-sehir"/></svg><span data-t="city_t">Şehir Transferi</span></div>
+        <div class="serit-oge"><svg class="ic"><use href="#i-kisi"/></svg><span data-t="private_t">Özel Transfer</span></div>
+        <div class="kesfet"><span data-t="explore">Antalya'yı Keşfedin!</span><svg viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 9C50 3 120 2 198 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></div>
+      </div>
+    </div>
   </div>
-</section>
-
-<footer class="alt" id="iletisim">
-  <div class="kap">
-    <div>
-      <h4 data-t="nav_contact">İletişim</h4>
+  <div class="kap alt-ana" id="iletisim">
+    <div class="alt-sut as-hl">
+      <h4 data-t="quick_links">Hızlı Linkler</h4>
       <ul>
-        <li><svg class="ic"><use href="#i-telefon"/></svg><a href="#" id="altTel"></a></li>
-        <li><svg class="ic"><use href="#i-wa"/></svg><a href="#" data-wa>WhatsApp</a></li>
+        <li><svg class="ic"><use href="#i-ev"/></svg><a href="#ana" data-t="nav_home">Ana Sayfa</a></li>
+        <li><svg class="ic"><use href="#i-kisiler"/></svg><a href="#neden" data-t="about">Hakkımızda</a></li>
+        <li><svg class="ic"><use href="#i-belge"/></svg><button type="button" data-sartlar data-t="terms">Şartlar ve Koşullar</button></li>
+        <li><svg class="ic"><use href="#i-telefon"/></svg><a href="#iletisim" data-t="nav_contact">İletişim</a></li>
+      </ul>
+    </div>
+    <div class="alt-sut as-il">
+      <h4 data-t="nav_contact">İletişim</h4>
+      <div class="alt-yuv">
+        <a href="#" class="yv-wa" data-wa aria-label="WhatsApp"><svg class="ic"><use href="#i-wa"/></svg></a>
+        <a href="#" class="yv-tg" data-tg aria-label="Telegram"><svg class="ic"><use href="#i-tg"/></svg></a>
+        <a href="#" class="yv-ms" id="altMs" aria-label="Messenger"><svg class="ic"><use href="#i-ms"/></svg></a>
+        <a href="#" class="yv-tel" id="altTel"><svg class="ic"><use href="#i-telefon"/></svg></a>
+      </div>
+      <ul>
         <li><svg class="ic"><use href="#i-posta"/></svg><a href="#" id="altPosta"></a></li>
         <li><svg class="ic"><use href="#i-konum"/></svg><span id="altAdres"></span></li>
       </ul>
     </div>
-    <div>
+    <div class="alt-sut as-he">
       <h4 data-t="account">Hesabım</h4>
       <ul>
-        <li><svg class="ic"><use href="#i-kisi"/></svg><button type="button" data-hesap style="color:inherit" data-t="signin_reg">Giriş / Üye Ol</button></li>
-        <li><svg class="ic"><use href="#i-liste"/></svg><button type="button" data-rezlerim style="color:inherit" data-t="my_bookings">Rezervasyonlarım</button></li>
+        <li><svg class="ic"><use href="#i-kisi"/></svg><button type="button" data-hesap data-t="signin_reg">Giriş / Üye Ol</button></li>
+        <li><svg class="ic"><use href="#i-liste"/></svg><button type="button" data-rezlerim data-t="my_bookings">Rezervasyonlarım</button></li>
+        <li><svg class="ic"><use href="#i-belge"/></svg><button type="button" data-tursab data-t="tursab_doc">TÜRSAB Belgesi</button></li>
       </ul>
-      <a class="panel-link" href="#panel"><svg class="ic"><use href="#i-pano"/></svg>Yönetim Paneli (demo)</a>
     </div>
-    <div class="kunye-k">
-      <h4>ATALIA Transfer</h4>
-      <p class="kunye">Örnek çalışmadır; fiyatlar, yorumlar ve iletişim bilgileri örnek olarak girilmiştir. Gerçek sitede adres önerisi ve km hesabı Google Haritalar'dan gelir, bu örnekte açık harita servisi kullanılmıştır.</p>
+    <div class="alt-sut as-bu">
+      <h4 data-t="newsletter">Bülten</h4>
+      <p data-t="news_sub">Kampanyalar ve yeniliklerden haberdar olun.</p>
+      <form class="bulten" id="bulten" novalidate>
+        <svg class="ic"><use href="#i-posta"/></svg>
+        <input type="email" id="bultenEp" autocomplete="email" data-tp="news_ph" data-t-aria="news_ph" placeholder="E-posta adresiniz" aria-label="E-posta adresiniz">
+        <button type="submit" data-t-aria="news_btn" aria-label="Abone ol"><svg class="ic"><use href="#i-ok-sag"/></svg></button>
+      </form>
     </div>
+  </div>
+  <div class="kap alt-ozl">
+    <div class="ao"><div class="ao-hal"><svg class="ic"><use href="#i-kulaklik"/></svg></div><b data-t="w1">7/24 Destek</b><p data-t="w1s">Her zaman yanınızdayız.</p></div>
+    <div class="ao"><div class="ao-hal"><svg class="ic"><use href="#i-kalkan-tik"/></svg></div><b data-t="pay">Güvenli Ödeme</b><p data-t="pay_s">Ödemeniz güvende ve şifreli.</p></div>
+    <div class="ao"><div class="ao-hal"><svg class="ic"><use href="#i-simsek"/></svg></div><b data-t="w2">Anında Onay</b><p data-t="w2s">Rezervasyonunuz anında onaylanır.</p></div>
+    <div class="ao"><div class="ao-hal"><svg class="ic"><use href="#i-sofor"/></svg></div><b data-t="w3">Profesyonel Şoförler</b><p data-t="w3f">Deneyimli ve güler yüzlü şoförler.</p></div>
+    <div class="ao"><div class="ao-hal"><svg class="ic"><use href="#i-arac"/></svg></div><b data-t="w4">Kapıdan Kapıya Transfer</b><p data-t="w4s">Hedefinize direkt ulaşın.</p></div>
+  </div>
+  <div class="kap alt-son">
+    <p id="altTelif"></p>
+    <div class="alt-son-sag">
+      <button type="button" class="tursab" data-tursab><b>TÜRSAB</b><small id="tursabNo"></small></button>
+      <div class="sosyal">
+        <a href="#" data-sos="instagram" aria-label="Instagram"><svg class="ic"><use href="#i-ig"/></svg></a>
+        <a href="#" data-sos="facebook" aria-label="Facebook"><svg class="ic"><use href="#i-fb"/></svg></a>
+        <a href="#" data-sos="youtube" aria-label="YouTube"><svg class="ic"><use href="#i-yt"/></svg></a>
+        <a href="#" data-sos="tiktok" aria-label="TikTok"><svg class="ic"><use href="#i-tt"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="kap alt-not">
+    <a class="panel-link" href="#panel"><svg class="ic"><use href="#i-pano"/></svg>Yönetim Paneli (demo)</a>
+    <p class="kunye">Örnek çalışmadır; fiyatlar, yorumlar ve iletişim bilgileri örnek olarak girilmiştir. Gerçek sitede adres önerisi ve km hesabı Google Haritalar'dan gelir, bu örnekte açık harita servisi kullanılmıştır.</p>
   </div>
 </footer>
 
@@ -1121,6 +1257,7 @@ account:'Hesabım',signin_reg:'Giriş / Üye Ol',signin_t:'Giriş Yap',register_
 st_yeni:'Onay bekliyor',st_onay:'Onaylandı',st_tamam:'Tamamlandı',st_iptal:'İptal',
 wa_hello:'Merhaba, rezervasyonumu onaylamak istiyorum.',wa_demo:'Örnek sitede işletmenin WhatsApp numarası henüz girilmedi.',search_first:'Önce güzergâhınızı arayın, sonra aracınızı seçin.',
 why_title:'Neden Atalia Transfer',w1:'7/24 Destek',w1s:'Her zaman yanınızdayız.',w2:'Anında Onay',w2s:'Rezervasyo\u00adnunuz anında onaylanır.',w3:'Profesyonel Şoförler',w3s:'Güvenli ve deneyimli şoförler.',w4:'Kapıdan Kapıya Transfer',w4s:'Hedefinize direkt ulaşın.',prev:'Önceki',next:'Sonraki',
+quick_links:'Hızlı Linkler',about:'Hakkımızda',terms:'Şartlar ve Koşullar',tursab_doc:'TÜRSAB Belgesi',tursab_no:'Belge No',tursab_empty:'Örnek sitede belge numarası henüz girilmedi.',newsletter:'Bülten',news_sub:'Kampanyalar ve yeniliklerden haberdar olun.',news_ph:'E-posta adresiniz',news_btn:'Abone ol',news_ok:'Teşekkürler, bültene kaydoldunuz.',news_dup:'Bu e-posta adresi zaten kayıtlı.',pay:'Güvenli Ödeme',pay_s:'Ödemeniz güvende ve şifreli.',w3f:'Deneyimli ve güler yüzlü şoförler.',rights:'© {y} Atalia Transfer, tüm haklar saklıdır.',phone_l:'Telefon',link_demo:'Örnek sitede bu bağlantı henüz girilmedi.',
 fav_title:'Favori Transferler',fav_sub:'Antalya\'nın en popüler destinasyonları',rev_title:'Misafirlerin Yorumları',fav_pick:'Güzergâh seçildi, şimdi tarih ve saati seçin.',fav_where:'Otelinizi ya da gideceğiniz yeri yazın.',choose_title:'Aracınızı Seçin',fit_sub:'{n} yolcu için uygun araçlar',no_vehicle:'Bu yolcu sayısı için sitede uygun araç yok. Size uygun aracı ayarlamamız için WhatsApp\'tan yazın.',
 flight:'Uçuş Numarası',ret_info:'Dönüş Transferi',ret_flight:'Dönüş Uçuş No',ret_flight_time:'Uçuş Saati',pickup_time:'Pickup Saati',err_ret_flight:'Lütfen dönüş uçuş saatini girin.',err_pickup:'Lütfen pickup saatini girin.',flight_ph:'Örn. TK 2412',seat:'Çocuk Koltuğu',seat_none:'Gerek yok',seat_1:'1 koltuk',seat_n:'{n} koltuk'},
 en:{nav_home:'Home',nav_fleet:'Our Fleet',nav_services:'Services',nav_why:'Why Atalia?',nav_contact:'Contact',support:'Customer Support',signin:'Sign in',
@@ -1143,6 +1280,7 @@ account:'My Account',signin_reg:'Sign in / Sign up',signin_t:'Sign in',register_
 st_yeni:'Awaiting confirmation',st_onay:'Confirmed',st_tamam:'Completed',st_iptal:'Cancelled',
 wa_hello:'Hello, I would like to confirm my booking.',wa_demo:'The business WhatsApp number has not been entered in this sample site yet.',search_first:'Search your route first, then choose your vehicle.',
 why_title:'Why Atalia Transfer',w1:'24/7 Support',w1s:'We are always here for you.',w2:'Instant Confirmation',w2s:'Your booking is confirmed instantly.',w3:'Professional Drivers',w3s:'Safe and experienced drivers.',w4:'Door-to-Door Transfer',w4s:'Straight to your destination.',prev:'Previous',next:'Next',
+quick_links:'Quick Links',about:'About Us',terms:'Terms and Conditions',tursab_doc:'TÜRSAB Certificate',tursab_no:'Licence No',tursab_empty:'The licence number has not been entered in this sample site yet.',newsletter:'Newsletter',news_sub:'Be the first to hear about offers and news.',news_ph:'Your email address',news_btn:'Subscribe',news_ok:'Thank you, you are now subscribed.',news_dup:'This email address is already subscribed.',pay:'Secure Payment',pay_s:'Your payment is safe and encrypted.',w3f:'Experienced and friendly drivers.',rights:'© {y} Atalia Transfer. All rights reserved.',phone_l:'Phone',link_demo:'This link has not been entered in this sample site yet.',
 fav_title:'Favourite Transfers',fav_sub:'The most popular destinations in Antalya',rev_title:'Guest Reviews',fav_pick:'Route selected, now choose the date and time.',fav_where:'Type your hotel or destination.',choose_title:'Choose Your Vehicle',fit_sub:'Vehicles suitable for {n} passengers',no_vehicle:'There is no vehicle on the site for this number of passengers. Message us on WhatsApp and we will arrange the right vehicle.',
 flight:'Flight Number',ret_info:'Return Transfer',ret_flight:'Return Flight No',ret_flight_time:'Flight Time',pickup_time:'Pickup Time',err_ret_flight:'Please enter your return flight time.',err_pickup:'Please enter the pickup time.',flight_ph:'e.g. TK 2412',seat:'Child Seat',seat_none:'Not needed',seat_1:'1 seat',seat_n:'{n} seats'},
 ru:{nav_home:'Главная',nav_fleet:'Автопарк',nav_services:'Услуги',nav_why:'Почему Atalia?',nav_contact:'Контакты',support:'Поддержка клиентов',signin:'Войти',
@@ -1165,6 +1303,7 @@ account:'Мой аккаунт',signin_reg:'Войти / Регистрация'
 st_yeni:'Ожидает подтверждения',st_onay:'Подтверждено',st_tamam:'Выполнено',st_iptal:'Отменено',
 wa_hello:'Здравствуйте, хочу подтвердить бронирование.',wa_demo:'В демо-версии номер WhatsApp компании ещё не указан.',search_first:'Сначала найдите маршрут, затем выберите автомобиль.',
 why_title:'Почему Atalia Transfer',w1:'Поддержка 24/7',w1s:'Мы всегда рядом.',w2:'Мгновенная бронь',w2s:'Бронь подтвер\u00adждается сразу.',w3:'Опытные водители',w3s:'Надёжные и опытные водители.',w4:'От двери до двери',w4s:'Прямо к месту назначения.',prev:'Назад',next:'Далее',
+quick_links:'Быстрые ссылки',about:'О нас',terms:'Условия и положения',tursab_doc:'Лицензия TÜRSAB',tursab_no:'Лицензия №',tursab_empty:'В демо-версии номер лицензии ещё не указан.',newsletter:'Рассылка',news_sub:'Узнавайте об акциях и новостях первыми.',news_ph:'Ваш e-mail',news_btn:'Подписаться',news_ok:'Спасибо, вы подписаны.',news_dup:'Этот e-mail уже подписан.',pay:'Безопасная оплата',pay_s:'Ваш платёж защищён и зашифрован.',w3f:'Опытные и приветливые водители.',rights:'© {y} Atalia Transfer. Все права защищены.',phone_l:'Телефон',link_demo:'В демо-версии эта ссылка ещё не указана.',
 fav_title:'Популярные трансферы',fav_sub:'Самые популярные направления Антальи',rev_title:'Отзывы гостей',fav_pick:'Маршрут выбран, теперь выберите дату и время.',fav_where:'Введите отель или место назначения.',choose_title:'Выберите автомобиль',fit_sub:'Автомобили для {n} пассажиров',no_vehicle:'Для такого числа пассажиров на сайте нет автомобиля. Напишите нам в WhatsApp, и мы подберём подходящий.',
 flight:'Номер рейса',ret_info:'Обратный трансфер',ret_flight:'Обратный рейс',ret_flight_time:'Время рейса',pickup_time:'Подача',err_ret_flight:'Укажите время обратного рейса.',err_pickup:'Укажите время подачи.',flight_ph:'напр. SU 2136',seat:'Детское кресло',seat_none:'Не нужно',seat_1:'1 кресло',seat_n:'{n} кресла'},
 de:{nav_home:'Startseite',nav_fleet:'Unsere Flotte',nav_services:'Leistungen',nav_why:'Warum Atalia?',nav_contact:'Kontakt',support:'Kundenservice',signin:'Anmelden',
@@ -1187,6 +1326,7 @@ account:'Mein Konto',signin_reg:'Anmelden / Registrieren',signin_t:'Anmelden',re
 st_yeni:'Wartet auf Bestätigung',st_onay:'Bestätigt',st_tamam:'Abgeschlossen',st_iptal:'Storniert',
 wa_hello:'Hallo, ich möchte meine Buchung bestätigen.',wa_demo:'Die WhatsApp-Nummer des Unternehmens ist in dieser Beispielseite noch nicht eingetragen.',search_first:'Suchen Sie zuerst Ihre Strecke und wählen Sie dann Ihr Fahrzeug.',
 why_title:'Warum Atalia Transfer',w1:'24/7 Support',w1s:'Wir sind immer für Sie da.',w2:'Sofort bestätigt',w2s:'Ihre Buchung wird sofort bestätigt.',w3:'Profi-Fahrer',w3s:'Sichere und erfahrene Fahrer.',w4:'Tür-zu-Tür-Transfer',w4s:'Direkt an Ihr Ziel.',prev:'Zurück',next:'Weiter',
+quick_links:'Schnellzugriff',about:'Über uns',terms:'AGB',tursab_doc:'TÜRSAB-Lizenz',tursab_no:'Lizenz-Nr.',tursab_empty:'Die Lizenznummer ist in dieser Beispielseite noch nicht eingetragen.',newsletter:'Newsletter',news_sub:'Erfahren Sie zuerst von Angeboten und Neuigkeiten.',news_ph:'Ihre E-Mail-Adresse',news_btn:'Abonnieren',news_ok:'Danke, Sie sind jetzt angemeldet.',news_dup:'Diese E-Mail-Adresse ist bereits angemeldet.',pay:'Sichere Zahlung',pay_s:'Ihre Zahlung ist sicher und verschlüsselt.',w3f:'Erfahrene und freundliche Fahrer.',rights:'© {y} Atalia Transfer. Alle Rechte vorbehalten.',phone_l:'Telefon',link_demo:'Dieser Link ist in dieser Beispielseite noch nicht eingetragen.',
 fav_title:'Beliebte Transfers',fav_sub:'Die beliebtesten Ziele in Antalya',rev_title:'Gästebewertungen',fav_pick:'Strecke gewählt, wählen Sie jetzt Datum und Uhrzeit.',fav_where:'Geben Sie Ihr Hotel oder Ziel ein.',choose_title:'Wählen Sie Ihr Fahrzeug',fit_sub:'Passende Fahrzeuge für {n} Fahrgäste',no_vehicle:'Für diese Personenzahl gibt es auf der Seite kein Fahrzeug. Schreiben Sie uns per WhatsApp, wir organisieren das passende Fahrzeug.',
 flight:'Flugnummer',ret_info:'Rücktransfer',ret_flight:'Rückflug-Nr.',ret_flight_time:'Flugzeit',pickup_time:'Abholzeit',err_ret_flight:'Bitte geben Sie die Zeit Ihres Rückflugs ein.',err_pickup:'Bitte geben Sie die Abholzeit ein.',flight_ph:'z. B. TK 2412',seat:'Kindersitz',seat_none:'Nicht nötig',seat_1:'1 Sitz',seat_n:'{n} Sitze'}
 };
@@ -1225,7 +1365,7 @@ function varsayilanIcerik() {
       {id:'y2', ad:'Mark T.', ulke:'GB', puan:5, aktif:true, metin:{tr:'Araç tertemizdi, çocuk koltuğu hazırdı. Kesinlikle tavsiye ederim.', en:'The car was spotless and the child seat was ready. Highly recommended.', ru:'Машина была идеально чистой, детское кресло уже стояло. Однозначно рекомендую.', de:'Das Auto war blitzsauber, der Kindersitz war bereit. Absolut empfehlenswert.'}},
       {id:'y3', ad:'Elif Y.', ulke:'TR', puan:4.5, aktif:true, metin:{tr:'Fiyat baştan belliydi, ekstra ücret yoktu.', en:'The price was clear from the start, no extra charges.', ru:'Цена была известна заранее, никаких доплат.', de:'Der Preis stand von Anfang an fest, keine Extrakosten.'}}
     ],
-    sozlesme:varsayilanSozlesme(), icerikS:2
+    sozlesme:varsayilanSozlesme(), bulten:[], icerikS:3
   };
 }
 // sözleşme metinleri: her satır bir madde; işletme panelde Ayarlar'dan yazar (bunlar örnek)
@@ -1270,7 +1410,7 @@ function varsayilan() {
   ];
   const S = {fiyat, araclar, uyeler, kodlar, rez:[], sira:1047, ...varsayilanIcerik(),
     uyelik:{acik:true, indirim:10},
-    ayar:{whatsapp:'', telegram:'', telefon:'+90 242 000 00 00', eposta:'info@ataliatransfer.com', adres:'Antalya, Türkiye', mapsAnahtar:'',
+    ayar:{whatsapp:'', telegram:'', telefon:'+90 242 000 00 00', eposta:'info@ataliatransfer.com', adres:'Side | Manavgat | Antalya | Turkey', mapsAnahtar:'', messenger:'', instagram:'', facebook:'', youtube:'', tiktok:'', tursab:'', tursabFoto:'',
       kur:{TRY:55.82, GBP:0.833, RUB:89.67}, kurTarih:'30.10.2026', diller:{tr:true,en:true,ru:true,de:true}},
     metin:{tr:{},en:{},ru:{},de:{}}};
   // örnek rezervasyonlar (sabit tohumla)
@@ -1338,13 +1478,16 @@ function icerikTamamla() {
   if (!Array.isArray(S.favori)) S.favori = v.favori;
   if (!Array.isArray(S.yorumlar)) S.yorumlar = v.yorumlar;
   if (!S.sozlesme) S.sozlesme = v.sozlesme;
+  if (!Array.isArray(S.bulten)) S.bulten = [];
   // 05.11 yeni tasarım: eski örnek favori kartları (değiştirilmediyse) yenileriyle değişir, ilk örnek yoruma fotoğraf gelir
-  if (S.icerikS !== 2) {
+  if (!(S.icerikS >= 2)) {
     const eskiOrnek = S.favori.length === 3 && S.favori.every((f, i) => f.id === 'f' + (i + 1) && /^fav-(lara|side|belek)\.webp$/.test(f.foto));
     if (eskiOrnek) S.favori = v.favori;
     const y1 = S.yorumlar.find(y => y.id === 'y1'); if (y1 && !y1.foto) y1.foto = 'yorum-anna.webp';
     S.icerikS = 2;
   }
+  // 05.11 alt bölüm: alıcının verdiği adres örnek adresin yerine geçer (değiştirilmediyse)
+  if (S.icerikS === 2) { if (S.ayar && S.ayar.adres === 'Antalya, Türkiye') S.ayar.adres = 'Side | Manavgat | Antalya | Turkey'; S.icerikS = 3; }
 }
 function kaydet() { bellek = S; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
 yukle();
@@ -1880,7 +2023,11 @@ $('#onayYazi').addEventListener('click', e => {
   const b = e.target.closest('[data-belge]');
   if (!b) return;
   e.preventDefault();
-  const k = b.dataset.belge, m = S.sozlesme[k] || {};
+  belgeAc(b.dataset.belge, true);
+});
+// onayli: rezervasyondaki onay kutusundan açılınca "Okudum, onaylıyorum" düğmesi çıkar; alt bölümdeki Şartlar ve Koşullar yalnız okutur
+function belgeAc(k, onayli) {
+  const m = S.sozlesme[k] || {};
   const metin = m[dil] || m.en || m.tr || '';
   const ornek = metin === varsayilanSozlesme()[k][m[dil] ? dil : m.en ? 'en' : 'tr'];
   const maddeler = metin.split('\n').map(x => x.trim()).filter(Boolean);
@@ -1888,7 +2035,22 @@ $('#onayYazi').addEventListener('click', e => {
     <h3>${esc(t(k + '_t'))}</h3>
     <ol class="belge-liste">${maddeler.map(x => `<li>${esc(x)}</li>`).join('')}</ol>
     ${ornek ? `<p class="demo-hesap" style="margin-bottom:12px">${esc(t('doc_demo'))}</p>` : ''}
-    <button type="button" class="ana-btn" data-onayla>${esc(t('consent_ok'))}</button>`, true);
+    ${onayli ? `<button type="button" class="ana-btn" data-onayla>${esc(t('consent_ok'))}</button>` : ''}`, true);
+}
+function tursabAc() {
+  const a = S.ayar;
+  modalAc(`<button class="modal-kapat" data-mkapat aria-label="${esc(t('close'))}"><svg class="ic"><use href="#i-kapat"/></svg></button>
+    <h3>${esc(t('tursab_doc'))}</h3>
+    ${a.tursab ? `<p style="margin-bottom:12px">${esc(t('tursab_no'))}: <b>${esc(a.tursab)}</b></p>` : ''}
+    ${a.tursabFoto ? `<img src="${esc(a.tursabFoto)}" alt="${esc(t('tursab_doc'))}" style="display:block;width:100%;border-radius:10px;border:1px solid var(--cizgi)">` : ''}
+    ${!a.tursab && !a.tursabFoto ? `<p class="demo-hesap">${esc(t('tursab_empty'))}</p>` : ''}`);
+}
+$('#bulten').addEventListener('submit', e => {
+  e.preventDefault();
+  const g = $('#bultenEp'), ep = g.value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(ep)) { tost(t('err_email')); g.focus(); return; }
+  if (S.bulten.some(x => x.eposta.toLowerCase() === ep.toLowerCase())) { tost(t('news_dup')); return; }
+  S.bulten.unshift({eposta:ep, dil, tarih:isoGun(new Date())}); kaydet(); g.value = ''; tost(t('news_ok'));
 });
 $('#onay').addEventListener('change', () => $('#onaySatir').classList.remove('hata'));
 $('#ozet').addEventListener('click', e => { if (e.target.id === 'kodKaldir') { A.kod = null; $('#kod').value = ''; tost(t('code_removed')); aracCiz(); ozetCiz(); } });
@@ -2066,6 +2228,9 @@ function girisYap(u) {
 document.addEventListener('click', e => {
   if (e.target.closest('[data-hesap]')) { e.preventDefault(); hesapAc('giris'); }
   if (e.target.closest('[data-rezlerim]')) { e.preventDefault(); hesapAc('giris'); }
+  if (e.target.closest('[data-sartlar]')) belgeAc('mss', false);
+  if (e.target.closest('[data-tursab]')) tursabAc();
+  if (e.target.closest('#altMs[href="#"],[data-sos][href="#"]')) { e.preventDefault(); tost(t('link_demo')); }
   const dd = e.target.closest('[data-dil]'); if (dd) { dilSec(dd.dataset.dil); $('#cekmece').classList.remove('acik'); }
   if (e.target.closest('a[href="#filo"]') && $('#filo').hidden) { filoAcik = true; aracCiz(); }
   const wa = e.target.closest('[data-wa]');
@@ -2082,11 +2247,18 @@ $('#burger').addEventListener('click', () => $('#cekmece').classList.add('acik')
 $('#cekKapat').addEventListener('click', () => $('#cekmece').classList.remove('acik'));
 $('#cekmece').addEventListener('click', e => { if (e.target.id === 'cekmece' || e.target.closest('nav a') || e.target.closest('a[href="#panel"]')) $('#cekmece').classList.remove('acik'); });
 
+// dış bağlantı: adres boşsa "#" kalır (tıklayınca örnek sitede girilmedi notu çıkar)
+function disBag(e, url) { e.href = url || '#'; if (url) { e.target = '_blank'; e.rel = 'noopener'; } else { e.removeAttribute('target'); e.removeAttribute('rel'); } }
 function iletisimCiz() {
   const a = S.ayar, no = (a.whatsapp || '').replace(/\D/g, '');
   $$('[data-wa]').forEach(e => { e.href = no ? 'https://wa.me/' + no : '#'; if (no) { e.target = '_blank'; e.rel = 'noopener'; } else e.removeAttribute('target'); });
   $$('[data-tg]').forEach(e => { e.href = a.telegram ? 'https://t.me/' + a.telegram.replace(/^@/, '') : '#'; if (a.telegram) { e.target = '_blank'; e.rel = 'noopener'; } });
-  $('#altTel').textContent = a.telefon; $('#altTel').href = 'tel:' + a.telefon.replace(/[^\d+]/g, '');
+  $('#altTel').hidden = !a.telefon; $('#altTel').href = 'tel:' + a.telefon.replace(/[^\d+]/g, ''); $('#altTel').title = a.telefon; $('#altTel').setAttribute('aria-label', t('phone_l') + ' ' + a.telefon);
+  const ms = (a.messenger || '').trim();
+  disBag($('#altMs'), ms ? (/^https?:\/\//i.test(ms) ? ms : 'https://m.me/' + ms.replace(/^@/, '')) : '');
+  $$('[data-sos]').forEach(e => { const u = (a[e.dataset.sos] || '').trim(); disBag(e, u ? (/^https?:\/\//i.test(u) ? u : 'https://' + u.replace(/^\/+/, '')) : ''); });
+  $('#tursabNo').textContent = a.tursab ? t('tursab_no') + ' ' + a.tursab : '';
+  $('#altTelif').textContent = t('rights', {y:new Date().getFullYear()});
   $('#hzTel').hidden = !a.telefon; $('#hzTelYazi').textContent = a.telefon; $('#hzTel').href = 'tel:' + a.telefon.replace(/[^\d+]/g, '');
   $('#altPosta').textContent = a.eposta; $('#altPosta').href = 'mailto:' + a.eposta;
   $('#altAdres').textContent = a.adres;
@@ -2356,9 +2528,13 @@ function pUye() {
       const rz = S.rez.filter(r => r.uyeId === x.id && r.durum !== 'iptal');
       return `<tr><td style="min-width:180px"><b>${esc(x.ad)}</b><small>${esc(x.eposta)}</small></td><td class="nw">${esc(x.tel)}</td><td>${esc((x.dil || '').toUpperCase())}</td><td class="nw">${trTarih(x.kayit)}</td><td class="sag">${rz.length}</td><td class="sag nw">${eurYaz(rz.reduce((s, r) => s + r.eur, 0))}</td><td><input class="p-girdi" style="width:74px" type="number" min="0" max="80" placeholder="${u.indirim}" data-uo="${i}" value="${esc(x.ozel)}"></td><td><label class="anahtar"><input type="checkbox" data-ua="${i}" ${x.aktif ? 'checked' : ''}><i></i>${x.aktif ? 'Aktif' : 'Kapalı'}</label></td></tr>`;
     }).join('')}</tbody></table></div>
+  </div>
+  <div class="p-kart"><h2>Bülten aboneleri (${S.bulten.length})</h2><p class="acik-y">Sitenin en altındaki bülten kutusuna e-posta adresini yazanlar.</p>
+    ${S.bulten.length ? `<div class="tablo-k"><table class="tablo"><thead><tr><th>E-posta</th><th>Dil</th><th>Kayıt</th><th></th></tr></thead><tbody id="bGovde">${S.bulten.map((x, i) => `<tr><td>${esc(x.eposta)}</td><td>${esc((x.dil || '').toUpperCase())}</td><td class="nw">${trTarih(x.tarih)}</td><td class="sag"><button type="button" class="p-btn ince" data-bsil="${i}"><svg class="ic"><use href="#i-cop"/></svg>Sil</button></td></tr>`).join('')}</tbody></table></div>` : '<p class="acik-y" style="margin:0">Henüz abone yok.</p>'}
   </div>`;
 }
 function pUyeBagla() {
+  const bg = $('#bGovde'); if (bg) bg.onclick = e => { const b = e.target.closest('[data-bsil]'); if (!b) return; S.bulten.splice(+b.dataset.bsil, 1); kaydet(); panelCiz(); tost('Abone silindi'); };
   $('#uAc').onchange = e => { S.uyelik.acik = e.target.checked; kaydet(); aracCiz(); ozetCiz(); tost(S.uyelik.acik ? 'Üyelik açıldı' : 'Üyelik kapatıldı'); };
   $('#uInd').onchange = e => { S.uyelik.indirim = Math.min(80, Math.max(0, Number(e.target.value) || 0)); kaydet(); panelCiz(); aracCiz(); ozetCiz(); tost('Üye indirimi kaydedildi'); };
   $('#uGovde').addEventListener('change', e => {
@@ -2478,6 +2654,17 @@ function pAyar() {
       <div class="p-alan" style="grid-column:span 2"><label for="aA">Adres</label><input class="p-girdi" id="aA" data-ay="adres" value="${esc(a.adres)}"></div>
     </div>
   </div>
+  <div class="p-kart"><h2>Sosyal medya ve TÜRSAB</h2><p class="acik-y">Sitenin en altındaki düğmeler. Boş bıraktığınız bağlantının düğmesi çalışmaz; TÜRSAB belge numarası ve belge görseli "TÜRSAB Belgesi" bağlantısında açılır.</p>
+    <div class="izgara-3">
+      <div class="p-alan"><label for="aM">Messenger</label><input class="p-girdi" id="aM" data-ay="messenger" value="${esc(a.messenger || '')}" placeholder="Sayfa kullanıcı adı ya da m.me bağlantısı"></div>
+      <div class="p-alan"><label for="aI">Instagram</label><input class="p-girdi" id="aI" data-ay="instagram" value="${esc(a.instagram || '')}" placeholder="instagram.com/kullaniciadi"></div>
+      <div class="p-alan"><label for="aF">Facebook</label><input class="p-girdi" id="aF" data-ay="facebook" value="${esc(a.facebook || '')}" placeholder="facebook.com/sayfaadi"></div>
+      <div class="p-alan"><label for="aY">YouTube</label><input class="p-girdi" id="aY" data-ay="youtube" value="${esc(a.youtube || '')}" placeholder="youtube.com/@kanaladi"></div>
+      <div class="p-alan"><label for="aK">TikTok</label><input class="p-girdi" id="aK" data-ay="tiktok" value="${esc(a.tiktok || '')}" placeholder="tiktok.com/@kullaniciadi"></div>
+      <div class="p-alan"><label for="aB">TÜRSAB belge no</label><input class="p-girdi" id="aB" data-ay="tursab" value="${esc(a.tursab || '')}"></div>
+    </div>
+    <div class="yorum-p"><span class="yorum-foto" style="border-radius:8px">${a.tursabFoto ? `<img src="${esc(a.tursabFoto)}" alt="">` : 'T'}</span><label class="foto-sec">Belge görseli seç<input type="file" accept="image/*" id="aBF"></label>${a.tursabFoto ? '<button type="button" class="p-btn ince" id="aBFsil">Görseli kaldır</button>' : '<small>İsteğe bağlı: belgenin fotoğrafı</small>'}</div>
+  </div>
   <div class="p-kart"><h2>Döviz kurları</h2><p class="acik-y">Gerçek sitede Merkez Bankası kurları her sabah otomatik çekilir; isterseniz elle de değiştirebilirsiniz. Şu anki değerler TCMB ${esc(a.kurTarih)} satış kurundan.</p>
     <div class="izgara-3">
       <div class="p-alan"><label for="kTRY">1 € = ₺</label><input class="p-girdi" id="kTRY" type="number" step="0.01" data-kur="TRY" value="${a.kur.TRY}"></div>
@@ -2502,12 +2689,14 @@ function pAyarBagla() {
   const ana = $('#pAna');
   ana.onchange = e => {
     const g = e.target;
+    if (g.id === 'aBF') { if (g.files[0]) resimKucult(g.files[0], url => { S.ayar.tursabFoto = url; kaydet(); panelCiz(); tost('Belge görseli kaydedildi'); }); return; }
     if (g.dataset.ay) { S.ayar[g.dataset.ay] = g.value.trim(); kaydet(); iletisimCiz(); tost('Kaydedildi'); }
     else if (g.dataset.kur) { const v = Number(g.value); if (!(v > 0)) { g.value = S.ayar.kur[g.dataset.kur]; tost('Geçerli bir kur girin'); return; } S.ayar.kur[g.dataset.kur] = v; S.ayar.kurTarih = new Date().toLocaleDateString('tr-TR') + ' (elle)'; kaydet(); aracCiz(); ozetCiz(); tost('Kur kaydedildi'); }
     else if (g.dataset.dl) { const d = g.dataset.dl; if (!g.checked && aktifDiller().length < 2) { g.checked = true; tost('En az bir dil açık kalmalı'); return; } S.ayar.diller[d] = g.checked; kaydet(); dilUygula(); tost('Kaydedildi'); }
     else if (g.dataset.soz) { const [k, d] = g.dataset.soz.split('|'); S.sozlesme[k] = S.sozlesme[k] || {}; S.sozlesme[k][d] = g.value.trim(); kaydet(); tost('Kaydedildi'); }
     else if (g.dataset.mt) { const [d, k] = g.dataset.mt.split('|'); S.metin[d] = S.metin[d] || {}; if (g.value.trim()) S.metin[d][k] = g.value.trim(); else delete S.metin[d][k]; kaydet(); dilUygula(); tost('Metin kaydedildi'); }
   };
+  const bfs = $('#aBFsil'); if (bfs) bfs.onclick = () => { S.ayar.tursabFoto = ''; kaydet(); panelCiz(); tost('Belge görseli kaldırıldı'); };
   $('#sifirla').onclick = e => { const b = e.currentTarget; if (!b.dataset.emin) { b.dataset.emin = 1; b.lastChild.textContent = 'Emin misiniz? Tekrar basın'; return; } try { localStorage.removeItem(KEY); localStorage.removeItem(OTURUM); } catch (x) {} bellek = null; S = varsayilan(); kaydet(); A.kod = null; dilUygula(); panelCiz(); tost('Örnek veriler geri yüklendi'); };
 }
 
