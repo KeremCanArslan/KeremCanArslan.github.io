@@ -743,6 +743,10 @@ select.p-girdi{cursor:pointer}
 .tablo td.nw{white-space:nowrap}
 .tablo input.p-girdi,.tablo select.p-girdi{padding:7px 9px;font-size:13.5px}
 .tablo .dar{width:96px}
+.tablo th small{display:block;margin-top:2px;font-size:11px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--yazi3)}
+.tk-satir{display:flex;align-items:center;flex-wrap:wrap;gap:8px 10px;margin-bottom:12px;font-size:13.5px;color:var(--yazi2)}
+.tk-satir label{font-weight:700;color:var(--koyu2)}
+.tk-satir .p-girdi{width:76px}
 .durum-sec{border:0;font-weight:700;font-size:12px;border-radius:999px;padding:5px 10px;cursor:pointer;outline:0}
 .uye-rozet{display:inline-block;background:var(--tur-acik);color:#b45512;font-size:10.5px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:1px}
 .p-btn{display:inline-flex;align-items:center;gap:7px;border-radius:9px;padding:9px 14px;font-weight:700;font-size:13.5px;background:var(--koyu);color:#fff;white-space:nowrap;transition:background .2s}
@@ -1362,14 +1366,16 @@ const isoGun = d => { const x = new Date(d); return x.getFullYear() + '-' + Stri
 
 function varsayilan() {
   const b = bugun0();
-  const fiyat = {araliklar:[
-      {min:0,max:25,taban:30,ek:5},{min:25,max:50,taban:40,ek:5},{min:50,max:80,taban:55,ek:6},
-      {min:80,max:130,taban:75,ek:7},{min:130,max:200,taban:110,ek:8}],
-    tabanKisi:3, gdIndirim:5, cocukKisi:true, bebekUcretsiz:true};
   const araclar = [
-    {id:'minivan', ad:'Minivan', model:'Mercedes Vito / Volkswagen Caravelle', min:1, max:5, bavul:5, fark:0, aktif:true, foto:'minivan.webp'},
-    {id:'minibus', ad:'Minibus', model:'Mercedes Sprinter / Similar', min:6, max:12, bavul:12, fark:15, aktif:true, foto:'minibus.webp'}
+    {id:'minivan', ad:'Minivan', model:'Mercedes Vito / Volkswagen Caravelle', min:1, max:5, bavul:5, aktif:true, foto:'minivan.webp'},
+    {id:'minibus', ad:'Minibus', model:'Mercedes Sprinter / Similar', min:6, max:12, bavul:12, aktif:true, foto:'minibus.webp'}
   ];
+  // örnek km aralıkları (euro): taban ilk 3 kişi + kişi başı ek; her aracın tablosu bundan çıkar, minibüs 15 € fazlası
+  const ornekAralik = [
+    {min:0,max:25,taban:30,ek:5},{min:25,max:50,taban:40,ek:5},{min:50,max:80,taban:55,ek:6},
+    {min:80,max:130,taban:75,ek:7},{min:130,max:200,taban:110,ek:8}];
+  const fiyat = {tablolar:Object.fromEntries(araclar.map(a => [a.id, aracTablosu(ornekAralik, 3, a.id === 'minibus' ? 15 : 0, a)])),
+    gdIndirim:5, cocukKisi:true, bebekUcretsiz:true};
   const uyeler = [
     {id:'u1', ad:'Ayşe Yılmaz', eposta:'ayse@example.com', tel:'+90 532 000 00 00', sifre:'1234', dil:'tr', kayit:isoGun(gunEkle(b,-62)), aktif:true, ozel:''},
     {id:'u2', ad:'James Wilson', eposta:'james@example.com', tel:'+44 7700 900000', sifre:'1234', dil:'en', kayit:isoGun(gunEkle(b,-41)), aktif:true, ozel:''},
@@ -1430,19 +1436,48 @@ function varsayilan() {
   }
   return S;
 }
+// her aracın kendi km tablosu: taban fiyat ilk "tabanKisi" kişiyi kapsar, "Ek 1 kişi", "Ek 2 kişi"... o kadar fazla kişide
+// taban fiyata eklenen tutardır; ek sütun sayısı aracın kapasitesinden gelir (en çok 3, büyük araçta taban daha çok kişiyi kapsar).
+// Ortak km aralıklarından (kişi başı ek + araç farkı) tablo kurar: örnek veri ve eski kayıtlı veri bununla çevrilir.
+function aracTablosu(araliklar, tabanKisi, fark, arac) {
+  const tk = Math.max(tabanKisi, (Number(arac.max) || 1) - 3);
+  return {tabanKisi:tk, araliklar:araliklar.map(a => ({min:a.min, max:a.max, taban:a.taban + (tk - tabanKisi) * a.ek + fark,
+    ek:Array.from({length:Math.max(0, arac.max - tk)}, (_, n) => (n + 1) * a.ek)}))};
+}
+// her aracın tablosu olsun, ek kişi sütunları kapasiteyle uyuşsun (araç eklenince, kapasite ya da taban kişi değişince)
+function tablolariDuzelt() {
+  const T = S.fiyat.tablolar;
+  S.araclar.forEach(a => {
+    if (!T[a.id]) {
+      const k = Object.values(T)[0];
+      T[a.id] = {tabanKisi:Math.min(k ? k.tabanKisi : 3, a.max), araliklar:k ? k.araliklar.map(r => ({min:r.min, max:r.max, taban:r.taban, ek:r.ek.slice()})) : [{min:0, max:50, taban:40, ek:[]}]};
+    }
+    const tb = T[a.id];
+    tb.tabanKisi = Math.max(1, Math.min(Number(tb.tabanKisi) || 1, Number(a.max) || 1));
+    const n = Math.max(0, (Number(a.max) || 0) - tb.tabanKisi);
+    tb.araliklar.forEach(r => {
+      r.ek = (Array.isArray(r.ek) ? r.ek : []).slice(0, n).map(Number);
+      // yeni sütun: son artış kadar fazlası (ilk sütun yoksa 0, panelden girilir)
+      while (r.ek.length < n) { const e = r.ek, j = e.length; e.push(j === 0 ? 0 : e[j - 1] + (j > 1 ? e[j - 1] - e[j - 2] : e[0])); }
+    });
+  });
+  Object.keys(T).forEach(id => { if (!S.araclar.some(a => a.id === id)) delete T[id]; });
+}
 function fiyatEurHam(S, km, kisi, aracId, gd) {
-  const ar = S.fiyat.araliklar.slice().sort((a, b) => a.min - b.min);
+  const tb = S.fiyat.tablolar[aracId];
+  if (!tb) return null;
+  const ar = tb.araliklar.slice().sort((a, b) => a.min - b.min);
   const a = ar.find((x, i) => km >= x.min && (km < x.max || (i === ar.length - 1 && km <= x.max)));
   if (!a) return null;
-  const arac = S.araclar.find(x => x.id === aracId);
-  let p = a.taban + Math.max(0, kisi - S.fiyat.tabanKisi) * a.ek + (arac ? Number(arac.fark) || 0 : 0);
+  const n = Math.min(Math.max(0, kisi - tb.tabanKisi), a.ek.length);
+  let p = a.taban + (n ? Number(a.ek[n - 1]) || 0 : 0);
   if (gd) p = p * 2 * (1 - (Number(S.fiyat.gdIndirim) || 0) / 100);
   return Math.round(p * 100) / 100;
 }
 let S;
 let bellek = null;
 function yukle() {
-  try { const s = localStorage.getItem(KEY); if (s) { S = JSON.parse(s); icerikTamamla(); return; } } catch (e) {}
+  try { const s = localStorage.getItem(KEY); if (s) { S = JSON.parse(s); icerikTamamla(); fiyatTamamla(); return; } } catch (e) {}
   S = bellek || varsayilan();
 }
 // demoyu daha önce açanların tarayıcısındaki veride yeni ana sayfa bölümleri yok: örnekleriyle tamamlanır
@@ -1461,6 +1496,17 @@ function icerikTamamla() {
   }
   // 05.11 alt bölüm: alıcının verdiği adres örnek adresin yerine geçer (değiştirilmediyse)
   if (S.icerikS === 2) { if (S.ayar && S.ayar.adres === 'Antalya, Türkiye') S.ayar.adres = 'Side | Manavgat | Antalya | Turkey'; S.icerikS = 3; }
+}
+// 05.11 fiyat her araç için ayrı tablo oldu: eski tek tablo (km aralıkları, kişi başı ek, araç farkı) araç tablolarına çevrilir
+function fiyatTamamla() {
+  const f = S.fiyat;
+  if (!f.tablolar) {
+    f.tablolar = {};
+    S.araclar.forEach(a => { f.tablolar[a.id] = aracTablosu(f.araliklar || [], Number(f.tabanKisi) || 3, Number(a.fark) || 0, a); });
+    delete f.araliklar; delete f.tabanKisi;
+  }
+  S.araclar.forEach(a => { delete a.fark; });
+  tablolariDuzelt();
 }
 function kaydet() { bellek = S; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
 yukle();
@@ -2404,19 +2450,27 @@ function rezDetay(kod) {
   $('#dSil').onclick = e => { const b = e.currentTarget; if (!b.dataset.emin) { b.dataset.emin = 1; b.lastChild.textContent = 'Silmek için tekrar basın'; return; } S.rez = S.rez.filter(x => x.kod !== kod); kaydet(); modalKapat(); panelCiz(); tost(kod + ' silindi'); };
 }
 
-function aralikSatir(a, i) {
-  return `<tr><td><input class="p-girdi dar" type="number" min="0" step="1" data-ar="${i}" data-a="min" value="${a.min}"></td><td><input class="p-girdi dar" type="number" min="1" step="1" data-ar="${i}" data-a="max" value="${a.max}"></td><td><input class="p-girdi dar" type="number" min="0" step="0.5" data-ar="${i}" data-a="taban" value="${a.taban}"></td><td><input class="p-girdi dar" type="number" min="0" step="0.5" data-ar="${i}" data-a="ek" value="${a.ek}"></td><td class="nw" style="color:var(--yazi2);font-size:12.5px">${tl(a.taban)} · ${paraYaz(a.taban, 'en')} · ${paraYaz(a.taban, 'ru')}</td><td><button type="button" class="ikon-btn" data-arsil="${i}" aria-label="Aralığı sil"><svg class="ic"><use href="#i-cop"/></svg></button></td></tr>`;
+function aralikSatir(id, a, i) {
+  const g = (k, v, ek) => `<td><input class="p-girdi dar" type="number" min="0" step="${k === 'min' || k === 'max' ? 1 : 0.5}" data-tb="${id}" data-ar="${i}" data-a="${k}"${ek != null ? ` data-ek="${ek}"` : ''} value="${v}"></td>`;
+  return `<tr>${g('min', a.min)}${g('max', a.max)}${g('taban', a.taban)}${a.ek.map((v, j) => g('ek', v, j)).join('')}<td class="nw gorunen" style="color:var(--yazi2);font-size:12.5px">${tabanYaz(a.taban)}</td><td><button type="button" class="ikon-btn" data-tb="${id}" data-arsil="${i}" aria-label="Aralığı sil"><svg class="ic"><use href="#i-cop"/></svg></button></td></tr>`;
+}
+const tabanYaz = eur => `${tl(eur)} · ${paraYaz(eur, 'en')} · ${paraYaz(eur, 'ru')}`;
+function fiyatTabloKart(a) {
+  const tb = S.fiyat.tablolar[a.id], tk = tb.tabanKisi, n = Math.max(0, a.max - tk);
+  const ekBas = Array.from({length:n}, (_, j) => `<th>Ek ${j + 1} kişi €<small>${tk + j + 1} kişi</small></th>`).join('');
+  return `<div class="p-kart" id="fk-${a.id}"><h2>${esc(a.ad)} · Km aralıkları</h2>
+    <p class="acik-y">Taban fiyat ilk ${tk} kişiyi kapsar. "Ek 1 kişi", "Ek 2 kişi" sütunları o kadar fazla kişide taban fiyata eklenen tutardır. Araç en çok ${a.max} kişi.</p>
+    <div class="tk-satir"><label for="tk-${a.id}">Taban fiyata dahil kişi</label><input class="p-girdi" id="tk-${a.id}" type="number" min="1" max="${a.max}" step="1" data-tk="${a.id}" value="${tk}"><span>Değiştirince ek kişi sütunları kendiliğinden değişir.</span></div>
+    <div class="tablo-k"><table class="tablo"><thead><tr><th>Başlangıç km</th><th>Bitiş km</th><th>Taban fiyat €<small>1-${tk} kişi</small></th>${ekBas}<th>Sitede görünen (taban)</th><th></th></tr></thead><tbody>${tb.araliklar.map((r, i) => aralikSatir(a.id, r, i)).join('')}</tbody></table></div>
+    <button type="button" class="p-btn ince" data-arekle="${a.id}" style="margin-top:12px"><svg class="ic"><use href="#i-arti"/></svg>Aralık ekle</button>
+  </div>`;
 }
 function pFiyat() {
   const f = S.fiyat;
-  return pBas('Fiyatlandırma', 'Fiyatları yalnız euro olarak girersiniz; site Türkçede ₺, İngilizcede £, Rusçada ₽, Almancada € gösterir.') + `
-  <div class="p-kart"><h2>Km aralıkları</h2><p class="acik-y">Mesafe Google Haritalar'daki gerçek yol km'si ile hesaplanır. Taban fiyat ilk ${f.tabanKisi} kişiyi kapsar, sonraki her kişi için "ek kişi" tutarı eklenir.</p>
-    <div class="tablo-k"><table class="tablo"><thead><tr><th>Başlangıç km</th><th>Bitiş km</th><th>Taban fiyat €</th><th>Ek kişi başı €</th><th>Sitede görünen (taban)</th><th></th></tr></thead><tbody id="arGovde">${f.araliklar.map(aralikSatir).join('')}</tbody></table></div>
-    <button type="button" class="p-btn ince" id="arEkle" style="margin-top:12px"><svg class="ic"><use href="#i-arti"/></svg>Aralık ekle</button>
-  </div>
+  return pBas('Fiyatlandırma', 'Fiyatları yalnız euro olarak girersiniz; site Türkçede ₺, İngilizcede £, Rusçada ₽, Almancada € gösterir. Mesafe Google Haritalar\'daki gerçek yol km\'si ile hesaplanır, her aracın fiyatı ayrı girilir.') +
+  S.araclar.map(fiyatTabloKart).join('') + `
   <div class="p-kart"><h2>Kurallar</h2><p class="acik-y">Değişiklikler sitede anında geçerli olur.</p>
-    <div class="izgara-4">
-      <div class="p-alan"><label for="fTK">Taban fiyata dahil kişi</label><input class="p-girdi" id="fTK" type="number" min="1" max="12" value="${f.tabanKisi}"><small>Örn. 3: 1-3 kişi aynı fiyat</small></div>
+    <div class="izgara-3">
       <div class="p-alan"><label for="fGD">Gidiş-dönüş indirimi %</label><input class="p-girdi" id="fGD" type="number" min="0" max="50" value="${f.gdIndirim}"><small>İki yön toplamından düşer</small></div>
       <div class="p-alan"><label>Çocuklar</label><label class="anahtar" style="margin-top:8px"><input type="checkbox" id="fCK" ${f.cocukKisi ? 'checked' : ''}><i></i>Fiyatta kişi sayılır</label></div>
       <div class="p-alan"><label>Bebekler</label><label class="anahtar" style="margin-top:8px"><input type="checkbox" id="fBU" ${f.bebekUcretsiz ? 'checked' : ''}><i></i>Ücretsiz</label></div>
@@ -2435,25 +2489,42 @@ function pFiyat() {
 function pFiyatBagla() {
   const test = () => {
     const km = Number($('#tKm').value), ki = Number($('#tKi').value);
+    const a = S.araclar.find(x => x.id === $('#tAr').value);
+    if (a && ki > a.max) { $('#tSonuc').innerHTML = `<div style="grid-column:1/-1"><small>Sonuç</small><b>${esc(a.ad)} en çok ${a.max} kişi</b><small>Bu kişi sayısında sitede bu araç seçilemez.</small></div>`; return; }
     const p = fiyatEurHam(S, km, ki, $('#tAr').value, $('#tGD').checked);
     $('#tSonuc').innerHTML = p == null ? `<div style="grid-column:1/-1"><small>Sonuç</small><b>Bu km için aralık yok</b><small>Sitede "fiyat için bize yazın" görünür.</small></div>` : DILLER.map(d => `<div><small>${DIL_AD[d]}</small><b>${paraYaz(p, d)}</b></div>`).join('');
   };
-  const satirYenile = () => { $('#arGovde').innerHTML = S.fiyat.araliklar.map(aralikSatir).join(''); };
-  $('#arGovde').addEventListener('change', e => {
+  const degisti = () => { kaydet(); test(); aracCiz(); ozetCiz(); };
+  const kartYenile = id => { const a = S.araclar.find(x => x.id === id); $('#fk-' + id).outerHTML = fiyatTabloKart(a); };
+  const ana = $('#pAna');
+  ana.onchange = e => {
+    const tk = e.target.closest('[data-tk]');
+    if (tk) {
+      const a = S.araclar.find(x => x.id === tk.dataset.tk), tb = S.fiyat.tablolar[a.id], v = Number(tk.value);
+      if (!Number.isInteger(v) || v < 1 || v > a.max) { tk.value = tb.tabanKisi; tost(`1 ile ${a.max} arasında bir sayı girin`); return; }
+      tb.tabanKisi = v; tablolariDuzelt(); degisti(); kartYenile(a.id); tost('Fiyat kaydedildi'); return;
+    }
     const g = e.target.closest('[data-ar]'); if (!g) return;
-    const v = Number(g.value); if (isNaN(v) || v < 0) { g.value = S.fiyat.araliklar[g.dataset.ar][g.dataset.a]; return; }
-    S.fiyat.araliklar[g.dataset.ar][g.dataset.a] = v; kaydet(); satirYenile(); test(); aracCiz(); ozetCiz(); tost('Fiyat kaydedildi');
-  });
-  $('#arGovde').addEventListener('click', e => { const b = e.target.closest('[data-arsil]'); if (!b) return; if (S.fiyat.araliklar.length < 2) { tost('En az bir aralık kalmalı'); return; } S.fiyat.araliklar.splice(+b.dataset.arsil, 1); kaydet(); satirYenile(); test(); tost('Aralık silindi'); });
-  $('#arEkle').onclick = () => { const son = S.fiyat.araliklar[S.fiyat.araliklar.length - 1]; S.fiyat.araliklar.push({min:son ? son.max : 0, max:(son ? son.max : 0) + 50, taban:(son ? son.taban : 30) + 20, ek:son ? son.ek : 5}); kaydet(); satirYenile(); tost('Aralık eklendi'); };
-  const kural = () => { S.fiyat.tabanKisi = Math.max(1, Number($('#fTK').value) || 1); S.fiyat.gdIndirim = Math.min(50, Math.max(0, Number($('#fGD').value) || 0)); S.fiyat.cocukKisi = $('#fCK').checked; S.fiyat.bebekUcretsiz = $('#fBU').checked; kaydet(); test(); aracCiz(); ozetCiz(); tost('Kurallar kaydedildi'); };
-  ['#fTK', '#fGD', '#fCK', '#fBU'].forEach(s => $(s).addEventListener('change', kural));
+    const r = S.fiyat.tablolar[g.dataset.tb].araliklar[g.dataset.ar], ekMi = g.dataset.ek != null, v = Number(g.value);
+    if (g.value === '' || isNaN(v) || v < 0) { g.value = ekMi ? r.ek[g.dataset.ek] : r[g.dataset.a]; return; }
+    if (ekMi) r.ek[+g.dataset.ek] = v; else r[g.dataset.a] = v;
+    g.closest('tr').querySelector('.gorunen').textContent = tabanYaz(r.taban);
+    degisti(); tost('Fiyat kaydedildi');
+  };
+  ana.onclick = e => {
+    const sil = e.target.closest('[data-arsil]');
+    if (sil) { const tb = S.fiyat.tablolar[sil.dataset.tb]; if (tb.araliklar.length < 2) { tost('En az bir aralık kalmalı'); return; } tb.araliklar.splice(+sil.dataset.arsil, 1); degisti(); kartYenile(sil.dataset.tb); tost('Aralık silindi'); return; }
+    const ekle = e.target.closest('[data-arekle]');
+    if (ekle) { const tb = S.fiyat.tablolar[ekle.dataset.arekle], son = tb.araliklar[tb.araliklar.length - 1]; tb.araliklar.push({min:son ? son.max : 0, max:(son ? son.max : 0) + 50, taban:(son ? son.taban : 30) + 20, ek:son ? son.ek.slice() : []}); tablolariDuzelt(); degisti(); kartYenile(ekle.dataset.arekle); tost('Aralık eklendi'); }
+  };
+  const kural = () => { S.fiyat.gdIndirim = Math.min(50, Math.max(0, Number($('#fGD').value) || 0)); S.fiyat.cocukKisi = $('#fCK').checked; S.fiyat.bebekUcretsiz = $('#fBU').checked; degisti(); tost('Kurallar kaydedildi'); };
+  ['#fGD', '#fCK', '#fBU'].forEach(s => $(s).addEventListener('change', kural));
   ['#tKm', '#tKi', '#tAr', '#tGD'].forEach(s => $(s).addEventListener('input', test));
   test();
 }
 
 function pArac() {
-  return pBas('Araçlar', 'Sitede görünen araçlar, kapasiteleri ve araç farkı.') + S.araclar.map((a, i) => `
+  return pBas('Araçlar', 'Sitede görünen araçlar ve kapasiteleri. Her aracın fiyatı Fiyatlandırma bölümünde ayrı girilir.') + S.araclar.map((a, i) => `
   <div class="p-kart"><div class="arac-p">
     <div><div class="foto-k"><img src="${esc(a.foto)}" alt=""></div><label class="foto-sec">Fotoğrafı değiştir<input type="file" accept="image/*" data-foto="${i}"></label></div>
     <div>
@@ -2463,9 +2534,8 @@ function pArac() {
         <div class="p-alan"><label>En az yolcu</label><input class="p-girdi" type="number" min="1" data-ac="${i}" data-a="min" value="${a.min}"></div>
         <div class="p-alan"><label>En çok yolcu</label><input class="p-girdi" type="number" min="1" data-ac="${i}" data-a="max" value="${a.max}"></div>
         <div class="p-alan"><label>Bavul (yaklaşık)</label><input class="p-girdi" type="number" min="0" data-ac="${i}" data-a="bavul" value="${a.bavul}"></div>
-        <div class="p-alan"><label>Araç farkı €</label><input class="p-girdi" type="number" step="0.5" data-ac="${i}" data-a="fark" value="${a.fark}"><small>Km fiyatına eklenir</small></div>
         <div class="p-alan"><label>Sitede</label><label class="anahtar" style="margin-top:8px"><input type="checkbox" data-ac="${i}" data-a="aktif" ${a.aktif ? 'checked' : ''}><i></i>Gösteriliyor</label></div>
-        <div class="p-alan" style="align-self:end;text-align:right"><button type="button" class="p-btn kirmizi" data-acsil="${i}"><svg class="ic"><use href="#i-cop"/></svg>Aracı sil</button></div>
+        <div class="p-alan" style="grid-column:span 2;align-self:end;text-align:right"><button type="button" class="p-btn kirmizi" data-acsil="${i}"><svg class="ic"><use href="#i-cop"/></svg>Aracı sil</button></div>
       </div>
     </div>
   </div></div>`).join('') + `<button type="button" class="p-btn tur" id="acEkle" style="margin-top:18px"><svg class="ic"><use href="#i-arti"/></svg>Araç ekle</button>`;
@@ -2481,7 +2551,7 @@ function pAracBagla() {
     const g = e.target.closest('[data-ac]');
     if (g) { const a = S.araclar[g.dataset.ac], k = g.dataset.a;
       if (k === 'aktif') { if (!g.checked && S.araclar.filter(x => x.aktif).length < 2) { g.checked = true; tost('Sitede en az bir araç kalmalı'); return; } a.aktif = g.checked; }
-      else if (['min', 'max', 'bavul', 'fark'].includes(k)) { const v = Number(g.value); if (isNaN(v)) return; a[k] = v; if (a.min > a.max) { a.max = a.min; } }
+      else if (['min', 'max', 'bavul'].includes(k)) { const v = Number(g.value); if (isNaN(v)) return; a[k] = v; if (a.min > a.max) { a.max = a.min; } if (k !== 'bavul') tablolariDuzelt(); }
       else a[k] = g.value.trim();
       kaydet(); aracCiz(); ozetCiz(); tost('Araç kaydedildi'); return; }
     const f = e.target.closest('[data-foto]');
@@ -2489,8 +2559,8 @@ function pAracBagla() {
   };
   ana.onclick = e => {
     const s = e.target.closest('[data-acsil]');
-    if (s) { if (S.araclar.length < 2) { tost('En az bir araç kalmalı'); return; } if (!s.dataset.emin) { s.dataset.emin = 1; s.lastChild.textContent = 'Emin misiniz? Tekrar basın'; return; } S.araclar.splice(+s.dataset.acsil, 1); kaydet(); panelCiz(); aracCiz(); tost('Araç silindi'); }
-    if (e.target.closest('#acEkle')) { S.araclar.push({id:'arac' + Date.now().toString(36), ad:'VIP Vito', model:'Mercedes V-Class VIP', min:1, max:6, bavul:6, fark:20, aktif:true, foto:'minivan.webp'}); kaydet(); panelCiz(); aracCiz(); tost('Araç eklendi'); }
+    if (s) { if (S.araclar.length < 2) { tost('En az bir araç kalmalı'); return; } if (!s.dataset.emin) { s.dataset.emin = 1; s.lastChild.textContent = 'Emin misiniz? Tekrar basın'; return; } S.araclar.splice(+s.dataset.acsil, 1); tablolariDuzelt(); kaydet(); panelCiz(); aracCiz(); tost('Araç silindi'); }
+    if (e.target.closest('#acEkle')) { S.araclar.push({id:'arac' + Date.now().toString(36), ad:'VIP Vito', model:'Mercedes V-Class VIP', min:1, max:6, bavul:6, aktif:true, foto:'minivan.webp'}); tablolariDuzelt(); kaydet(); panelCiz(); aracCiz(); tost('Araç eklendi'); }
   };
 }
 
