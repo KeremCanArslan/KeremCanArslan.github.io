@@ -37,8 +37,13 @@ ul{list-style:none}
 :focus-visible{outline:2px solid var(--tur);outline-offset:2px}
 
 /* ---------- üst ---------- */
-.ust{position:absolute;inset:0 0 auto;z-index:20;color:#fff}
-.ust .kap{display:flex;align-items:center;gap:24px;height:100px}
+.ust{position:fixed;inset:0 0 auto;z-index:70;color:#fff;transition:background .25s,box-shadow .25s}
+/* sabit üst şerit (alıcı 05.11: 'Burası sabit'): kapakta saydam, kaydırınca koyu zemin */
+.ust.dolu{background:var(--koyu2);box-shadow:0 12px 28px -20px rgba(0,0,0,.7)}
+.ust>.kap{display:flex;align-items:center;gap:24px;height:100px;transition:height .25s}
+.ust.dolu>.kap{height:76px}
+html{scroll-padding-top:84px}
+.hizli{display:none}
 .logo{display:flex;align-items:center;gap:12px;flex:none}
 .logo svg{width:70px;height:58px;overflow:visible}
 .logo b{display:block;font-family:var(--serif);font-weight:600;font-size:32px;letter-spacing:.2em;line-height:1}
@@ -302,43 +307,64 @@ input::-webkit-date-and-time-value{text-align:left}
 .rez-btn .ic{width:19px;height:19px}
 .yonlendirme{font-size:11.5px;color:var(--yazi2);text-align:center;margin-top:8px}
 
-/* ---------- neden biz, favori transferler, yorumlar ---------- */
+/* ---------- neden biz, favori transferler, yorumlar (alıcının 05.11 tasarımı) ---------- */
 .bolum-bas{text-align:center;margin-bottom:22px}
-.bolum-bas h2{font-family:var(--serif);font-size:32px;font-weight:600;line-height:1.15;color:var(--koyu2)}
-.bolum-bas h2::after{content:'';display:block;width:46px;height:3px;border-radius:2px;background:var(--tur);margin:12px auto 0}
-.neden{padding-top:54px}
-.neden-izgara{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:1px;background:var(--cizgi2);border-radius:18px;box-shadow:var(--golge2);overflow:hidden}
-.neden-kart{padding:26px 14px 24px;text-align:center;background:#fff}
-.neden-kart .ic{width:32px;height:32px;stroke-width:1.5;color:var(--koyu);margin:0 auto 12px;display:block}
-.neden-kart b{display:block;font-size:14.5px;font-weight:700;color:var(--koyu2);line-height:1.3}
-.neden-kart p{font-size:13px;color:var(--yazi2);margin-top:6px;line-height:1.45}
-.vitrin{margin-top:34px;background:#fff;border-radius:22px;box-shadow:var(--golge2);padding:28px 30px 30px}
-.vitrin h2{font-family:var(--serif);font-size:28px;font-weight:600;color:var(--koyu2);line-height:1.15;margin-bottom:16px}
-.vitrin h2.ikinci{margin-top:30px}
-.kaydir{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-.fav{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--cizgi2);border-radius:16px;overflow:hidden;box-shadow:0 12px 26px -22px rgba(1,35,38,.7);transition:transform .2s,box-shadow .2s}
+.bolum-bas h2{display:flex;align-items:center;justify-content:center;gap:18px;font-family:var(--serif);font-size:32px;font-weight:600;line-height:1.15;color:var(--koyu2)}
+.bolum-bas h2::before,.bolum-bas h2::after{content:'';flex:0 1 72px;min-width:14px;height:2px;border-radius:2px;background:var(--tur)}
+.bolum-bas p{color:var(--yazi2);margin-top:6px;font-size:15.5px}
+.neden{padding-top:44px}
+.neden-izgara{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));background:#fff;border-radius:18px;box-shadow:var(--golge2);padding:24px 8px}
+.neden-kart{position:relative;padding:2px 16px;text-align:center}
+.neden-kart+.neden-kart::before{content:'';position:absolute;left:0;top:6%;bottom:6%;width:1px;background:rgba(247,133,46,.42)}
+.neden-kart .ic{width:34px;height:34px;stroke-width:1.5;color:var(--koyu);margin:0 auto 12px;display:block}
+.neden-kart b{display:block;font-size:15px;font-weight:700;color:var(--koyu2);line-height:1.25}
+.neden-kart p{font-size:13.5px;color:var(--yazi2);margin-top:6px;line-height:1.4}
+.neden-kart b,.neden-kart p{-webkit-hyphens:auto;hyphens:auto;overflow-wrap:break-word}
+.vitrin{margin-top:44px}
+#favBolum:not([hidden])+#yorumBolum{margin-top:40px}
+.karusel{position:relative}
+.kr-cerceve{position:relative}
+.kaydir{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 36px)/3);gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding:6px 2px 26px}
+.kaydir::-webkit-scrollbar{display:none}
+.kaydir>*{scroll-snap-align:start}
+#yorumListe{grid-auto-columns:calc((100% - 18px)/2)}
+.kr-ok{position:absolute;top:42%;transform:translateY(-50%);z-index:3;width:44px;height:44px;border-radius:50%;background:#fff;color:var(--koyu2);display:none;place-items:center;box-shadow:0 8px 20px -8px rgba(1,35,38,.5);transition:opacity .2s}
+#yorumBolum .kr-ok{top:47%}
+.tasar .kr-ok{display:grid}
+.kr-ok.sol{left:-16px}
+.kr-ok.sag{right:-16px}
+.kr-ok .ic{width:21px;height:21px;stroke-width:2}
+.kr-ok.sol .ic{transform:rotate(90deg)}
+.kr-ok.sag .ic{transform:rotate(-90deg)}
+.kr-ok:disabled{opacity:0;pointer-events:none}
+.kr-nokta{display:flex;justify-content:center;gap:9px;margin-top:-10px}
+.kr-nokta:empty{display:none}
+.kr-nokta i{width:9px;height:9px;border-radius:50%;background:#d6dbdc;transition:background .2s}
+.kr-nokta i.aktif{background:var(--tur)}
+.fav{display:flex;flex-direction:column;width:100%;text-align:left;background:#fff;border:1px solid var(--cizgi2);border-radius:16px;overflow:hidden;box-shadow:0 12px 26px -22px rgba(1,35,38,.7);transition:transform .2s,box-shadow .2s}
 .fav:hover{transform:translateY(-3px);box-shadow:0 20px 32px -22px rgba(1,35,38,.75)}
-.fav-foto{position:relative;display:block;aspect-ratio:760/285;background:#dcebf3 center/cover no-repeat}
-.fav-foto::before{content:'';position:absolute;inset:0;background:linear-gradient(105deg,rgba(255,255,255,.62) 0%,rgba(255,255,255,.25) 45%,rgba(255,255,255,0) 65%)}
-.fav-y{position:absolute;left:16px;top:13px;right:12px}
-.fav-y b{display:block;font-size:19px;font-weight:800;color:var(--koyu2);letter-spacing:-.01em;line-height:1.2}
-.puan{display:flex;align-items:center;gap:7px;margin-top:6px;font-weight:700;font-size:14px;color:var(--yazi)}
-.fav-alt{display:flex;align-items:center;gap:8px;padding:12px 16px;font-size:14px;font-weight:600;color:var(--yazi)}
-.fav-alt .ic{width:18px;height:18px;color:var(--tur)}
-.fav-alt .ic.git{margin-left:auto;color:var(--yazi3);transition:color .2s,transform .2s}
-.fav:hover .fav-alt .ic.git{color:var(--tur2);transform:translateX(3px)}
+.fav-foto{display:block;aspect-ratio:2/1;background:#dcebf3 center/cover no-repeat}
+.fav-alt{flex:1;display:flex;align-items:center;gap:10px;padding:14px 16px;font-size:15px;font-weight:700;line-height:1.3;color:var(--koyu2)}
+.fav-alt>.ic{width:20px;height:20px;color:var(--tur)}
+.fav-ad{flex:1;min-width:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.fav-git{flex:none;width:36px;height:36px;border-radius:50%;border:1px solid var(--cizgi);display:grid;place-items:center;color:var(--koyu2);transition:background .2s,color .2s,border-color .2s}
+.fav-git .ic{width:17px;height:17px}
+.fav:hover .fav-git{background:var(--tur);border-color:var(--tur);color:#fff}
 .yildizlar{position:relative;display:inline-flex;line-height:0;white-space:nowrap}
 .yildizlar span{display:inline-flex;gap:2px}
 .yildizlar svg{width:16px;height:16px;fill:currentColor;stroke:none;flex:none}
 .yildizlar .yb{color:#d6dcde}
-.yildizlar .yd{position:absolute;left:0;top:0;overflow:hidden;color:#f5a524}
-.yorum{background:#fff;border:1px solid var(--cizgi2);border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:12px;box-shadow:0 12px 26px -22px rgba(1,35,38,.7)}
-.yorum-ust{display:flex;align-items:center;gap:10px}
-.bayrak{width:26px;height:26px;border-radius:50%;overflow:hidden;flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.1)}
+.yildizlar .yd{position:absolute;left:0;top:0;overflow:hidden;color:#f7962e}
+.yorum{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:22px;margin:0;background:#fff;border:1px solid var(--cizgi2);border-radius:18px;padding:22px 24px;box-shadow:0 12px 26px -22px rgba(1,35,38,.7)}
+.yorum-sol{display:flex;flex-direction:column;align-items:center;gap:10px}
+.yorum-foto{width:104px;height:104px;border-radius:50%;overflow:hidden;background:var(--koyu-acik);color:var(--koyu);display:grid;place-items:center;font-family:var(--serif);font-size:38px;font-weight:600;box-shadow:0 8px 18px -10px rgba(1,35,38,.5)}
+.yorum-foto img{width:100%;height:100%;object-fit:cover}
+.yorum q{display:block;font-size:16px;line-height:1.55;color:var(--yazi);quotes:'\201C' '\201D'}
+.yorum-ad{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:12px;font-size:14.5px;color:var(--yazi2)}
+.yorum-ad b{color:var(--koyu2);font-weight:800}
+.yorum-ad i{width:1px;height:14px;background:var(--cizgi)}
+.bayrak{width:26px;height:18px;border-radius:3px;overflow:hidden;flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.1)}
 .bayrak svg{width:100%;height:100%;display:block}
-.yorum q{font-size:15px;line-height:1.55;color:var(--yazi);quotes:'\201C' '\201D'}
-.yorum-ad{margin-top:auto;font-size:14px;color:var(--yazi2)}
-.yorum-ad b{color:var(--yazi);font-weight:700}
 
 /* ---------- şerit + alt ---------- */
 .serit{background:var(--koyu2);color:#fff;margin-top:44px;position:relative;overflow:hidden}
@@ -446,27 +472,36 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .serit-ilk{padding-right:24px}
   .alt .kap{grid-template-columns:1fr 1fr}
   .alt .kunye-k{grid-column:span 2}
-  .neden-izgara{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .vitrin{padding:24px 22px 26px}
-  .kaydir{gap:14px}
-  .fav-y b{font-size:17px}
 }
 @media (max-width:760px){
   body{font-size:14.5px;padding-bottom:96px}
   .kap{padding:0 16px}
-  .ust .kap{height:64px;gap:10px}
-  .logo svg{width:44px;height:37px}
-  .logo b{font-size:21px}
+  .ust>.kap,.ust.dolu>.kap{height:52px;gap:10px}
+  html{scroll-padding-top:96px}
+  /* hızlı erişim şeridi (alıcı 05.11: 'Birinci ekranın üzerinde buradaki gibi sabit hızlı erişim', 724transfer gibi) */
+  .hizli{display:block;background:#00171a;border-bottom:1px solid rgba(255,255,255,.08)}
+  .hizli>.kap{display:flex;align-items:center;height:34px}
+  .hz{display:flex;align-items:center;gap:6px;height:34px;padding:0 9px;font-size:12.5px;font-weight:600;color:#fff;white-space:nowrap}
+  .hz .ic{width:16px;height:16px}
+  .hizli>.kap>.hz:first-child{padding-left:0}
+  .hizli>.kap>.hz+.hz,.hz-sag>*+*{border-left:1px solid rgba(255,255,255,.16)}
+  .hz-sag{display:flex;align-items:center;margin-left:auto}
+  .hz-sag>:last-child,.hz-sag>:last-child .dil-btn{padding-right:0}
+  .hizli .dil-btn{height:34px;padding:0 0 0 9px;font-size:12.5px}
+  .hizli .dil-btn .ic{width:13px;height:13px}
+  .hizli .dil-liste{top:calc(100% + 6px)}
+  .logo svg{width:41px;height:34px}
+  .logo b{font-size:20px}
   .logo small{font-size:8.5px;letter-spacing:.52em;margin-top:4px}
   .ust-sag .dil,.ust-sag .yuvarlak,.ust-sag .hesap-btn{display:none}
   /* telefonda ilk ekran tek ekrana sığar: yazı, araç ve arama kutusu kaydırmadan görünür */
-  .kahraman{background-image:url(kapak-mobil.jpg);min-height:0;height:calc(186px + 45.4vw)}
+  .kahraman{background-image:url(kapak-mobil.jpg);min-height:0;height:calc(170px + 45.4vw);margin-top:34px}
   .kahraman::before{background:linear-gradient(180deg,rgba(8,20,32,.35) 0%,rgba(8,20,32,0) 40%)}
-  .kahraman .kap{padding-top:72px;padding-bottom:0}
+  .kahraman .kap{padding-top:58px;padding-bottom:0}
   .kicker{font-size:11px;letter-spacing:.28em}
-  h1{font-size:clamp(28px,8vw,36px);margin-top:6px}
+  h1{font-size:clamp(27px,7.5vw,34px);margin-top:5px}
   .slogan{font-size:14px;margin-top:8px;gap:4px 9px}
-  .arama-alan{margin-top:-19vw}
+  .arama-alan{margin-top:calc(-19vw - 6px)}
   .arama{border-radius:20px;padding:12px}
   .arama-satir{gap:8px}
   .alanlar{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -487,24 +522,35 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .alan-yolcu .acilir{left:-1px}
   .oneriler{width:calc(100vw - 58px)}
   .guven-serit{display:none}
-  .neden{padding-top:34px}
-  .bolum-bas{margin-bottom:16px}
-  .bolum-bas h2{font-size:25px}
-  .bolum-bas h2::after{margin-top:9px}
-  .neden-izgara{grid-template-columns:repeat(2,minmax(0,1fr));border-radius:16px}
-  .neden-kart{padding:18px 10px 16px}
-  .neden-kart .ic{width:28px;height:28px;margin-bottom:9px}
-  .neden-kart b{font-size:13.5px}
-  .neden-kart p{font-size:12px;margin-top:4px}
-  .vitrin{margin-top:24px;border-radius:18px;padding:20px 16px 20px}
-  .vitrin h2{font-size:23px;margin-bottom:12px}
-  .vitrin h2.ikinci{margin-top:22px}
-  .kaydir{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:84%;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:2px 16px 8px;scroll-padding:0 16px;gap:12px;scrollbar-width:none}
-  .kaydir::-webkit-scrollbar{display:none}
-  .kaydir>*{scroll-snap-align:start}
-  .fav-y b{font-size:17px}
-  .yorum{padding:16px}
-  .yorum q{font-size:14.5px}
+  .neden{padding-top:26px}
+  .bolum-bas{margin-bottom:14px}
+  .bolum-bas h2{font-size:22px;gap:10px}
+  .bolum-bas h2::before,.bolum-bas h2::after{flex-basis:28px}
+  .bolum-bas p{font-size:13.5px;margin-top:4px}
+  .neden-izgara{margin:0 -6px;padding:14px 2px;border-radius:16px}
+  .neden-kart{padding:2px 4px}
+  .neden-kart .ic{width:26px;height:26px;margin-bottom:7px}
+  .neden-kart b{font-size:11.5px}
+  .neden-kart p{font-size:10.5px;margin-top:3px;line-height:1.35}
+  .vitrin{margin-top:28px}
+  #favBolum:not([hidden])+#yorumBolum{margin-top:26px}
+  .kaydir{gap:12px;padding:4px 1px 24px}
+  #favListe{grid-auto-columns:calc((100% - 12px)/2)}
+  #yorumListe{grid-auto-columns:100%}
+  .kr-ok{width:34px;height:34px}
+  .kr-ok.sol{left:-10px}
+  .kr-ok.sag{right:-10px}
+  .kr-ok .ic{width:17px;height:17px}
+  .fav-alt{padding:10px;gap:6px;font-size:12.5px}
+  .fav-ad{-webkit-line-clamp:6}
+  .fav-alt>.ic{width:15px;height:15px}
+  .fav-git{width:26px;height:26px}
+  .fav-git .ic{width:13px;height:13px}
+  .yorum{gap:14px;padding:16px}
+  .yorum-foto{width:76px;height:76px;font-size:28px}
+  .yorum .yildizlar svg{width:13px;height:13px}
+  .yorum q{font-size:14px}
+  .yorum-ad{font-size:13px;gap:6px;margin-top:9px}
   .bolum{padding-top:26px}
   .bolum-ust{flex-direction:column;align-items:flex-start;gap:10px;margin-bottom:14px}
   .bolum-ust h2{font-size:25px}
@@ -678,6 +724,10 @@ select.p-girdi{cursor:pointer}
 .icerik-blok{border-top:1px solid var(--cizgi2);padding:16px 0}
 .icerik-blok:first-of-type{border-top:0;padding-top:4px}
 .p-alt-b{font-size:11.5px;font-weight:800;color:var(--yazi2);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 6px}
+.yorum-p{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;margin-top:12px}
+.yorum-p .yorum-foto{width:56px;height:56px;font-size:22px}
+.yorum-p .foto-sec{margin:0}
+.yorum-p small{color:var(--yazi2);font-size:12px}
 textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
 @media (max-width:1100px){.kpi{grid-template-columns:repeat(2,minmax(0,1fr))}.p-iki{grid-template-columns:1fr}.izgara-4{grid-template-columns:1fr 1fr}}
 @media (max-width:860px){
@@ -766,7 +816,20 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
 
 <!-- ======================= SİTE ======================= -->
 <div id="site">
-<header class="ust">
+<header class="ust" id="ust">
+  <div class="hizli">
+    <div class="kap">
+      <button class="hz" type="button" data-hesap><svg class="ic"><use href="#i-kisi"/></svg><span id="hzHesap">Giriş</span></button>
+      <a class="hz" href="#" id="hzTel"><svg class="ic"><use href="#i-telefon"/></svg><span id="hzTelYazi"></span></a>
+      <div class="hz-sag">
+        <a class="hz" href="#" data-wa aria-label="WhatsApp"><svg class="ic"><use href="#i-wa"/></svg></a>
+        <div class="dil" id="hzDil">
+          <button class="dil-btn" type="button" aria-haspopup="true"><span id="hzDilKod">TR</span><svg class="ic"><use href="#i-asagi"/></svg></button>
+          <div class="dil-liste" id="hzDilListe"></div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="kap">
     <a href="#ana" class="logo" aria-label="ATALIA Transfer">
       <svg viewBox="0 0 70 58" aria-hidden="true">
@@ -867,18 +930,18 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
 
 <section class="neden" id="neden">
   <div class="kap">
-    <div class="bolum-bas"><h2 data-t="why_title">Neden Atalia Tour?</h2></div>
+    <div class="bolum-bas"><h2 data-t="why_title">Neden Atalia Transfer</h2></div>
     <div class="neden-izgara">
-      <div class="neden-kart"><svg class="ic"><use href="#i-kulaklik"/></svg><b data-t="w1">7/24 Destek</b><p data-t="w1s">Her an yanınızdayız.</p></div>
+      <div class="neden-kart"><svg class="ic"><use href="#i-kulaklik"/></svg><b data-t="w1">7/24 Destek</b><p data-t="w1s">Her zaman yanınızdayız.</p></div>
       <div class="neden-kart"><svg class="ic"><use href="#i-simsek"/></svg><b data-t="w2">Anında Onay</b><p data-t="w2s">Rezervasyonunuz anında onaylanır.</p></div>
-      <div class="neden-kart"><svg class="ic"><use href="#i-kalkan-tik"/></svg><b data-t="w3">Güvenli Ödeme</b><p data-t="w3s">Ödemeniz güvende ve şifreli.</p></div>
-      <div class="neden-kart"><svg class="ic"><use href="#i-sofor"/></svg><b data-t="w4">Profesyonel Şoförler</b><p data-t="w4s">Deneyimli ve güler yüzlü şoförler.</p></div>
-      <div class="neden-kart"><svg class="ic"><use href="#i-iptal"/></svg><b data-t="w5">Ücretsiz İptal</b><p data-t="w5s">24 saat öncesine kadar ücretsiz iptal.</p></div>
-      <div class="neden-kart"><svg class="ic"><use href="#i-dunya"/></svg><b data-t="w6">Çok Dilli Hizmet</b><p data-t="w6s">Sizin dilinizi konuşuyoruz.</p></div>
+      <div class="neden-kart"><svg class="ic"><use href="#i-sofor"/></svg><b data-t="w3">Profesyonel Şoförler</b><p data-t="w3s">Güvenli ve deneyimli şoförler.</p></div>
+      <div class="neden-kart"><svg class="ic"><use href="#i-konum"/></svg><b data-t="w4">Kapıdan Kapıya Transfer</b><p data-t="w4s">Hedefinize direkt ulaşın.</p></div>
     </div>
     <div class="vitrin" id="vitrin">
-      <div id="favBolum"><h2 data-t="fav_title">Favori Transferler</h2><div class="kaydir" id="favListe"></div></div>
-      <div id="yorumBolum"><h2 class="ikinci" data-t="rev_title">Misafirler Ne Diyor?</h2><div class="kaydir" id="yorumListe"></div></div>
+      <div id="favBolum"><div class="bolum-bas"><h2 data-t="fav_title">Favori Transferler</h2><p data-t="fav_sub">Antalya'nın en popüler destinasyonları</p></div>
+        <div class="karusel"><div class="kr-cerceve"><button type="button" class="kr-ok sol" data-t-aria="prev" aria-label="Önceki"><svg class="ic"><use href="#i-asagi"/></svg></button><div class="kaydir" id="favListe"></div><button type="button" class="kr-ok sag" data-t-aria="next" aria-label="Sonraki"><svg class="ic"><use href="#i-asagi"/></svg></button></div><div class="kr-nokta" aria-hidden="true"></div></div></div>
+      <div id="yorumBolum"><div class="bolum-bas"><h2 data-t="rev_title">Misafirlerin Yorumları</h2></div>
+        <div class="karusel"><div class="kr-cerceve"><button type="button" class="kr-ok sol" data-t-aria="prev" aria-label="Önceki"><svg class="ic"><use href="#i-asagi"/></svg></button><div class="kaydir" id="yorumListe"></div><button type="button" class="kr-ok sag" data-t-aria="next" aria-label="Sonraki"><svg class="ic"><use href="#i-asagi"/></svg></button></div><div class="kr-nokta" aria-hidden="true"></div></div></div>
     </div>
   </div>
 </section>
@@ -1057,8 +1120,8 @@ booked_title:'Rezervasyonunuz alındı',booked_sub:'Onay için WhatsApp\'tan biz
 account:'Hesabım',signin_reg:'Giriş / Üye Ol',signin_t:'Giriş Yap',register_t:'Üye Ol',password:'Şifre',login_btn:'Giriş Yap',register_btn:'Üye Ol',demo_acc:'Denemek için örnek üye hesabını kullanın:',demo_fill:'Örnek hesapla doldur',login_bad:'E-posta ya da şifre hatalı.',login_blocked:'Bu hesap kullanıma kapalı. Lütfen bize yazın.',reg_exists:'Bu e-posta ile kayıtlı bir hesap var.',reg_short:'Şifre en az 4 karakter olmalı.',welcome:'Hoş geldiniz, {n}',logout:'Çıkış Yap',my_bookings:'Rezervasyonlarım',no_bookings:'Henüz rezervasyonunuz yok.',member_benefit:'Üyelere özel %{p} indirim her rezervasyonda otomatik uygulanır.',
 st_yeni:'Onay bekliyor',st_onay:'Onaylandı',st_tamam:'Tamamlandı',st_iptal:'İptal',
 wa_hello:'Merhaba, rezervasyonumu onaylamak istiyorum.',wa_demo:'Örnek sitede işletmenin WhatsApp numarası henüz girilmedi.',search_first:'Önce güzergâhınızı arayın, sonra aracınızı seçin.',
-why_title:'Neden Atalia Tour?',w1:'7/24 Destek',w1s:'Her an yanınızdayız.',w2:'Anında Onay',w2s:'Rezervasyonunuz anında onaylanır.',w3:'Güvenli Ödeme',w3s:'Ödemeniz güvende ve şifreli.',w4:'Profesyonel Şoförler',w4s:'Deneyimli ve güler yüzlü şoförler.',w5:'Ücretsiz İptal',w5s:'24 saat öncesine kadar ücretsiz iptal.',w6:'Çok Dilli Hizmet',w6s:'Sizin dilinizi konuşuyoruz.',
-fav_title:'Favori Transferler',rev_title:'Misafirler Ne Diyor?',fav_pick:'Güzergâh seçildi, şimdi tarih ve saati seçin.',choose_title:'Aracınızı Seçin',fit_sub:'{n} yolcu için uygun araçlar',no_vehicle:'Bu yolcu sayısı için sitede uygun araç yok. Size uygun aracı ayarlamamız için WhatsApp\'tan yazın.',
+why_title:'Neden Atalia Transfer',w1:'7/24 Destek',w1s:'Her zaman yanınızdayız.',w2:'Anında Onay',w2s:'Rezervasyo\u00adnunuz anında onaylanır.',w3:'Profesyonel Şoförler',w3s:'Güvenli ve deneyimli şoförler.',w4:'Kapıdan Kapıya Transfer',w4s:'Hedefinize direkt ulaşın.',prev:'Önceki',next:'Sonraki',
+fav_title:'Favori Transferler',fav_sub:'Antalya\'nın en popüler destinasyonları',rev_title:'Misafirlerin Yorumları',fav_pick:'Güzergâh seçildi, şimdi tarih ve saati seçin.',fav_where:'Otelinizi ya da gideceğiniz yeri yazın.',choose_title:'Aracınızı Seçin',fit_sub:'{n} yolcu için uygun araçlar',no_vehicle:'Bu yolcu sayısı için sitede uygun araç yok. Size uygun aracı ayarlamamız için WhatsApp\'tan yazın.',
 flight:'Uçuş Numarası',ret_info:'Dönüş Transferi',ret_flight:'Dönüş Uçuş No',ret_flight_time:'Uçuş Saati',pickup_time:'Pickup Saati',err_ret_flight:'Lütfen dönüş uçuş saatini girin.',err_pickup:'Lütfen pickup saatini girin.',flight_ph:'Örn. TK 2412',seat:'Çocuk Koltuğu',seat_none:'Gerek yok',seat_1:'1 koltuk',seat_n:'{n} koltuk'},
 en:{nav_home:'Home',nav_fleet:'Our Fleet',nav_services:'Services',nav_why:'Why Atalia?',nav_contact:'Contact',support:'Customer Support',signin:'Sign in',
 hero_kicker:'Antalya Airport Transfer',hero_1:'Your Journey.',hero_2a:'Our ',hero_2b:'Priority.',hero_sub:'Comfortable|Safe|On Time',
@@ -1079,8 +1142,8 @@ booked_title:'Your booking has been received',booked_sub:'Please send it to us o
 account:'My Account',signin_reg:'Sign in / Sign up',signin_t:'Sign in',register_t:'Sign up',password:'Password',login_btn:'Sign in',register_btn:'Sign up',demo_acc:'Use the sample member account to try it:',demo_fill:'Fill with sample account',login_bad:'Wrong email or password.',login_blocked:'This account is disabled. Please contact us.',reg_exists:'An account with this email already exists.',reg_short:'Password must be at least 4 characters.',welcome:'Welcome, {n}',logout:'Sign out',my_bookings:'My Bookings',no_bookings:'No bookings yet.',member_benefit:'Your {p}% member discount is applied to every booking automatically.',
 st_yeni:'Awaiting confirmation',st_onay:'Confirmed',st_tamam:'Completed',st_iptal:'Cancelled',
 wa_hello:'Hello, I would like to confirm my booking.',wa_demo:'The business WhatsApp number has not been entered in this sample site yet.',search_first:'Search your route first, then choose your vehicle.',
-why_title:'Why Choose Atalia Tour?',w1:'24/7 Support',w1s:'We are here for you anytime.',w2:'Instant Confirmation',w2s:'Get your booking confirmed instantly.',w3:'Secure Payment',w3s:'Your payment is safe and encrypted.',w4:'Professional Drivers',w4s:'Experienced & friendly drivers.',w5:'Free Cancellation',w5s:'Cancel up to 24 hours in advance.',w6:'Multilingual Service',w6s:'We speak your language.',
-fav_title:'Favourite Transfers',rev_title:'What Our Guests Say',fav_pick:'Route selected, now choose the date and time.',choose_title:'Choose Your Vehicle',fit_sub:'Vehicles suitable for {n} passengers',no_vehicle:'There is no vehicle on the site for this number of passengers. Message us on WhatsApp and we will arrange the right vehicle.',
+why_title:'Why Atalia Transfer',w1:'24/7 Support',w1s:'We are always here for you.',w2:'Instant Confirmation',w2s:'Your booking is confirmed instantly.',w3:'Professional Drivers',w3s:'Safe and experienced drivers.',w4:'Door-to-Door Transfer',w4s:'Straight to your destination.',prev:'Previous',next:'Next',
+fav_title:'Favourite Transfers',fav_sub:'The most popular destinations in Antalya',rev_title:'Guest Reviews',fav_pick:'Route selected, now choose the date and time.',fav_where:'Type your hotel or destination.',choose_title:'Choose Your Vehicle',fit_sub:'Vehicles suitable for {n} passengers',no_vehicle:'There is no vehicle on the site for this number of passengers. Message us on WhatsApp and we will arrange the right vehicle.',
 flight:'Flight Number',ret_info:'Return Transfer',ret_flight:'Return Flight No',ret_flight_time:'Flight Time',pickup_time:'Pickup Time',err_ret_flight:'Please enter your return flight time.',err_pickup:'Please enter the pickup time.',flight_ph:'e.g. TK 2412',seat:'Child Seat',seat_none:'Not needed',seat_1:'1 seat',seat_n:'{n} seats'},
 ru:{nav_home:'Главная',nav_fleet:'Автопарк',nav_services:'Услуги',nav_why:'Почему Atalia?',nav_contact:'Контакты',support:'Поддержка клиентов',signin:'Войти',
 hero_kicker:'Трансфер из аэропорта Анталии',hero_1:'Ваша поездка —',hero_2a:'наш ',hero_2b:'приоритет.',hero_sub:'Комфортно|Безопасно|Вовремя',
@@ -1101,8 +1164,8 @@ booked_title:'Ваше бронирование получено',booked_sub:'О
 account:'Мой аккаунт',signin_reg:'Войти / Регистрация',signin_t:'Вход',register_t:'Регистрация',password:'Пароль',login_btn:'Войти',register_btn:'Зарегистрироваться',demo_acc:'Для проверки используйте пример аккаунта:',demo_fill:'Заполнить примером',login_bad:'Неверный e-mail или пароль.',login_blocked:'Аккаунт отключён. Свяжитесь с нами.',reg_exists:'Аккаунт с этим e-mail уже существует.',reg_short:'Пароль — минимум 4 символа.',welcome:'Добро пожаловать, {n}',logout:'Выйти',my_bookings:'Мои бронирования',no_bookings:'Бронирований пока нет.',member_benefit:'Скидка участника {p}% применяется к каждому бронированию автоматически.',
 st_yeni:'Ожидает подтверждения',st_onay:'Подтверждено',st_tamam:'Выполнено',st_iptal:'Отменено',
 wa_hello:'Здравствуйте, хочу подтвердить бронирование.',wa_demo:'В демо-версии номер WhatsApp компании ещё не указан.',search_first:'Сначала найдите маршрут, затем выберите автомобиль.',
-why_title:'Почему Atalia Tour?',w1:'Поддержка 24/7',w1s:'Мы на связи в любое время.',w2:'Мгновенное подтверждение',w2s:'Бронирование подтверждается сразу.',w3:'Безопасная оплата',w3s:'Ваш платёж защищён и зашифрован.',w4:'Опытные водители',w4s:'Опытные и доброжелательные водители.',w5:'Бесплатная отмена',w5s:'Отмена не позднее чем за 24 часа.',w6:'Сервис на вашем языке',w6s:'Мы говорим на вашем языке.',
-fav_title:'Популярные трансферы',rev_title:'Что говорят гости',fav_pick:'Маршрут выбран, теперь выберите дату и время.',choose_title:'Выберите автомобиль',fit_sub:'Автомобили для {n} пассажиров',no_vehicle:'Для такого числа пассажиров на сайте нет автомобиля. Напишите нам в WhatsApp, и мы подберём подходящий.',
+why_title:'Почему Atalia Transfer',w1:'Поддержка 24/7',w1s:'Мы всегда рядом.',w2:'Мгновенная бронь',w2s:'Бронь подтвер\u00adждается сразу.',w3:'Опытные водители',w3s:'Надёжные и опытные водители.',w4:'От двери до двери',w4s:'Прямо к месту назначения.',prev:'Назад',next:'Далее',
+fav_title:'Популярные трансферы',fav_sub:'Самые популярные направления Антальи',rev_title:'Отзывы гостей',fav_pick:'Маршрут выбран, теперь выберите дату и время.',fav_where:'Введите отель или место назначения.',choose_title:'Выберите автомобиль',fit_sub:'Автомобили для {n} пассажиров',no_vehicle:'Для такого числа пассажиров на сайте нет автомобиля. Напишите нам в WhatsApp, и мы подберём подходящий.',
 flight:'Номер рейса',ret_info:'Обратный трансфер',ret_flight:'Обратный рейс',ret_flight_time:'Время рейса',pickup_time:'Подача',err_ret_flight:'Укажите время обратного рейса.',err_pickup:'Укажите время подачи.',flight_ph:'напр. SU 2136',seat:'Детское кресло',seat_none:'Не нужно',seat_1:'1 кресло',seat_n:'{n} кресла'},
 de:{nav_home:'Startseite',nav_fleet:'Unsere Flotte',nav_services:'Leistungen',nav_why:'Warum Atalia?',nav_contact:'Kontakt',support:'Kundenservice',signin:'Anmelden',
 hero_kicker:'Antalya Flughafentransfer',hero_1:'Ihre Reise.',hero_2a:'Unsere ',hero_2b:'Priorität.',hero_sub:'Komfortabel|Sicher|Pünktlich',
@@ -1123,8 +1186,8 @@ booked_title:'Ihre Buchung ist eingegangen',booked_sub:'Bitte senden Sie sie uns
 account:'Mein Konto',signin_reg:'Anmelden / Registrieren',signin_t:'Anmelden',register_t:'Registrieren',password:'Passwort',login_btn:'Anmelden',register_btn:'Registrieren',demo_acc:'Zum Testen das Beispielkonto verwenden:',demo_fill:'Mit Beispielkonto ausfüllen',login_bad:'E-Mail oder Passwort ist falsch.',login_blocked:'Dieses Konto ist gesperrt. Bitte kontaktieren Sie uns.',reg_exists:'Mit dieser E-Mail gibt es bereits ein Konto.',reg_short:'Das Passwort muss mindestens 4 Zeichen haben.',welcome:'Willkommen, {n}',logout:'Abmelden',my_bookings:'Meine Buchungen',no_bookings:'Noch keine Buchungen.',member_benefit:'Ihr Mitgliederrabatt von {p} % gilt automatisch für jede Buchung.',
 st_yeni:'Wartet auf Bestätigung',st_onay:'Bestätigt',st_tamam:'Abgeschlossen',st_iptal:'Storniert',
 wa_hello:'Hallo, ich möchte meine Buchung bestätigen.',wa_demo:'Die WhatsApp-Nummer des Unternehmens ist in dieser Beispielseite noch nicht eingetragen.',search_first:'Suchen Sie zuerst Ihre Strecke und wählen Sie dann Ihr Fahrzeug.',
-why_title:'Warum Atalia Tour?',w1:'24/7 Support',w1s:'Wir sind jederzeit für Sie da.',w2:'Sofortige Bestätigung',w2s:'Ihre Buchung wird sofort bestätigt.',w3:'Sichere Zahlung',w3s:'Ihre Zahlung ist sicher und verschlüsselt.',w4:'Professionelle Fahrer',w4s:'Erfahrene & freundliche Fahrer.',w5:'Kostenlose Stornierung',w5s:'Stornierung bis 24 Stunden vorher.',w6:'Mehrsprachiger Service',w6s:'Wir sprechen Ihre Sprache.',
-fav_title:'Beliebte Transfers',rev_title:'Was unsere Gäste sagen',fav_pick:'Strecke gewählt, wählen Sie jetzt Datum und Uhrzeit.',choose_title:'Wählen Sie Ihr Fahrzeug',fit_sub:'Passende Fahrzeuge für {n} Fahrgäste',no_vehicle:'Für diese Personenzahl gibt es auf der Seite kein Fahrzeug. Schreiben Sie uns per WhatsApp, wir organisieren das passende Fahrzeug.',
+why_title:'Warum Atalia Transfer',w1:'24/7 Support',w1s:'Wir sind immer für Sie da.',w2:'Sofort bestätigt',w2s:'Ihre Buchung wird sofort bestätigt.',w3:'Profi-Fahrer',w3s:'Sichere und erfahrene Fahrer.',w4:'Tür-zu-Tür-Transfer',w4s:'Direkt an Ihr Ziel.',prev:'Zurück',next:'Weiter',
+fav_title:'Beliebte Transfers',fav_sub:'Die beliebtesten Ziele in Antalya',rev_title:'Gästebewertungen',fav_pick:'Strecke gewählt, wählen Sie jetzt Datum und Uhrzeit.',fav_where:'Geben Sie Ihr Hotel oder Ziel ein.',choose_title:'Wählen Sie Ihr Fahrzeug',fit_sub:'Passende Fahrzeuge für {n} Fahrgäste',no_vehicle:'Für diese Personenzahl gibt es auf der Seite kein Fahrzeug. Schreiben Sie uns per WhatsApp, wir organisieren das passende Fahrzeug.',
 flight:'Flugnummer',ret_info:'Rücktransfer',ret_flight:'Rückflug-Nr.',ret_flight_time:'Flugzeit',pickup_time:'Abholzeit',err_ret_flight:'Bitte geben Sie die Zeit Ihres Rückflugs ein.',err_pickup:'Bitte geben Sie die Abholzeit ein.',flight_ph:'z. B. TK 2412',seat:'Kindersitz',seat_none:'Nicht nötig',seat_1:'1 Sitz',seat_n:'{n} Sitze'}
 };
 const HAVALIMANLARI = [
@@ -1153,16 +1216,16 @@ const ULKE = {
 function varsayilanIcerik() {
   return {
     favori:[
-      {id:'f1', bolge:'lara', puan:4.9, foto:'fav-lara.webp', ad:{tr:'Lara Otelleri', en:'Lara Hotels', ru:'Отели Лары', de:'Lara Hotels'}, etiket:{tr:'En çok tercih edilen', en:'Most popular', ru:'Самый популярный', de:'Am beliebtesten'}},
-      {id:'f2', bolge:'side', puan:4.8, foto:'fav-side.webp', ad:{tr:'Side', en:'Side', ru:'Сиде', de:'Side'}, etiket:{tr:'Aileler için ideal', en:'Ideal for families', ru:'Идеально для семей', de:'Ideal für Familien'}},
-      {id:'f3', bolge:'belek', puan:4.9, foto:'fav-belek.webp', ad:{tr:'Belek', en:'Belek', ru:'Белек', de:'Belek'}, etiket:{tr:'Golf otelleri', en:'Golf hotels', ru:'Гольф-отели', de:'Golfhotels'}}
+      {id:'f1', bolge:'', foto:'fav-antalya.webp', ad:{tr:'Antalya - Lara / Belek / Side / Alanya / Kemer', en:'Antalya - Lara / Belek / Side / Alanya / Kemer', ru:'Анталья - Лара / Белек / Сиде / Аланья / Кемер', de:'Antalya - Lara / Belek / Side / Alanya / Kemer'}},
+      {id:'f2', bolge:'', foto:'fav-legends.webp', ad:{tr:'The Land of Legends / Sea Alanya', en:'The Land of Legends / Sea Alanya', ru:'The Land of Legends / Sea Alanya', de:'The Land of Legends / Sea Alanya'}},
+      {id:'f3', bolge:'belek', foto:'fav-belek.webp', ad:{tr:'Belek Golf Otelleri', en:'Belek Golf Hotels', ru:'Гольф-отели Белека', de:'Golfhotels in Belek'}}
     ],
     yorumlar:[
-      {id:'y1', ad:'Anna K.', ulke:'DE', puan:5, aktif:true, metin:{tr:'Uçuşum rötar yaptı ama şoför bizi bekliyordu. Çok profesyonel bir hizmet.', en:'My flight was delayed, but the driver was waiting for us. A very professional service.', ru:'Рейс задержали, но водитель нас дождался. Очень профессиональный сервис.', de:'Mein Flug hatte Verspätung, aber der Fahrer hat auf uns gewartet. Ein sehr professioneller Service.'}},
+      {id:'y1', ad:'Anna K.', ulke:'DE', puan:5, aktif:true, foto:'yorum-anna.webp', metin:{tr:'Uçuşum rötar yaptı ama şoför bizi bekliyordu. Çok profesyonel bir hizmet.', en:'My flight was delayed, but the driver was waiting for us. A very professional service.', ru:'Рейс задержали, но водитель нас дождался. Очень профессиональный сервис.', de:'Mein Flug hatte Verspätung, aber der Fahrer hat auf uns gewartet. Ein sehr professioneller Service.'}},
       {id:'y2', ad:'Mark T.', ulke:'GB', puan:5, aktif:true, metin:{tr:'Araç tertemizdi, çocuk koltuğu hazırdı. Kesinlikle tavsiye ederim.', en:'The car was spotless and the child seat was ready. Highly recommended.', ru:'Машина была идеально чистой, детское кресло уже стояло. Однозначно рекомендую.', de:'Das Auto war blitzsauber, der Kindersitz war bereit. Absolut empfehlenswert.'}},
       {id:'y3', ad:'Elif Y.', ulke:'TR', puan:4.5, aktif:true, metin:{tr:'Fiyat baştan belliydi, ekstra ücret yoktu.', en:'The price was clear from the start, no extra charges.', ru:'Цена была известна заранее, никаких доплат.', de:'Der Preis stand von Anfang an fest, keine Extrakosten.'}}
     ],
-    sozlesme:varsayilanSozlesme()
+    sozlesme:varsayilanSozlesme(), icerikS:2
   };
 }
 // sözleşme metinleri: her satır bir madde; işletme panelde Ayarlar'dan yazar (bunlar örnek)
@@ -1275,6 +1338,13 @@ function icerikTamamla() {
   if (!Array.isArray(S.favori)) S.favori = v.favori;
   if (!Array.isArray(S.yorumlar)) S.yorumlar = v.yorumlar;
   if (!S.sozlesme) S.sozlesme = v.sozlesme;
+  // 05.11 yeni tasarım: eski örnek favori kartları (değiştirilmediyse) yenileriyle değişir, ilk örnek yoruma fotoğraf gelir
+  if (S.icerikS !== 2) {
+    const eskiOrnek = S.favori.length === 3 && S.favori.every((f, i) => f.id === 'f' + (i + 1) && /^fav-(lara|side|belek)\.webp$/.test(f.foto));
+    if (eskiOrnek) S.favori = v.favori;
+    const y1 = S.yorumlar.find(y => y.id === 'y1'); if (y1 && !y1.foto) y1.foto = 'yorum-anna.webp';
+    S.icerikS = 2;
+  }
 }
 function kaydet() { bellek = S; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
 yukle();
@@ -1313,8 +1383,9 @@ function dilUygula() {
   $$('[data-th]').forEach(e => e.innerHTML = t(e.dataset.th));
   $$('[data-tp]').forEach(e => e.placeholder = t(e.dataset.tp));
   $('#slogan').innerHTML = t('hero_sub').split('|').map(esc).join('<i></i>');
-  $('#dilKod').textContent = dil.toUpperCase();
-  $('#dilListe').innerHTML = aktifDiller().map(d => `<button type="button" data-dil="${d}" class="${d === dil ? 'secili' : ''}">${DIL_AD[d]}<span>${PARA[d].isaret}</span></button>`).join('');
+  $('#dilKod').textContent = $('#hzDilKod').textContent = dil.toUpperCase();
+  $('#dilListe').innerHTML = $('#hzDilListe').innerHTML = aktifDiller().map(d => `<button type="button" data-dil="${d}" class="${d === dil ? 'secili' : ''}">${DIL_AD[d]}<span>${PARA[d].isaret}</span></button>`).join('');
+  $$('[data-t-aria]').forEach(e => e.setAttribute('aria-label', t(e.dataset.tAria)));
   $('#cekDil').innerHTML = aktifDiller().map(d => `<button type="button" data-dil="${d}" class="${d === dil ? 'secili' : ''}">${d.toUpperCase()}</button>`).join('');
   rotaAlanCiz();
   $('#donusKaldir').setAttribute('aria-label', t('remove_return'));
@@ -1327,7 +1398,7 @@ function dilUygula() {
 }
 function dilSec(d) {
   dil = d; try { localStorage.setItem(DILK, d); } catch (e) {}
-  $('#dil').classList.remove('acik'); dilUygula();
+  $('#dil').classList.remove('acik'); $('#hzDil').classList.remove('acik'); dilUygula();
 }
 
 /* ---------------- arama durumu ---------------- */
@@ -1501,21 +1572,54 @@ function yildizHTML(p) {
 function vitrinCiz() {
   const fav = S.favori || [], yor = (S.yorumlar || []).filter(y => y.aktif !== false && metinSec(y.metin));
   $('#favBolum').hidden = !fav.length; $('#yorumBolum').hidden = !yor.length; $('#vitrin').hidden = !fav.length && !yor.length;
-  $('#yorumBolum h2').classList.toggle('ikinci', fav.length > 0);
   $('#favListe').innerHTML = fav.map((f, i) => `<button type="button" class="fav" data-fav="${i}">
-      <span class="fav-foto" style="background-image:url('${esc(f.foto)}')"><span class="fav-y"><b>AYT → ${esc(metinSec(f.ad))}</b><span class="puan">${yildizHTML(f.puan)}${esc(puanYaz(f.puan))}</span></span></span>
-      <span class="fav-alt"><svg class="ic"><use href="#i-konum"/></svg><span>${esc(metinSec(f.etiket))}</span><svg class="ic git"><use href="#i-ok-sag"/></svg></span></button>`).join('');
+      <span class="fav-foto" style="background-image:url('${esc(f.foto)}')"></span>
+      <span class="fav-alt"><svg class="ic"><use href="#i-konum"/></svg><span class="fav-ad">${esc(metinSec(f.ad))}</span><span class="fav-git"><svg class="ic"><use href="#i-ok-sag"/></svg></span></span></button>`).join('');
   $('#yorumListe').innerHTML = yor.map(y => {
-    const u = ULKE[y.ulke];
-    return `<figure class="yorum"><div class="yorum-ust">${u ? `<span class="bayrak"><svg><use href="#b-${y.ulke.toLowerCase()}"/></svg></span>` : ''}${yildizHTML(y.puan)}</div>
-      <q>${esc(metinSec(y.metin))}</q><figcaption class="yorum-ad"><b>${esc(y.ad)}</b>${u ? ' | ' + esc(u[dil]) : ''}</figcaption></figure>`;
+    const u = ULKE[y.ulke], bas = (y.ad || '?').trim().charAt(0).toUpperCase();
+    return `<figure class="yorum"><div class="yorum-sol"><span class="yorum-foto">${y.foto ? `<img src="${esc(y.foto)}" alt="" loading="lazy">` : esc(bas)}</span>${yildizHTML(y.puan)}</div>
+      <div><q>${esc(metinSec(y.metin))}</q><figcaption class="yorum-ad"><b>${esc(y.ad)}</b>${u ? `<i></i><span>${esc(u[dil])}</span><span class="bayrak"><svg><use href="#b-${y.ulke.toLowerCase()}"/></svg></span>` : ''}</figcaption></div></figure>`;
   }).join('');
+  $$('.karusel').forEach(karuselCiz);
 }
+/* kaydırmalı kartlar: oklar bir kart kaydırır, noktalar konumu gösterir; hepsi sığınca oklar ve noktalar gizlenir */
+function karuselAdim(liste) { const o = liste.children; return o.length > 1 ? o[1].offsetLeft - o[0].offsetLeft : liste.clientWidth; }
+function karuselCiz(kok) {
+  const liste = kok.querySelector('.kaydir'), n = liste.children.length;
+  const tasar = n > 0 && liste.scrollWidth > liste.clientWidth + 2;
+  kok.classList.toggle('tasar', tasar);
+  const sayfa = tasar ? Math.max(1, n - Math.round((liste.clientWidth + 1) / karuselAdim(liste)) + 1) : 0;
+  const nokta = kok.querySelector('.kr-nokta');
+  if (nokta.children.length !== sayfa) nokta.innerHTML = '<i></i>'.repeat(sayfa);
+  karuselDurum(kok);
+}
+function karuselDurum(kok) {
+  const liste = kok.querySelector('.kaydir'), son = liste.scrollWidth - liste.clientWidth, x = liste.scrollLeft;
+  const nokta = [...kok.querySelectorAll('.kr-nokta i')];
+  if (nokta.length) { const i = x >= son - 2 ? nokta.length - 1 : Math.min(nokta.length - 1, Math.round(x / karuselAdim(liste))); nokta.forEach((e, j) => e.classList.toggle('aktif', j === i)); }
+  kok.querySelector('.kr-ok.sol').disabled = x <= 2;
+  kok.querySelector('.kr-ok.sag').disabled = x >= son - 2;
+}
+$$('.karusel').forEach(kok => {
+  const liste = kok.querySelector('.kaydir');
+  liste.addEventListener('scroll', () => karuselDurum(kok), {passive:true});
+  kok.querySelectorAll('.kr-ok').forEach(b => b.addEventListener('click', () => liste.scrollBy({left:(b.classList.contains('sag') ? 1 : -1) * karuselAdim(liste), behavior:'smooth'})));
+  if ('ResizeObserver' in window) new ResizeObserver(() => karuselCiz(kok)).observe(liste);
+});
 $('#favListe').addEventListener('click', e => {
   const b = e.target.closest('[data-fav]'); if (!b) return;
-  const f = S.favori[+b.dataset.fav], p = f && POPULER.find(x => x.id === f.bolge); if (!p) return;
-  A.nereden = havalimaniYer('ayt'); A.nereye = {ad:p.ad, lat:p.lat, lon:p.lon, hid:null};
-  $('#nereden').value = A.nereden.ad; $('#nereye').value = A.nereye.ad;
+  const f = S.favori[+b.dataset.fav]; if (!f) return;
+  const p = POPULER.find(x => x.id === f.bolge);
+  A.nereden = havalimaniYer('ayt'); A.nereye = p ? {ad:p.ad, lat:p.lat, lon:p.lon, hid:null} : null;
+  $('#nereden').value = A.nereden.ad; $('#nereye').value = A.nereye ? A.nereye.ad : '';
+  if (!p) {
+    $$('.alan.hata').forEach(a => a.classList.remove('hata'));
+    rotaAlanCiz(); rotaSifirla(); tost(t('fav_where'));
+    $('.arama-alan').scrollIntoView({behavior:'smooth', block:'center'});
+    $('#nereye').focus({preventScroll:true});
+    setTimeout(() => oneriAc('nereye'), 0); // bu tıklamayı belge düzeyinde dinleyen 'dışarı basınca kapat' kapatmasın
+    return;
+  }
   $$('.alan.hata').forEach(a => a.classList.remove('hata'));
   rotaAlanCiz(); rotaSifirla();
   const zamanTam = $('#tarih').value && $('#saat').value && (A.tip !== 'gd' || ($('#dTarih').value && $('#dSaat').value));
@@ -1897,7 +2001,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') { modalKapat
 function hesapCiz() {
   const u = oturum();
   const yazi = u ? u.ad.split(' ')[0] : t('signin');
-  $('#hesapYazi').textContent = yazi; $('#cekHesap').textContent = u ? t('account') + ' · ' + yazi : t('signin_reg');
+  $('#hesapYazi').textContent = yazi; $('#hzHesap').textContent = yazi; $('#cekHesap').textContent = u ? t('account') + ' · ' + yazi : t('signin_reg');
   if (u) { if (!$('#ad').value) $('#ad').value = u.ad; if (!$('#tel').value) $('#tel').value = u.tel; if (!$('#eposta').value) $('#eposta').value = u.eposta; }
 }
 function hesapAc(sekme = 'giris') {
@@ -1970,6 +2074,10 @@ document.addEventListener('click', e => {
   if (tg && !S.ayar.telegram) { e.preventDefault(); tost(t('wa_demo').replace('WhatsApp', 'Telegram')); }
 });
 $('#dil .dil-btn').addEventListener('click', () => $('#dil').classList.toggle('acik'));
+$('#hzDil .dil-btn').addEventListener('click', () => $('#hzDil').classList.toggle('acik'));
+// sabit üst şerit: kapağın üstündeyken saydam, kaydırınca koyu zemin
+const ustBak = () => $('#ust').classList.toggle('dolu', scrollY > 8);
+addEventListener('scroll', ustBak, {passive:true}); ustBak();
 $('#burger').addEventListener('click', () => $('#cekmece').classList.add('acik'));
 $('#cekKapat').addEventListener('click', () => $('#cekmece').classList.remove('acik'));
 $('#cekmece').addEventListener('click', e => { if (e.target.id === 'cekmece' || e.target.closest('nav a') || e.target.closest('a[href="#panel"]')) $('#cekmece').classList.remove('acik'); });
@@ -1979,6 +2087,7 @@ function iletisimCiz() {
   $$('[data-wa]').forEach(e => { e.href = no ? 'https://wa.me/' + no : '#'; if (no) { e.target = '_blank'; e.rel = 'noopener'; } else e.removeAttribute('target'); });
   $$('[data-tg]').forEach(e => { e.href = a.telegram ? 'https://t.me/' + a.telegram.replace(/^@/, '') : '#'; if (a.telegram) { e.target = '_blank'; e.rel = 'noopener'; } });
   $('#altTel').textContent = a.telefon; $('#altTel').href = 'tel:' + a.telefon.replace(/[^\d+]/g, '');
+  $('#hzTel').hidden = !a.telefon; $('#hzTelYazi').textContent = a.telefon; $('#hzTel').href = 'tel:' + a.telefon.replace(/[^\d+]/g, '');
   $('#altPosta').textContent = a.eposta; $('#altPosta').href = 'mailto:' + a.eposta;
   $('#altAdres').textContent = a.adres;
 }
@@ -2299,15 +2408,13 @@ function pIcerik() {
     ? `<textarea class="p-girdi" rows="2" ${on} data-k="${alan}|${d}">${esc((o[alan] || {})[d] || '')}</textarea>`
     : `<input class="p-girdi" ${on} data-k="${alan}|${d}" value="${esc((o[alan] || {})[d] || '')}">`}</div>`).join('')}</div>`;
   const fav = S.favori.map((f, i) => `<div class="icerik-blok"><div class="arac-p">
-      <div><div class="foto-k" style="aspect-ratio:760/285"><img src="${esc(f.foto)}" alt=""></div><label class="foto-sec">Fotoğrafı değiştir<input type="file" accept="image/*" data-f="${i}" data-k="foto"></label></div>
+      <div><div class="foto-k" style="aspect-ratio:2/1"><img src="${esc(f.foto)}" alt=""></div><label class="foto-sec">Fotoğrafı değiştir<input type="file" accept="image/*" data-f="${i}" data-k="foto"></label></div>
       <div>
         <div class="izgara-3">
-          <div class="p-alan"><label>Bölge</label><select class="p-girdi" data-f="${i}" data-k="bolge">${POPULER.map(p => `<option value="${p.id}" ${p.id === f.bolge ? 'selected' : ''}>${esc(p.ad)}</option>`).join('')}</select><small>Karta basınca aramaya gelen yer</small></div>
-          <div class="p-alan"><label>Puan (0-5)</label><input class="p-girdi" type="number" min="0" max="5" step="0.1" data-f="${i}" data-k="puan" value="${f.puan}"></div>
+          <div class="p-alan" style="grid-column:span 2"><label>Karta basınca</label><select class="p-girdi" data-f="${i}" data-k="bolge"><option value="" ${!POPULER.some(p => p.id === f.bolge) ? 'selected' : ''}>Nereye alanı açılır (birden çok yer yazan kart)</option>${POPULER.map(p => `<option value="${p.id}" ${p.id === f.bolge ? 'selected' : ''}>Havalimanı → ${esc(p.ad)} aramaya gelir</option>`).join('')}</select></div>
           <div class="p-alan" style="align-self:end;text-align:right"><button type="button" class="p-btn kirmizi" data-fsil="${i}"><svg class="ic"><use href="#i-cop"/></svg>Kartı sil</button></div>
         </div>
-        <div class="p-alt-b">Başlık (önüne "AYT →" yazılır)</div>${dilAlan(f, 'ad', `data-f="${i}"`)}
-        <div class="p-alt-b">Alt yazı</div>${dilAlan(f, 'etiket', `data-f="${i}"`)}
+        <div class="p-alt-b">Kart yazısı</div>${dilAlan(f, 'ad', `data-f="${i}"`)}
       </div></div></div>`).join('');
   const yor = S.yorumlar.map((y, i) => `<div class="icerik-blok">
       <div class="izgara-4">
@@ -2316,10 +2423,11 @@ function pIcerik() {
         <div class="p-alan"><label>Puan (1-5)</label><input class="p-girdi" type="number" min="1" max="5" step="0.5" data-y="${i}" data-k="puan" value="${y.puan}"></div>
         <div class="p-alan"><label>Sitede</label><div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px"><label class="anahtar"><input type="checkbox" data-y="${i}" data-k="aktif" ${y.aktif !== false ? 'checked' : ''}><i></i>${y.aktif !== false ? 'Gösteriliyor' : 'Gizli'}</label><button type="button" class="ikon-btn" data-ysil="${i}" aria-label="Yorumu sil"><svg class="ic"><use href="#i-cop"/></svg></button></div></div>
       </div>
+      <div class="yorum-p"><span class="yorum-foto">${y.foto ? `<img src="${esc(y.foto)}" alt="">` : esc((y.ad || '?').charAt(0).toUpperCase())}</span><label class="foto-sec">Fotoğraf seç<input type="file" accept="image/*" data-y="${i}" data-k="foto"></label>${y.foto ? `<button type="button" class="p-btn ince" data-yfsil="${i}">Fotoğrafı kaldır</button>` : '<small>Fotoğraf yoksa adın baş harfi görünür</small>'}</div>
       <div class="p-alt-b">Yorum</div>${dilAlan(y, 'metin', `data-y="${i}"`, true)}
     </div>`).join('');
   return pBas('Ana Sayfa', 'Favori transfer kartları ve misafir yorumları; değişiklik sitede anında görünür.') + `
-  <div class="p-kart"><h2>Favori Transferler</h2><p class="acik-y">Müşteri karta basınca güzergâh (havalimanı → bölge) arama kutusuna gelir. Bir dilde yazı boşsa İngilizcesi görünür.</p>${fav || '<p class="bos">Kart yok</p>'}
+  <div class="p-kart"><h2>Favori Transferler</h2><p class="acik-y">Müşteri karta basınca seçtiğiniz bölge aramaya gelir; birden çok yer yazan kartta Nereye alanı açılır. Bir dilde yazı boşsa İngilizcesi görünür.</p>${fav || '<p class="bos">Kart yok</p>'}
     <button type="button" class="p-btn ince" id="fEkle" style="margin-top:6px"><svg class="ic"><use href="#i-arti"/></svg>Kart ekle</button></div>
   <div class="p-kart"><h2>Misafir Yorumları</h2><p class="acik-y">Bu örnekteki yorumlar gösterim içindir; yayında yalnız gerçek müşteri yorumları girilir. Bir dilde yorum boşsa İngilizcesi görünür.</p>${yor || '<p class="bos">Yorum yok</p>'}
     <button type="button" class="p-btn ince" id="yEkle" style="margin-top:6px"><svg class="ic"><use href="#i-arti"/></svg>Yorum ekle</button></div>`;
@@ -2333,9 +2441,10 @@ function pIcerikBagla() {
     if (g.dataset.f != null) {
       const f = S.favori[+g.dataset.f]; if (!f) return;
       if (k === 'foto') { if (g.files[0]) resimKucult(g.files[0], url => { f.foto = url; kaydet(); panelCiz(); vitrinCiz(); tost('Fotoğraf güncellendi'); }); return; }
-      if (k === 'puan') { const v = puanAl(g, f.puan, 0); if (v == null) return; f.puan = v; } else yaz(f, k, g.value.trim());
+      yaz(f, k, g.value.trim());
     } else if (g.dataset.y != null) {
       const y = S.yorumlar[+g.dataset.y]; if (!y) return;
+      if (k === 'foto') { if (g.files[0]) resimKucult(g.files[0], url => { y.foto = url; kaydet(); panelCiz(); vitrinCiz(); tost('Fotoğraf güncellendi'); }); return; }
       if (k === 'puan') { const v = puanAl(g, y.puan, 1); if (v == null) return; y.puan = v; }
       else if (k === 'aktif') { y.aktif = g.checked; g.parentElement.lastChild.textContent = g.checked ? 'Gösteriliyor' : 'Gizli'; }
       else yaz(y, k, g.value.trim());
@@ -2343,13 +2452,15 @@ function pIcerikBagla() {
     kaydet(); vitrinCiz(); tost('Kaydedildi');
   };
   ana.onclick = e => {
+    const fs = e.target.closest('[data-yfsil]');
+    if (fs) { const y = S.yorumlar[+fs.dataset.yfsil]; if (y) { delete y.foto; kaydet(); panelCiz(); vitrinCiz(); tost('Fotoğraf kaldırıldı'); } return; }
     const sil = e.target.closest('[data-fsil], [data-ysil]');
     if (sil) {
       if (!sil.dataset.emin) { sil.dataset.emin = 1; tost('Silmek için tekrar basın'); return; }
       if (sil.dataset.fsil != null) S.favori.splice(+sil.dataset.fsil, 1); else S.yorumlar.splice(+sil.dataset.ysil, 1);
       kaydet(); panelCiz(); vitrinCiz(); tost('Silindi'); return;
     }
-    if (e.target.closest('#fEkle')) { S.favori.push({id:'f' + Date.now().toString(36), bolge:'kemer', puan:5, foto:'fav-side.webp', ad:{tr:'Kemer', en:'Kemer', ru:'Кемер', de:'Kemer'}, etiket:{}}); kaydet(); panelCiz(); vitrinCiz(); tost('Kart eklendi'); }
+    if (e.target.closest('#fEkle')) { S.favori.push({id:'f' + Date.now().toString(36), bolge:'kemer', foto:'fav-antalya.webp', ad:{tr:'Kemer', en:'Kemer', ru:'Кемер', de:'Kemer'}}); kaydet(); panelCiz(); vitrinCiz(); tost('Kart eklendi'); }
     if (e.target.closest('#yEkle')) { S.yorumlar.push({id:'y' + Date.now().toString(36), ad:'', ulke:'TR', puan:5, aktif:false, metin:{}}); kaydet(); panelCiz(); vitrinCiz(); tost('Yorum eklendi; yazıp "Sitede" anahtarını açın'); }
   };
 }
