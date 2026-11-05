@@ -374,16 +374,16 @@ input::-webkit-date-and-time-value{text-align:left}
 .kesfet{margin-left:auto;font-family:var(--el);font-size:36px;line-height:1;position:relative;padding-bottom:8px;white-space:nowrap}
 .kesfet svg{position:absolute;left:4%;right:0;bottom:-4px;width:96%;height:12px;color:var(--tur)}
 /* alt bölüm: Keşfedin şeridi + bilgiler tek parça */
-.alt{background:#011a1c;color:rgba(255,255,255,.72);font-size:14px;margin-top:44px}
-.alt-bant{position:relative;color:#fff;background:#011a1c url(kapak.jpg) 70% 42%/cover no-repeat;overflow:hidden}
-.alt-bant::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(1,26,28,.94),rgba(1,26,28,.7) 34%,rgba(1,26,28,.1) 62%,rgba(1,26,28,0)),linear-gradient(0deg,#011a1c,rgba(1,26,28,.8) 26%,rgba(1,26,28,0) 54%)}
-.alt-bant .kap{position:relative;min-height:410px;display:flex;flex-direction:column;justify-content:space-between;padding-top:50px}
-.ab-marka .logo svg{width:92px;height:76px}
-.ab-marka .logo b{font-size:44px}
-.ab-marka .logo small{font-size:15px;margin-top:9px}
-.ab-slogan{font-family:var(--serif);font-weight:600;font-size:34px;line-height:1.15;margin-top:18px}
-.ab-slogan em{font-style:normal;color:var(--tur)}
-.ab-serit{display:flex;flex-wrap:wrap;align-items:center;gap:8px 38px;min-height:84px;padding:18px 0}
+.alt{background:#022128;color:rgba(255,255,255,.72);font-size:14px;margin-top:44px}
+.alt-bant{position:relative;color:#fff;background:#022128;overflow:hidden}
+.ab-foto{position:relative;height:clamp(240px,24vw,400px);background:url(kapak.jpg) center 62%/cover no-repeat}
+.ab-foto::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,33,40,.25),rgba(2,33,40,0) 22%,rgba(2,33,40,0) 62%,#022128)}
+.alt-bant .kap{position:relative}
+.ab-serit{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px 12px;margin-top:-30px;padding:0 0 34px}
+.ab-serit .kesfet{grid-column:1/-1;grid-row:1;justify-self:center;margin:0 0 8px;font-size:44px}
+.ab-serit .serit-oge{flex-direction:column;gap:10px;font-size:15px;white-space:normal;text-align:center;line-height:1.25}
+.ab-serit .serit-ilk{padding-right:0;border-right:0}
+.ab-serit .serit-ilk .ok-s,.ab-serit .serit-ilk .ilk-hedef{display:none}
 .alt-ana{display:grid;grid-template-columns:1fr 1.3fr 1fr 1.25fr;padding-top:34px;padding-bottom:32px}
 .alt-sut{padding:0 28px;border-left:1px solid rgba(255,255,255,.1);min-width:0}
 .alt-sut:first-child{padding-left:0;border-left:0}
@@ -429,10 +429,6 @@ input::-webkit-date-and-time-value{text-align:left}
 .alt-not{display:flex;align-items:center;gap:8px 18px;flex-wrap:wrap;padding-bottom:78px}
 .alt-not .panel-link{margin-top:0}
 .alt .kunye{font-size:11.5px;line-height:1.6;color:rgba(255,255,255,.45);flex:1;min-width:240px}
-@media (max-width:1400px){
-  .ab-serit{display:grid;grid-template-columns:repeat(5,auto);justify-content:space-between;gap:12px 20px}
-  .ab-serit .kesfet{grid-column:1/-1;grid-row:1;justify-self:start;margin:0 0 6px}
-}
 .panel-link{display:inline-flex;align-items:center;gap:8px;margin-top:10px;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:7px 14px;color:#fff;font-weight:600}
 .panel-link .ic{width:16px;height:16px}
 .panel-pill{position:fixed;left:18px;bottom:18px;z-index:45;display:flex;align-items:center;gap:8px;background:#fff;color:var(--koyu);border:1px solid var(--cizgi);border-radius:999px;padding:9px 16px 9px 12px;font-size:13px;font-weight:700;box-shadow:0 12px 28px -14px rgba(1,35,38,.5);transition:transform .2s}
@@ -519,15 +515,11 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .burger{display:block}
   .bilgi{grid-template-columns:minmax(0,1fr)}
   .bilgi-foto{display:none}
-  .ab-serit{grid-template-columns:repeat(5,minmax(0,1fr));gap:12px 6px}
-  .serit-oge{flex-direction:column;gap:7px;font-size:12.5px;white-space:normal;text-align:center;line-height:1.25}
-  .serit-ilk{padding-right:0;border-right:0}
-  .serit-ilk .ok-s,.serit-ilk .ilk-hedef{display:none}
+  .ab-serit .serit-oge{font-size:13.5px}
   .alt-ana{grid-template-columns:1fr 1fr;row-gap:30px}
   .alt-sut:nth-child(3){padding-left:0;border-left:0}
   .alt-sut:nth-child(2){padding-right:0}
   .ao{padding:0 8px}
-  .ab-slogan{font-size:28px}
 }
 @media (max-width:760px){
   body{font-size:14.5px;padding-bottom:96px}
@@ -644,34 +636,38 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .toplam-bar .rez-btn{padding:0 18px;min-height:50px;font-size:15.5px}
   .toplam-bar .rez-btn .ic{display:none}
   .alt{margin-top:30px;margin-bottom:-96px}
-  .alt-bant{background-image:url(kesfet.jpg);background-position:center 40%}
-  .alt-bant::before{background:linear-gradient(180deg,rgba(1,35,38,.45),rgba(1,35,38,.86) 58%,#011a1c)}
-  .alt-bant .kap{min-height:0;padding-top:30px;align-items:center;text-align:center}
-  .ab-marka{display:flex;flex-direction:column;align-items:center}
-  .ab-marka .logo svg{width:58px;height:48px}
-  .ab-marka .logo b{font-size:28px}
-  .ab-marka .logo small{font-size:10.5px;margin-top:6px}
-  .ab-slogan{font-size:22px;margin-top:10px}
-  .ab-serit{display:grid;grid-template-columns:repeat(5,1fr);gap:16px 4px;width:100%;padding:24px 0 22px;overflow:visible}
+  .ab-foto{height:72vw;background-image:url(kapak-mobil.jpg);background-position:center 78%}
+  .ab-foto::after{background:linear-gradient(180deg,rgba(2,33,40,.2),rgba(2,33,40,0) 20%,rgba(2,33,40,0) 72%,#022128)}
+  .ab-serit{gap:16px 4px;margin-top:-16px;padding:0 0 22px}
+  .ab-serit .kesfet{font-size:34px;margin:0 0 10px}
+  .ab-serit .serit-oge{gap:7px;font-size:11px}
   .kesfet{grid-column:1/-1;grid-row:1;justify-self:center;margin:0 0 10px;font-size:34px}
   .serit-oge{flex-direction:column;gap:7px;font-size:11px;white-space:normal;text-align:center;line-height:1.25}
   .serit-oge .ic{width:24px;height:24px}
   .serit-ilk{padding-right:0;border-right:0}
   .serit-ilk .ok-s,.serit-ilk .ilk-hedef{display:none}
-  .alt-ana{grid-template-columns:1fr 1fr;grid-template-areas:"hl he" "il il" "bu bu";gap:28px 18px;padding-top:28px;padding-bottom:26px}
+  .alt-ana{grid-template-columns:1fr 1fr;grid-template-areas:"hl he" "il il" "bu bu";gap:20px 16px;padding-top:20px;padding-bottom:18px}
   .alt-sut{padding:0;border:0}
   .as-hl{grid-area:hl}.as-he{grid-area:he}.as-il{grid-area:il}.as-bu{grid-area:bu}
-  .alt h4{font-size:13px;margin-bottom:14px}
-  .alt li{padding:5px 0}
-  .alt-ozl{display:flex;flex-wrap:wrap;justify-content:center;row-gap:22px;padding-top:24px;padding-bottom:24px}
-  .ao{flex:0 0 33.333%;padding:0 6px;border:0}
-  .ao-hal{width:52px;height:52px;margin-bottom:10px}
-  .ao-hal .ic{width:24px;height:24px}
-  .ao b{font-size:13px;margin-bottom:4px}
-  .ao p{font-size:12px}
-  .alt-son{flex-direction:column-reverse;gap:16px;text-align:center}
+  .alt h4{font-size:12.5px;padding-bottom:9px;margin-bottom:10px}
+  .alt h4::after{width:28px;height:2.5px}
+  .alt li{padding:3px 0;gap:10px;font-size:13.5px}
+  .alt li .ic{width:18px;height:18px}
+  .alt-sut p{font-size:13.5px;margin-bottom:10px}
+  .alt-yuv{gap:10px;margin-bottom:8px}
+  .alt-yuv a{width:40px;height:40px}
+  .alt-yuv .ic{width:20px;height:20px}
+  .bulten input{padding:11px 10px}
+  .alt-ozl{grid-template-columns:repeat(5,minmax(0,1fr));gap:0 4px;padding-top:16px;padding-bottom:16px}
+  .ao{padding:0;border:0}
+  .ao-hal{width:42px;height:42px;border-width:1.5px;margin-bottom:7px}
+  .ao-hal .ic{width:20px;height:20px}
+  .ao b{font-size:10.5px;line-height:1.25;margin:0;overflow-wrap:anywhere;hyphens:auto}
+  .ao p{display:none}
+  .alt-son{flex-direction:column-reverse;gap:10px;text-align:center;padding-top:14px;padding-bottom:12px}
   .alt-son-sag{margin:0}
   .alt-not{justify-content:center;text-align:center;padding-bottom:124px}
+  .alt .kunye{font-size:11px}
   .panel-pill{display:none}
   .mobil-bar{display:flex;position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:60;background:#fff;color:var(--yazi);border:1px solid var(--cizgi2);border-radius:18px;min-height:68px;padding:9px 9px 9px 16px;align-items:center;gap:12px;box-shadow:0 16px 34px -14px rgba(1,35,38,.45);transition:transform .25s ease,opacity .25s ease}
   body.arama-gorunur .mobil-bar,body.form-gorunur .mobil-bar{transform:translateY(140%);opacity:0;pointer-events:none}
@@ -884,7 +880,7 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
     <symbol id="i-belge" viewBox="0 0 24 24"><path d="M14 3.5H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8.5z"/><path d="M14 3.5v5h5M8.8 12.5h6.4M8.8 16h6.4"/></symbol>
     <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".7" fill="currentColor"/></symbol>
     <symbol id="i-fb" viewBox="0 0 24 24"><path d="M12 2.5a9.5 9.5 0 0 0-1.5 18.9v-6.6H8.1V12h2.4V9.9c0-2.4 1.4-3.7 3.6-3.7 1 0 2.1.2 2.1.2v2.3h-1.2c-1.2 0-1.5.7-1.5 1.5V12h2.6l-.4 2.8h-2.2v6.6A9.5 9.5 0 0 0 12 2.5z" fill="currentColor" stroke="none"/></symbol>
-    <symbol id="i-yt" viewBox="0 0 24 24"><path d="M21.6 7.2a2.6 2.6 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4a2.6 2.6 0 0 0-1.8 1.8A27 27 0 0 0 2 12a27 27 0 0 0 .4 4.8 2.6 2.6 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.6 2.6 0 0 0 1.8-1.8A27 27 0 0 0 22 12a27 27 0 0 0-.4-4.8z" fill="currentColor" stroke="none"/><path d="M10 15.2V8.8l5.4 3.2z" fill="#011a1c" stroke="none"/></symbol>
+    <symbol id="i-yt" viewBox="0 0 24 24"><path d="M21.6 7.2a2.6 2.6 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4a2.6 2.6 0 0 0-1.8 1.8A27 27 0 0 0 2 12a27 27 0 0 0 .4 4.8 2.6 2.6 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.6 2.6 0 0 0 1.8-1.8A27 27 0 0 0 22 12a27 27 0 0 0-.4-4.8z" fill="currentColor" stroke="none"/><path d="M10 15.2V8.8l5.4 3.2z" fill="#022128" stroke="none"/></symbol>
     <symbol id="i-tt" viewBox="0 0 24 24"><path d="M16.6 3h-3.2v12.2a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .9.1V9.1a6.2 6.2 0 1 0 5.2 6.1V9.1a7.6 7.6 0 0 0 4.2 1.3V7.2a4.3 4.3 0 0 1-4.2-4.2z" fill="currentColor" stroke="none"/></symbol>
     <symbol id="i-simsek" viewBox="0 0 24 24"><path d="M13.2 2.6L4.6 13.4h6.6l-1.2 8 8.6-11h-6.6z"/></symbol>
     <symbol id="i-sofor" viewBox="0 0 24 24"><circle cx="12" cy="10.2" r="3.3"/><path d="M7 7.6c.6-2.5 2.6-4.1 5-4.1s4.4 1.6 5 4.1zM4.5 20.5c0-4.1 3.3-6.6 7.5-6.6s7.5 2.5 7.5 6.6M10.3 14.1l1.7 2.6 1.7-2.6"/></symbol>
@@ -1088,19 +1084,8 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
 
 <footer class="alt">
   <div class="alt-bant" id="hizmetler">
+    <div class="ab-foto" aria-hidden="true"></div>
     <div class="kap">
-      <div class="ab-marka">
-        <a href="#ana" class="logo" aria-label="ATALIA Transfer">
-          <svg viewBox="0 0 70 58" aria-hidden="true">
-            <path d="M5 55L27.5 6.5h6.6L13.2 55z" fill="#f7852e"/>
-            <path d="M29.3 12.5l3.6-5.3L45 55h-6.6z" fill="#f7852e"/>
-            <path d="M1 39.5C17 31 37 25.5 57 20.8" fill="none" stroke="#f7852e" stroke-width="3.2" stroke-linecap="round"/>
-            <g transform="translate(55.5 11.5) rotate(62) scale(.62)" fill="#f7852e"><use href="#i-ucak" width="24" height="24" x="-12" y="-12" style="fill:#f7852e;stroke:none"/></g>
-          </svg>
-          <span><b>ATALIA</b><small>TRANSFER</small></span>
-        </a>
-        <p class="ab-slogan"><span data-t="hero_1">Yolculuğunuz.</span> <span data-t="hero_2a">Bizim </span><em data-t="hero_2b">Önceliğimiz.</em></p>
-      </div>
       <div class="ab-serit">
         <div class="serit-oge serit-ilk"><svg class="ic"><use href="#i-konum"/></svg><span class="ilk-yazi"><span data-t="airport_short">Antalya Havalimanı</span></span><svg class="ic ok-s"><use href="#i-ok-sag"/></svg><span class="ilk-hedef" data-t="your_dest">Varış Noktanız</span></div>
         <div class="serit-oge"><svg class="ic"><use href="#i-otel"/></svg><span data-t="hotel_t">Otel Transferi</span></div>
