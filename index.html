@@ -21,7 +21,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..100,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111'/%3E%3Crect x='20' y='20' width='8' height='8' fill='%23ff4f1f'/%3E%3C/svg%3E">
 <link rel="preload" as="image" href="img/is/berber-panel.webp">
-<link rel="stylesheet" href="ana.css?v=1">
+<link rel="stylesheet" href="ana.css?v=2">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ProfessionalService","name":"Kerem Can Arslan","url":"https://keremcanarslan.github.io/","image":"https://keremcanarslan.github.io/img/og.jpg","areaServed":"TR","founder":{"@type":"Person","name":"Kerem Can Arslan","jobTitle":"Bilgisayar Mühendisi","sameAs":["https://github.com/KeremCanArslan"]},"sameAs":["https://github.com/KeremCanArslan"]}
 </script>
@@ -357,65 +357,6 @@
 
 <div class="onizleme" aria-hidden="true"><img alt=""></div>
 
-<script>
-(function () {
-  // Son güncelleme: sunucunun verdiği tarih
-  var g = document.getElementById('guncel'), t = new Date(document.lastModified);
-  if (g && !isNaN(t) && t.getFullYear() > 2025) g.textContent = 'Son güncelleme: ' + t.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
-
-  // Örnek sayısı listeden sayılır
-  var satirlar = [].slice.call(document.querySelectorAll('.dizin li'));
-  var sayi = document.getElementById('ornek-sayi');
-  if (sayi) sayi.textContent = satirlar.filter(function (li) { return li.hasAttribute('data-canli'); }).length;
-
-  // Süzgeç
-  var dugmeler = [].slice.call(document.querySelectorAll('.suzgec button'));
-  dugmeler.forEach(function (b) {
-    var k = b.dataset.k;
-    b.querySelector('sup').textContent = k === 'hepsi' ? satirlar.length : satirlar.filter(function (li) { return li.dataset.k === k; }).length;
-    b.addEventListener('click', function () {
-      dugmeler.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-      satirlar.forEach(function (li) { li.hidden = !(k === 'hepsi' || li.dataset.k === k); });
-    });
-  });
-
-  // Vaka görünümü
-  [].slice.call(document.querySelectorAll('[data-sekme]')).forEach(function (f) {
-    var ekran = f.querySelector('.ekran img'), tel = f.querySelector('.tel img');
-    var bs = [].slice.call(f.querySelectorAll('.sekme button'));
-    bs.forEach(function (b) {
-      b.addEventListener('click', function () {
-        bs.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-        ekran.src = b.dataset.ekran; ekran.alt = b.dataset.alt; tel.src = b.dataset.tel;
-      });
-    });
-  });
-
-  // İmleçle gelen önizleme (yalnız fareyle)
-  var on = document.querySelector('.onizleme');
-  if (!on || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-  var img = on.querySelector('img'), x = 0, y = 0, bekliyor = false;
-  function yerlestir() {
-    bekliyor = false;
-    var w = on.offsetWidth, h = on.offsetHeight;
-    var px = x + 28, py = y - h / 2;
-    if (px + w > innerWidth - 12) px = x - w - 28;
-    py = Math.max(12, Math.min(py, innerHeight - h - 12));
-    on.style.transform = 'translate(' + px + 'px,' + py + 'px)';
-  }
-  document.querySelector('.dizin').addEventListener('mousemove', function (e) {
-    x = e.clientX; y = e.clientY;
-    if (!bekliyor) { bekliyor = true; requestAnimationFrame(yerlestir); }
-  });
-  satirlar.forEach(function (li) {
-    var k = li.querySelector('img.d-kucuk');
-    li.addEventListener('mouseenter', function () {
-      if (!k) { on.classList.remove('acik'); return; }
-      img.src = k.getAttribute('src'); on.classList.add('acik');
-    });
-    li.addEventListener('mouseleave', function () { on.classList.remove('acik'); });
-  });
-})();
-</script>
+<script src="ana.js?v=1"></script>
 </body>
 </html>
