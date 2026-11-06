@@ -146,6 +146,13 @@ h1 em{font-style:normal;color:var(--tur)}
 .oneri .ic{width:18px;height:18px;color:var(--koyu)}
 .oneri small{display:block;color:var(--yazi2);font-weight:500;font-size:12px}
 .oneri-bos{padding:12px 10px;color:var(--yazi2);font-size:13.5px}
+.oneri-fav{display:flex;align-items:center}
+.oneri-fav .oneri{flex:1;min-width:0}
+.oneri-fav .oneri .ic{color:var(--tur);fill:currentColor}
+.oneri-fav .oneri span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fav-sil{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;color:var(--yazi3)}
+.fav-sil:hover{background:#f2f5f5;color:var(--koyu)}
+.fav-sil .ic{width:15px;height:15px}
 .sayac-liste{width:300px}
 .sayac{display:flex;align-items:center;justify-content:space-between;padding:10px 8px}
 .sayac+.sayac{border-top:1px solid var(--cizgi2)}
@@ -172,6 +179,10 @@ h1 em{font-style:normal;color:var(--tur)}
 .rota-cip .ic{width:17px;height:17px;color:var(--tur)}
 .rota-cip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rota-cip em{font-style:normal;color:var(--yazi2);font-weight:500;white-space:nowrap}
+.rota-cip .kalp{flex:none;display:grid;place-items:center;width:32px;height:32px;margin:-6px -10px -6px -2px;border-radius:50%;color:var(--tur)}
+.rota-cip .kalp:hover{background:var(--tur-acik)}
+.rota-cip .kalp .ic{width:19px;height:19px}
+.rota-cip .kalp.dolu .ic{fill:currentColor}
 .araclar{display:grid;grid-template-columns:1fr 1fr;gap:26px}
 .arac{display:grid;grid-template-columns:47% 1fr;background:#fff;border-radius:18px;overflow:hidden;box-shadow:var(--golge2);border:1.5px solid transparent;transition:border-color .2s,box-shadow .2s,transform .2s;position:relative}
 .arac:hover{transform:translateY(-2px)}
@@ -464,6 +475,12 @@ input::-webkit-date-and-time-value{text-align:left}
 .ikincil-btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:46px;border-radius:12px;border:1px solid var(--cizgi);font-weight:700;color:var(--yazi);margin-top:10px}
 .demo-hesap{font-size:12.5px;color:var(--yazi2);text-align:center}
 .demo-hesap button{color:var(--tur2);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.et-satir{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:6px}
+.et-satir label{margin-bottom:0}
+.unuttum{font-size:12.5px;font-weight:700;color:var(--tur2)}
+.m-bilgi{font-size:13.5px;color:var(--yazi2);line-height:1.5}
+.m-tamam{background:#eef7f1;color:#1f6b3a;border-radius:10px;padding:10px 12px;font-size:13.5px;font-weight:600;line-height:1.5}
+.m-geri{justify-self:center;font-size:13px;font-weight:700;color:var(--yazi2)}
 .hata-y{color:var(--kirmizi);font-size:13px;font-weight:600;min-height:18px}
 .onay-kod{display:flex;justify-content:space-between;align-items:center;background:var(--tur-acik);border-radius:12px;padding:12px 16px;margin:16px 0 10px}
 .onay-kod b{font-size:22px;letter-spacing:.06em;color:var(--koyu2)}
@@ -747,6 +764,7 @@ select.p-girdi{cursor:pointer}
 .tk-satir{display:flex;align-items:center;flex-wrap:wrap;gap:8px 10px;margin-bottom:12px;font-size:13.5px;color:var(--yazi2)}
 .tk-satir label{font-weight:700;color:var(--koyu2)}
 .tk-satir .p-girdi{width:76px}
+.fiyat-ornek{background:var(--tur-acik);border-radius:9px;padding:9px 12px;margin-bottom:14px;font-size:13px;color:var(--koyu2);line-height:1.55}
 .durum-sec{border:0;font-weight:700;font-size:12px;border-radius:999px;padding:5px 10px;cursor:pointer;outline:0}
 .uye-rozet{display:inline-block;background:var(--tur-acik);color:#b45512;font-size:10.5px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:1px}
 .p-btn{display:inline-flex;align-items:center;gap:7px;border-radius:9px;padding:9px 14px;font-weight:700;font-size:13.5px;background:var(--koyu);color:#fff;white-space:nowrap;transition:background .2s}
@@ -846,6 +864,7 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
     <symbol id="i-gd" viewBox="0 0 24 24"><path d="M4.6 9.4A7.9 7.9 0 0 1 18.4 7.2M18.9 3.6v3.9H15M19.4 14.6A7.9 7.9 0 0 1 5.6 16.8M5.1 20.4v-3.9H9"/></symbol>
     <symbol id="i-kulaklik" viewBox="0 0 24 24"><path d="M4.5 14.5v-2.8a7.5 7.5 0 0 1 15 0v2.8"/><rect x="3" y="13.2" width="4.2" height="6.3" rx="1.6"/><rect x="16.8" y="13.2" width="4.2" height="6.3" rx="1.6"/><path d="M19 19.5c0 1.6-1.6 2.4-4.3 2.4h-1.4"/></symbol>
     <symbol id="i-yildiz" viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.5 6 .9-4.4 4.2 1.1 6-5.4-2.9-5.4 2.9 1.1-6-4.4-4.2 6-.9z"/></symbol>
+    <symbol id="i-kalp" viewBox="0 0 24 24"><path d="M12 20.3s-7.6-4.6-9.4-9.3C1.3 7.7 3.4 4.4 6.9 4.4c2.1 0 3.7 1.1 5.1 3 1.4-1.9 3-3 5.1-3 3.5 0 5.6 3.3 4.3 6.6-1.8 4.7-9.4 9.3-9.4 9.3z"/></symbol>
     <symbol id="i-elmas" viewBox="0 0 24 24"><path d="M6.6 4h10.8L21 9.2l-9 11-9-11z"/><path d="M3 9.2h18M9.6 4L8.2 9.2 12 20.2l3.8-11L14.4 4"/></symbol>
     <symbol id="i-destek" viewBox="0 0 24 24"><path d="M19.8 11.2A7.9 7.9 0 1 1 17.5 5.6M19.9 3.4v4h-4"/><path d="M12 8v4.2l2.7 1.6"/></symbol>
     <symbol id="i-telefon" viewBox="0 0 24 24"><path d="M6.5 3.5h2.8l1.4 4.1-2 1.4a11.4 11.4 0 0 0 6.3 6.3l1.4-2 4.1 1.4v2.8a2 2 0 0 1-2.2 2A16.6 16.6 0 0 1 4.5 5.7a2 2 0 0 1 2-2.2z"/></symbol>
@@ -1235,7 +1254,7 @@ st_yeni:'Onay bekliyor',st_onay:'Onaylandı',st_tamam:'Tamamlandı',st_iptal:'İ
 wa_hello:'Merhaba, rezervasyonumu onaylamak istiyorum.',wa_demo:'Örnek sitede işletmenin WhatsApp numarası henüz girilmedi.',search_first:'Önce güzergâhınızı arayın, sonra aracınızı seçin.',
 why_title:'Neden Atalia Transfer',w1:'7/24 Destek',w1s:'Her zaman yanınızdayız.',w2:'Anında Onay',w2s:'Rezervasyo\u00adnunuz anında onaylanır.',w3:'Profesyonel Şoförler',w3s:'Güvenli ve deneyimli şoförler.',w4:'Kapıdan Kapıya Transfer',w4s:'Hedefinize direkt ulaşın.',prev:'Önceki',next:'Sonraki',
 quick_links:'Hızlı Linkler',about:'Hakkımızda',terms:'Şartlar ve Koşullar',tursab_doc:'TÜRSAB Belgesi',tursab_no:'Belge No',tursab_empty:'Örnek sitede belge numarası henüz girilmedi.',newsletter:'Bülten',news_sub:'Kampanyalar ve yeniliklerden haberdar olun.',news_ph:'E-posta adresiniz',news_btn:'Abone ol',news_ok:'Teşekkürler, bültene kaydoldunuz.',news_dup:'Bu e-posta adresi zaten kayıtlı.',rights:'© {y} Atalia Transfer, tüm haklar saklıdır.',phone_l:'Telefon',link_demo:'Örnek sitede bu bağlantı henüz girilmedi.',
-fav_title:'Favori Transferler',fav_sub:'Antalya\'nın en popüler destinasyonları',rev_title:'Misafirlerin Yorumları',fav_pick:'Güzergâh seçildi, şimdi tarih ve saati seçin.',fav_where:'Otelinizi ya da gideceğiniz yeri yazın.',choose_title:'Aracınızı Seçin',fit_sub:'{n} yolcu için uygun araçlar',no_vehicle:'Bu yolcu sayısı için sitede uygun araç yok. Size uygun aracı ayarlamamız için WhatsApp\'tan yazın.',
+fav_title:'Favori Transferler',fav_sub:'Antalya\'nın en popüler destinasyonları',rev_title:'Misafirlerin Yorumları',fav_pick:'Güzergâh seçildi, şimdi tarih ve saati seçin.',my_favs:'Favori aramalarım',fav_add:'Bu aramayı favorilere ekle',fav_remove:'Favorilerden çıkar',fav_saved:'Favorilere eklendi. Nereden ya da Nereye alanına basınca en üstte görünür.',fav_removed:'Favorilerden çıkarıldı.',forgot:'Şifremi unuttum',reset_t:'Şifre sıfırlama',reset_hint:'E-posta adresinizi yazın, şifre sıfırlama bağlantısı gönderelim.',reset_btn:'Bağlantı gönder',reset_sent:'Bu e-posta ile kayıtlı bir hesap varsa şifre sıfırlama bağlantısı gönderildi.',reset_demo:'Örnek sitede e-posta gitmez, bağlantıyı buradan açabilirsiniz.',reset_open:'Bağlantıyı aç',reset_none:'Örnek sitede bu e-postayla kayıtlı üye yok.',new_pw:'Yeni şifre',new_pw2:'Yeni şifre (tekrar)',pw_save:'Şifreyi kaydet',pw_mismatch:'Şifreler aynı değil.',pw_done:'Şifreniz değişti.',back_login:'Girişe dön',fav_where:'Otelinizi ya da gideceğiniz yeri yazın.',choose_title:'Aracınızı Seçin',fit_sub:'{n} yolcu için uygun araçlar',no_vehicle:'Bu yolcu sayısı için sitede uygun araç yok. Size uygun aracı ayarlamamız için WhatsApp\'tan yazın.',
 flight:'Uçuş Numarası',ret_info:'Dönüş Transferi',ret_flight:'Dönüş Uçuş No',ret_flight_time:'Uçuş Saati',pickup_time:'Pickup Saati',err_ret_flight:'Lütfen dönüş uçuş saatini girin.',err_pickup:'Lütfen pickup saatini girin.',flight_ph:'Örn. TK 2412',seat:'Çocuk Koltuğu',seat_none:'Gerek yok',seat_1:'1 koltuk',seat_n:'{n} koltuk'},
 en:{nav_home:'Home',nav_fleet:'Our Fleet',nav_services:'Services',nav_why:'Why Atalia?',nav_contact:'Contact',support:'Customer Support',signin:'Sign in',
 hero_kicker:'Antalya Airport Transfer',hero_1:'Your Journey.',hero_2a:'Our ',hero_2b:'Priority.',hero_sub:'Comfortable|Safe|On Time',
@@ -1258,7 +1277,7 @@ st_yeni:'Awaiting confirmation',st_onay:'Confirmed',st_tamam:'Completed',st_ipta
 wa_hello:'Hello, I would like to confirm my booking.',wa_demo:'The business WhatsApp number has not been entered in this sample site yet.',search_first:'Search your route first, then choose your vehicle.',
 why_title:'Why Atalia Transfer',w1:'24/7 Support',w1s:'We are always here for you.',w2:'Instant Confirmation',w2s:'Your booking is confirmed instantly.',w3:'Professional Drivers',w3s:'Safe and experienced drivers.',w4:'Door-to-Door Transfer',w4s:'Straight to your destination.',prev:'Previous',next:'Next',
 quick_links:'Quick Links',about:'About Us',terms:'Terms and Conditions',tursab_doc:'TÜRSAB Certificate',tursab_no:'Licence No',tursab_empty:'The licence number has not been entered in this sample site yet.',newsletter:'Newsletter',news_sub:'Be the first to hear about offers and news.',news_ph:'Your email address',news_btn:'Subscribe',news_ok:'Thank you, you are now subscribed.',news_dup:'This email address is already subscribed.',rights:'© {y} Atalia Transfer. All rights reserved.',phone_l:'Phone',link_demo:'This link has not been entered in this sample site yet.',
-fav_title:'Favourite Transfers',fav_sub:'The most popular destinations in Antalya',rev_title:'Guest Reviews',fav_pick:'Route selected, now choose the date and time.',fav_where:'Type your hotel or destination.',choose_title:'Choose Your Vehicle',fit_sub:'Vehicles suitable for {n} passengers',no_vehicle:'There is no vehicle on the site for this number of passengers. Message us on WhatsApp and we will arrange the right vehicle.',
+fav_title:'Favourite Transfers',fav_sub:'The most popular destinations in Antalya',rev_title:'Guest Reviews',fav_pick:'Route selected, now choose the date and time.',my_favs:'My favourite searches',fav_add:'Add this search to favourites',fav_remove:'Remove from favourites',fav_saved:'Added to favourites. Tap From or To to see it at the top.',fav_removed:'Removed from favourites.',forgot:'Forgot password?',reset_t:'Reset password',reset_hint:'Enter your email and we will send you a password reset link.',reset_btn:'Send link',reset_sent:'If an account exists for this email, a password reset link has been sent.',reset_demo:'No email is sent on the demo site, you can open the link here.',reset_open:'Open link',reset_none:'There is no member with this email on the demo site.',new_pw:'New password',new_pw2:'New password (again)',pw_save:'Save password',pw_mismatch:'The passwords do not match.',pw_done:'Your password has been changed.',back_login:'Back to sign in',fav_where:'Type your hotel or destination.',choose_title:'Choose Your Vehicle',fit_sub:'Vehicles suitable for {n} passengers',no_vehicle:'There is no vehicle on the site for this number of passengers. Message us on WhatsApp and we will arrange the right vehicle.',
 flight:'Flight Number',ret_info:'Return Transfer',ret_flight:'Return Flight No',ret_flight_time:'Flight Time',pickup_time:'Pickup Time',err_ret_flight:'Please enter your return flight time.',err_pickup:'Please enter the pickup time.',flight_ph:'e.g. TK 2412',seat:'Child Seat',seat_none:'Not needed',seat_1:'1 seat',seat_n:'{n} seats'},
 ru:{nav_home:'Главная',nav_fleet:'Автопарк',nav_services:'Услуги',nav_why:'Почему Atalia?',nav_contact:'Контакты',support:'Поддержка клиентов',signin:'Войти',
 hero_kicker:'Трансфер из аэропорта Анталии',hero_1:'Ваша поездка —',hero_2a:'наш ',hero_2b:'приоритет.',hero_sub:'Комфортно|Безопасно|Вовремя',
@@ -1281,7 +1300,7 @@ st_yeni:'Ожидает подтверждения',st_onay:'Подтвержд�
 wa_hello:'Здравствуйте, хочу подтвердить бронирование.',wa_demo:'В демо-версии номер WhatsApp компании ещё не указан.',search_first:'Сначала найдите маршрут, затем выберите автомобиль.',
 why_title:'Почему Atalia Transfer',w1:'Поддержка 24/7',w1s:'Мы всегда рядом.',w2:'Мгновенная бронь',w2s:'Бронь подтвер\u00adждается сразу.',w3:'Опытные водители',w3s:'Надёжные и опытные водители.',w4:'От двери до двери',w4s:'Прямо к месту назначения.',prev:'Назад',next:'Далее',
 quick_links:'Быстрые ссылки',about:'О нас',terms:'Условия и положения',tursab_doc:'Лицензия TÜRSAB',tursab_no:'Лицензия №',tursab_empty:'В демо-версии номер лицензии ещё не указан.',newsletter:'Рассылка',news_sub:'Узнавайте об акциях и новостях первыми.',news_ph:'Ваш e-mail',news_btn:'Подписаться',news_ok:'Спасибо, вы подписаны.',news_dup:'Этот e-mail уже подписан.',rights:'© {y} Atalia Transfer. Все права защищены.',phone_l:'Телефон',link_demo:'В демо-версии эта ссылка ещё не указана.',
-fav_title:'Популярные трансферы',fav_sub:'Самые популярные направления Антальи',rev_title:'Отзывы гостей',fav_pick:'Маршрут выбран, теперь выберите дату и время.',fav_where:'Введите отель или место назначения.',choose_title:'Выберите автомобиль',fit_sub:'Автомобили для {n} пассажиров',no_vehicle:'Для такого числа пассажиров на сайте нет автомобиля. Напишите нам в WhatsApp, и мы подберём подходящий.',
+fav_title:'Популярные трансферы',fav_sub:'Самые популярные направления Антальи',rev_title:'Отзывы гостей',fav_pick:'Маршрут выбран, теперь выберите дату и время.',my_favs:'Избранные поиски',fav_add:'Добавить поиск в избранное',fav_remove:'Удалить из избранного',fav_saved:'Добавлено в избранное. Нажмите «Откуда» или «Куда», чтобы увидеть его вверху.',fav_removed:'Удалено из избранного.',forgot:'Забыли пароль?',reset_t:'Сброс пароля',reset_hint:'Введите e-mail, и мы отправим ссылку для сброса пароля.',reset_btn:'Отправить ссылку',reset_sent:'Если аккаунт с этим e-mail существует, ссылка для сброса пароля отправлена.',reset_demo:'На демо-сайте письмо не отправляется, ссылку можно открыть здесь.',reset_open:'Открыть ссылку',reset_none:'На демо-сайте нет участника с этим e-mail.',new_pw:'Новый пароль',new_pw2:'Новый пароль (ещё раз)',pw_save:'Сохранить пароль',pw_mismatch:'Пароли не совпадают.',pw_done:'Пароль изменён.',back_login:'Назад ко входу',fav_where:'Введите отель или место назначения.',choose_title:'Выберите автомобиль',fit_sub:'Автомобили для {n} пассажиров',no_vehicle:'Для такого числа пассажиров на сайте нет автомобиля. Напишите нам в WhatsApp, и мы подберём подходящий.',
 flight:'Номер рейса',ret_info:'Обратный трансфер',ret_flight:'Обратный рейс',ret_flight_time:'Время рейса',pickup_time:'Подача',err_ret_flight:'Укажите время обратного рейса.',err_pickup:'Укажите время подачи.',flight_ph:'напр. SU 2136',seat:'Детское кресло',seat_none:'Не нужно',seat_1:'1 кресло',seat_n:'{n} кресла'},
 de:{nav_home:'Startseite',nav_fleet:'Unsere Flotte',nav_services:'Leistungen',nav_why:'Warum Atalia?',nav_contact:'Kontakt',support:'Kundenservice',signin:'Anmelden',
 hero_kicker:'Antalya Flughafentransfer',hero_1:'Ihre Reise.',hero_2a:'Unsere ',hero_2b:'Priorität.',hero_sub:'Komfortabel|Sicher|Pünktlich',
@@ -1304,7 +1323,7 @@ st_yeni:'Wartet auf Bestätigung',st_onay:'Bestätigt',st_tamam:'Abgeschlossen',
 wa_hello:'Hallo, ich möchte meine Buchung bestätigen.',wa_demo:'Die WhatsApp-Nummer des Unternehmens ist in dieser Beispielseite noch nicht eingetragen.',search_first:'Suchen Sie zuerst Ihre Strecke und wählen Sie dann Ihr Fahrzeug.',
 why_title:'Warum Atalia Transfer',w1:'24/7 Support',w1s:'Wir sind immer für Sie da.',w2:'Sofort bestätigt',w2s:'Ihre Buchung wird sofort bestätigt.',w3:'Profi-Fahrer',w3s:'Sichere und erfahrene Fahrer.',w4:'Tür-zu-Tür-Transfer',w4s:'Direkt an Ihr Ziel.',prev:'Zurück',next:'Weiter',
 quick_links:'Schnellzugriff',about:'Über uns',terms:'AGB',tursab_doc:'TÜRSAB-Lizenz',tursab_no:'Lizenz-Nr.',tursab_empty:'Die Lizenznummer ist in dieser Beispielseite noch nicht eingetragen.',newsletter:'Newsletter',news_sub:'Erfahren Sie zuerst von Angeboten und Neuigkeiten.',news_ph:'Ihre E-Mail-Adresse',news_btn:'Abonnieren',news_ok:'Danke, Sie sind jetzt angemeldet.',news_dup:'Diese E-Mail-Adresse ist bereits angemeldet.',rights:'© {y} Atalia Transfer. Alle Rechte vorbehalten.',phone_l:'Telefon',link_demo:'Dieser Link ist in dieser Beispielseite noch nicht eingetragen.',
-fav_title:'Beliebte Transfers',fav_sub:'Die beliebtesten Ziele in Antalya',rev_title:'Gästebewertungen',fav_pick:'Strecke gewählt, wählen Sie jetzt Datum und Uhrzeit.',fav_where:'Geben Sie Ihr Hotel oder Ziel ein.',choose_title:'Wählen Sie Ihr Fahrzeug',fit_sub:'Passende Fahrzeuge für {n} Fahrgäste',no_vehicle:'Für diese Personenzahl gibt es auf der Seite kein Fahrzeug. Schreiben Sie uns per WhatsApp, wir organisieren das passende Fahrzeug.',
+fav_title:'Beliebte Transfers',fav_sub:'Die beliebtesten Ziele in Antalya',rev_title:'Gästebewertungen',fav_pick:'Strecke gewählt, wählen Sie jetzt Datum und Uhrzeit.',my_favs:'Meine Favoriten',fav_add:'Diese Suche zu Favoriten hinzufügen',fav_remove:'Aus Favoriten entfernen',fav_saved:'Zu Favoriten hinzugefügt. Tippen Sie auf Von oder Nach, um sie oben zu sehen.',fav_removed:'Aus Favoriten entfernt.',forgot:'Passwort vergessen?',reset_t:'Passwort zurücksetzen',reset_hint:'Geben Sie Ihre E-Mail-Adresse ein, wir senden Ihnen einen Link zum Zurücksetzen.',reset_btn:'Link senden',reset_sent:'Falls ein Konto mit dieser E-Mail existiert, wurde ein Link zum Zurücksetzen gesendet.',reset_demo:'Auf der Demo-Seite wird keine E-Mail gesendet, Sie können den Link hier öffnen.',reset_open:'Link öffnen',reset_none:'Auf der Demo-Seite gibt es kein Mitglied mit dieser E-Mail.',new_pw:'Neues Passwort',new_pw2:'Neues Passwort (wiederholen)',pw_save:'Passwort speichern',pw_mismatch:'Die Passwörter stimmen nicht überein.',pw_done:'Ihr Passwort wurde geändert.',back_login:'Zurück zur Anmeldung',fav_where:'Geben Sie Ihr Hotel oder Ziel ein.',choose_title:'Wählen Sie Ihr Fahrzeug',fit_sub:'Passende Fahrzeuge für {n} Fahrgäste',no_vehicle:'Für diese Personenzahl gibt es auf der Seite kein Fahrzeug. Schreiben Sie uns per WhatsApp, wir organisieren das passende Fahrzeug.',
 flight:'Flugnummer',ret_info:'Rücktransfer',ret_flight:'Rückflug-Nr.',ret_flight_time:'Flugzeit',pickup_time:'Abholzeit',err_ret_flight:'Bitte geben Sie die Zeit Ihres Rückflugs ein.',err_pickup:'Bitte geben Sie die Abholzeit ein.',flight_ph:'z. B. TK 2412',seat:'Kindersitz',seat_none:'Nicht nötig',seat_1:'1 Sitz',seat_n:'{n} Sitze'}
 };
 const HAVALIMANLARI = [
@@ -1382,12 +1401,7 @@ function varsayilan() {
     {id:'minivan', ad:'Minivan', model:'Mercedes Vito / Volkswagen Caravelle', min:1, max:5, bavul:5, aktif:true, foto:'minivan.webp'},
     {id:'minibus', ad:'Minibus', model:'Mercedes Sprinter / Similar', min:6, max:12, bavul:12, aktif:true, foto:'minibus.webp'}
   ];
-  // örnek km aralıkları (euro): taban ilk 3 kişi + kişi başı ek; her aracın tablosu bundan çıkar, minibüs 15 € fazlası
-  const ornekAralik = [
-    {min:0,max:25,taban:30,ek:5},{min:25,max:50,taban:40,ek:5},{min:50,max:80,taban:55,ek:6},
-    {min:80,max:130,taban:75,ek:7},{min:130,max:200,taban:110,ek:8}];
-  const fiyat = {tablolar:Object.fromEntries(araclar.map(a => [a.id, aracTablosu(ornekAralik, 3, a.id === 'minibus' ? 15 : 0, a)])),
-    gdIndirim:5, cocukKisi:true, bebekUcretsiz:true};
+  const fiyat = {tablolar:ornekKmTablolari(), gdIndirim:5, cocukKisi:true, bebekUcretsiz:true};
   const uyeler = [
     {id:'u1', ad:'Ayşe Yılmaz', eposta:'ayse@example.com', tel:'+90 532 000 00 00', sifre:'1234', dil:'tr', kayit:isoGun(gunEkle(b,-62)), aktif:true, ozel:''},
     {id:'u2', ad:'James Wilson', eposta:'james@example.com', tel:'+44 7700 900000', sifre:'1234', dil:'en', kayit:isoGun(gunEkle(b,-41)), aktif:true, ozel:''},
@@ -1449,9 +1463,21 @@ function varsayilan() {
   }
   return S;
 }
-// her aracın kendi km tablosu: taban fiyat ilk "tabanKisi" kişiyi kapsar, "Ek 1 kişi", "Ek 2 kişi"... o kadar fazla kişide
-// taban fiyata eklenen tutardır; ek sütun sayısı aracın kapasitesinden gelir (en çok 3, büyük araçta taban daha çok kişiyi kapsar).
-// Ortak km aralıklarından (kişi başı ek + araç farkı) tablo kurar: örnek veri ve eski kayıtlı veri bununla çevrilir.
+// 06.11 fiyat kademeli km: başlangıç fiyatı + her aralıkta gidilen km x o aralığın km başı fiyatı (km arttıkça fiyat artar).
+// Fiyat ilk "tabanKisi" kişiyi kapsar; "Ek 1 kişi", "Ek 2 kişi"... o kadar fazla kişide eklenen tutardır ve yolculuğun bittiği
+// aralıktan alınır; ek sütun sayısı aracın kapasitesinden gelir (en çok 3, büyük araçta fiyat daha çok kişiyi kapsar).
+function ornekKmTablolari() {
+  const ar = (kmBasi, ek) => [[0, 25], [25, 50], [50, 80], [80, 130], [130, 200]].map(([min, max], i) => ({min, max, kmBasi:kmBasi[i], ek:ek[i].slice()}));
+  return {
+    minivan:{tabanKisi:3, baslangic:15, araliklar:ar([.8, .6, .5, .4, .35], [[5, 10], [5, 10], [6, 12], [7, 14], [8, 16]])},
+    minibus:{tabanKisi:9, baslangic:45, araliklar:ar([1.2, .9, .7, .6, .5], [[5, 10, 15], [5, 10, 15], [6, 12, 18], [7, 14, 21], [8, 16, 24]])}
+  };
+}
+// 05.11'deki eski biçim (aralık başına sabit taban fiyat) yalnız kayıtlı verileri çevirmek için duruyor
+const ESKI_ORNEK_ARALIK = [
+  {min:0,max:25,taban:30,ek:5},{min:25,max:50,taban:40,ek:5},{min:50,max:80,taban:55,ek:6},
+  {min:80,max:130,taban:75,ek:7},{min:130,max:200,taban:110,ek:8}];
+// Ortak km aralıklarından (kişi başı ek + araç farkı) eski biçimde tablo kurar: 05.11 öncesi kayıtlı veri bununla çevrilir.
 function aracTablosu(araliklar, tabanKisi, fark, arac) {
   const tk = Math.max(tabanKisi, (Number(arac.max) || 1) - 3);
   return {tabanKisi:tk, araliklar:araliklar.map(a => ({min:a.min, max:a.max, taban:a.taban + (tk - tabanKisi) * a.ek + fark,
@@ -1463,7 +1489,7 @@ function tablolariDuzelt() {
   S.araclar.forEach(a => {
     if (!T[a.id]) {
       const k = Object.values(T)[0];
-      T[a.id] = {tabanKisi:Math.min(k ? k.tabanKisi : 3, a.max), araliklar:k ? k.araliklar.map(r => ({min:r.min, max:r.max, taban:r.taban, ek:r.ek.slice()})) : [{min:0, max:50, taban:40, ek:[]}]};
+      T[a.id] = {tabanKisi:Math.min(k ? k.tabanKisi : 3, a.max), baslangic:k ? k.baslangic : 15, araliklar:k ? k.araliklar.map(r => ({min:r.min, max:r.max, kmBasi:r.kmBasi, ek:r.ek.slice()})) : [{min:0, max:50, kmBasi:1, ek:[]}]};
     }
     const tb = T[a.id];
     tb.tabanKisi = Math.max(1, Math.min(Number(tb.tabanKisi) || 1, Number(a.max) || 1));
@@ -1483,9 +1509,19 @@ function fiyatEurHam(S, km, kisi, aracId, gd) {
   const a = ar.find((x, i) => km >= x.min && (km < x.max || (i === ar.length - 1 && km <= x.max)));
   if (!a) return null;
   const n = Math.min(Math.max(0, kisi - tb.tabanKisi), a.ek.length);
-  let p = a.taban + (n ? Number(a.ek[n - 1]) || 0 : 0);
+  let p = kmFiyati(tb, km) + (n ? Number(a.ek[n - 1]) || 0 : 0);
   if (gd) p = p * 2 * (1 - (Number(S.fiyat.gdIndirim) || 0) / 100);
   return Math.round(p * 100) / 100;
+}
+// başlangıç fiyatı + her aralıkta gidilen km x km başı fiyat (ek kişi hariç); üst üste binen aralıkta km iki kez sayılmaz
+function kmFiyati(tb, km) {
+  let p = Number(tb.baslangic) || 0, kapsanan = 0;
+  tb.araliklar.slice().sort((a, b) => a.min - b.min).forEach(r => {
+    const bas = Math.max(r.min, kapsanan), son = Math.min(km, r.max);
+    if (son > bas) p += (son - bas) * (Number(r.kmBasi) || 0);
+    kapsanan = Math.max(kapsanan, r.max);
+  });
+  return p;
 }
 let S;
 let bellek = null;
@@ -1521,6 +1557,23 @@ function fiyatTamamla() {
     S.araclar.forEach(a => { f.tablolar[a.id] = aracTablosu(f.araliklar || [], Number(f.tabanKisi) || 3, Number(a.fark) || 0, a); });
     delete f.araliklar; delete f.tabanKisi;
   }
+  // 06.11 kademeli km fiyatı: aralık başına sabit taban fiyatlı tablolar çevrilir. Örnek fiyatlar değiştirilmediyse yeni örnek gelir;
+  // elle girilmiş fiyatlarda başlangıç = ilk aralığın tabanı, km başı = sonraki aralığın tabanına kadarki artış / km (aralık başlarında fiyat aynı kalır)
+  const yeniOrnek = ornekKmTablolari();
+  Object.keys(f.tablolar).forEach(id => {
+    const tb = f.tablolar[id], a = S.araclar.find(x => x.id === id);
+    if (tb.baslangic !== undefined) return;
+    const sade = t => JSON.stringify({tabanKisi:Number(t.tabanKisi), araliklar:t.araliklar.map(r => ({min:Number(r.min), max:Number(r.max), taban:Number(r.taban), ek:(r.ek || []).map(Number)}))});
+    if (a && yeniOrnek[id] && sade(tb) === sade(aracTablosu(ESKI_ORNEK_ARALIK, 3, id === 'minibus' ? 15 : 0, a))) { f.tablolar[id] = yeniOrnek[id]; return; }
+    const ar = tb.araliklar.slice().sort((x, y) => x.min - y.min);
+    let onceki = 0;
+    tb.baslangic = ar.length ? Number(ar[0].taban) || 0 : 0;
+    tb.araliklar = ar.map((r, i) => {
+      const s = ar[i + 1];
+      if (s && s.min > r.min) onceki = Math.round(Math.max(0, (Number(s.taban) - Number(r.taban)) / (s.min - r.min)) * 100) / 100;
+      return {min:r.min, max:r.max, kmBasi:onceki, ek:(r.ek || []).slice()};
+    });
+  });
   S.araclar.forEach(a => { delete a.fark; });
   tablolariDuzelt();
 }
@@ -1651,6 +1704,7 @@ function yerelEslesme(q) {
 }
 function hazirOneriler(k, q) {
   const liste = q ? yerelEslesme(q).map(o => ({...o, grup:'p'})) : [
+    ...favListe().map((f, j) => ({fav:f, favNo:j, grup:'f'})),
     ...HAVALIMANLARI.map(x => ({ad:x.ad[dil], alt:x.alt, lat:x.lat, lon:x.lon, hid:x.id, ucak:true, grup:'h'})),
     ...POPULER.map(x => ({ad:x.ad, alt:x.alt + ', Antalya', lat:x.lat, lon:x.lon, grup:'p'}))];
   oneriYaz(k, liste);
@@ -1662,7 +1716,8 @@ function oneriYaz(k, liste) {
   if (!liste.length) { kutu.innerHTML = `<div class="oneri-bos">${esc(t('no_result'))}</div>`; return; }
   let html = '', son = '';
   liste.forEach((o, i) => {
-    if (o.grup !== son) { son = o.grup; html += `<div class="grup">${esc(t(o.grup === 'h' ? 'airports' : o.grup === 'r' ? 'results' : 'popular'))}</div>`; }
+    if (o.grup !== son) { son = o.grup; html += `<div class="grup">${esc(t(o.grup === 'f' ? 'my_favs' : o.grup === 'h' ? 'airports' : o.grup === 'r' ? 'results' : 'popular'))}</div>`; }
+    if (o.fav) { html += `<div class="oneri-fav"><button type="button" class="oneri" data-i="${i}"><svg class="ic"><use href="#i-kalp"/></svg><span>${esc(favYerAd(o.fav.nereden))} → ${esc(favYerAd(o.fav.nereye))}<small>${esc(t('adult'))} ${o.fav.yetiskin}${o.fav.yaslar.length ? ` · ${esc(t('child'))} ${o.fav.yaslar.length}` : ''}</small></span></button><button type="button" class="fav-sil" data-favsil="${o.favNo}" aria-label="${esc(t('fav_remove'))}" title="${esc(t('fav_remove'))}"><svg class="ic"><use href="#i-kapat"/></svg></button></div>`; return; }
     html += `<button type="button" class="oneri" data-i="${i}"><svg class="ic"${o.ucak ? ' style="transform:rotate(45deg)"' : ''}><use href="#${o.ucak ? 'i-ucak' : 'i-konum'}"/></svg><span>${esc(o.ad)}<small>${esc(o.alt)}</small></span></button>`;
   });
   kutu.innerHTML = html;
@@ -1675,6 +1730,38 @@ function yerSec(k, o) {
   if (k === 'nereden' && !A.nereye) setTimeout(() => $('#nereye').focus(), 30);
 }
 function rotaSifirla() { if (A.aranan) { A.aranan = false; A.rota = null; aracCiz(); ozetCiz(); } }
+/* favori aramalar (06.11 alıcı: aradığı aramayı tekrar uğraşmadan kullansın): aramadan sonra güzergâhtaki kalple kaydedilir,
+   Nereden / Nereye'ye basınca en üstte çıkar. Üyede hesabına, girişsiz ziyaretçide bu cihaza kaydedilir. */
+const FAV_SINIR = 10;
+function favListe() { const u = oturum(); if (u) return u.favoriler || (u.favoriler = []); return S.misafirFav || (S.misafirFav = []); }
+const yerAnahtar = y => y.hid || `${Number(y.lat).toFixed(4)},${Number(y.lon).toFixed(4)}`;
+const favAnahtar = f => yerAnahtar(f.nereden) + '>' + yerAnahtar(f.nereye);
+const favYerAd = y => y.hid ? havalimaniYer(y.hid).ad : y.ad;
+function aramaFavNo() { if (!A.nereden || !A.nereye) return -1; const k = favAnahtar(A); return favListe().findIndex(f => favAnahtar(f) === k); }
+function oneriSec(k, o) { if (o.fav) favUygula(o.fav); else yerSec(k, o); }
+function favUygula(f) {
+  const yer = y => ({ad:favYerAd(y), lat:y.lat, lon:y.lon, hid:y.hid || null});
+  A.nereden = yer(f.nereden); A.nereye = yer(f.nereye);
+  $('#nereden').value = A.nereden.ad; $('#nereye').value = A.nereye.ad;
+  A.yetiskin = f.yetiskin; A.yaslar = f.yaslar.slice(); A.bavul = f.bavul; yasGuncelle();
+  $$('.alan.acik, .alan.hata').forEach(a => a.classList.remove('acik', 'hata'));
+  if (document.activeElement) document.activeElement.blur();
+  rotaAlanCiz(); rotaSifirla();
+  const zamanTam = $('#tarih').value && $('#saat').value && (A.tip !== 'gd' || ($('#dTarih').value && $('#dSaat').value));
+  if (zamanTam) { $('#araBtn').click(); return; }
+  tost(t('fav_pick'));
+}
+$('#rotaCip').addEventListener('click', e => {
+  if (!e.target.closest('#aramaFav') || !A.nereden || !A.nereye) return;
+  const l = favListe(), no = aramaFavNo();
+  if (no >= 0) { l.splice(no, 1); tost(t('fav_removed')); }
+  else {
+    const yer = y => ({ad:y.ad, lat:y.lat, lon:y.lon, hid:y.hid || null});
+    l.unshift({nereden:yer(A.nereden), nereye:yer(A.nereye), yetiskin:A.yetiskin, yaslar:A.yaslar.slice(), bavul:A.bavul});
+    l.splice(FAV_SINIR); tost(t('fav_saved'));
+  }
+  kaydet(); aracCiz();
+});
 ['nereden', 'nereye'].forEach(k => {
   const inp = $('#' + k);
   inp.addEventListener('focus', () => { inp.select(); oneriAc(k); });
@@ -1687,11 +1774,15 @@ function rotaSifirla() { if (A.aranan) { A.aranan = false; A.rota = null; aracCi
       e.preventDefault(); btn.forEach(b => b.classList.remove('vurgu'));
       i = e.key === 'ArrowDown' ? (i + 1) % btn.length : (i <= 0 ? btn.length - 1 : i - 1);
       btn[i].classList.add('vurgu'); btn[i].scrollIntoView({block:'nearest'});
-    } else if (e.key === 'Enter' && i >= 0) { e.preventDefault(); yerSec(k, oneriListe[k][+btn[i].dataset.i]); }
+    } else if (e.key === 'Enter' && i >= 0) { e.preventDefault(); oneriSec(k, oneriListe[k][+btn[i].dataset.i]); }
     else if (e.key === 'Escape') inp.closest('.alan').classList.remove('acik');
   });
   $('#' + k + 'O').addEventListener('mousedown', e => e.preventDefault());
-  $('#' + k + 'O').addEventListener('click', e => { const b = e.target.closest('.oneri'); if (b) yerSec(k, oneriListe[k][+b.dataset.i]); });
+  $('#' + k + 'O').addEventListener('click', e => {
+    const sil = e.target.closest('[data-favsil]');
+    if (sil) { favListe().splice(+sil.dataset.favsil, 1); kaydet(); hazirOneriler(k); aracCiz(); tost(t('fav_removed')); return; }
+    const b = e.target.closest('.oneri'); if (b) oneriSec(k, oneriListe[k][+b.dataset.i]);
+  });
   inp.addEventListener('blur', () => setTimeout(() => {
     inp.closest('.alan').classList.remove('acik');
     if (!A[k] && inp.value.trim()) { const l = oneriListe[k]; if (l.length === 1) yerSec(k, l[0]); }
@@ -1987,7 +2078,8 @@ function aracCiz() {
   const cip = $('#rotaCip');
   if (A.aranan && A.rota) {
     cip.hidden = false;
-    cip.innerHTML = `<svg class="ic"><use href="#i-yol"/></svg><span>${esc(A.nereden.ad)} → ${esc(A.nereye.ad)}</span><em>${A.rota.tahmin ? '~' : ''}${kmF(A.rota.km)} km · ${A.rota.dk} ${esc(t('min'))}</em>`;
+    const fav = aramaFavNo() >= 0, favEt = esc(t(fav ? 'fav_remove' : 'fav_add'));
+    cip.innerHTML = `<svg class="ic"><use href="#i-yol"/></svg><span>${esc(A.nereden.ad)} → ${esc(A.nereye.ad)}</span><em>${A.rota.tahmin ? '~' : ''}${kmF(A.rota.km)} km · ${A.rota.dk} ${esc(t('min'))}</em><button type="button" class="kalp${fav ? ' dolu' : ''}" id="aramaFav" aria-pressed="${fav}" aria-label="${favEt}" title="${favEt}"><svg class="ic"><use href="#i-kalp"/></svg></button>`;
   } else cip.hidden = true;
   toplamCiz();
 }
@@ -2228,7 +2320,7 @@ function hesapAc(sekme = 'giris') {
     <div class="m-sekmeler"><button type="button" data-ms="giris" class="${sekme === 'giris' ? 'aktif' : ''}">${esc(t('signin_t'))}</button><button type="button" data-ms="kayit" class="${sekme === 'kayit' ? 'aktif' : ''}">${esc(t('register_t'))}</button></div>
     <form class="m-form" id="mGiris" ${sekme === 'giris' ? '' : 'hidden'} novalidate>
       <div class="girdi"><label for="gE">${esc(t('email'))}</label><div class="kutu"><svg class="ic"><use href="#i-posta"/></svg><input id="gE" type="email" autocomplete="username"></div></div>
-      <div class="girdi"><label for="gS">${esc(t('password'))}</label><div class="kutu"><svg class="ic"><use href="#i-kalkan"/></svg><input id="gS" type="password" autocomplete="current-password"></div></div>
+      <div class="girdi"><div class="et-satir"><label for="gS">${esc(t('password'))}</label><button type="button" class="unuttum" id="unuttum">${esc(t('forgot'))}</button></div><div class="kutu"><svg class="ic"><use href="#i-kalkan"/></svg><input id="gS" type="password" autocomplete="current-password"></div></div>
       <div class="hata-y" id="gH"></div>
       <button class="ana-btn" type="submit">${esc(t('login_btn'))}</button>
       ${ornek ? `<p class="demo-hesap">${esc(t('demo_acc'))} ${esc(ornek.eposta)} / ${esc(ornek.sifre)} · <button type="button" id="ornekDoldur">${esc(t('demo_fill'))}</button></p>` : ''}
@@ -2242,9 +2334,47 @@ function hesapAc(sekme = 'giris') {
       <label class="onay-satir" style="margin-top:0;font-size:12.5px;color:var(--yazi2)"><input type="checkbox" id="kIzin"><span>${esc(t('promo_ok'))}</span></label>
       <div class="hata-y" id="kH"></div>
       <button class="ana-btn tur" type="submit">${esc(t('register_btn'))}</button>
+    </form>
+    <form class="m-form" id="mSifre" hidden novalidate>
+      <h4 style="font-size:15px">${esc(t('reset_t'))}</h4><p class="m-bilgi">${esc(t('reset_hint'))}</p>
+      <div class="girdi"><label for="sE">${esc(t('email'))}</label><div class="kutu"><svg class="ic"><use href="#i-posta"/></svg><input id="sE" type="email" autocomplete="email"></div></div>
+      <div class="hata-y" id="sH"></div>
+      <div id="sSonuc" hidden></div>
+      <button class="ana-btn" type="submit">${esc(t('reset_btn'))}</button>
+      <button type="button" class="m-geri" data-girise>${esc(t('back_login'))}</button>
+    </form>
+    <form class="m-form" id="mYeni" hidden novalidate>
+      <h4 style="font-size:15px">${esc(t('reset_t'))}</h4><p class="m-bilgi" id="yEposta"></p>
+      <div class="girdi"><label for="yS">${esc(t('new_pw'))}</label><div class="kutu"><svg class="ic"><use href="#i-kalkan"/></svg><input id="yS" type="password" autocomplete="new-password"></div></div>
+      <div class="girdi"><label for="yS2">${esc(t('new_pw2'))}</label><div class="kutu"><svg class="ic"><use href="#i-kalkan"/></svg><input id="yS2" type="password" autocomplete="new-password"></div></div>
+      <div class="hata-y" id="yH"></div>
+      <button class="ana-btn" type="submit">${esc(t('pw_save'))}</button>
     </form>`);
-  $$('[data-ms]').forEach(b => b.onclick = () => { $$('[data-ms]').forEach(x => x.classList.toggle('aktif', x === b)); $('#mGiris').hidden = b.dataset.ms !== 'giris'; $('#mKayit').hidden = b.dataset.ms !== 'kayit'; });
+  const formGoster = id => ['#mGiris', '#mKayit', '#mSifre', '#mYeni'].forEach(s => { $(s).hidden = s !== id; });
+  $$('[data-ms]').forEach(b => b.onclick = () => { $$('[data-ms]').forEach(x => x.classList.toggle('aktif', x === b)); formGoster(b.dataset.ms === 'giris' ? '#mGiris' : '#mKayit'); });
   if ($('#ornekDoldur')) $('#ornekDoldur').onclick = () => { $('#gE').value = ornek.eposta; $('#gS').value = ornek.sifre; };
+  // şifremi unuttum: gerçek sitede e-postaya tek kullanımlık, süreli bağlantı gider; örnek sitede bağlantı burada açılır
+  $('#unuttum').onclick = () => { $('#sE').value = $('#gE').value.trim(); $('#sH').textContent = ''; $('#sSonuc').hidden = true; formGoster('#mSifre'); $('#sE').focus(); };
+  $('[data-girise]').onclick = () => formGoster('#mGiris');
+  let sifreUye = null;
+  $('#mSifre').onsubmit = e => {
+    e.preventDefault();
+    const ep = $('#sE').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(ep)) { $('#sH').textContent = t('err_email'); return; }
+    $('#sH').textContent = '';
+    sifreUye = S.uyeler.find(x => x.eposta.toLowerCase() === ep.toLowerCase() && x.aktif) || null;
+    const s = $('#sSonuc'); s.hidden = false;
+    s.innerHTML = `<p class="m-tamam">${esc(t('reset_sent'))}</p><p class="demo-hesap" style="margin-top:8px">${sifreUye ? `${esc(t('reset_demo'))} <button type="button" id="sAc">${esc(t('reset_open'))}</button>` : esc(t('reset_none'))}</p>`;
+    if (sifreUye) $('#sAc').onclick = () => { $('#yEposta').textContent = sifreUye.eposta; $('#yS').value = $('#yS2').value = ''; $('#yH').textContent = ''; formGoster('#mYeni'); $('#yS').focus(); };
+  };
+  $('#mYeni').onsubmit = e => {
+    e.preventDefault();
+    const s1 = $('#yS').value, s2 = $('#yS2').value;
+    if (s1.length < 4) { $('#yH').textContent = t('reg_short'); return; }
+    if (s1 !== s2) { $('#yH').textContent = t('pw_mismatch'); return; }
+    if (!sifreUye) return;
+    sifreUye.sifre = s1; kaydet(); girisYap(sifreUye); tost(t('pw_done'));
+  };
   $('#mGiris').onsubmit = e => {
     e.preventDefault();
     const u = S.uyeler.find(x => x.eposta.toLowerCase() === $('#gE').value.trim().toLowerCase() && x.sifre === $('#gS').value);
@@ -2473,17 +2603,33 @@ function rezDetay(kod) {
 }
 
 function aralikSatir(id, a, i) {
-  const g = (k, v, ek) => `<td><input class="p-girdi dar" type="number" min="0" step="${k === 'min' || k === 'max' ? 1 : 0.5}" data-tb="${id}" data-ar="${i}" data-a="${k}"${ek != null ? ` data-ek="${ek}"` : ''} value="${v}"></td>`;
-  return `<tr>${g('min', a.min)}${g('max', a.max)}${g('taban', a.taban)}${a.ek.map((v, j) => g('ek', v, j)).join('')}<td class="nw gorunen" style="color:var(--yazi2);font-size:12.5px">${tabanYaz(a.taban)}</td><td><button type="button" class="ikon-btn" data-tb="${id}" data-arsil="${i}" aria-label="Aralığı sil"><svg class="ic"><use href="#i-cop"/></svg></button></td></tr>`;
+  const g = (k, v, ek) => `<td><input class="p-girdi dar" type="number" min="0" step="${k === 'min' || k === 'max' ? 1 : k === 'kmBasi' ? 0.05 : 0.5}" data-tb="${id}" data-ar="${i}" data-a="${k}"${ek != null ? ` data-ek="${ek}"` : ''} value="${v}"></td>`;
+  return `<tr>${g('min', a.min)}${g('max', a.max)}${g('kmBasi', a.kmBasi)}${a.ek.map((v, j) => g('ek', v, j)).join('')}<td class="nw gorunen" data-gr="${i}" style="color:var(--yazi2);font-size:12.5px">${sonFiyatYaz(S.fiyat.tablolar[id], a)}</td><td><button type="button" class="ikon-btn" data-tb="${id}" data-arsil="${i}" aria-label="Aralığı sil"><svg class="ic"><use href="#i-cop"/></svg></button></td></tr>`;
 }
 const tabanYaz = eur => `${tl(eur)} · ${paraYaz(eur, 'en')} · ${paraYaz(eur, 'ru')}`;
+const eur2 = v => new Intl.NumberFormat('tr-TR', {minimumFractionDigits:2, maximumFractionDigits:2}).format(v || 0) + ' €';
+// aralığın bitiş km'sindeki fiyat (ek kişi hariç), euro + sitede görünen
+const sonFiyatYaz = (tb, r) => { const p = kmFiyati(tb, r.max); return `${r.max} km: ${eur2(p)} · ${tabanYaz(p)}`; };
+// panelde fiyatın nasıl hesaplandığını gösteren örnek (ikinci aralığın içinden bir km)
+function fiyatOrnek(tb) {
+  const ar = tb.araliklar.slice().sort((a, b) => a.min - b.min);
+  if (!ar.length) return '';
+  const r = ar[Math.min(1, ar.length - 1)], km = Math.round(r.min + (r.max - r.min) * .44) || 1;
+  let kapsanan = 0;
+  const parca = [];
+  ar.forEach(x => { const bas = Math.max(x.min, kapsanan), son = Math.min(km, x.max); if (son > bas) parca.push(`${kmF(son - bas, 'tr')} km × ${eur2(x.kmBasi)}`); kapsanan = Math.max(kapsanan, x.max); });
+  const p = kmFiyati(tb, km);
+  return `<b>Örnek ${km} km:</b> ${eur2(tb.baslangic)} başlangıç + ${parca.join(' + ')} = <b>${eur2(p)}</b> (sitede ${paraYaz(p, 'de')} · ${tl(p)}). ${tb.tabanKisi + 1} kişide bu tutara "Ek 1 kişi" eklenir.`;
+}
 function fiyatTabloKart(a) {
   const tb = S.fiyat.tablolar[a.id], tk = tb.tabanKisi, n = Math.max(0, a.max - tk);
   const ekBas = Array.from({length:n}, (_, j) => `<th>Ek ${j + 1} kişi €<small>${tk + j + 1} kişi</small></th>`).join('');
-  return `<div class="p-kart" id="fk-${a.id}"><h2>${esc(a.ad)} · Km aralıkları</h2>
-    <p class="acik-y">Taban fiyat ilk ${tk} kişiyi kapsar. "Ek 1 kişi", "Ek 2 kişi" sütunları o kadar fazla kişide taban fiyata eklenen tutardır. Araç en çok ${a.max} kişi.</p>
-    <div class="tk-satir"><label for="tk-${a.id}">Taban fiyata dahil kişi</label><input class="p-girdi" id="tk-${a.id}" type="number" min="1" max="${a.max}" step="1" data-tk="${a.id}" value="${tk}"><span>Değiştirince ek kişi sütunları kendiliğinden değişir.</span></div>
-    <div class="tablo-k"><table class="tablo"><thead><tr><th>Başlangıç km</th><th>Bitiş km</th><th>Taban fiyat €<small>1-${tk} kişi</small></th>${ekBas}<th>Sitede görünen (taban)</th><th></th></tr></thead><tbody>${tb.araliklar.map((r, i) => aralikSatir(a.id, r, i)).join('')}</tbody></table></div>
+  return `<div class="p-kart" id="fk-${a.id}"><h2>${esc(a.ad)} · Km fiyatları</h2>
+    <p class="acik-y">Fiyat, başlangıç fiyatı ile her aralıkta gidilen km'nin o aralığın km başı fiyatıyla çarpımının toplamıdır; km arttıkça fiyat da artar. Fiyat ilk ${tk} kişiyi kapsar. "Ek 1 kişi", "Ek 2 kişi" sütunları o kadar fazla kişide eklenen tutardır (yolculuğun bittiği aralıktaki). Araç en çok ${a.max} kişi.</p>
+    <p class="fiyat-ornek" data-ornek="${a.id}">${fiyatOrnek(tb)}</p>
+    <div class="tk-satir"><label for="bs-${a.id}">Başlangıç fiyatı €</label><input class="p-girdi" id="bs-${a.id}" type="number" min="0" step="0.5" data-bs="${a.id}" value="${tb.baslangic}"><span>Her yolculukta km fiyatına eklenir.</span></div>
+    <div class="tk-satir"><label for="tk-${a.id}">Fiyata dahil kişi</label><input class="p-girdi" id="tk-${a.id}" type="number" min="1" max="${a.max}" step="1" data-tk="${a.id}" value="${tk}"><span>Değiştirince ek kişi sütunları kendiliğinden değişir.</span></div>
+    <div class="tablo-k"><table class="tablo"><thead><tr><th>Başlangıç km</th><th>Bitiş km</th><th>Km başı €</th>${ekBas}<th>Bitiş km'deki fiyat<small>1-${tk} kişi</small></th><th></th></tr></thead><tbody>${tb.araliklar.map((r, i) => aralikSatir(a.id, r, i)).join('')}</tbody></table></div>
     <button type="button" class="p-btn ince" data-arekle="${a.id}" style="margin-top:12px"><svg class="ic"><use href="#i-arti"/></svg>Aralık ekle</button>
   </div>`;
 }
@@ -2518,8 +2664,20 @@ function pFiyatBagla() {
   };
   const degisti = () => { kaydet(); test(); aracCiz(); ozetCiz(); };
   const kartYenile = id => { const a = S.araclar.find(x => x.id === id); $('#fk-' + id).outerHTML = fiyatTabloKart(a); };
+  // bir aralık değişince sonraki aralıkların bitiş fiyatı da değişir: kartın bütün fiyat hücreleri ve örnek yenilenir
+  const fiyatlariYenile = id => {
+    const tb = S.fiyat.tablolar[id], k = $('#fk-' + id);
+    k.querySelectorAll('[data-gr]').forEach(c => { c.textContent = sonFiyatYaz(tb, tb.araliklar[+c.dataset.gr]); });
+    k.querySelector('[data-ornek]').innerHTML = fiyatOrnek(tb);
+  };
   const ana = $('#pAna');
   ana.onchange = e => {
+    const bs = e.target.closest('[data-bs]');
+    if (bs) {
+      const tb = S.fiyat.tablolar[bs.dataset.bs], v = Number(bs.value);
+      if (bs.value === '' || isNaN(v) || v < 0) { bs.value = tb.baslangic; return; }
+      tb.baslangic = v; fiyatlariYenile(bs.dataset.bs); degisti(); tost('Fiyat kaydedildi'); return;
+    }
     const tk = e.target.closest('[data-tk]');
     if (tk) {
       const a = S.araclar.find(x => x.id === tk.dataset.tk), tb = S.fiyat.tablolar[a.id], v = Number(tk.value);
@@ -2530,14 +2688,14 @@ function pFiyatBagla() {
     const r = S.fiyat.tablolar[g.dataset.tb].araliklar[g.dataset.ar], ekMi = g.dataset.ek != null, v = Number(g.value);
     if (g.value === '' || isNaN(v) || v < 0) { g.value = ekMi ? r.ek[g.dataset.ek] : r[g.dataset.a]; return; }
     if (ekMi) r.ek[+g.dataset.ek] = v; else r[g.dataset.a] = v;
-    g.closest('tr').querySelector('.gorunen').textContent = tabanYaz(r.taban);
+    fiyatlariYenile(g.dataset.tb);
     degisti(); tost('Fiyat kaydedildi');
   };
   ana.onclick = e => {
     const sil = e.target.closest('[data-arsil]');
     if (sil) { const tb = S.fiyat.tablolar[sil.dataset.tb]; if (tb.araliklar.length < 2) { tost('En az bir aralık kalmalı'); return; } tb.araliklar.splice(+sil.dataset.arsil, 1); degisti(); kartYenile(sil.dataset.tb); tost('Aralık silindi'); return; }
     const ekle = e.target.closest('[data-arekle]');
-    if (ekle) { const tb = S.fiyat.tablolar[ekle.dataset.arekle], son = tb.araliklar[tb.araliklar.length - 1]; tb.araliklar.push({min:son ? son.max : 0, max:(son ? son.max : 0) + 50, taban:(son ? son.taban : 30) + 20, ek:son ? son.ek.slice() : []}); tablolariDuzelt(); degisti(); kartYenile(ekle.dataset.arekle); tost('Aralık eklendi'); }
+    if (ekle) { const tb = S.fiyat.tablolar[ekle.dataset.arekle], son = tb.araliklar[tb.araliklar.length - 1]; tb.araliklar.push({min:son ? son.max : 0, max:(son ? son.max : 0) + 50, kmBasi:son ? son.kmBasi : 1, ek:son ? son.ek.slice() : []}); tablolariDuzelt(); degisti(); kartYenile(ekle.dataset.arekle); tost('Aralık eklendi'); }
   };
   const kural = () => { S.fiyat.gdIndirim = Math.min(50, Math.max(0, Number($('#fGD').value) || 0)); S.fiyat.cocukKisi = $('#fCK').checked; S.fiyat.bebekUcretsiz = $('#fBU').checked; degisti(); tost('Kurallar kaydedildi'); };
   ['#fGD', '#fCK', '#fBU'].forEach(s => $(s).addEventListener('change', kural));
