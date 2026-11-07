@@ -284,7 +284,7 @@ h1 em{font-style:normal;color:var(--tur)}
 #ucus::placeholder,#dUcus::placeholder{text-transform:none}
 .donus-bas{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--koyu);margin-bottom:10px}
 .donus-bas .ic{width:18px;height:18px;color:var(--tur)}
-.donus-uc{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);gap:10px}
+.donus-uc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
 .donus-uc .girdi label{line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .donus-uc .kutu{height:47px}
 input::-webkit-date-and-time-value{text-align:left}
@@ -1125,7 +1125,6 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
           <div class="donus-uc">
             <div class="girdi"><label for="gUcus" data-t="flight_s">Uçuş No</label><div class="kutu"><svg class="ic" style="transform:rotate(45deg)"><use href="#i-ucak"/></svg><input id="gUcus" autocapitalize="characters" autocomplete="off" data-tp="flight_ph" placeholder="Örn. TK 2412"></div></div>
             <div class="girdi"><label for="gUcusSaat"><span data-t="ret_flight_time">Uçuş Saati</span><i>*</i></label><div class="kutu"><svg class="ic"><use href="#i-saat"/></svg><input id="gUcusSaat" type="time" step="300"></div></div>
-            <div class="girdi"><label for="gAlis"><span data-t="pickup_time">Pickup Saati</span><i>*</i></label><div class="kutu"><svg class="ic"><use href="#i-saat"/></svg><input id="gAlis" type="time" step="300"></div></div>
           </div>
         </div>
         <div class="donus-bilgi" id="donusBilgi" hidden>
@@ -1133,7 +1132,6 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
           <div class="donus-uc">
             <div class="girdi"><label for="dUcus" data-t="ret_flight">Dönüş Uçuş No</label><div class="kutu"><svg class="ic" style="transform:rotate(45deg)"><use href="#i-ucak"/></svg><input id="dUcus" autocapitalize="characters" autocomplete="off" data-tp="flight_ph" placeholder="Örn. TK 2412"></div></div>
             <div class="girdi"><label for="dUcusSaat"><span data-t="ret_flight_time">Uçuş Saati</span><i>*</i></label><div class="kutu"><svg class="ic"><use href="#i-saat"/></svg><input id="dUcusSaat" type="time" step="300"></div></div>
-            <div class="girdi"><label for="dAlis"><span data-t="pickup_time">Pickup Saati</span><i>*</i></label><div class="kutu"><svg class="ic"><use href="#i-saat"/></svg><input id="dAlis" type="time" step="300"></div></div>
           </div>
         </div>
         <div class="girdi tam"><label for="not" class="sr" data-t="note">Özel Not</label><div class="kutu uzun"><svg class="ic"><use href="#i-not"/></svg><textarea id="not" rows="2" data-tp="note_ph" placeholder=""></textarea></div></div>
@@ -1745,7 +1743,6 @@ function rotaAlanCiz() {
   $('#ucus').closest('.girdi').hidden = !hv || gidis;
   formDuzen();
   $('#gidisBilgi').hidden = !gidis;
-  if (gidis && !$('#gAlis').value) $('#gAlis').value = $('#saat').value;
   $('#donusBilgi').hidden = !(A.tip === 'gd' && hv);
   yolcuCiz();
 }
@@ -2056,8 +2053,7 @@ $('#alanDonus').addEventListener('click', e => {
 });
 $('#donusKaldir').addEventListener('click', e => {
   e.stopPropagation();
-  ['#dTarih', '#dSaat', '#dUcus', '#dUcusSaat', '#dAlis'].forEach(s => { $(s).value = ''; });
-  delete $('#dAlis').dataset.elle;
+  ['#dTarih', '#dSaat', '#dUcus', '#dUcusSaat'].forEach(s => { $(s).value = ''; });
   tipSec('tek');
 });
 const simdi = new Date();
@@ -2066,13 +2062,8 @@ const simdi = new Date();
 const saatAc = id => { const s = $(id); if (s.value) return; try { s.showPicker(); } catch (e) { s.focus(); } };
 $('#tarih').addEventListener('change', () => { $('#dTarih').min = $('#tarih').value || isoGun(simdi); $('#alanTarih').classList.remove('hata'); ozetCiz(); if ($('#tarih').value) saatAc('#saat'); });
 $('#dTarih').addEventListener('change', () => { if ($('#dTarih').value) saatAc('#dSaat'); });
-$('#saat').addEventListener('change', () => { $('#alanTarih').classList.remove('hata'); $('#gAlis').value = $('#saat').value; ozetCiz(); });
-// otelden havalimanına: pickup saati aramadaki saattir, ikisi birlikte değişir
-$('#gAlis').addEventListener('change', () => { if (!$('#gAlis').value) return; $('#saat').value = $('#gAlis').value; ozetCiz(); });
+$('#saat').addEventListener('change', () => { $('#alanTarih').classList.remove('hata'); ozetCiz(); });
 ['#dTarih', '#dSaat'].forEach(s => $(s).addEventListener('change', () => { $('#alanDonus').classList.remove('hata'); ozetCiz(); }));
-// pickup saati, elle değiştirilmedikçe aramadaki dönüş saatiyle dolar
-$('#dSaat').addEventListener('change', () => { if (!$('#dAlis').dataset.elle) $('#dAlis').value = $('#dSaat').value; });
-$('#dAlis').addEventListener('change', () => { $('#dAlis').dataset.elle = '1'; ozetCiz(); });
 
 /* rota ve arama */
 function kusUcusu(p, q) {
@@ -2251,7 +2242,7 @@ function ozetCiz() {
   let s = `<div class="ozet-satir"><span>${esc(t('vehicle'))}</span><span>${esc(a.ad)}</span></div>
     <div class="ozet-satir"><span>${esc(t('route'))}</span><span>${esc(A.nereden.ad)} → ${esc(A.nereye.ad)}</span></div>
     <div class="ozet-satir"><span>${esc(t('date'))}</span><span>${esc(tarih)}</span></div>`;
-  if (A.tip === 'gd') s += `<div class="ozet-satir"><span>${esc(t('return_d'))}</span><span>${esc($('#dTarih').value ? tarihYaz($('#dTarih').value) + ' · ' + ($('#dAlis').value || $('#dSaat').value) : '–')}</span></div>`;
+  if (A.tip === 'gd') s += `<div class="ozet-satir"><span>${esc(t('return_d'))}</span><span>${esc($('#dTarih').value ? tarihYaz($('#dTarih').value) + ' · ' + $('#dSaat').value : '–')}</span></div>`;
   if (h.uyeE || h.kodE) s += `<div class="ozet-satir"><span>${esc(t('subtotal'))}</span><span>${paraYaz(h.brut)}</span></div>`;
   if (h.uyeE) s += `<div class="ozet-satir ind"><span>${esc(t('member_disc'))} (%${h.uyeP})</span><span>−${paraYaz(h.uyeE)}</span></div>`;
   if (h.kodE) s += `<div class="ozet-satir ind"><span>${esc(t('code_disc'))} ${esc(A.kod.kod)} <button type="button" id="kodKaldir" style="color:var(--yazi3);text-decoration:underline;font-size:12px">${esc(t('remove'))}</button></span><span>−${paraYaz(h.kodE)}</span></div>`;
@@ -2365,15 +2356,13 @@ function rezervasyonYap() {
   const otel = (A.nereden.hid ? A.nereye : A.nereden).ad;
   const hv = havalimaniVar(), donusUcus = A.tip === 'gd' && hv, gidis = !$('#gidisBilgi').hidden;
   if (gidis && !$('#gUcusSaat').value) return isaretle('#gUcusSaat', t('err_flight_time'));
-  if (gidis && !$('#gAlis').value) return isaretle('#gAlis', t('err_pickup'));
   if (donusUcus && !$('#dUcusSaat').value) return isaretle('#dUcusSaat', t('err_ret_flight'));
-  if (donusUcus && !$('#dAlis').value) return isaretle('#dAlis', t('err_pickup'));
   if (!$('#onay').checked) { const o = $('#onaySatir'); o.classList.add('hata'); tost(t('err_consent')); o.scrollIntoView({behavior:'smooth', block:'center'}); return; }
   if (A.kod) { const r = kodBul(A.kod.kod); if (r.hata) { A.kod = null; ozetCiz(); tost(t(r.hata)); return; } }
   const u = oturum();
   const r = {kod:'AT-' + (S.sira++), olus:new Date().toISOString().slice(0, 16), tarih:$('#tarih').value, saat:$('#saat').value, gd:A.tip === 'gd',
-    dTarih:A.tip === 'gd' ? $('#dTarih').value : '', dSaat:A.tip === 'gd' ? $(donusUcus ? '#dAlis' : '#dSaat').value : '',
-    dUcus:donusUcus ? $('#dUcus').value.trim().toUpperCase() : '', dUcusSaat:donusUcus ? $('#dUcusSaat').value : '', dAlis:donusUcus ? $('#dAlis').value : '',
+    dTarih:A.tip === 'gd' ? $('#dTarih').value : '', dSaat:A.tip === 'gd' ? $('#dSaat').value : '',
+    dUcus:donusUcus ? $('#dUcus').value.trim().toUpperCase() : '', dUcusSaat:donusUcus ? $('#dUcusSaat').value : '', dAlis:donusUcus ? $('#dSaat').value : '',
     nereden:A.nereden.ad, nereye:A.nereye.ad, km:A.rota.km, dk:A.rota.dk, yetiskin:A.yetiskin, cocuk:A.cocuk, bebek:A.bebek, yaslar:A.yaslar.slice(), bavul:hv ? A.bavul : 0,
     arac:a.id, ad, tel, eposta:ep, dil, not:$('#not').value.trim(), ucus:gidis ? $('#gUcus').value.trim().toUpperCase() : hv ? $('#ucus').value.trim().toUpperCase() : '', ucusSaat:gidis ? $('#gUcusSaat').value : '', otel, koltuk:Number($('#koltuk').value) || 0, uyeId:u ? u.id : null, sofor:'', plaka:'', ic:'', kodKul:A.kod ? A.kod.kod : '',
     brut:h.brut, indirim:Math.round((h.uyeE + h.kodE) * 100) / 100, eur:Math.round(h.net * 100) / 100, durum:'yeni', gosterim:paraYaz(h.net)};
