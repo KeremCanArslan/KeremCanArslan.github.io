@@ -1109,6 +1109,14 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
         <div class="girdi"><div class="kutu ic-et"><svg class="ic"><use href="#i-posta"/></svg><input id="eposta" type="email" autocomplete="email" placeholder=" "><label for="eposta"><span data-t="email">E-posta Adresi</span><i>*</i></label></div></div>
         <div class="girdi"><div class="kutu ic-et"><svg class="ic" style="transform:rotate(45deg)"><use href="#i-ucak"/></svg><input id="ucus" autocapitalize="characters" autocomplete="off" placeholder=" "><label for="ucus" data-t="flight">Uçuş Numarası</label></div></div>
         <div class="girdi"><label for="koltuk" data-t="seat">Çocuk Koltuğu</label><div class="kutu"><svg class="ic"><use href="#i-koltuk"/></svg><select id="koltuk" class="kutu-sec"></select></div></div>
+        <div class="donus-bilgi" id="gidisBilgi" hidden>
+          <div class="donus-bas"><svg class="ic" style="transform:rotate(45deg)"><use href="#i-ucak"/></svg><span data-t="dep_info">Havalimanına Gidiş</span></div>
+          <div class="donus-uc">
+            <div class="girdi"><label for="gUcus" data-t="flight_s">Uçuş No</label><div class="kutu"><svg class="ic" style="transform:rotate(45deg)"><use href="#i-ucak"/></svg><input id="gUcus" autocapitalize="characters" autocomplete="off" data-tp="flight_ph" placeholder="Örn. TK 2412"></div></div>
+            <div class="girdi"><label for="gUcusSaat"><span data-t="ret_flight_time">Uçuş Saati</span><i>*</i></label><div class="kutu"><svg class="ic"><use href="#i-saat"/></svg><input id="gUcusSaat" type="time" step="300"></div></div>
+            <div class="girdi"><label for="gAlis"><span data-t="pickup_time">Pickup Saati</span><i>*</i></label><div class="kutu"><svg class="ic"><use href="#i-saat"/></svg><input id="gAlis" type="time" step="300"></div></div>
+          </div>
+        </div>
         <div class="donus-bilgi" id="donusBilgi" hidden>
           <div class="donus-bas"><svg class="ic"><use href="#i-gd"/></svg><span data-t="ret_info">Dönüş Transferi</span></div>
           <div class="donus-uc">
@@ -1301,7 +1309,7 @@ wa_hello:'Merhaba, rezervasyonumu onaylamak istiyorum.',wa_demo:'Örnek sitede i
 why_title:'Neden Atalia Transfer',w1:'7/24 Destek',w1s:'Her zaman yanınızdayız.',w2:'Anında Onay',w2s:'Rezervasyo\u00adnunuz anında onaylanır.',w3:'Profesyonel Şoförler',w3s:'Güvenli ve deneyimli şoförler.',w4:'Kapıdan Kapıya Transfer',w4s:'Hedefinize direkt ulaşın.',prev:'Önceki',next:'Sonraki',
 quick_links:'Hızlı Linkler',about:'Hakkımızda',terms:'Şartlar ve Koşullar',tursab_doc:'TÜRSAB Belgesi',tursab_no:'Belge No',tursab_empty:'Örnek sitede belge numarası henüz girilmedi.',newsletter:'Bülten',news_sub:'Kampanyalar ve yeniliklerden haberdar olun.',news_ph:'E-posta adresiniz',news_btn:'Abone ol',news_ok:'Teşekkürler, bültene kaydoldunuz.',news_dup:'Bu e-posta adresi zaten kayıtlı.',rights:'© {y} Atalia Transfer, tüm haklar saklıdır.',phone_l:'Telefon',link_demo:'Örnek sitede bu bağlantı henüz girilmedi.',
 fav_title:'Favori Transferler',fav_sub:'Antalya\'nın en popüler destinasyonları',rev_title:'Misafirlerin Yorumları',fav_pick:'Güzergâh seçildi, şimdi tarih ve saati seçin.',my_favs:'Favori aramalarım',fav_add:'Bu aramayı favorilere ekle',fav_remove:'Favorilerden çıkar',fav_saved:'Favorilere eklendi. Nereden ya da Nereye alanına basınca en üstte görünür.',fav_removed:'Favorilerden çıkarıldı.',forgot:'Şifremi unuttum',reset_t:'Şifre sıfırlama',reset_hint:'E-posta adresinizi yazın, şifre sıfırlama bağlantısı gönderelim.',reset_btn:'Bağlantı gönder',reset_sent:'Bu e-posta ile kayıtlı bir hesap varsa şifre sıfırlama bağlantısı gönderildi.',reset_demo:'Örnek sitede e-posta gitmez, bağlantıyı buradan açabilirsiniz.',reset_open:'Bağlantıyı aç',reset_none:'Örnek sitede bu e-postayla kayıtlı üye yok.',new_pw:'Yeni şifre',new_pw2:'Yeni şifre (tekrar)',pw_save:'Şifreyi kaydet',pw_mismatch:'Şifreler aynı değil.',pw_done:'Şifreniz değişti.',back_login:'Girişe dön',choose_title:'Aracınızı Seçin',fit_sub:'{n} yolcu için uygun araçlar',no_vehicle:'Bu yolcu sayısı için sitede uygun araç yok. Size uygun aracı ayarlamamız için WhatsApp\'tan yazın.',
-flight:'Uçuş Numarası',ret_info:'Dönüş Transferi',ret_flight:'Dönüş Uçuş No',ret_flight_time:'Uçuş Saati',pickup_time:'Pickup Saati',err_ret_flight:'Lütfen dönüş uçuş saatini girin.',err_pickup:'Lütfen pickup saatini girin.',flight_ph:'Örn. TK 2412',seat:'Çocuk Koltuğu',seat_none:'Gerek yok',seat_1:'1 koltuk',seat_n:'{n} koltuk'},
+flight:'Uçuş Numarası',dep_info:'Havalimanına Gidiş',flight_s:'Uçuş No',err_flight_time:'Lütfen uçuş saatini girin.',ret_info:'Dönüş Transferi',ret_flight:'Dönüş Uçuş No',ret_flight_time:'Uçuş Saati',pickup_time:'Pickup Saati',err_ret_flight:'Lütfen dönüş uçuş saatini girin.',err_pickup:'Lütfen pickup saatini girin.',flight_ph:'Örn. TK 2412',seat:'Çocuk Koltuğu',seat_none:'Gerek yok',seat_1:'1 koltuk',seat_n:'{n} koltuk'},
 en:{nav_home:'Home',nav_fleet:'Our Fleet',nav_services:'Services',nav_why:'Why Atalia?',nav_contact:'Contact',support:'Customer Support',signin:'Sign in',
 hero_kicker:'Antalya Airport Transfer',hero_1:'Your Journey.',hero_2a:'Our ',hero_2b:'Priority.',hero_sub:'Comfortable|Safe|On Time',
 add_return:'Add Return',gd_disc:'{n}% off',remove_return:'Remove return',return_s:'Return',pickup_s:'Pick-up',landing:'Flight Landing',child_age:'Child {n} age',age_pick:'Select',err_age:'Please select the age of each child.',ages:'ages',from:'From',to:'To',addr_ph:'Hotel / Resort / Address',date_time:'Date & Time',pickup:'Pick-up Date & Time',return:'Return Date & Time',select_date:'Select date',select_time:'Select time',
@@ -1324,7 +1332,7 @@ wa_hello:'Hello, I would like to confirm my booking.',wa_demo:'The business What
 why_title:'Why Atalia Transfer',w1:'24/7 Support',w1s:'We are always here for you.',w2:'Instant Confirmation',w2s:'Your booking is confirmed instantly.',w3:'Professional Drivers',w3s:'Safe and experienced drivers.',w4:'Door-to-Door Transfer',w4s:'Straight to your destination.',prev:'Previous',next:'Next',
 quick_links:'Quick Links',about:'About Us',terms:'Terms and Conditions',tursab_doc:'TÜRSAB Certificate',tursab_no:'Licence No',tursab_empty:'The licence number has not been entered in this sample site yet.',newsletter:'Newsletter',news_sub:'Be the first to hear about offers and news.',news_ph:'Your email address',news_btn:'Subscribe',news_ok:'Thank you, you are now subscribed.',news_dup:'This email address is already subscribed.',rights:'© {y} Atalia Transfer. All rights reserved.',phone_l:'Phone',link_demo:'This link has not been entered in this sample site yet.',
 fav_title:'Favourite Transfers',fav_sub:'The most popular destinations in Antalya',rev_title:'Guest Reviews',fav_pick:'Route selected, now choose the date and time.',my_favs:'My favourite searches',fav_add:'Add this search to favourites',fav_remove:'Remove from favourites',fav_saved:'Added to favourites. Tap From or To to see it at the top.',fav_removed:'Removed from favourites.',forgot:'Forgot password?',reset_t:'Reset password',reset_hint:'Enter your email and we will send you a password reset link.',reset_btn:'Send link',reset_sent:'If an account exists for this email, a password reset link has been sent.',reset_demo:'No email is sent on the demo site, you can open the link here.',reset_open:'Open link',reset_none:'There is no member with this email on the demo site.',new_pw:'New password',new_pw2:'New password (again)',pw_save:'Save password',pw_mismatch:'The passwords do not match.',pw_done:'Your password has been changed.',back_login:'Back to sign in',choose_title:'Choose Your Vehicle',fit_sub:'Vehicles suitable for {n} passengers',no_vehicle:'There is no vehicle on the site for this number of passengers. Message us on WhatsApp and we will arrange the right vehicle.',
-flight:'Flight Number',ret_info:'Return Transfer',ret_flight:'Return Flight No',ret_flight_time:'Flight Time',pickup_time:'Pickup Time',err_ret_flight:'Please enter your return flight time.',err_pickup:'Please enter the pickup time.',flight_ph:'e.g. TK 2412',seat:'Child Seat',seat_none:'Not needed',seat_1:'1 seat',seat_n:'{n} seats'},
+flight:'Flight Number',dep_info:'To the Airport',flight_s:'Flight No',err_flight_time:'Please enter your flight time.',ret_info:'Return Transfer',ret_flight:'Return Flight No',ret_flight_time:'Flight Time',pickup_time:'Pickup Time',err_ret_flight:'Please enter your return flight time.',err_pickup:'Please enter the pickup time.',flight_ph:'e.g. TK 2412',seat:'Child Seat',seat_none:'Not needed',seat_1:'1 seat',seat_n:'{n} seats'},
 ru:{nav_home:'Главная',nav_fleet:'Автопарк',nav_services:'Услуги',nav_why:'Почему Atalia?',nav_contact:'Контакты',support:'Поддержка клиентов',signin:'Войти',
 hero_kicker:'Трансфер из аэропорта Анталии',hero_1:'Ваша поездка —',hero_2a:'наш ',hero_2b:'приоритет.',hero_sub:'Комфортно|Безопасно|Вовремя',
 add_return:'Обратный трансфер',gd_disc:'скидка {n}%',remove_return:'Убрать обратный трансфер',return_s:'Обратно',pickup_s:'Подача',landing:'Посадка рейса',child_age:'Возраст ребёнка {n}',age_pick:'Выбрать',err_age:'Укажите возраст каждого ребёнка.',ages:'возраст',from:'Откуда',to:'Куда',addr_ph:'Отель / Курорт / Адрес',date_time:'Дата и время',pickup:'Дата и время подачи',return:'Дата и время обратно',select_date:'Выберите дату',select_time:'Выберите время',
@@ -1347,7 +1355,7 @@ wa_hello:'Здравствуйте, хочу подтвердить бронир
 why_title:'Почему Atalia Transfer',w1:'Поддержка 24/7',w1s:'Мы всегда рядом.',w2:'Мгновенная бронь',w2s:'Бронь подтвер\u00adждается сразу.',w3:'Опытные водители',w3s:'Надёжные и опытные водители.',w4:'От двери до двери',w4s:'Прямо к месту назначения.',prev:'Назад',next:'Далее',
 quick_links:'Быстрые ссылки',about:'О нас',terms:'Условия и положения',tursab_doc:'Лицензия TÜRSAB',tursab_no:'Лицензия №',tursab_empty:'В демо-версии номер лицензии ещё не указан.',newsletter:'Рассылка',news_sub:'Узнавайте об акциях и новостях первыми.',news_ph:'Ваш e-mail',news_btn:'Подписаться',news_ok:'Спасибо, вы подписаны.',news_dup:'Этот e-mail уже подписан.',rights:'© {y} Atalia Transfer. Все права защищены.',phone_l:'Телефон',link_demo:'В демо-версии эта ссылка ещё не указана.',
 fav_title:'Популярные трансферы',fav_sub:'Самые популярные направления Антальи',rev_title:'Отзывы гостей',fav_pick:'Маршрут выбран, теперь выберите дату и время.',my_favs:'Избранные поиски',fav_add:'Добавить поиск в избранное',fav_remove:'Удалить из избранного',fav_saved:'Добавлено в избранное. Нажмите «Откуда» или «Куда», чтобы увидеть его вверху.',fav_removed:'Удалено из избранного.',forgot:'Забыли пароль?',reset_t:'Сброс пароля',reset_hint:'Введите e-mail, и мы отправим ссылку для сброса пароля.',reset_btn:'Отправить ссылку',reset_sent:'Если аккаунт с этим e-mail существует, ссылка для сброса пароля отправлена.',reset_demo:'На демо-сайте письмо не отправляется, ссылку можно открыть здесь.',reset_open:'Открыть ссылку',reset_none:'На демо-сайте нет участника с этим e-mail.',new_pw:'Новый пароль',new_pw2:'Новый пароль (ещё раз)',pw_save:'Сохранить пароль',pw_mismatch:'Пароли не совпадают.',pw_done:'Пароль изменён.',back_login:'Назад ко входу',choose_title:'Выберите автомобиль',fit_sub:'Автомобили для {n} пассажиров',no_vehicle:'Для такого числа пассажиров на сайте нет автомобиля. Напишите нам в WhatsApp, и мы подберём подходящий.',
-flight:'Номер рейса',ret_info:'Обратный трансфер',ret_flight:'Обратный рейс',ret_flight_time:'Время рейса',pickup_time:'Подача',err_ret_flight:'Укажите время обратного рейса.',err_pickup:'Укажите время подачи.',flight_ph:'напр. SU 2136',seat:'Детское кресло',seat_none:'Не нужно',seat_1:'1 кресло',seat_n:'{n} кресла'},
+flight:'Номер рейса',dep_info:'В аэропорт',flight_s:'Номер рейса',err_flight_time:'Укажите время рейса.',ret_info:'Обратный трансфер',ret_flight:'Обратный рейс',ret_flight_time:'Время рейса',pickup_time:'Подача',err_ret_flight:'Укажите время обратного рейса.',err_pickup:'Укажите время подачи.',flight_ph:'напр. SU 2136',seat:'Детское кресло',seat_none:'Не нужно',seat_1:'1 кресло',seat_n:'{n} кресла'},
 de:{nav_home:'Startseite',nav_fleet:'Unsere Flotte',nav_services:'Leistungen',nav_why:'Warum Atalia?',nav_contact:'Kontakt',support:'Kundenservice',signin:'Anmelden',
 hero_kicker:'Antalya Flughafentransfer',hero_1:'Ihre Reise.',hero_2a:'Unsere ',hero_2b:'Priorität.',hero_sub:'Komfortabel|Sicher|Pünktlich',
 add_return:'Rückfahrt hinzufügen',gd_disc:'{n} % Rabatt',remove_return:'Rückfahrt entfernen',return_s:'Rückfahrt',pickup_s:'Abholung',landing:'Landung',child_age:'Alter Kind {n}',age_pick:'Wählen',err_age:'Bitte wählen Sie das Alter jedes Kindes.',ages:'Alter',from:'Von',to:'Nach',addr_ph:'Hotel / Resort / Adresse',date_time:'Datum & Uhrzeit',pickup:'Abholung Datum & Uhrzeit',return:'Rückfahrt Datum & Uhrzeit',select_date:'Datum wählen',select_time:'Uhrzeit wählen',
@@ -1370,7 +1378,7 @@ wa_hello:'Hallo, ich möchte meine Buchung bestätigen.',wa_demo:'Die WhatsApp-N
 why_title:'Warum Atalia Transfer',w1:'24/7 Support',w1s:'Wir sind immer für Sie da.',w2:'Sofort bestätigt',w2s:'Ihre Buchung wird sofort bestätigt.',w3:'Profi-Fahrer',w3s:'Sichere und erfahrene Fahrer.',w4:'Tür-zu-Tür-Transfer',w4s:'Direkt an Ihr Ziel.',prev:'Zurück',next:'Weiter',
 quick_links:'Schnellzugriff',about:'Über uns',terms:'AGB',tursab_doc:'TÜRSAB-Lizenz',tursab_no:'Lizenz-Nr.',tursab_empty:'Die Lizenznummer ist in dieser Beispielseite noch nicht eingetragen.',newsletter:'Newsletter',news_sub:'Erfahren Sie zuerst von Angeboten und Neuigkeiten.',news_ph:'Ihre E-Mail-Adresse',news_btn:'Abonnieren',news_ok:'Danke, Sie sind jetzt angemeldet.',news_dup:'Diese E-Mail-Adresse ist bereits angemeldet.',rights:'© {y} Atalia Transfer. Alle Rechte vorbehalten.',phone_l:'Telefon',link_demo:'Dieser Link ist in dieser Beispielseite noch nicht eingetragen.',
 fav_title:'Beliebte Transfers',fav_sub:'Die beliebtesten Ziele in Antalya',rev_title:'Gästebewertungen',fav_pick:'Strecke gewählt, wählen Sie jetzt Datum und Uhrzeit.',my_favs:'Meine Favoriten',fav_add:'Diese Suche zu Favoriten hinzufügen',fav_remove:'Aus Favoriten entfernen',fav_saved:'Zu Favoriten hinzugefügt. Tippen Sie auf Von oder Nach, um sie oben zu sehen.',fav_removed:'Aus Favoriten entfernt.',forgot:'Passwort vergessen?',reset_t:'Passwort zurücksetzen',reset_hint:'Geben Sie Ihre E-Mail-Adresse ein, wir senden Ihnen einen Link zum Zurücksetzen.',reset_btn:'Link senden',reset_sent:'Falls ein Konto mit dieser E-Mail existiert, wurde ein Link zum Zurücksetzen gesendet.',reset_demo:'Auf der Demo-Seite wird keine E-Mail gesendet, Sie können den Link hier öffnen.',reset_open:'Link öffnen',reset_none:'Auf der Demo-Seite gibt es kein Mitglied mit dieser E-Mail.',new_pw:'Neues Passwort',new_pw2:'Neues Passwort (wiederholen)',pw_save:'Passwort speichern',pw_mismatch:'Die Passwörter stimmen nicht überein.',pw_done:'Ihr Passwort wurde geändert.',back_login:'Zurück zur Anmeldung',choose_title:'Wählen Sie Ihr Fahrzeug',fit_sub:'Passende Fahrzeuge für {n} Fahrgäste',no_vehicle:'Für diese Personenzahl gibt es auf der Seite kein Fahrzeug. Schreiben Sie uns per WhatsApp, wir organisieren das passende Fahrzeug.',
-flight:'Flugnummer',ret_info:'Rücktransfer',ret_flight:'Rückflug-Nr.',ret_flight_time:'Flugzeit',pickup_time:'Abholzeit',err_ret_flight:'Bitte geben Sie die Zeit Ihres Rückflugs ein.',err_pickup:'Bitte geben Sie die Abholzeit ein.',flight_ph:'z. B. TK 2412',seat:'Kindersitz',seat_none:'Nicht nötig',seat_1:'1 Sitz',seat_n:'{n} Sitze'}
+flight:'Flugnummer',dep_info:'Zum Flughafen',flight_s:'Flug-Nr.',err_flight_time:'Bitte geben Sie Ihre Flugzeit ein.',ret_info:'Rücktransfer',ret_flight:'Rückflug-Nr.',ret_flight_time:'Flugzeit',pickup_time:'Abholzeit',err_ret_flight:'Bitte geben Sie die Zeit Ihres Rückflugs ein.',err_pickup:'Bitte geben Sie die Abholzeit ein.',flight_ph:'z. B. TK 2412',seat:'Kindersitz',seat_none:'Nicht nötig',seat_1:'1 Sitz',seat_n:'{n} Sitze'}
 };
 const HAVALIMANLARI = [
   {id:'ayt', ad:{tr:'Antalya Havalimanı (AYT)', en:'Antalya Airport (AYT)', ru:'Аэропорт Анталии (AYT)', de:'Flughafen Antalya (AYT)'}, alt:'Muratpaşa, Antalya', lat:36.8987, lon:30.8005},
@@ -1709,9 +1717,11 @@ function rotaAlanCiz() {
   // yer seçilince Nereden / Nereye başlığı gizlenir (tarih, dönüş ve yolcu başlıkları CSS ile)
   $('#alanNereden').classList.toggle('dolu', !!A.nereden);
   $('#alanNereye').classList.toggle('dolu', !!A.nereye);
-  const hv = havalimaniVar();
-  $('#ucus').closest('.girdi').hidden = !hv;
+  const hv = havalimaniVar(), gidis = !!(A.nereden && !A.nereden.hid && A.nereye && A.nereye.hid);
+  $('#ucus').closest('.girdi').hidden = !hv || gidis;
   formDuzen();
+  $('#gidisBilgi').hidden = !gidis;
+  if (gidis && !$('#gAlis').value) $('#gAlis').value = $('#saat').value;
   $('#donusBilgi').hidden = !(A.tip === 'gd' && hv);
   yolcuCiz();
 }
@@ -1888,9 +1898,9 @@ function koltukCiz() {
 }
 // masaüstündeki iki sütunlu formda tek kalan alan tam genişlik olur
 function formDuzen() {
-  const hv = havalimaniVar(), en = !$('#koltuk').closest('.girdi').hidden;
-  $('#eposta').closest('.girdi').classList.toggle('tam', !hv && !en);
-  $('#koltuk').closest('.girdi').classList.toggle('tam', hv && en);
+  const uc = !$('#ucus').closest('.girdi').hidden, en = !$('#koltuk').closest('.girdi').hidden;
+  $('#eposta').closest('.girdi').classList.toggle('tam', !uc && !en);
+  $('#koltuk').closest('.girdi').classList.toggle('tam', uc && en);
 }
 
 /* ana sayfa: favori transferler + misafir yorumları (panelden düzenlenir) */
@@ -2032,7 +2042,9 @@ const simdi = new Date();
 const saatAc = id => { const s = $(id); if (s.value) return; try { s.showPicker(); } catch (e) { s.focus(); } };
 $('#tarih').addEventListener('change', () => { $('#dTarih').min = $('#tarih').value || isoGun(simdi); $('#alanTarih').classList.remove('hata'); ozetCiz(); if ($('#tarih').value) saatAc('#saat'); });
 $('#dTarih').addEventListener('change', () => { if ($('#dTarih').value) saatAc('#dSaat'); });
-$('#saat').addEventListener('change', () => { $('#alanTarih').classList.remove('hata'); ozetCiz(); });
+$('#saat').addEventListener('change', () => { $('#alanTarih').classList.remove('hata'); $('#gAlis').value = $('#saat').value; ozetCiz(); });
+// otelden havalimanına: pickup saati aramadaki saattir, ikisi birlikte değişir
+$('#gAlis').addEventListener('change', () => { if (!$('#gAlis').value) return; $('#saat').value = $('#gAlis').value; ozetCiz(); });
 ['#dTarih', '#dSaat'].forEach(s => $(s).addEventListener('change', () => { $('#alanDonus').classList.remove('hata'); ozetCiz(); }));
 // pickup saati, elle değiştirilmedikçe aramadaki dönüş saatiyle dolar
 $('#dSaat').addEventListener('change', () => { if (!$('#dAlis').dataset.elle) $('#dAlis').value = $('#dSaat').value; });
@@ -2327,7 +2339,9 @@ function rezervasyonYap() {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(ep)) return isaretle('#eposta', t('err_email'));
   // otel / adres ayrıca sorulmaz, aramadaki yerden gelir: havalimanından alışta varış yeri, diğerlerinde alış yeri
   const otel = (A.nereden.hid ? A.nereye : A.nereden).ad;
-  const hv = havalimaniVar(), donusUcus = A.tip === 'gd' && hv;
+  const hv = havalimaniVar(), donusUcus = A.tip === 'gd' && hv, gidis = !$('#gidisBilgi').hidden;
+  if (gidis && !$('#gUcusSaat').value) return isaretle('#gUcusSaat', t('err_flight_time'));
+  if (gidis && !$('#gAlis').value) return isaretle('#gAlis', t('err_pickup'));
   if (donusUcus && !$('#dUcusSaat').value) return isaretle('#dUcusSaat', t('err_ret_flight'));
   if (donusUcus && !$('#dAlis').value) return isaretle('#dAlis', t('err_pickup'));
   if (!$('#onay').checked) { const o = $('#onaySatir'); o.classList.add('hata'); tost(t('err_consent')); o.scrollIntoView({behavior:'smooth', block:'center'}); return; }
@@ -2337,7 +2351,7 @@ function rezervasyonYap() {
     dTarih:A.tip === 'gd' ? $('#dTarih').value : '', dSaat:A.tip === 'gd' ? $(donusUcus ? '#dAlis' : '#dSaat').value : '',
     dUcus:donusUcus ? $('#dUcus').value.trim().toUpperCase() : '', dUcusSaat:donusUcus ? $('#dUcusSaat').value : '', dAlis:donusUcus ? $('#dAlis').value : '',
     nereden:A.nereden.ad, nereye:A.nereye.ad, km:A.rota.km, dk:A.rota.dk, yetiskin:A.yetiskin, cocuk:A.cocuk, bebek:A.bebek, yaslar:A.yaslar.slice(), bavul:hv ? A.bavul : 0,
-    arac:a.id, ad, tel, eposta:ep, dil, not:$('#not').value.trim(), ucus:hv ? $('#ucus').value.trim().toUpperCase() : '', otel, koltuk:Number($('#koltuk').value) || 0, uyeId:u ? u.id : null, sofor:'', plaka:'', ic:'', kodKul:A.kod ? A.kod.kod : '',
+    arac:a.id, ad, tel, eposta:ep, dil, not:$('#not').value.trim(), ucus:gidis ? $('#gUcus').value.trim().toUpperCase() : hv ? $('#ucus').value.trim().toUpperCase() : '', ucusSaat:gidis ? $('#gUcusSaat').value : '', otel, koltuk:Number($('#koltuk').value) || 0, uyeId:u ? u.id : null, sofor:'', plaka:'', ic:'', kodKul:A.kod ? A.kod.kod : '',
     brut:h.brut, indirim:Math.round((h.uyeE + h.kodE) * 100) / 100, eur:Math.round(h.net * 100) / 100, durum:'yeni', gosterim:paraYaz(h.net)};
   if (A.kod) { const k = S.kodlar.find(x => x.kod === A.kod.kod); if (k) k.kullanim = Number(k.kullanim || 0) + 1; }
   S.rez.push(r); kaydet();
@@ -2345,7 +2359,7 @@ function rezervasyonYap() {
     `${t('date')}: ${tarihYaz(r.tarih)} ${r.saat}` + (r.gd ? ` / ${t('return_d')}: ${tarihYaz(r.dTarih)} ${r.dSaat}` : ''),
     `${t('pax')}: ${t('adult')} ${r.yetiskin}, ${t('child')} ${r.yaslar.length}${r.yaslar.length ? ` (${t('ages')}: ${r.yaslar.join(', ')})` : ''}${hv ? ` · ${t('bags')} ${r.bavul}` : ''}`,
     `${t('vehicle')}: ${a.ad}`, `${t('total')}: ${r.gosterim}`, `${t('name')}: ${r.ad} · ${r.tel}`,
-    r.ucus ? `${t('flight')}: ${r.ucus}` : '',
+    r.ucus || r.ucusSaat ? `${t('flight')}: ${r.ucus || '–'}${r.ucusSaat ? ` · ${t('ret_flight_time')} ${r.ucusSaat} · ${t('pickup_time')} ${r.saat}` : ''}` : '',
     r.dAlis ? `${t('ret_flight')}: ${r.dUcus || '–'} · ${t('ret_flight_time')} ${r.dUcusSaat} · ${t('pickup_time')} ${r.dAlis}` : '',
     r.koltuk ? `${t('seat')}: ${r.koltuk}` : ''].filter(Boolean).join('\n') + (r.not ? '\n' + t('note') + ': ' + r.not : '');
   const no = (S.ayar.whatsapp || '').replace(/\D/g, '');
@@ -2358,7 +2372,7 @@ function rezervasyonYap() {
       <div><span>${esc(t('date'))}</span><span>${esc(tarihYaz(r.tarih))} · ${esc(r.saat)}</span></div>
       ${r.gd ? `<div><span>${esc(t('return_d'))}</span><span>${esc(tarihYaz(r.dTarih))} · ${esc(r.dSaat)}</span></div>` : ''}
       <div><span>${esc(t('vehicle'))}</span><span>${esc(a.ad)} · ${koltukSayisi()} ${esc(t('pax'))}</span></div>
-      ${r.ucus ? `<div><span>${esc(t('flight'))}</span><span>${esc(r.ucus)}</span></div>` : ''}
+      ${r.ucus || r.ucusSaat ? `<div><span>${esc(t('flight'))}</span><span>${esc(r.ucus || '–')}${r.ucusSaat ? ` · ${esc(r.ucusSaat)} · ${esc(t('pickup_time'))} ${esc(r.saat)}` : ''}</span></div>` : ''}
       ${r.dAlis ? `<div><span>${esc(t('ret_flight'))}</span><span>${esc(r.dUcus || '–')} · ${esc(r.dUcusSaat)} · ${esc(t('pickup_time'))} ${esc(r.dAlis)}</span></div>` : ''}
       <div><span>${esc(t('total'))}</span><span>${esc(r.gosterim)}</span></div>
     </div>
@@ -2686,7 +2700,7 @@ function rezSatirlar() {
   if (!l.length) return `<tr><td colspan="8" class="bos">Bu filtreye uyan rezervasyon yok</td></tr>`;
   return l.map(r => `<tr>
     <td class="kod-h">${esc(r.kod)}<small>${trTarih(r.olus.slice(0, 10))} geldi</small></td>
-    <td class="nw"><b>${trTarih(r.tarih)}</b> ${esc(r.saat)}${r.gd ? `<small>Dönüş: ${trTarih(r.dTarih)} ${esc(r.dSaat)}</small>` : ''}${r.ucus ? `<small>Uçuş ${esc(r.ucus)}</small>` : ''}</td>
+    <td class="nw"><b>${trTarih(r.tarih)}</b> ${esc(r.saat)}${r.gd ? `<small>Dönüş: ${trTarih(r.dTarih)} ${esc(r.dSaat)}</small>` : ''}${r.ucus || r.ucusSaat ? `<small>Uçuş ${esc(r.ucus || '–')}${r.ucusSaat ? ' · ' + esc(r.ucusSaat) : ''}</small>` : ''}</td>
     <td style="min-width:210px">${esc(r.nereden)} → ${esc(r.nereye)}<small>${kmF(r.km, 'tr')} km · ${r.dk} dk${r.gd ? ' · gidiş-dönüş' : ''}</small></td>
     <td class="nw">${r.yetiskin + r.cocuk + r.bebek} kişi<small>${r.bavul} bavul</small></td>
     <td class="nw">${esc(aracAd(r.arac))}${r.sofor ? `<small>${esc(r.sofor)}</small>` : ''}</td>
@@ -2737,7 +2751,7 @@ function rezDetay(kod) {
       <div><small>Tutar</small>${eurYaz(r.eur)} (${tl(r.eur)})${r.indirim ? `<br><span style="color:var(--yesil)">İndirim ${eurYaz(r.indirim)}${r.kodKul ? ' · kod ' + esc(r.kodKul) : ''}</span>` : ''}</div>
       <div><small>Müşteri notu</small>${esc(r.not) || '–'}</div>
       <div class="tam"><small>Otel / adres</small>${esc(r.otel) || '–'}</div>
-      <div><small>Uçuş numarası</small>${esc(r.ucus) || '–'}</div>
+      <div><small>Uçuş numarası</small>${esc(r.ucus) || '–'}${r.ucusSaat ? ' · uçuş saati ' + esc(r.ucusSaat) + ' · pickup ' + esc(r.saat) : ''}</div>
       <div><small>Çocuk koltuğu</small>${r.koltuk ? r.koltuk + ' adet' : '–'}</div>
       ${r.dUcus || r.dUcusSaat || r.dAlis ? `<div class="tam"><small>Dönüş uçuşu</small>${esc(r.dUcus) || '–'}${r.dUcusSaat ? ' · uçuş saati ' + esc(r.dUcusSaat) : ''}${r.dAlis ? ' · pickup ' + esc(r.dAlis) : ''}</div>` : ''}
     </div>
