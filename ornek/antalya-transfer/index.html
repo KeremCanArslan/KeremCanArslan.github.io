@@ -104,6 +104,8 @@ h1 em{font-style:normal;color:var(--tur)}
 .donus-ekle{flex:1;display:flex;align-items:center;gap:12px;align-self:stretch;font-weight:700;font-size:14.5px;line-height:1.25;color:var(--koyu);text-align:left}
 .donus-ekle .ic{width:22px;height:22px;flex:none}
 .donus-ekle .arti{width:18px;height:18px;margin-left:auto;color:var(--tur)}
+.de-yazi{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px}
+.gd-ind{color:var(--yesil);font-size:13px;font-weight:700;white-space:nowrap}
 .alanlar:not(.gd) .alan-donus>:not(.donus-ekle),.alanlar.gd .donus-ekle{display:none}
 .donus-kaldir{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:var(--yazi2);flex:none;transition:background .2s,color .2s}
 .donus-kaldir:hover{background:#eef2f2;color:var(--kirmizi)}
@@ -245,6 +247,14 @@ h1 em{font-style:normal;color:var(--tur)}
 .kutu.ic-et>label{position:absolute;left:41px;right:13px;top:0;bottom:0;margin:0;display:flex;align-items:center;font-size:14px;font-weight:400;color:var(--yazi3);pointer-events:none;white-space:nowrap;overflow:hidden}
 .kutu.ic-et>input:not(:placeholder-shown)+label{opacity:0}
 .kutu.ic-et>input:-webkit-autofill+label{opacity:0}
+/* telefon: önce ülke kodu seçilir (07.11 alıcı); seçim kutusu görünmez, üstünde +90 gibi kod yazar */
+.tel-kod{position:relative;display:flex;align-items:center;gap:3px;align-self:stretch;padding-right:10px;border-right:1px solid var(--cizgi);font-size:14px;font-weight:700;color:var(--yazi);white-space:nowrap}
+.tel-kod .ic{width:14px;height:14px}
+.tel-kod select{position:absolute;inset:0;width:100%;opacity:0;cursor:pointer;font-size:16px}
+.tel-kod:focus-within{color:var(--koyu3)}
+.tel-no{position:relative;flex:1;display:flex;min-width:0}
+.kutu .tel-no>label{position:absolute;inset:0;margin:0;display:flex;align-items:center;font-size:14px;font-weight:400;color:var(--yazi3);pointer-events:none;white-space:nowrap;overflow:hidden}
+.tel-no>input:not(:placeholder-shown)+label,.tel-no>input:-webkit-autofill+label{opacity:0}
 .sr,.alan.dolu .ak>label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;margin:0;padding:0}
 .alan-tarih:has(#tarih:valid):has(#saat:valid) .ak>.et,.alan-donus:has(#dTarih:valid):has(#dSaat:valid) .ak>.et,.alan-yolcu:has(.yolcu-ozet:not(:empty)) .ak>.et{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;margin:0;padding:0}
 .kutu{display:flex;align-items:center;gap:10px;border:1px solid var(--cizgi);border-radius:10px;padding:0 13px;min-height:47px;background:#fff;transition:border-color .15s,box-shadow .15s}
@@ -587,6 +597,8 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .degistir{left:auto;right:46px;transform:translateY(-50%) rotate(90deg)}
   .alan{min-height:52px;padding:7px 12px;gap:9px}
   .donus-ekle{font-size:14px;gap:9px}
+  .de-yazi{flex-direction:column;align-items:flex-start}
+  .gd-ind{font-size:12.5px}
   .zk input{font-size:13.5px;min-height:20px}
   .zk .yt{font-size:13px}
   .ara-btn{min-height:50px;font-size:16px;letter-spacing:.06em;text-transform:uppercase}
@@ -828,6 +840,14 @@ select.p-girdi{cursor:pointer}
 .detay-izgara .tam{grid-column:span 2}
 .btn-satir{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
 .icerik-blok{border-top:1px solid var(--cizgi2);padding:16px 0}
+/* panel favori kart yeri: yazınca havalimanı, bölge ve adres önerileri */
+.p-yer{position:relative}
+.p-oneri{position:absolute;left:0;top:calc(100% + 4px);width:max(100%,280px);z-index:40;background:#fff;border:1px solid var(--cizgi);border-radius:10px;box-shadow:0 18px 40px -16px rgba(1,35,38,.45);padding:6px;max-height:290px;overflow:auto}
+.p-oneri button{display:flex;gap:9px;align-items:center;width:100%;text-align:left;padding:7px 8px;border-radius:8px;font-size:13.5px;font-weight:600}
+.p-oneri button:hover{background:#f1f5f5}
+.p-oneri .ic{width:16px;height:16px;flex:none;color:var(--koyu)}
+.p-oneri small{display:block;color:var(--yazi2);font-weight:500;font-size:12px}
+.p-oneri-bos{padding:8px;color:var(--yazi2);font-size:13px}
 .icerik-blok:first-of-type{border-top:0;padding-top:4px}
 .p-alt-b{font-size:11.5px;font-weight:800;color:var(--yazi2);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 6px}
 .yorum-p{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;margin-top:12px}
@@ -1014,7 +1034,7 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
           </div>
         </div>
         <div class="alan alan-donus" id="alanDonus">
-          <button type="button" class="donus-ekle" id="donusEkle"><svg class="ic"><use href="#i-gd"/></svg><span data-t="add_return">Dönüş Ekle</span><svg class="ic arti"><use href="#i-arti"/></svg></button>
+          <button type="button" class="donus-ekle" id="donusEkle"><svg class="ic"><use href="#i-gd"/></svg><span class="de-yazi"><span data-t="add_return">Dönüş Ekle</span><span class="gd-ind" id="gdInd"></span></span><svg class="ic arti"><use href="#i-arti"/></svg></button>
           <svg class="ic"><use href="#i-takvim"/></svg>
           <div class="ak">
             <span class="et" id="donusEt"><span class="uz" data-t="return">Dönüş Tarihi & Saati</span><span class="ks" data-t="return_s">Dönüş</span></span>
@@ -1084,7 +1104,7 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
       </button>
       <div class="form-izgara">
         <div class="girdi"><div class="kutu ic-et"><svg class="ic"><use href="#i-kisi"/></svg><input id="ad" autocomplete="name" placeholder=" "><label for="ad"><span data-t="name">Ad Soyad</span><i>*</i></label></div></div>
-        <div class="girdi"><div class="kutu ic-et"><svg class="ic"><use href="#i-telefon"/></svg><input id="tel" type="tel" autocomplete="tel" inputmode="tel" placeholder=" "><label for="tel"><span data-t="phone">Cep Telefonu</span><i>*</i></label></div></div>
+        <div class="girdi"><div class="kutu"><span class="tel-kod"><b>+90</b><svg class="ic"><use href="#i-asagi"/></svg><select id="telKod" data-t-aria="cc"></select></span><span class="tel-no"><input id="tel" type="tel" autocomplete="tel-national" inputmode="tel" placeholder=" "><label for="tel"><span data-t="phone">Cep Telefonu</span><i>*</i></label></span></div></div>
         <div class="girdi"><div class="kutu ic-et"><svg class="ic"><use href="#i-posta"/></svg><input id="eposta" type="email" autocomplete="email" placeholder=" "><label for="eposta"><span data-t="email">E-posta Adresi</span><i>*</i></label></div></div>
         <div class="girdi"><div class="kutu ic-et"><svg class="ic" style="transform:rotate(45deg)"><use href="#i-ucak"/></svg><input id="ucus" autocapitalize="characters" autocomplete="off" placeholder=" "><label for="ucus" data-t="flight">Uçuş Numarası</label></div></div>
         <div class="girdi"><label for="koltuk" data-t="seat">Çocuk Koltuğu</label><div class="kutu"><svg class="ic"><use href="#i-koltuk"/></svg><select id="koltuk" class="kutu-sec"></select></div></div>
@@ -1249,16 +1269,23 @@ const PARA = {
 };
 const HAVALIMANI = {lat:36.8987, lon:30.8005};
 
+/* telefon ülke kodları: Google libphonenumber 9.0.43 bölge listesi (ISO kodu + alan kodu); ülke adları tarayıcının Intl.DisplayNames ile 4 dilde */
+const TEL_KOD = 'AC247 AD376 AE971 AF93 AG1 AI1 AL355 AM374 AO244 AR54 AS1 AT43 AU61 AW297 AX358 AZ994 BA387 BB1 BD880 BE32 BF226 BG359 BH973 BI257 BJ229 BL590 BM1 BN673 BO591 BQ599 BR55 BS1 BT975 BW267 BY375 BZ501 CA1 CC61 CD243 CF236 CG242 CH41 CI225 CK682 CL56 CM237 CN86 CO57 CR506 CU53 CV238 CW599 CX61 CY357 CZ420 DE49 DJ253 DK45 DM1 DO1 DZ213 EC593 EE372 EG20 EH212 ER291 ES34 ET251 FI358 FJ679 FK500 FM691 FO298 FR33 GA241 GB44 GD1 GE995 GF594 GG44 GH233 GI350 GL299 GM220 GN224 GP590 GQ240 GR30 GT502 GU1 GW245 GY592 HK852 HN504 HR385 HT509 HU36 ID62 IE353 IL972 IM44 IN91 IO246 IQ964 IR98 IS354 IT39 JE44 JM1 JO962 JP81 KE254 KG996 KH855 KI686 KM269 KN1 KP850 KR82 KW965 KY1 KZ7 LA856 LB961 LC1 LI423 LK94 LR231 LS266 LT370 LU352 LV371 LY218 MA212 MC377 MD373 ME382 MF590 MG261 MH692 MK389 ML223 MM95 MN976 MO853 MP1 MQ596 MR222 MS1 MT356 MU230 MV960 MW265 MX52 MY60 MZ258 NA264 NC687 NE227 NF672 NG234 NI505 NL31 NO47 NP977 NR674 NU683 NZ64 OM968 PA507 PE51 PF689 PG675 PH63 PK92 PL48 PM508 PR1 PS970 PT351 PW680 PY595 QA974 RE262 RO40 RS381 RU7 RW250 SA966 SB677 SC248 SD249 SE46 SG65 SH290 SI386 SJ47 SK421 SL232 SM378 SN221 SO252 SR597 SS211 ST239 SV503 SX1 SY963 SZ268 TA290 TC1 TD235 TG228 TH66 TJ992 TK690 TL670 TM993 TN216 TO676 TR90 TT1 TV688 TW886 TZ255 UA380 UG256 US1 UY598 UZ998 VA39 VC1 VE58 VG1 VI1 VN84 VU678 WF681 WS685 XK383 YE967 YT262 ZA27 ZM260 ZW263'.split(' ').map(x => [x.slice(0, 2), x.slice(2)]);
+const TEL_ANA = {1:'US', 7:'RU', 39:'IT', 44:'GB', 47:'NO', 61:'AU', 212:'MA', 262:'RE', 290:'SH', 358:'FI', 590:'GP', 599:'CW'};
+const TEL_SIK = ['TR', 'DE', 'GB', 'RU', 'UA', 'PL', 'NL', 'KZ', 'RO', 'AT', 'CH', 'FR'];
+const TEL_DIL = {tr:'TR', en:'GB', ru:'RU', de:'DE'};
+let telKodElle = false; // ziyaretçi kodu kendisi seçene kadar kod site diline göre gelir
+
 /* ---------------- metinler (4 dil) ---------------- */
 const D = {
 tr:{nav_home:'Ana Sayfa',nav_fleet:'Araç Filomuz',nav_services:'Hizmetler',nav_why:'Neden Atalia?',nav_contact:'İletişim',support:'Müşteri Desteği',signin:'Giriş',
 hero_kicker:'Antalya Havalimanı Transferi',hero_1:'Yolculuğunuz.',hero_2a:'Bizim ',hero_2b:'Önceliğimiz.',hero_sub:'Konforlu|Güvenli|Zamanında',
-add_return:'Dönüş Ekle',remove_return:'Dönüşü kaldır',return_s:'Dönüş',pickup_s:'Alış',landing:'Uçak İniş',child_age:'{n}. Çocuk Yaşı',age_pick:'Seçin',err_age:'Lütfen çocukların yaşını seçin.',ages:'yaş',from:'Nereden',to:'Nereye',addr_ph:'Otel / Tatil köyü / Adres',date_time:'Tarih & Saat',pickup:'Alış Tarihi & Saati',return:'Dönüş Tarihi & Saati',select_date:'Tarih seçin',select_time:'Saat seçin',
+add_return:'Dönüş Ekle',gd_disc:'%{n} indirim',remove_return:'Dönüşü kaldır',return_s:'Dönüş',pickup_s:'Alış',landing:'Uçak İniş',child_age:'{n}. Çocuk Yaşı',age_pick:'Seçin',err_age:'Lütfen çocukların yaşını seçin.',ages:'yaş',from:'Nereden',to:'Nereye',addr_ph:'Otel / Tatil köyü / Adres',date_time:'Tarih & Saat',pickup:'Alış Tarihi & Saati',return:'Dönüş Tarihi & Saati',select_date:'Tarih seçin',select_time:'Saat seçin',
 passengers:'Yolcular',adult:'Yetişkin',child:'Çocuk',adult_s:'12 yaş ve üstü',child_s:'0-11 yaş',bags:'Toplam Bavul',bags_short:'Bavul',bags_s:'Valiz ve büyük çanta',done:'Tamam',search:'Ara',
 free_cancel:'24 saate kadar ücretsiz iptal',support247:'7/24 Müşteri Desteği',options_title:'Transfer Seçenekleriniz',options_sub:'Konforunuz, bizim aracımız.',
 pax_badge:'{a} – {b} Yolcu',pax_short:'{a}–{b} Kişi',suitcases:'{n} Bavul (yaklaşık)',wifi:'Ücretsiz Wi‑Fi',ac:'Klima',pro_driver:'Profesyonel Şoför',service:'Hizmet',service_val:'Havalimanı ↔ Otel / Tatil Köyü',service_route:'Kapıdan kapıya',km_time:'Km & Süre',
 select:'Seç',selected:'Seçildi',total:'Toplam',total_rt:'Toplam (gidiş-dönüş)',max_pax:'En fazla {n} yolcu',price_hint:'Fiyatı görmek için güzergâh seçip arayın',over_range:'Bu mesafe için fiyat almak üzere bize yazın',min:'dk',approx:'yaklaşık',
-your_info:'Bilgileriniz',info_sub:'Rezervasyonu tamamlamak için bilgilerinizi girin.',name:'Ad Soyad',phone:'Cep Telefonu',email:'E-posta Adresi',note:'Özel Not',note_ph:'Özel bir isteğiniz var mı? (ör. bebek koltuğu, isimle karşılama vb.)',
+your_info:'Bilgileriniz',info_sub:'Rezervasyonu tamamlamak için bilgilerinizi girin.',name:'Ad Soyad',phone:'Cep Telefonu',cc:'Ülke kodu',cc_pop:'Sık seçilenler',cc_all:'Tüm ülkeler',email:'E-posta Adresi',note:'Özel Not',note_ph:'Özel bir isteğiniz var mı? (ör. bebek koltuğu, isimle karşılama vb.)',
 code:'İndirim kodu',code_ph:'Kodunuz varsa girin',apply:'Uygula',special_kicker:'Özel Transfer Hizmeti',special_title:'Yolculuktan fazlası,<br>bir deneyim.',
 book:'Rezervasyon Yap',redirect:'Onay için WhatsApp\'a yönlendirileceksiniz.',summary_empty:'Güzergâhı arayıp aracınızı seçtiğinizde özet burada görünür.',vehicle:'Araç',route:'Güzergâh',date:'Tarih',return_d:'Dönüş',pax:'Yolcu',subtotal:'Ara toplam',member_disc:'Üye indirimi',code_disc:'Kod',details:'Detay',consent:'{mss} ve {obf} okudum, onaylıyorum.',mss:'Mesafeli Satış Sözleşmesini',obf:'Ön Bilgilendirme Formunu',mss_t:'Mesafeli Satış Sözleşmesi',obf_t:'Ön Bilgilendirme Formu',consent_ok:'Okudum, onaylıyorum',err_consent:'Lütfen sözleşmeyi onaylayın.',doc_demo:'Örnek metindir; maddeleri panelde Ayarlar bölümünden siz yazarsınız.',
 login_hint:'Giriş yapın, üyelere özel %{p} indirimden yararlanın.',login_link:'Giriş yap / Üye ol',guest_ok:'Üye olmadan da rezervasyon yapabilirsiniz.',member_on:'Üye girişi yapıldı: %{p} üye indirimi uygulanıyor.',
@@ -1276,12 +1303,12 @@ fav_title:'Favori Transferler',fav_sub:'Antalya\'nın en popüler destinasyonlar
 flight:'Uçuş Numarası',ret_info:'Dönüş Transferi',ret_flight:'Dönüş Uçuş No',ret_flight_time:'Uçuş Saati',pickup_time:'Pickup Saati',err_ret_flight:'Lütfen dönüş uçuş saatini girin.',err_pickup:'Lütfen pickup saatini girin.',flight_ph:'Örn. TK 2412',seat:'Çocuk Koltuğu',seat_none:'Gerek yok',seat_1:'1 koltuk',seat_n:'{n} koltuk'},
 en:{nav_home:'Home',nav_fleet:'Our Fleet',nav_services:'Services',nav_why:'Why Atalia?',nav_contact:'Contact',support:'Customer Support',signin:'Sign in',
 hero_kicker:'Antalya Airport Transfer',hero_1:'Your Journey.',hero_2a:'Our ',hero_2b:'Priority.',hero_sub:'Comfortable|Safe|On Time',
-add_return:'Add Return',remove_return:'Remove return',return_s:'Return',pickup_s:'Pick-up',landing:'Flight Landing',child_age:'Child {n} age',age_pick:'Select',err_age:'Please select the age of each child.',ages:'ages',from:'From',to:'To',addr_ph:'Hotel / Resort / Address',date_time:'Date & Time',pickup:'Pick-up Date & Time',return:'Return Date & Time',select_date:'Select date',select_time:'Select time',
+add_return:'Add Return',gd_disc:'{n}% off',remove_return:'Remove return',return_s:'Return',pickup_s:'Pick-up',landing:'Flight Landing',child_age:'Child {n} age',age_pick:'Select',err_age:'Please select the age of each child.',ages:'ages',from:'From',to:'To',addr_ph:'Hotel / Resort / Address',date_time:'Date & Time',pickup:'Pick-up Date & Time',return:'Return Date & Time',select_date:'Select date',select_time:'Select time',
 passengers:'Passengers',adult:'Adult',child:'Child',adult_s:'Age 12+',child_s:'Age 0-11',bags:'Total Bags',bags_short:'Bags',bags_s:'Suitcases and large bags',done:'Done',search:'Search',
 free_cancel:'Free cancellation up to 24h',support247:'24/7 Customer Support',options_title:'Your Transfer Options',options_sub:'Your comfort, our vehicle.',
 pax_badge:'{a} – {b} Passengers',pax_short:'{a}–{b} Pax',suitcases:'{n} Suitcases (approx.)',wifi:'Free WiFi',ac:'Air Condition',pro_driver:'Professional Driver',service:'Service',service_val:'Airport ↔ Hotel / Resort',service_route:'Door to door',km_time:'Km & Time',
 select:'Select',selected:'Selected',total:'Total',total_rt:'Total (round trip)',max_pax:'Max. {n} passengers',price_hint:'Choose your route and search to see the price',over_range:'Please contact us for a quote for this distance',min:'min',approx:'approx.',
-your_info:'Your Information',info_sub:'Please enter your details to complete the booking.',name:'Name Surname',phone:'Mobile Phone',email:'Email Address',note:'Special Note',note_ph:'Any special request? (e.g. baby seat, meet & greet, etc.)',
+your_info:'Your Information',info_sub:'Please enter your details to complete the booking.',name:'Name Surname',phone:'Mobile Phone',cc:'Country code',cc_pop:'Popular',cc_all:'All countries',email:'Email Address',note:'Special Note',note_ph:'Any special request? (e.g. baby seat, meet & greet, etc.)',
 code:'Discount code',code_ph:'Enter your code if you have one',apply:'Apply',special_kicker:'Special Transfer Service',special_title:'More than a ride,<br>it\'s an experience.',
 book:'Book Now',redirect:'You will be redirected to WhatsApp for confirmation.',summary_empty:'Search your route and choose a vehicle to see your booking summary here.',vehicle:'Vehicle',route:'Route',date:'Date',return_d:'Return',pax:'Passengers',subtotal:'Subtotal',member_disc:'Member discount',code_disc:'Code',details:'Details',consent:'I have read and accept the {mss} and the {obf}.',mss:'Distance Sales Agreement',obf:'Preliminary Information Form',mss_t:'Distance Sales Agreement',obf_t:'Preliminary Information Form',consent_ok:'I have read and accept',err_consent:'Please accept the agreement.',doc_demo:'Sample text; the business writes the terms in the panel under Settings.',
 login_hint:'Sign in to get the {p}% member discount.',login_link:'Sign in / Sign up',guest_ok:'You can also book as a guest.',member_on:'Signed in: {p}% member discount applied.',
@@ -1299,12 +1326,12 @@ fav_title:'Favourite Transfers',fav_sub:'The most popular destinations in Antaly
 flight:'Flight Number',ret_info:'Return Transfer',ret_flight:'Return Flight No',ret_flight_time:'Flight Time',pickup_time:'Pickup Time',err_ret_flight:'Please enter your return flight time.',err_pickup:'Please enter the pickup time.',flight_ph:'e.g. TK 2412',seat:'Child Seat',seat_none:'Not needed',seat_1:'1 seat',seat_n:'{n} seats'},
 ru:{nav_home:'Главная',nav_fleet:'Автопарк',nav_services:'Услуги',nav_why:'Почему Atalia?',nav_contact:'Контакты',support:'Поддержка клиентов',signin:'Войти',
 hero_kicker:'Трансфер из аэропорта Анталии',hero_1:'Ваша поездка —',hero_2a:'наш ',hero_2b:'приоритет.',hero_sub:'Комфортно|Безопасно|Вовремя',
-add_return:'Обратный трансфер',remove_return:'Убрать обратный трансфер',return_s:'Обратно',pickup_s:'Подача',landing:'Посадка рейса',child_age:'Возраст ребёнка {n}',age_pick:'Выбрать',err_age:'Укажите возраст каждого ребёнка.',ages:'возраст',from:'Откуда',to:'Куда',addr_ph:'Отель / Курорт / Адрес',date_time:'Дата и время',pickup:'Дата и время подачи',return:'Дата и время обратно',select_date:'Выберите дату',select_time:'Выберите время',
+add_return:'Обратный трансфер',gd_disc:'скидка {n}%',remove_return:'Убрать обратный трансфер',return_s:'Обратно',pickup_s:'Подача',landing:'Посадка рейса',child_age:'Возраст ребёнка {n}',age_pick:'Выбрать',err_age:'Укажите возраст каждого ребёнка.',ages:'возраст',from:'Откуда',to:'Куда',addr_ph:'Отель / Курорт / Адрес',date_time:'Дата и время',pickup:'Дата и время подачи',return:'Дата и время обратно',select_date:'Выберите дату',select_time:'Выберите время',
 passengers:'Пассажиры',adult:'Взрослые',child:'Дети',adult_s:'От 12 лет',child_s:'0–11 лет',bags:'Всего багажа',bags_short:'Багаж',bags_s:'Чемоданы и большие сумки',done:'Готово',search:'Найти',
 free_cancel:'Бесплатная отмена за 24 ч',support247:'Поддержка 24/7',options_title:'Варианты трансфера',options_sub:'Ваш комфорт — наш автомобиль.',
 pax_badge:'{a} – {b} пассажиров',pax_short:'{a}–{b} чел.',suitcases:'{n} чемоданов (прибл.)',wifi:'Бесплатный Wi‑Fi',ac:'Кондиционер',pro_driver:'Опытный водитель',service:'Услуга',service_val:'Аэропорт ↔ Отель / Курорт',service_route:'От двери до двери',km_time:'Км и время',
 select:'Выбрать',selected:'Выбрано',total:'Итого',total_rt:'Итого (туда и обратно)',max_pax:'Макс. {n} пассажиров',price_hint:'Выберите маршрут и нажмите «Найти», чтобы увидеть цену',over_range:'Для этого расстояния уточните цену у нас',min:'мин',approx:'прибл.',
-your_info:'Ваши данные',info_sub:'Укажите данные, чтобы завершить бронирование.',name:'Имя и фамилия',phone:'Мобильный телефон',email:'Эл. почта',note:'Особые пожелания',note_ph:'Есть пожелания? (напр. детское кресло, встреча с табличкой)',
+your_info:'Ваши данные',info_sub:'Укажите данные, чтобы завершить бронирование.',name:'Имя и фамилия',phone:'Мобильный телефон',cc:'Код страны',cc_pop:'Популярные',cc_all:'Все страны',email:'Эл. почта',note:'Особые пожелания',note_ph:'Есть пожелания? (напр. детское кресло, встреча с табличкой)',
 code:'Промокод',code_ph:'Введите промокод, если он есть',apply:'Применить',special_kicker:'Индивидуальный трансфер',special_title:'Больше, чем поездка, —<br>это впечатление.',
 book:'Забронировать',redirect:'Для подтверждения вы перейдёте в WhatsApp.',summary_empty:'Найдите маршрут и выберите автомобиль — здесь появится сводка бронирования.',vehicle:'Автомобиль',route:'Маршрут',date:'Дата',return_d:'Обратно',pax:'Пассажиры',subtotal:'Промежуточный итог',member_disc:'Скидка участника',code_disc:'Промокод',details:'Детали',consent:'Я прочитал(а) и принимаю {mss} и {obf}.',mss:'Договор дистанционной продажи',obf:'Форму предварительной информации',mss_t:'Договор дистанционной продажи',obf_t:'Форма предварительной информации',consent_ok:'Прочитал(а) и принимаю',err_consent:'Пожалуйста, примите условия договора.',doc_demo:'Пример текста; условия компания пишет в панели, в разделе «Настройки».',
 login_hint:'Войдите и получите скидку {p}% для участников.',login_link:'Войти / Регистрация',guest_ok:'Можно забронировать и без регистрации.',member_on:'Вы вошли: применена скидка участника {p}%.',
@@ -1322,12 +1349,12 @@ fav_title:'Популярные трансферы',fav_sub:'Самые попу
 flight:'Номер рейса',ret_info:'Обратный трансфер',ret_flight:'Обратный рейс',ret_flight_time:'Время рейса',pickup_time:'Подача',err_ret_flight:'Укажите время обратного рейса.',err_pickup:'Укажите время подачи.',flight_ph:'напр. SU 2136',seat:'Детское кресло',seat_none:'Не нужно',seat_1:'1 кресло',seat_n:'{n} кресла'},
 de:{nav_home:'Startseite',nav_fleet:'Unsere Flotte',nav_services:'Leistungen',nav_why:'Warum Atalia?',nav_contact:'Kontakt',support:'Kundenservice',signin:'Anmelden',
 hero_kicker:'Antalya Flughafentransfer',hero_1:'Ihre Reise.',hero_2a:'Unsere ',hero_2b:'Priorität.',hero_sub:'Komfortabel|Sicher|Pünktlich',
-add_return:'Rückfahrt hinzufügen',remove_return:'Rückfahrt entfernen',return_s:'Rückfahrt',pickup_s:'Abholung',landing:'Landung',child_age:'Alter Kind {n}',age_pick:'Wählen',err_age:'Bitte wählen Sie das Alter jedes Kindes.',ages:'Alter',from:'Von',to:'Nach',addr_ph:'Hotel / Resort / Adresse',date_time:'Datum & Uhrzeit',pickup:'Abholung Datum & Uhrzeit',return:'Rückfahrt Datum & Uhrzeit',select_date:'Datum wählen',select_time:'Uhrzeit wählen',
+add_return:'Rückfahrt hinzufügen',gd_disc:'{n} % Rabatt',remove_return:'Rückfahrt entfernen',return_s:'Rückfahrt',pickup_s:'Abholung',landing:'Landung',child_age:'Alter Kind {n}',age_pick:'Wählen',err_age:'Bitte wählen Sie das Alter jedes Kindes.',ages:'Alter',from:'Von',to:'Nach',addr_ph:'Hotel / Resort / Adresse',date_time:'Datum & Uhrzeit',pickup:'Abholung Datum & Uhrzeit',return:'Rückfahrt Datum & Uhrzeit',select_date:'Datum wählen',select_time:'Uhrzeit wählen',
 passengers:'Fahrgäste',adult:'Erwachsene',child:'Kinder',adult_s:'Ab 12 Jahren',child_s:'0–11 Jahre',bags:'Gepäckstücke',bags_short:'Gepäck',bags_s:'Koffer und große Taschen',done:'Fertig',search:'Suchen',
 free_cancel:'Kostenlose Stornierung bis 24 Std.',support247:'24/7 Kundenservice',options_title:'Ihre Transferoptionen',options_sub:'Ihr Komfort, unser Fahrzeug.',
 pax_badge:'{a} – {b} Fahrgäste',pax_short:'{a}–{b} Pers.',suitcases:'{n} Koffer (ca.)',wifi:'Gratis WLAN',ac:'Klimaanlage',pro_driver:'Profi-Fahrer',service:'Service',service_val:'Flughafen ↔ Hotel / Resort',service_route:'Von Tür zu Tür',km_time:'Km & Zeit',
 select:'Auswählen',selected:'Ausgewählt',total:'Gesamt',total_rt:'Gesamt (Hin & Zurück)',max_pax:'Max. {n} Fahrgäste',price_hint:'Wählen Sie Ihre Strecke und suchen Sie, um den Preis zu sehen',over_range:'Für diese Strecke erhalten Sie ein Angebot von uns',min:'Min.',approx:'ca.',
-your_info:'Ihre Angaben',info_sub:'Bitte geben Sie Ihre Daten ein, um die Buchung abzuschließen.',name:'Vor- und Nachname',phone:'Mobiltelefon',email:'E-Mail-Adresse',note:'Besondere Wünsche',note_ph:'Besondere Wünsche? (z. B. Babysitz, Empfang mit Namensschild)',
+your_info:'Ihre Angaben',info_sub:'Bitte geben Sie Ihre Daten ein, um die Buchung abzuschließen.',name:'Vor- und Nachname',phone:'Mobiltelefon',cc:'Ländervorwahl',cc_pop:'Häufig gewählt',cc_all:'Alle Länder',email:'E-Mail-Adresse',note:'Besondere Wünsche',note_ph:'Besondere Wünsche? (z. B. Babysitz, Empfang mit Namensschild)',
 code:'Rabattcode',code_ph:'Code eingeben, falls vorhanden',apply:'Anwenden',special_kicker:'Exklusiver Transferservice',special_title:'Mehr als eine Fahrt,<br>ein Erlebnis.',
 book:'Jetzt buchen',redirect:'Zur Bestätigung werden Sie zu WhatsApp weitergeleitet.',summary_empty:'Suchen Sie Ihre Strecke und wählen Sie ein Fahrzeug, um die Buchungsübersicht zu sehen.',vehicle:'Fahrzeug',route:'Strecke',date:'Datum',return_d:'Rückfahrt',pax:'Fahrgäste',subtotal:'Zwischensumme',member_disc:'Mitgliederrabatt',code_disc:'Code',details:'Details',consent:'Ich habe den {mss} und das {obf} gelesen und akzeptiere sie.',mss:'Fernabsatzvertrag',obf:'Vorabinformationsformular',mss_t:'Fernabsatzvertrag',obf_t:'Vorabinformationsformular',consent_ok:'Gelesen und akzeptiert',err_consent:'Bitte akzeptieren Sie den Vertrag.',doc_demo:'Beispieltext; die Bedingungen schreibt das Unternehmen im Panel unter Einstellungen.',
 login_hint:'Melden Sie sich an und erhalten Sie {p} % Mitgliederrabatt.',login_link:'Anmelden / Registrieren',guest_ok:'Sie können auch als Gast buchen.',member_on:'Angemeldet: {p} % Mitgliederrabatt wird angewendet.',
@@ -1654,7 +1681,7 @@ function dilUygula() {
   if (A.nereye && A.nereye.hid) A.nereye.ad = HAVALIMANLARI.find(h => h.id === A.nereye.hid).ad[dil];
   $('#nereden').value = A.nereden ? A.nereden.ad : '';
   $('#nereye').value = A.nereye ? A.nereye.ad : '';
-  iletisimCiz(); yolcuCiz(); koltukCiz(); vitrinCiz(); hesapCiz(); aracCiz(); ozetCiz(); onayCiz();
+  iletisimCiz(); telKodCiz(); gdIndCiz(); yolcuCiz(); koltukCiz(); vitrinCiz(); hesapCiz(); aracCiz(); ozetCiz(); onayCiz();
 }
 function dilSec(d) {
   dil = d; try { localStorage.setItem(DILK, d); } catch (e) {}
@@ -1671,6 +1698,8 @@ const havalimaniVar = () => !(A.nereden && A.nereye) || !!(A.nereden.hid || A.ne
 const yerIkon = (sel, ucak) => { const ic = $(sel + ' > .ic'); ic.querySelector('use').setAttribute('href', ucak ? '#i-ucak' : '#i-konum'); ic.style.transform = ucak ? 'rotate(45deg)' : ''; };
 // rotaya ve dönüşe bağlı alanlar: havalimanından alışta tarih etiketi "Uçak İniş" (dar ekranda uzun etiket yerine kısası, ks),
 // yer ikonları, bavul, uçuş numarası ve dönüş uçuş satırı
+// oran paneldeki gidiş-dönüş indiriminden; indirim yoksa yazı çıkmaz
+function gdIndCiz() { const n = Number(S.fiyat.gdIndirim) || 0; $('#gdInd').textContent = n > 0 ? t('gd_disc', {n:new Intl.NumberFormat(PARA[dil].loc).format(n)}) : ''; }
 function rotaAlanCiz() {
   const k = A.nereden && A.nereden.hid ? 'landing' : A.tip === 'gd' ? 'pickup' : 'date_time';
   $('#tarihEt').innerHTML = k === 'pickup' ? `<span class="uz">${esc(t(k))}</span><span class="ks">${esc(t('pickup_s'))}</span>` : esc(t(k));
@@ -1706,16 +1735,8 @@ function oneriAc(k) {
   const no = ++oneriNo;
   oneriZaman = setTimeout(async () => {
     try {
-      const r = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=10&lang=default&lat=36.88&lon=30.85&bbox=29.2,35.9,32.8,37.6`);
-      const d = await r.json();
+      const liste = await photonAra(q);
       if (no !== oneriNo) return;
-      const gor = new Set();
-      const liste = (d.features || []).filter(f => f.properties.countrycode === 'TR').map(f => {
-        const p = f.properties;
-        const ad = p.name || [p.street, p.housenumber].filter(Boolean).join(' ') || p.city || '';
-        const alt = [p.district || p.locality, p.county || p.city, p.state].filter((v, i, a) => v && v !== ad && a.indexOf(v) === i).slice(0, 2).join(', ');
-        return {ad, alt, lat:f.geometry.coordinates[1], lon:f.geometry.coordinates[0]};
-      }).filter(o => { const a = o.ad + o.alt; if (!o.ad || gor.has(a)) return false; gor.add(a); return true; }).slice(0, 6);
       const yerel = yerelEslesme(q);
       oneriYaz(k, [...yerel.map(o => ({...o, grup:'p'})), ...liste.map(o => ({...o, grup:'r'}))]);
     } catch (e) {
@@ -1724,8 +1745,20 @@ function oneriAc(k) {
     }
   }, 300);
 }
+// Photon (OpenStreetMap) adres araması: Antalya çevresi öncelikli, yalnız Türkiye, en çok 6 sonuç
+async function photonAra(q) {
+  const r = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=10&lang=default&lat=36.88&lon=30.85&bbox=29.2,35.9,32.8,37.6`);
+  const d = await r.json(), gor = new Set();
+  return (d.features || []).filter(f => f.properties.countrycode === 'TR').map(f => {
+    const p = f.properties;
+    const ad = p.name || [p.street, p.housenumber].filter(Boolean).join(' ') || p.city || '';
+    const alt = [p.district || p.locality, p.county || p.city, p.state].filter((v, i, a) => v && v !== ad && a.indexOf(v) === i).slice(0, 2).join(', ');
+    return {ad, alt, lat:f.geometry.coordinates[1], lon:f.geometry.coordinates[0]};
+  }).filter(o => { const a = o.ad + o.alt; if (!o.ad || gor.has(a)) return false; gor.add(a); return true; }).slice(0, 6);
+}
+const yerNorm = s => s.toLocaleLowerCase('tr').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ı/g, 'i');
 function yerelEslesme(q) {
-  const n = s => s.toLocaleLowerCase('tr').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ı/g, 'i');
+  const n = yerNorm;
   const qq = n(q);
   const h = HAVALIMANLARI.filter(x => DILLER.some(d => n(x.ad[d]).includes(qq)) || x.id.includes(qq)).map(x => ({ad:x.ad[dil], alt:x.alt, lat:x.lat, lon:x.lon, hid:x.id, ucak:true}));
   const p = POPULER.filter(x => n(x.ad).includes(qq)).map(x => ({ad:x.ad, alt:x.alt + ', Antalya', lat:x.lat, lon:x.lon}));
@@ -1844,9 +1877,9 @@ function yolcuCiz() {
   $('#sayacListe').innerHTML = sayacHTML([['yetiskin', 'adult', 'adult_s'], ['cocuk', 'child', 'child_s']]) + yasHTML()
     + (havalimaniVar() ? sayacHTML([['bavul', 'bags', 'bags_s']]) : '') + `<button type="button" class="tamam-btn" data-kapat>${esc(t('done'))}</button>`;
 }
-// çocuk koltuğu yalnız 0-3 yaş çocuk varsa sorulur; seçenek en çok o çocuk sayısı kadar
+// çocuk koltuğu yalnız 0-2 yaş bebek varsa sorulur; seçenek en çok bebek sayısı kadar (07.11 alıcı; önce 0-3 yaştı)
 function koltukCiz() {
-  const s = $('#koltuk'), en = A.yaslar.filter(y => y !== '' && y <= 3).length, v = Math.min(Number(s.value) || 0, en);
+  const s = $('#koltuk'), en = A.yaslar.filter(y => y !== '' && y <= 2).length, v = Math.min(Number(s.value) || 0, en);
   s.closest('.girdi').hidden = !en;
   s.innerHTML = Array.from({length:en + 1}, (_, n) => `<option value="${n}">${esc(n === 0 ? t('seat_none') : n === 1 ? t('seat_1') : t('seat_n', {n}))}</option>`).join('');
   s.value = String(v);
@@ -1881,8 +1914,10 @@ function vitrinCiz() {
   $$('.karusel').forEach(karuselCiz);
   favFiyatlar();
 }
-/* favori kart = güzergâh (07.11 alıcı: kartta Nereden → Nereye ve Minivan fiyatı). Yer kodu 'h:ayt' havalimanı, 'p:lara' bölge. */
+/* favori kart = güzergâh (07.11 alıcı: kartta Nereden → Nereye ve Minivan fiyatı). Yer kodu 'h:ayt' havalimanı, 'p:lara' bölge;
+   panelde aranıp seçilen otel, AVM, gezi yeri {ad, lat, lon} olarak saklanır (07.11 alıcı: 'esnek olsun, yoğun istek transferleri eklemek için') */
 function kartYer(k) {
+  if (k && typeof k === 'object') return k.ad && isFinite(k.lat) && isFinite(k.lon) ? {ad:k.ad, lat:+k.lat, lon:+k.lon, hid:null} : null;
   const [tur, id] = String(k || '').split(':');
   if (tur === 'h' && HAVALIMANLARI.some(x => x.id === id)) return havalimaniYer(id);
   const p = tur === 'p' && POPULER.find(x => x.id === id);
@@ -1992,7 +2027,10 @@ $('#donusKaldir').addEventListener('click', e => {
 });
 const simdi = new Date();
 ['#tarih', '#dTarih'].forEach(s => $(s).min = isoGun(simdi));
-$('#tarih').addEventListener('change', () => { $('#dTarih').min = $('#tarih').value || isoGun(simdi); $('#alanTarih').classList.remove('hata'); ozetCiz(); });
+// tarih seçilince saat boşsa saat seçimi hemen açılır (07.11 alıcı)
+const saatAc = id => { const s = $(id); if (s.value) return; try { s.showPicker(); } catch (e) { s.focus(); } };
+$('#tarih').addEventListener('change', () => { $('#dTarih').min = $('#tarih').value || isoGun(simdi); $('#alanTarih').classList.remove('hata'); ozetCiz(); if ($('#tarih').value) saatAc('#saat'); });
+$('#dTarih').addEventListener('change', () => { if ($('#dTarih').value) saatAc('#dSaat'); });
 $('#saat').addEventListener('change', () => { $('#alanTarih').classList.remove('hata'); ozetCiz(); });
 ['#dTarih', '#dSaat'].forEach(s => $(s).addEventListener('change', () => { $('#alanDonus').classList.remove('hata'); ozetCiz(); }));
 // pickup saati, elle değiştirilmedikçe aramadaki dönüş saatiyle dolar
@@ -2280,11 +2318,11 @@ function rezervasyonYap() {
   if (!yaslarTam()) return;
   const h = hesapla(a.id); if (!h || h.asim) { tost(t('over_range')); return; }
   $('#bilgi').classList.add('acik');
-  const ad = $('#ad').value.trim(), tel = $('#tel').value.trim(), ep = $('#eposta').value.trim();
+  const ad = $('#ad').value.trim(), tel = telTam($('#telKod'), $('#tel')), ep = $('#eposta').value.trim();
   const isaretle = (id, m) => { const k = $(id).closest('.kutu'); k.classList.add('hata'); tost(m); $(id).focus(); k.scrollIntoView({behavior:'smooth', block:'center'}); };
   $$('.kutu.hata').forEach(k => k.classList.remove('hata'));
   if (ad.length < 3 || !ad.includes(' ')) return isaretle('#ad', t('err_name'));
-  if (tel.replace(/\D/g, '').length < 10) return isaretle('#tel', t('err_phone'));
+  if (!tel) return isaretle('#tel', t('err_phone'));
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(ep)) return isaretle('#eposta', t('err_email'));
   // otel / adres ayrıca sorulmaz, aramadaki yerden gelir: havalimanından alışta varış yeri, diğerlerinde alış yeri
   const otel = (A.nereden.hid ? A.nereye : A.nereden).ad;
@@ -2338,6 +2376,7 @@ $('#mbRez').addEventListener('click', () => {
 });
 $('#bilgiBas').addEventListener('click', () => { if (matchMedia('(max-width:760px)').matches) $('#bilgi').classList.toggle('acik'); });
 ['#ad', '#tel', '#eposta'].forEach(s => $(s).addEventListener('input', () => $(s).closest('.kutu').classList.remove('hata')));
+telBagla($('#telKod'), $('#tel'), () => { telKodElle = true; });
 // telefonda alttaki sabit "Rezervasyon Yap" çubuğu arama kutusu ekrandayken gizlenir, ilk ekran tek ekrana sığar
 if ('IntersectionObserver' in window) {
   document.body.classList.add('arama-gorunur');
@@ -2355,12 +2394,49 @@ $('#modal').addEventListener('click', e => { if (e.target.id === 'modal' || e.ta
 $('#modal').addEventListener('click', e => { if (e.target.closest('[data-onayla]')) { $('#onay').checked = true; $('#onaySatir').classList.remove('hata'); modalKapat(); } });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') { modalKapat(); $('#cekmece').classList.remove('acik'); } });
 
+/* telefon: önce ülke kodu seçilir, numara '+90 542 723 05 88' biçiminde kaydedilir (07.11 alıcı) */
+const telKodu = iso => (TEL_KOD.find(x => x[0] === iso) || [])[1] || '';
+const ulkeAdlari = {};
+function ulkeAd(iso) {
+  if (!ulkeAdlari[dil]) { try { ulkeAdlari[dil] = new Intl.DisplayNames([PARA[dil].loc], {type:'region'}); } catch (e) { ulkeAdlari[dil] = {of:x => x}; } }
+  return ulkeAdlari[dil].of(iso) || iso;
+}
+function telKodDoldur(sel, iso) {
+  const sira = new Intl.Collator(PARA[dil].loc), op = iso => `<option value="${iso}">${esc(ulkeAd(iso))} +${telKodu(iso)}</option>`;
+  sel.innerHTML = `<optgroup label="${esc(t('cc_pop'))}">${TEL_SIK.map(op).join('')}</optgroup><optgroup label="${esc(t('cc_all'))}">${TEL_KOD.map(([x]) => [x, ulkeAd(x)]).sort((a, b) => sira.compare(a[1], b[1])).map(([x]) => op(x)).join('')}</optgroup>`;
+  sel.value = iso; telKodGoster(sel);
+}
+function telKodGoster(sel) { sel.parentElement.querySelector('b').textContent = '+' + telKodu(sel.value); }
+function telKodCiz() { const s = $('#telKod'); telKodDoldur(s, telKodElle ? s.value : TEL_DIL[dil]); }
+// '+49 151…' ya da '0049…' yazılır ya da yapıştırılırsa kod seçime geçer, kutuda yalnız numara kalır
+function telAyir(deger, tercih) {
+  const v = String(deger || '').trim(), m = v.match(/^(?:\+|00)\s*/); if (!m) return null;
+  const r = v.slice(m[0].length), n = r.replace(/\D/g, '');
+  for (let u = 3; u >= 1; u--) {
+    const k = n.slice(0, u), aday = TEL_KOD.filter(x => x[1] === k);
+    if (k.length < u || !aday.length) continue;
+    let j = 0, c = 0; while (j < r.length && c < u) { if (/\d/.test(r[j])) c++; j++; }
+    return {iso:aday.some(x => x[0] === tercih) ? tercih : TEL_ANA[k] || aday[0][0], no:r.slice(j).replace(/^[\s\-()./]+/, '')};
+  }
+  return null;
+}
+function telBagla(sel, inp, secildi) {
+  sel.addEventListener('change', () => { telKodGoster(sel); if (secildi) secildi(); });
+  inp.addEventListener('input', () => { const p = telAyir(inp.value, sel.value); if (!p) return; sel.value = p.iso; telKodGoster(sel); inp.value = p.no; if (secildi) secildi(); });
+}
+// geçerliyse '+kod numara', değilse boş; numaranın başındaki 0 atılır (İtalya'da 0 numaranın parçası)
+function telTam(sel, inp) {
+  const k = telKodu(sel.value), yazi = inp.value.replace(/[^\d ]/g, ' ').replace(/\s+/g, ' ').trim(), no = k === '39' ? yazi : yazi.replace(/^[0 ]+/, ''), d = no.replace(/\D/g, '');
+  return k && d.length >= 6 && k.length + d.length <= 15 && (k !== '90' || d.length === 10) ? '+' + k + ' ' + no : '';
+}
+function telDoldur(deger) { const s = $('#telKod'), p = telAyir(deger, s.value); if (p) { s.value = p.iso; telKodGoster(s); telKodElle = true; } $('#tel').value = p ? p.no : deger || ''; }
+
 /* hesap */
 function hesapCiz() {
   const u = oturum();
   const yazi = u ? u.ad.split(' ')[0] : t('signin');
   $('#hesapYazi').textContent = yazi; $('#hzHesap').textContent = yazi; $('#cekHesap').textContent = u ? t('account') + ' · ' + yazi : t('signin_reg');
-  if (u) { if (!$('#ad').value) $('#ad').value = u.ad; if (!$('#tel').value) $('#tel').value = u.tel; if (!$('#eposta').value) $('#eposta').value = u.eposta; }
+  if (u) { if (!$('#ad').value) $('#ad').value = u.ad; if (!$('#tel').value) telDoldur(u.tel); if (!$('#eposta').value) $('#eposta').value = u.eposta; }
 }
 function hesapAc(sekme = 'giris') {
   $('#cekmece').classList.remove('acik');
@@ -2390,7 +2466,7 @@ function hesapAc(sekme = 'giris') {
     <form class="m-form" id="mKayit" ${sekme === 'kayit' ? '' : 'hidden'} novalidate>
       <div class="girdi"><label for="kA">${esc(t('name'))}</label><div class="kutu"><svg class="ic"><use href="#i-kisi"/></svg><input id="kA" autocomplete="name"></div></div>
       <div class="girdi"><label for="kE">${esc(t('email'))}</label><div class="kutu"><svg class="ic"><use href="#i-posta"/></svg><input id="kE" type="email" autocomplete="email"></div></div>
-      <div class="girdi"><label for="kT">${esc(t('phone'))}</label><div class="kutu"><svg class="ic"><use href="#i-telefon"/></svg><input id="kT" type="tel" placeholder="+90 5xx xxx xx xx"></div></div>
+      <div class="girdi"><label for="kT">${esc(t('phone'))}</label><div class="kutu"><span class="tel-kod"><b></b><svg class="ic"><use href="#i-asagi"/></svg><select id="kTKod" aria-label="${esc(t('cc'))}"></select></span><input id="kT" type="tel" autocomplete="tel-national" inputmode="tel"></div></div>
       <div class="girdi"><label for="kDg">${esc(t('birth'))}</label><div class="kutu"><svg class="ic"><use href="#i-takvim"/></svg><input id="kDg" type="date" autocomplete="bday" min="1900-01-01" max="${isoGun(new Date())}"></div></div>
       <div class="girdi"><label for="kS">${esc(t('password'))}</label><div class="kutu"><svg class="ic"><use href="#i-kalkan"/></svg><input id="kS" type="password" autocomplete="new-password"></div></div>
       <label class="onay-satir" style="margin-top:0;font-size:12.5px;color:var(--yazi2)"><input type="checkbox" id="kIzin"><span>${esc(t('promo_ok'))}</span></label>
@@ -2444,12 +2520,13 @@ function hesapAc(sekme = 'giris') {
     if (!u.aktif) { $('#gH').textContent = t('login_blocked'); return; }
     girisYap(u);
   };
+  telKodDoldur($('#kTKod'), $('#telKod').value); telBagla($('#kTKod'), $('#kT'));
   $('#mKayit').onsubmit = e => {
     e.preventDefault();
-    const ad = $('#kA').value.trim(), ep = $('#kE').value.trim(), tel = $('#kT').value.trim(), sf = $('#kS').value;
+    const ad = $('#kA').value.trim(), ep = $('#kE').value.trim(), tel = telTam($('#kTKod'), $('#kT')), sf = $('#kS').value;
     if (ad.length < 3 || !ad.includes(' ')) { $('#kH').textContent = t('err_name'); return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(ep)) { $('#kH').textContent = t('err_email'); return; }
-    if (tel.replace(/\D/g, '').length < 10) { $('#kH').textContent = t('err_phone'); return; }
+    if (!tel) { $('#kH').textContent = t('err_phone'); return; }
     const dg = $('#kDg').value;
     if (!/^\d{4}-\d{2}-\d{2}$/.test(dg) || dg < '1900-01-01' || dg > isoGun(new Date())) { $('#kH').textContent = t('err_birth'); return; }
     if (sf.length < 4) { $('#kH').textContent = t('reg_short'); return; }
@@ -2461,7 +2538,7 @@ function hesapAc(sekme = 'giris') {
 }
 function girisYap(u) {
   try { localStorage.setItem(OTURUM, u.id); } catch (e) {}
-  modalKapat(); $('#ad').value = u.ad; $('#tel').value = u.tel; $('#eposta').value = u.eposta;
+  modalKapat(); $('#ad').value = u.ad; telDoldur(u.tel); $('#eposta').value = u.eposta;
   hesapCiz(); aracCiz(); ozetCiz(); tost(t('welcome', {n:u.ad.split(' ')[0]}));
 }
 document.addEventListener('click', e => {
@@ -2731,7 +2808,7 @@ function pFiyatBagla() {
     const p = fiyatEurHam(S, km, ki, $('#tAr').value, $('#tGD').checked);
     $('#tSonuc').innerHTML = p == null ? `<div style="grid-column:1/-1"><small>Sonuç</small><b>Bu km için aralık yok</b><small>Sitede "fiyat için bize yazın" görünür.</small></div>` : DILLER.map(d => `<div><small>${DIL_AD[d]}</small><b>${paraYaz(p, d)}</b></div>`).join('');
   };
-  const degisti = () => { kaydet(); test(); aracCiz(); ozetCiz(); };
+  const degisti = () => { kaydet(); test(); aracCiz(); ozetCiz(); gdIndCiz(); };
   const kartYenile = id => { const a = S.araclar.find(x => x.id === id); $('#fk-' + id).outerHTML = fiyatTabloKart(a); };
   // bir aralık değişince sonraki aralıkların bitiş fiyatı da değişir: kartın bütün fiyat hücreleri ve örnek yenilenir
   const fiyatlariYenile = id => {
@@ -2959,8 +3036,38 @@ function pKodBagla() {
   $('#kGovde').addEventListener('click', e => { const s = e.target.closest('[data-ksil]'); if (s) { const k = S.kodlar[s.dataset.ksil]; S.kodlar.splice(+s.dataset.ksil, 1); if (A.kod && A.kod.kod === k.kod) { A.kod = null; ozetCiz(); } kaydet(); panelCiz(); tost(k.kod + ' silindi'); } });
 }
 
-const yerSecenek = sec => [...HAVALIMANLARI.map(h => ['h:' + h.id, h.ad.tr]), ...POPULER.map(p => ['p:' + p.id, p.ad])]
-  .map(([v, ad]) => `<option value="${v}" ${v === sec ? 'selected' : ''}>${esc(ad)}</option>`).join('');
+// panel kart yeri: havalimanı ve bölgeler hazır listede, otel / AVM / gezi yeri adres aramasıyla bulunur
+function pYerAd(k) { const [tur, id] = typeof k === 'string' ? k.split(':') : [], h = tur === 'h' && HAVALIMANLARI.find(x => x.id === id); return h ? h.ad.tr : (kartYer(k) || {}).ad || ''; }
+const pHazirYer = q => [
+  ...HAVALIMANLARI.filter(x => !q || DILLER.some(d => yerNorm(x.ad[d]).includes(q)) || x.id.includes(q)).map(x => ({k:'h:' + x.id, ad:x.ad.tr, alt:x.alt, ucak:true})),
+  ...POPULER.filter(x => !q || yerNorm(x.ad).includes(q)).map(x => ({k:'p:' + x.id, ad:x.ad, alt:x.alt + ', Antalya'}))];
+let pYerNo = 0;
+function pYerOneri(g) {
+  const kutu = g.nextElementSibling, f = S.favori[+g.dataset.f], ham = g.value.trim(), no = ++pYerNo;
+  const q = ham === pYerAd(f && f[g.dataset.yer]) ? '' : yerNorm(ham);
+  const yaz = (liste, not) => {
+    kutu._liste = liste; kutu.hidden = false;
+    kutu.innerHTML = liste.map((o, i) => `<button type="button" data-yi="${i}"><svg class="ic"${o.ucak ? ' style="transform:rotate(45deg)"' : ''}><use href="#${o.ucak ? 'i-ucak' : 'i-konum'}"/></svg><span>${esc(o.ad)}<small>${esc(o.alt || '')}</small></span></button>`).join('')
+      + (not ? `<div class="p-oneri-bos">${not}</div>` : liste.length ? '' : '<div class="p-oneri-bos">Sonuç yok; otel, AVM ya da yer adını yazın</div>');
+  };
+  const hazir = pHazirYer(q);
+  clearTimeout(pYerOneri.z);
+  if (q.length < 3) { yaz(hazir); return; }
+  yaz(hazir, 'Aranıyor…');
+  pYerOneri.z = setTimeout(async () => {
+    let bulunan = [];
+    try { bulunan = await photonAra(ham); } catch (e) { if (no === pYerNo) yaz(hazir, 'Adres araması şu an yapılamadı'); return; }
+    if (no !== pYerNo) return;
+    yaz([...hazir, ...bulunan.map(o => ({k:{ad:o.ad, lat:o.lat, lon:o.lon}, ad:o.ad, alt:o.alt}))]);
+  }, 300);
+}
+function pYerKapat(g) { const kutu = g.nextElementSibling, f = S.favori[+g.dataset.f]; kutu.hidden = true; kutu.innerHTML = ''; ++pYerNo; if (f) g.value = pYerAd(f[g.dataset.yer]); }
+function pYerSec(g, o) {
+  const f = S.favori[+g.dataset.f], k = g.dataset.yer; if (!f || !o) return;
+  const diger = kartYer(f[k === 'nereden' ? 'nereye' : 'nereden']), yeni = kartYer(o.k);
+  if (diger && yeni && yerAnahtar(diger) === yerAnahtar(yeni)) { tost('Nereden ve Nereye aynı yer olamaz'); return; }
+  f[k] = o.k; kaydet(); vitrinCiz(); pYerKapat(g); g.blur(); tost('Kaydedildi');
+}
 function pIcerik() {
   const dilAlan = (o, alan, on, cok) => `<div class="${cok ? 'izgara-2' : 'izgara-4'}">${DILLER.map(d => `<div class="p-alan"><label>${DIL_AD[d]}</label>${cok
     ? `<textarea class="p-girdi" rows="2" ${on} data-k="${alan}|${d}">${esc((o[alan] || {})[d] || '')}</textarea>`
@@ -2969,8 +3076,7 @@ function pIcerik() {
       <div><div class="foto-k" style="aspect-ratio:2/1"><img src="${esc(f.foto)}" alt=""></div><label class="foto-sec">Fotoğrafı değiştir<input type="file" accept="image/*" data-f="${i}" data-k="foto"></label></div>
       <div>
         <div class="izgara-3">
-          <div class="p-alan"><label>Nereden</label><select class="p-girdi" data-f="${i}" data-k="nereden">${yerSecenek(f.nereden)}</select></div>
-          <div class="p-alan"><label>Nereye</label><select class="p-girdi" data-f="${i}" data-k="nereye">${yerSecenek(f.nereye)}</select></div>
+          ${['nereden', 'nereye'].map(k => `<div class="p-alan p-yer"><label>${k === 'nereden' ? 'Nereden' : 'Nereye'}</label><input class="p-girdi" data-f="${i}" data-yer="${k}" value="${esc(pYerAd(f[k]))}" placeholder="Havalimanı, otel, AVM, gezi yeri" autocomplete="off"><div class="p-oneri" hidden></div></div>`).join('')}
           <div class="p-alan" style="align-self:end;text-align:right"><button type="button" class="p-btn kirmizi" data-fsil="${i}"><svg class="ic"><use href="#i-cop"/></svg>Kartı sil</button></div>
         </div>
       </div></div></div>`).join('');
@@ -2985,22 +3091,30 @@ function pIcerik() {
       <div class="p-alt-b">Yorum</div>${dilAlan(y, 'metin', `data-y="${i}"`, true)}
     </div>`).join('');
   return pBas('Ana Sayfa', 'Favori transfer kartları ve misafir yorumları; değişiklik sitede anında görünür.') + `
-  <div class="p-kart"><h2>Favori Transferler</h2><p class="acik-y">Her kart bir güzergâh: sitede kartta Nereden → Nereye ve Minivan fiyatı görünür, fiyat Fiyatlandırma tablosundan kendiliğinden hesaplanır. Müşteri karta basınca bu güzergâh aramaya gelir.</p>${fav || '<p class="bos">Kart yok</p>'}
+  <div class="p-kart"><h2>Favori Transferler</h2><p class="acik-y">Her kart bir güzergâh. Nereden ve Nereye alanına havalimanı, bölge, otel, AVM ya da gezi yeri yazıp listeden seçin. Sitede kartta Nereden → Nereye ve Minivan fiyatı görünür, fiyat Fiyatlandırma tablosundan kendiliğinden hesaplanır. Müşteri karta basınca bu güzergâh aramaya gelir.</p>${fav || '<p class="bos">Kart yok</p>'}
     <button type="button" class="p-btn ince" id="fEkle" style="margin-top:6px"><svg class="ic"><use href="#i-arti"/></svg>Kart ekle</button></div>
   <div class="p-kart"><h2>Misafir Yorumları</h2><p class="acik-y">Bu örnekteki yorumlar gösterim içindir; yayında yalnız gerçek müşteri yorumları girilir. Bir dilde yorum boşsa İngilizcesi görünür.</p>${yor || '<p class="bos">Yorum yok</p>'}
     <button type="button" class="p-btn ince" id="yEkle" style="margin-top:6px"><svg class="ic"><use href="#i-arti"/></svg>Yorum ekle</button></div>`;
 }
 function pIcerikBagla() {
   const ana = $('#pAna');
+  ana.querySelectorAll('[data-yer]').forEach(g => {
+    const kutu = g.nextElementSibling;
+    g.onfocus = () => { g.select(); pYerOneri(g); };
+    g.oninput = () => pYerOneri(g);
+    g.onblur = () => setTimeout(() => { if (document.activeElement !== g) pYerKapat(g); }, 200);
+    g.onkeydown = e => { if (e.key === 'Escape') { pYerKapat(g); g.blur(); } if (e.key === 'Enter') { e.preventDefault(); const l = kutu._liste || []; if (l.length) pYerSec(g, l[0]); } };
+    kutu.onmousedown = e => e.preventDefault();
+    kutu.onclick = e => { const b = e.target.closest('[data-yi]'); if (b) pYerSec(g, (kutu._liste || [])[+b.dataset.yi]); };
+  });
   const yaz = (o, k, v) => { const [a, d] = k.split('|'); if (!d) { o[a] = v; return; } o[a] = o[a] || {}; if (v) o[a][d] = v; else delete o[a][d]; };
   const puanAl = (g, eski, alt) => { const v = Number(g.value); if (g.value === '' || isNaN(v) || v < alt || v > 5) { g.value = eski; tost(`Puan ${alt} ile 5 arasında olmalı`); return null; } return v; };
   ana.onchange = e => {
     const g = e.target, k = g.dataset.k; if (!k) return;
     if (g.dataset.f != null) {
       const f = S.favori[+g.dataset.f]; if (!f) return;
-      if (k === 'foto') { if (g.files[0]) resimKucult(g.files[0], url => { f.foto = url; kaydet(); panelCiz(); vitrinCiz(); tost('Fotoğraf güncellendi'); }); return; }
-      if (g.value === f[k === 'nereden' ? 'nereye' : 'nereden']) { g.value = f[k]; tost('Nereden ve Nereye aynı yer olamaz'); return; }
-      yaz(f, k, g.value.trim());
+      if (k === 'foto' && g.files[0]) resimKucult(g.files[0], url => { f.foto = url; kaydet(); panelCiz(); vitrinCiz(); tost('Fotoğraf güncellendi'); });
+      return;
     } else if (g.dataset.y != null) {
       const y = S.yorumlar[+g.dataset.y]; if (!y) return;
       if (k === 'foto') { if (g.files[0]) resimKucult(g.files[0], url => { y.foto = url; kaydet(); panelCiz(); vitrinCiz(); tost('Fotoğraf güncellendi'); }); return; }
