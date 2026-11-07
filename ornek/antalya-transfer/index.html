@@ -49,7 +49,7 @@ html{scroll-padding-top:84px}
 .logo b{display:block;font-family:var(--serif);font-weight:600;font-size:32px;letter-spacing:.2em;line-height:1}
 .logo small{display:block;font-size:11.5px;font-weight:600;letter-spacing:.66em;margin-top:7px;padding-left:3px}
 .menu{display:flex;gap:36px;margin:0 auto 0 7%}
-.menu a{font-size:15.5px;font-weight:500;padding:8px 0;position:relative;opacity:.94;transition:color .2s,opacity .2s}
+.menu a{display:flex;align-items:center;gap:7px;font-size:15.5px;font-weight:500;padding:8px 0;position:relative;opacity:.94;transition:color .2s,opacity .2s}
 .menu a:hover{opacity:1;color:#ffd2ad}
 .menu a.aktif{color:var(--tur);opacity:1}
 .menu a.aktif::after{content:'';position:absolute;left:0;right:0;bottom:-3px;height:2px;border-radius:2px;background:var(--tur)}
@@ -72,9 +72,14 @@ html{scroll-padding-top:84px}
 .destek .ic{width:34px;height:34px;stroke-width:1.4}
 .destek b{font-size:21px;line-height:1;font-weight:700;display:block}
 .destek small{font-size:11.5px;display:block;opacity:.9;margin-top:2px}
-.hesap-btn{display:flex;align-items:center;gap:7px;border:1px solid rgba(255,255,255,.38);border-radius:999px;padding:7px 14px 7px 11px;font-size:13.5px;font-weight:600;color:#fff;transition:background .2s}
+/* üye girişi her cihazda yalnız simge (alıcı 08.11); girişliyken turuncu */
+.hesap-btn{display:grid;place-items:center;width:40px;height:40px;flex:none;border:1px solid rgba(255,255,255,.38);border-radius:50%;color:#fff;transition:background .2s}
 .hesap-btn:hover{background:rgba(255,255,255,.12)}
-.hesap-btn .ic{width:17px;height:17px}
+.hesap-btn .ic{width:19px;height:19px}
+.hesap-btn.girisli,.hz.girisli{color:var(--tur)}
+.hesap-btn.girisli{border-color:var(--tur)}
+.ekran-oku{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.menu .menu-ac .ic{width:20px;height:20px;stroke-width:1.8}
 .burger{display:none;color:#fff;padding:6px;margin-right:-6px}
 .burger .ic{width:30px;height:30px;stroke-width:1.8}
 
@@ -315,6 +320,13 @@ input::-webkit-date-and-time-value{text-align:left}
 .onay-satir.hata{color:var(--kirmizi)}
 .onay-satir.hata input{outline:2px solid var(--kirmizi);outline-offset:1px}
 .onay-satir button{color:var(--koyu3);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.sss-liste{margin:14px 0 12px;display:grid;gap:8px}
+.sss-liste details{border:1px solid var(--cizgi);border-radius:12px;padding:0 14px}
+.sss-liste summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 0;font-weight:700;font-size:14.5px}
+.sss-liste summary::-webkit-details-marker{display:none}
+.sss-liste summary::after{content:'+';flex:none;color:var(--tur);font-size:21px;font-weight:600;line-height:1}
+.sss-liste details[open] summary::after{content:'−'}
+.sss-liste p{padding:0 0 14px;font-size:14px;line-height:1.55;color:var(--yazi2)}
 .belge-liste{margin:14px 0 10px;padding-left:20px;display:grid;gap:8px;font-size:14px;line-height:1.5;list-style:decimal}
 /* alt toplam çubuğu: solda toplam tutar + Detay, sağda Rezervasyon Yap */
 .toplam-bar{display:flex;align-items:center;gap:18px;margin-top:16px;padding-top:16px;border-top:1px solid var(--cizgi2)}
@@ -558,7 +570,6 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
 }
 @media (max-width:1060px){
   .menu,.destek{display:none}
-  .ust-sag .hesap-btn span{display:none}
   .burger{display:block}
   .bilgi{grid-template-columns:minmax(0,1fr)}
   .bilgi-foto{display:none}
@@ -965,7 +976,7 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
 <header class="ust" id="ust">
   <div class="hizli">
     <div class="kap">
-      <button class="hz" type="button" data-hesap><svg class="ic"><use href="#i-kisi"/></svg><span id="hzHesap">Giriş</span></button>
+      <button class="hz" type="button" data-hesap id="hzHesapBtn"><svg class="ic"><use href="#i-kisi"/></svg><span id="hzHesap" class="ekran-oku">Giriş</span></button>
       <a class="hz" href="#" id="hzTel"><svg class="ic"><use href="#i-telefon"/></svg><span id="hzTelYazi"></span></a>
       <div class="hz-sag">
         <a class="hz" href="#" data-wa aria-label="WhatsApp"><svg class="ic"><use href="#i-wa"/></svg></a>
@@ -986,15 +997,15 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
       </svg>
       <span><b>ATALIA</b><small>TRANSFER</small></span>
     </a>
+    <!-- üstte yalnız Ana Sayfa, İletişim, SSS ve Menü; diğer bölümler Menü'de, telefondaki gibi (alıcı 08.11) -->
     <nav class="menu" aria-label="Ana menü">
       <a href="#ana" class="aktif" data-t="nav_home">Ana Sayfa</a>
-      <a href="#filo" data-t="nav_fleet">Araç Filomuz</a>
-      <a href="#hizmetler" data-t="nav_services">Hizmetler</a>
-      <a href="#neden" data-t="nav_why">Neden Atalia?</a>
       <a href="#iletisim" data-t="nav_contact">İletişim</a>
+      <a href="#sss" data-sss data-t="nav_faq">SSS</a>
+      <a href="#menu" class="menu-ac" data-menu-ac><svg class="ic"><use href="#i-menu"/></svg><span data-t="nav_menu">Menü</span></a>
     </nav>
     <div class="ust-sag">
-      <button class="hesap-btn" type="button" data-hesap><svg class="ic"><use href="#i-kisi"/></svg><span id="hesapYazi">Giriş</span></button>
+      <button class="hesap-btn" type="button" data-hesap id="hesapBtn"><svg class="ic"><use href="#i-kisi"/></svg><span id="hesapYazi" class="ekran-oku">Giriş</span></button>
       <div class="dil" id="dil">
         <button class="dil-btn" type="button" aria-haspopup="true"><span id="dilKod">TR</span><svg class="ic"><use href="#i-asagi"/></svg></button>
         <div class="dil-liste" id="dilListe"></div>
@@ -1232,9 +1243,10 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
     <button type="button" class="kapat" id="cekKapat" aria-label="Kapat"><svg class="ic"><use href="#i-kapat"/></svg></button>
     <nav>
       <a href="#ana" data-t="nav_home">Ana Sayfa</a>
+      <a href="#neden" data-t="nav_why">Neden Atalia?</a>
       <a href="#filo" data-t="nav_fleet">Araç Filomuz</a>
       <a href="#hizmetler" data-t="nav_services">Hizmetler</a>
-      <a href="#neden" data-t="nav_why">Neden Atalia?</a>
+      <a href="#sss" data-sss data-t="nav_faq">SSS</a>
       <a href="#iletisim" data-t="nav_contact">İletişim</a>
     </nav>
     <div class="cek-dil" id="cekDil"></div>
@@ -1289,7 +1301,7 @@ let telKodElle = false; // ziyaretçi kodu kendisi seçene kadar kod site diline
 
 /* ---------------- metinler (4 dil) ---------------- */
 const D = {
-tr:{nav_home:'Ana Sayfa',nav_fleet:'Araç Filomuz',nav_services:'Hizmetler',nav_why:'Neden Atalia?',nav_contact:'İletişim',support:'Müşteri Desteği',signin:'Giriş',
+tr:{nav_home:'Ana Sayfa',nav_fleet:'Araç Filomuz',nav_services:'Hizmetler',nav_why:'Neden Atalia?',nav_contact:'İletişim',nav_faq:'SSS',nav_menu:'Menü',faq_t:'Sık Sorulan Sorular',faq_demo:'Örnek sorulardır; soruları ve cevapları panelde Ana Sayfa bölümünden siz yazarsınız.',faq_empty:'Henüz soru eklenmedi.',support:'Müşteri Desteği',signin:'Giriş',
 hero_kicker:'Antalya Havalimanı Transferi',hero_1:'Yolculuğunuz.',hero_2a:'Bizim ',hero_2b:'Önceliğimiz.',hero_sub:'Konforlu|Güvenli|Zamanında',
 add_return:'Dönüş Ekle',gd_disc:'%{n} indirim',remove_return:'Dönüşü kaldır',return_s:'Dönüş',pickup_s:'Alış',landing:'Uçak İniş',child_age:'{n}. Çocuk Yaşı',age_pick:'Seçin',err_age:'Lütfen çocukların yaşını seçin.',ages:'yaş',from:'Nereden',to:'Nereye',addr_ph:'Otel / Tatil köyü / Adres',date_time:'Tarih & Saat',pickup:'Alış Tarihi & Saati',return:'Dönüş Tarihi & Saati',select_date:'Tarih seçin',select_time:'Saat seçin',
 passengers:'Yolcular',adult:'Yetişkin',child:'Çocuk',adult_s:'12 yaş ve üstü',child_s:'0-11 yaş',bags:'Toplam Bavul',bags_short:'Bavul',bags_s:'Valiz ve büyük çanta',done:'Tamam',search:'Ara',
@@ -1312,7 +1324,7 @@ why_title:'Neden Atalia Transfer',w1:'7/24 Destek',w1s:'Her zaman yanınızdayı
 quick_links:'Hızlı Linkler',about:'Hakkımızda',terms:'Şartlar ve Koşullar',tursab_doc:'TÜRSAB Belgesi',tursab_no:'Belge No',tursab_empty:'Örnek sitede belge numarası henüz girilmedi.',newsletter:'Bülten',news_sub:'Kampanyalar ve yeniliklerden haberdar olun.',news_ph:'E-posta adresiniz',news_btn:'Abone ol',news_ok:'Teşekkürler, bültene kaydoldunuz.',news_dup:'Bu e-posta adresi zaten kayıtlı.',rights:'© {y} Atalia Transfer, tüm haklar saklıdır.',phone_l:'Telefon',link_demo:'Örnek sitede bu bağlantı henüz girilmedi.',
 fav_title:'Favori Transferler',fav_sub:'Antalya\'nın en popüler destinasyonları',rev_title:'Misafirlerin Yorumları',fav_pick:'Güzergâh seçildi, şimdi tarih ve saati seçin.',my_favs:'Favori aramalarım',fav_add:'Bu aramayı favorilere ekle',fav_remove:'Favorilerden çıkar',fav_saved:'Favorilere eklendi. Nereden ya da Nereye alanına basınca en üstte görünür.',fav_removed:'Favorilerden çıkarıldı.',forgot:'Şifremi unuttum',reset_t:'Şifre sıfırlama',reset_hint:'E-posta adresinizi yazın, şifre sıfırlama bağlantısı gönderelim.',reset_btn:'Bağlantı gönder',reset_sent:'Bu e-posta ile kayıtlı bir hesap varsa şifre sıfırlama bağlantısı gönderildi.',reset_demo:'Örnek sitede e-posta gitmez, bağlantıyı buradan açabilirsiniz.',reset_open:'Bağlantıyı aç',reset_none:'Örnek sitede bu e-postayla kayıtlı üye yok.',new_pw:'Yeni şifre',new_pw2:'Yeni şifre (tekrar)',pw_save:'Şifreyi kaydet',pw_mismatch:'Şifreler aynı değil.',pw_done:'Şifreniz değişti.',back_login:'Girişe dön',choose_title:'Aracınızı Seçin',fit_sub:'{n} yolcu için uygun araçlar',no_vehicle:'Bu yolcu sayısı için sitede uygun araç yok. Size uygun aracı ayarlamamız için WhatsApp\'tan yazın.',
 flight:'Uçuş Numarası',ret_info:'Dönüş Transferi',ret_flight:'Dönüş Uçuş No',flight_ph:'Örn. TK 2412',seat:'Çocuk Koltuğu',seat_none:'Gerek yok',seat_1:'1 koltuk',seat_n:'{n} koltuk'},
-en:{nav_home:'Home',nav_fleet:'Our Fleet',nav_services:'Services',nav_why:'Why Atalia?',nav_contact:'Contact',support:'Customer Support',signin:'Sign in',
+en:{nav_home:'Home',nav_fleet:'Our Fleet',nav_services:'Services',nav_why:'Why Atalia?',nav_contact:'Contact',nav_faq:'FAQ',nav_menu:'Menu',faq_t:'Frequently Asked Questions',faq_demo:'Sample questions; you write the questions and answers yourself in the Home Page section of the panel.',faq_empty:'No questions have been added yet.',support:'Customer Support',signin:'Sign in',
 hero_kicker:'Antalya Airport Transfer',hero_1:'Your Journey.',hero_2a:'Our ',hero_2b:'Priority.',hero_sub:'Comfortable|Safe|On Time',
 add_return:'Add Return',gd_disc:'{n}% off',remove_return:'Remove return',return_s:'Return',pickup_s:'Pick-up',landing:'Flight Landing',child_age:'Child {n} age',age_pick:'Select',err_age:'Please select the age of each child.',ages:'ages',from:'From',to:'To',addr_ph:'Hotel / Resort / Address',date_time:'Date & Time',pickup:'Pick-up Date & Time',return:'Return Date & Time',select_date:'Select date',select_time:'Select time',
 passengers:'Passengers',adult:'Adult',child:'Child',adult_s:'Age 12+',child_s:'Age 0-11',bags:'Total Bags',bags_short:'Bags',bags_s:'Suitcases and large bags',done:'Done',search:'Search',
@@ -1335,7 +1347,7 @@ why_title:'Why Atalia Transfer',w1:'24/7 Support',w1s:'We are always here for yo
 quick_links:'Quick Links',about:'About Us',terms:'Terms and Conditions',tursab_doc:'TÜRSAB Certificate',tursab_no:'Licence No',tursab_empty:'The licence number has not been entered in this sample site yet.',newsletter:'Newsletter',news_sub:'Be the first to hear about offers and news.',news_ph:'Your email address',news_btn:'Subscribe',news_ok:'Thank you, you are now subscribed.',news_dup:'This email address is already subscribed.',rights:'© {y} Atalia Transfer. All rights reserved.',phone_l:'Phone',link_demo:'This link has not been entered in this sample site yet.',
 fav_title:'Favourite Transfers',fav_sub:'The most popular destinations in Antalya',rev_title:'Guest Reviews',fav_pick:'Route selected, now choose the date and time.',my_favs:'My favourite searches',fav_add:'Add this search to favourites',fav_remove:'Remove from favourites',fav_saved:'Added to favourites. Tap From or To to see it at the top.',fav_removed:'Removed from favourites.',forgot:'Forgot password?',reset_t:'Reset password',reset_hint:'Enter your email and we will send you a password reset link.',reset_btn:'Send link',reset_sent:'If an account exists for this email, a password reset link has been sent.',reset_demo:'No email is sent on the demo site, you can open the link here.',reset_open:'Open link',reset_none:'There is no member with this email on the demo site.',new_pw:'New password',new_pw2:'New password (again)',pw_save:'Save password',pw_mismatch:'The passwords do not match.',pw_done:'Your password has been changed.',back_login:'Back to sign in',choose_title:'Choose Your Vehicle',fit_sub:'Vehicles suitable for {n} passengers',no_vehicle:'There is no vehicle on the site for this number of passengers. Message us on WhatsApp and we will arrange the right vehicle.',
 flight:'Flight Number',ret_info:'Return Transfer',ret_flight:'Return Flight No',flight_ph:'e.g. TK 2412',seat:'Child Seat',seat_none:'Not needed',seat_1:'1 seat',seat_n:'{n} seats'},
-ru:{nav_home:'Главная',nav_fleet:'Автопарк',nav_services:'Услуги',nav_why:'Почему Atalia?',nav_contact:'Контакты',support:'Поддержка клиентов',signin:'Войти',
+ru:{nav_home:'Главная',nav_fleet:'Автопарк',nav_services:'Услуги',nav_why:'Почему Atalia?',nav_contact:'Контакты',nav_faq:'Вопросы',nav_menu:'Меню',faq_t:'Частые вопросы',faq_demo:'Это примеры вопросов; вопросы и ответы вы пишете сами в разделе «Главная» панели.',faq_empty:'Вопросы пока не добавлены.',support:'Поддержка клиентов',signin:'Войти',
 hero_kicker:'Трансфер из аэропорта Анталии',hero_1:'Ваша поездка —',hero_2a:'наш ',hero_2b:'приоритет.',hero_sub:'Комфортно|Безопасно|Вовремя',
 add_return:'Обратный трансфер',gd_disc:'скидка {n}%',remove_return:'Убрать обратный трансфер',return_s:'Обратно',pickup_s:'Подача',landing:'Посадка рейса',child_age:'Возраст ребёнка {n}',age_pick:'Выбрать',err_age:'Укажите возраст каждого ребёнка.',ages:'возраст',from:'Откуда',to:'Куда',addr_ph:'Отель / Курорт / Адрес',date_time:'Дата и время',pickup:'Дата и время подачи',return:'Дата и время обратно',select_date:'Выберите дату',select_time:'Выберите время',
 passengers:'Пассажиры',adult:'Взрослые',child:'Дети',adult_s:'От 12 лет',child_s:'0–11 лет',bags:'Всего багажа',bags_short:'Багаж',bags_s:'Чемоданы и большие сумки',done:'Готово',search:'Найти',
@@ -1358,7 +1370,7 @@ why_title:'Почему Atalia Transfer',w1:'Поддержка 24/7',w1s:'Мы 
 quick_links:'Быстрые ссылки',about:'О нас',terms:'Условия и положения',tursab_doc:'Лицензия TÜRSAB',tursab_no:'Лицензия №',tursab_empty:'В демо-версии номер лицензии ещё не указан.',newsletter:'Рассылка',news_sub:'Узнавайте об акциях и новостях первыми.',news_ph:'Ваш e-mail',news_btn:'Подписаться',news_ok:'Спасибо, вы подписаны.',news_dup:'Этот e-mail уже подписан.',rights:'© {y} Atalia Transfer. Все права защищены.',phone_l:'Телефон',link_demo:'В демо-версии эта ссылка ещё не указана.',
 fav_title:'Популярные трансферы',fav_sub:'Самые популярные направления Антальи',rev_title:'Отзывы гостей',fav_pick:'Маршрут выбран, теперь выберите дату и время.',my_favs:'Избранные поиски',fav_add:'Добавить поиск в избранное',fav_remove:'Удалить из избранного',fav_saved:'Добавлено в избранное. Нажмите «Откуда» или «Куда», чтобы увидеть его вверху.',fav_removed:'Удалено из избранного.',forgot:'Забыли пароль?',reset_t:'Сброс пароля',reset_hint:'Введите e-mail, и мы отправим ссылку для сброса пароля.',reset_btn:'Отправить ссылку',reset_sent:'Если аккаунт с этим e-mail существует, ссылка для сброса пароля отправлена.',reset_demo:'На демо-сайте письмо не отправляется, ссылку можно открыть здесь.',reset_open:'Открыть ссылку',reset_none:'На демо-сайте нет участника с этим e-mail.',new_pw:'Новый пароль',new_pw2:'Новый пароль (ещё раз)',pw_save:'Сохранить пароль',pw_mismatch:'Пароли не совпадают.',pw_done:'Пароль изменён.',back_login:'Назад ко входу',choose_title:'Выберите автомобиль',fit_sub:'Автомобили для {n} пассажиров',no_vehicle:'Для такого числа пассажиров на сайте нет автомобиля. Напишите нам в WhatsApp, и мы подберём подходящий.',
 flight:'Номер рейса',ret_info:'Обратный трансфер',ret_flight:'Обратный рейс',flight_ph:'напр. SU 2136',seat:'Детское кресло',seat_none:'Не нужно',seat_1:'1 кресло',seat_n:'{n} кресла'},
-de:{nav_home:'Startseite',nav_fleet:'Unsere Flotte',nav_services:'Leistungen',nav_why:'Warum Atalia?',nav_contact:'Kontakt',support:'Kundenservice',signin:'Anmelden',
+de:{nav_home:'Startseite',nav_fleet:'Unsere Flotte',nav_services:'Leistungen',nav_why:'Warum Atalia?',nav_contact:'Kontakt',nav_faq:'FAQ',nav_menu:'Menü',faq_t:'Häufige Fragen',faq_demo:'Beispielfragen; Fragen und Antworten tragen Sie selbst im Bereich „Startseite“ des Panels ein.',faq_empty:'Noch keine Fragen hinzugefügt.',support:'Kundenservice',signin:'Anmelden',
 hero_kicker:'Antalya Flughafentransfer',hero_1:'Ihre Reise.',hero_2a:'Unsere ',hero_2b:'Priorität.',hero_sub:'Komfortabel|Sicher|Pünktlich',
 add_return:'Rückfahrt hinzufügen',gd_disc:'{n} % Rabatt',remove_return:'Rückfahrt entfernen',return_s:'Rückfahrt',pickup_s:'Abholung',landing:'Landung',child_age:'Alter Kind {n}',age_pick:'Wählen',err_age:'Bitte wählen Sie das Alter jedes Kindes.',ages:'Alter',from:'Von',to:'Nach',addr_ph:'Hotel / Resort / Adresse',date_time:'Datum & Uhrzeit',pickup:'Abholung Datum & Uhrzeit',return:'Rückfahrt Datum & Uhrzeit',select_date:'Datum wählen',select_time:'Uhrzeit wählen',
 passengers:'Fahrgäste',adult:'Erwachsene',child:'Kinder',adult_s:'Ab 12 Jahren',child_s:'0–11 Jahre',bags:'Gepäckstücke',bags_short:'Gepäck',bags_s:'Koffer und große Taschen',done:'Fertig',search:'Suchen',
@@ -1418,8 +1430,23 @@ function varsayilanIcerik() {
       {id:'y2', ad:'Mark T.', ulke:'GB', puan:5, aktif:true, metin:{tr:'Araç tertemizdi, çocuk koltuğu hazırdı. Kesinlikle tavsiye ederim.', en:'The car was spotless and the child seat was ready. Highly recommended.', ru:'Машина была идеально чистой, детское кресло уже стояло. Однозначно рекомендую.', de:'Das Auto war blitzsauber, der Kindersitz war bereit. Absolut empfehlenswert.'}},
       {id:'y3', ad:'Elif Y.', ulke:'TR', puan:4.5, aktif:true, metin:{tr:'Fiyat baştan belliydi, ekstra ücret yoktu.', en:'The price was clear from the start, no extra charges.', ru:'Цена была известна заранее, никаких доплат.', de:'Der Preis stand von Anfang an fest, keine Extrakosten.'}}
     ],
-    sozlesme:varsayilanSozlesme(), bulten:[], icerikS:4
+    sozlesme:varsayilanSozlesme(), bulten:[], icerikS:4, sss:varsayilanSss()
   };
+}
+// sık sorulan sorular (08.11 alıcı: üst menüde FAQ): örnek sorular yalnız sitedeki bilgilerden; işletme panelde Ana Sayfa'dan yazar
+function varsayilanSss() {
+  return [
+    {id:'q1', ornek:true, s:{tr:'Rezervasyonum nasıl kesinleşir?', en:'How is my booking confirmed?', ru:'Как подтверждается бронирование?', de:'Wie wird meine Buchung bestätigt?'},
+      c:{tr:'Rezervasyonu tamamladığınızda WhatsApp\'a yönlendirilirsiniz. Rezervasyonunuz WhatsApp üzerinden onaylandığında kesinleşir.', en:'When you complete the booking you are redirected to WhatsApp. Your booking is final once it is confirmed via WhatsApp.', ru:'После оформления бронирования вы перейдёте в WhatsApp. Бронирование считается окончательным после подтверждения в WhatsApp.', de:'Nach Abschluss der Buchung werden Sie zu WhatsApp weitergeleitet. Die Buchung ist verbindlich, sobald sie über WhatsApp bestätigt wurde.'}},
+    {id:'q2', ornek:true, s:{tr:'Uçağım rötar yaparsa ne olur?', en:'What happens if my flight is delayed?', ru:'Что будет, если рейс задержится?', de:'Was passiert, wenn mein Flug Verspätung hat?'},
+      c:{tr:'Uçuş numaranızdan iniş saatinizi takip ederiz, şoförünüz sizi havalimanında bekler.', en:'We track your landing time using your flight number, and your driver waits for you at the airport.', ru:'Мы отслеживаем время посадки по номеру рейса, водитель будет ждать вас в аэропорту.', de:'Wir verfolgen Ihre Landezeit anhand Ihrer Flugnummer, Ihr Fahrer wartet am Flughafen auf Sie.'}},
+    {id:'q3', ornek:true, s:{tr:'Rezervasyonumu iptal edebilir miyim?', en:'Can I cancel my booking?', ru:'Можно ли отменить бронирование?', de:'Kann ich meine Buchung stornieren?'},
+      c:{tr:'Transferden 24 saat öncesine kadar ücretsiz iptal edebilirsiniz.', en:'You can cancel free of charge up to 24 hours before the transfer.', ru:'Бесплатная отмена возможна не позднее чем за 24 часа до трансфера.', de:'Sie können bis 24 Stunden vor dem Transfer kostenlos stornieren.'}},
+    {id:'q4', ornek:true, s:{tr:'Sonradan ek ücret çıkar mı?', en:'Are there any extra charges later?', ru:'Будут ли доплаты?', de:'Fallen später Zusatzkosten an?'},
+      c:{tr:'Hayır. Rezervasyon özetinde gördüğünüz toplam tutar kesindir, gizli ücret yoktur.', en:'No. The total shown in the booking summary is final; there are no hidden costs.', ru:'Нет. Итоговая сумма в сводке бронирования окончательная, скрытых платежей нет.', de:'Nein. Der in der Buchungsübersicht angezeigte Gesamtpreis ist endgültig, es gibt keine versteckten Kosten.'}},
+    {id:'q5', ornek:true, s:{tr:'Bebek için çocuk koltuğu var mı?', en:'Is there a child seat for babies?', ru:'Есть ли детское кресло для малышей?', de:'Gibt es einen Kindersitz für Babys?'},
+      c:{tr:'Evet. Yolcu seçiminde 0-2 yaş çocuk seçtiğinizde formda çocuk koltuğu isteyebilirsiniz.', en:'Yes. If you select a child aged 0-2 in the passenger selection, you can request a child seat in the form.', ru:'Да. Если при выборе пассажиров указать ребёнка 0–2 лет, в форме можно заказать детское кресло.', de:'Ja. Wenn Sie bei den Fahrgästen ein Kind von 0–2 Jahren auswählen, können Sie im Formular einen Kindersitz anfordern.'}}
+  ];
 }
 // sözleşme metinleri: her satır bir madde; işletme panelde Ayarlar'dan yazar (bunlar örnek)
 function varsayilanSozlesme() {
@@ -1592,6 +1619,7 @@ function icerikTamamla() {
   if (!Array.isArray(S.favori)) S.favori = v.favori;
   if (!Array.isArray(S.yorumlar)) S.yorumlar = v.yorumlar;
   if (!S.sozlesme) S.sozlesme = v.sozlesme;
+  if (!Array.isArray(S.sss)) S.sss = v.sss;
   if (!Array.isArray(S.bulten)) S.bulten = [];
   // 05.11 yeni tasarım: eski örnek favori kartları (değiştirilmediyse) yenileriyle değişir, ilk örnek yoruma fotoğraf gelir
   if (!(S.icerikS >= 2)) {
@@ -2287,6 +2315,13 @@ function belgeAc(k, onayli) {
     ${ornek ? `<p class="demo-hesap" style="margin-bottom:12px">${esc(t('doc_demo'))}</p>` : ''}
     ${onayli ? `<button type="button" class="ana-btn" data-onayla>${esc(t('consent_ok'))}</button>` : ''}`, true);
 }
+function sssAc() {
+  const l = (S.sss || []).filter(x => metinSec(x.s));
+  modalAc(`<button class="modal-kapat" data-mkapat aria-label="${esc(t('close'))}"><svg class="ic"><use href="#i-kapat"/></svg></button>
+    <h3>${esc(t('faq_t'))}</h3>
+    ${l.length ? `<div class="sss-liste">${l.map(x => `<details><summary>${esc(metinSec(x.s))}</summary>${metinSec(x.c) ? `<p>${esc(metinSec(x.c))}</p>` : ''}</details>`).join('')}</div>` : `<p class="alt-y">${esc(t('faq_empty'))}</p>`}
+    ${l.some(x => x.ornek) ? `<p class="demo-hesap">${esc(t('faq_demo'))}</p>` : ''}`, true);
+}
 function tursabAc() {
   const a = S.ayar;
   modalAc(`<button class="modal-kapat" data-mkapat aria-label="${esc(t('close'))}"><svg class="ic"><use href="#i-kapat"/></svg></button>
@@ -2528,6 +2563,7 @@ function hesapCiz() {
   const u = oturum();
   const yazi = u ? u.ad.split(' ')[0] : t('signin');
   $('#hesapYazi').textContent = yazi; $('#hzHesap').textContent = yazi; $('#cekHesap').textContent = u ? t('account') + ' · ' + yazi : t('signin_reg');
+  ['#hesapBtn', '#hzHesapBtn'].forEach(id => { $(id).title = yazi; $(id).classList.toggle('girisli', !!u); });
   if (u) { if (!$('#ad').value) $('#ad').value = u.ad; if (!$('#tel').value) telDoldur(u.tel); if (!$('#eposta').value) $('#eposta').value = u.eposta; }
 }
 function hesapAc(sekme = 'giris') {
@@ -2638,6 +2674,8 @@ document.addEventListener('click', e => {
   if (e.target.closest('[data-rezlerim]')) { e.preventDefault(); hesapAc('giris'); }
   if (e.target.closest('[data-sartlar]')) belgeAc('mss', false);
   if (e.target.closest('[data-tursab]')) tursabAc();
+  if (e.target.closest('[data-sss]')) { e.preventDefault(); $('#cekmece').classList.remove('acik'); sssAc(); }
+  if (e.target.closest('[data-menu-ac]')) { e.preventDefault(); $('#cekmece').classList.add('acik'); }
   if (e.target.closest('#altMs[href="#"],[data-sos][href="#"]')) { e.preventDefault(); tost(t('link_demo')); }
   const dd = e.target.closest('[data-dil]'); if (dd) { dilSec(dd.dataset.dil); $('#cekmece').classList.remove('acik'); }
   const dp = e.target.closest('[data-pb]'); if (dp) { pbSec(dp.dataset.pb); $('#cekmece').classList.remove('acik'); }
@@ -3183,11 +3221,18 @@ function pIcerik() {
       <div class="yorum-p"><span class="yorum-foto">${y.foto ? `<img src="${esc(y.foto)}" alt="">` : esc((y.ad || '?').charAt(0).toUpperCase())}</span><label class="foto-sec">Fotoğraf seç<input type="file" accept="image/*" data-y="${i}" data-k="foto"></label>${y.foto ? `<button type="button" class="p-btn ince" data-yfsil="${i}">Fotoğrafı kaldır</button>` : '<small>Fotoğraf yoksa adın baş harfi görünür</small>'}</div>
       <div class="p-alt-b">Yorum</div>${dilAlan(y, 'metin', `data-y="${i}"`, true)}
     </div>`).join('');
-  return pBas('Ana Sayfa', 'Favori transfer kartları ve misafir yorumları; değişiklik sitede anında görünür.') + `
+  const sss = (S.sss || []).map((q, i) => `<div class="icerik-blok">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><div class="p-alt-b" style="margin:0">Soru ${i + 1}</div><button type="button" class="ikon-btn" data-qsil="${i}" aria-label="Soruyu sil"><svg class="ic"><use href="#i-cop"/></svg></button></div>
+      ${dilAlan(q, 's', `data-q="${i}"`, false)}
+      <div class="p-alt-b">Cevap</div>${dilAlan(q, 'c', `data-q="${i}"`, true)}
+    </div>`).join('');
+  return pBas('Ana Sayfa', 'Favori transfer kartları, misafir yorumları ve sık sorulan sorular; değişiklik sitede anında görünür.') + `
   <div class="p-kart"><h2>Favori Transferler</h2><p class="acik-y">Her kart bir güzergâh. Nereden ve Nereye alanına havalimanı, bölge, otel, AVM ya da gezi yeri yazıp listeden seçin. Sitede kartta Nereden → Nereye ve Minivan fiyatı görünür, fiyat Fiyatlandırma tablosundan kendiliğinden hesaplanır. Müşteri karta basınca bu güzergâh aramaya gelir.</p>${fav || '<p class="bos">Kart yok</p>'}
     <button type="button" class="p-btn ince" id="fEkle" style="margin-top:6px"><svg class="ic"><use href="#i-arti"/></svg>Kart ekle</button></div>
   <div class="p-kart"><h2>Misafir Yorumları</h2><p class="acik-y">Bu örnekteki yorumlar gösterim içindir; yayında yalnız gerçek müşteri yorumları girilir. Bir dilde yorum boşsa İngilizcesi görünür.</p>${yor || '<p class="bos">Yorum yok</p>'}
-    <button type="button" class="p-btn ince" id="yEkle" style="margin-top:6px"><svg class="ic"><use href="#i-arti"/></svg>Yorum ekle</button></div>`;
+    <button type="button" class="p-btn ince" id="yEkle" style="margin-top:6px"><svg class="ic"><use href="#i-arti"/></svg>Yorum ekle</button></div>
+  <div class="p-kart"><h2>Sık Sorulan Sorular</h2><p class="acik-y">Sitede üst menüdeki SSS'den açılır. Buradaki sorular örnektir, kendi sorularınızı ve cevaplarınızı yazın. Bir dilde soru boşsa İngilizcesi görünür; sorusu boş olan madde sitede görünmez.</p>${sss || '<p class="bos">Soru yok</p>'}
+    <button type="button" class="p-btn ince" id="qEkle" style="margin-top:6px"><svg class="ic"><use href="#i-arti"/></svg>Soru ekle</button></div>`;
 }
 function pIcerikBagla() {
   const ana = $('#pAna');
@@ -3214,19 +3259,23 @@ function pIcerikBagla() {
       if (k === 'puan') { const v = puanAl(g, y.puan, 1); if (v == null) return; y.puan = v; }
       else if (k === 'aktif') { y.aktif = g.checked; g.parentElement.lastChild.textContent = g.checked ? 'Gösteriliyor' : 'Gizli'; }
       else yaz(y, k, g.value.trim());
+    } else if (g.dataset.q != null) {
+      const q = S.sss[+g.dataset.q]; if (!q) return;
+      yaz(q, k, g.value.trim()); delete q.ornek;
     } else return;
     kaydet(); vitrinCiz(); tost('Kaydedildi');
   };
   ana.onclick = e => {
     const fs = e.target.closest('[data-yfsil]');
     if (fs) { const y = S.yorumlar[+fs.dataset.yfsil]; if (y) { delete y.foto; kaydet(); panelCiz(); vitrinCiz(); tost('Fotoğraf kaldırıldı'); } return; }
-    const sil = e.target.closest('[data-fsil], [data-ysil]');
+    const sil = e.target.closest('[data-fsil], [data-ysil], [data-qsil]');
     if (sil) {
       if (!sil.dataset.emin) { sil.dataset.emin = 1; tost('Silmek için tekrar basın'); return; }
-      if (sil.dataset.fsil != null) S.favori.splice(+sil.dataset.fsil, 1); else S.yorumlar.splice(+sil.dataset.ysil, 1);
+      if (sil.dataset.fsil != null) S.favori.splice(+sil.dataset.fsil, 1); else if (sil.dataset.qsil != null) S.sss.splice(+sil.dataset.qsil, 1); else S.yorumlar.splice(+sil.dataset.ysil, 1);
       kaydet(); panelCiz(); vitrinCiz(); tost('Silindi'); return;
     }
     if (e.target.closest('#fEkle')) { S.favori.push({id:'f' + Date.now().toString(36), nereden:'h:ayt', nereye:'p:kemer', foto:'fav-antalya.webp'}); kaydet(); panelCiz(); vitrinCiz(); tost('Kart eklendi'); }
+    if (e.target.closest('#qEkle')) { S.sss.push({id:'q' + Date.now().toString(36), s:{}, c:{}}); kaydet(); panelCiz(); tost('Soru eklendi'); }
     if (e.target.closest('#yEkle')) { S.yorumlar.push({id:'y' + Date.now().toString(36), ad:'', ulke:'TR', puan:5, aktif:false, metin:{}}); kaydet(); panelCiz(); vitrinCiz(); tost('Yorum eklendi; yazıp "Sitede" anahtarını açın'); }
   };
 }
