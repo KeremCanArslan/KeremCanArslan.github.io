@@ -358,6 +358,20 @@ input::-webkit-date-and-time-value{text-align:left}
 .fav-alt{flex:1;display:flex;align-items:center;gap:10px;padding:14px 16px;font-size:15px;font-weight:700;line-height:1.3;color:var(--koyu2)}
 .fav-alt>.ic{width:20px;height:20px;color:var(--tur)}
 .fav-ad{flex:1;min-width:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.fav-ad i{font-style:normal;color:var(--tur);font-weight:600}
+.fav-fiyat{flex:none;display:flex;flex-direction:column;align-items:flex-end;line-height:1.15;white-space:nowrap}
+.fav-fiyat:empty{display:none}
+.fav-fiyat small{font-size:11.5px;font-weight:600;color:var(--yazi2)}
+.fav-fiyat b{font-size:17px;font-weight:800;color:var(--koyu2)}
+.filo-fav{position:relative;min-height:220px}
+.filo-fav-ic{position:absolute;inset:0;display:flex;flex-direction:column;gap:8px;overflow:auto;padding:2px}
+.filo-fav h3{font-family:var(--serif);font-size:20px;font-weight:600;line-height:1.2;color:var(--koyu2)}
+.fav-satir{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:#fff;border:1px solid var(--cizgi2);border-radius:14px;padding:7px 10px 7px 8px;font-size:14px;font-weight:700;line-height:1.3;color:var(--koyu2);box-shadow:0 12px 26px -24px rgba(1,35,38,.7);transition:border-color .2s}
+.fav-satir:hover{border-color:var(--tur)}
+.fav-k{flex:none;width:64px;height:42px;border-radius:9px;background:#dcebf3 center/cover no-repeat}
+.fav-satir .fav-ad{-webkit-line-clamp:2}
+.fav-satir .fav-git{width:32px;height:32px}
+.fav-satir:hover .fav-git{background:var(--tur);border-color:var(--tur);color:#fff}
 .fav-git{flex:none;width:36px;height:36px;border-radius:50%;border:1px solid var(--cizgi);display:grid;place-items:center;color:var(--koyu2);transition:background .2s,color .2s,border-color .2s}
 .fav-git .ic{width:17px;height:17px}
 .fav:hover .fav-git{background:var(--tur);border-color:var(--tur);color:#fff}
@@ -507,6 +521,7 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .destek small{display:none}
   .bilgi{grid-template-columns:290px minmax(0,1fr)}
   .araclar{grid-template-columns:1fr}
+  .filo-fav{display:none}
   .arac{grid-template-columns:36% 1fr}
   .arama-satir{flex-direction:column}
   .alanlar{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -598,8 +613,11 @@ body.modal-acik .mobil-bar,body.modal-acik .panel-pill{display:none}
   .kr-ok.sol{left:-10px}
   .kr-ok.sag{right:-10px}
   .kr-ok .ic{width:17px;height:17px}
-  .fav-alt{padding:10px;gap:6px;font-size:12.5px}
-  .fav-ad{-webkit-line-clamp:6}
+  .fav-alt{padding:10px;gap:6px;font-size:12.5px;flex-wrap:wrap}
+  .fav-ad{-webkit-line-clamp:6;flex-basis:calc(100% - 21px)}
+  .fav-fiyat{margin:0 auto 0 21px;align-items:flex-start}
+  .fav-fiyat small{font-size:10.5px}
+  .fav-fiyat b{font-size:14.5px}
   .fav-alt>.ic{width:15px;height:15px}
   .fav-git{width:26px;height:26px}
   .fav-git .ic{width:13px;height:13px}
@@ -1254,7 +1272,7 @@ st_yeni:'Onay bekliyor',st_onay:'Onaylandı',st_tamam:'Tamamlandı',st_iptal:'İ
 wa_hello:'Merhaba, rezervasyonumu onaylamak istiyorum.',wa_demo:'Örnek sitede işletmenin WhatsApp numarası henüz girilmedi.',search_first:'Önce güzergâhınızı arayın, sonra aracınızı seçin.',
 why_title:'Neden Atalia Transfer',w1:'7/24 Destek',w1s:'Her zaman yanınızdayız.',w2:'Anında Onay',w2s:'Rezervasyo\u00adnunuz anında onaylanır.',w3:'Profesyonel Şoförler',w3s:'Güvenli ve deneyimli şoförler.',w4:'Kapıdan Kapıya Transfer',w4s:'Hedefinize direkt ulaşın.',prev:'Önceki',next:'Sonraki',
 quick_links:'Hızlı Linkler',about:'Hakkımızda',terms:'Şartlar ve Koşullar',tursab_doc:'TÜRSAB Belgesi',tursab_no:'Belge No',tursab_empty:'Örnek sitede belge numarası henüz girilmedi.',newsletter:'Bülten',news_sub:'Kampanyalar ve yeniliklerden haberdar olun.',news_ph:'E-posta adresiniz',news_btn:'Abone ol',news_ok:'Teşekkürler, bültene kaydoldunuz.',news_dup:'Bu e-posta adresi zaten kayıtlı.',rights:'© {y} Atalia Transfer, tüm haklar saklıdır.',phone_l:'Telefon',link_demo:'Örnek sitede bu bağlantı henüz girilmedi.',
-fav_title:'Favori Transferler',fav_sub:'Antalya\'nın en popüler destinasyonları',rev_title:'Misafirlerin Yorumları',fav_pick:'Güzergâh seçildi, şimdi tarih ve saati seçin.',my_favs:'Favori aramalarım',fav_add:'Bu aramayı favorilere ekle',fav_remove:'Favorilerden çıkar',fav_saved:'Favorilere eklendi. Nereden ya da Nereye alanına basınca en üstte görünür.',fav_removed:'Favorilerden çıkarıldı.',forgot:'Şifremi unuttum',reset_t:'Şifre sıfırlama',reset_hint:'E-posta adresinizi yazın, şifre sıfırlama bağlantısı gönderelim.',reset_btn:'Bağlantı gönder',reset_sent:'Bu e-posta ile kayıtlı bir hesap varsa şifre sıfırlama bağlantısı gönderildi.',reset_demo:'Örnek sitede e-posta gitmez, bağlantıyı buradan açabilirsiniz.',reset_open:'Bağlantıyı aç',reset_none:'Örnek sitede bu e-postayla kayıtlı üye yok.',new_pw:'Yeni şifre',new_pw2:'Yeni şifre (tekrar)',pw_save:'Şifreyi kaydet',pw_mismatch:'Şifreler aynı değil.',pw_done:'Şifreniz değişti.',back_login:'Girişe dön',fav_where:'Otelinizi ya da gideceğiniz yeri yazın.',choose_title:'Aracınızı Seçin',fit_sub:'{n} yolcu için uygun araçlar',no_vehicle:'Bu yolcu sayısı için sitede uygun araç yok. Size uygun aracı ayarlamamız için WhatsApp\'tan yazın.',
+fav_title:'Favori Transferler',fav_sub:'Antalya\'nın en popüler destinasyonları',rev_title:'Misafirlerin Yorumları',fav_pick:'Güzergâh seçildi, şimdi tarih ve saati seçin.',my_favs:'Favori aramalarım',fav_add:'Bu aramayı favorilere ekle',fav_remove:'Favorilerden çıkar',fav_saved:'Favorilere eklendi. Nereden ya da Nereye alanına basınca en üstte görünür.',fav_removed:'Favorilerden çıkarıldı.',forgot:'Şifremi unuttum',reset_t:'Şifre sıfırlama',reset_hint:'E-posta adresinizi yazın, şifre sıfırlama bağlantısı gönderelim.',reset_btn:'Bağlantı gönder',reset_sent:'Bu e-posta ile kayıtlı bir hesap varsa şifre sıfırlama bağlantısı gönderildi.',reset_demo:'Örnek sitede e-posta gitmez, bağlantıyı buradan açabilirsiniz.',reset_open:'Bağlantıyı aç',reset_none:'Örnek sitede bu e-postayla kayıtlı üye yok.',new_pw:'Yeni şifre',new_pw2:'Yeni şifre (tekrar)',pw_save:'Şifreyi kaydet',pw_mismatch:'Şifreler aynı değil.',pw_done:'Şifreniz değişti.',back_login:'Girişe dön',choose_title:'Aracınızı Seçin',fit_sub:'{n} yolcu için uygun araçlar',no_vehicle:'Bu yolcu sayısı için sitede uygun araç yok. Size uygun aracı ayarlamamız için WhatsApp\'tan yazın.',
 flight:'Uçuş Numarası',ret_info:'Dönüş Transferi',ret_flight:'Dönüş Uçuş No',ret_flight_time:'Uçuş Saati',pickup_time:'Pickup Saati',err_ret_flight:'Lütfen dönüş uçuş saatini girin.',err_pickup:'Lütfen pickup saatini girin.',flight_ph:'Örn. TK 2412',seat:'Çocuk Koltuğu',seat_none:'Gerek yok',seat_1:'1 koltuk',seat_n:'{n} koltuk'},
 en:{nav_home:'Home',nav_fleet:'Our Fleet',nav_services:'Services',nav_why:'Why Atalia?',nav_contact:'Contact',support:'Customer Support',signin:'Sign in',
 hero_kicker:'Antalya Airport Transfer',hero_1:'Your Journey.',hero_2a:'Our ',hero_2b:'Priority.',hero_sub:'Comfortable|Safe|On Time',
@@ -1277,7 +1295,7 @@ st_yeni:'Awaiting confirmation',st_onay:'Confirmed',st_tamam:'Completed',st_ipta
 wa_hello:'Hello, I would like to confirm my booking.',wa_demo:'The business WhatsApp number has not been entered in this sample site yet.',search_first:'Search your route first, then choose your vehicle.',
 why_title:'Why Atalia Transfer',w1:'24/7 Support',w1s:'We are always here for you.',w2:'Instant Confirmation',w2s:'Your booking is confirmed instantly.',w3:'Professional Drivers',w3s:'Safe and experienced drivers.',w4:'Door-to-Door Transfer',w4s:'Straight to your destination.',prev:'Previous',next:'Next',
 quick_links:'Quick Links',about:'About Us',terms:'Terms and Conditions',tursab_doc:'TÜRSAB Certificate',tursab_no:'Licence No',tursab_empty:'The licence number has not been entered in this sample site yet.',newsletter:'Newsletter',news_sub:'Be the first to hear about offers and news.',news_ph:'Your email address',news_btn:'Subscribe',news_ok:'Thank you, you are now subscribed.',news_dup:'This email address is already subscribed.',rights:'© {y} Atalia Transfer. All rights reserved.',phone_l:'Phone',link_demo:'This link has not been entered in this sample site yet.',
-fav_title:'Favourite Transfers',fav_sub:'The most popular destinations in Antalya',rev_title:'Guest Reviews',fav_pick:'Route selected, now choose the date and time.',my_favs:'My favourite searches',fav_add:'Add this search to favourites',fav_remove:'Remove from favourites',fav_saved:'Added to favourites. Tap From or To to see it at the top.',fav_removed:'Removed from favourites.',forgot:'Forgot password?',reset_t:'Reset password',reset_hint:'Enter your email and we will send you a password reset link.',reset_btn:'Send link',reset_sent:'If an account exists for this email, a password reset link has been sent.',reset_demo:'No email is sent on the demo site, you can open the link here.',reset_open:'Open link',reset_none:'There is no member with this email on the demo site.',new_pw:'New password',new_pw2:'New password (again)',pw_save:'Save password',pw_mismatch:'The passwords do not match.',pw_done:'Your password has been changed.',back_login:'Back to sign in',fav_where:'Type your hotel or destination.',choose_title:'Choose Your Vehicle',fit_sub:'Vehicles suitable for {n} passengers',no_vehicle:'There is no vehicle on the site for this number of passengers. Message us on WhatsApp and we will arrange the right vehicle.',
+fav_title:'Favourite Transfers',fav_sub:'The most popular destinations in Antalya',rev_title:'Guest Reviews',fav_pick:'Route selected, now choose the date and time.',my_favs:'My favourite searches',fav_add:'Add this search to favourites',fav_remove:'Remove from favourites',fav_saved:'Added to favourites. Tap From or To to see it at the top.',fav_removed:'Removed from favourites.',forgot:'Forgot password?',reset_t:'Reset password',reset_hint:'Enter your email and we will send you a password reset link.',reset_btn:'Send link',reset_sent:'If an account exists for this email, a password reset link has been sent.',reset_demo:'No email is sent on the demo site, you can open the link here.',reset_open:'Open link',reset_none:'There is no member with this email on the demo site.',new_pw:'New password',new_pw2:'New password (again)',pw_save:'Save password',pw_mismatch:'The passwords do not match.',pw_done:'Your password has been changed.',back_login:'Back to sign in',choose_title:'Choose Your Vehicle',fit_sub:'Vehicles suitable for {n} passengers',no_vehicle:'There is no vehicle on the site for this number of passengers. Message us on WhatsApp and we will arrange the right vehicle.',
 flight:'Flight Number',ret_info:'Return Transfer',ret_flight:'Return Flight No',ret_flight_time:'Flight Time',pickup_time:'Pickup Time',err_ret_flight:'Please enter your return flight time.',err_pickup:'Please enter the pickup time.',flight_ph:'e.g. TK 2412',seat:'Child Seat',seat_none:'Not needed',seat_1:'1 seat',seat_n:'{n} seats'},
 ru:{nav_home:'Главная',nav_fleet:'Автопарк',nav_services:'Услуги',nav_why:'Почему Atalia?',nav_contact:'Контакты',support:'Поддержка клиентов',signin:'Войти',
 hero_kicker:'Трансфер из аэропорта Анталии',hero_1:'Ваша поездка —',hero_2a:'наш ',hero_2b:'приоритет.',hero_sub:'Комфортно|Безопасно|Вовремя',
@@ -1300,7 +1318,7 @@ st_yeni:'Ожидает подтверждения',st_onay:'Подтвержд�
 wa_hello:'Здравствуйте, хочу подтвердить бронирование.',wa_demo:'В демо-версии номер WhatsApp компании ещё не указан.',search_first:'Сначала найдите маршрут, затем выберите автомобиль.',
 why_title:'Почему Atalia Transfer',w1:'Поддержка 24/7',w1s:'Мы всегда рядом.',w2:'Мгновенная бронь',w2s:'Бронь подтвер\u00adждается сразу.',w3:'Опытные водители',w3s:'Надёжные и опытные водители.',w4:'От двери до двери',w4s:'Прямо к месту назначения.',prev:'Назад',next:'Далее',
 quick_links:'Быстрые ссылки',about:'О нас',terms:'Условия и положения',tursab_doc:'Лицензия TÜRSAB',tursab_no:'Лицензия №',tursab_empty:'В демо-версии номер лицензии ещё не указан.',newsletter:'Рассылка',news_sub:'Узнавайте об акциях и новостях первыми.',news_ph:'Ваш e-mail',news_btn:'Подписаться',news_ok:'Спасибо, вы подписаны.',news_dup:'Этот e-mail уже подписан.',rights:'© {y} Atalia Transfer. Все права защищены.',phone_l:'Телефон',link_demo:'В демо-версии эта ссылка ещё не указана.',
-fav_title:'Популярные трансферы',fav_sub:'Самые популярные направления Антальи',rev_title:'Отзывы гостей',fav_pick:'Маршрут выбран, теперь выберите дату и время.',my_favs:'Избранные поиски',fav_add:'Добавить поиск в избранное',fav_remove:'Удалить из избранного',fav_saved:'Добавлено в избранное. Нажмите «Откуда» или «Куда», чтобы увидеть его вверху.',fav_removed:'Удалено из избранного.',forgot:'Забыли пароль?',reset_t:'Сброс пароля',reset_hint:'Введите e-mail, и мы отправим ссылку для сброса пароля.',reset_btn:'Отправить ссылку',reset_sent:'Если аккаунт с этим e-mail существует, ссылка для сброса пароля отправлена.',reset_demo:'На демо-сайте письмо не отправляется, ссылку можно открыть здесь.',reset_open:'Открыть ссылку',reset_none:'На демо-сайте нет участника с этим e-mail.',new_pw:'Новый пароль',new_pw2:'Новый пароль (ещё раз)',pw_save:'Сохранить пароль',pw_mismatch:'Пароли не совпадают.',pw_done:'Пароль изменён.',back_login:'Назад ко входу',fav_where:'Введите отель или место назначения.',choose_title:'Выберите автомобиль',fit_sub:'Автомобили для {n} пассажиров',no_vehicle:'Для такого числа пассажиров на сайте нет автомобиля. Напишите нам в WhatsApp, и мы подберём подходящий.',
+fav_title:'Популярные трансферы',fav_sub:'Самые популярные направления Антальи',rev_title:'Отзывы гостей',fav_pick:'Маршрут выбран, теперь выберите дату и время.',my_favs:'Избранные поиски',fav_add:'Добавить поиск в избранное',fav_remove:'Удалить из избранного',fav_saved:'Добавлено в избранное. Нажмите «Откуда» или «Куда», чтобы увидеть его вверху.',fav_removed:'Удалено из избранного.',forgot:'Забыли пароль?',reset_t:'Сброс пароля',reset_hint:'Введите e-mail, и мы отправим ссылку для сброса пароля.',reset_btn:'Отправить ссылку',reset_sent:'Если аккаунт с этим e-mail существует, ссылка для сброса пароля отправлена.',reset_demo:'На демо-сайте письмо не отправляется, ссылку можно открыть здесь.',reset_open:'Открыть ссылку',reset_none:'На демо-сайте нет участника с этим e-mail.',new_pw:'Новый пароль',new_pw2:'Новый пароль (ещё раз)',pw_save:'Сохранить пароль',pw_mismatch:'Пароли не совпадают.',pw_done:'Пароль изменён.',back_login:'Назад ко входу',choose_title:'Выберите автомобиль',fit_sub:'Автомобили для {n} пассажиров',no_vehicle:'Для такого числа пассажиров на сайте нет автомобиля. Напишите нам в WhatsApp, и мы подберём подходящий.',
 flight:'Номер рейса',ret_info:'Обратный трансфер',ret_flight:'Обратный рейс',ret_flight_time:'Время рейса',pickup_time:'Подача',err_ret_flight:'Укажите время обратного рейса.',err_pickup:'Укажите время подачи.',flight_ph:'напр. SU 2136',seat:'Детское кресло',seat_none:'Не нужно',seat_1:'1 кресло',seat_n:'{n} кресла'},
 de:{nav_home:'Startseite',nav_fleet:'Unsere Flotte',nav_services:'Leistungen',nav_why:'Warum Atalia?',nav_contact:'Kontakt',support:'Kundenservice',signin:'Anmelden',
 hero_kicker:'Antalya Flughafentransfer',hero_1:'Ihre Reise.',hero_2a:'Unsere ',hero_2b:'Priorität.',hero_sub:'Komfortabel|Sicher|Pünktlich',
@@ -1323,7 +1341,7 @@ st_yeni:'Wartet auf Bestätigung',st_onay:'Bestätigt',st_tamam:'Abgeschlossen',
 wa_hello:'Hallo, ich möchte meine Buchung bestätigen.',wa_demo:'Die WhatsApp-Nummer des Unternehmens ist in dieser Beispielseite noch nicht eingetragen.',search_first:'Suchen Sie zuerst Ihre Strecke und wählen Sie dann Ihr Fahrzeug.',
 why_title:'Warum Atalia Transfer',w1:'24/7 Support',w1s:'Wir sind immer für Sie da.',w2:'Sofort bestätigt',w2s:'Ihre Buchung wird sofort bestätigt.',w3:'Profi-Fahrer',w3s:'Sichere und erfahrene Fahrer.',w4:'Tür-zu-Tür-Transfer',w4s:'Direkt an Ihr Ziel.',prev:'Zurück',next:'Weiter',
 quick_links:'Schnellzugriff',about:'Über uns',terms:'AGB',tursab_doc:'TÜRSAB-Lizenz',tursab_no:'Lizenz-Nr.',tursab_empty:'Die Lizenznummer ist in dieser Beispielseite noch nicht eingetragen.',newsletter:'Newsletter',news_sub:'Erfahren Sie zuerst von Angeboten und Neuigkeiten.',news_ph:'Ihre E-Mail-Adresse',news_btn:'Abonnieren',news_ok:'Danke, Sie sind jetzt angemeldet.',news_dup:'Diese E-Mail-Adresse ist bereits angemeldet.',rights:'© {y} Atalia Transfer. Alle Rechte vorbehalten.',phone_l:'Telefon',link_demo:'Dieser Link ist in dieser Beispielseite noch nicht eingetragen.',
-fav_title:'Beliebte Transfers',fav_sub:'Die beliebtesten Ziele in Antalya',rev_title:'Gästebewertungen',fav_pick:'Strecke gewählt, wählen Sie jetzt Datum und Uhrzeit.',my_favs:'Meine Favoriten',fav_add:'Diese Suche zu Favoriten hinzufügen',fav_remove:'Aus Favoriten entfernen',fav_saved:'Zu Favoriten hinzugefügt. Tippen Sie auf Von oder Nach, um sie oben zu sehen.',fav_removed:'Aus Favoriten entfernt.',forgot:'Passwort vergessen?',reset_t:'Passwort zurücksetzen',reset_hint:'Geben Sie Ihre E-Mail-Adresse ein, wir senden Ihnen einen Link zum Zurücksetzen.',reset_btn:'Link senden',reset_sent:'Falls ein Konto mit dieser E-Mail existiert, wurde ein Link zum Zurücksetzen gesendet.',reset_demo:'Auf der Demo-Seite wird keine E-Mail gesendet, Sie können den Link hier öffnen.',reset_open:'Link öffnen',reset_none:'Auf der Demo-Seite gibt es kein Mitglied mit dieser E-Mail.',new_pw:'Neues Passwort',new_pw2:'Neues Passwort (wiederholen)',pw_save:'Passwort speichern',pw_mismatch:'Die Passwörter stimmen nicht überein.',pw_done:'Ihr Passwort wurde geändert.',back_login:'Zurück zur Anmeldung',fav_where:'Geben Sie Ihr Hotel oder Ziel ein.',choose_title:'Wählen Sie Ihr Fahrzeug',fit_sub:'Passende Fahrzeuge für {n} Fahrgäste',no_vehicle:'Für diese Personenzahl gibt es auf der Seite kein Fahrzeug. Schreiben Sie uns per WhatsApp, wir organisieren das passende Fahrzeug.',
+fav_title:'Beliebte Transfers',fav_sub:'Die beliebtesten Ziele in Antalya',rev_title:'Gästebewertungen',fav_pick:'Strecke gewählt, wählen Sie jetzt Datum und Uhrzeit.',my_favs:'Meine Favoriten',fav_add:'Diese Suche zu Favoriten hinzufügen',fav_remove:'Aus Favoriten entfernen',fav_saved:'Zu Favoriten hinzugefügt. Tippen Sie auf Von oder Nach, um sie oben zu sehen.',fav_removed:'Aus Favoriten entfernt.',forgot:'Passwort vergessen?',reset_t:'Passwort zurücksetzen',reset_hint:'Geben Sie Ihre E-Mail-Adresse ein, wir senden Ihnen einen Link zum Zurücksetzen.',reset_btn:'Link senden',reset_sent:'Falls ein Konto mit dieser E-Mail existiert, wurde ein Link zum Zurücksetzen gesendet.',reset_demo:'Auf der Demo-Seite wird keine E-Mail gesendet, Sie können den Link hier öffnen.',reset_open:'Link öffnen',reset_none:'Auf der Demo-Seite gibt es kein Mitglied mit dieser E-Mail.',new_pw:'Neues Passwort',new_pw2:'Neues Passwort (wiederholen)',pw_save:'Passwort speichern',pw_mismatch:'Die Passwörter stimmen nicht überein.',pw_done:'Ihr Passwort wurde geändert.',back_login:'Zurück zur Anmeldung',choose_title:'Wählen Sie Ihr Fahrzeug',fit_sub:'Passende Fahrzeuge für {n} Fahrgäste',no_vehicle:'Für diese Personenzahl gibt es auf der Seite kein Fahrzeug. Schreiben Sie uns per WhatsApp, wir organisieren das passende Fahrzeug.',
 flight:'Flugnummer',ret_info:'Rücktransfer',ret_flight:'Rückflug-Nr.',ret_flight_time:'Flugzeit',pickup_time:'Abholzeit',err_ret_flight:'Bitte geben Sie die Zeit Ihres Rückflugs ein.',err_pickup:'Bitte geben Sie die Abholzeit ein.',flight_ph:'z. B. TK 2412',seat:'Kindersitz',seat_none:'Nicht nötig',seat_1:'1 Sitz',seat_n:'{n} Sitze'}
 };
 const HAVALIMANLARI = [
@@ -1340,7 +1358,8 @@ const POPULER = [
   {id:'side', ad:'Side', alt:'Manavgat', lat:36.7676, lon:31.3889, km:66, dk:55},
   {id:'manavgat', ad:'Manavgat', alt:'Manavgat', lat:36.7867, lon:31.4431, km:72, dk:60},
   {id:'alanya', ad:'Alanya', alt:'Alanya', lat:36.5443, lon:31.9955, km:124, dk:105},
-  {id:'kas', ad:'Kaş', alt:'Kaş', lat:36.2018, lon:29.6377, km:190, dk:185}
+  {id:'kas', ad:'Kaş', alt:'Kaş', lat:36.2018, lon:29.6377, km:190, dk:185},
+  {id:'legends', ad:'The Land of Legends', alt:'Kadriye, Serik', lat:36.8770, lon:31.0028, km:30, dk:46}
 ];
 const ULKE = {
   TR:{tr:'Türkiye', en:'Türkiye', ru:'Турция', de:'Türkei'},
@@ -1352,16 +1371,16 @@ const ULKE = {
 function varsayilanIcerik() {
   return {
     favori:[
-      {id:'f1', bolge:'', foto:'fav-antalya.webp', ad:{tr:'Antalya - Lara / Belek / Side / Alanya / Kemer', en:'Antalya - Lara / Belek / Side / Alanya / Kemer', ru:'Анталья - Лара / Белек / Сиде / Аланья / Кемер', de:'Antalya - Lara / Belek / Side / Alanya / Kemer'}},
-      {id:'f2', bolge:'', foto:'fav-legends.webp', ad:{tr:'The Land of Legends / Sea Alanya', en:'The Land of Legends / Sea Alanya', ru:'The Land of Legends / Sea Alanya', de:'The Land of Legends / Sea Alanya'}},
-      {id:'f3', bolge:'belek', foto:'fav-belek.webp', ad:{tr:'Belek Golf Otelleri', en:'Belek Golf Hotels', ru:'Гольф-отели Белека', de:'Golfhotels in Belek'}}
+      {id:'f1', nereden:'h:ayt', nereye:'p:lara', foto:'fav-antalya.webp'},
+      {id:'f2', nereden:'h:ayt', nereye:'p:legends', foto:'fav-legends.webp'},
+      {id:'f3', nereden:'h:ayt', nereye:'p:belek', foto:'fav-belek.webp'}
     ],
     yorumlar:[
       {id:'y1', ad:'Anna K.', ulke:'DE', puan:5, aktif:true, foto:'yorum-anna.webp', metin:{tr:'Uçuşum rötar yaptı ama şoför bizi bekliyordu. Çok profesyonel bir hizmet.', en:'My flight was delayed, but the driver was waiting for us. A very professional service.', ru:'Рейс задержали, но водитель нас дождался. Очень профессиональный сервис.', de:'Mein Flug hatte Verspätung, aber der Fahrer hat auf uns gewartet. Ein sehr professioneller Service.'}},
       {id:'y2', ad:'Mark T.', ulke:'GB', puan:5, aktif:true, metin:{tr:'Araç tertemizdi, çocuk koltuğu hazırdı. Kesinlikle tavsiye ederim.', en:'The car was spotless and the child seat was ready. Highly recommended.', ru:'Машина была идеально чистой, детское кресло уже стояло. Однозначно рекомендую.', de:'Das Auto war blitzsauber, der Kindersitz war bereit. Absolut empfehlenswert.'}},
       {id:'y3', ad:'Elif Y.', ulke:'TR', puan:4.5, aktif:true, metin:{tr:'Fiyat baştan belliydi, ekstra ücret yoktu.', en:'The price was clear from the start, no extra charges.', ru:'Цена была известна заранее, никаких доплат.', de:'Der Preis stand von Anfang an fest, keine Extrakosten.'}}
     ],
-    sozlesme:varsayilanSozlesme(), bulten:[], icerikS:3
+    sozlesme:varsayilanSozlesme(), bulten:[], icerikS:4
   };
 }
 // sözleşme metinleri: her satır bir madde; işletme panelde Ayarlar'dan yazar (bunlar örnek)
@@ -1545,6 +1564,16 @@ function icerikTamamla() {
   }
   // 05.11 alt bölüm: alıcının verdiği adres örnek adresin yerine geçer (değiştirilmediyse)
   if (S.icerikS === 2) { if (S.ayar && S.ayar.adres === 'Antalya, Türkiye') S.ayar.adres = 'Side | Manavgat | Antalya | Turkey'; S.icerikS = 3; }
+  // 07.11 favori kart güzergâh oldu (Nereden → Nereye + Minivan fiyatı): 05.11 örnek kartları yenileriyle değişir, elle değiştirilmiş kart havalimanından bölgeye çevrilir
+  if (S.icerikS === 3) {
+    const ornek = S.favori.length === 3 && ['fav-antalya.webp', 'fav-legends.webp', 'fav-belek.webp'].every((ft, i) => S.favori[i].id === 'f' + (i + 1) && S.favori[i].foto === ft);
+    if (ornek) S.favori = v.favori;
+    else S.favori.forEach(f => {
+      if (!f.nereye) { f.nereden = 'h:ayt'; f.nereye = 'p:' + (POPULER.some(p => p.id === f.bolge) ? f.bolge : /legends/i.test(f.foto + JSON.stringify(f.ad || {})) ? 'legends' : 'lara'); }
+      delete f.bolge; delete f.ad;
+    });
+    S.icerikS = 4;
+  }
   // 06.11 doğum günü hediyesi: kayıtlı örnek üyelere örnek doğum tarihi gelir (elle girilmiş veri korunur)
   if (!S.dogumGunu) S.dogumGunu = dogumVarsayilan();
   S.uyeler.forEach(u => { if (u.dogum === undefined) { if (ornekDogum[u.id]) ornekDogumYaz(u); else { u.dogum = ''; u.izin = false; u.izinTarih = ''; } } });
@@ -1843,13 +1872,50 @@ function vitrinCiz() {
   $('#favBolum').hidden = !fav.length; $('#yorumBolum').hidden = !yor.length; $('#vitrin').hidden = !fav.length && !yor.length;
   $('#favListe').innerHTML = fav.map((f, i) => `<button type="button" class="fav" data-fav="${i}">
       <span class="fav-foto" style="background-image:url('${esc(f.foto)}')"></span>
-      <span class="fav-alt"><svg class="ic"><use href="#i-konum"/></svg><span class="fav-ad">${esc(metinSec(f.ad))}</span><span class="fav-git"><svg class="ic"><use href="#i-ok-sag"/></svg></span></span></button>`).join('');
+      <span class="fav-alt"><svg class="ic"><use href="#i-konum"/></svg><span class="fav-ad">${favRota(f)}</span><span class="fav-fiyat" data-favf="${i}"></span><span class="fav-git"><svg class="ic"><use href="#i-ok-sag"/></svg></span></span></button>`).join('');
   $('#yorumListe').innerHTML = yor.map(y => {
     const u = ULKE[y.ulke], bas = (y.ad || '?').trim().charAt(0).toUpperCase();
     return `<figure class="yorum"><div class="yorum-sol"><span class="yorum-foto">${y.foto ? `<img src="${esc(y.foto)}" alt="" loading="lazy">` : esc(bas)}</span>${yildizHTML(y.puan)}</div>
       <div><q>${esc(metinSec(y.metin))}</q><figcaption class="yorum-ad"><b>${esc(y.ad)}</b>${u ? `<i></i><span>${esc(u[dil])}</span><span class="bayrak"><svg><use href="#b-${y.ulke.toLowerCase()}"/></svg></span>` : ''}</figcaption></div></figure>`;
   }).join('');
   $$('.karusel').forEach(karuselCiz);
+  favFiyatlar();
+}
+/* favori kart = güzergâh (07.11 alıcı: kartta Nereden → Nereye ve Minivan fiyatı). Yer kodu 'h:ayt' havalimanı, 'p:lara' bölge. */
+function kartYer(k) {
+  const [tur, id] = String(k || '').split(':');
+  if (tur === 'h' && HAVALIMANLARI.some(x => x.id === id)) return havalimaniYer(id);
+  const p = tur === 'p' && POPULER.find(x => x.id === id);
+  return p ? {ad:p.ad, lat:p.lat, lon:p.lon, hid:null} : null;
+}
+function favRota(f) { const a = kartYer(f.nereden), b = kartYer(f.nereye); return a && b ? `${esc(a.ad)} <i>→</i> ${esc(b.ad)}` : ''; }
+// kartta Minivan (yoksa ilk aktif araç), 1 kişi, tek yön fiyatı; km aramadakiyle aynı rotadan
+function kartFiyat(r) {
+  const a = S.araclar.find(x => x.aktif && x.id === 'minivan') || S.araclar.find(x => x.aktif);
+  const p = a && r ? fiyatEurHam(S, r.km, 1, a.id, false) : null;
+  return p == null ? '' : `<small>${esc(a.ad)}</small><b>${paraYaz(p)}</b>`;
+}
+function favFiyatlar() {
+  $$('[data-favf]').forEach(el => {
+    const f = S.favori[+el.dataset.favf], a = f && kartYer(f.nereden), b = f && kartYer(f.nereye);
+    if (!a || !b) { el.innerHTML = ''; return; }
+    const r = rotaHafiza[rotaAnahtar(a, b)];
+    if (r) el.innerHTML = kartFiyat(r);
+    else rotaAl(a, b).then(x => { el.innerHTML = kartFiyat(x); });
+  });
+}
+// karta basınca güzergâh aramaya gelir; tarih ve saat seçiliyse arama hemen yapılır
+function favSec(i) {
+  const f = S.favori[i], a = f && kartYer(f.nereden), b = f && kartYer(f.nereye);
+  if (!a || !b) return;
+  A.nereden = a; A.nereye = b;
+  $('#nereden').value = a.ad; $('#nereye').value = b.ad;
+  $$('.alan.hata').forEach(x => x.classList.remove('hata'));
+  rotaAlanCiz(); rotaSifirla();
+  const zamanTam = $('#tarih').value && $('#saat').value && (A.tip !== 'gd' || ($('#dTarih').value && $('#dSaat').value));
+  if (zamanTam) { $('#araBtn').click(); return; }
+  tost(t('fav_pick'));
+  $('.arama-alan').scrollIntoView({behavior:'smooth', block:'center'});
 }
 /* kaydırmalı kartlar: oklar bir kart kaydırır, noktalar konumu gösterir; hepsi sığınca oklar ve noktalar gizlenir */
 function karuselAdim(liste) { const o = liste.children; return o.length > 1 ? o[1].offsetLeft - o[0].offsetLeft : liste.clientWidth; }
@@ -1875,27 +1941,7 @@ $$('.karusel').forEach(kok => {
   kok.querySelectorAll('.kr-ok').forEach(b => b.addEventListener('click', () => liste.scrollBy({left:(b.classList.contains('sag') ? 1 : -1) * karuselAdim(liste), behavior:'smooth'})));
   if ('ResizeObserver' in window) new ResizeObserver(() => karuselCiz(kok)).observe(liste);
 });
-$('#favListe').addEventListener('click', e => {
-  const b = e.target.closest('[data-fav]'); if (!b) return;
-  const f = S.favori[+b.dataset.fav]; if (!f) return;
-  const p = POPULER.find(x => x.id === f.bolge);
-  A.nereden = havalimaniYer('ayt'); A.nereye = p ? {ad:p.ad, lat:p.lat, lon:p.lon, hid:null} : null;
-  $('#nereden').value = A.nereden.ad; $('#nereye').value = A.nereye ? A.nereye.ad : '';
-  if (!p) {
-    $$('.alan.hata').forEach(a => a.classList.remove('hata'));
-    rotaAlanCiz(); rotaSifirla(); tost(t('fav_where'));
-    $('.arama-alan').scrollIntoView({behavior:'smooth', block:'center'});
-    $('#nereye').focus({preventScroll:true});
-    setTimeout(() => oneriAc('nereye'), 0); // bu tıklamayı belge düzeyinde dinleyen 'dışarı basınca kapat' kapatmasın
-    return;
-  }
-  $$('.alan.hata').forEach(a => a.classList.remove('hata'));
-  rotaAlanCiz(); rotaSifirla();
-  const zamanTam = $('#tarih').value && $('#saat').value && (A.tip !== 'gd' || ($('#dTarih').value && $('#dSaat').value));
-  if (zamanTam) { $('#araBtn').click(); return; }
-  tost(t('fav_pick'));
-  $('.arama-alan').scrollIntoView({behavior:'smooth', block:'center'});
-});
+$('#favListe').addEventListener('click', e => { const b = e.target.closest('[data-fav]'); if (b) favSec(+b.dataset.fav); });
 {
   const alan = $('#alanYolcu');
   alan.addEventListener('click', e => {
@@ -1973,6 +2019,16 @@ async function rotaBul(a, b) {
     return {km, dk:Math.round(km * 1.05 + 6), tahmin:true};
   }
 }
+const ROTA_KEY = 'atalia-rota';
+let rotaHafiza = {}; try { rotaHafiza = JSON.parse(localStorage.getItem(ROTA_KEY)) || {}; } catch (e) {}
+const rotaAnahtar = (a, b) => yerAnahtar(a) + '>' + yerAnahtar(b);
+async function rotaAl(a, b) {
+  const k = rotaAnahtar(a, b);
+  if (rotaHafiza[k]) return rotaHafiza[k];
+  const r = await rotaBul(a, b);
+  if (!r.tahmin) { rotaHafiza[k] = r; try { localStorage.setItem(ROTA_KEY, JSON.stringify(rotaHafiza)); } catch (e) {} }
+  return r;
+}
 function hataGoster(sel, mesaj) { const el = $(sel); el.classList.add('hata'); tost(mesaj); el.scrollIntoView({behavior:'smooth', block:'center'}); return false; }
 function zamanGecerli() {
   if (!$('#tarih').value || !$('#saat').value) return hataGoster('#alanTarih', t('err_date'));
@@ -2000,7 +2056,7 @@ $('#aramaForm').addEventListener('submit', async e => {
   if (!yaslarTam()) return;
   const btn = $('#araBtn'); btn.classList.add('yukleniyor');
   btn.querySelector('span').textContent = t('calc');
-  A.rota = await rotaBul(A.nereden, A.nereye);
+  A.rota = await rotaAl(A.nereden, A.nereye);
   btn.classList.remove('yukleniyor'); btn.querySelector('span').textContent = t('search');
   A.aranan = true;
   A.arac = null; // kişi sayısına uygun araçlar listelenir, müşteri seçer
@@ -2075,6 +2131,11 @@ function aracCiz() {
         <div class="arac-alt"><div class="fiyat">${fiyat}</div><button type="button" class="sec-btn" data-sec="${esc(a.id)}" ${butonPasif ? 'disabled' : ''}>${esc(t(secili ? 'selected' : 'select'))}</button></div>
       </div></article>`;
   }).join('');
+  if (A.aranan && liste.length % 2 && S.favori.length) {
+    kutu.insertAdjacentHTML('beforeend', `<aside class="filo-fav"><div class="filo-fav-ic"><h3>${esc(t('fav_title'))}</h3>${S.favori.map((f, i) => `<button type="button" class="fav-satir" data-fav="${i}">
+      <span class="fav-k" style="background-image:url('${esc(f.foto)}')"></span><span class="fav-ad">${favRota(f)}</span><span class="fav-fiyat" data-favf="${i}"></span><span class="fav-git"><svg class="ic"><use href="#i-ok-sag"/></svg></span></button>`).join('')}</div></aside>`);
+    favFiyatlar();
+  }
   const cip = $('#rotaCip');
   if (A.aranan && A.rota) {
     cip.hidden = false;
@@ -2084,6 +2145,7 @@ function aracCiz() {
   toplamCiz();
 }
 $('#araclar').addEventListener('click', e => {
+  const fb = e.target.closest('[data-fav]'); if (fb) { favSec(+fb.dataset.fav); return; }
   const b = e.target.closest('[data-sec]');
   const kart = e.target.closest('.arac');
   if (!kart) return;
@@ -2411,11 +2473,18 @@ document.addEventListener('click', e => {
   const dd = e.target.closest('[data-dil]'); if (dd) { dilSec(dd.dataset.dil); $('#cekmece').classList.remove('acik'); }
   if (e.target.closest('a[href="#filo"]') && $('#filo').hidden) { filoAcik = true; aracCiz(); }
   if (e.target.closest('a[href="#neden"]')) $('#neden').hidden = false;
+  if (e.target.closest('a[href="#ana"]')) anaSayfa();
   const wa = e.target.closest('[data-wa]');
   if (wa) { const no = (S.ayar.whatsapp || '').replace(/\D/g, ''); if (!no) { e.preventDefault(); tost(t('wa_demo')); } }
   const tg = e.target.closest('[data-tg]');
   if (tg && !S.ayar.telegram) { e.preventDefault(); tost(t('wa_demo').replace('WhatsApp', 'Telegram')); }
 });
+// menü, logo ya da alt bölümdeki Ana Sayfa: araç listesi ve form kapanır, ikinci ekran geri gelir; aramadaki bilgiler kalır
+function anaSayfa() {
+  A.aranan = false; A.rota = null; A.arac = null; filoAcik = false;
+  $('#neden').hidden = false;
+  aracCiz(); ozetCiz();
+}
 $('#dil .dil-btn').addEventListener('click', () => $('#dil').classList.toggle('acik'));
 $('#hzDil .dil-btn').addEventListener('click', () => $('#hzDil').classList.toggle('acik'));
 // sabit üst şerit: kapağın üstündeyken saydam, kaydırınca koyu zemin
@@ -2890,6 +2959,8 @@ function pKodBagla() {
   $('#kGovde').addEventListener('click', e => { const s = e.target.closest('[data-ksil]'); if (s) { const k = S.kodlar[s.dataset.ksil]; S.kodlar.splice(+s.dataset.ksil, 1); if (A.kod && A.kod.kod === k.kod) { A.kod = null; ozetCiz(); } kaydet(); panelCiz(); tost(k.kod + ' silindi'); } });
 }
 
+const yerSecenek = sec => [...HAVALIMANLARI.map(h => ['h:' + h.id, h.ad.tr]), ...POPULER.map(p => ['p:' + p.id, p.ad])]
+  .map(([v, ad]) => `<option value="${v}" ${v === sec ? 'selected' : ''}>${esc(ad)}</option>`).join('');
 function pIcerik() {
   const dilAlan = (o, alan, on, cok) => `<div class="${cok ? 'izgara-2' : 'izgara-4'}">${DILLER.map(d => `<div class="p-alan"><label>${DIL_AD[d]}</label>${cok
     ? `<textarea class="p-girdi" rows="2" ${on} data-k="${alan}|${d}">${esc((o[alan] || {})[d] || '')}</textarea>`
@@ -2898,10 +2969,10 @@ function pIcerik() {
       <div><div class="foto-k" style="aspect-ratio:2/1"><img src="${esc(f.foto)}" alt=""></div><label class="foto-sec">Fotoğrafı değiştir<input type="file" accept="image/*" data-f="${i}" data-k="foto"></label></div>
       <div>
         <div class="izgara-3">
-          <div class="p-alan" style="grid-column:span 2"><label>Karta basınca</label><select class="p-girdi" data-f="${i}" data-k="bolge"><option value="" ${!POPULER.some(p => p.id === f.bolge) ? 'selected' : ''}>Nereye alanı açılır (birden çok yer yazan kart)</option>${POPULER.map(p => `<option value="${p.id}" ${p.id === f.bolge ? 'selected' : ''}>Havalimanı → ${esc(p.ad)} aramaya gelir</option>`).join('')}</select></div>
+          <div class="p-alan"><label>Nereden</label><select class="p-girdi" data-f="${i}" data-k="nereden">${yerSecenek(f.nereden)}</select></div>
+          <div class="p-alan"><label>Nereye</label><select class="p-girdi" data-f="${i}" data-k="nereye">${yerSecenek(f.nereye)}</select></div>
           <div class="p-alan" style="align-self:end;text-align:right"><button type="button" class="p-btn kirmizi" data-fsil="${i}"><svg class="ic"><use href="#i-cop"/></svg>Kartı sil</button></div>
         </div>
-        <div class="p-alt-b">Kart yazısı</div>${dilAlan(f, 'ad', `data-f="${i}"`)}
       </div></div></div>`).join('');
   const yor = S.yorumlar.map((y, i) => `<div class="icerik-blok">
       <div class="izgara-4">
@@ -2914,7 +2985,7 @@ function pIcerik() {
       <div class="p-alt-b">Yorum</div>${dilAlan(y, 'metin', `data-y="${i}"`, true)}
     </div>`).join('');
   return pBas('Ana Sayfa', 'Favori transfer kartları ve misafir yorumları; değişiklik sitede anında görünür.') + `
-  <div class="p-kart"><h2>Favori Transferler</h2><p class="acik-y">Müşteri karta basınca seçtiğiniz bölge aramaya gelir; birden çok yer yazan kartta Nereye alanı açılır. Bir dilde yazı boşsa İngilizcesi görünür.</p>${fav || '<p class="bos">Kart yok</p>'}
+  <div class="p-kart"><h2>Favori Transferler</h2><p class="acik-y">Her kart bir güzergâh: sitede kartta Nereden → Nereye ve Minivan fiyatı görünür, fiyat Fiyatlandırma tablosundan kendiliğinden hesaplanır. Müşteri karta basınca bu güzergâh aramaya gelir.</p>${fav || '<p class="bos">Kart yok</p>'}
     <button type="button" class="p-btn ince" id="fEkle" style="margin-top:6px"><svg class="ic"><use href="#i-arti"/></svg>Kart ekle</button></div>
   <div class="p-kart"><h2>Misafir Yorumları</h2><p class="acik-y">Bu örnekteki yorumlar gösterim içindir; yayında yalnız gerçek müşteri yorumları girilir. Bir dilde yorum boşsa İngilizcesi görünür.</p>${yor || '<p class="bos">Yorum yok</p>'}
     <button type="button" class="p-btn ince" id="yEkle" style="margin-top:6px"><svg class="ic"><use href="#i-arti"/></svg>Yorum ekle</button></div>`;
@@ -2928,6 +2999,7 @@ function pIcerikBagla() {
     if (g.dataset.f != null) {
       const f = S.favori[+g.dataset.f]; if (!f) return;
       if (k === 'foto') { if (g.files[0]) resimKucult(g.files[0], url => { f.foto = url; kaydet(); panelCiz(); vitrinCiz(); tost('Fotoğraf güncellendi'); }); return; }
+      if (g.value === f[k === 'nereden' ? 'nereye' : 'nereden']) { g.value = f[k]; tost('Nereden ve Nereye aynı yer olamaz'); return; }
       yaz(f, k, g.value.trim());
     } else if (g.dataset.y != null) {
       const y = S.yorumlar[+g.dataset.y]; if (!y) return;
@@ -2947,7 +3019,7 @@ function pIcerikBagla() {
       if (sil.dataset.fsil != null) S.favori.splice(+sil.dataset.fsil, 1); else S.yorumlar.splice(+sil.dataset.ysil, 1);
       kaydet(); panelCiz(); vitrinCiz(); tost('Silindi'); return;
     }
-    if (e.target.closest('#fEkle')) { S.favori.push({id:'f' + Date.now().toString(36), bolge:'kemer', foto:'fav-antalya.webp', ad:{tr:'Kemer', en:'Kemer', ru:'Кемер', de:'Kemer'}}); kaydet(); panelCiz(); vitrinCiz(); tost('Kart eklendi'); }
+    if (e.target.closest('#fEkle')) { S.favori.push({id:'f' + Date.now().toString(36), nereden:'h:ayt', nereye:'p:kemer', foto:'fav-antalya.webp'}); kaydet(); panelCiz(); vitrinCiz(); tost('Kart eklendi'); }
     if (e.target.closest('#yEkle')) { S.yorumlar.push({id:'y' + Date.now().toString(36), ad:'', ulke:'TR', puan:5, aktif:false, metin:{}}); kaydet(); panelCiz(); vitrinCiz(); tost('Yorum eklendi; yazıp "Sitede" anahtarını açın'); }
   };
 }
