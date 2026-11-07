@@ -250,6 +250,7 @@ h1 em{font-style:normal;color:var(--tur)}
 /* telefon: önce ülke kodu seçilir (07.11 alıcı); seçim kutusu görünmez, üstünde +90 gibi kod yazar */
 .tel-kod{position:relative;display:flex;align-items:center;gap:3px;align-self:stretch;padding-right:10px;border-right:1px solid var(--cizgi);font-size:14px;font-weight:700;color:var(--yazi);white-space:nowrap}
 .tel-kod .ic{width:14px;height:14px}
+.tel-kod img{width:21px;height:16px;border-radius:2px;object-fit:cover;box-shadow:0 0 0 1px rgba(0,0,0,.1);margin-right:3px}
 .tel-kod select{position:absolute;inset:0;width:100%;opacity:0;cursor:pointer;font-size:16px}
 .tel-kod:focus-within{color:var(--koyu3)}
 .tel-no{position:relative;flex:1;display:flex;min-width:0}
@@ -1104,7 +1105,7 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
       </button>
       <div class="form-izgara">
         <div class="girdi"><div class="kutu ic-et"><svg class="ic"><use href="#i-kisi"/></svg><input id="ad" autocomplete="name" placeholder=" "><label for="ad"><span data-t="name">Ad Soyad</span><i>*</i></label></div></div>
-        <div class="girdi"><div class="kutu"><span class="tel-kod"><b>+90</b><svg class="ic"><use href="#i-asagi"/></svg><select id="telKod" data-t-aria="cc"></select></span><span class="tel-no"><input id="tel" type="tel" autocomplete="tel-national" inputmode="tel" placeholder=" "><label for="tel"><span data-t="phone">Cep Telefonu</span><i>*</i></label></span></div></div>
+        <div class="girdi"><div class="kutu"><span class="tel-kod"><img alt=""><b>+90</b><svg class="ic"><use href="#i-asagi"/></svg><select id="telKod" data-t-aria="cc"></select></span><span class="tel-no"><input id="tel" type="tel" autocomplete="tel-national" inputmode="tel" placeholder=" "><label for="tel"><span data-t="phone">Cep Telefonu</span><i>*</i></label></span></div></div>
         <div class="girdi"><div class="kutu ic-et"><svg class="ic"><use href="#i-posta"/></svg><input id="eposta" type="email" autocomplete="email" placeholder=" "><label for="eposta"><span data-t="email">E-posta Adresi</span><i>*</i></label></div></div>
         <div class="girdi"><div class="kutu ic-et"><svg class="ic" style="transform:rotate(45deg)"><use href="#i-ucak"/></svg><input id="ucus" autocapitalize="characters" autocomplete="off" placeholder=" "><label for="ucus" data-t="flight">Uçuş Numarası</label></div></div>
         <div class="girdi"><label for="koltuk" data-t="seat">Çocuk Koltuğu</label><div class="kutu"><svg class="ic"><use href="#i-koltuk"/></svg><select id="koltuk" class="kutu-sec"></select></div></div>
@@ -2402,11 +2403,18 @@ function ulkeAd(iso) {
   return ulkeAdlari[dil].of(iso) || iso;
 }
 function telKodDoldur(sel, iso) {
-  const sira = new Intl.Collator(PARA[dil].loc), op = iso => `<option value="${iso}">${esc(ulkeAd(iso))} +${telKodu(iso)}</option>`;
+  const sira = new Intl.Collator(PARA[dil].loc), op = iso => `<option value="${iso}">${bayrakEmoji(iso)} ${esc(ulkeAd(iso))} +${telKodu(iso)}</option>`;
   sel.innerHTML = `<optgroup label="${esc(t('cc_pop'))}">${TEL_SIK.map(op).join('')}</optgroup><optgroup label="${esc(t('cc_all'))}">${TEL_KOD.map(([x]) => [x, ulkeAd(x)]).sort((a, b) => sira.compare(a[1], b[1])).map(([x]) => op(x)).join('')}</optgroup>`;
   sel.value = iso; telKodGoster(sel);
 }
-function telKodGoster(sel) { sel.parentElement.querySelector('b').textContent = '+' + telKodu(sel.value); }
+const bayrakEmoji = iso => String.fromCodePoint(...[...iso].map(c => 127397 + c.charCodeAt(0)));
+// bayrak görselleri: flag-icons 7.6.0 (MIT); gerçek sitede kendi sunucumuzdan verilir
+const bayrakUrl = iso => `https://cdn.jsdelivr.net/npm/flag-icons@7.6.0/flags/4x3/${{AC:'sh-ac', TA:'sh-ta'}[iso] || iso.toLowerCase()}.svg`;
+function telKodGoster(sel) {
+  const k = sel.parentElement, img = k.querySelector('img');
+  k.querySelector('b').textContent = '+' + telKodu(sel.value);
+  img.hidden = false; img.onerror = () => { img.hidden = true; }; img.src = bayrakUrl(sel.value);
+}
 function telKodCiz() { const s = $('#telKod'); telKodDoldur(s, telKodElle ? s.value : TEL_DIL[dil]); }
 // '+49 151…' ya da '0049…' yazılır ya da yapıştırılırsa kod seçime geçer, kutuda yalnız numara kalır
 function telAyir(deger, tercih) {
@@ -2466,7 +2474,7 @@ function hesapAc(sekme = 'giris') {
     <form class="m-form" id="mKayit" ${sekme === 'kayit' ? '' : 'hidden'} novalidate>
       <div class="girdi"><label for="kA">${esc(t('name'))}</label><div class="kutu"><svg class="ic"><use href="#i-kisi"/></svg><input id="kA" autocomplete="name"></div></div>
       <div class="girdi"><label for="kE">${esc(t('email'))}</label><div class="kutu"><svg class="ic"><use href="#i-posta"/></svg><input id="kE" type="email" autocomplete="email"></div></div>
-      <div class="girdi"><label for="kT">${esc(t('phone'))}</label><div class="kutu"><span class="tel-kod"><b></b><svg class="ic"><use href="#i-asagi"/></svg><select id="kTKod" aria-label="${esc(t('cc'))}"></select></span><input id="kT" type="tel" autocomplete="tel-national" inputmode="tel"></div></div>
+      <div class="girdi"><label for="kT">${esc(t('phone'))}</label><div class="kutu"><span class="tel-kod"><img alt=""><b></b><svg class="ic"><use href="#i-asagi"/></svg><select id="kTKod" aria-label="${esc(t('cc'))}"></select></span><input id="kT" type="tel" autocomplete="tel-national" inputmode="tel"></div></div>
       <div class="girdi"><label for="kDg">${esc(t('birth'))}</label><div class="kutu"><svg class="ic"><use href="#i-takvim"/></svg><input id="kDg" type="date" autocomplete="bday" min="1900-01-01" max="${isoGun(new Date())}"></div></div>
       <div class="girdi"><label for="kS">${esc(t('password'))}</label><div class="kutu"><svg class="ic"><use href="#i-kalkan"/></svg><input id="kS" type="password" autocomplete="new-password"></div></div>
       <label class="onay-satir" style="margin-top:0;font-size:12.5px;color:var(--yazi2)"><input type="checkbox" id="kIzin"><span>${esc(t('promo_ok'))}</span></label>
