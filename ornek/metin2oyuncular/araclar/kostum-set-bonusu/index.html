@@ -63,8 +63,8 @@
                       <a href="/ornek/metin2oyuncular/wiki/esyalar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 4 6 6-9 9H5v-6z"/><path d="m11 7 6 6"/></svg><span><b>Eşyalar</b><small>Silah, zırh, takı ve özellikleri</small></span></a>
                       <a href="/ornek/metin2oyuncular/wiki/haritalar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span><b>Haritalar</b><small>Bölgeler, seviye aralığı ve canavarlar</small></span></a>
                       <a href="/ornek/metin2oyuncular/wiki/sandiklar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v9H4z"/><path d="M4 12h16"/><path d="M10.5 12v2.5h3V12"/></svg><span><b>Sandıklar</b><small>İçerikler ve düşen eşyalar</small></span></a>
-                      <a href="/ornek/metin2oyuncular/wiki/npcler"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1-4.5 4-6.5 7.5-6.5s6.5 2 7.5 6.5"/></svg><span><b>NPC&#039;ler</b><small>Konumlar, görevler ve satılanlar</small></span></a>
-                      <a href="/ornek/metin2oyuncular/wiki/yukseltme"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 3 6 6 .9-4.5 4.3 1 6.3L12 17.5 6.5 20.500l1-6.300L3 9.900 9 9z"/></svg><span><b>Yükseltme</b><small>Artı basma şansı ve simülasyon</small></span></a>
+                      <a href="/ornek/metin2oyuncular/wiki/npcler"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1-4.5 4-6.5 7.5-6.5s6.5 2 7.5 6.5"/></svg><span><b>NPC&#039;ler</b><small>Konumlar ve verdikleri görevler</small></span></a>
+                      <a href="/ornek/metin2oyuncular/wiki/yukseltme"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 3 6 6 .9-4.5 4.3 1 6.3L12 17.5 6.5 20.500l1-6.300L3 9.900 9 9z"/></svg><span><b>Yükseltme</b><small>Artı tabloları, malzeme ve simülasyon</small></span></a>
                   </div>
       </div>
       <div class="acilir sagda">
@@ -97,11 +97,24 @@
 <main>
 <div class="sar">
   <header class="sayfa-bas">
-    <nav class="yol" aria-label="Sayfa yolu"><a href="/ornek/metin2oyuncular/">Ana Sayfa</a><span>/</span><a href="/ornek/metin2oyuncular/araclar">Araçlar</a><span>/</span><span>Meley Kronometresi</span></nav>
-    <h1 class="buyuk">Meley Kronometresi</h1>
-    <p>Zindanda yumurta ve heykel sürelerini takip et.</p>
+    <nav class="yol" aria-label="Sayfa yolu"><a href="/ornek/metin2oyuncular/">Ana Sayfa</a><span>/</span><a href="/ornek/metin2oyuncular/araclar">Araçlar</a><span>/</span><span>Kostüm Set Bonusu</span></nav>
+    <h1 class="buyuk">Kostüm Set Bonusu</h1>
+    <p>Kostüm parçalarını seç, toplam bonusu gör.</p>
   </header>
-      <div class="bos-kutu"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.500" r="7.500"/><path d="M12 9v4.500l2.500 1.500M9.500 3h5M12 3v3"/></svg><h2>Bu araç hazırlanıyor</h2><p>Hesaplamalar resmî Metin2 Wiki verileriyle kontrol edildikten sonra burada açılacak.</p><a class="altin-bag" href="/ornek/metin2oyuncular/araclar">Diğer araçlara dön <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
+      <div class="arac" id="kostum">
+  <form class="arac-ana arac-alan" autocomplete="off">
+    <label class="genis">Set<select id="kostum-set"></select></label>
+    <div class="genis kostum-parca" id="kostum-parca"></div>
+  </form>
+  <aside class="arac-yan">
+    <dl class="arac-sayac"><div><dt>Takılı parça</dt><dd id="kostum-say">0</dd></div></dl>
+    <h3>Aktif bonus</h3>
+    <ul class="arac-madde" id="kostum-bonus"></ul>
+    <h3 id="kostum-sonraki-bas">Sonraki eşik</h3>
+    <ul class="arac-madde soluk" id="kostum-sonraki"></ul>
+  </aside>
+</div>
+<script type="application/json" id="kostum-veri">[{"ad":"Azrail Seti","kaynak":"Azrail Seti","yuvalar":[["Kırmızı Azrail Zırhı Erkek","Kırmızı Azrail Zırhı Kadın","Beyaz Azrail Zırhı Erkek","Beyaz Azrail Zırhı Kadın"],["Kırmızı Azrail Kaskı Erkek","Kırmızı Azrail Kaskı Kadın","Beyaz Azrail Kaskı Erkek","Beyaz Azrail Kaskı Kadın"],["Ölümcül Gücün Yüzüğü","İrade Gücü Yüzüğü"],["Kırmızı Yavru Huashin","Beyaz Yavru Huashin"]],"bonus":{"2":["+%5 Beceri Hasarı"],"3":["+%5 Beceri Hasarı","+%50 EXP Bonus"],"4":["+%5 Beceri Hasarı","+%100 EXP Bonus","+%5 Ortalama Zarar"]}},{"ad":"Festival Seti","kaynak":"Festival Seti","yuvalar":[["Kırmızı Torero","Kırmızı Dişi Torero","Mavi Torero","Mavi Dişi Torero"],["Kırmızı Montera","Kırmızı Dişi Montera","Mavi Montera","Mavi Dişi Montera"],["Güçlü Lolipop","Sihir Lolipopu"],["Siyah Boğa","Kahverengi Boğa"]],"bonus":{"2":["+%50 EXP Bonus"],"3":["+%75 EXP Bonus","+%5 Büyü\/Yakın Dövüş Saldırı"],"4":["+%100 EXP Bonus","+%7 Büyü\/Yakın Dövüş Saldırı","+5% Eşya Düşürme Şansı"]}},{"ad":"Hoşgörü Seti","kaynak":"Hoşgörü Seti","yuvalar":[["Cömertlik Kostümü E","Cömertlik Kostümü K","Muzaffer Kostümü E","Muzaffer Kostümü K"],["Cömertliğin Kafalığı E","Cömertliğin Kafalığı K","Muzaffer Kafalığı E","Muzaffer Kafalığı K"],["Nazar Tılsımı"],["Halia","Aquilos"]],"bonus":{"2":["+%50 EXP Bonus"],"3":["+%75 EXP Bonus","+%3 Metin Taşı Karşısında Güçlü"],"4":["+%100 EXP Bonus","+%8 Metin Taşı Karşısında Güçlü","+%5 Eşya Düşürme Şansı"]}},{"ad":"Kahin Seti","kaynak":"Kahin Seti","yuvalar":[["Kara Kahin Cübbesi Erkek","Kara Kahin Cübbesi Kadın","Parlak Kahin Cübbesi Erkek","Parlak Kahin Cübbesi Kadın"],["Kara Kahin Başlığı Erkek","Mor Kahin Gözü Kadın","Parlak Kahin Başlığı Erkek","Yeşil Kahin Gözü Kadın"],["Güçlü Lolipop","Sihir Lolipopu"],["Falcı_Ateş_Kedisi","Falcı_Buz_Kedisi"]],"bonus":{"2":["+%5 Beceri Hasarı"],"3":["+%5 Beceri Hasarı","+%100 EXP Bonus"],"4":["+%5 Beceri Hasarı","+%150 EXP Bonus","+%5 Büyü\/Yakın Dövüş Saldırı"]}},{"ad":"Viking Seti","kaynak":"Kostüm Seti","yuvalar":[["Işık Vikingi+","Işık Valkürü+","Gece Vikingi+","Gece Valkürü+"],["Işık Vikingi kaskı+","Işık Valkürü kaskı+","Gece Vikingi kaskı+","Gece Valkürü kaskı+"],["Kahramanlık Madalyonu"],["Hati","Skalli"],["Mavi Kadırga","kırmızı kadırga"],["Kuzey ejderi çift el k","Kuzey ejderi kılıcı","Kuzey ejderi yayı","Kuzey ejderi zili","Kuzey ejderi yelpazesi","Kuzey ejderi hançeri","Kuzey ejderi pençesi"]],"bonus":{"2":["+%50 EXP Bonus"],"3":["+%75 EXP Bonus","+%5 Beceri Hasarı"],"4":["+%135 EXP Bonus","+%7 Beceri Hasarı","+%3 Nesne Düşürme Şansı","+%10 Hareket Hızı"],"5":["+%150 EXP Bonus","+%10 Beceri Hasarı","+%5 Nesne Düşürme Şansı","+%20 Hareket Hızı"],"7":["+%150 EXP Bonus","+%10 Beceri Hasarı","+%5 Nesne Düşürme Şansı","+%20 Hareket Hızı","+%5 Canavarlara Karşı Güçlü"]}},{"ad":"Kış Etkinliği","kaynak":"Kış Etkinliği","yuvalar":[["Kar Tanesi Bambi"],["Kar Tanesi Yıldızı"]],"bonus":{"2":["+%50 EXP Bonus","+%3 Metin Taşı Karşısında Güçlü"]}},{"ad":"Tavşan Lordu Seti","kaynak":"Tavşan Lordu Seti","yuvalar":[["Kara Lord Lambası Erkek","Kara Lord Lambası Kadın","Mor Lord Lambası Erkek","Mor Lord Lambası Kadın"],["Kara Tavşan Lord Maskesi Erkek","Kara Tavşan Lord Maskesi Kadın","Mor Tavşan Lord Maskesi Erkek","Mor Tavşan Lord Maskesi Kadın"],["Güçlü Lolipop","Sihir Lolipopu"],["Mavi Klasik Araba","Yeşil Klasik Araba"]],"bonus":{"2":["+%50 EXP Bonus"],"3":["+%75 EXP Bonus","+%3 Canavarlara Karşı Güç"],"4":["+%100 EXP Bonus","+%5 Canavarlara Karşı Güç","+%5 Metin Taşı Karşısında Güçlü"]}},{"ad":"Öbür Dünyaya Seyahat","kaynak":"Öbür Dünyaya Seyahat","yuvalar":[["S. Dokkaebi Kaftanı","S. Dokkaebi Kaftanı K"],["S. Dokkaebi Boynuzu E","S. Dokkaebi Boynuzu K"]],"bonus":{"3":["+%400 Ölümsüzlere Karşı Güçlü","+%100 Karanlığın Gücü"]}}]</script>
     <div class="ad ad-bos ad-liste"><span>Reklam alanı</span><b>728x90</b></div></div>
 </main>
 <footer class="alt">
@@ -136,5 +149,5 @@
   </div>
 </footer>
 <script src="/ornek/metin2oyuncular/assets/site.js"></script>
-</body>
+<script src="/ornek/metin2oyuncular/assets/araclar.js"></script></body>
 </html>

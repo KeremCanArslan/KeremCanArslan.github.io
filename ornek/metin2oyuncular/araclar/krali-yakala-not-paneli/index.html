@@ -63,8 +63,8 @@
                       <a href="/ornek/metin2oyuncular/wiki/esyalar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 4 6 6-9 9H5v-6z"/><path d="m11 7 6 6"/></svg><span><b>Eşyalar</b><small>Silah, zırh, takı ve özellikleri</small></span></a>
                       <a href="/ornek/metin2oyuncular/wiki/haritalar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span><b>Haritalar</b><small>Bölgeler, seviye aralığı ve canavarlar</small></span></a>
                       <a href="/ornek/metin2oyuncular/wiki/sandiklar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v9H4z"/><path d="M4 12h16"/><path d="M10.5 12v2.5h3V12"/></svg><span><b>Sandıklar</b><small>İçerikler ve düşen eşyalar</small></span></a>
-                      <a href="/ornek/metin2oyuncular/wiki/npcler"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1-4.5 4-6.5 7.5-6.5s6.5 2 7.5 6.5"/></svg><span><b>NPC&#039;ler</b><small>Konumlar, görevler ve satılanlar</small></span></a>
-                      <a href="/ornek/metin2oyuncular/wiki/yukseltme"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 3 6 6 .9-4.5 4.3 1 6.3L12 17.5 6.5 20.500l1-6.300L3 9.900 9 9z"/></svg><span><b>Yükseltme</b><small>Artı basma şansı ve simülasyon</small></span></a>
+                      <a href="/ornek/metin2oyuncular/wiki/npcler"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1-4.5 4-6.5 7.5-6.5s6.5 2 7.5 6.5"/></svg><span><b>NPC&#039;ler</b><small>Konumlar ve verdikleri görevler</small></span></a>
+                      <a href="/ornek/metin2oyuncular/wiki/yukseltme"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 3 6 6 .9-4.5 4.3 1 6.3L12 17.5 6.5 20.500l1-6.300L3 9.900 9 9z"/></svg><span><b>Yükseltme</b><small>Artı tabloları, malzeme ve simülasyon</small></span></a>
                   </div>
       </div>
       <div class="acilir sagda">
@@ -97,11 +97,46 @@
 <main>
 <div class="sar">
   <header class="sayfa-bas">
-    <nav class="yol" aria-label="Sayfa yolu"><a href="/ornek/metin2oyuncular/">Ana Sayfa</a><span>/</span><a href="/ornek/metin2oyuncular/araclar">Araçlar</a><span>/</span><span>Meley Kronometresi</span></nav>
-    <h1 class="buyuk">Meley Kronometresi</h1>
-    <p>Zindanda yumurta ve heykel sürelerini takip et.</p>
+    <nav class="yol" aria-label="Sayfa yolu"><a href="/ornek/metin2oyuncular/">Ana Sayfa</a><span>/</span><a href="/ornek/metin2oyuncular/araclar">Araçlar</a><span>/</span><span>Kralı Yakala Not Paneli</span></nav>
+    <h1 class="buyuk">Kralı Yakala Not Paneli</h1>
+    <p>Açılan kartları takip et, olasılıkları tek bakışta gör.</p>
   </header>
-      <div class="bos-kutu"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.500" r="7.500"/><path d="M12 9v4.500l2.500 1.500M9.500 3h5M12 3v3"/></svg><h2>Bu araç hazırlanıyor</h2><p>Hesaplamalar resmî Metin2 Wiki verileriyle kontrol edildikten sonra burada açılacak.</p><a class="altin-bag" href="/ornek/metin2oyuncular/araclar">Diğer araçlara dön <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
+      <div class="arac" id="kral">
+  <div class="arac-ana">
+    <div class="kral-el-bas"><span>Sıradaki kartın</span><b id="kral-simdiki">1</b><div class="kral-el" id="kral-el"></div></div>
+    <div class="kral-tahta" id="kral-tahta"></div>
+    <label class="arac-sec"><input type="checkbox" id="kral-puansiz"> Elimdeki 5, bitişik 5'i topladı (puan yok)</label>
+    <p class="arac-not">Oyunda açtığın karta buradan da dokun, çıkan değeri seç. Puan ve kalan kartlar kendiliğinden güncellenir.</p>
+  </div>
+  <aside class="arac-yan">
+    <dl class="arac-sayac">
+      <div><dt>Puan</dt><dd id="kral-puan">0</dd></div>
+      <div><dt>Bingo</dt><dd id="kral-bingo">0</dd></div>
+      <div><dt>Kapalı</dt><dd id="kral-kapali">25</dd></div>
+    </dl>
+    <p class="arac-odul" id="kral-odul"></p>
+    <h3>Kalan kartlar</h3>
+    <div class="tablo-sar"><table class="wiki-tablo duz kucuk"><thead><tr><th>Kart</th><th>Kalan</th><th>Çıkma şansı</th></tr></thead><tbody id="kral-kalan"></tbody></table></div>
+    <p class="arac-odul" id="kral-sans"></p>
+    <div class="arac-dugmeler">
+      <button class="arac-btn" id="kral-geri" type="button">Geri al</button>
+      <button class="arac-btn" id="kral-yeni" type="button">Yeni oyun</button>
+    </div>
+  </aside>
+</div>
+<div class="kral-sec" id="kral-sec" hidden>
+  <span>Açılan kart</span>
+  <div id="kral-secenek"></div>
+  <button class="arac-btn" id="kral-vazgec" type="button">Vazgeç</button>
+</div>
+<section class="arac-kural">
+  <h2>Kurallar</h2>
+  <div class="tablo-sar"><table class="wiki-tablo duz">
+    <thead><tr><th>Kart</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>K</th><th>Bingo</th></tr></thead>
+    <tbody><tr><td>Puan</td><td>10</td><td>20</td><td>30</td><td>40</td><td>50</td><td>100</td><td>10</td></tr></tbody>
+  </table></div>
+  <p class="wiki-not">Kartın açılandan yüksekse puan alır ve bir kart daha açarsın. Eşitse puanı alır, sıradaki karta geçersin. Düşükse puan yoktur. Bir sıranın tamamı açılınca Bingo gelir. Kralı kendi K kartınla yakalarsan 100 puan alırsın ve oyun biter. Ödül: 400 puan ve altı Bronz, 400-549 Gümüş, 550 ve üzeri Altın. 650 puanda duyuru geçer.</p>
+</section>
     <div class="ad ad-bos ad-liste"><span>Reklam alanı</span><b>728x90</b></div></div>
 </main>
 <footer class="alt">
@@ -136,5 +171,5 @@
   </div>
 </footer>
 <script src="/ornek/metin2oyuncular/assets/site.js"></script>
-</body>
+<script src="/ornek/metin2oyuncular/assets/araclar.js"></script></body>
 </html>
