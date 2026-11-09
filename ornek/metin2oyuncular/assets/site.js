@@ -63,6 +63,7 @@
   var form = document.getElementById('ust-ara');
   var girdi = document.getElementById('ara');
   var kapsam = document.getElementById('ara-kapsam');
+  var tarihSec = document.getElementById('ara-tarih');
   var sonuc = document.getElementById('arama-sonuc');
   var veri = null, yukleniyor = false;
   function satirYaz(metin) {
@@ -77,7 +78,8 @@
     sonuc.hidden = false;
     if (!veri) { satirYaz('Yükleniyor...'); return; }
     var alan = kapsam.value;
-    var liste = veri.filter(function (y) { return (!alan || y.c === alan) && kucult(y.t).indexOf(a) > -1; }).slice(0, 10);
+    var sinir = tarihSec.value ? Date.now() / 1000 - tarihSec.value * 86400 : 0;
+    var liste = veri.filter(function (y) { return (!alan || y.c === alan) && (!sinir || y.d >= sinir) && kucult(y.t).indexOf(a) > -1; }).slice(0, 10);
     if (!liste.length) { satirYaz('Sonuç bulunamadı.'); return; }
     sonuc.textContent = '';
     liste.forEach(function (y) {
@@ -101,7 +103,12 @@
   if (form) {
     girdi.addEventListener('focus', veriYukle);
     girdi.addEventListener('input', goster);
-    kapsam.addEventListener('change', goster);
+    kapsam.addEventListener('change', function () {
+      tarihSec.hidden = kapsam.value !== 'rehber';
+      if (tarihSec.hidden) tarihSec.value = '';
+      goster();
+    });
+    tarihSec.addEventListener('change', goster);
     form.addEventListener('submit', function (o) {
       o.preventDefault();
       var ilk = sonuc.querySelector('a');
@@ -109,6 +116,29 @@
     });
     document.addEventListener('click', function (o) { if (!form.contains(o.target)) sonuc.hidden = true; });
     document.addEventListener('keydown', function (o) { if (o.key === 'Escape') sonuc.hidden = true; });
+  }
+
+  // Bildirimler son rehberleri gösterir; ziyaretçinin son baktığı an yalnız kendi tarayıcısında tutulur.
+  var zil = document.getElementById('bildirim');
+  if (zil) {
+    var zilAc = document.getElementById('bildirim-ac');
+    var zilKutu = document.getElementById('bildirim-kutu');
+    var zilSayi = document.getElementById('bildirim-sayi');
+    var bakilan = +(oku('m2o-bildirim') || 0);
+    var yeniler = zilKutu.querySelectorAll('a');
+    var yeniAdet = 0;
+    yeniler.forEach(function (a) { if (+a.dataset.an > bakilan) { a.classList.add('yeni'); yeniAdet++; } });
+    if (yeniAdet) { zilSayi.textContent = yeniAdet; zilSayi.hidden = false; }
+    function zilKapat() { zilKutu.hidden = true; zilAc.setAttribute('aria-expanded', 'false'); }
+    zilAc.addEventListener('click', function () {
+      if (!zilKutu.hidden) { zilKapat(); return; }
+      zilKutu.hidden = false;
+      zilAc.setAttribute('aria-expanded', 'true');
+      zilSayi.hidden = true;
+      yaz('m2o-bildirim', String(Math.floor(Date.now() / 1000)));
+    });
+    document.addEventListener('click', function (o) { if (!zil.contains(o.target)) zilKapat(); });
+    document.addEventListener('keydown', function (o) { if (o.key === 'Escape') zilKapat(); });
   }
 
   var slayt = document.getElementById('slayt');
