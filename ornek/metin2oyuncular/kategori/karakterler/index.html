@@ -18,7 +18,7 @@
 <header class="ust">
   <div class="ust-bilgi">
     <div class="sar">
-      <span>9 Kasım 2026, Pazartesi</span>
+      <span>10 Kasım 2026, Salı</span>
       <nav aria-label="Site bağlantıları">
         <a href="/ornek/metin2oyuncular/sayfa/hakkimizda">Hakkımızda</a>
         <a href="/ornek/metin2oyuncular/sayfa/reklam">Reklam</a>
@@ -36,11 +36,29 @@
         <option value="wiki">Wiki</option>
         <option value="arac">Araçlar</option>
       </select>
+      <select id="ara-tarih" aria-label="Rehber tarihi" hidden>
+        <option value="">Tüm zamanlar</option>
+        <option value="7">Son 7 gün</option>
+        <option value="30">Son 30 gün</option>
+        <option value="365">Son 1 yıl</option>
+      </select>
       <div class="arama-sonuc" id="arama-sonuc" hidden></div>
     </form>
     <div class="ust-sag">
       <a class="ust-dugme" href="/ornek/metin2oyuncular/ticaret-cami"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="9" cy="7" rx="6" ry="3"/><path d="M3 7v4c0 1.7 2.7 3 6 3s6-1.3 6-3V7"/><path d="M15 11.2c3.2.2 6 1.4 6 3v3c0 1.7-2.7 3-6 3s-6-1.3-6-3v-3"/></svg><span>Ticaret Camı</span></a>
       <a class="ust-dugme dolu" href="/ornek/metin2oyuncular/etkinlik-takvimi"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5.5" width="16" height="15"/><path d="M4 10h16M8.5 3v4.5M15.5 3v4.5"/><path d="M8 14h2M14 14h2M8 17.5h2M14 17.5h2"/></svg><span>Etkinlik Takvimi</span></a>
+      <div class="bildirim" id="bildirim">
+        <button class="kare" id="bildirim-ac" type="button" aria-label="Bildirimler" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16v-5a6 6 0 1 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></svg><span class="bildirim-sayi" id="bildirim-sayi" hidden></span></button>
+        <div class="bildirim-kutu" id="bildirim-kutu" hidden>
+          <strong>Bildirimler</strong>
+                      <a href="/ornek/metin2oyuncular/rehber/efsaneye-ilk-adimini-saglam-at" data-an="1794259876">Efsaneye ilk adımını sağlam at.<small>10 Kasım 2026</small></a>
+                      <a href="/ornek/metin2oyuncular/rehber/canavar-kart-sistemi" data-an="1794173476">Canavar Kart Sistemi nasıl çalışır?<small>9 Kasım 2026</small></a>
+                      <a href="/ornek/metin2oyuncular/rehber/orumcek-zindanlari-rehberi" data-an="1794173476">Örümcek zindanları rehberi<small>9 Kasım 2026</small></a>
+                      <a href="/ornek/metin2oyuncular/rehber/krali-yakala-etkinligi" data-an="1794173476">Kralı Yakala etkinliği: puan ve ödül rehberi<small>9 Kasım 2026</small></a>
+                      <a href="/ornek/metin2oyuncular/rehber/meleyin-ini-rehberi" data-an="1794173476">Meley&#039;in İni: aşama aşama lonca zindanı rehberi<small>9 Kasım 2026</small></a>
+                      <a href="/ornek/metin2oyuncular/rehber/zodyak-silahlari" data-an="1794173476">Zodyak Silahları: özellikleri, artıları ve yükseltme süreci<small>9 Kasım 2026</small></a>
+                  </div>
+      </div>
       <button class="kare" id="tema" type="button" aria-label="Gündüz ya da gece görünümü"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg></button>
       <button class="kare mobil-ac" id="menu-ac" type="button" aria-label="Menü" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
@@ -122,7 +140,7 @@
     <div class="etiket"><b>Rehber</b><span>Karakterler</span></div>
     <h3><a href="/ornek/metin2oyuncular/rehber/hangi-karakter-sana-uygun">Hangi karakter sana uygun? Tüm karakterlerin artı ve eksileri</a></h3>
     <p>Beş sınıfın yolları, becerileri ve silahları.</p>
-    <div class="kart-alt"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span>3 dk okuma</span><span class="kart-tarih">8 Kasım 2026</span><i></i><button class="kaydet" type="button" data-kaydet="hangi-karakter-sana-uygun" aria-label="Kaydet"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v16l-5-3.5L7 20z"/></svg></button></div>
+    <div class="kart-alt"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span>3 dk okuma</span><span class="kart-tarih">9 Kasım 2026</span><i></i><button class="kaydet" type="button" data-kaydet="hangi-karakter-sana-uygun" aria-label="Kaydet"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v16l-5-3.5L7 20z"/></svg></button></div>
   </div>
 </article>
 <article class="kart" data-tur="rehber">
@@ -131,7 +149,7 @@
     <div class="etiket"><b>Rehber</b><span>Karakter rehberi</span></div>
     <h3><a href="/ornek/metin2oyuncular/rehber/sura-icin-beceri-ve-efsun-rehberi">Sura için beceri ve efsun rehberi</a></h3>
     <p>Büyülü Silah ve Kara Büyü Sura için beceriler ve efsun seçimi.</p>
-    <div class="kart-alt"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span>2 dk okuma</span><span class="kart-tarih">8 Kasım 2026</span><i></i><button class="kaydet" type="button" data-kaydet="sura-icin-beceri-ve-efsun-rehberi" aria-label="Kaydet"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v16l-5-3.5L7 20z"/></svg></button></div>
+    <div class="kart-alt"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span>2 dk okuma</span><span class="kart-tarih">9 Kasım 2026</span><i></i><button class="kaydet" type="button" data-kaydet="sura-icin-beceri-ve-efsun-rehberi" aria-label="Kaydet"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v16l-5-3.5L7 20z"/></svg></button></div>
   </div>
 </article>
 </div>
@@ -159,9 +177,10 @@
       <h4>Site</h4>
       <a href="/ornek/metin2oyuncular/sayfa/gizlilik-politikasi">Gizlilik Politikası</a><a href="/ornek/metin2oyuncular/sayfa/hakkimizda">Hakkımızda</a><a href="/ornek/metin2oyuncular/sayfa/kullanim-sartlari">Kullanım Şartları</a><a href="/ornek/metin2oyuncular/sayfa/reklam">Reklam</a><a href="/ornek/metin2oyuncular/sayfa/iletisim">İletişim</a>    </div>
     <div>
-      <h4>Haftalık özet</h4>
-      <span class="ozet-not">Yeni rehberler ve etkinlikler her pazartesi e-postanda.</span>
+      <h4>Abone ol</h4>
+      <span class="ozet-not">Yeni rehber ve etkinliklerden e-postayla haberdar ol.</span>
       <form class="ozet-form" id="ozet-form" action="/ornek/metin2oyuncular/abone" method="post"><input type="email" name="eposta" required placeholder="E-posta adresin" aria-label="E-posta adresin"><button type="submit">Abone ol</button></form>
+      <label class="ozet-onay"><input type="checkbox" name="onay" value="1" form="ozet-form" required><span>E-posta almayı kabul ediyorum. <a href="/ornek/metin2oyuncular/sayfa/gizlilik-politikasi">Gizlilik</a></span></label>
       <span class="ozet-not" id="ozet-sonuc" role="status"></span>
     </div>
   </div>

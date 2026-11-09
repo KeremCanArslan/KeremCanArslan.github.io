@@ -244,6 +244,19 @@ li.bitti{opacity:.5}
 .yazi table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:16px}
 .yazi th,.yazi td{border:1px solid var(--cizgi2);padding:9px 12px;text-align:left}
 .yazi th{background:var(--zemin2);font-weight:700}
+.bildirim{position:relative;display:flex}
+.bildirim-sayi{position:absolute;top:4px;right:4px;min-width:17px;height:17px;padding:0 4px;background:var(--altin);color:var(--altin-uzeri);font-size:11.5px;font-weight:700;line-height:17px;text-align:center}
+.bildirim-kutu{position:absolute;right:0;top:calc(100% + 6px);width:340px;background:var(--kutu);border:1px solid var(--cizgi2);z-index:60}
+.bildirim-kutu strong{display:block;padding:12px 14px;font:700 17px/1.2 var(--baslik);border-bottom:1px solid var(--cizgi)}
+.bildirim-kutu a{display:block;padding:10px 14px;border-bottom:1px solid var(--cizgi);font-weight:600;line-height:1.3;color:var(--yazi)}
+.bildirim-kutu a:last-child{border-bottom:0}
+.bildirim-kutu a:hover{background:var(--zemin)}
+.bildirim-kutu a.yeni{box-shadow:inset 2px 0 0 var(--altin)}
+.bildirim-kutu small{display:block;color:var(--soluk);font-weight:500;font-size:13px;margin-top:2px}
+@media (max-width:620px){.bildirim{position:static}.bildirim-kutu{left:16px;right:16px;top:auto;width:auto;margin-top:50px}}
+.ozet-onay{display:flex;align-items:flex-start;gap:7px;color:var(--soluk);font-size:13.5px;line-height:1.35;margin-top:8px}
+.ozet-onay input{flex:none;margin-top:2px;accent-color:var(--altin)}
+.ozet-onay a{color:var(--altin);text-decoration:underline}
 .yazi .kaynak{color:var(--soluk);font-size:15px;margin-top:30px}
 @media (max-width:620px){.yazi table{display:block;overflow-x:auto;font-size:14.5px}.yazi th,.yazi td{padding:7px 9px}}
 .afis{width:100%;border:1px solid var(--cizgi2);margin-bottom:15px}
@@ -491,7 +504,7 @@ form.wiki-ara button{color:var(--altin);font-weight:700;padding:0 4px}
 .sim-sonuc h3{font:700 18px var(--baslik);margin:14px 0 8px}
 
 /* Araçlar */
-.arac{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:22px;align-items:start;margin-bottom:28px}
+div.arac{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:22px;align-items:start;margin-bottom:28px}
 .arac-yan{border:1px solid var(--cizgi2);background:var(--zemin2);padding:16px}
 .arac-yan h3{font:700 18px/1.25 var(--baslik);margin:16px 0 7px}
 .arac-sayac{display:flex;gap:1px;background:var(--cizgi);border:1px solid var(--cizgi)}
@@ -580,7 +593,7 @@ a.mob-ad:hover{color:var(--altin-ac)}
 .cam-alt summary small{color:var(--soluk);font-weight:400;margin-left:4px}
 .cam-alt .wiki-liste{padding-bottom:13px}
 @media (max-width:980px){
-  .arac{grid-template-columns:minmax(0,1fr)}
+  div.arac{grid-template-columns:minmax(0,1fr)}
   .sim{grid-template-columns:repeat(2,minmax(0,1fr))}
   .sim .dugme{grid-column:1/-1}
 }
