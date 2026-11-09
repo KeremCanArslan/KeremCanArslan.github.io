@@ -467,9 +467,9 @@
   let topluBekleyen = null;
   const xlsxYukle = () => window.XLSX ? Promise.resolve() : new Promise((ok, no) => {
     const s = document.createElement('script');
-    s.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
+    s.src = 'xlsx.full.min.js';
     s.onload = ok;
-    s.onerror = () => no(new Error('Excel okuyucu yüklenemedi, bağlantınızı kontrol edin.'));
+    s.onerror = () => no(new Error('Excel okuyucu yüklenemedi, sayfayı yenileyip tekrar deneyin.'));
     document.head.append(s);
   });
   function sayiCoz(v) {
