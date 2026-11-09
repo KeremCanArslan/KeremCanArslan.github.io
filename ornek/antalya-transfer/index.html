@@ -67,7 +67,7 @@ html{scroll-padding-top:84px}
 .yuvarlak{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;flex:none;transition:transform .2s}
 .yuvarlak:hover{transform:translateY(-2px)}
 .yuvarlak svg{width:22px;height:22px}
-.wa{background:#25d366}.tg{background:#2aa8e8}
+.wa{background:#25d366}.tg{background:#2aa8e8}.ms{background:#8b3dff}
 .destek{display:flex;align-items:center;gap:9px;margin-left:10px}
 .destek .ic{width:34px;height:34px;stroke-width:1.4}
 .destek b{font-size:21px;line-height:1;font-weight:700;display:block}
@@ -981,7 +981,7 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
       <a class="hz" href="#" id="hzTel"><svg class="ic"><use href="#i-telefon"/></svg><span id="hzTelYazi"></span></a>
       <div class="hz-sag">
         <a class="hz" href="#" data-wa aria-label="WhatsApp"><svg class="ic"><use href="#i-wa"/></svg></a>
-        <a class="hz" href="#" data-tg aria-label="Telegram"><svg class="ic" style="stroke:none"><use href="#i-tg"/></svg></a>
+        <a class="hz" href="#" data-ms aria-label="Messenger"><svg class="ic"><use href="#i-ms"/></svg></a>
         <div class="dil" id="hzDil">
           <button class="dil-btn" type="button" aria-haspopup="true"><span id="hzDilKod">TR</span><svg class="ic"><use href="#i-asagi"/></svg></button>
           <div class="dil-liste" id="hzDilListe"></div>
@@ -1013,7 +1013,7 @@ textarea.p-girdi{resize:vertical;min-height:62px;line-height:1.4}
         <div class="dil-liste" id="dilListe"></div>
       </div>
       <a class="yuvarlak wa" href="#" data-wa aria-label="WhatsApp"><svg style="color:#fff"><use href="#i-wa"/></svg></a>
-      <a class="yuvarlak tg" href="#" data-tg aria-label="Telegram"><svg style="color:#fff"><use href="#i-tg"/></svg></a>
+      <a class="yuvarlak ms" href="#" data-ms aria-label="Messenger"><svg class="ic" style="color:#fff"><use href="#i-ms"/></svg></a>
       <div class="destek"><svg class="ic"><use href="#i-kulaklik"/></svg><div><b>24/7</b><small data-t="support">Müşteri Desteği</small></div></div>
       <button class="burger" type="button" id="burger" aria-label="Menü"><svg class="ic"><use href="#i-menu"/></svg></button>
     </div>
@@ -2678,7 +2678,7 @@ document.addEventListener('click', e => {
   if (e.target.closest('[data-tursab]')) tursabAc();
   if (e.target.closest('[data-sss]')) { e.preventDefault(); $('#cekmece').classList.remove('acik'); sssAc(); }
   if (e.target.closest('[data-menu-ac]')) { e.preventDefault(); $('#cekmece').classList.add('acik'); }
-  if (e.target.closest('#altMs[href="#"],[data-sos][href="#"]')) { e.preventDefault(); tost(t('link_demo')); }
+  if (e.target.closest('#altMs[href="#"],[data-ms][href="#"],[data-sos][href="#"]')) { e.preventDefault(); tost(t('link_demo')); }
   const dd = e.target.closest('[data-dil]'); if (dd) { dilSec(dd.dataset.dil); $('#cekmece').classList.remove('acik'); }
   const dp = e.target.closest('[data-pb]'); if (dp) { pbSec(dp.dataset.pb); $('#cekmece').classList.remove('acik'); }
   if (e.target.closest('a[href="#filo"]') && $('#filo').hidden) { filoAcik = true; aracCiz(); }
@@ -2712,7 +2712,7 @@ function iletisimCiz() {
   $$('[data-tg]').forEach(e => { e.href = a.telegram ? 'https://t.me/' + a.telegram.replace(/^@/, '') : '#'; if (a.telegram) { e.target = '_blank'; e.rel = 'noopener'; } });
   $('#altTel').hidden = !a.telefon; $('#altTel').href = 'tel:' + a.telefon.replace(/[^\d+]/g, ''); $('#altTel').title = a.telefon; $('#altTel').setAttribute('aria-label', t('phone_l') + ' ' + a.telefon);
   const ms = (a.messenger || '').trim();
-  disBag($('#altMs'), ms ? (/^https?:\/\//i.test(ms) ? ms : 'https://m.me/' + ms.replace(/^@/, '')) : '');
+  $$('#altMs,[data-ms]').forEach(e => disBag(e, ms ? (/^https?:\/\//i.test(ms) ? ms : 'https://m.me/' + ms.replace(/^@/, '')) : ''));
   $$('[data-sos]').forEach(e => { const u = (a[e.dataset.sos] || '').trim(); disBag(e, u ? (/^https?:\/\//i.test(u) ? u : 'https://' + u.replace(/^\/+/, '')) : ''); });
   $('#tursabNo').textContent = a.tursab ? t('tursab_no') + ' ' + a.tursab : '';
   $('#altTelif').textContent = t('rights', {y:new Date().getFullYear()});
