@@ -31,7 +31,7 @@
   // Yardımcılar
   const e = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const r2 = n => Math.round((+n + Number.EPSILON) * 100) / 100;
-  const TL = n => '₺' + new Intl.NumberFormat('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n || 0);
+  const TL = n => new Intl.NumberFormat('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n || 0) + ' TL';
   const tarih = t => new Date(t).toLocaleString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
   const kucuk = s => String(s || '').toLocaleLowerCase('tr-TR');
   const baslikAnah = s => kucuk(s).replace(/ç/g, 'c').replace(/ğ/g, 'g').replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ş/g, 's').replace(/ü/g, 'u').replace(/[^a-z0-9]/g, '');
@@ -76,9 +76,9 @@
     const d = {
       siteler, kategoriler: [...new Set(siteler.map(s => s.kategori))],
       uyeler: [
-        { id: 1, ad: 'Ayşe Demir', eposta: 'uye@example.com', sifre, bakiye: 0, engelli: false, kayit: simdi - 40 * gun },
-        { id: 2, ad: 'Mehmet Kaya', eposta: 'mehmet@example.com', sifre, bakiye: 0, engelli: false, kayit: simdi - 22 * gun },
-        { id: 3, ad: 'Elif Şahin', eposta: 'elif@example.com', sifre, bakiye: 0, engelli: false, kayit: simdi - 6 * gun }
+        { id: 1, ad: 'Burak Tosun', eposta: 'uye@example.com', sifre, bakiye: 0, engelli: false, kayit: simdi - 40 * gun },
+        { id: 2, ad: 'Nazlı Karabulut', eposta: 'nazli.karabulut@example.com', sifre, bakiye: 0, engelli: false, kayit: simdi - 22 * gun },
+        { id: 3, ad: 'Gökhan Çetinkaya', eposta: 'gokhan@example.com', sifre, bakiye: 0, engelli: false, kayit: simdi - 6 * gun }
       ],
       yonetici: { ad: 'Yönetici', eposta: 'yonetici@example.com', sifre },
       siparisler: [], talepler: [], hareketler: [], kayitlar: [], sifirlama: {}, sira: 10421, talepSira: 301, siteSira: siteler.length + 1
@@ -94,13 +94,13 @@
     d.talepSira = 303;
     const uygun = siteler.filter(s => s.fiyat >= 50 && s.fiyat <= 600);
     const sip = (uid, i, durum, gunOnce, kelime, hedef, odendi = true) => {
-      const s = uygun[i], t = simdi - gunOnce * gun, id = 'HA-' + (d.sira++), tutar = tutarKdv(s.fiyat);
+      const s = uygun[i], t = simdi - gunOnce * gun, id = String(d.sira++), tutar = tutarKdv(s.fiyat);
       d.siparisler.unshift({
         id, uid, siteId: s.id, site: s.ad, kelime, hedef, icerik: `${kelime} hakkında hazırlanan tanıtım yazısı metni burada görünür.`,
         fiyat: s.fiyat, tutar, durum, link: ['Yayında', 'Tamamlandı'].includes(durum) ? `https://${s.ad}/haber/ornek-tanitim-yazisi` : '',
         odendi, iade: false, t
       });
-      if (odendi) hareket(d, uid, -tutar, `${id} sipariş ödemesi`, t);
+      if (odendi) hareket(d, uid, -tutar, `${id} nolu sipariş ödemesi`, t);
     };
     sip(1, 3, 'Tamamlandı', 18, 'kurumsal web tasarım', 'https://example.com/web-tasarim');
     sip(2, 11, 'Tamamlandı', 12, 'ikinci el araba', 'https://example.org/arac');
@@ -108,7 +108,7 @@
     sip(2, 34, 'Hazırlanıyor', 2, 'oto kiralama', 'https://example.org/kiralama');
     sip(1, 47, 'Hazırlanıyor', 1, 'tatil köyü', 'https://example.com/tatil');
     sip(3, 58, 'Ödeme Bekliyor', 0.2, 'online eğitim', 'https://example.net/egitim', false);
-    d.kayitlar.unshift({ t: simdi - 18 * gun, kim: 'Yönetici', metin: `${d.siparisler[5].id} durumu Tamamlandı yapıldı` });
+    d.kayitlar.unshift({ t: simdi - 18 * gun, kim: 'Yönetici', metin: `${d.siparisler[5].id} nolu siparişin durumu Tamamlandı yapıldı` });
     return d;
   }
 
@@ -142,18 +142,20 @@
   function kabuk(ic, acik = '') {
     const u = uye();
     const n = sepetKalemleri().length;
+    const { q } = coz();
     return `${ornekSerit()}
     <div class="ust"><div class="kap">
-      <a class="logo" href="#/"><b>H.</b><span><strong>hadra<i>ajans</i></strong><small>DİJİTAL MEDYA PAZARYERİ</small></span></a>
-      <div class="satir">
-        <a class="dg" href="${u ? '#/hesabim' : '#/giris'}"><i class="fa-regular fa-user"></i> ${u ? e(u.ad.split(' ')[0]) + ' · ' + TL(u.bakiye) : 'Giriş / Kayıt'}</a>
-        <a class="dg ana" href="#/sepet"><i class="fa-solid fa-cart-shopping"></i> Sepet ${n}</a>
+      <a class="logo" href="#/"><strong>hadra<i>ajans</i></strong></a>
+      <form class="ust-arama" data-form="ara"><input name="q" value="${e(q.q || '')}" aria-label="Site ara" placeholder="Site adıyla arayın"><button class="dg ana">Ara</button></form>
+      <div class="ust-bag">
+        <a href="${u ? '#/hesabim' : '#/giris'}">${u ? `${e(u.ad.split(' ')[0])} (${TL(u.bakiye)})` : 'Giriş yap / Üye ol'}</a>
+        <a class="sepet-bag" href="#/sepet">Sepet (${n})</a>
       </div>
     </div></div>
     <nav class="menu" aria-label="Ana menü"><div class="kap">
       <a href="#/" class="${acik === 'ana' ? 'acik' : ''}">Ana Sayfa</a>
-      <a href="#/siteler" class="${acik === 'siteler' ? 'acik' : ''}">Tüm Siteler</a>
-      <a href="${u ? '#/hesabim' : '#/giris'}" class="${acik === 'hesap' ? 'acik' : ''}">Hesabım</a>
+      <a href="#/siteler" class="${acik === 'siteler' && !q.k ? 'acik' : ''}">Tüm Siteler</a>
+      ${db.kategoriler.map(k => `<a href="${hq('siteler', { k })}" class="${acik === 'siteler' && q.k === k ? 'acik' : ''}">${e(k)}</a>`).join('')}
     </div></nav>
     <main class="kap govde bosluk">${ic}</main>
     <footer class="alt"><div class="kap">Bu sayfa satış yapmaz, gösterim amaçlıdır.</div></footer>`;
@@ -161,23 +163,18 @@
 
   const ekleDugme = s => {
     const var_ = sepet.some(k => k.id === s.id);
-    return `<button class="ekle ${var_ ? 'var' : ''}" data-do="sepeteEkle" data-id="${s.id}" aria-label="${e(s.ad)} sepete ekle"><i class="fa-solid ${var_ ? 'fa-check' : 'fa-plus'}"></i></button>`;
+    return `<button class="ekle ${var_ ? 'var' : ''}" data-do="sepeteEkle" data-id="${s.id}" aria-label="${e(s.ad)} sepete ekle">${var_ ? 'Sepette' : 'Sepete ekle'}</button>`;
   };
   const fiyatHtml = s => `<div class="fiyat">${s.eski ? `<s>${TL(s.eski)}</s>` : ''}${TL(s.fiyat)} <span>+KDV</span></div>`;
 
   // Üye tarafı
   function vAna() {
     const aktif = db.siteler.filter(s => s.aktif);
-    const blok = (bas, ikon, tip) => `<section class="kart">
-      <header><h2><i class="fa-solid ${ikon}" style="color:var(--y)"></i> ${bas}</h2><a class="dg kck" href="${hq('siteler', { v: tip })}">Tümü</a></header>
-      <ol>${aktif.filter(s => s.vitrin === tip).slice(0, 7).map((s, i) => `<li><span class="no">${String(i + 1).padStart(2, '0')}</span><span class="ad">${e(s.ad)}</span>${fiyatHtml(s)}${ekleDugme(s)}</li>`).join('') || '<li class="bos">Bu bölümde site yok</li>'}</ol>
+    const blok = (bas, tip) => `<section class="kart">
+      <header><h2>${bas}</h2><a class="kucuk" href="${hq('siteler', { v: tip })}">Tümünü gör</a></header>
+      <ul>${aktif.filter(s => s.vitrin === tip).slice(0, 10).map(s => `<li><span class="ad">${e(s.ad)}<small>DA ${e(s.da)}, PA ${e(s.pa)}, ${e(s.baglanti)}</small></span>${fiyatHtml(s)}${ekleDugme(s)}</li>`).join('') || '<li class="bos">Bu bölümde site yok</li>'}</ul>
     </section>`;
-    return kabuk(`
-      <section class="kart">
-        <form class="arama" data-form="ara"><input name="q" aria-label="Site ara" placeholder="Hangi sitede yayın yapmak istersiniz?"><button class="dg ana">Site Ara</button></form>
-        <div class="etiketler"><span class="soluk kucuk">Kategoriler</span>${db.kategoriler.map(k => `<a class="etiket" href="${hq('siteler', { k })}">${e(k)}</a>`).join('')}</div>
-      </section>
-      <div class="vitrin">${blok('Yeni Eklenenler', 'fa-star', 'Yeni Eklenen')}${blok('İndirimdekiler', 'fa-bolt', 'İndirimde')}${blok('En Çok Satanlar', 'fa-fire', 'Çok Satan')}</div>`, 'ana');
+    return kabuk(`<div class="vitrin">${blok('Yeni Eklenenler', 'Yeni Eklenen')}${blok('İndirimdekiler', 'İndirimde')}${blok('En Çok Satanlar', 'Çok Satan')}</div>`, 'ana');
   }
 
   function vSiteler(q) {
@@ -190,27 +187,36 @@
     const adim = 25, son = Math.max(1, Math.ceil(l.length / adim)), syf = Math.min(son, Math.max(1, +sf || 1));
     const gor = l.slice((syf - 1) * adim, syf * adim);
     const sec = (ad, ops, val) => `<select name="${ad}" aria-label="${ad}">${ops.map(([d, m]) => `<option value="${e(d)}" ${d === val ? 'selected' : ''}>${e(m)}</option>`).join('')}</select>`;
-    return kabuk(`
-      <div class="satir ara"><h1>Tüm Siteler</h1><span class="soluk kucuk">${l.length} site</span></div>
+    const katSay = c => db.siteler.filter(s => s.aktif && s.kategori === c).length;
+    return kabuk(`<div class="liste-yer">
+      <aside class="kart"><h2>Kategori</h2><ul class="kat-list">
+        <li><a class="${k ? '' : 'acik'}" href="${hq('siteler', { q: ara, v, sira })}">Tümü</a></li>
+        ${db.kategoriler.map(c => `<li><a class="${k === c ? 'acik' : ''}" href="${hq('siteler', { q: ara, k: c, v, sira })}">${e(c)} <span>(${katSay(c)})</span></a></li>`).join('')}
+      </ul></aside>
       <section class="kart bosluk">
+        <div class="satir ara"><h2>${e(k || v || 'Tüm Siteler')}</h2><span class="soluk kucuk">${l.length} site</span></div>
         <form class="filtre" data-form="filtre" data-otomatik>
-          <div class="tam"><input name="q" value="${e(ara)}" placeholder="Site adı yazın" aria-label="Site adı"></div>
-          ${sec('k', [['', 'Tüm kategoriler'], ...db.kategoriler.map(c => [c, c])], k)}
+          <input name="q" value="${e(ara)}" placeholder="Site adı" aria-label="Site adı">
           ${sec('sira', [['', 'Önerilen sıra'], ['artan', 'Fiyat artan'], ['azalan', 'Fiyat azalan'], ['da', 'DA yüksek'], ['pa', 'PA yüksek']], sira)}
-          <input type="hidden" name="v" value="${e(v)}"><button class="dg ana">Filtrele</button>
+          <input type="hidden" name="k" value="${e(k)}"><input type="hidden" name="v" value="${e(v)}"><button class="dg ana">Filtrele</button>
         </form>
         ${gor.length ? `<table class="kirk"><thead><tr><th>Site</th><th>Kategori</th><th>DA</th><th>PA</th><th>Site yaşı</th><th>Bağlantı</th><th>News</th><th class="sag">Fiyat</th><th></th></tr></thead><tbody>
         ${gor.map(s => `<tr><td class="ad" data-l="Site">${e(s.ad)}</td><td data-l="Kategori">${e(s.kategori)}</td><td data-l="DA">${e(s.da)}</td><td data-l="PA">${e(s.pa)}</td><td data-l="Site yaşı">${e(s.yas)}</td><td data-l="Bağlantı">${e(s.baglanti)}</td><td data-l="News">${e(s.news)}</td><td data-l="Fiyat">${fiyatHtml(s)}</td><td data-l="">${ekleDugme(s)}</td></tr>`).join('')}
         </tbody></table>` : '<p class="bos">Bu aramaya uygun site bulunamadı.</p>'}
         ${sayfala(syf, son, n => hq('siteler', { q: ara, k, v, sira, s: n }))}
-      </section>`, 'siteler');
+      </section></div>`, 'siteler');
   }
 
   function sayfala(syf, son, h) {
     if (son <= 1) return '';
-    return `<nav class="sayfa" aria-label="Sayfalar">
-      ${syf > 1 ? `<a class="dg kck" href="${h(syf - 1)}">Önceki</a>` : ''}<span class="soluk">${syf} / ${son}</span>${syf < son ? `<a class="dg kck" href="${h(syf + 1)}">Sonraki</a>` : ''}
-    </nav>`;
+    const nolar = [...new Set([1, syf - 1, syf, syf + 1, son])].filter(n => n >= 1 && n <= son).sort((a, b) => a - b);
+    let onceki = 0, html = '';
+    for (const n of nolar) {
+      if (n - onceki > 1) html += '<span class="soluk">...</span>';
+      html += n === syf ? `<b aria-current="page">${n}</b>` : `<a href="${h(n)}">${n}</a>`;
+      onceki = n;
+    }
+    return `<nav class="sayfa" aria-label="Sayfalar">${html}</nav>`;
   }
 
   const girisKutu = (bas, ic) => kabuk(`<section class="kart dar bosluk"><h1>${bas}</h1>${ic}</section>`, 'hesap');
@@ -269,7 +275,7 @@
         <div><span>Ara toplam</span><span>${TL(ara)}</span></div><div><span>KDV (%${KDV})</span><span>${TL(r2(toplam - ara))}</span></div><div class="son"><span>Toplam</span><span>${TL(toplam)}</span></div>
         ${u ? `<div><span class="soluk">Bakiyeniz</span><span>${TL(u.bakiye)}</span></div>` : ''}</div>
         <div id="sepetHata"></div>
-        <button class="dg ana" data-do="ode">${u ? 'Bakiye ile öde' : 'Giriş yapıp devam et'}</button>
+        <button class="dg turuncu" data-do="ode">${u ? 'Bakiye ile öde' : 'Giriş yapıp devam et'}</button>
       </aside></div>`);
   }
 
@@ -315,17 +321,15 @@
 
   // Yönetim paneli
   function yonKabuk(ic, acik) {
-    const m = [['', 'Özet', 'fa-house'], ['siparisler', 'Siparişler', 'fa-list-check', bekleyenSiparis()], ['talepler', 'Bakiye Talepleri', 'fa-wallet', bekleyenTalep()], ['siteler', 'Siteler', 'fa-globe'], ['kategoriler', 'Kategoriler', 'fa-tags'], ['uyeler', 'Üyeler', 'fa-users'], ['kayitlar', 'İşlem Kayıtları', 'fa-clock-rotate-left']];
-    return `<div class="yonetim"><nav class="yan-menu" aria-label="Yönetim menüsü">
-      <a class="logo" href="#/yonetim"><b>H.</b><div><strong>hadra<i>ajans</i></strong><small>YÖNETİM PANELİ</small></div></a>
-      ${m.map(([y, t, i, n]) => `<a class="git ${y === acik ? 'acik' : ''}" href="#/yonetim${y ? '/' + y : ''}"><i class="fa-solid ${i}"></i>${t}${n ? `<span class="say">${n}</span>` : ''}</a>`).join('')}
-      <div class="yan-alt"><a class="git" href="#/"><i class="fa-solid fa-arrow-up-right-from-square"></i>Siteyi aç</a><a class="git" href="#" data-do="yonCikis"><i class="fa-solid fa-right-from-bracket"></i>Çıkış</a></div>
-    </nav><main class="yon-govde">${ic}</main></div>`;
+    const m = [['', 'Genel Durum'], ['siparisler', 'Siparişler', bekleyenSiparis()], ['talepler', 'Bakiye Talepleri', bekleyenTalep()], ['siteler', 'Siteler'], ['kategoriler', 'Kategoriler'], ['uyeler', 'Üyeler'], ['kayitlar', 'İşlem Kayıtları']];
+    return `<div class="yon-ust"><a class="logo" href="#/yonetim"><strong>hadra<i>ajans</i></strong><small>Yönetim Paneli</small></a>
+      <div class="ust-bag"><a href="#/">Siteyi aç</a><a href="#" data-do="yonCikis">Çıkış</a></div></div>
+    <nav class="yon-menu" aria-label="Yönetim menüsü">${m.map(([y, t, n]) => `<a class="${y === acik ? 'acik' : ''}" href="#/yonetim${y ? '/' + y : ''}">${t}${n ? ` (${n})` : ''}</a>`).join('')}</nav>
+    <main class="yon-govde">${ic}</main>`;
   }
 
   function yGiris() {
-    return `${ornekSerit()}<main class="kap govde"><section class="kart dar bosluk">
-      <a class="logo" href="#/"><b>H.</b><span><strong>hadra<i>ajans</i></strong><small>YÖNETİM PANELİ</small></span></a>
+    return `${ornekSerit()}<div class="yon-ust"><a class="logo" href="#/"><strong>hadra<i>ajans</i></strong><small>Yönetim Paneli</small></a></div><main class="kap govde"><section class="kart dar bosluk">
       <h1>Yönetici girişi</h1>
       <div class="bilgi">Örnek yönetici: yonetici@example.com, şifre 123456. <button type="button" class="dg kck" data-do="ornekYonetici" style="margin-top:6px">Bu hesapla gir</button></div>
       <form class="bosluk" data-form="yGiris">
@@ -340,13 +344,16 @@
   const yOzet = () => {
     const satis = db.siparisler.filter(o => o.odendi && !o.iade).reduce((t, o) => t + o.tutar, 0);
     const hazir = db.siparisler.filter(o => o.durum === 'Hazırlanıyor').length, odeme = db.siparisler.filter(o => o.durum === 'Ödeme Bekliyor').length;
-    return yonKabuk(`<h1>Özet</h1>
-      <section class="kart ozet-satir"><div><span>Toplam satış</span><b>${TL(satis)}</b></div><div><span>Sipariş</span><b>${db.siparisler.length}</b></div><div><span>Üye</span><b>${db.uyeler.length}</b></div><div><span>Aktif site</span><b>${db.siteler.filter(s => s.aktif).length}</b></div></section>
-      <section class="kart bosluk"><h2>Bekleyen işler</h2><div class="yapilacak">
-        <a href="${hq('yonetim/siparisler', { d: 'Hazırlanıyor' })}"><span>Yayınlanacak sipariş</span><b>${hazir}</b></a>
-        <a href="${hq('yonetim/siparisler', { d: 'Ödeme Bekliyor' })}"><span>Ödeme bekleyen sipariş</span><b>${odeme}</b></a>
-        <a href="#/yonetim/talepler"><span>Onay bekleyen bakiye talebi</span><b>${bekleyenTalep()}</b></a>
-      </div></section>
+    const satir = (m, n, h) => `<tr><td>${h ? `<a href="${h}">${m}</a>` : m}</td><td class="sag"><b>${n}</b></td></tr>`;
+    return yonKabuk(`<div class="iki">
+      <section class="kart"><h2>Bekleyen işler</h2><table><tbody>
+        ${satir('Yayınlanacak sipariş', hazir, hq('yonetim/siparisler', { d: 'Hazırlanıyor' }))}
+        ${satir('Ödeme bekleyen sipariş', odeme, hq('yonetim/siparisler', { d: 'Ödeme Bekliyor' }))}
+        ${satir('Onay bekleyen bakiye talebi', bekleyenTalep(), '#/yonetim/talepler')}
+      </tbody></table></section>
+      <section class="kart"><h2>Toplamlar</h2><table><tbody>
+        ${satir('Toplam satış', TL(satis))}${satir('Sipariş sayısı', db.siparisler.length)}${satir('Üye sayısı', db.uyeler.length)}${satir('Aktif site', db.siteler.filter(s => s.aktif).length)}
+      </tbody></table></section></div>
       <section class="kart bosluk"><div class="satir ara"><h2>Son siparişler</h2><a class="kucuk" href="#/yonetim/siparisler">Tümü</a></div>${ySiparisTablo(db.siparisler.slice(0, 6))}</section>`, '');
   };
 
@@ -372,7 +379,7 @@
     const { q: ara = '', k = '', s: sf = '1' } = q, a = kucuk(ara);
     const l = db.siteler.filter(s => (!k || s.kategori === k) && (!a || kucuk(s.ad).includes(a)));
     const adim = 20, son = Math.max(1, Math.ceil(l.length / adim)), syf = Math.min(son, Math.max(1, +sf || 1));
-    return yonKabuk(`<div class="satir ara"><h1>Siteler</h1><div class="satir"><button class="dg" data-do="topluAc"><i class="fa-solid fa-file-arrow-up"></i> Excel ile yükle</button><button class="dg ana" data-do="siteAc"><i class="fa-solid fa-plus"></i> Site ekle</button></div></div>
+    return yonKabuk(`<div class="satir ara"><h1>Siteler</h1><div class="satir"><button class="dg" data-do="topluAc">Excel ile yükle</button><button class="dg ana" data-do="siteAc">Site ekle</button></div></div>
       <section class="kart bosluk"><form class="filtre uclu" data-form="ySiteFiltre" data-otomatik>
         <input name="q" value="${e(ara)}" placeholder="Site adı" aria-label="Site ara">
         <select name="k" aria-label="Kategori"><option value="">Tüm kategoriler</option>${db.kategoriler.map(c => `<option ${c === k ? 'selected' : ''}>${e(c)}</option>`).join('')}</select>
@@ -433,7 +440,7 @@
 
   function pencere(bas, ic) {
     $('#modal').innerHTML = `<div class="perde" data-perde><div class="pencere" role="dialog" aria-modal="true" aria-label="${e(bas)}">
-      <div class="bas"><h2>${e(bas)}</h2><button class="kapat" data-do="kapat" aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button></div>${ic}</div></div>`;
+      <div class="bas"><h2>${e(bas)}</h2><button class="kapat" data-do="kapat" aria-label="Kapat">&times;</button></div>${ic}</div></div>`;
     const ilk = $('#modal input:not([type=hidden]), #modal select, #modal textarea');
     if (ilk) ilk.focus();
   }
@@ -565,9 +572,9 @@
       const toplam = r2(k.reduce((t, x) => t + tutarKdv(x.s.fiyat), 0));
       if (u.bakiye < toplam) return goster(`<p class="hata">Bakiyeniz yetmiyor, ${TL(r2(toplam - u.bakiye))} eksik. <a href="#/hesabim/bakiye">Bakiye yükleyin</a></p>`);
       for (const { k: c, s } of k) {
-        const id = 'HA-' + (db.sira++), tutar = tutarKdv(s.fiyat);
+        const id = String(db.sira++), tutar = tutarKdv(s.fiyat);
         db.siparisler.unshift({ id, uid: u.id, siteId: s.id, site: s.ad, kelime: c.kelime.trim(), hedef: c.hedef.trim(), icerik: c.icerik.trim(), fiyat: s.fiyat, tutar, durum: 'Hazırlanıyor', link: '', odendi: true, iade: false, t: Date.now() });
-        hareket(db, u.id, -tutar, `${id} sipariş ödemesi`);
+        hareket(db, u.id, -tutar, `${id} nolu sipariş ödemesi`);
       }
       kaydet(); sepet = []; sepetKaydet();
       tost(`${k.length} sipariş oluşturuldu`);
@@ -631,7 +638,7 @@
       topluBekleyen = null;
       pencere('Excel ile site yükle', `<p class="soluk kucuk">Excel ya da CSV dosyası seçin. İlk satırda sütun adları olsun: Site, Kategori, Fiyat, Eski Fiyat, DA, PA, Site Yaşı, Bağlantı, News. Listede olan site güncellenir, olmayan eklenir.</p>
         <label class="al">Dosya<input type="file" id="topluDosya" accept=".xlsx,.xls,.csv"></label>
-        <button class="dg kck" data-do="ornekDosyaIndir" style="justify-self:start"><i class="fa-solid fa-download"></i> Örnek dosyayı indir</button>
+        <button class="dg kck" data-do="ornekDosyaIndir" style="justify-self:start">Örnek dosyayı indir</button>
         <div id="topluSonuc" class="bosluk"></div>`);
     },
     ornekDosyaIndir: ornekDosya,
@@ -744,11 +751,11 @@
       if (link && !urlMi(link)) return formHata(f, 'Yayın linki https:// ile başlamalı.');
       if (['Yayında', 'Tamamlandı'].includes(durum) && !link) return formHata(f, 'Bu durum için yayın linki gerekli.');
       if (durum === 'Ödeme Bekliyor' && o.odendi) return formHata(f, 'Ödemesi alınmış sipariş bu duruma dönemez.');
-      if (durum === 'İptal' && o.odendi && !o.iade) { o.iade = true; hareket(db, o.uid, o.tutar, `${o.id} iptal iadesi`); }
+      if (durum === 'İptal' && o.odendi && !o.iade) { o.iade = true; hareket(db, o.uid, o.tutar, `${o.id} nolu sipariş iadesi`); }
       if (!o.odendi && ['Hazırlanıyor', 'Yayında', 'Tamamlandı'].includes(durum)) o.odendi = true;
       const eski = o.durum;
       o.durum = durum; o.link = link;
-      kayit(`${o.id} durumu ${eski === durum ? durum + ' olarak kaydedildi' : eski + ' > ' + durum}`);
+      kayit(`${o.id} nolu siparişin durumu ${eski === durum ? durum + ' olarak kaydedildi' : eski + ' iken ' + durum + ' yapıldı'}`);
       kaydet(); kapat(); tost('Sipariş güncellendi'); ciz();
     },
     site(fd, f) {
