@@ -63,8 +63,8 @@
                       <a href="/ornek/metin2oyuncular/wiki/esyalar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 4 6 6-9 9H5v-6z"/><path d="m11 7 6 6"/></svg><span><b>Eşyalar</b><small>Silah, zırh, takı ve özellikleri</small></span></a>
                       <a href="/ornek/metin2oyuncular/wiki/haritalar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span><b>Haritalar</b><small>Bölgeler, seviye aralığı ve canavarlar</small></span></a>
                       <a href="/ornek/metin2oyuncular/wiki/sandiklar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v9H4z"/><path d="M4 12h16"/><path d="M10.5 12v2.5h3V12"/></svg><span><b>Sandıklar</b><small>İçerikler ve düşen eşyalar</small></span></a>
-                      <a href="/ornek/metin2oyuncular/wiki/npcler"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1-4.5 4-6.5 7.5-6.5s6.5 2 7.5 6.5"/></svg><span><b>NPC&#039;ler</b><small>Konumlar, görevler ve satılanlar</small></span></a>
-                      <a href="/ornek/metin2oyuncular/wiki/yukseltme"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 3 6 6 .9-4.5 4.3 1 6.3L12 17.5 6.5 20.500l1-6.300L3 9.900 9 9z"/></svg><span><b>Yükseltme</b><small>Artı basma şansı ve simülasyon</small></span></a>
+                      <a href="/ornek/metin2oyuncular/wiki/npcler"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1-4.5 4-6.5 7.5-6.5s6.5 2 7.5 6.5"/></svg><span><b>NPC&#039;ler</b><small>Konumlar ve verdikleri görevler</small></span></a>
+                      <a href="/ornek/metin2oyuncular/wiki/yukseltme"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 3 6 6 .9-4.5 4.3 1 6.3L12 17.5 6.5 20.500l1-6.300L3 9.900 9 9z"/></svg><span><b>Yükseltme</b><small>Artı tabloları, malzeme ve simülasyon</small></span></a>
                   </div>
       </div>
       <div class="acilir sagda">
@@ -97,11 +97,18 @@
 <main>
 <div class="sar">
   <header class="sayfa-bas">
-    <nav class="yol" aria-label="Sayfa yolu"><a href="/ornek/metin2oyuncular/">Ana Sayfa</a><span>/</span><a href="/ornek/metin2oyuncular/araclar">Araçlar</a><span>/</span><span>Meley Kronometresi</span></nav>
-    <h1 class="buyuk">Meley Kronometresi</h1>
-    <p>Zindanda yumurta ve heykel sürelerini takip et.</p>
+    <nav class="yol" aria-label="Sayfa yolu"><a href="/ornek/metin2oyuncular/">Ana Sayfa</a><span>/</span><a href="/ornek/metin2oyuncular/araclar">Araçlar</a><span>/</span><span>Mob ve Patron Nerede?</span></nav>
+    <h1 class="buyuk">Mob ve Patron Nerede?</h1>
+    <p>Canavar ya da patronu ara, hangi haritada çıktığını öğren.</p>
   </header>
-      <div class="bos-kutu"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.500" r="7.500"/><path d="M12 9v4.500l2.500 1.500M9.500 3h5M12 3v3"/></svg><h2>Bu araç hazırlanıyor</h2><p>Hesaplamalar resmî Metin2 Wiki verileriyle kontrol edildikten sonra burada açılacak.</p><a class="altin-bag" href="/ornek/metin2oyuncular/araclar">Diğer araçlara dön <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
+      <div id="mob" data-veri="/ornek/metin2oyuncular/araclar/mob-veri.json" data-taban="/ornek/metin2oyuncular/wiki/">
+  <div class="mob-arama">
+    <div class="wiki-ara"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><input id="mob-ara" type="search" placeholder="Canavar, patron ya da metin taşı adı yaz" aria-label="Canavar ara" autocomplete="off"></div>
+    <select id="mob-grup" aria-label="Grup"><option value="">Tümü</option><option>Canavar</option><option>Patron</option><option>Metin Taşı</option><option>Uyanış Canavarı</option></select>
+  </div>
+  <p class="wiki-not" id="mob-durum" role="status">Veriler yükleniyor.</p>
+  <div class="mob-sonuc" id="mob-sonuc"></div>
+</div>
     <div class="ad ad-bos ad-liste"><span>Reklam alanı</span><b>728x90</b></div></div>
 </main>
 <footer class="alt">
@@ -136,5 +143,5 @@
   </div>
 </footer>
 <script src="/ornek/metin2oyuncular/assets/site.js"></script>
-</body>
+<script src="/ornek/metin2oyuncular/assets/araclar.js"></script></body>
 </html>

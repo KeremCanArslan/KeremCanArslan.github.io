@@ -63,8 +63,8 @@
                       <a href="/ornek/metin2oyuncular/wiki/esyalar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 4 6 6-9 9H5v-6z"/><path d="m11 7 6 6"/></svg><span><b>Eşyalar</b><small>Silah, zırh, takı ve özellikleri</small></span></a>
                       <a href="/ornek/metin2oyuncular/wiki/haritalar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span><b>Haritalar</b><small>Bölgeler, seviye aralığı ve canavarlar</small></span></a>
                       <a href="/ornek/metin2oyuncular/wiki/sandiklar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v9H4z"/><path d="M4 12h16"/><path d="M10.5 12v2.5h3V12"/></svg><span><b>Sandıklar</b><small>İçerikler ve düşen eşyalar</small></span></a>
-                      <a href="/ornek/metin2oyuncular/wiki/npcler"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1-4.5 4-6.5 7.5-6.5s6.5 2 7.5 6.5"/></svg><span><b>NPC&#039;ler</b><small>Konumlar, görevler ve satılanlar</small></span></a>
-                      <a href="/ornek/metin2oyuncular/wiki/yukseltme"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 3 6 6 .9-4.5 4.3 1 6.3L12 17.5 6.5 20.500l1-6.300L3 9.900 9 9z"/></svg><span><b>Yükseltme</b><small>Artı basma şansı ve simülasyon</small></span></a>
+                      <a href="/ornek/metin2oyuncular/wiki/npcler"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1-4.5 4-6.5 7.5-6.5s6.5 2 7.5 6.5"/></svg><span><b>NPC&#039;ler</b><small>Konumlar ve verdikleri görevler</small></span></a>
+                      <a href="/ornek/metin2oyuncular/wiki/yukseltme"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 3 6 6 .9-4.5 4.3 1 6.3L12 17.5 6.5 20.500l1-6.300L3 9.900 9 9z"/></svg><span><b>Yükseltme</b><small>Artı tabloları, malzeme ve simülasyon</small></span></a>
                   </div>
       </div>
       <div class="acilir sagda">
@@ -101,7 +101,31 @@
     <h1 class="buyuk">Meley Kronometresi</h1>
     <p>Zindanda yumurta ve heykel sürelerini takip et.</p>
   </header>
-      <div class="bos-kutu"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.500" r="7.500"/><path d="M12 9v4.500l2.500 1.500M9.500 3h5M12 3v3"/></svg><h2>Bu araç hazırlanıyor</h2><p>Hesaplamalar resmî Metin2 Wiki verileriyle kontrol edildikten sonra burada açılacak.</p><a class="altin-bag" href="/ornek/metin2oyuncular/araclar">Diğer araçlara dön <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
+      <div class="arac" id="meley">
+  <div class="arac-ana">
+    <div class="meley-saat"><span id="meley-kalan">60:00</span><small>Zindan süresi</small></div>
+    <div class="arac-dugmeler">
+      <button class="dugme" id="meley-basla" type="button">Başlat</button>
+      <button class="arac-btn" id="meley-sifirla" type="button">Sıfırla</button>
+      <label class="arac-sec"><input type="checkbox" id="meley-ses" checked> Sesli uyarı</label>
+    </div>
+    <ol class="meley-asama" id="meley-asama">
+      <li><button type="button"><b>Heykeller %75</b><span>Dört heykelin canını %75'e indir.</span></button></li>
+      <li><button type="button"><b>Yumurtalar, heykeller %50</b><span>2 dakikada bir 4 yumurta çıkar. Yumurtalar kırılmadan heykele hasar gitmez.</span></button></li>
+      <li><button type="button"><b>İdall, heykeller %0,1</b><span>Her sütundan bir Ejderha Bekçisi İdall çıkar. Heykelleri %0,1'e indir.</span></button></li>
+      <li><button type="button"><b>Ejderha Ateşi Yüzüğü</b><span>Dört oyuncu 10 saniye içinde yüzüğü heykellere sürükler.</span></button></li>
+    </ol>
+  </div>
+  <aside class="arac-yan">
+    <h3>Yumurta sayacı</h3>
+    <div class="meley-kucuk"><b id="meley-yumurta">2:00</b><button class="arac-btn" id="meley-yumurta-btn" type="button">Başlat</button></div>
+    <h3>Yüzük sayacı</h3>
+    <div class="meley-kucuk"><b id="meley-yuzuk">10</b><button class="arac-btn" id="meley-yuzuk-btn" type="button">10 saniye</button></div>
+    <h3>Tekrar giriş</h3>
+    <div class="meley-kucuk"><b id="meley-bekleme">Hazır</b><button class="arac-btn" id="meley-bekleme-btn" type="button">Zindandan çıktım</button></div>
+    <p class="arac-not">Giriş için en az 90. seviye gerekir, zindana 4 ile 16 kişi girer. Süre 60 dakika, bekleme 3 saattir.</p>
+  </aside>
+</div>
     <div class="ad ad-bos ad-liste"><span>Reklam alanı</span><b>728x90</b></div></div>
 </main>
 <footer class="alt">
@@ -136,5 +160,5 @@
   </div>
 </footer>
 <script src="/ornek/metin2oyuncular/assets/site.js"></script>
-</body>
+<script src="/ornek/metin2oyuncular/assets/araclar.js"></script></body>
 </html>
