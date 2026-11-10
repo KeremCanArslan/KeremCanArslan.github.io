@@ -2,17 +2,2238 @@
 <html lang="tr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hadra Ajans | Dijital Yayın Pazaryeri</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{--ink:#17283a;--muted:#718093;--line:#e5eaf0;--blue:#2463e9;--bg:#f8fafb;--green:#168052}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px 'DM Sans',sans-serif;overflow-x:hidden}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+.wrap{max-width:1240px;margin:auto;padding:0 25px}
+
+/* Üst Duyuru ve İletişim Çubuğu */
+.top{background:#1b2c26;color:#d1dbd7;font-size:12px;padding:9px 0}
+.top .wrap,.head .wrap,.nav .wrap,.between,.row{display:flex;align-items:center;justify-content:space-between;gap:14px}
+
+.head{background:#fff;border-bottom:1px solid var(--line);position:relative;z-index:110}
+.head .wrap{min-height:78px}
+.logo{display:flex;align-items:center;gap:11px;cursor:pointer}
+.logo-mark{background:#168052;color:white;border-radius:10px;padding:10px 13px;font-size:18px;font-weight:800}
+.logo b{font:800 22px Manrope;letter-spacing:-0.8px;color:#17283a}
+.logo b span{color:#168052}
+.logo small{display:block;color:#8995a4;font-size:9.5px;letter-spacing:1.6px;font-weight:800;margin-top:2px}
+
+.btn{background:#168052;border:1px solid #168052;color:white;padding:10px 16px;border-radius:10px;font-weight:700;font-size:13px;transition:.2s}
+.btn:hover{background:#116442}
+.btn.light{background:white;border-color:var(--line);color:#35475b}
+.btn.light:hover{background:#f3f6f8}
+.btn.small{padding:8px 13px;font-size:12px}
+
+/* Mobil Hamburger Menü Butonu (Masaüstünde Gizli) */
+.menu-toggle{display:none;background:#fff;border:1px solid var(--line);color:#17283a;width:40px;height:40px;border-radius:10px;align-items:center;justify-content:center;font-size:20px;font-weight:700;padding:0;transition:.2s}
+.menu-toggle:hover{background:#f3f6f8;border-color:#168052;color:#168052}
+
+/* Navigasyon Menüsü */
+.nav{background:white;border-bottom:1px solid var(--line);position:relative;z-index:105}
+.nav .wrap{justify-content:flex-start;overflow:auto;gap:8px}
+.nav button{background:transparent;border:0;border-bottom:3px solid transparent;padding:15px 12px;white-space:nowrap;color:#4b5563;font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px}
+.nav button.active{color:#168052;border-bottom-color:#168052}
+.nav button.mobile-only-auth{display:none}
+.main{min-height:65vh;padding:26px 0 70px}
+
+/* Slider & Hero Alanı */
+.slider-container{position:relative;border-radius:22px;overflow:hidden;margin-top:6px;background:#fff;border:1px solid #e4eae8;padding:45px 50px;box-shadow:0 10px 30px rgba(0,0,0,0.03)}
+.slide{display:none;grid-template-columns:1.3fr 1fr;gap:40px;align-items:center;animation:fadeIn 0.5s ease}
+.slide.active{display:grid}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.slide-eyebrow{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#128c75;display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.slide h1{font:800 38px/1.2 Manrope;margin:0 0 14px;color:#1a2e35}
+.slide h1 em{font-style:normal;color:#168052}
+.slide p{color:#647484;line-height:1.7;margin:0 0 24px;font-size:14px;max-width:520px}
+.slide .btn{background:#168052;color:white;border-color:#168052;padding:12px 22px;border-radius:10px}
+.slide-right-card{background:linear-gradient(135deg,#0e6b5c,#199882);color:white;border-radius:20px;padding:45px 30px;text-align:center;box-shadow:0 15px 35px rgba(22,128,82,0.2);position:relative;overflow:hidden}
+.slide-right-card h3{font:800 24px Manrope;margin:12px 0 6px;letter-spacing:-0.5px}
+.slide-right-card p{color:#dcf3ee;font-size:12px;margin:0}
+.slide-right-card .lightning{font-size:32px;margin-bottom:5px;display:inline-block}
+
+/* Slider Kontrol Noktaları */
+.slider-dots{position:absolute;bottom:18px;right:45px;display:flex;gap:6px;align-items:center;background:#fff;padding:6px 12px;border-radius:20px;border:1px solid #e5e9ec}
+.dot{width:22px;height:22px;border-radius:50%;background:#f0f4f2;color:#53645e;font-size:11px;font-weight:700;display:grid;place-items:center;cursor:pointer;transition:.2s}
+.dot.active{background:#168052;color:white}
+
+/* Ana Sayfa Arama ve 9 Kategori Barı (Webde Tek Satıra Sığar, Taşmaz) */
+.home-search-panel{background:#fff;border:1px solid #e4eae8;border-radius:18px;padding:24px 22px;margin-top:24px;box-shadow:0 5px 20px rgba(0,0,0,0.02)}
+.search-box-row{display:flex;align-items:center;background:#f8fbf9;border:1px solid #d7e6df;border-radius:13px;padding:6px 6px 6px 18px;gap:12px;max-width:850px;margin:0 auto}
+.search-box-row input{border:0;background:transparent;outline:0;width:100%;font-size:14px;color:#233831}
+.search-box-row .btn{padding:12px 24px;border-radius:10px;white-space:nowrap}
+.home-cats{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:18px;flex-wrap:wrap}
+.home-cats-label{font-size:10px;font-weight:800;letter-spacing:1px;color:#85968f;margin-right:3px;text-transform:uppercase;white-space:nowrap}
+.cat-pill{background:#fff;border:1px solid #dfeae5;color:#2b423a;padding:9px 12px;border-radius:10px;font-weight:700;font-size:12px;display:inline-flex;align-items:center;gap:5px;cursor:pointer;transition:.2s;white-space:nowrap}
+.cat-pill:hover{background:#edf7f3;border-color:#168052;color:#168052;transform:translateY(-1px)}
+
+/* Görseldeki Katalog Sayfası (Tüm Siteler) Tasarımı */
+.catalog-banner{background:linear-gradient(180deg,#ebf5f1 0%,#f7fbf9 100%);border:1px solid #e3ede8;border-radius:16px;padding:38px 24px;text-align:center;margin-bottom:22px}
+.catalog-banner-eyebrow{font-size:11px;font-weight:800;letter-spacing:1.4px;color:#168052;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px}
+.catalog-banner h1{font:800 clamp(26px,3vw,36px) Manrope,sans-serif;margin:12px 0 10px;color:#17283a;letter-spacing:-0.8px}
+.catalog-banner h1 em{font-style:normal;color:#168052}
+.catalog-banner p{color:#687787;font-size:13.5px;margin:0}
+
+.catalog-box{background:#fff;border:1px solid #e4e9ee;border-radius:14px;padding:22px 24px;margin-bottom:18px;box-shadow:0 3px 14px rgba(0,0,0,0.015)}
+.catalog-box-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.catalog-box-top h2{font:800 18px Manrope;margin:0;color:#17283a}
+.catalog-box-top span{font-size:12px;color:#758292}
+.catalog-box-top span b{color:#168052;font-weight:800}
+
+.active-chips-row{display:flex;flex-wrap:wrap;gap:8px}
+.active-cat-tag{display:inline-flex;align-items:center;gap:8px;background:#e5f4ef;color:#13735b;font-weight:700;font-size:12px;padding:7px 14px;border-radius:20px;margin-bottom:14px;border:1px solid #cce9df;cursor:pointer}
+.active-cat-tag:hover{background:#d5ede5}
+
+.catalog-search-input{display:flex;align-items:center;gap:10px;border:1px solid #dce3ea;border-radius:10px;padding:0 14px;background:#fff;margin-bottom:12px}
+.catalog-search-input span{color:#8492a2;font-size:18px}
+.catalog-search-input input{border:0;outline:0;width:100%;padding:12px 0;font-size:13px;color:#1e293b}
+
+.catalog-selects-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.catalog-selects-grid select{width:100%;border:1px solid #dce3ea;border-radius:10px;padding:11px 12px;background:#fff;color:#2c3a4b;font-size:13px;outline-color:#168052}
+
+.catalog-filter-btns{display:flex;justify-content:flex-end;gap:10px;margin-top:14px}
+.btn-reset{background:#fff;border:1px solid #dce3ea;color:#3b4859;padding:9px 16px;border-radius:9px;font-weight:600;font-size:12.5px}
+.btn-reset:hover{background:#f5f7f9}
+.btn-apply{background:#168052;border:1px solid #168052;color:#fff;padding:9px 18px;border-radius:9px;font-weight:700;font-size:12.5px;display:inline-flex;align-items:center;gap:6px}
+.btn-apply:hover{background:#116442}
+
+/* Kategori Hapları ve Excel İndir Satırı (Taşma Olmadan Alt Satıra Geçer) */
+.catalog-pills-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:18px 0;flex-wrap:wrap}
+.catalog-pills-list{display:flex;align-items:center;gap:8px;flex-wrap:wrap;width:100%;flex:1}
+.cat-tab-pill{background:#fff;border:1px solid #e1e6ec;color:#2d3b4e;padding:9px 16px;border-radius:24px;font-weight:700;font-size:12px;cursor:pointer;transition:.18s;white-space:nowrap}
+.cat-tab-pill:hover{border-color:#168052;color:#168052}
+.cat-tab-pill.active{background:#168052;border-color:#168052;color:#fff}
+
+.btn-excel{background:#fff;border:1px solid #dce3ea;color:#2d3b4e;padding:9px 15px;border-radius:10px;font-weight:600;font-size:12px;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.btn-excel:hover{background:#f1f6f3;border-color:#168052;color:#168052}
+
+/* Görseldeki Katalog Tablosu */
+.tablewrap{overflow:auto;background:white;border:1px solid #e4e9ee;border-radius:14px;box-shadow:0 3px 14px rgba(0,0,0,0.015)}
+table{width:100%;border-collapse:collapse;text-align:left;white-space:nowrap}
+th{background:#f8fafb;color:#7c8a9b;text-transform:uppercase;font-size:10.5px;font-weight:700;letter-spacing:.4px;padding:15px 16px;border-bottom:1px solid #edf1f5}
+td{padding:14px 16px;border-bottom:1px solid #f1f4f8;font-size:12.5px;color:#2b394a;vertical-align:middle}
+tr:last-child td{border-bottom:0}
+tr:hover td{background:#fafdfc}
+
+.site-cell{display:flex;align-items:center;gap:12px}
+.site-badge-box{width:32px;height:32px;min-width:32px;border-radius:8px;background:#e4f3ee;color:#157a5c;font-weight:800;font-size:11px;display:grid;place-items:center}
+.site-name-link{font-weight:700;color:#1e293b;cursor:pointer;font-size:13px}
+.site-name-link:hover{color:#168052;text-decoration:underline}
+
+.pill-dofollow{display:inline-block;padding:4px 10px;border-radius:16px;background:#e6f5ef;color:#147a5c;font-weight:700;font-size:11px}
+.pill-nofollow{display:inline-block;padding:4px 10px;border-radius:16px;background:#fef2f2;color:#dc2626;font-weight:700;font-size:11px}
+.pill-news-var{display:inline-block;padding:4px 10px;border-radius:16px;background:#e6f5ef;color:#147a5c;font-weight:700;font-size:11px}
+.pill-news-yok{display:inline-block;padding:4px 10px;border-radius:16px;background:#fef2f2;color:#dc2626;font-weight:700;font-size:11px}
+
+.price-cell b{font-weight:800;color:#17283a;font-size:13px}
+.price-cell small{color:#9aa5b4;font-size:10px;margin-left:3px;font-weight:600}
+
+.btn-table-add{background:#1b6b53;border:1px solid #1b6b53;color:#fff;padding:9px 15px;border-radius:9px;font-weight:700;font-size:12px;display:inline-flex;align-items:center;gap:6px}
+.btn-table-add:hover{background:#13533f}
+
+/* Görseldeki Yeni Site Detay Sayfası Tasarımı */
+.site-detail-breadcrumbs{color:#8793a3;font-size:12px;margin-bottom:18px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.site-detail-breadcrumbs a{color:#7c8a9b;cursor:pointer}
+.site-detail-breadcrumbs a:hover{color:#168052}
+.site-detail-breadcrumbs strong{color:#35475b}
+
+.site-detail-grid{display:grid;grid-template-columns:minmax(0,2.1fr) minmax(290px,0.95fr);gap:20px;align-items:start}
+.site-detail-left,.site-detail-right{display:grid;gap:18px;min-width:0}
+
+.detail-card{background:#fff;border:1px solid #e5e9ed;border-radius:14px;overflow:hidden}
+.detail-top-box{display:flex;align-items:center;gap:16px;padding:22px 24px}
+.detail-avatar-lg{width:54px;height:54px;min-width:54px;border-radius:12px;background:#e6f4f0;color:#147a63;font-weight:800;font-size:16px;display:grid;place-items:center}
+.detail-top-box h1{font:800 24px Manrope;margin:0 0 8px;color:#17283a;letter-spacing:-0.6px;overflow-wrap:anywhere}
+.detail-chip-row{display:flex;flex-wrap:wrap;gap:6px}
+.detail-chip{font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:6px;background:#f4f6f8;color:#4b5563;border:1px solid #e9edf0}
+.detail-chip.green{background:#e7f6f1;color:#127862;border-color:#cde9df}
+.detail-chip.clickable{cursor:pointer;transition:.15s}
+.detail-chip.clickable:hover{background:#dcefe8;color:#0e6350}
+
+.detail-desc-box{border-top:1px solid #ecf0f3;padding:20px 24px;color:#5a6777;font-size:12.5px;line-height:1.75}
+.detail-desc-box b{color:#17283a}
+
+.detail-data-head{padding:16px 22px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ecf0f3}
+.detail-data-head strong{font:800 13.5px Manrope;color:#17283a}
+.detail-data-head span{font-size:11px;color:#9aa4b2}
+
+.detail-metrics-table{display:grid;grid-template-columns:repeat(3,1fr)}
+.detail-metrics-table>div{padding:18px 22px;border-right:1px solid #edf0f3;border-bottom:1px solid #edf0f3;min-height:78px}
+.detail-metrics-table>div:nth-child(3n){border-right:0}
+.detail-metrics-table>div:nth-last-child(-n+3){border-bottom:0}
+.detail-metrics-table small{display:block;font-size:10px;font-weight:800;color:#8c98a8;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px}
+.detail-metrics-table b{font:800 15px Manrope;color:#17283a}
+.detail-metrics-table b.green-val{color:#137b66}
+.detail-metrics-table b.cat-link-val{color:#137b66;cursor:pointer}
+.detail-metrics-table b.cat-link-val:hover{text-decoration:underline}
+
+.detail-buy-box{padding:22px}
+.detail-price-big{font:800 30px Manrope;color:#17283a;letter-spacing:-1px}
+.detail-price-big small{font-size:10.5px;font-weight:600;color:#9ca6b4;letter-spacing:0;margin-left:3px}
+.detail-buy-btn{width:100%;margin-top:16px;padding:13px;background:#168052;border:1px solid #168052;color:#fff;border-radius:9px;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s}
+.detail-buy-btn:hover{background:#116442}
+.detail-sub-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.detail-sub-actions button{padding:9px;background:#fff;border:1px solid #e1e6eb;border-radius:8px;color:#475569;font-size:12px;font-weight:600;transition:.15s}
+.detail-sub-actions button:hover{background:#f8fafb;border-color:#cbd5e1}
+
+.detail-side-top{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #edf0f3}
+.detail-side-top strong{font:800 13px Manrope;color:#17283a;display:flex;align-items:center;gap:6px}
+.detail-side-top button{background:#e7f4f0;border:0;color:#157a64;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer}
+
+.detail-side-row{display:flex;align-items:center;gap:9px;padding:11px 16px;border-bottom:1px solid #f0f3f6;font-size:12px}
+.detail-side-row:last-child{border-bottom:0}
+.detail-side-num{background:#edf6f3;color:#167d67;font-weight:800;font-size:10px;padding:4px 6px;border-radius:5px;flex:none}
+.detail-side-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600;color:#293548;cursor:pointer}
+.detail-side-name:hover{color:#168052}
+.detail-side-price{font-weight:800;color:#17283a;white-space:nowrap;font-size:11.5px}
+.detail-side-price small{font-size:9px;color:#9ca6b4;font-weight:500;margin-left:2px}
+.detail-side-add{width:26px;height:26px;min-width:26px;border:0;border-radius:6px;background:#168052;color:#fff;font-size:16px;display:grid;place-items:center;line-height:1;cursor:pointer}
+.detail-side-add:hover{background:#116442}
+
+/* Benzer Siteler 4'lü Kart Alanı */
+.similar-section{margin-top:34px}
+.similar-section h2{font:800 20px Manrope;color:#17283a;margin:0 0 16px}
+.similar-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.similar-card{background:#fff;border:1px solid #e5e9ed;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:14px}
+.similar-head{display:flex;align-items:center;gap:10px}
+.similar-avatar{width:36px;height:36px;min-width:36px;border-radius:9px;background:#e7f4f0;color:#147a63;font-weight:800;font-size:11px;display:grid;place-items:center}
+.similar-title-wrap{min-width:0}
+.similar-title-wrap a{font-weight:800;font-size:12.5px;color:#17283a;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;margin-bottom:4px}
+.similar-title-wrap a:hover{color:#168052}
+.similar-tags{display:flex;gap:4px;flex-wrap:wrap}
+.similar-tags span{font-size:9.5px;padding:2px 6px;border-radius:4px;background:#f3f5f8;color:#526071;border:1px solid #e6eaf0;font-weight:600}
+.similar-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;padding:12px 0;border-top:1px dashed #e5e9ed;border-bottom:1px dashed #e5e9ed;font-size:11px;color:#7b8797}
+.similar-stats div{display:flex;justify-content:space-between;align-items:center}
+.similar-stats b{color:#1e293b;font-weight:700}
+.similar-price{font:800 17px Manrope;color:#17283a}
+.similar-price small{font-size:10px;color:#9ca6b4;font-weight:500;margin-left:2px}
+.similar-btn{width:100%;margin-top:auto;padding:10px;background:#168052;border:1px solid #168052;color:#fff;border-radius:8px;font-weight:700;font-size:12px;transition:.2s}
+.similar-btn:hover{background:#116442}
+
+/* Diğer Bileşenler */
+.section{margin-top:37px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+.panel,.tile,.detail,.sidebar,.stat{background:#fff;border:1px solid var(--line);border-radius:16px}
+.panel{padding:20px}
+.panel h3{font:800 17px Manrope;margin:0}
+.price{font-weight:800;color:#206b4c;white-space:nowrap}
+.old{text-decoration:line-through;color:#9ca7b4;font-size:11px}
+.breadcrumbs{color:#8793a3;font-size:12px;margin-bottom:18px}
+.breadcrumbs a{cursor:pointer}
+.breadcrumbs a:hover{color:#168052}
+.detail-layout{display:grid;grid-template-columns:1.5fr .85fr;gap:20px}
+.metricgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:23px 0}
+.metric{padding:17px;background:#f7f9fc;border-radius:10px}
+.metric b{display:block;font-size:20px;margin-top:8px}
+.cartrow{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:20px;padding:18px 0;border-bottom:1px solid var(--line)}
+.summary{background:#f7f9fc;padding:22px;border-radius:12px;margin-top:20px}
+.muted{color:var(--muted)}
+.empty{text-align:center;padding:55px 20px;color:#8491a1}
+.authbox{max-width:470px;margin:20px auto;background:white;border:1px solid var(--line);border-radius:17px;padding:30px}
+.authbox label{display:block;font-weight:700;margin:15px 0 7px}
+.authbox .field{width:100%;padding:12px;border:1px solid #dce3ea;border-radius:9px}
+.authbox .btn{width:100%;margin-top:18px;background:#168052;border-color:#168052}
+.tabs{display:flex;gap:10px;margin-bottom:18px}
+.tabs button{flex:1}
+
+/* Sepet Açılır Penceresi (Dropdown) */
+.cart-preview{position:absolute;z-index:120;right:max(20px,calc((100vw - 1240px)/2 + 25px));top:70px;width:min(380px,calc(100vw - 28px));background:#fff;border:1px solid #e2e7e9;border-radius:16px;box-shadow:0 20px 60px rgba(16,24,40,0.15);overflow:hidden}
+.cart-preview[hidden]{display:none!important}
+.preview-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid #f0f2f5}
+.preview-head strong{font-size:16px;font-weight:800;color:#1f2937}
+.preview-head span{font-size:12px;color:#6b7280;font-weight:600}
+.preview-head button{background:#f3f4f6;border:0;border-radius:6px;padding:4px 8px;color:#6b7280}
+.preview-list{max-height:280px;overflow-y:auto}
+.preview-item{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:14px 20px;border-bottom:1px solid #f3f4f6}
+.preview-item a{font-weight:700;font-size:13px;color:#1f2937;cursor:pointer;display:block;margin-bottom:3px}
+.preview-item-cat{font-size:10px;color:#0d9488;background:#f0fdf4;border:1px solid #ccfbf1;padding:2px 6px;border-radius:4px;display:inline-block;font-weight:700}
+.preview-item b{font-size:14px;color:#1f2937;white-space:nowrap;display:block}
+.preview-remove{border:0;background:transparent;color:#dc2626;font-size:11px;text-decoration:underline;cursor:pointer;padding:0;display:inline-block;margin-top:4px}
+.preview-bottom{padding:20px;background:#fafafa;border-top:1px solid #f0f2f5}
+.preview-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;font-size:15px;font-weight:800;color:#1f2937}
+.preview-btn-go{background:#0d9488!important;border-color:#0d9488!important;color:white;width:100%;padding:12px;border-radius:10px;font-weight:700;text-align:center;display:block;margin-bottom:8px;cursor:pointer}
+.preview-btn-go:hover{background:#0f766e!important}
+.preview-btn-clear{background:#fee2e2!important;border:0!important;color:#b91c1c!important;width:100%;padding:11px;border-radius:10px;font-weight:700;text-align:center;cursor:pointer}
+.preview-btn-clear:hover{background:#fecaca!important}
+.preview-vat-note{font-size:10px;color:#9ca3af;text-align:center;margin-top:10px;line-height:1.4}
+.preview-empty{text-align:center;padding:40px;color:#9ca3af;font-size:13px}
+
+/* Toast Bildirimi */
+.added-toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-30px);z-index:9999;background:#fff;border:1px solid #d1fae5;box-shadow:0 10px 30px rgba(0,0,0,0.1);border-radius:10px;padding:12px 24px;display:flex;align-items:center;gap:12px;opacity:0;pointer-events:none;transition:.3s}
+.added-toast.visible{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* Tekrar Ekleme Uyarı Modalı */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px}
+.modal-box{background:#fff;border-radius:16px;width:100%;max-width:440px;padding:30px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,0.2);animation:scaleIn 0.25s ease}
+@keyframes scaleIn{from{transform:scale(0.9);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-icon{width:60px;height:60px;border-radius:50%;background:#fef3c7;color:#d97706;font-size:30px;display:grid;place-items:center;margin:0 auto 16px;border:2px solid #fde68a}
+.modal-box h3{font:800 20px Manrope;color:#1f2937;margin:0 0 10px}
+.modal-box p{color:#6b7280;font-size:13px;line-height:1.6;margin:0 0 24px}
+.modal-actions{display:flex;gap:10px}
+.modal-actions button{flex:1;padding:12px;border-radius:10px;font-weight:700;font-size:13px}
+.modal-btn-cancel{background:#f3f4f6;border:1px solid #e5e7eb;color:#374151}
+.modal-btn-add{background:#0d9488;border:0;color:white}
+
+/* Ana Sayfa Liste Panelleri */
+.featured-section{padding-top:22px;padding-bottom:30px}
+.featured-section .grid3{gap:14px;align-items:stretch}
+.ranking-panel{padding:0!important;overflow:hidden;border:1px solid #e6e9ed!important;border-radius:16px!important;background:#fff;box-shadow:none!important}
+.ranking-panel .list-title{padding:17px 18px!important;margin:0!important;min-height:62px;border-bottom:1px solid #e9edf0;display:flex;align-items:center;justify-content:space-between}
+.ranking-panel .list-title h3{margin:0;display:flex;align-items:center;gap:10px;font-size:14px;font-weight:800;letter-spacing:-.2px;color:#1d2635}
+.list-heading-icon{width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;background:#eaf5f2;color:#168679;border-radius:8px;font-size:18px;font-weight:700}
+.ranking-panel .all-inline{background:#e7f3f0!important;color:#287c70!important;border:0!important;border-radius:6px!important;padding:8px 11px!important;font-size:12px!important;font-weight:700!important;cursor:pointer}
+.ranking-panel .rank-row{display:flex!important;align-items:center;gap:11px;min-height:50px;padding:9px 17px!important;border-bottom:1px solid #edf0f2!important;background:#fff}
+.ranking-panel .rank-row:last-child{border-bottom:0!important}
+.rank-number{font-size:11px;font-weight:800;color:#8790a2;background:#f3f5f8;border-radius:5px;padding:4px 5px;flex:none}
+.rank-site{min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px!important;font-weight:600!important;color:#293446!important;cursor:pointer}
+.ranking-panel .rank-actions{display:flex;align-items:center;gap:9px;flex:none;margin-left:auto}
+.ranking-panel .rank-pricing{display:flex;flex-direction:column;align-items:flex-end;gap:1px;min-width:65px}
+.ranking-panel .rank-pricing .old{font-size:10px!important;text-decoration:line-through;color:#8c96a6!important;line-height:1}
+.ranking-panel .price-line{display:flex;align-items:baseline;gap:4px;white-space:nowrap}
+.ranking-panel .price-line strong{font-size:12px!important;color:#172433!important;font-weight:800}
+.ranking-panel .rank-add{display:grid!important;place-items:center;width:29px!important;height:29px!important;min-width:29px!important;border:0!important;border-radius:7px!important;background:#168052!important;color:#fff!important;font-size:19px!important;line-height:1!important;box-shadow:0 2px 6px #147f7325!important;padding:0!important}
+.ranking-panel .rank-add:hover{background:#116442!important}
+
+/* Tanıtım Paketleri Kart Stilleri */
+.packages-intro{text-align:center;padding:36px 16px 20px}
+.packages-intro h1{font:800 clamp(24px,2.8vw,35px) Manrope,sans-serif;margin:12px 0 10px;color:#111827}
+.packages-intro p{color:#4b5563;font-size:13px;max-width:650px;margin:0 auto 20px;line-height:1.6}
+.packages-features{display:flex;justify-content:center;gap:25px;font-size:12px;color:#374151;font-weight:600;margin-bottom:35px;flex-wrap:wrap}
+.packages-features span{display:flex;align-items:center;gap:6px}
+
+.pkg-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-bottom:40px}
+.pkg-card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:20px;box-shadow:0 4px 15px rgba(0,0,0,0.02);display:flex;flex-direction:column;position:relative}
+.pkg-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+.pkg-card-top h3{font:800 15px Manrope;color:#1f2937;margin:0}
+.pkg-star{background:#047857;color:white;width:26px;height:26px;border-radius:6px;display:grid;place-items:center;font-size:12px}
+.pkg-table{width:100%;border-collapse:collapse;margin-bottom:15px}
+.pkg-table th{background:#f9fafb;color:#6b7280;font-size:10px;padding:8px 6px;text-transform:uppercase;border-bottom:1px solid #e5e7eb}
+.pkg-table td{padding:9px 6px;font-size:12px;border-bottom:1px solid #f3f4f6;color:#374151}
+.pkg-more{text-align:center;font-size:11px;color:#6b7280;cursor:pointer;margin:8px 0 16px;display:block}
+.pkg-bottom{margin-top:auto;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #e5e7eb;padding-top:14px}
+.pkg-price{font:800 18px Manrope;color:#1f2937}
+.pkg-price small{font-size:10px;color:#9ca3af;font-weight:500}
+.pkg-btn{background:#047857!important;border:0!important;color:white;padding:9px 16px;border-radius:8px;font-weight:700;font-size:12px}
+.pkg-btn:hover{background:#065f46!important}
+
+/* SSS ve Footer */
+.faq-showcase{background:#f4f6fa;padding:36px 18px 42px;margin-top:28px;border-radius:16px}
+.faq-showcase-inner{max-width:1060px;margin:auto}
+.faq-showcase h2{text-align:center;margin:0 0 8px;font-size:24px;color:#172235}
+.faq-subtitle{text-align:center;color:#758195;font-size:12px;margin:0 0 26px}
+.faq-two-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:35px;row-gap:0}
+.faq-line{border:0;border-bottom:1px solid #e0e5ed;background:transparent;border-radius:0;margin:0;min-width:0}
+.faq-line summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:17px 2px;cursor:pointer;font-size:13px;font-weight:600;color:#1c2939}
+.faq-line summary::-webkit-details-marker{display:none}
+.faq-plus{font-size:19px;font-weight:400;color:#798698;line-height:1;flex-shrink:0;transition:transform .2s}
+.faq-line[open] .faq-plus{transform:rotate(45deg);color:#168052}
+.faq-line p{font-size:12px;color:#677589;line-height:1.7;padding:0 24px 15px 2px;margin:0}
+
+.new-footer{background:#133c2c;color:#bdcad8;padding:42px 0 0}
+.new-footer-grid{display:grid;grid-template-columns:1.6fr repeat(4,1fr);gap:28px;padding-bottom:38px}
+.new-footer-grid>div{display:flex;flex-direction:column;gap:12px}
+.new-footer-grid strong{color:#f8fafc;font-size:13px;border-left:2px solid #168052;padding-left:9px}
+.new-footer-grid a{font-size:12px;color:#aebac8;text-decoration:none;cursor:pointer}
+.new-footer-grid a:hover{color:#fff}
+.new-footer-grid p{font-size:12px;line-height:1.7;margin:0}
+.footer-brand{color:#fff;font-size:20px}
+.footer-brand span{color:#58c5ae}
+.footer-bottom{border-top:1px solid #273140;padding:17px 0;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:11px;color:#8995a5}
+
+@media(max-width:850px){
+  .grid3,.pkg-grid,.detail-layout,.site-detail-grid{grid-template-columns:1fr}
+  .similar-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .catalog-selects-grid{grid-template-columns:repeat(2,1fr)}
+  .top{display:none}
+  .new-footer-grid{grid-template-columns:repeat(3,1fr)}
+}
+
+/* Mobil Görünüm: Taşmasız 3x3 Kategoriler, Hamburger Menü ve Mobil Uyumlu Kartlar */
+@media(max-width:768px){
+  .header-account-btn{display:none!important}
+  .menu-toggle{display:inline-flex}
+  .nav{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 15px 35px rgba(0,0,0,0.1)}
+  .nav.mobile-open{display:block;animation:fadeIn 0.2s ease}
+  .nav .wrap{flex-direction:column;align-items:stretch;padding:10px 14px;gap:4px}
+  .nav button{width:100%;text-align:left;padding:12px 14px;border-bottom:0;border-left:3px solid transparent;border-radius:8px;justify-content:flex-start}
+  .nav button.active{background:#e9f5ef;border-left-color:#168052;border-bottom-color:transparent}
+  .nav button.mobile-only-auth{display:flex;margin-top:6px;padding-top:13px;border-top:1px solid #edf1f5;color:#168052;font-weight:800}
+
+  /* Mobilde Ufak ve Yatay Slayt Tasarımı */
+  .slider-container{padding:18px 16px 38px;border-radius:16px;margin-top:2px}
+  .slide{grid-template-columns:1.35fr 0.9fr!important;gap:12px;align-items:center}
+  .slide-eyebrow{font-size:9px;margin-bottom:5px}
+  .slide h1{font-size:18px;line-height:1.22;margin:0 0 6px}
+  .slide p{font-size:11px;line-height:1.4;margin:0 0 10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .slide .btn{padding:8px 12px;font-size:11px;border-radius:8px}
+  .slide-right-card{padding:16px 10px;border-radius:13px}
+  .slide-right-card .lightning{font-size:20px;margin-bottom:2px}
+  .slide-right-card h3{font-size:13px;margin:4px 0 2px}
+  .slide-right-card p{font-size:9.5px}
+  .slider-dots{bottom:8px;right:12px;padding:3px 8px}
+  .dot{width:18px;height:18px;font-size:10px}
+
+  /* Ana Sayfa 9 Kategori - Mobilde 3x3 Izgara (Sağa Taşmaz, Tam Sığar) */
+  .home-cats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:14px}
+  .home-cats-label{grid-column:1/-1;text-align:center;margin:0 0 2px}
+  .cat-pill{width:100%;justify-content:center;padding:8px 6px;font-size:11px}
+
+  /* Katalog Kategorileri - Mobilde Sağa Uzamaz, Alt Satırlara Sarmalanır (Wrap) */
+  .catalog-banner{padding:24px 16px;margin-bottom:14px}
+  .catalog-box{padding:16px}
+  .catalog-pills-bar{flex-direction:column;align-items:stretch;gap:12px;margin:14px 0}
+  .catalog-pills-list{display:flex;flex-wrap:wrap;gap:6px;overflow:visible;width:100%}
+  .cat-tab-pill{flex:1 1 calc(33.333% - 6px);min-width:92px;text-align:center;padding:8px 10px;font-size:11.5px;border-radius:10px}
+  .btn-excel{width:100%;justify-content:center;padding:10px}
+
+  .responsive-catalog-wrap{border:0;background:transparent;box-shadow:none;overflow:visible}
+  .responsive-catalog-table thead{display:none}
+  .responsive-catalog-table,.responsive-catalog-table tbody{display:block;width:100%}
+  .responsive-catalog-table tr{display:grid;grid-template-columns:1fr 1fr;gap:10px;background:#fff;border:1px solid #e4e9ee;border-radius:14px;padding:15px;margin-bottom:12px;box-shadow:0 3px 10px rgba(0,0,0,0.02);white-space:normal}
+  .responsive-catalog-table td{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;border:0;background:#f8fafb;border-radius:8px;font-size:12px}
+  .responsive-catalog-table td::before{content:attr(data-label);font-size:10px;font-weight:800;color:#7c8a9b;text-transform:uppercase}
+  .responsive-catalog-table td.cell-main{grid-column:1/-1;background:transparent;padding:0 0 10px;border-bottom:1px solid #edf1f5;border-radius:0}
+  .responsive-catalog-table td.cell-main::before{display:none}
+  .responsive-catalog-table td.cell-action{grid-column:1/-1;background:transparent;padding:6px 0 0;justify-content:stretch}
+  .responsive-catalog-table td.cell-action::before{display:none}
+  .responsive-catalog-table td.cell-action .btn-table-add{width:100%;justify-content:center;padding:11px}
+}
+
+@media(max-width:550px){
+  .wrap{padding:0 14px}
+  .head .wrap{min-height:68px}
+  .logo b{font-size:19px}
+  .home-search-panel{padding:16px 12px;margin-top:14px}
+  .search-box-row{padding:4px 4px 4px 12px;gap:8px}
+  .search-box-row input{font-size:12.5px}
+  .search-box-row .btn{padding:9px 14px;font-size:12px}
+  .catalog-selects-grid{grid-template-columns:1fr}
+  .detail-metrics-table{grid-template-columns:1fr 1fr}
+  .detail-metrics-table>div:nth-child(3n){border-right:1px solid #edf0f3}
+  .detail-metrics-table>div:nth-child(2n){border-right:0}
+  .detail-metrics-table>div:nth-last-child(-n+3){border-bottom:1px solid #edf0f3}
+  .detail-metrics-table>div:nth-last-child(-n+2){border-bottom:0}
+  .similar-grid{grid-template-columns:1fr}
+  .faq-two-columns{grid-template-columns:1fr}
+  .new-footer-grid{grid-template-columns:1fr 1fr;gap:25px}
+  .new-footer-grid>div:first-child{grid-column:1/-1}
+  .cart-preview{top:65px;right:14px}
+}
+</style>
 <meta name="robots" content="noindex, nofollow">
-<title>Hadra Ajans | Üyelik ve Yönetim Paneli Örneği</title>
 <link rel="icon" href="data:,">
 <link rel="stylesheet" href="app.css">
 </head>
 <body>
-<div id="app"></div>
-<div id="modal"></div>
-<div id="toast" role="status" aria-live="polite"></div>
-<script src="siteler.js"></script>
+
+<div class="top">
+  <div class="wrap">
+    <span>Örnek çalışma &nbsp;&nbsp; <a href="#/yonetim" style="color:#fff;font-weight:700">Yönetim Paneli</a></span>
+    <span>Markanız için doğru yayın, tek platformda.</span>
+  </div>
+</div>
+
+<header class="head">
+  <div class="wrap">
+    <div class="logo" onclick="go('home')">
+      <span class="logo-mark">H.</span>
+      <div><b>hadra<span>ajans</span></b><small>DİJİTAL MEDYA PAZARYERİ</small></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="btn light header-account-btn" onclick="go('account')">♟ Hesabım</button>
+      <button class="btn" onclick="toggleCartPreview(event)" aria-expanded="false" id="cartToggle">▣ Sepet <span id="cartN">0</span></button>
+      <button class="menu-toggle" id="mobileMenuBtn" onclick="toggleMobileMenu(event)" aria-label="Menüyü Aç/Kapat" aria-expanded="false">☰</button>
+      <div id="cartPreview" class="cart-preview" hidden></div>
+    </div>
+  </div>
+  <nav class="nav" id="mainNav">
+    <div class="wrap" id="nav"></div>
+  </nav>
+</header>
+
+<main class="main">
+  <div class="wrap" id="app"></div>
+</main>
+
+<footer class="footer new-footer">
+  <div class="wrap">
+    <div class="new-footer-grid">
+      <div>
+        <div class="footer-brand">▤ <b>Hadra<span>Ajans</span></b></div>
+        <p>Tanıtım yazısı, basın bülteni ve dijital yayın çözümleri.</p>
+        
+        
+      </div>
+      <div>
+        <strong>Hizmetler</strong>
+        <a onclick="openCategory('Tümü')">Tanıtım Yazısı</a>
+        <a onclick="go('press')">Basın Bülteni</a>
+        <a onclick="go('footer')">Footer Link</a>
+        <a onclick="go('packages')">Tanıtım Paketleri</a>
+        <a onclick="go('story')">Story & Post</a>
+      </div>
+      <div>
+        <strong>Kurumsal</strong>
+        <a onclick="go('about')">Hakkımızda</a>
+        <a onclick="go('contact')">İletişim</a>
+        <a onclick="go('faq')">Sık Sorulan Sorular</a>
+      </div>
+      <div>
+        <strong>Hesabım</strong>
+        <a onclick="go('account')">Giriş Yap / Kayıt Ol</a>
+        <a onclick="go('cart')">Sepetim</a>
+        <a onclick="go('orders')">Siparişlerim</a>
+        <a href="#/yonetim">Yönetim Paneli</a>
+      </div>
+      <div>
+        <strong>Destek</strong>
+        <a onclick="go('contact')">Telefonla Destek</a>
+        <a onclick="go('contact')">E-posta Gönder</a>
+        <a onclick="go('faq')">Yardım Merkezi</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Hadra Ajans. Tüm hakları saklıdır.</span>
+      <span>Gizlilik · KVKK · Kullanım Şartları</span>
+      <span>Örnek çalışma, gerçek satış yapılmaz</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Zenginleştirilmiş Yayıncı Veritabanı
+const SITES=[
+  // Kadın Siteleri
+  {"name": "kadinyasamrehberi.com", "category": "Kadın", "price": 150.0, "oldPrice": null, "discountPct": null, "da": "—", "pa": "—", "age": "—", "linkType": "Dofollow", "news": "Var", "badge": "KA", "type": "Normal"},
+  {"name": "modaveyasam.net", "category": "Kadın", "price": 250.0, "oldPrice": null, "discountPct": null, "da": "—", "pa": "—", "age": "—", "linkType": "Dofollow", "news": "Var", "badge": "MO", "type": "Normal"},
+  {"name": "kadindunyasi.com", "category": "Kadın", "price": 350.0, "oldPrice": null, "discountPct": null, "da": "—", "pa": "—", "age": "—", "linkType": "Dofollow", "news": "Var", "badge": "KA", "type": "Normal"},
+  {"name": "guzelliknotlari.net", "category": "Kadın", "price": 450.0, "oldPrice": null, "discountPct": null, "da": "—", "pa": "—", "age": "—", "linkType": "Dofollow", "news": "Var", "badge": "GU", "type": "Normal"},
+  {"name": "annelikrehberi.com", "category": "Kadın", "price": 550.0, "oldPrice": null, "discountPct": null, "da": "—", "pa": "—", "age": "—", "linkType": "Dofollow", "news": "Var", "badge": "AN", "type": "Normal"},
+  {"name": "gercekmagazin.com", "category": "Kadın", "price": 150.0, "oldPrice": null, "discountPct": null, "da": 12, "pa": 30, "age": "5 yıl, 231 gün", "linkType": "Dofollow", "news": "Var", "badge": "GE", "type": "Normal"},
+  {"name": "lifemagazin.net", "category": "Kadın", "price": 190.0, "oldPrice": null, "discountPct": null, "da": 17, "pa": 29, "age": "18 yıl, 305 gün", "linkType": "Dofollow", "news": "Var", "badge": "LI", "type": "Normal"},
+  {"name": "kadinfoni.com", "category": "Kadın", "price": 210.0, "oldPrice": 294.0, "discountPct": "-%29 İNDİRİM", "da": 10, "pa": 27, "age": "4 yıl, 305 gün", "linkType": "Dofollow", "news": "Yok", "badge": "KA", "type": "İndirimde"},
+  {"name": "modayelkeni.com", "category": "Kadın", "price": 210.0, "oldPrice": null, "discountPct": null, "da": 10, "pa": 27, "age": "4 yıl, 22 gün", "linkType": "Dofollow", "news": "Yok", "badge": "MO", "type": "Çok Satan"},
+
+  // Teknoloji Siteleri
+  {"name": "teknolojipusulasi.com", "category": "Teknoloji", "price": 150.0, "oldPrice": null, "discountPct": null, "da": 17, "pa": 26, "age": "7 yıl, 70 gün", "linkType": "Dofollow", "news": "Var", "badge": "TE", "type": "Yeni Eklenen"},
+  {"name": "dijitalteknoloji.net", "category": "Teknoloji", "price": 250.0, "oldPrice": null, "discountPct": null, "da": 24, "pa": 35, "age": "5 yıl, 112 gün", "linkType": "Dofollow", "news": "Var", "badge": "DI", "type": "Yeni Eklenen"},
+  {"name": "idealindirim.com", "category": "Teknoloji", "price": 50.0, "oldPrice": null, "discountPct": null, "da": 10, "pa": 36, "age": "8 yıl, 337 gün", "linkType": "Dofollow", "news": "Yok", "badge": "ID", "type": "Çok Satan"},
+  {"name": "teknocini.com", "category": "Teknoloji", "price": 75.0, "oldPrice": null, "discountPct": null, "da": 5, "pa": 38, "age": "9 yıl, 320 gün", "linkType": "Dofollow", "news": "Yok", "badge": "TE", "type": "Normal"},
+  {"name": "teknobilgi.com", "category": "Teknoloji", "price": 150.0, "oldPrice": null, "discountPct": null, "da": 56, "pa": 42, "age": "22 yıl, 217 gün", "linkType": "Dofollow", "news": "Yok", "badge": "TE", "type": "Normal"},
+  {"name": "oyunhabertr.com", "category": "Teknoloji", "price": 175.0, "oldPrice": null, "discountPct": null, "da": 18, "pa": 38, "age": "8 yıl, 57 gün", "linkType": "Dofollow", "news": "Var", "badge": "OY", "type": "Normal"},
+  {"name": "webhane.com", "category": "Teknoloji", "price": 210.0, "oldPrice": null, "discountPct": null, "da": 56, "pa": 37, "age": "22 yıl, 292 gün", "linkType": "Dofollow", "news": "Var", "badge": "WE", "type": "Normal"},
+  {"name": "teknobird.com", "category": "Teknoloji", "price": 700.0, "oldPrice": null, "discountPct": null, "da": 56, "pa": 47, "age": "6 yıl, 334 gün", "linkType": "Dofollow", "news": "Var", "badge": "TE", "type": "Normal"},
+
+  // Haber Siteleri
+  {"name": "nesilhaber.com", "category": "Haber", "price": 5.0, "oldPrice": null, "discountPct": null, "da": 7, "pa": 37, "age": "9 yıl, 195 gün", "linkType": "Dofollow", "news": "Var", "badge": "NE", "type": "Çok Satan"},
+  {"name": "46haberler.com", "category": "Haber", "price": 50.0, "oldPrice": null, "discountPct": null, "da": 9, "pa": 30, "age": "4 yıl, 214 gün", "linkType": "Dofollow", "news": "Var", "badge": "46", "type": "Çok Satan"},
+  {"name": "ajansdolunay.com", "category": "Haber", "price": 50.0, "oldPrice": null, "discountPct": null, "da": 16, "pa": 43, "age": "9 yıl, 253 gün", "linkType": "Dofollow", "news": "Var", "badge": "AJ", "type": "Çok Satan"},
+  {"name": "buhaber.com.tr", "category": "Haber", "price": 50.0, "oldPrice": null, "discountPct": null, "da": 8, "pa": 19, "age": "3 yıl, 288 gün", "linkType": "Dofollow", "news": "Var", "badge": "BU", "type": "Çok Satan"},
+  {"name": "haber01.com.tr", "category": "Haber", "price": 50.0, "oldPrice": null, "discountPct": null, "da": 9, "pa": 23, "age": "3 yıl, 288 gün", "linkType": "Dofollow", "news": "Var", "badge": "HA", "type": "Çok Satan"},
+  {"name": "haberayaz.com", "category": "Haber", "price": 50.0, "oldPrice": null, "discountPct": null, "da": 14, "pa": 43, "age": "9 yıl, 190 gün", "linkType": "Dofollow", "news": "Var", "badge": "HA", "type": "Çok Satan"},
+  {"name": "gercekcihaber.com", "category": "Haber", "price": 90.0, "oldPrice": 126.0, "discountPct": "-%29 İNDİRİM", "da": 52, "pa": 39, "age": "7 yıl, 187 gün", "linkType": "Dofollow", "news": "Var", "badge": "GE", "type": "İndirimde"},
+  {"name": "mizrakhaber.com", "category": "Haber", "price": 150.0, "oldPrice": null, "discountPct": null, "da": 14, "pa": 35, "age": "6 yıl, 174 gün", "linkType": "Dofollow", "news": "Var", "badge": "MI", "type": "Çok Satan"},
+  {"name": "beyazgundem.com", "category": "Haber", "price": 550.0, "oldPrice": null, "discountPct": null, "da": 57, "pa": 46, "age": "13 yıl, 300 gün", "linkType": "Dofollow", "news": "Var", "badge": "BE", "type": "Yeni Eklenen"},
+
+  // Ekonomi / Finans Siteleri
+  {"name": "basinbultenin.com", "category": "Ekonomi", "price": 50.0, "oldPrice": null, "discountPct": null, "da": 10, "pa": 20, "age": "4 yıl, 266 gün", "linkType": "Dofollow", "news": "Var", "badge": "BA", "type": "Çok Satan"},
+  {"name": "emlakredi.com", "category": "Ekonomi", "price": 50.0, "oldPrice": null, "discountPct": null, "da": 18, "pa": 41, "age": "8 yıl, 306 gün", "linkType": "Dofollow", "news": "Var", "badge": "EM", "type": "Çok Satan"},
+  {"name": "borsakredi.net", "category": "Ekonomi", "price": 100.0, "oldPrice": null, "discountPct": null, "da": 53, "pa": 33, "age": "8 yıl, 135 gün", "linkType": "Dofollow", "news": "Var", "badge": "BO", "type": "Yeni Eklenen"},
+  {"name": "ekonomitakip.com", "category": "Ekonomi", "price": 210.0, "oldPrice": null, "discountPct": null, "da": 8, "pa": 32, "age": "6 yıl, 205 gün", "linkType": "Dofollow", "news": "Yok", "badge": "EK", "type": "Yeni Eklenen"},
+  {"name": "piyasahaberleri.com", "category": "Ekonomi", "price": 367.5, "oldPrice": 514.5, "discountPct": "-%29 İNDİRİM", "da": 31, "pa": 32, "age": "15 yıl, 106 gün", "linkType": "Dofollow", "news": "Var", "badge": "PI", "type": "İndirimde"},
+
+  // Blog Siteleri
+  {"name": "gazetemsanat.com", "category": "Blog", "price": 50.0, "oldPrice": null, "discountPct": null, "da": 6, "pa": 28, "age": "4 yıl, 45 gün", "linkType": "Dofollow", "news": "Var", "badge": "GA", "type": "Çok Satan"},
+  {"name": "Gunlukveri.com", "category": "Blog", "price": 50.0, "oldPrice": null, "discountPct": null, "da": 10, "pa": 23, "age": "2 yıl, 232 gün", "linkType": "Dofollow", "news": "Var", "badge": "GU", "type": "Çok Satan"},
+  {"name": "hayatpedi.com", "category": "Blog", "price": 75.0, "oldPrice": null, "discountPct": null, "da": 19, "pa": 35, "age": "11 yıl, 337 gün", "linkType": "Dofollow", "news": "Yok", "badge": "HA", "type": "Yeni Eklenen"},
+  {"name": "futbolluk.com", "category": "Blog", "price": 150.0, "oldPrice": 210.0, "discountPct": "-%29 İNDİRİM", "da": 4, "pa": 10, "age": "4 yıl, 288 gün", "linkType": "Dofollow", "news": "Yok", "badge": "FU", "type": "İndirimde"},
+  {"name": "sanaltus.com", "category": "Blog", "price": 175.0, "oldPrice": null, "discountPct": null, "da": 56, "pa": 42, "age": "5 yıl, 215 gün", "linkType": "Dofollow", "news": "Var", "badge": "SA", "type": "Çok Satan"},
+
+  // Sağlık Siteleri
+  {"name": "idealyasam.com", "category": "Sağlık", "price": 50.0, "oldPrice": null, "discountPct": null, "da": 8, "pa": 38, "age": "8 yıl, 88 gün", "linkType": "Dofollow", "news": "Yok", "badge": "ID", "type": "Çok Satan"},
+  {"name": "saglikussu.com", "category": "Sağlık", "price": 150.0, "oldPrice": 210.0, "discountPct": "-%29 İNDİRİM", "da": 7, "pa": 38, "age": "4 yıl, 212 gün", "linkType": "Dofollow", "news": "Var", "badge": "SA", "type": "İndirimde"},
+  {"name": "diyetvekilo.net", "category": "Sağlık", "price": 220.0, "oldPrice": null, "discountPct": null, "da": 19, "pa": 26, "age": "7 yıl, 166 gün", "linkType": "Dofollow", "news": "Var", "badge": "DI", "type": "Normal"},
+  {"name": "sagliktube.com", "category": "Sağlık", "price": 240.0, "oldPrice": null, "discountPct": null, "da": 54, "pa": 40, "age": "9 yıl, 65 gün", "linkType": "Dofollow", "news": "Var", "badge": "SA", "type": "Normal"},
+
+  // Eğitim Siteleri
+  {"name": "egitimhaberlerim.com", "category": "Eğitim", "price": 210.0, "oldPrice": null, "discountPct": null, "da": 6, "pa": 30, "age": "4 yıl, 115 gün", "linkType": "Dofollow", "news": "Yok", "badge": "EG", "type": "Normal"},
+  {"name": "kpsshocasi.com", "category": "Eğitim", "price": 400.0, "oldPrice": null, "discountPct": null, "da": 11, "pa": 20, "age": "5 yıl, 193 gün", "linkType": "Dofollow", "news": "Yok", "badge": "KP", "type": "Normal"},
+  {"name": "egitimrotasi.com", "category": "Eğitim", "price": 600.0, "oldPrice": null, "discountPct": null, "da": 9, "pa": 32, "age": "13 yıl, 48 gün", "linkType": "Dofollow", "news": "Var", "badge": "EG", "type": "Normal"},
+  {"name": "unibilgi.net", "category": "Eğitim", "price": 1200.0, "oldPrice": null, "discountPct": null, "da": 56, "pa": 44, "age": "9 yıl, 205 gün", "linkType": "Dofollow", "news": "Yok", "badge": "UN", "type": "Normal"},
+
+  // Turizm Siteleri
+  {"name": "briturkish.com", "category": "Turizm", "price": 150.0, "oldPrice": null, "discountPct": null, "da": 56, "pa": 37, "age": "4 yıl, 269 gün", "linkType": "Dofollow", "news": "Yok", "badge": "BR", "type": "Normal"},
+  {"name": "mersinseyahat.com", "category": "Turizm", "price": 175.0, "oldPrice": null, "discountPct": null, "da": 6, "pa": 19, "age": "5 yıl, 321 gün", "linkType": "Dofollow", "news": "Var", "badge": "ME", "type": "Normal"},
+  {"name": "dogurehberi.com", "category": "Turizm", "price": 240.0, "oldPrice": null, "discountPct": null, "da": 30, "pa": 41, "age": "13 yıl, 223 gün", "linkType": "Dofollow", "news": "Var", "badge": "DO", "type": "Normal"},
+  {"name": "turizmsayfasi.com", "category": "Turizm", "price": 1000.0, "oldPrice": null, "discountPct": null, "da": 57, "pa": 41, "age": "17 yıl, 337 gün", "linkType": "Dofollow", "news": "Var", "badge": "TU", "type": "Normal"},
+
+  // Yabancı Siteler
+  {"name": "newsmersin.com", "category": "Yabancı", "price": 190.0, "oldPrice": null, "discountPct": null, "da": 1, "pa": 5, "age": "0 yıl, 140 gün", "linkType": "Dofollow", "news": "Yok", "badge": "NE", "type": "Normal"},
+  {"name": "maduranewsmedia.com", "category": "Yabancı", "price": 400.0, "oldPrice": null, "discountPct": null, "da": 11, "pa": 26, "age": "0 yıl, 342 gün", "linkType": "Nofollow", "news": "Yok", "badge": "MA", "type": "Normal"},
+  {"name": "balinamedia.com", "category": "Yabancı", "price": 500.0, "oldPrice": null, "discountPct": null, "da": 54, "pa": 42, "age": "6 yıl, 89 gün", "linkType": "Dofollow", "news": "Yok", "badge": "BA", "type": "Normal"},
+  {"name": "dotimes.co.uk", "category": "Yabancı", "price": 1700.0, "oldPrice": null, "discountPct": null, "da": 42, "pa": 34, "age": "0 yıl, 256 gün", "linkType": "Dofollow", "news": "Yok", "badge": "DO", "type": "Normal"}
+];
+
+const CATEGORIES = ["Tümü", "Haber", "Teknoloji", "Ekonomi", "Blog", "Kadın", "Sağlık", "Eğitim", "Turizm", "Yabancı"];
+
+let cart = JSON.parse(localStorage.getItem('hadra_cart') || '[]');
+let currentRoute = 'home';
+let routeParam = null;
+let currentSlide = 0;
+let slideInterval = null;
+
+// Katalog Filtre Durumu (State)
+let filterState = {
+  category: 'Tümü',
+  specialType: 'all', // 'all', 'Yeni Eklenen', 'İndirimde', 'Çok Satan'
+  search: '',
+  priceRange: 'all',
+  news: 'all',
+  linkType: 'all',
+  sort: 'price_asc'
+};
+
+function saveCart() {
+  localStorage.setItem('hadra_cart', JSON.stringify(cart));
+  updateCartCount();
+}
+
+function updateCartCount() {
+  const n = cart.reduce((acc, item) => acc + (item.qty || 1), 0);
+  document.getElementById('cartN').innerText = n;
+}
+
+// Mobil Hamburger Menü Aç/Kapat Fonksiyonu
+function toggleMobileMenu(e) {
+  if (e) e.stopPropagation();
+  const nav = document.getElementById('mainNav');
+  const btn = document.getElementById('mobileMenuBtn');
+  const cp = document.getElementById('cartPreview');
+  if (cp) cp.hidden = true;
+
+  const isOpen = nav.classList.toggle('mobile-open');
+  if (btn) {
+    btn.setAttribute('aria-expanded', isOpen);
+    btn.innerText = isOpen ? '✕' : '☰';
+  }
+}
+
+function closeMobileMenu() {
+  const nav = document.getElementById('mainNav');
+  const btn = document.getElementById('mobileMenuBtn');
+  if (nav && nav.classList.contains('mobile-open')) {
+    nav.classList.remove('mobile-open');
+    if (btn) {
+      btn.setAttribute('aria-expanded', 'false');
+      btn.innerText = '☰';
+    }
+  }
+}
+
+// Herhangi bir kategoriye tıklandığında Tüm Siteler sayfasını o kategori seçili olarak açar
+function openCategory(catName, searchQuery = '') {
+  filterState.category = catName || 'Tümü';
+  filterState.specialType = 'all';
+  filterState.search = searchQuery || '';
+  go('sites');
+}
+
+// Yeni Eklenenler, İndirimdekiler, En Çok Satanlar "Tümü ↗" butonuna tıklandığında ilgili grubu mobil uyumlu açar
+function openSpecialList(typeKey) {
+  filterState.category = 'Tümü';
+  filterState.specialType = typeKey;
+  filterState.search = '';
+  go('sites');
+}
+
+function go(route, param = null) {
+  currentRoute = route;
+  routeParam = param;
+  window.scrollTo(0, 0);
+  if (route !== 'home' && slideInterval) {
+    clearInterval(slideInterval);
+  }
+  closeMobileMenu();
+  renderNav();
+  renderApp();
+  const cp = document.getElementById('cartPreview');
+  if (cp) cp.hidden = true;
+}
+
+function toggleCartPreview(e) {
+  e.stopPropagation();
+  closeMobileMenu();
+  const cp = document.getElementById('cartPreview');
+  if (cp.hidden) {
+    renderCartPreview();
+    cp.hidden = false;
+  } else {
+    cp.hidden = true;
+  }
+}
+
+window.addEventListener('click', (e) => {
+  const cp = document.getElementById('cartPreview');
+  const toggle = document.getElementById('cartToggle');
+  if (cp && !cp.hidden && !cp.contains(e.target) && !toggle.contains(e.target)) {
+    cp.hidden = true;
+  }
+
+  const nav = document.getElementById('mainNav');
+  const menuBtn = document.getElementById('mobileMenuBtn');
+  if (nav && nav.classList.contains('mobile-open') && !nav.contains(e.target) && (!menuBtn || !menuBtn.contains(e.target))) {
+    closeMobileMenu();
+  }
+});
+
+function renderNav() {
+  const nav = document.getElementById('nav');
+  const items = [
+    {id: 'home', label: 'Ana Sayfa'},
+    {id: 'sites', label: 'Tüm Siteler'},
+    {id: 'press', label: 'Basın Bülteni'},
+    {id: 'packages', label: 'Tanıtım Paketleri'},
+    {id: 'story', label: 'Story & Post'},
+    {id: 'footer', label: 'Footer Link'},
+    {id: 'account', label: '♟ Giriş Yap / Hesabım', mobileOnly: true},
+    {id: 'yonetim', label: 'Yönetim Paneli', mobileOnly: true}
+  ];
+  nav.innerHTML = items.map(i => `
+    <button class="${currentRoute === i.id ? 'active' : ''} ${i.mobileOnly ? 'mobile-only-auth' : ''}" onclick="${i.id === 'sites' ? "openCategory('Tümü')" : `go('${i.id}')`}">${i.label}</button>
+  `).join('');
+}
+
+function checkAndAddToCart(name, price, type = 'Tanıtım Yazısı') {
+  const existing = cart.find(i => i.name === name);
+  if (existing) {
+    showDuplicateModal(name, price, type);
+  } else {
+    addToCart(name, price, type);
+  }
+}
+
+function showDuplicateModal(name, price, type) {
+  let modal = document.getElementById('dupModal');
+  if (modal) modal.remove();
+  
+  modal = document.createElement('div');
+  modal.id = 'dupModal';
+  modal.className = 'modal-overlay';
+  modal.innerHTML = `
+    <div class="modal-box">
+      <div class="modal-icon">!</div>
+      <h3>Ürün zaten sepette</h3>
+      <p><b>${name}</b> ürününü daha önce sepete eklediniz. Yeni bir satır olarak tekrar eklemek ister misiniz?</p>
+      <div class="modal-actions">
+        <button class="modal-btn-cancel" onclick="document.getElementById('dupModal').remove()">İptal</button>
+        <button class="modal-btn-add" onclick="addToCart('${name}', ${price}, '${type}'); document.getElementById('dupModal').remove();">Tekrar Ekle</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+function addToCart(name, price, type = 'Tanıtım Yazısı') {
+  cart.push({name, price, type, qty: 1});
+  saveCart();
+  showToast(name);
+}
+
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  saveCart();
+  renderApp();
+  renderCartPreview();
+}
+
+function clearCartCompletely() {
+  cart = [];
+  saveCart();
+  renderApp();
+  renderCartPreview();
+}
+
+function showToast(name, customTitle = 'Ürün sepete eklendi.') {
+  let toast = document.getElementById('toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'toast';
+    toast.className = 'added-toast';
+    toast.innerHTML = `<div style="background:#10b981;color:white;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-weight:bold">✓</div><div><strong id="toastTitle" style="font-size:13px;display:block">Ürün sepete eklendi.</strong><small id="toastMsg" style="color:#6b7280"></small></div>`;
+    document.body.appendChild(toast);
+  }
+  document.getElementById('toastTitle').innerText = customTitle;
+  document.getElementById('toastMsg').innerText = name;
+  toast.classList.add('visible');
+  setTimeout(() => toast.classList.remove('visible'), 2500);
+}
+
+function renderCartPreview() {
+  const cp = document.getElementById('cartPreview');
+  if (!cart.length) {
+    cp.innerHTML = `<div class="preview-head"><strong>Sepetim</strong><span>0 ürün</span><button onclick="document.getElementById('cartPreview').hidden=true">✕</button></div><div class="preview-empty">Sepetinizde henüz ürün bulunmuyor.</div>`;
+    return;
+  }
+  const total = cart.reduce((acc, i) => acc + (i.price * (i.qty || 1)), 0);
+  const totalCount = cart.reduce((acc, i) => acc + (i.qty || 1), 0);
+  
+  cp.innerHTML = `
+    <div class="preview-head">
+      <strong>Sepetim</strong>
+      <span>${totalCount} ürün</span>
+      <button onclick="document.getElementById('cartPreview').hidden=true">✕</button>
+    </div>
+    <div class="preview-list">
+      ${cart.map((item, idx) => `
+        <div class="preview-item">
+          <div>
+            <a onclick="go('detail','${item.name}')">${item.name}</a>
+            <span class="preview-item-cat">${item.type}</span>
+          </div>
+          <div style="text-align:right">
+            <b>₺${(item.price * (item.qty || 1)).toLocaleString('tr-TR', {minimumFractionDigits:2})}</b>
+            <button class="preview-remove" onclick="removeFromCart(${idx})">kaldır</button>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="preview-bottom">
+      <div class="preview-total-row">
+        <span>Toplam Tutar</span>
+        <span style="color:#0d9488">₺${total.toLocaleString('tr-TR', {minimumFractionDigits:2})}</span>
+      </div>
+      <a class="preview-btn-go" onclick="go('cart')">Sepete Git →</a>
+      <button class="preview-btn-clear" onclick="clearCartCompletely()">Sepeti boşalt ✕</button>
+      <div class="preview-vat-note">Fiyatlara KDV dahil değildir. KDV sepet sayfasında hesaplanır.</div>
+    </div>
+  `;
+}
+
+function renderApp() {
+  const app = document.getElementById('app');
+  if (currentRoute === 'home') {
+    app.innerHTML = renderHome();
+    initSlider();
+  } else if (currentRoute === 'sites') {
+    app.innerHTML = renderSitesCatalogPage();
+  } else if (currentRoute === 'press') {
+    app.innerHTML = renderPressCatalog();
+  } else if (currentRoute === 'footer') {
+    app.innerHTML = renderFooterCatalog();
+  } else if (currentRoute === 'packages') {
+    app.innerHTML = renderPackagesCatalog();
+  } else if (currentRoute === 'story') {
+    app.innerHTML = renderStoryCatalog();
+  } else if (currentRoute === 'story-detail') {
+    app.innerHTML = renderStoryDetail(routeParam);
+  } else if (currentRoute === 'detail') {
+    app.innerHTML = renderDetail(routeParam);
+  } else if (currentRoute === 'cart') {
+    app.innerHTML = renderCartPage();
+  } else if (currentRoute === 'about') {
+    app.innerHTML = renderAbout();
+  } else if (currentRoute === 'contact') {
+    app.innerHTML = renderContact();
+  } else if (currentRoute === 'faq') {
+    app.innerHTML = renderFaqPage();
+  } else if (currentRoute === 'account') {
+    app.innerHTML = renderAccount();
+  } else {
+    app.innerHTML = renderHome();
+    initSlider();
+  }
+}
+
+function renderHome() {
+  const topSellers = SITES.filter(s => s.type === 'Çok Satan').slice(0, 5);
+  const discounts = SITES.filter(s => s.oldPrice || s.type === 'İndirimde').slice(0, 5);
+  const newAdded = SITES.filter(s => s.type === 'Yeni Eklenen').slice(0, 5);
+
+  return `
+    <div class="slider-container">
+      <div class="slide active">
+        <div>
+          <span class="slide-eyebrow">⚡ FLAŞ İNDİRİMLER</span>
+          <h1>Flaş indirimlerle <em>öne çıkın.</em></h1>
+          <p>Seçili yayıncı sitelerinde avantajlı tanıtım fırsatlarını keşfedin.</p>
+          <button class="btn" onclick="openSpecialList('İndirimde')">İndirimli Siteleri Gör →</button>
+        </div>
+        <div class="slide-right-card">
+          <div class="lightning">⚡</div>
+          <h3>FLAŞ İNDİRİM</h3>
+          <p>Seçili yayın fırsatları</p>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div>
+          <span class="slide-eyebrow">🚀 İNFLUENCER & STORY</span>
+          <h1>Sosyal medyada <em>güç katın.</em></h1>
+          <p>Instagram ve YouTube hesaplarında binlerce gerçek kullanıcıya ulaşın.</p>
+          <button class="btn" onclick="go('story')">Story Paketlerini İncele →</button>
+        </div>
+        <div class="slide-right-card" style="background:linear-gradient(135deg,#c53b74,#e84b8a);">
+          <div class="lightning">🔥</div>
+          <h3>STORY SATIŞ</h3>
+          <p>Yüksek etkileşimli hesaplar</p>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div>
+          <span class="slide-eyebrow">📈 SEO & BACKLINK</span>
+          <h1>Arama motorlarında <em>zirveye</em> çıkın.</h1>
+          <p>Güçlü footer link ve tanıtım yazısı paketleriyle otoritenizi artırın.</p>
+          <button class="btn" onclick="go('footer')">Footer Linkleri Keşfet →</button>
+        </div>
+        <div class="slide-right-card" style="background:linear-gradient(135deg,#24486d,#356a9e);">
+          <div class="lightning">⭐</div>
+          <h3>ÖMÜR BOYU LİNK</h3>
+          <p>Garantili SEO yükselişi</p>
+        </div>
+      </div>
+
+      <div class="slider-dots">
+        <span class="dot active" onclick="setSlide(0)">1</span>
+        <span class="dot" onclick="setSlide(1)">2</span>
+        <span class="dot" onclick="setSlide(2)">3</span>
+      </div>
+    </div>
+
+    <div class="home-search-panel">
+      <div class="search-box-row">
+        <span style="color:#168052;font-size:20px;">⚲</span>
+        <input type="text" id="homeSearchInput" placeholder="Hangi sitede yayın yapmak istersiniz?" onkeydown="if(event.key==='Enter') openCategory('Tümü', this.value)">
+        <button class="btn" onclick="openCategory('Tümü', document.getElementById('homeSearchInput').value)">Site Ara →</button>
+      </div>
+      <div class="home-cats">
+        <span class="home-cats-label">Kategoriler</span>
+        <button class="cat-pill" onclick="openCategory('Haber')">📰 Haber ↗</button>
+        <button class="cat-pill" onclick="openCategory('Teknoloji')">💻 Teknoloji ↗</button>
+        <button class="cat-pill" onclick="openCategory('Ekonomi')">📈 Ekonomi ↗</button>
+        <button class="cat-pill" onclick="openCategory('Blog')">✍️ Blog ↗</button>
+        <button class="cat-pill" onclick="openCategory('Kadın')">🌸 Kadın ↗</button>
+        <button class="cat-pill" onclick="openCategory('Sağlık')">+ Sağlık ↗</button>
+        <button class="cat-pill" onclick="openCategory('Eğitim')">🎓 Eğitim ↗</button>
+        <button class="cat-pill" onclick="openCategory('Turizm')">✈️ Turizm ↗</button>
+        <button class="cat-pill" onclick="openCategory('Yabancı')">🌍 Yabancı ↗</button>
+      </div>
+    </div>
+
+    <div class="featured-section">
+      <div class="grid3">
+        <div class="panel ranking-panel">
+          <div class="list-title">
+            <h3><span class="list-heading-icon">✳</span> Yeni Eklenenler</h3>
+            <button class="all-inline" onclick="openSpecialList('Yeni Eklenen')">Tümü ↗</button>
+          </div>
+          <div>
+            ${newAdded.map((s, idx) => `
+              <div class="rank-row">
+                <span class="rank-number">0${idx+1}</span>
+                <a class="rank-site" onclick="go('detail','${s.name}')">${s.name}</a>
+                <div class="rank-actions">
+                  <div class="rank-pricing">
+                    <div class="price-line"><strong>₺${s.price.toLocaleString('tr-TR', {minimumFractionDigits:2})}</strong><small>+KDV</small></div>
+                  </div>
+                  <button class="rank-add" onclick="checkAndAddToCart('${s.name}',${s.price},'${s.category}')">+</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="panel ranking-panel">
+          <div class="list-title">
+            <h3><span class="list-heading-icon">⚡</span> İndirimdekiler</h3>
+            <button class="all-inline" onclick="openSpecialList('İndirimde')">Tümü ↗</button>
+          </div>
+          <div>
+            ${discounts.map((s, idx) => `
+              <div class="rank-row">
+                <span class="rank-number">0${idx+1}</span>
+                <a class="rank-site" onclick="go('detail','${s.name}')">${s.name}</a>
+                <div class="rank-actions">
+                  <div class="rank-pricing">
+                    ${s.oldPrice ? `<div style="display:flex;align-items:center;gap:4px;justify-content:flex-end"><small class="old">₺${s.oldPrice.toLocaleString('tr-TR', {minimumFractionDigits:2})}</small>${s.discountPct ? `<span style="background:#fee2e2;color:#dc2626;font-size:9.5px;font-weight:800;padding:1px 4px;border-radius:4px">${s.discountPct}</span>` : ''}</div>` : ''}
+                    <div class="price-line"><strong>₺${s.price.toLocaleString('tr-TR', {minimumFractionDigits:2})}</strong><small>+KDV</small></div>
+                  </div>
+                  <button class="rank-add" onclick="checkAndAddToCart('${s.name}',${s.price},'${s.category}')">+</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="panel ranking-panel">
+          <div class="list-title">
+            <h3><span class="list-heading-icon">⏳</span> En Çok Satanlar</h3>
+            <button class="all-inline" onclick="openSpecialList('Çok Satan')">Tümü ↗</button>
+          </div>
+          <div>
+            ${topSellers.map((s, idx) => `
+              <div class="rank-row">
+                <span class="rank-number">0${idx+1}</span>
+                <a class="rank-site" onclick="go('detail','${s.name}')">${s.name}</a>
+                <div class="rank-actions">
+                  <div class="rank-pricing">
+                    <div class="price-line"><strong>₺${s.price.toLocaleString('tr-TR', {minimumFractionDigits:2})}</strong><small>+KDV</small></div>
+                  </div>
+                  <button class="rank-add" onclick="checkAndAddToCart('${s.name}',${s.price},'${s.category}')">+</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-showcase">
+      <div class="faq-showcase-inner">
+        <h2>Sık Sorulan Sorular</h2>
+        <div class="faq-subtitle">Hadra Ajans dijital yayıncılık süreçleri hakkında merak edilenler</div>
+        <div class="faq-two-columns">
+          <div>
+            <details class="faq-line">
+              <summary>Tanıtım yazısı ne kadar sürede yayınlanır? <span class="faq-plus">+</span></summary>
+              <p>Sipariş onayınızın ardından yazınız editörler tarafından incelenir ve ortalama 24 ila 48 saat içerisinde seçtiğiniz yayınlarda aktif hale getirilir.</p>
+            </details>
+            <details class="faq-line">
+              <summary>Yayınlanan yazılar kalıcı mı? <span class="faq-plus">+</span></summary>
+              <p>Tüm tanıtım yazısı ve bülten yayınlarımız en az 1 yıl garanti kapsamında olup, aksi belirtilmediği sürece ömür boyu yayında kalmaktadır.</p>
+            </details>
+          </div>
+          <div>
+            <details class="faq-line">
+              <summary>Faturam kesiliyor mu? <span class="faq-plus">+</span></summary>
+              <p>Evet, tüm kurumsal ve bireysel siparişleriniz için yasal mevzuata uygun e-fatura / e-arşiv faturanız sistemde kayıtlı e-posta adresinize gönderilir.</p>
+            </details>
+            <details class="faq-line">
+              <summary>Ödeme seçenekleri nelerdir? <span class="faq-plus">+</span></summary>
+              <p>Kredi kartı, banka kartı veya havale / EFT seçenekleri ile güvenli bir şekilde ödemenizi gerçekleştirebilirsiniz.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function initSlider() {
+  if (slideInterval) clearInterval(slideInterval);
+  slideInterval = setInterval(() => {
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    if (!slides.length) return;
+    slides[currentSlide].classList.remove('active');
+    dots[currentSlide].classList.remove('active');
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].classList.add('active');
+    dots[currentSlide].classList.add('active');
+  }, 4500);
+}
+
+function setSlide(index) {
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+  if (!slides.length) return;
+  slides[currentSlide].classList.remove('active');
+  dots[currentSlide].classList.remove('active');
+  currentSlide = index;
+  slides[currentSlide].classList.add('active');
+  dots[currentSlide].classList.add('active');
+  initSlider();
+}
+
+// Filtrelenmiş Siteleri Hesapla
+
+let catalogVisibleLimit = 45;
+
+function getFilteredSites() {
+  let list = [...SITES];
+
+  if (filterState.specialType && filterState.specialType !== 'all') {
+    if (filterState.specialType === 'İndirimde') {
+      list = list.filter(s => s.oldPrice || s.type === 'İndirimde');
+    } else {
+      list = list.filter(s => s.type === filterState.specialType);
+    }
+  }
+
+  if (filterState.category && filterState.category !== 'Tümü') {
+    list = list.filter(s => s.category.toLowerCase() === filterState.category.toLowerCase());
+  }
+
+  if (filterState.search.trim() !== '') {
+    const q = filterState.search.toLowerCase().trim();
+    list = list.filter(s => s.name.toLowerCase().includes(q) || s.category.toLowerCase().includes(q));
+  }
+
+  if (filterState.priceRange === '0-100') {
+    list = list.filter(s => s.price <= 100);
+  } else if (filterState.priceRange === '100-300') {
+    list = list.filter(s => s.price > 100 && s.price <= 300);
+  } else if (filterState.priceRange === '300-700') {
+    list = list.filter(s => s.price > 300 && s.price <= 700);
+  } else if (filterState.priceRange === '700-1500') {
+    list = list.filter(s => s.price > 700 && s.price <= 1500);
+  } else if (filterState.priceRange === '1500+') {
+    list = list.filter(s => s.price > 1500);
+  }
+
+  if (filterState.news !== 'all') {
+    list = list.filter(s => s.news === filterState.news);
+  }
+
+  if (filterState.linkType !== 'all') {
+    list = list.filter(s => s.linkType === filterState.linkType);
+  }
+
+  if (filterState.sort === 'price_asc') {
+    list.sort((a,b) => a.price - b.price);
+  } else if (filterState.sort === 'price_desc') {
+    list.sort((a,b) => b.price - a.price);
+  } else if (filterState.sort === 'da_desc') {
+    list.sort((a,b) => (parseInt(b.da)||0) - (parseInt(a.da)||0));
+  } else if (filterState.sort === 'da_asc') {
+    list.sort((a,b) => (parseInt(a.da)||0) - (parseInt(b.da)||0));
+  } else if (filterState.sort === 'pa_desc') {
+    list.sort((a,b) => (parseInt(b.pa)||0) - (parseInt(a.pa)||0));
+  } else if (filterState.sort === 'pa_asc') {
+    list.sort((a,b) => (parseInt(a.pa)||0) - (parseInt(b.pa)||0));
+  } else {
+    // Default: price ascending as requested ("fiyat küçükten büyüğe açılsın")
+    list.sort((a,b) => a.price - b.price);
+  }
+
+  return list;
+}
+
+function handleTableSort(columnKey) {
+  if (columnKey === 'price') {
+    if (filterState.sort === 'price_asc') filterState.sort = 'price_desc';
+    else filterState.sort = 'price_asc';
+  } else if (columnKey === 'da') {
+    if (filterState.sort === 'da_desc') filterState.sort = 'da_asc';
+    else filterState.sort = 'da_desc';
+  } else if (columnKey === 'pa') {
+    if (filterState.sort === 'pa_desc') filterState.sort = 'pa_asc';
+    else filterState.sort = 'pa_desc';
+  }
+  catalogVisibleLimit = 45;
+  updateCatalogView();
+}
+
+function loadMoreCatalog() {
+  catalogVisibleLimit += 45;
+  updateCatalogView();
+}
+
+
+function getSpecialTypeTitle(type) {
+  if (type === 'Yeni Eklenen') return 'Yeni Eklenen Siteler';
+  if (type === 'İndirimde') return 'İndirimdeki Siteler';
+  if (type === 'Çok Satan') return 'En Çok Satan Siteler';
+  return 'Tüm Siteler';
+}
+
+// Tüm Siteler & Kategori & Özel Grup Katalog Sayfası (Tam Mobil Uyumlu)
+function renderSitesCatalogPage(eyebrowText = 'TÜM SİTELER', subText = 'Yayıncıları filtreleyin, karşılaştırın ve ihtiyacınıza uygun seçenekleri inceleyin.') {
+  const filteredList = getFilteredSites();
+  const hasActiveCat = filterState.category && filterState.category !== 'Tümü';
+  const hasSpecialType = filterState.specialType && filterState.specialType !== 'all';
+  const boxHeading = hasSpecialType ? getSpecialTypeTitle(filterState.specialType) : 'Tüm Siteler';
+
+  return `
+    <div class="catalog-banner">
+      <div class="catalog-banner-eyebrow">• ${hasSpecialType ? boxHeading.toUpperCase() : eyebrowText}</div>
+      <h1>Markanız için doğru <em>yayıncıyı keşfedin.</em></h1>
+      <p>${subText}</p>
+    </div>
+
+    <div class="catalog-box">
+      <div class="catalog-box-top">
+        <h2 id="catalogBoxTitle">${boxHeading}</h2>
+        <span>Toplam <b id="totalCountText">${filteredList.length}</b> site listeleniyor</span>
+      </div>
+
+      <div id="activeCatChipWrap" class="active-chips-row">
+        ${hasSpecialType ? `
+          <div class="active-cat-tag" onclick="clearSpecialType()" title="Özel Liste Filtresini Kaldır">
+            Liste: ${boxHeading} <span>×</span>
+          </div>
+        ` : ''}
+        ${hasActiveCat ? `
+          <div class="active-cat-tag" onclick="selectCatalogCategory('Tümü')" title="Kategoriyi Kaldır">
+            Kategori: ${filterState.category} <span>×</span>
+          </div>
+        ` : ''}
+      </div>
+
+      <div class="catalog-search-input">
+        <span>⚲</span>
+        <input type="text" id="catSearchInput" value="${filterState.search}" placeholder="Web site ara..." oninput="onCatalogSearchInput(this.value)">
+      </div>
+
+      <div class="catalog-selects-grid">
+        <select id="selPrice" onchange="filterState.priceRange=this.value; updateCatalogView()">
+          <option value="all" ${filterState.priceRange==='all'?'selected':''}>Fiyat (Hepsi)</option>
+          <option value="0-100" ${filterState.priceRange==='0-100'?'selected':''}>0 - 100 ₺</option>
+          <option value="100-300" ${filterState.priceRange==='100-300'?'selected':''}>100 - 300 ₺</option>
+          <option value="300-700" ${filterState.priceRange==='300-700'?'selected':''}>300 - 700 ₺</option>
+          <option value="700-1500" ${filterState.priceRange==='700-1500'?'selected':''}>700 - 1500 ₺</option>
+          <option value="1500+" ${filterState.priceRange==='1500+'?'selected':''}>1500 ₺ ve üzeri</option>
+        </select>
+
+        <select id="selNews" onchange="filterState.news=this.value; updateCatalogView()">
+          <option value="all" ${filterState.news==='all'?'selected':''}>News (Hepsi)</option>
+          <option value="Var" ${filterState.news==='Var'?'selected':''}>News Kayıtlı (Var)</option>
+          <option value="Yok" ${filterState.news==='Yok'?'selected':''}>News Kayıtsız (Yok)</option>
+        </select>
+
+        <select id="selLink" onchange="filterState.linkType=this.value; updateCatalogView()">
+          <option value="all" ${filterState.linkType==='all'?'selected':''}>Link Yapısı (Hepsi)</option>
+          <option value="Dofollow" ${filterState.linkType==='Dofollow'?'selected':''}>Dofollow</option>
+          <option value="Nofollow" ${filterState.linkType==='Nofollow'?'selected':''}>Nofollow</option>
+        </select>
+
+                <select id="selSort" onchange="filterState.sort=this.value; updateCatalogView()">
+          <option value="default" ${filterState.sort==='default'?'selected':''}>Sıralama: Varsayılan</option>
+          <option value="price_asc" ${filterState.sort==='price_asc'?'selected':''}>Fiyat (Artan)</option>
+          <option value="price_desc" ${filterState.sort==='price_desc'?'selected':''}>Fiyat (Azalan)</option>
+          <option value="da_desc" ${filterState.sort==='da_desc'?'selected':''}>DA (Azalan)</option>
+          <option value="da_asc" ${filterState.sort==='da_asc'?'selected':''}>DA (Artan)</option>
+          <option value="pa_desc" ${filterState.sort==='pa_desc'?'selected':''}>PA (Azalan)</option>
+          <option value="pa_asc" ${filterState.sort==='pa_asc'?'selected':''}>PA (Artan)</option>
+        </select>
+      </div>
+
+      <div class="catalog-filter-btns">
+        <button class="btn-reset" onclick="resetCatalogFilters()">Sıfırla</button>
+        <button class="btn-apply" onclick="updateCatalogView()">⚲ Filtrele</button>
+      </div>
+    </div>
+
+    <div class="catalog-pills-bar">
+      <div class="catalog-pills-list" id="catalogCategoryPills">
+        ${CATEGORIES.map(c => `
+          <button class="cat-tab-pill ${filterState.category === c ? 'active' : ''}" onclick="selectCatalogCategory('${c}')">${c}</button>
+        `).join('')}
+      </div>
+      <button class="btn-excel" onclick="exportCatalogCSV()">⇩ Excel / CSV indir</button>
+    </div>
+
+    <div class="tablewrap responsive-catalog-wrap">
+      <table class="responsive-catalog-table">
+        <thead>
+          <tr>
+            <th>SİTE ADI</th>
+            <th>LİNK TİPİ</th>
+            <th>NEWS</th>
+            <th>YAŞ</th>
+            <th style="cursor:pointer" onclick="handleTableSort('da')">DA ↕</th>
+            <th style="cursor:pointer" onclick="handleTableSort('pa')">PA ↕</th>
+            <th style="cursor:pointer;text-align:right" onclick="handleTableSort('price')">FİYAT ↕</th>
+            <th style="text-align:right">AKSİYON</th>
+          </tr>
+        </thead>
+        <tbody id="catalogTableBody">
+          ${renderCatalogTableRows(filteredList)}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+// Site altındaki "Normal" yazısı kaldırıldı, sadece özel etiketler varsa gösteriliyor
+function renderCatalogTableRows(list) {
+  if (!list.length) {
+    return `<tr><td colspan="8" style="text-align:center;padding:45px;color:#8492a2;grid-column:1/-1">Arama ve filtre kriterlerinize uygun site bulunamadı.</td></tr>`;
+  }
+  return list.map(s => {
+    const subLabel = (s.type && s.type !== 'Normal') ? `${s.category} • ${s.type}` : s.category;
+    return `
+      <tr>
+        <td class="cell-main" data-label="SİTE ADI">
+          <div class="site-cell">
+            <div class="site-badge-box">${s.badge || s.name.substring(0,2).toUpperCase()}</div>
+            <div>
+              <span class="site-name-link" onclick="go('detail','${s.name}')">${s.name}</span>
+              <small style="display:block;color:#8995a4;font-size:11px;margin-top:2px">${subLabel}</small>
+            </div>
+          </div>
+        </td>
+        <td data-label="LİNK TİPİ">
+          <span class="${s.linkType === 'Dofollow' ? 'pill-dofollow' : 'pill-nofollow'}">${s.linkType}</span>
+        </td>
+        <td data-label="NEWS">
+          <span class="${s.news === 'Var' ? 'pill-news-var' : 'pill-news-yok'}">${s.news === 'Var' ? '✓ Var' : '✕ Yok'}</span>
+        </td>
+        <td data-label="YAŞ">${s.age || '—'}</td>
+        <td data-label="DA"><b>${s.da || '—'}</b></td>
+        <td data-label="PA"><b>${s.pa || '—'}</b></td>
+        <td class="price-cell" data-label="FİYAT">
+          <div style="text-align:right">
+            ${s.oldPrice ? `<div style="display:flex;align-items:center;justify-content:flex-end;gap:5px;margin-bottom:2px"><small class="old">₺${s.oldPrice.toLocaleString('tr-TR', {minimumFractionDigits:2})}</small>${s.discountPct ? `<span style="background:#fee2e2;color:#dc2626;font-size:10px;font-weight:800;padding:1px 5px;border-radius:4px">${s.discountPct}</span>` : ''}</div>` : ''}
+            <div><b>₺${s.price.toLocaleString('tr-TR', {minimumFractionDigits:2})}</b><small>+KDV</small></div>
+          </div>
+        </td>
+        <td class="cell-action" style="text-align:right">
+          <button class="btn-table-add" onclick="checkAndAddToCart('${s.name}',${s.price},'${s.category}')">⊕ Sepete Ekle</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function selectCatalogCategory(cat) {
+  filterState.category = cat;
+  updateCatalogView();
+}
+
+function clearSpecialType() {
+  filterState.specialType = 'all';
+  updateCatalogView();
+}
+
+function onCatalogSearchInput(val) {
+  filterState.search = val;
+  updateCatalogView();
+}
+
+function resetCatalogFilters() {
+  filterState = {
+    category: 'Tümü',
+    specialType: 'all',
+    search: '',
+    priceRange: 'all',
+    news: 'all',
+    linkType: 'all',
+    sort: 'default'
+  };
+  renderApp();
+}
+
+function updateCatalogView() {
+  const filteredList = getFilteredSites();
+  const tbody = document.getElementById('catalogTableBody');
+  const countEl = document.getElementById('totalCountText');
+  const chipWrap = document.getElementById('activeCatChipWrap');
+  const pillsWrap = document.getElementById('catalogCategoryPills');
+  const titleEl = document.getElementById('catalogBoxTitle');
+
+  const hasActiveCat = filterState.category && filterState.category !== 'Tümü';
+  const hasSpecialType = filterState.specialType && filterState.specialType !== 'all';
+  const boxHeading = hasSpecialType ? getSpecialTypeTitle(filterState.specialType) : 'Tüm Siteler';
+
+  if (titleEl) titleEl.innerText = boxHeading;
+  if (tbody) tbody.innerHTML = renderCatalogTableRows(filteredList);
+  if (countEl) countEl.innerText = filteredList.length;
+
+  if (chipWrap) {
+    chipWrap.innerHTML = `
+      ${hasSpecialType ? `
+        <div class="active-cat-tag" onclick="clearSpecialType()" title="Özel Liste Filtresini Kaldır">
+          Liste: ${boxHeading} <span>×</span>
+        </div>
+      ` : ''}
+      ${hasActiveCat ? `
+        <div class="active-cat-tag" onclick="selectCatalogCategory('Tümü')" title="Kategoriyi Kaldır">
+          Kategori: ${filterState.category} <span>×</span>
+        </div>
+      ` : ''}
+    `;
+  }
+
+  if (pillsWrap) {
+    pillsWrap.innerHTML = CATEGORIES.map(c => `
+      <button class="cat-tab-pill ${filterState.category === c ? 'active' : ''}" onclick="selectCatalogCategory('${c}')">${c}</button>
+    `).join('');
+  }
+}
+
+function exportCatalogCSV() {
+  const list = getFilteredSites();
+  const headers = ["Site Adı", "Kategori", "Link Tipi", "News", "Yaş", "DA", "PA", "Fiyat (TL)"];
+  const rows = list.map(s => [s.name, s.category, s.linkType, s.news, `"${s.age}"`, s.da, s.pa, s.price]);
+  const csvContent = "data:text/csv;charset=utf-8,\uFEFF" + [headers.join(";"), ...rows.map(r => r.join(";"))].join("\n");
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", `hadra_ajans_siteler_${filterState.category.toLowerCase()}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+}
+
+function renderFooterCatalog() {
+  const footerSites = [
+    {name: "haberbizde.net", age: "16 yıl, 208 gün", da: 7, pa: 40, price: 150.0},
+    {name: "haberekibi.com", age: "—", da: "—", pa: "—", price: 150.0},
+    {name: "nesilhaber.com", age: "—", da: "—", pa: "—", price: 150.0},
+    {name: "gundem33.com.tr", age: "3 yıl, 310 gün", da: 6, pa: 23, price: 250.0},
+    {name: "haber01.com.tr", age: "3 yıl, 321 gün", da: 8, pa: 24, price: 250.0}
+  ];
+  return `
+    <div class="catalog-banner">
+      <div class="catalog-banner-eyebrow">• FOOTER LİNKLER</div>
+      <h1>Kaliteli sitelerde <em>footer link yayını</em></h1>
+      <p>Footer alanında link yayını için uygun siteleri filtreleyin, karşılaştırın ve bütçenize en uygun seçenekleri sepete ekleyin.</p>
+    </div>
+    <div class="catalog-box">
+      <div class="catalog-box-top">
+        <h2>Footer Link Siteleri</h2>
+        <span>Toplam <b>${footerSites.length}</b> site listeleniyor</span>
+      </div>
+      <div class="catalog-search-input">
+        <span>⚲</span>
+        <input type="text" placeholder="Web site ara...">
+      </div>
+      <div class="catalog-selects-grid" style="grid-template-columns:repeat(2,1fr)">
+        <select><option>Fiyat (Hepsi)</option></select>
+        <select><option>Sıralama: Varsayılan</option></select>
+      </div>
+    </div>
+    <div class="tablewrap responsive-catalog-wrap">
+      <table class="responsive-catalog-table">
+        <thead>
+          <tr>
+            <th>SİTE ADI</th>
+            <th>YAŞ</th>
+            <th>DA</th>
+            <th>PA</th>
+            <th>SÜRE / FİYAT</th>
+            <th style="text-align:right">AKSİYON</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${footerSites.map(f => `
+            <tr>
+              <td class="cell-main" data-label="SİTE ADI">
+                <div class="site-cell">
+                  <div class="site-badge-box">${f.name.substring(0,2).toUpperCase()}</div>
+                  <strong class="site-name-link" onclick="go('detail','${f.name}')">${f.name}</strong>
+                </div>
+              </td>
+              <td data-label="YAŞ">${f.age}</td>
+              <td data-label="DA"><b>${f.da}</b></td>
+              <td data-label="PA"><b>${f.pa}</b></td>
+              <td data-label="SÜRE / FİYAT" style="grid-column:1/-1">
+                <select style="padding:7px 10px;border-radius:8px;border:1px solid #d1d5db;font-size:12px">
+                  <option>1 Aylık • ₺${f.price.toFixed(2)} +KDV</option>
+                  <option>3 Aylık • ₺${(f.price*2.3).toFixed(2)} +KDV</option>
+                  <option>6 Aylık • ₺${(f.price*3.6).toFixed(2)} +KDV</option>
+                  <option>12 Aylık • ₺${(f.price*6.5).toFixed(2)} +KDV</option>
+                </select>
+              </td>
+              <td class="cell-action" style="text-align:right">
+                <button class="btn-table-add" onclick="checkAndAddToCart('${f.name}', ${f.price}, 'Footer Link')">⊕ Sepete Ekle</button>
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function renderPackagesCatalog() {
+  const starterSites = [
+    {s: "aydingazetesi.net", da: 13, pa: 34, news: "Var"},
+    {s: "ekhaber.net", da: 6, pa: 37, news: "Var"},
+    {s: "gorushaber.com", da: 9, pa: 26, news: "Var"},
+    {s: "Gundemkulis.com", da: 11, pa: 40, news: "Var"},
+    {s: "haber01.com.tr", da: 9, pa: 23, news: "Var"},
+    {s: "46haberler.com", da: 9, pa: 30, news: "Var"},
+    {s: "ajansdolunay.com", da: 16, pa: 43, news: "Var"},
+    {s: "basinbultenin.com", da: 10, pa: 20, news: "Var"},
+    {s: "buhaber.com.tr", da: 8, pa: 19, news: "Var"},
+    {s: "emlakredi.com", da: 18, pa: 41, news: "Var"}
+  ];
+  const bultenSites = [
+    {s: "46haberler.com", da: 9, pa: 30, news: "Var"},
+    {s: "akyazisonhaber.com", da: 10, pa: 31, news: "Var"},
+    {s: "asafhaber.com", da: 52, pa: 35, news: "Var"},
+    {s: "ataturkhaber.com", da: 10, pa: 38, news: "Var"},
+    {s: "aydingazetesi.net", da: 13, pa: 34, news: "Var"},
+    {s: "ekhaber.net", da: 6, pa: 37, news: "Var"},
+    {s: "gorushaber.com", da: 9, pa: 26, news: "Var"},
+    {s: "Gundemkulis.com", da: 11, pa: 40, news: "Var"},
+    {s: "haber01.com.tr", da: 9, pa: 23, news: "Var"},
+    {s: "ajansdolunay.com", da: 16, pa: 43, news: "Var"},
+    {s: "basinbultenin.com", da: 10, pa: 20, news: "Var"},
+    {s: "buhaber.com.tr", da: 8, pa: 19, news: "Var"},
+    {s: "emlakredi.com", da: 18, pa: 41, news: "Var"},
+    {s: "gazetemsanat.com", da: 6, pa: 28, news: "Var"},
+    {s: "Gunlukveri.com", da: 10, pa: 23, news: "Var"},
+    {s: "haberayaz.com", da: 14, pa: 43, news: "Var"},
+    {s: "habercep.com", da: 10, pa: 39, news: "Yok"},
+    {s: "idealindirim.com", da: 10, pa: 36, news: "Yok"},
+    {s: "idealyasam.com", da: 8, pa: 38, news: "Yok"},
+    {s: "yukselishaber.com", da: 10, pa: 34, news: "Yok"}
+  ];
+  const linkSites = [
+    {s: "halkgazetesi.net", da: 16, pa: 40, news: "Var"},
+    {s: "yukselishaber.com", da: 10, pa: 34, news: "Yok"},
+    {s: "hayatpedi.com", da: 19, pa: 35, news: "Yok"},
+    {s: "sanikhaber.com", da: 8, pa: 39, news: "Var"},
+    {s: "gercekmagazin.com", da: 12, pa: 30, news: "Var"},
+    {s: "lifemagazin.net", da: 17, pa: 29, news: "Var"},
+    {s: "kadinfoni.com", da: 10, pa: 27, news: "Yok"},
+    {s: "modayelkeni.com", da: 10, pa: 27, news: "Yok"},
+    {s: "teknolojipusulasi.com", da: 17, pa: 26, news: "Var"},
+    {s: "dijitalteknoloji.net", da: 24, pa: 35, news: "Var"},
+    {s: "idealindirim.com", da: 10, pa: 36, news: "Yok"},
+    {s: "teknocini.com", da: 5, pa: 38, news: "Yok"},
+    {s: "teknobilgi.com", da: 56, pa: 42, news: "Yok"},
+    {s: "oyunhabertr.com", "da": 18, "pa": 38, "news": "Var"},
+    {s: "webhane.com", "da": 56, "pa": 37, "news": "Var"}
+  ];
+
+  return `
+    <div class="packages-intro">
+      <span class="catalog-banner-eyebrow">• TANITIM PAKETLERİ</span>
+      <h1>Hazır tanıtım paketleri ile dakikalar içinde yayında</h1>
+      <p>Starter outreach'ten kurumsal SEO boost'a kadar — hedefinize uygun paketi seçin, biz yayın sürecini yönetelim. Tüm paketlerde 1 yıl link garantisi ve koşulsuz iade.</p>
+      <div class="packages-features">
+        <span>✓ 1 yıl link garantisi</span>
+        <span>🕒 1-7 gün yayın</span>
+        <span>✓ Koşulsuz iade</span>
+      </div>
+    </div>
+
+    <div class="pkg-grid">
+      ${renderSinglePkgCard("Starter Outreach Paketi (8 Site)", 399, starterSites)}
+      ${renderSinglePkgCard("20 Sitede Basın Bülteni Linksiz", 400, bultenSites)}
+      ${renderSinglePkgCard("Link Building Paketi (15 Adet)", 450, linkSites)}
+    </div>
+  `;
+}
+
+function renderSinglePkgCard(title, price, sitesArr) {
+  const previewSites = sitesArr.slice(0, 5);
+  const extraSites = sitesArr.slice(5);
+
+  return `
+    <div class="pkg-card">
+      <div class="pkg-card-top">
+        <h3>${title}</h3>
+        <div class="pkg-star">★</div>
+      </div>
+      <table class="pkg-table">
+        <thead><tr><th>Site</th><th>Da</th><th>Pa</th><th>News</th></tr></thead>
+        <tbody>
+          ${previewSites.map(i=>`<tr><td><b>${i.s}</b></td><td>${i.da}</td><td>${i.pa}</td><td>${i.news}</td></tr>`).join('')}
+        </tbody>
+      </table>
+      ${extraSites.length > 0 ? `
+        <div class="pkg-expanded-area" style="display:none;margin-bottom:10px">
+          <table class="pkg-table" style="border-top:1px dashed #e5e7eb">
+            <tbody>
+              ${extraSites.map(i=>`<tr><td><b>${i.s}</b></td><td>${i.da}</td><td>${i.pa}</td><td>${i.news}</td></tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+        <small class="pkg-more" onclick="togglePackageExpand(this)">Tümünü görmek için tıklayın ↗</small>
+      ` : ''}
+      <div class="pkg-bottom">
+        <div class="pkg-price">${price.toFixed(2).replace('.', ',')}₺ <small>+KDV</small></div>
+        <button class="pkg-btn" onclick="checkAndAddToCart('${title}', ${price}, 'Paket')">Sepete Ekle</button>
+      </div>
+    </div>
+  `;
+}
+
+function togglePackageExpand(el) {
+  const card = el.closest('.pkg-card');
+  const expandedArea = card.querySelector('.pkg-expanded-area');
+  if (!expandedArea) return;
+
+  const isOpen = expandedArea.style.display !== 'none';
+  if (isOpen) {
+    expandedArea.style.display = 'none';
+    el.innerText = 'Tümünü görmek için tıklayın ↗';
+  } else {
+    expandedArea.style.display = 'block';
+    el.innerText = 'Listeyi daralt ↖';
+  }
+}
+
+
+function renderStoryCatalog() {
+  const stories = [
+    {name: "Haber Gazetesi", platform: "Facebook", type: "fb", followers: "98K takipçi", post: "1.200,00₺", story: 500.0},
+    {name: "menemen.havadis", platform: "Instagram", type: "ig", followers: "33K takipçi", post: "1.399,97₺", story: 500.0},
+    {name: "bergamakonusuyor", platform: "Instagram", type: "ig", followers: "4.6K takipçi", post: "1.400,00₺", story: 500.0}
+  ];
+  return `
+    <div class="catalog-banner">
+      <div class="catalog-banner-eyebrow">• STORY SATIŞ</div>
+      <h1>Influencer hesaplarından <em>story ve post reklamı</em></h1>
+      <p>Instagram, TikTok, YouTube, X ve Facebook üzerinden binlerce gerçek takipçiye erişim.</p>
+    </div>
+    <div class="catalog-box">
+      <div class="catalog-box-top">
+        <h2>Tüm Hesaplar</h2>
+        <span>Toplam <b>${stories.length}</b> hesap listeleniyor</span>
+      </div>
+      <div class="catalog-search-input">
+        <span>⚲</span>
+        <input type="text" placeholder="Hesap adı ara...">
+      </div>
+      <div class="catalog-selects-grid">
+        <select><option>Platform (Hepsi)</option></select>
+        <select><option>Takipçi (Hepsi)</option></select>
+        <select><option>Story Fiyatı (Hepsi)</option></select>
+        <select><option>Sıralama: Varsayılan</option></select>
+      </div>
+    </div>
+    <div class="tablewrap responsive-catalog-wrap">
+      <table class="responsive-catalog-table">
+        <thead>
+          <tr>
+            <th>SOSYAL MEDYA ADI</th>
+            <th>TAKİPÇİ SAYISI</th>
+            <th>POST FİYATI</th>
+            <th>STORY FİYATI</th>
+            <th>PLATFORM</th>
+            <th style="text-align:right">AKSİYON</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${stories.map(st => `
+            <tr>
+              <td class="cell-main" data-label="SOSYAL MEDYA ADI"><strong>${st.name}</strong></td>
+              <td data-label="TAKİPÇİ">${st.followers}</td>
+              <td data-label="POST FİYATI"><span><b>${st.post}</b> <small>+KDV</small></span></td>
+              <td data-label="STORY FİYATI"><span><b>₺${st.story.toFixed(2)}</b> <small>+KDV</small></span></td>
+              <td data-label="PLATFORM"><span style="background:${st.type==='fb'?'#2563eb':'linear-gradient(135deg,#f59e0b,#db2777)'};color:white;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700">${st.platform}</span></td>
+              <td class="cell-action" style="text-align:right">
+                <button class="btn-table-add" onclick="go('story-detail', '${st.name}')">◉ İncele</button>
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function renderStoryDetail(accountName) {
+  const name = accountName || "Haber Gazetesi";
+  return `
+    <div class="breadcrumbs"><a onclick="go('home')">Ana Sayfa</a> / <a onclick="go('story')">Story & Post</a> / <strong>${name}</strong></div>
+    
+    <div class="panel" style="margin-bottom:20px;padding:25px">
+      <div style="display:flex;align-items:center;gap:15px;margin-bottom:15px">
+        <div style="width:60px;height:60px;border-radius:50%;background:#1d4ed8;color:white;display:grid;place-items:center;font-weight:800;font-size:20px">HG</div>
+        <div>
+          <h1 style="margin:0 0 5px;font-size:24px">${name}</h1>
+          <div style="display:flex;gap:8px">
+            <span style="background:#2563eb;color:white;padding:2px 8px;border-radius:4px;font-size:11px">f Facebook</span>
+            <span style="background:#f3f4f6;color:#374151;padding:2px 8px;border-radius:4px;font-size:11px">👥 98K takipçi</span>
+          </div>
+        </div>
+      </div>
+      <p style="color:#6b7280;font-size:13px;line-height:1.6">${name} hesabında markanız için story veya post siparişi verebilirsiniz. Sepete ekledikten sonra görsel/metin briefinizi paylaşın.</p>
+    </div>
+
+    <div class="detail-layout">
+      <div class="panel">
+        <h3>Hesap Verileri</h3>
+        <div class="metricgrid" style="margin-top:15px">
+          <div class="metric"><small>PLATFORM</small><b>Facebook</b></div>
+          <div class="metric"><small>TAKİPÇİ</small><b>98K</b></div>
+        </div>
+        <h3 style="margin-top:25px">Sipariş Koşulları</h3>
+        <ul style="color:#4b5563;font-size:13px;line-height:1.8;padding-left:18px;margin:10px 0 0">
+          <li>Story ve post siparişleri ayrı fiyatlandırılır; yalnızca tanımlı hizmetler sepete eklenebilir.</li>
+          <li>Ödeme sonrası brief, görsel veya video dosyanızı sipariş ekranından iletebilirsiniz.</li>
+          <li>Yayın tarihi ve içerik onayı, hesap sahibi ile koordineli şekilde planlanır.</li>
+          <li>Tamamlanan siparişler için ekran görüntüsü veya link raporu paylaşılır.</li>
+        </ul>
+      </div>
+
+      <div style="display:grid;gap:15px">
+        <div class="panel">
+          <span style="font-size:11px;color:#6b7280;font-weight:700">Sipariş Seçenekleri</span>
+          <div class="between" style="margin:10px 0 15px">
+            <div>
+              <strong>Post Siparişi</strong>
+              <small style="color:#9ca3af;display:block">Feed / gönderi paylaşımı</small>
+            </div>
+            <div style="text-align:right">
+              <span style="font-size:18px;font-weight:800;color:#1f2937">1.200,00₺</span><small> +KDV</small>
+            </div>
+          </div>
+          <button class="btn" style="width:100%;background:#0d9488" onclick="checkAndAddToCart('${name} (Post)', 1200, 'Post')">Post — Sepete Ekle</button>
+        </div>
+
+        <div class="panel">
+          <div class="between" style="margin:5px 0 15px">
+            <div>
+              <strong>Story Siparişi</strong>
+              <small style="color:#9ca3af;display:block">24 saatlik story paylaşımı</small>
+            </div>
+            <div style="text-align:right">
+              <span style="font-size:18px;font-weight:800;color:#1f2937">500,00₺</span><small> +KDV</small>
+            </div>
+          </div>
+          <button class="btn" style="width:100%;background:#0d9488" onclick="checkAndAddToCart('${name} (Story)', 500, 'Story')">Story — Sepete Ekle</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Site Detay Sayfası
+function renderDetail(name) {
+  const site = SITES.find(s => s.name === name) || PRESS_SITES.find(s => s.name === name) || SITES[0];
+  const topSellersSide = SITES.filter(s => s.type === 'Çok Satan').slice(0, 6);
+  let similarSites = SITES.filter(s => s.category === site.category && s.name !== site.name).slice(0, 4);
+  if (similarSites.length < 4) {
+    const extras = SITES.filter(s => s.name !== site.name && !similarSites.includes(s)).slice(0, 4 - similarSites.length);
+    similarSites = [...similarSites, ...extras];
+  }
+
+  const isNoLink = site.linkOutput === 'Link Çıkışı Yok' || site.linkType === 'Nofollow' || site.category === 'Basın Bülteni';
+
+  return `
+    <div class="site-detail-breadcrumbs">
+      <a onclick="go('home')">⌂ Anasayfa</a> › 
+      <a onclick="openCategory('Tümü')">Tüm Siteler</a> › 
+      <a onclick="openCategory('${site.category}')">${site.category}</a> › 
+      <strong>${site.name}</strong>
+    </div>
+
+    <div class="site-detail-grid">
+      <div class="site-detail-left">
+        <div class="detail-card">
+          <div class="detail-top-box">
+            <div class="detail-avatar-lg" style="${isNoLink ? 'background:#fee2e2;color:#dc2626' : ''}">${site.badge || site.name.substring(0,2).toUpperCase()}</div>
+            <div>
+              <h1>${site.name}</h1>
+              ${isNoLink ? `<div style="margin-bottom:8px"><span style="background:#fee2e2;color:#dc2626;font-size:11px;font-weight:800;padding:4px 8px;border-radius:6px;display:inline-flex;align-items:center;gap:5px">⚠️ Bu yayında SEO link çıkışı yapılmaz (Linksiz Basın Bülteni)</span></div>` : ''}
+              <div class="detail-chip-row">
+                <span class="detail-chip ${isNoLink ? '' : 'green'}">${isNoLink ? '✕ Link Çıkışı Yok' : '✓ ' + site.linkType}</span>
+                <span class="detail-chip">News: ${site.news}</span>
+                <span class="detail-chip clickable" onclick="openCategory('${site.category}')">${site.category} ↗</span>
+              </div>
+            </div>
+          </div>
+          <div class="detail-desc-box">
+            <b>${site.name}</b> için sepete ekledikten sonra bülten metninizi gönderebilir ya da içerik hazırlanmasını talep edebilirsiniz. Ödeme sonrası talebiniz incelenir ve yayın raporu tarafınıza iletilir. ${isNoLink ? '<b>Not:</b> Bu yayıncı kuruluşte SEO backlink / link çıkışı verilmemektedir, yalnızca marka adı ve kurumsal bülten paylaşımı yapılır.' : ''}
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-data-head">
+            <strong>Site Verileri</strong>
+            <span>Örnek katalog verileri</span>
+          </div>
+          <div class="detail-metrics-table">
+            <div>
+              <small>KATEGORİ</small>
+              <b class="cat-link-val" onclick="openCategory('${site.category}')">${site.category} ↗</b>
+            </div>
+            <div>
+              <small>SİTE YAŞI</small>
+              <b>${site.age || '—'}</b>
+            </div>
+            <div>
+              <small>NEWS KAYDI</small>
+              <b class="${site.news === 'Var' ? 'green-val' : ''}" style="${site.news !== 'Var' ? 'color:#dc2626' : ''}">${site.news}</b>
+            </div>
+            <div>
+              <small>LİNK DURUMU</small>
+              <b style="color:${isNoLink ? '#dc2626' : '#137b66'}">${isNoLink ? 'Link Çıkışı Yok' : site.linkType}</b>
+            </div>
+            <div>
+              <small>DA</small>
+              <b>${site.da || '—'}</b>
+            </div>
+            <div>
+              <small>PA</small>
+              <b>${site.pa || '—'}</b>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="site-detail-right">
+        <div class="detail-card detail-buy-box">
+          <div class="detail-price-big">₺${site.price.toLocaleString('tr-TR', {minimumFractionDigits:2})}<small>+KDV</small></div>
+          <button class="detail-buy-btn" onclick="checkAndAddToCart('${site.name}',${site.price},'${site.category}')">▣ Sepete Ekle</button>
+          <div class="detail-sub-actions">
+            <button onclick="showToast('${site.name}', 'Favorilere eklendi.')">♡ Favori</button>
+            <button onclick="navigator.clipboard?.writeText(window.location.href); showToast('${site.name}', 'Bağlantı kopyalandı.')">↗ Paylaş</button>
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-side-top">
+            <strong>⏳ En Çok Satanlar</strong>
+            <button onclick="openSpecialList('Çok Satan')">Tümü →</button>
+          </div>
+          <div>
+            ${topSellersSide.map((ts, idx) => `
+              <div class="detail-side-row">
+                <span class="detail-side-num">0${idx+1}</span>
+                <a class="detail-side-name" onclick="go('detail','${ts.name}')">${ts.name}</a>
+                <span class="detail-side-price">₺${ts.price.toLocaleString('tr-TR', {minimumFractionDigits:2})}<small>+KDV</small></span>
+                <button class="detail-side-add" onclick="checkAndAddToCart('${ts.name}',${ts.price},'${ts.category}')">+</button>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="similar-section">
+      <h2>Benzer Siteler</h2>
+      <div class="similar-grid">
+        ${similarSites.map(sim => `
+          <div class="similar-card">
+            <div class="similar-head">
+              <div class="similar-avatar">${sim.badge || sim.name.substring(0,2).toUpperCase()}</div>
+              <div class="similar-title-wrap">
+                <a onclick="go('detail','${sim.name}')">${sim.name}</a>
+                <div class="similar-tags">
+                  <span>News: ${sim.news}</span>
+                  <span style="cursor:pointer" onclick="openCategory('${sim.category}')">${sim.category} ↗</span>
+                </div>
+              </div>
+            </div>
+            <div class="similar-stats">
+              <div><span>DA</span><b>${sim.da || '—'}</b></div>
+              <div><span>PA</span><b>${sim.pa || '—'}</b></div>
+              <div><span>Site Yaşı</span><b>${sim.age && sim.age !== '—' ? sim.age.split(',')[0] : '—'}</b></div>
+              <div><span>News</span><b style="color:#137b66">${sim.news}</b></div>
+            </div>
+            <div class="similar-price">₺${sim.price.toLocaleString('tr-TR', {minimumFractionDigits:2})}<small>+KDV</small></div>
+            <button class="similar-btn" onclick="checkAndAddToCart('${sim.name}',${sim.price},'${sim.category}')">Sepete Ekle</button>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+
+function renderCartPage() {
+  if (!cart.length) {
+    return `
+      <div class="empty">
+        <h2>Sepetiniz Boş</h2>
+        <p>Sepetinizde henüz ürün veya yayın bulunmuyor.</p>
+        <button class="btn" style="margin-top:15px;" onclick="openCategory('Tümü')">Yayınları İncelemeye Başla</button>
+      </div>
+    `;
+  }
+  const total = cart.reduce((acc, i) => acc + (i.price * (i.qty || 1)), 0);
+  return `
+    <div class="catalog-banner">
+      <div class="catalog-banner-eyebrow">• ALIŞVERİŞ SEPETİ</div>
+      <h1>Sipariş <em>Özeti</em></h1>
+      <p>Seçtiğiniz yayınları ve paketleri gözden geçirin.</p>
+    </div>
+    <div class="detail-layout" style="margin-top:20px;">
+      <div class="panel">
+        <h3>Sepetteki Ürünler (${cart.length})</h3>
+        ${cart.map((item, idx) => `
+          <div class="cartrow">
+            <div>
+              <strong>${item.name}</strong>
+              <small class="muted" style="display:block;margin-top:4px">${item.type} • Adet: ${item.qty || 1}</small>
+            </div>
+            <div class="price">₺${(item.price * (item.qty || 1)).toLocaleString('tr-TR', {minimumFractionDigits:2})}</div>
+            <button class="preview-remove" onclick="removeFromCart(${idx})">kaldır</button>
+          </div>
+        `).join('')}
+      </div>
+      <div class="panel">
+        <h3>Ödeme Detayı</h3>
+        <div class="summary">
+          <div class="between" style="margin-bottom:10px"><span class="muted">Ara Toplam</span><b>₺${total.toLocaleString('tr-TR', {minimumFractionDigits:2})}</b></div>
+          <div class="between"><span class="muted">KDV (%20)</span><b>₺${(total * 0.2).toLocaleString('tr-TR', {minimumFractionDigits:2})}</b></div>
+          <hr style="border:0;border-top:1px solid #e5e9ed;margin:14px 0">
+          <div class="between" style="font-size:16px;"><strong>Toplam Tutar</strong><strong style="color:#168052">₺${(total * 1.2).toLocaleString('tr-TR', {minimumFractionDigits:2})}</strong></div>
+          <button class="btn" style="width:100%;margin-top:20px;" onclick="alert('Siparişiniz başarıyla alındı! Ödeme sayfasına yönlendiriliyorsunuz.')">Siparişi Tamamla</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderAbout() {
+  return `
+    <div class="catalog-banner">
+      <div class="catalog-banner-eyebrow">• KURUMSAL</div>
+      <h1>Hadra Ajans <em>Hakkında</em></h1>
+      <p>Dijital pazarlama, PR, SEO ve yazılım çözümlerinde güvenilir iş ortağınız.</p>
+    </div>
+    <div class="panel" style="max-width:800px;margin:20px auto;line-height:1.8;padding:35px;">
+      <h3 style="margin-bottom:15px;font-size:20px">Dijital Dünyadaki Gücünüz</h3>
+      <p>Hadra Ajans Dijital Reklam, Medya ve Yazılım Ticaret Limited Şirketi olarak markaların dijital mecralarda hak ettikleri görünürlüğü kazanmalarını sağlıyoruz. Geniş yayıncı ağı, şeffaf raporlama süreçleri ve profesyonel ekibimizle tanışın.</p>
+      <p style="margin-top:15px"><b>İletişim Bilgilerimiz:</b><br>Adres: İstanbul, Türkiye</p>
+    </div>
+  `;
+}
+
+function renderContact() {
+  return `
+    <div class="catalog-banner">
+      <div class="catalog-banner-eyebrow">• İLETİŞİM</div>
+      <h1>Bize <em>Ulaşın</em></h1>
+      <p>Sorularınız, özel paket talepleriniz ve iş birlikleri için bize her zaman ulaşabilirsiniz.</p>
+    </div>
+    <div class="authbox">
+      <label>Adınız Soyadınız</label>
+      <input type="text" class="field" placeholder="Adınız Soyadınız">
+      <label>E-posta Adresiniz</label>
+      <input type="email" class="field" placeholder="ornek@siteniz.com">
+      <label>Mesajınız</label>
+      <textarea class="field" rows="4" placeholder="Mesajınızı buraya yazın..."></textarea>
+      <button class="btn" onclick="alert('Mesajınız gönderildi. En kısa sürede dönüş yapacağız.')">Gönder</button>
+    </div>
+  `;
+}
+
+function renderFaqPage() {
+  return `
+    <div class="catalog-banner">
+      <div class="catalog-banner-eyebrow">• YARDIM MERKEZİ</div>
+      <h1>Sık Sorulan <em>Sorular</em></h1>
+      <p>Merak ettiğiniz tüm soruların yanıtlarını burada bulabilirsiniz.</p>
+    </div>
+    <div class="faq" style="max-width:800px;margin:20px auto;">
+      <details>
+        <summary>Tanıtım yazısı için makaleyi kim yazıyor?</summary>
+        <p>İsterseniz kendi özgün makalenizi iletebilir, isterseniz profesyonel içerik ekibimize SEO uyumlu makale hazırlatabilirsiniz.</p>
+      </details>
+      <details>
+        <summary>Hangi ödeme yöntemlerini kullanabilirim?</summary>
+        <p>Kredi kartı, banka kartı ve havale / EFT yöntemleri ile ödeme yapabilirsiniz.</p>
+      </details>
+      <details>
+        <summary>Fatura veriliyor mu?</summary>
+        <p>Evet, tüm siparişleriniz için yasal faturalandırma yapılmaktadır.</p>
+      </details>
+    </div>
+  `;
+}
+
+function renderAccount() {
+  return `
+    <div class="authbox">
+      <div class="tabs">
+        <button class="btn" id="loginTab">Giriş Yap</button>
+        <button class="btn light" id="registerTab" onclick="alert('Kayıt formu aktif.')">Kayıt Ol</button>
+      </div>
+      <label>E-posta Adresi</label>
+      <input type="email" class="field" placeholder="ornek@siteniz.com">
+      <label>Şifre</label>
+      <input type="password" class="field" placeholder="••••••••">
+      <button class="btn" onclick="alert('Giriş başarılı!')">Giriş Yap</button>
+    </div>
+  `;
+}
+
+renderNav();
+renderApp();
+updateCartCount();
+
+function openPackageModal(pkgTitle) {
+  let modal = document.getElementById('pkgModal');
+  if (modal) modal.remove();
+
+  let sitesList = [
+    {s: "aydingazetesi.net", da: 13, pa: 34, news: "Var", price: 75},
+    {s: "ekhaber.net", da: 6, pa: 37, news: "Var", price: 75},
+    {s: "gorushaber.com", da: 9, pa: 26, news: "Var", price: 70},
+    {s: "Gundemkulis.com", da: 11, pa: 40, news: "Var", price: 75},
+    {s: "haber01.com.tr", da: 9, pa: 23, news: "Var", price: 50},
+    {s: "46haberler.com", da: 9, pa: 30, news: "Var", price: 50},
+    {s: "akyazisonhaber.com", da: 10, pa: 31, news: "Var", price: 100},
+    {s: "asafhaber.com", da: 52, pa: 35, news: "Var", price: 100},
+    {s: "halkgazetesi.net", da: 16, pa: 40, news: "Var", price: 100},
+    {s: "yukselishaber.com", da: 10, pa: 34, news: "Yok", price: 50}
+  ];
+
+  modal = document.createElement('div');
+  modal.id = 'pkgModal';
+  modal.className = 'modal-overlay';
+  modal.innerHTML = `
+    <div class="modal-box" style="max-width:600px;text-align:left">
+      <div class="between" style="align-items:center;margin-bottom:15px;border-bottom:1px solid #e5e7eb;padding-bottom:10px">
+        <h3 style="margin:0;font-size:18px">${pkgTitle} - Tüm Yayın Siteleri</h3>
+        <button onclick="document.getElementById('pkgModal').remove()" style="background:#f3f4f6;border:0;border-radius:6px;width:28px;height:28px;font-weight:bold;cursor:pointer">✕</button>
+      </div>
+      <p style="color:#6b7280;font-size:12px;margin:0 0 15px">Bu pakette yer alan yayıncı sitelerinin listesi aşağıdadır:</p>
+      <div style="max-height:350px;overflow-y:auto;border:1px solid #e5e7eb;border-radius:8px">
+        <table style="width:100%;border-collapse:collapse;font-size:12px">
+          <thead>
+            <tr style="background:#f9fafb;border-bottom:1px solid #e5e7eb">
+              <th style="padding:10px;text-align:left">Site Adı</th>
+              <th style="padding:10px;text-align:center">DA</th>
+              <th style="padding:10px;text-align:center">PA</th>
+              <th style="padding:10px;text-align:center">News</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${sitesList.map(si => `
+              <tr style="border-bottom:1px solid #f3f4f6">
+                <td style="padding:10px;font-weight:700;color:#1f2937">${si.s}</td>
+                <td style="padding:10px;text-align:center">${si.da}</td>
+                <td style="padding:10px;text-align:center">${si.pa}</td>
+                <td style="padding:10px;text-align:center;color:#059669;font-weight:700">${si.news}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+      <button class="btn" style="width:100%;margin-top:20px" onclick="document.getElementById('pkgModal').remove()">Kapat</button>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+
+
+let pressFilterState = {
+  search: '',
+  priceRange: 'all',
+  news: 'all',
+  sort: 'price_desc' // default largest to smallest
+};
+
+
+const PRESS_SITES = [
+  {"name": "ensonhaber.com.tr", "category": "Basın Bülteni", "price": 4500.0, "da": 58, "pa": 45, "age": "18 yıl", "linkOutput": "Link Çıkışı Yok", "news": "Var", "badge": "EN"},
+  {"name": "sondakika.com", "category": "Basın Bülteni", "price": 4000.0, "da": 56, "pa": 44, "age": "16 yıl", "linkOutput": "Link Çıkışı Yok", "news": "Var", "badge": "SO"},
+  {"name": "haberler.com", "category": "Basın Bülteni", "price": 3800.0, "da": 62, "pa": 48, "age": "20 yıl", "linkOutput": "Link Çıkışı Yok", "news": "Var", "badge": "HA"},
+  {"name": "milliyet.com.tr", "category": "Basın Bülteni", "price": 3500.0, "da": 78, "pa": 62, "age": "24 yıl", "linkOutput": "Link Çıkışı Yok", "news": "Var", "badge": "Mİ"},
+  {"name": "hurriyet.com.tr", "category": "Basın Bülteni", "price": 3200.0, "da": 82, "pa": 65, "age": "25 yıl", "linkOutput": "Link Çıkışı Yok", "news": "Var", "badge": "HÜ"},
+  {"name": "sabah.com.tr", "category": "Basın Bülteni", "price": 3000.0, "da": 80, "pa": 64, "age": "24 yıl", "linkOutput": "Link Çıkışı Yok", "news": "Var", "badge": "SA"},
+  {"name": "trthaber.com", "category": "Basın Bülteni", "price": 2800.0, "da": 85, "pa": 68, "age": "15 yıl", "linkOutput": "Link Çıkışı Yok", "news": "Var", "badge": "TR"},
+  {"name": "cnnturk.com", "category": "Basın Bülteni", "price": 2600.0, "da": 79, "pa": 63, "age": "22 yıl", "linkOutput": "Link Çıkışı Yok", "news": "Var", "badge": "CN"},
+  {"name": "ntv.com.tr", "category": "Basın Bülteni", "price": 2500.0, "da": 77, "pa": 61, "age": "21 yıl", "linkOutput": "Link Çıkışı Yok", "news": "Var", "badge": "NT"},
+  {"name": "haberturk.com", "category": "Basın Bülteni", "price": 2400.0, "da": 76, "pa": 60, "age": "20 yıl", "linkOutput": "Link Çıkışı Yok", "news": "Var", "badge": "HT"},
+  {"name": "sozcu.com.tr", "category": "Basın Bülteni", "price": 2200.0, "da": 74, "pa": 58, "age": "18 yıl", "linkOutput": "Link Çıkışı Yok", "news": "Var", "badge": "SÖ"},
+  {"name": "karar.com", "category": "Basın Bülteni", "price": 1900.0, "da": 64, "pa": 50, "age": "10 yıl", "linkOutput": "Link Çıkışı Yok", "news": "Var", "badge": "KA"},
+  {"name": "aksam.com.tr", "category": "Basın Bülteni", "price": 1750.0, "da": 70, "pa": 54, "age": "19 yıl", "linkOutput": "Link Çıkışı Yok", "news": "Var", "badge": "AK"},
+  {"name": "star.com.tr", "category": "Basın Bülteni", "price": 1600.0, "oldPrice": 2200.0, "discountPct": "-%27 İNDİRİM", "da": 69, "pa": 53, "age": "19 yıl", "linkOutput": "Link Çıkışı Yok", "news": "Var", "badge": "ST"},
+  {"name": "takvim.com.tr", "category": "Basın Bülteni", "price": 1500.0, "da": 68, "pa": 52, "age": "18 yıl", "linkOutput": "Link Çıkışı Yok", "news": "Var", "badge": "TA"},
+  {"name": "ahaber.com.tr", "category": "Basın Bülteni", "price": 1400.0, "da": 67, "pa": 51, "age": "14 yıl", "linkOutput": "Link Çıkışı Yok", "news": "Var", "badge": "AH"},
+  {"name": "tgrthaber.com.tr", "category": "Basın Bülteni", "price": 1300.0, "da": 63, "pa": 49, "age": "16 yıl", "linkOutput": "Link Çıkışı Yok", "news": "Var", "badge": "TG"},
+  {"name": "iha.com.tr", "category": "Basın Bülteni", "price": 1200.0, "da": 65, "pa": 50, "age": "23 yıl", "linkOutput": "Link Çıkışı Yok", "news": "Var", "badge": "İH"},
+  {"name": "dha.com.tr", "category": "Basın Bülteni", "price": 1100.0, "oldPrice": 1500.0, "discountPct": "-%27 İNDİRİM", "da": 66, "pa": 51, "age": "22 yıl", "linkOutput": "Link Çıkışı Yok", "news": "Var", "badge": "DH"},
+  {"name": "aa.com.tr", "category": "Basın Bülteni", "price": 1000.0, "da": 84, "pa": 70, "age": "100+ yıl", "linkOutput": "Link Çıkışı Yok", "news": "Var", "badge": "AA"}
+];
+
+
+function getFilteredPressSites() {
+  let list = [...PRESS_SITES];
+
+  if (pressFilterState.search.trim() !== '') {
+    const q = pressFilterState.search.toLowerCase().trim();
+    list = list.filter(s => s.name.toLowerCase().includes(q));
+  }
+
+  if (pressFilterState.priceRange === '0-100') {
+    list = list.filter(s => s.price <= 100);
+  } else if (pressFilterState.priceRange === '100-300') {
+    list = list.filter(s => s.price > 100 && s.price <= 300);
+  } else if (pressFilterState.priceRange === '300-700') {
+    list = list.filter(s => s.price > 300 && s.price <= 700);
+  } else if (pressFilterState.priceRange === '700-1500') {
+    list = list.filter(s => s.price > 700 && s.price <= 1500);
+  } else if (pressFilterState.priceRange === '1500+') {
+    list = list.filter(s => s.price > 1500);
+  }
+
+  if (pressFilterState.news !== 'all') {
+    list = list.filter(s => s.news === pressFilterState.news);
+  }
+
+  if (pressFilterState.sort === 'price_desc') {
+    list.sort((a,b) => b.price - a.price);
+  } else if (pressFilterState.sort === 'price_asc') {
+    list.sort((a,b) => a.price - b.price);
+  } else if (pressFilterState.sort === 'da_desc') {
+    list.sort((a,b) => (parseInt(b.da)||0) - (parseInt(a.da)||0));
+  } else if (pressFilterState.sort === 'pa_desc') {
+    list.sort((a,b) => (parseInt(b.pa)||0) - (parseInt(a.pa)||0));
+  } else {
+    list.sort((a,b) => b.price - a.price);
+  }
+
+  return list;
+}
+
+function handlePressSort(columnKey) {
+  if (columnKey === 'price') {
+    if (pressFilterState.sort === 'price_desc') pressFilterState.sort = 'price_asc';
+    else pressFilterState.sort = 'price_desc';
+  } else if (columnKey === 'da') {
+    pressFilterState.sort = 'da_desc';
+  } else if (columnKey === 'pa') {
+    pressFilterState.sort = 'pa_desc';
+  }
+  updatePressView();
+}
+
+function renderPressCatalog() {
+  const filteredPress = getFilteredPressSites();
+
+  return `
+    <div class="catalog-banner">
+      <div class="catalog-banner-eyebrow">• BASIN BÜLTENİ</div>
+      <h1>Ulusal ve prestijli sitelerde <em>linksiz basın bülteni</em></h1>
+      <p>Basın bülteniniz prestijli haber sitelerinde doğrudan bülten olarak yayınlanır. Bu sitelerde SEO link çıkışı yapılmaz, marka bilinirliği odaklıdır.</p>
+    </div>
+
+    <div class="catalog-box">
+      <div class="catalog-box-top">
+        <h2>Basın Bülteni Dağıtım Ağları</h2>
+        <span>Toplam <b id="totalPressCountText">${filteredPress.length}</b> yayıncı listeleniyor</span>
+      </div>
+
+      <div class="catalog-search-input" style="margin-bottom:12px">
+        <span>⚲</span>
+        <input type="text" id="pressSearchInput" value="${pressFilterState.search}" placeholder="Basın bülteni sitesi ara..." oninput="pressFilterState.search=this.value; updatePressView()">
+      </div>
+
+      <div class="catalog-selects-grid">
+        <select id="pressSelPrice" onchange="pressFilterState.priceRange=this.value; updatePressView()">
+          <option value="all" ${pressFilterState.priceRange==='all'?'selected':''}>Fiyat (Hepsi)</option>
+          <option value="0-100" ${pressFilterState.priceRange==='0-100'?'selected':''}>0 - 100 ₺</option>
+          <option value="100-300" ${pressFilterState.priceRange==='100-300'?'selected':''}>100 - 300 ₺</option>
+          <option value="300-700" ${pressFilterState.priceRange==='300-700'?'selected':''}>300 - 700 ₺</option>
+          <option value="700-1500" ${pressFilterState.priceRange==='700-1500'?'selected':''}>700 - 1500 ₺</option>
+          <option value="1500+" ${pressFilterState.priceRange==='1500+'?'selected':''}>1500 ₺ ve üzeri</option>
+        </select>
+
+        <select id="pressSelNews" onchange="pressFilterState.news=this.value; updatePressView()">
+          <option value="all" ${pressFilterState.news==='all'?'selected':''}>News (Hepsi)</option>
+          <option value="Var" ${pressFilterState.news==='Var'?'selected':''}>News Kayıtlı (Var)</option>
+          <option value="Yok" ${pressFilterState.news==='Yok'?'selected':''}>News Kayıtsız (Yok)</option>
+        </select>
+
+                <select id="pressSelSort" onchange="pressFilterState.sort=this.value; updatePressView()">
+          <option value="default" ${pressFilterState.sort==='default'?'selected':''}>Sıralama: Varsayılan</option>
+          <option value="price_asc" ${pressFilterState.sort==='price_asc'?'selected':''}>Fiyat (Artan)</option>
+          <option value="price_desc" ${pressFilterState.sort==='price_desc'?'selected':''}>Fiyat (Azalan)</option>
+          <option value="da_desc" ${pressFilterState.sort==='da_desc'?'selected':''}>DA (Azalan)</option>
+          <option value="da_asc" ${pressFilterState.sort==='da_asc'?'selected':''}>DA (Artan)</option>
+          <option value="pa_desc" ${pressFilterState.sort==='pa_desc'?'selected':''}>PA (Azalan)</option>
+          <option value="pa_asc" ${pressFilterState.sort==='pa_asc'?'selected':''}>PA (Artan)</option>
+        </select>
+      </div>
+
+      <div class="catalog-filter-btns">
+        <button class="btn-reset" onclick="resetPressFilters()">Sıfırla</button>
+        <button class="btn-apply" onclick="updatePressView()">⚲ Filtrele</button>
+      </div>
+    </div>
+
+    <div class="tablewrap responsive-catalog-wrap">
+      <table class="responsive-catalog-table">
+        <thead>
+          <tr>
+            <th>SİTE ADI</th>
+            <th>LİNK ÇIKIŞI</th>
+            <th>NEWS</th>
+            <th>YAŞ</th>
+            <th style="cursor:pointer" onclick="handlePressSort('da')">DA ↕</th>
+            <th style="cursor:pointer" onclick="handlePressSort('pa')">PA ↕</th>
+            <th style="cursor:pointer;text-align:right" onclick="handlePressSort('price')">FİYAT ↕</th>
+            <th style="text-align:right">AKSİYON</th>
+          </tr>
+        </thead>
+        <tbody id="pressTableBody">
+          ${renderPressRows(filteredPress)}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function renderPressRows(list) {
+  if (!list.length) {
+    return `<tr><td colspan="8" style="text-align:center;padding:45px;color:#8492a2">Aramanıza uygun basın bülteni sitesi bulunamadı.</td></tr>`;
+  }
+  return list.map(s => `
+    <tr>
+      <td class="cell-main" data-label="SİTE ADI">
+        <div class="site-cell">
+          <div class="site-badge-box" style="background:#fee2e2;color:#dc2626">${s.badge}</div>
+          <div>
+            <span class="site-name-link" onclick="go('detail','${s.name}')">${s.name}</span>
+            <small style="display:block;color:#8995a4;font-size:11px;margin-top:2px">Basın Bülteni (Linksiz)</small>
+          </div>
+        </div>
+      </td>
+      <td data-label="LİNK ÇIKIŞI">
+        <span class="pill-nofollow" style="background:#fef2f2;color:#dc2626">Link Çıkışı Yok</span>
+      </td>
+      <td data-label="NEWS">
+        <span class="pill-news-var">✓ ${s.news}</span>
+      </td>
+      <td data-label="YAŞ">${s.age}</td>
+      <td data-label="DA"><b>${s.da}</b></td>
+      <td data-label="PA"><b>${s.pa}</b></td>
+      <td class="price-cell" data-label="FİYAT" style="text-align:right">
+        <div>
+          ${s.oldPrice ? `<div style="display:flex;align-items:center;justify-content:flex-end;gap:5px;margin-bottom:2px"><small class="old">₺${s.oldPrice.toLocaleString('tr-TR', {minimumFractionDigits:2})}</small>${s.discountPct ? `<span style="background:#fee2e2;color:#dc2626;font-size:10px;font-weight:800;padding:1px 5px;border-radius:4px">${s.discountPct}</span>` : ''}</div>` : ''}
+          <div><b>₺${s.price.toLocaleString('tr-TR', {minimumFractionDigits:2})}</b><small>+KDV</small></div>
+        </div>
+      </td>
+      <td class="cell-action" style="text-align:right">
+        <button class="btn-table-add" onclick="checkAndAddToCart('${s.name}', ${s.price}, 'Basın Bülteni')">⊕ Sepete Ekle</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function updatePressView() {
+  const filtered = getFilteredPressSites();
+  const tbody = document.getElementById('pressTableBody');
+  const countEl = document.getElementById('totalPressCountText');
+  if (tbody) tbody.innerHTML = renderPressRows(filtered);
+  if (countEl) countEl.innerText = filtered.length;
+}
+
+function resetPressFilters() {
+  pressFilterState = {
+    search: '',
+    priceRange: 'all',
+    news: 'all',
+    sort: 'price_desc'
+  };
+  updatePressView();
+  // also reset select elements if present
+  const pPrice = document.getElementById('pressSelPrice');
+  const pNews = document.getElementById('pressSelNews');
+  const pSort = document.getElementById('pressSelSort');
+  const pSearch = document.getElementById('pressSearchInput');
+  if (pPrice) pPrice.value = 'all';
+  if (pNews) pNews.value = 'all';
+  if (pSort) pSort.value = 'price_desc';
+  if (pSearch) pSearch.value = '';
+}
+
+
+</script>
+<div id="h-modal"></div>
+<div id="h-toast" role="status" aria-live="polite"></div>
 <script src="app.js"></script>
 </body>
 </html>
