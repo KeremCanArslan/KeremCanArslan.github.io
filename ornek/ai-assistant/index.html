@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Speichenhaus Leipzig · Bike and e-bike workshop</title>
+<meta name="description" content="Demo website: bike and e-bike workshop in Leipzig-Plagwitz with a website assistant in English and German.">
+<style>
+:root{
+  --ink:#141414; --paper:#f7f6f3; --line:#d9d6cf; --muted:#5f5b55; --signal:#d64218; --signal-dark:#a83210; --soft:#ecebe6;
+  --cond:"Avenir Next Condensed","Arial Narrow","Roboto Condensed","Helvetica Neue",Arial,sans-serif;
+  --text:"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--text);background:var(--paper);color:var(--ink);font-size:16px;line-height:1.5}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+.topbar{background:var(--ink);color:#e9e7e2;font-size:13px}
+.topbar .wrap{display:flex;justify-content:space-between;gap:16px;padding-top:7px;padding-bottom:7px}
+header{border-bottom:2px solid var(--ink)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-top:18px;padding-bottom:16px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand svg{width:44px;height:44px;flex:none}
+.brand b{display:block;font-family:var(--cond);font-weight:800;font-size:30px;letter-spacing:.02em;text-transform:uppercase;line-height:1}
+.brand small{display:block;font-size:13px;color:var(--muted);margin-top:3px}
+nav{display:flex;align-items:center;gap:26px;font-size:15px}
+nav a{text-decoration:none}
+nav a:hover{text-decoration:underline;text-underline-offset:4px}
+.lang{display:flex;border:1.5px solid var(--ink)}
+.lang button{background:none;border:0;padding:4px 10px;font-size:13px;font-weight:700;letter-spacing:.04em}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.hero .wrap{display:grid;grid-template-columns:1.35fr 1fr;gap:56px;padding-top:56px;padding-bottom:52px;align-items:end}
+.hero h1{font-family:var(--cond);font-weight:800;font-size:76px;line-height:.95;letter-spacing:-.005em;text-transform:uppercase}
+.hero h1 em{font-style:normal;color:var(--signal)}
+.hero .lead{font-size:19px;color:#2f2c28;margin-top:22px;max-width:560px}
+.board{border:2px solid var(--ink);background:#fff}
+.board h2{font-family:var(--cond);font-size:20px;text-transform:uppercase;letter-spacing:.04em;background:var(--ink);color:#fff;padding:8px 14px}
+.board table{width:100%;border-collapse:collapse;font-size:15px}
+.board td{padding:9px 14px;border-top:1px solid var(--line)}
+.board td:last-child{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.board p{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px solid var(--line)}
+section.block{border-top:1px solid var(--line)}
+section.block .wrap{padding-top:44px;padding-bottom:44px}
+.block h2{font-family:var(--cond);font-weight:800;font-size:40px;text-transform:uppercase;line-height:1;margin-bottom:22px}
+.prices{display:grid;grid-template-columns:1fr 1fr;column-gap:56px;row-gap:4px;list-style:none}
+.prices li{padding:10px 0;border-bottom:1px dashed var(--line)}
+.prices .row{display:flex;align-items:baseline;gap:10px;font-weight:700}
+.prices .row span:first-child{flex:none;max-width:62%}
+.prices .dots{flex:1;border-bottom:2px dotted #a9a59d;transform:translateY(-4px)}
+.prices .price{flex:none;font-variant-numeric:tabular-nums;text-align:right;max-width:46%}
+.prices .inc{font-size:14px;color:var(--muted);margin-top:2px}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+.cols h3{font-family:var(--cond);font-size:22px;text-transform:uppercase;margin-bottom:8px;padding-top:10px;border-top:4px solid var(--signal);display:inline-block}
+.cols p{font-size:15px;color:#2f2c28}
+.visit{display:grid;grid-template-columns:1fr 1fr;gap:40px;font-size:16px}
+.visit dt{font-weight:700;margin-top:12px}
+.visit dt:first-child{margin-top:0}
+footer{background:var(--ink);color:#cfccc5;font-size:13px}
+footer .wrap{padding-top:22px;padding-bottom:90px}
+
+/* chat */
+#launch{position:fixed;right:28px;bottom:28px;background:var(--ink);color:#fff;border:0;padding:14px 20px;font-weight:700;font-size:15px;border-radius:4px;box-shadow:0 6px 18px rgba(0,0,0,.18);display:flex;align-items:center;gap:10px}
+#launch i{width:9px;height:9px;border-radius:50%;background:var(--signal);display:block}
+#chat{position:fixed;right:28px;bottom:28px;width:400px;height:620px;max-height:calc(100vh - 56px);background:#fff;border:2px solid var(--ink);border-radius:4px;box-shadow:0 14px 36px rgba(0,0,0,.2);display:none;flex-direction:column;overflow:hidden;z-index:10}
+body.open #chat{display:flex}
+body.open #launch{display:none}
+#chat .head{background:var(--ink);color:#fff;padding:13px 16px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+#chat .head b{display:block;font-family:var(--cond);font-size:21px;text-transform:uppercase;letter-spacing:.03em;line-height:1.1}
+#chat .head small{display:block;font-size:12.5px;color:#bdb9b1;margin-top:2px}
+#close{background:none;border:0;color:#fff;font-size:26px;line-height:1;padding:0 2px}
+#log{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:#fbfaf8}
+.msg{max-width:86%;padding:10px 13px;font-size:14.5px;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere;border-radius:3px}
+.msg.bot{align-self:flex-start;background:var(--soft);color:var(--ink)}
+.msg.me{align-self:flex-end;background:var(--signal);color:#fff}
+.msg.err{align-self:flex-start;background:#fff;border:1.5px solid var(--signal-dark);color:var(--signal-dark)}
+.msg.wait{color:var(--muted);font-style:italic;background:none;padding-left:0}
+.saved{align-self:flex-start;font-size:13px;border-left:4px solid var(--signal);background:#fff;padding:7px 10px;color:#2f2c28}
+.saved b{display:block}
+#chips{display:flex;flex-direction:column;align-items:flex-start;gap:7px;margin-top:2px}
+#chips button{background:#fff;border:1.5px solid var(--ink);padding:6px 11px;font-size:13.5px;border-radius:3px;text-align:left}
+#chips button:hover{background:var(--ink);color:#fff}
+#form{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line)}
+#q{flex:1;min-width:0;border:1.5px solid #a9a59d;border-radius:3px;padding:10px 11px;font:inherit;font-size:15px;outline:none;background:#fff}
+#q:focus{border-color:var(--ink)}
+#send{background:var(--signal);border:0;color:#fff;font-weight:700;padding:0 16px;border-radius:3px}
+#send:disabled,#q:disabled{opacity:.5;cursor:default}
+#note{font-size:11.5px;color:var(--muted);padding:0 12px 10px;line-height:1.35}
+
+@media (max-width:900px){
+  .wrap{padding:0 16px}
+  .topbar .wrap{flex-direction:column;gap:0}
+  header .wrap{flex-wrap:wrap}
+  nav{gap:16px;flex-wrap:wrap}
+  nav a{display:none}
+  .hero .wrap{grid-template-columns:1fr;gap:32px;padding-top:36px}
+  .hero h1{font-size:40px;overflow-wrap:break-word}
+  .hero .lead{font-size:17px}
+  .prices,.cols,.visit{grid-template-columns:1fr}
+  .prices .row{flex-direction:column;align-items:flex-start;gap:0}
+  .prices .row span:first-child,.prices .price{max-width:none;text-align:left}
+  .prices .dots{display:none}
+  .prices .price{color:var(--signal-dark)}
+  .block h2{font-size:32px}
+  .cols{gap:24px}
+  #chat{right:0;bottom:0;width:100%;height:100%;max-height:none;border:0;border-radius:0}
+  #launch{right:16px;bottom:16px}
+}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><span id="tb-address"></span><span id="tb-hours"></span></div></div>
+<header><div class="wrap">
+  <a class="brand" href="#">
+    <svg viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="#141414">
+      <circle cx="16" cy="16" r="14.5" stroke-width="2.6"/><circle cx="16" cy="16" r="12.2" stroke-width="1"/>
+      <g stroke-width=".8"><line x1="28.2" y1="16" x2="3.8" y2="16"/><line x1="27.3" y1="20.7" x2="4.7" y2="11.3"/><line x1="24.6" y1="24.6" x2="7.4" y2="7.4"/><line x1="20.7" y1="27.3" x2="11.3" y2="4.7"/><line x1="16" y1="28.2" x2="16" y2="3.8"/><line x1="11.3" y1="27.3" x2="20.7" y2="4.7"/><line x1="7.4" y1="24.6" x2="24.6" y2="7.4"/><line x1="4.7" y1="20.7" x2="27.3" y2="11.3"/></g>
+      <circle cx="16" cy="16" r="2.6" fill="#d64218" stroke="#141414" stroke-width="1"/>
+    </svg>
+    <span><b>Speichenhaus</b><small data-t="tagline"></small></span>
+  </a>
+  <nav>
+    <a href="#prices" data-t="nav_prices"></a><a href="#ebikes" data-t="nav_ebikes"></a><a href="#visit" data-t="nav_visit"></a>
+    <div class="lang" role="group" aria-label="Language"><button type="button" data-lang="en">EN</button><button type="button" data-lang="de">DE</button></div>
+  </nav>
+</div></header>
+
+<section class="hero"><div class="wrap">
+  <div><h1 data-t="h1"></h1><p class="lead" data-t="lead"></p></div>
+  <div class="board"><h2 data-t="hours_title"></h2><table id="hours"></table><p id="walkin"></p></div>
+</div></section>
+
+<section class="block" id="prices"><div class="wrap"><h2 data-t="prices_title"></h2><ul class="prices" id="price-list"></ul></div></section>
+
+<section class="block" id="ebikes"><div class="wrap"><div class="cols">
+  <div><h3 data-t="ebikes_title"></h3><p id="ebikes-text"></p></div>
+  <div><h3 data-t="pickup_title"></h3><p id="pickup-text"></p></div>
+  <div><h3 data-t="warranty_title"></h3><p id="warranty-text"></p></div>
+</div></div></section>
+
+<section class="block" id="visit"><div class="wrap"><h2 data-t="visit_title"></h2><div class="visit">
+  <dl><dt data-t="address"></dt><dd id="v-address"></dd><dt data-t="contact"></dt><dd id="v-contact"></dd></dl>
+  <dl><dt data-t="payment"></dt><dd id="v-payment"></dd><dt data-t="estimate"></dt><dd id="v-estimate"></dd></dl>
+</div></div></section>
+
+<footer><div class="wrap"><p data-t="footer"></p></div></footer>
+
+<button id="launch" type="button"><i></i><span data-t="launch"></span></button>
+<div id="chat" role="dialog" aria-labelledby="chat-title">
+  <div class="head"><div><b id="chat-title" data-t="chat_title"></b><small data-t="chat_sub"></small></div><button id="close" type="button" aria-label="Close">&times;</button></div>
+  <div id="log" aria-live="polite"></div>
+  <form id="form"><input id="q" maxlength="500" autocomplete="off"><button id="send" data-t="send"></button></form>
+  <div id="note" data-t="note"></div>
+</div>
+
+<script>
+// Backend address. Empty: the local test server (server.py, /api/chat). After deploying the
+// Apps Script web app, paste its /exec URL here.
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxMHg8WIz7CMIfmocBVF5j-za9BwJlgLEIaLab7hclBlMFQhnpaknMYg9LD_gpd5cA5/exec';
+const ENDPOINT = WEB_APP_URL || '/api/chat';
+const MAX_TURNS = 10;
+
+const UI = {
+  en: {
+    tagline: 'Bike and e-bike workshop · Leipzig', nav_prices: 'Prices', nav_ebikes: 'E-bikes', nav_visit: 'Visit us',
+    h1: 'Bike and e-bike workshop in <em>Leipzig-Plagwitz</em>',
+    lead: 'Repairs, servicing and e-bike diagnostics. Small repairs while you wait, services usually ready in two working days.',
+    hours_title: 'Opening hours', prices_title: 'Price list', ebikes_title: 'E-bikes', pickup_title: 'Pick-up and return',
+    warranty_title: 'Guarantee and returns', visit_title: 'Visit the workshop', address: 'Address', contact: 'Phone and email',
+    payment: 'Payment', estimate: 'Cost estimate', launch: 'Questions? Ask the workshop',
+    chat_title: 'Speichenhaus', chat_sub: 'Prices, opening hours, repairs and pick-up', send: 'Send', placeholder: 'Type your question',
+    note: 'Demo: messages are sent to an AI service to generate a reply. This demo does not save them.',
+    footer: 'This is a demo website. Speichenhaus Leipzig is a fictional business; the address, phone number and email are not real.',
+    hello: 'Hello, this is the Speichenhaus assistant. Ask about prices, opening hours, e-bikes or pick-up. For special requests I can pass your message to the workshop team.',
+    chips: ['How much is an e-bike service?', 'Are you open on Saturdays?', 'Can you pick up my bike?'],
+    typing: 'Writing…', saved: 'Contact details saved (demo)', saved_sub: 'Nothing is actually stored in this demo.',
+    offline: 'The assistant cannot be reached right now. Please email hallo@speichenhaus.example.',
+    limit: 'This demo chat is limited to 10 questions. Reload the page to start a new conversation.'
+  },
+  de: {
+    tagline: 'Fahrrad- und E-Bike-Werkstatt · Leipzig', nav_prices: 'Preise', nav_ebikes: 'E-Bikes', nav_visit: 'Anfahrt',
+    h1: 'Fahrrad- und E-Bike-Werkstatt in <em>Leipzig-Plagwitz</em>',
+    lead: 'Reparatur, Inspektion und E-Bike-Diagnose. Kleine Reparaturen zum Mitwarten, Inspektionen meist in zwei Werktagen fertig.',
+    hours_title: 'Öffnungszeiten', prices_title: 'Preisliste', ebikes_title: 'E-Bikes', pickup_title: 'Hol- und Bringservice',
+    warranty_title: 'Garantie und Umtausch', visit_title: 'So finden Sie uns', address: 'Adresse', contact: 'Telefon und E-Mail',
+    payment: 'Bezahlung', estimate: 'Kostenvoranschlag', launch: 'Fragen? Schreiben Sie uns',
+    chat_title: 'Speichenhaus', chat_sub: 'Preise, Öffnungszeiten, Reparaturen und Abholung', send: 'Senden', placeholder: 'Ihre Frage',
+    note: 'Demo: Nachrichten werden zur Beantwortung an einen KI-Dienst gesendet. Diese Demo speichert sie nicht.',
+    footer: 'Dies ist eine Demo-Website. Speichenhaus Leipzig ist ein fiktiver Betrieb; Adresse, Telefonnummer und E-Mail sind nicht echt.',
+    hello: 'Hallo, hier ist der Assistent von Speichenhaus. Fragen Sie nach Preisen, Öffnungszeiten, E-Bikes oder dem Hol- und Bringservice. Besondere Anfragen gebe ich an das Werkstatt-Team weiter.',
+    chips: ['Was kostet eine E-Bike-Inspektion?', 'Haben Sie samstags geöffnet?', 'Können Sie mein Rad abholen?'],
+    typing: 'Schreibt…', saved: 'Kontaktdaten gespeichert (Demo)', saved_sub: 'In dieser Demo wird nichts gespeichert.',
+    offline: 'Der Assistent ist gerade nicht erreichbar. Bitte schreiben Sie an hallo@speichenhaus.example.',
+    limit: 'Dieser Demo-Chat ist auf 10 Fragen begrenzt. Laden Sie die Seite neu, um ein neues Gespräch zu beginnen.'
+  }
+};
+
+const $ = (id) => document.getElementById(id);
+const log = $('log');
+const history = [];
+let lang = 'en';
+let business = null;
+let busy = false;
+
+function storedLang() {
+  try { return localStorage.getItem('lang'); } catch (e) { return null; }
+}
+function rememberLang(value) {
+  try { localStorage.setItem('lang', value); } catch (e) { /* private mode: language is simply not remembered */ }
+}
+
+function setLang(value) {
+  lang = value === 'de' ? 'de' : 'en';
+  const t = UI[lang];
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-t]').forEach((el) => {
+    const v = t[el.dataset.t];
+    if (el.dataset.t === 'h1') el.innerHTML = v; else el.textContent = v;
+  });
+  document.querySelectorAll('.lang button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+  $('q').placeholder = t.placeholder;
+  if (business) renderBusiness();
+  const hello = $('hello');
+  if (hello) hello.textContent = t.hello;
+  renderChips();
+}
+
+function renderBusiness() {
+  const b = business[lang];
+  const c = business.contact;
+  const hours = Object.entries(b.opening_hours);
+  $('tb-address').textContent = c.address.replace(', Germany', '') + ' · ' + c.phone;
+  $('tb-hours').textContent = hours.slice(0, 2).map(([d, h]) => d + ' ' + h).join(' · ');
+  $('hours').replaceChildren(...hours.map(([d, h]) => {
+    const tr = document.createElement('tr');
+    tr.append(cell(d), cell(h));
+    return tr;
+  }));
+  $('walkin').textContent = b.appointments;
+  $('price-list').replaceChildren(...b.services.map((s) => {
+    const li = document.createElement('li');
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.append(span(s.name), span('', 'dots'), span(s.price, 'price'));
+    li.append(row);
+    const extra = [s.includes, s.time].filter(Boolean).join(' · ');
+    if (extra) { const d = document.createElement('div'); d.className = 'inc'; d.textContent = extra; li.append(d); }
+    return li;
+  }));
+  $('ebikes-text').textContent = b.e_bikes;
+  $('pickup-text').textContent = b.pickup_and_delivery;
+  $('warranty-text').textContent = b.warranty_and_returns;
+  $('v-address').textContent = c.address;
+  $('v-contact').textContent = c.phone + ' · ' + c.email;
+  $('v-payment').textContent = b.payment;
+  $('v-estimate').textContent = b.cost_estimate;
+}
+function cell(text) { const td = document.createElement('td'); td.textContent = text; return td; }
+function span(text, cls) { const s = document.createElement('span'); s.textContent = text; if (cls) s.className = cls; return s; }
+
+function add(text, cls) {
+  const d = document.createElement('div');
+  d.className = 'msg ' + cls;
+  d.textContent = text;
+  log.appendChild(d);
+  log.scrollTop = log.scrollHeight;
+  return d;
+}
+function addSaved() {
+  const d = document.createElement('div');
+  d.className = 'saved';
+  const b = document.createElement('b');
+  b.textContent = UI[lang].saved;
+  d.append(b, UI[lang].saved_sub);
+  log.appendChild(d);
+  log.scrollTop = log.scrollHeight;
+}
+
+function renderChips() {
+  const old = $('chips');
+  if (old) old.remove();
+  if (history.length) return;
+  const box = document.createElement('div');
+  box.id = 'chips';
+  UI[lang].chips.forEach((q) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = q;
+    b.addEventListener('click', () => ask(q));
+    box.appendChild(b);
+  });
+  log.appendChild(box);
+}
+
+function lockInput(locked) {
+  $('q').disabled = locked;
+  $('send').disabled = locked;
+}
+
+async function ask(text) {
+  if (busy || !text) return;
+  busy = true;
+  const chips = $('chips');
+  if (chips) chips.remove();
+  add(text, 'me');
+  history.push({ role: 'user', text });
+  lockInput(true);
+  const wait = add(UI[lang].typing, 'bot wait');
+  let data = null;
+  try {
+    // text/plain keeps this a "simple" request, so the browser sends no CORS preflight to Apps Script.
+    const res = await fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ lang, history }) });
+    data = await res.json();
+  } catch (e) {
+    data = { ok: false, error: 'network', reply: UI[lang].offline };
+  }
+  wait.remove();
+  busy = false;
+  if (data.ok) {
+    add(data.reply, 'bot');
+    history.push({ role: 'assistant', text: data.reply });
+    if (data.lead_saved_demo) addSaved();
+  } else {
+    add(data.reply || UI[lang].offline, 'err');
+    history.pop();
+  }
+  const turns = history.filter((m) => m.role === 'user').length;
+  if (turns >= MAX_TURNS || data.error === 'turn_limit' || data.error === 'daily_limit') {
+    if (turns >= MAX_TURNS && data.ok) add(UI[lang].limit, 'err');
+    lockInput(true);
+    return;
+  }
+  lockInput(false);
+  $('q').focus();
+}
+
+function openChat(open) {
+  document.body.classList.toggle('open', open);
+  if (open) { log.scrollTop = log.scrollHeight; $('q').focus(); }
+}
+
+$('form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const v = $('q').value.trim();
+  if (!v) return;
+  $('q').value = '';
+  ask(v);
+});
+$('launch').addEventListener('click', () => openChat(true));
+$('close').addEventListener('click', () => openChat(false));
+document.querySelectorAll('.lang button').forEach((b) => b.addEventListener('click', () => { setLang(b.dataset.lang); rememberLang(lang); }));
+
+const hello = add('', 'bot');
+hello.id = 'hello';
+const params = new URLSearchParams(location.search);
+setLang(params.get('lang') || storedLang() || ((navigator.language || '').toLowerCase().startsWith('de') ? 'de' : 'en'));
+
+fetch('isletme.json').then((r) => r.json()).then((data) => { business = data; renderBusiness(); }).catch((e) => console.warn('shop information could not be loaded', e));
+
+// Recording mode for the showcase video (vitrin.py): #frame=N&typing&draft=0.5&lang=de&closed
+// draws the first N messages of the recorded real conversation (konusma.json) without calling the backend.
+(async () => {
+  const h = new URLSearchParams(location.hash.slice(1));
+  if (!h.has('frame')) return;
+  if (h.get('lang')) setLang(h.get('lang'));
+  const convo = await (await fetch('konusma.json')).json();
+  const n = Number(h.get('frame'));
+  convo.slice(0, n).forEach((m) => {
+    history.push({ role: m.role, text: m.text });
+    add(m.text, m.role === 'user' ? 'me' : 'bot');
+    if (m.lead_saved_demo) addSaved();
+  });
+  renderChips();
+  if (h.has('typing')) add(UI[lang].typing, 'bot wait');
+  if (h.has('draft') && convo[n]) $('q').value = convo[n].text.slice(0, Math.round(convo[n].text.length * Number(h.get('draft'))));
+  if (!h.has('closed')) document.body.classList.add('open');
+  log.scrollTop = log.scrollHeight;
+  $('q').blur();
+})();
+</script>
+</body>
+</html>
