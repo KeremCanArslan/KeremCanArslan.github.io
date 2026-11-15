@@ -6,8 +6,8 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Sıraüstü | Google, Meta, TikTok ve ChatGPT reklamları, SEO, web sitesi</title>
 <meta name="description" content="Reklamı, SEO'yu ve web sitenizi tek ekip yönetir; her ay hangi liranın kaç talep getirdiğini raporlarız.">
-<meta name="theme-color" content="#ffffff">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232B3AF0'/%3E%3Crect x='8' y='8' width='6' height='6' fill='%23FFD84A'/%3E%3Crect x='18' y='8' width='6' height='6' fill='%23FFD84A'/%3E%3Crect x='8' y='18' width='16' height='6' fill='%23fff'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#0a0d1a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a0d1a'/%3E%3Crect x='7' y='19' width='4' height='6' rx='1' fill='%23eceef4'/%3E%3Crect x='14' y='14' width='4' height='11' rx='1' fill='%23eceef4'/%3E%3Crect x='21' y='7' width='4' height='18' rx='1' fill='%23d9bf8f'/%3E%3C/svg%3E">
 <link rel="preload" href="assets/fonts/mona-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/site.css">
 </head>
@@ -21,36 +21,33 @@
       <span aria-hidden="true">sıra<span class="u">u</span>st<span class="u">u</span></span>
     </a>
     <nav class="menu" id="menu" aria-label="Ana menü">
-      <a href="#google-ads">Hizmetler</a>
+      <a href="#hizmetler">Hizmetler</a>
+      <a href="#rapor">Rapor</a>
+      <a href="#surec">Süreç</a>
       <a href="#paketler">SEO paketleri</a>
       <a href="#web">Web sitesi</a>
-      <a href="#surec">Süreç</a>
-      <a href="#rapor">Rapor</a>
       <a href="#sss">SSS</a>
-      <a class="dugme dugme-kucuk" href="#analiz">Ücretsiz analiz</a>
+      <a class="dugme dugme-cizgi dugme-kucuk" href="#analiz">Ücretsiz analiz</a>
     </nav>
     <button class="menu-ac" type="button" aria-expanded="false" aria-controls="menu">
-      <span class="menu-ac-cizgi" aria-hidden="true"></span>
       <span class="menu-ac-yazi">Menü</span>
+      <span class="menu-ac-cizgi" aria-hidden="true"></span>
     </button>
   </div>
 </header>
 
 <main id="icerik">
 
-  <!-- Giriş + kanallar: sağdaki sahne kaydırdıkça reklamın göründüğü yere dönüşür -->
-  <section class="kanal-alani" aria-label="Hizmetler">
-    <div class="kanal-metin">
-
-      <div class="giris adim" data-yuzey="arama" id="giris">
-        <h1 class="giris-baslik"><span class="k"><span style="--s:0">Arayan</span></span> <span class="k"><span style="--s:1">sizi</span></span> <span class="k"><span style="--s:2">bulsun.</span></span></h1>
+  <!-- Giriş: firma adını yazınca vitrindeki beş telefonda reklam o firmaya göre değişir -->
+  <section class="giris" id="giris" aria-labelledby="giris-baslik">
+    <div class="giris-ic">
+      <div class="giris-metin">
+        <h1 class="giris-baslik" id="giris-baslik"><span class="k"><span style="--s:0">Arayan</span></span> <span class="k"><span style="--s:1">sizi</span></span> <span class="k"><span style="--s:2">bulsun.</span></span></h1>
         <p class="giris-yazi">Google'da arayan, Instagram'da gezinen, TikTok'ta video izleyen ya da ChatGPT'ye soran müşteriniz sizi görsün. Reklamı, SEO'yu ve sitenizi tek ekip yönetir; her ay hangi liranın kaç talep getirdiğini raporlarız.</p>
 
         <form class="dene" id="dene" autocomplete="off" onsubmit="return false">
-          <label class="dene-etiket" for="firma-adi">Firmanızın adını yazın, reklamınızın nerede görüneceğine bakın</label>
-          <div class="dene-satir">
-            <input class="dene-girdi" id="firma-adi" name="firma" type="text" maxlength="28" placeholder="Firmanızın adı" autocomplete="organization" spellcheck="false">
-          </div>
+          <label class="dene-etiket" for="firma-adi">Firmanızın adını yazın, reklamınızı beş yerde birden görün</label>
+          <input class="dene-girdi" id="firma-adi" name="firma" type="text" maxlength="28" placeholder="Firmanızın adı" autocomplete="organization" spellcheck="false">
           <fieldset class="sektor">
             <legend class="sr">Sektörünüz</legend>
             <label><input type="radio" name="sektor" value="sanayi" checked><span>Sanayi</span></label>
@@ -59,191 +56,144 @@
             <label><input type="radio" name="sektor" value="turizm"><span>Turizm</span></label>
           </fieldset>
         </form>
+      </div>
 
-        <div class="giris-eylem">
-          <a class="dugme" href="#analiz">Ücretsiz analiz iste</a>
-          <a class="metin-baglanti" href="#paketler">SEO paketlerine bak</a>
+      <div class="vitrin-kap">
+        <div class="vitrin" id="vitrin" aria-hidden="true">
+          <div class="cihaz" data-y="arama"></div>
+          <div class="cihaz" data-y="akis"></div>
+          <div class="cihaz" data-y="video"></div>
+          <div class="cihaz" data-y="sohbet"></div>
+          <div class="cihaz" data-y="seo"></div>
         </div>
-
-        <div class="mini-sahne" data-mini="arama"></div>
-      </div>
-
-      <article class="adim kanal" data-yuzey="arama" id="google-ads">
-        <h2 class="kanal-ad">Google Ads</h2>
-        <p class="kanal-alt">Arama, YouTube ve Performance Max</p>
-        <p>Ürününüzü arayan kişiye, aramayı yaptığı anda çıkarsınız. Anahtar kelimeleri satın alma niyetine göre ayırır, boşa tıklatan aramaları her hafta negatif listeye ekleriz.</p>
-        <ul class="kanal-liste">
-          <li>Form, telefon ve WhatsApp dönüşümlerinin ayrı ayrı takibi</li>
-          <li>Haftalık arama terimi temizliği</li>
-          <li>Rakip markaların aramalarında görünme</li>
-        </ul>
-      </article>
-
-      <article class="adim kanal" data-yuzey="akis" id="meta-ads">
-        <div class="mini-sahne" data-mini="akis"></div>
-        <h2 class="kanal-ad">Meta Ads</h2>
-        <p class="kanal-alt">Instagram ve Facebook</p>
-        <p>Henüz aramaya başlamamış ama ilgilenecek kişiye ulaşırız. Her ay yeni görsel ve video setiyle test eder, en düşük maliyetle talep getireni bütçeyle büyütürüz.</p>
-        <ul class="kanal-liste">
-          <li>Görsel ve video üretimi ücrete dahil</li>
-          <li>Piksel ve Dönüşümler API kurulumu</li>
-          <li>Form reklamlarından gelen kişiler doğrudan e-postanıza</li>
-        </ul>
-      </article>
-
-      <article class="adim kanal" data-yuzey="video" id="tiktok-ads">
-        <div class="mini-sahne" data-mini="video"></div>
-        <h2 class="kanal-ad">TikTok Ads</h2>
-        <p class="kanal-alt">Dikey kısa video</p>
-        <p>İlk üç saniyede durduran videolar. Senaryoyu biz yazarız; çekimi sizin ekibinizle ya da içerik üreticileriyle planlarız.</p>
-        <ul class="kanal-liste">
-          <li>Spark Ads ile içerik üretici paylaşımlarını öne çıkarma</li>
-          <li>TikTok Pikseli ve olay takibi</li>
-          <li>İki haftada bir yeni video seti</li>
-        </ul>
-      </article>
-
-      <article class="adim kanal" data-yuzey="sohbet" id="chatgpt-ads">
-        <div class="mini-sahne" data-mini="sohbet"></div>
-        <h2 class="kanal-ad">ChatGPT Ads</h2>
-        <p class="kanal-alt">Yapay zekâ sohbetleri</p>
-        <p>İnsanlar artık neyi kimden alacağını ChatGPT'ye soruyor. Konuşmanın konusu işinizle ilgiliyse reklamınız cevabın altında, Sponsorlu etiketiyle ayrı bir kutuda çıkar; cevabın kendisini değiştirmez.</p>
-        <ul class="kanal-liste">
-          <li>Ads Manager hesabı, ödeme ve kampanya kurulumu</li>
-          <li>Konu ve bağlam ipuçlarıyla hedefleme</li>
-          <li>Markanızın yapay zekâ cevaplarında nasıl anlatıldığının aylık takibi</li>
-        </ul>
-      </article>
-
-      <article class="adim kanal" data-yuzey="seo" id="seo">
-        <div class="mini-sahne" data-mini="seo"></div>
-        <h2 class="kanal-ad">SEO</h2>
-        <p class="kanal-alt">Organik arama</p>
-        <p>Reklam bütçesi durduğunda da gelen ziyaretçi. Sitenin teknik altyapısını düzeltir, aranan sorulara cevap veren içerikler yazar, Google İşletme Profilinizi yönetiriz.</p>
-        <ul class="kanal-liste">
-          <li>Takip edilen kelimeler sözleşmede yazılı</li>
-          <li>Sıralamalar her hafta panelde</li>
-          <li>İçerikleri sektörünüzü bilen yazarlar yazar</li>
-        </ul>
-        <a class="metin-baglanti" href="#paketler">SEO paketlerine bak</a>
-      </article>
-
-    </div>
-
-    <div class="sahne-kolon" aria-hidden="true">
-      <div class="sahne-panel">
-        <div class="sahne-orta">
-          <div class="cerceve-kap"><span class="kose k1"></span><span class="kose k2"></span><span class="kose k3"></span><span class="kose k4"></span><div class="cerceve" id="sahne" data-yuzey="arama"></div></div>
-          <p class="cerceve-etiket" id="sahne-etiket">Arama ağı, metin reklamı</p>
-        </div>
-        <div class="sahne-sekmeler" role="presentation">
-          <button type="button" tabindex="-1" data-git="google-ads" data-yuzey="arama">Arama</button>
-          <button type="button" tabindex="-1" data-git="meta-ads" data-yuzey="akis">Akış</button>
-          <button type="button" tabindex="-1" data-git="tiktok-ads" data-yuzey="video">Video</button>
-          <button type="button" tabindex="-1" data-git="chatgpt-ads" data-yuzey="sohbet">Sohbet</button>
-          <button type="button" tabindex="-1" data-git="seo" data-yuzey="seo">Organik</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SEO paketleri -->
-  <section class="bolum paketler" id="paketler" aria-labelledby="paketler-baslik">
-    <div class="kap">
-      <div class="bolum-bas">
-        <h2 id="paketler-baslik">SEO paketleri</h2>
-        <p>Aylık sabit ücret, en az 6 ay. Hangi kelimeleri takip ettiğimiz sözleşmede yazılı olur; sıralamayı her hafta panelden görürsünüz.</p>
-      </div>
-
-      <div class="paket-sec" role="tablist" aria-label="Paket seçin">
-        <button type="button" role="tab" aria-selected="false" data-sutun="1">Yerel</button>
-        <button type="button" role="tab" aria-selected="true" data-sutun="2">Büyüme</button>
-        <button type="button" role="tab" aria-selected="false" data-sutun="3">Kurumsal</button>
-      </div>
-
-      <div class="paket-tablo-kap">
-        <table class="paket-tablo" data-secili="2">
-          <caption class="sr">SEO paketlerinin karşılaştırması</caption>
-          <thead>
-            <tr>
-              <td></td>
-              <th scope="col" data-sutun="1">
-                <span class="paket-ad">Yerel</span>
-                <span class="paket-kim">Tek şube, bölgesel hizmet</span>
-                <span class="paket-fiyat">9.500 TL<small> / ay</small></span>
-                <a class="dugme dugme-cizgi" href="#analiz" data-paket="Yerel">Bu paketle başla</a>
-              </th>
-              <th scope="col" data-sutun="2" class="one-cikan">
-                <span class="paket-not">En çok seçilen</span>
-                <span class="paket-ad">Büyüme</span>
-                <span class="paket-kim">Birden çok şehir ya da e-ticaret</span>
-                <span class="paket-fiyat">18.500 TL<small> / ay</small></span>
-                <a class="dugme" href="#analiz" data-paket="Büyüme">Bu paketle başla</a>
-              </th>
-              <th scope="col" data-sutun="3">
-                <span class="paket-ad">Kurumsal</span>
-                <span class="paket-kim">Çok dilli site, büyük katalog</span>
-                <span class="paket-fiyat paket-fiyat-yazi">Görüşmeyle</span>
-                <a class="dugme dugme-cizgi" href="#analiz" data-paket="Kurumsal">Bu paketle başla</a>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><th scope="row">Takip edilen anahtar kelime</th><td data-sutun="1">15</td><td data-sutun="2">50</td><td data-sutun="3">150 ve üzeri</td></tr>
-            <tr><th scope="row">Aylık içerik</th><td data-sutun="1">2 yazı</td><td data-sutun="2">6 yazı</td><td data-sutun="3">12 yazı ve kategori metinleri</td></tr>
-            <tr><th scope="row">Teknik denetim</th><td data-sutun="1">3 ayda bir</td><td data-sutun="2">Her ay</td><td data-sutun="3">Her ay ve her yayın öncesi</td></tr>
-            <tr><th scope="row">Google İşletme Profili</th><td data-sutun="1"><span class="var">Var</span></td><td data-sutun="2"><span class="var">Var</span></td><td data-sutun="3">Tüm şubeler</td></tr>
-            <tr><th scope="row">Yapay zekâ cevaplarında görünürlük takibi</th><td data-sutun="1"><span class="yok">Yok</span></td><td data-sutun="2"><span class="var">Var</span></td><td data-sutun="3"><span class="var">Var</span></td></tr>
-            <tr><th scope="row">Dijital PR ile bağlantı kazanımı</th><td data-sutun="1"><span class="yok">Yok</span></td><td data-sutun="2">Ayda 2</td><td data-sutun="3">Ayda 6</td></tr>
-            <tr><th scope="row">Raporlama</th><td data-sutun="1">Aylık</td><td data-sutun="2">Aylık ve canlı panel</td><td data-sutun="3">Haftalık ve canlı panel</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="dipnot">Fiyatlara KDV dahil değildir. Reklam yönetimi ücreti için <a href="#sss">sık sorulanlara</a> bakın.</p>
-    </div>
-  </section>
-
-  <!-- Web yazılım -->
-  <section class="bolum web" id="web" aria-labelledby="web-baslik">
-    <div class="kap web-izgara">
-      <div class="web-metin">
-        <h2 id="web-baslik">Reklamın gittiği sayfa da bizden</h2>
-        <p>Tıklamanın karşılığını alamamanın en sık sebebi yavaş ya da karışık bir açılış sayfası. Kurumsal sitenizi ve kampanya sayfalarınızı WordPress üzerinde, size özel tasarımla kodluyoruz; hazır tema kullanmıyoruz.</p>
-        <dl class="olcu">
-          <div><dt>Mobil hız puanı</dt><dd>90 ve üzeri</dd></div>
-          <div><dt>Sayfanın açılması</dt><dd>2 saniyenin altında</dd></div>
-          <div><dt>İçerik düzenleme</dt><dd>Panelden, kod bilmeden</dd></div>
-          <div><dt>KVKK</dt><dd>Aydınlatma metni ve çerez onayı kurulu</dd></div>
-          <div><dt>Ölçüm</dt><dd>Form, arama ve WhatsApp tıklamaları kayıtlı</dd></div>
-        </dl>
-        <p class="olcu-not">Bu beş maddeyi teslim günü sizinle birlikte kontrol ederiz.</p>
-        <a class="dugme" href="#analiz" data-hizmet="Web sitesi">Site için teklif iste</a>
-      </div>
-      <div class="web-onizleme" id="web-onizleme" aria-hidden="true"></div>
-    </div>
-  </section>
-
-  <!-- İlk 30 gün -->
-  <section class="bolum surec" id="surec" aria-labelledby="surec-baslik">
-    <div class="kap">
-      <div class="bolum-bas">
-        <h2 id="surec-baslik">İlk 30 gün</h2>
-        <p>Sözleşmeyi imzaladığınız günden ilk rapora kadar ne olacağı belli. Yayın 15. günde başlar.</p>
-      </div>
-      <div class="cizelge" role="table" aria-label="İlk 30 günün iş planı">
-        <div class="cz-satir cz-eksen" role="row">
-          <span class="cz-ad" role="columnheader">İş</span>
-          <div class="cz-iz" role="columnheader" aria-label="Günler">
-            <span style="--g:1">1. gün</span><span style="--g:8">8</span><span style="--g:15">15</span><span style="--g:22">22</span><span style="--g:30">30</span>
+        <div class="vitrin-alt">
+          <div class="vitrin-yazi">
+            <p class="vitrin-ad" id="vitrin-ad">Google Ads</p>
+            <p class="vitrin-etiket" id="vitrin-etiket">Arama ağı, metin reklamı</p>
           </div>
+          <button class="vitrin-dur" type="button" aria-pressed="false"><span class="sr">Vitrinin kendiliğinden dönmesini durdur</span><span class="dur-ik" aria-hidden="true"></span></button>
+          <div class="vitrin-sekmeler" role="group" aria-label="Reklamın göründüğü yer">
+            <button type="button" data-yuzey="arama" aria-pressed="true">Google<i aria-hidden="true"></i></button>
+            <button type="button" data-yuzey="akis" aria-pressed="false">Instagram<i aria-hidden="true"></i></button>
+            <button type="button" data-yuzey="video" aria-pressed="false">TikTok<i aria-hidden="true"></i></button>
+            <button type="button" data-yuzey="sohbet" aria-pressed="false">ChatGPT<i aria-hidden="true"></i></button>
+            <button type="button" data-yuzey="seo" aria-pressed="false">SEO<i aria-hidden="true"></i></button>
+          </div>
+          <p class="vitrin-ipucu">Telefonları sürükleyerek çevirebilirsiniz.</p>
         </div>
-        <div class="cz-satir" role="row"><span class="cz-ad" role="rowheader" data-gun="1–3. gün">Hesap ve site denetimi</span><div class="cz-iz" role="cell"><span class="cz-cubuk" style="--b:1;--s:3">1–3. gün</span></div></div>
-        <div class="cz-satir" role="row"><span class="cz-ad" role="rowheader" data-gun="3–8. gün">Ölçüm kurulumu: Analytics, Etiket Yöneticisi, pikseller</span><div class="cz-iz" role="cell"><span class="cz-cubuk" style="--b:3;--s:8">3–8. gün</span></div></div>
-        <div class="cz-satir" role="row"><span class="cz-ad" role="rowheader" data-gun="6–10. gün">Kampanya planı ve sizin onayınız</span><div class="cz-iz" role="cell"><span class="cz-cubuk" style="--b:6;--s:10">6–10. gün</span></div></div>
-        <div class="cz-satir" role="row"><span class="cz-ad" role="rowheader" data-gun="8–14. gün">Görsel, video ve metin üretimi</span><div class="cz-iz" role="cell"><span class="cz-cubuk" style="--b:8;--s:14">8–14. gün</span></div></div>
-        <div class="cz-satir" role="row"><span class="cz-ad" role="rowheader" data-gun="15. gün">Yayın</span><div class="cz-iz" role="cell"><span class="cz-nokta" style="--b:15">15. gün</span></div></div>
-        <div class="cz-satir" role="row"><span class="cz-ad" role="rowheader" data-gun="15–30. gün">Günlük kontrol, haftalık iyileştirme</span><div class="cz-iz" role="cell"><span class="cz-cubuk" style="--b:15;--s:30">15–30. gün</span></div></div>
-        <div class="cz-satir" role="row"><span class="cz-ad" role="rowheader" data-gun="30. gün">İlk aylık rapor ve değerlendirme görüşmesi</span><div class="cz-iz" role="cell"><span class="cz-nokta" style="--b:30">30. gün</span></div></div>
+      </div>
+
+      <div class="giris-eylem">
+        <a class="dugme" href="#analiz">Ücretsiz analiz iste</a>
+        <a class="metin-baglanti" href="#hizmetler">Hizmetlere bak</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hizmetler -->
+  <section class="bolum hizmetler" id="hizmetler" aria-labelledby="hizmetler-baslik">
+    <div class="kap">
+      <div class="bolum-bas">
+        <h2 id="hizmetler-baslik">Altı hizmet, tek ekip</h2>
+        <p>Bir kanalda öğrendiğimizi ötekinde kullanırız. Google'da en çok talep getiren kelime, Instagram'daki bir sonraki görselin konusu olur.</p>
+      </div>
+
+      <div class="hizmet-liste">
+        <article class="hizmet" id="google-ads">
+          <div class="hizmet-bas">
+            <h3 class="hizmet-ad">Google Ads</h3>
+            <p class="hizmet-alt">Arama, YouTube ve Performance Max</p>
+          </div>
+          <p class="hizmet-yazi">Ürününüzü arayan kişiye, aramayı yaptığı anda çıkarsınız. Anahtar kelimeleri satın alma niyetine göre ayırır, boşa tıklatan aramaları her hafta negatif listeye ekleriz.</p>
+          <div class="hizmet-yan">
+            <ul class="hizmet-madde">
+              <li>Form, telefon ve WhatsApp dönüşümlerinin ayrı ayrı takibi</li>
+              <li>Haftalık arama terimi temizliği</li>
+              <li>Rakip markaların aramalarında görünme</li>
+            </ul>
+            <button class="hizmet-gor" type="button" data-vitrin="arama">Vitrinde gör</button>
+          </div>
+        </article>
+
+        <article class="hizmet" id="meta-ads">
+          <div class="hizmet-bas">
+            <h3 class="hizmet-ad">Meta Ads</h3>
+            <p class="hizmet-alt">Instagram ve Facebook</p>
+          </div>
+          <p class="hizmet-yazi">Henüz aramaya başlamamış ama ilgilenecek kişiye ulaşırız. Her ay yeni görsel ve video setiyle test eder, en düşük maliyetle talep getireni bütçeyle büyütürüz.</p>
+          <div class="hizmet-yan">
+            <ul class="hizmet-madde">
+              <li>Görsel ve video üretimi ücrete dahil</li>
+              <li>Piksel ve Dönüşümler API kurulumu</li>
+              <li>Form reklamlarından gelen kişiler doğrudan e-postanıza</li>
+            </ul>
+            <button class="hizmet-gor" type="button" data-vitrin="akis">Vitrinde gör</button>
+          </div>
+        </article>
+
+        <article class="hizmet" id="tiktok-ads">
+          <div class="hizmet-bas">
+            <h3 class="hizmet-ad">TikTok Ads</h3>
+            <p class="hizmet-alt">Dikey kısa video</p>
+          </div>
+          <p class="hizmet-yazi">İlk üç saniyede durduran videolar. Senaryoyu biz yazarız; çekimi sizin ekibinizle ya da içerik üreticileriyle planlarız.</p>
+          <div class="hizmet-yan">
+            <ul class="hizmet-madde">
+              <li>Spark Ads ile içerik üretici paylaşımlarını öne çıkarma</li>
+              <li>TikTok Pikseli ve olay takibi</li>
+              <li>İki haftada bir yeni video seti</li>
+            </ul>
+            <button class="hizmet-gor" type="button" data-vitrin="video">Vitrinde gör</button>
+          </div>
+        </article>
+
+        <article class="hizmet" id="chatgpt-ads">
+          <div class="hizmet-bas">
+            <h3 class="hizmet-ad">ChatGPT Ads</h3>
+            <p class="hizmet-alt">Yapay zekâ sohbetleri</p>
+          </div>
+          <p class="hizmet-yazi">İnsanlar artık neyi kimden alacağını ChatGPT'ye soruyor. Konuşmanın konusu işinizle ilgiliyse reklamınız cevabın altında, Sponsorlu etiketiyle ayrı bir kutuda çıkar; cevabın kendisini değiştirmez.</p>
+          <div class="hizmet-yan">
+            <ul class="hizmet-madde">
+              <li>Ads Manager hesabı, ödeme ve kampanya kurulumu</li>
+              <li>Konu ve bağlam ipuçlarıyla hedefleme</li>
+              <li>Markanızın yapay zekâ cevaplarında nasıl anlatıldığının aylık takibi</li>
+            </ul>
+            <button class="hizmet-gor" type="button" data-vitrin="sohbet">Vitrinde gör</button>
+          </div>
+        </article>
+
+        <article class="hizmet" id="seo">
+          <div class="hizmet-bas">
+            <h3 class="hizmet-ad">SEO</h3>
+            <p class="hizmet-alt">Organik arama</p>
+          </div>
+          <p class="hizmet-yazi">Reklam bütçesi durduğunda da gelen ziyaretçi. Sitenin teknik altyapısını düzeltir, aranan sorulara cevap veren içerikler yazar, Google İşletme Profilinizi yönetiriz.</p>
+          <div class="hizmet-yan">
+            <ul class="hizmet-madde">
+              <li>Takip edilen kelimeler sözleşmede yazılı</li>
+              <li>Sıralamalar her hafta panelde</li>
+              <li>İçerikleri sektörünüzü bilen yazarlar yazar</li>
+            </ul>
+            <a class="hizmet-gor" href="#paketler">Paketleri gör</a>
+          </div>
+        </article>
+
+        <article class="hizmet" id="web-sitesi">
+          <div class="hizmet-bas">
+            <h3 class="hizmet-ad">Web sitesi</h3>
+            <p class="hizmet-alt">Kurumsal site ve kampanya sayfaları</p>
+          </div>
+          <p class="hizmet-yazi">Reklamın gittiği sayfa yavaş ya da karışıksa tıklamanın karşılığı gelmez. Sitenizi WordPress üzerinde, size özel tasarımla kodluyoruz; hazır tema kullanmıyoruz.</p>
+          <div class="hizmet-yan">
+            <ul class="hizmet-madde">
+              <li>Mobil hız puanı 90 ve üzeri</li>
+              <li>İçeriği panelden, kod bilmeden düzenleme</li>
+              <li>KVKK metinleri ve çerez onayı kurulu</li>
+            </ul>
+            <a class="hizmet-gor" href="#web">Ayrıntılara bak</a>
+          </div>
+        </article>
       </div>
     </div>
   </section>
@@ -313,6 +263,107 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- İlk 30 gün -->
+  <section class="bolum surec acik" id="surec" aria-labelledby="surec-baslik">
+    <div class="kap">
+      <div class="bolum-bas">
+        <h2 id="surec-baslik">İlk 30 gün</h2>
+        <p>Sözleşmeyi imzaladığınız günden ilk rapora kadar ne olacağı belli. Yayın 15. günde başlar.</p>
+      </div>
+      <div class="cizelge" role="table" aria-label="İlk 30 günün iş planı">
+        <div class="cz-satir cz-eksen" role="row">
+          <span class="cz-ad" role="columnheader">İş</span>
+          <div class="cz-iz" role="columnheader" aria-label="Günler">
+            <span style="--g:1">1. gün</span><span style="--g:8">8</span><span style="--g:15">15</span><span style="--g:22">22</span><span style="--g:30">30</span>
+          </div>
+        </div>
+        <div class="cz-satir" role="row"><span class="cz-ad" role="rowheader" data-gun="1–3. gün">Hesap ve site denetimi</span><div class="cz-iz" role="cell"><span class="cz-cubuk" style="--b:1;--s:3">1–3. gün</span></div></div>
+        <div class="cz-satir" role="row"><span class="cz-ad" role="rowheader" data-gun="3–8. gün">Ölçüm kurulumu: Analytics, Etiket Yöneticisi, pikseller</span><div class="cz-iz" role="cell"><span class="cz-cubuk" style="--b:3;--s:8">3–8. gün</span></div></div>
+        <div class="cz-satir" role="row"><span class="cz-ad" role="rowheader" data-gun="6–10. gün">Kampanya planı ve sizin onayınız</span><div class="cz-iz" role="cell"><span class="cz-cubuk" style="--b:6;--s:10">6–10. gün</span></div></div>
+        <div class="cz-satir" role="row"><span class="cz-ad" role="rowheader" data-gun="8–14. gün">Görsel, video ve metin üretimi</span><div class="cz-iz" role="cell"><span class="cz-cubuk" style="--b:8;--s:14">8–14. gün</span></div></div>
+        <div class="cz-satir" role="row"><span class="cz-ad" role="rowheader" data-gun="15. gün">Yayın</span><div class="cz-iz" role="cell"><span class="cz-nokta" style="--b:15">15. gün</span></div></div>
+        <div class="cz-satir" role="row"><span class="cz-ad" role="rowheader" data-gun="15–30. gün">Günlük kontrol, haftalık iyileştirme</span><div class="cz-iz" role="cell"><span class="cz-cubuk" style="--b:15;--s:30">15–30. gün</span></div></div>
+        <div class="cz-satir" role="row"><span class="cz-ad" role="rowheader" data-gun="30. gün">İlk aylık rapor ve değerlendirme görüşmesi</span><div class="cz-iz" role="cell"><span class="cz-nokta" style="--b:30">30. gün</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEO paketleri -->
+  <section class="bolum paketler acik" id="paketler" aria-labelledby="paketler-baslik">
+    <div class="kap">
+      <div class="bolum-bas">
+        <h2 id="paketler-baslik">SEO paketleri</h2>
+        <p>Aylık sabit ücret, en az 6 ay. Hangi kelimeleri takip ettiğimiz sözleşmede yazılı olur; sıralamayı her hafta panelden görürsünüz.</p>
+      </div>
+
+      <div class="paket-sec" role="tablist" aria-label="Paket seçin">
+        <button type="button" role="tab" aria-selected="false" data-sutun="1">Yerel</button>
+        <button type="button" role="tab" aria-selected="true" data-sutun="2">Büyüme</button>
+        <button type="button" role="tab" aria-selected="false" data-sutun="3">Kurumsal</button>
+      </div>
+
+      <div class="paket-tablo-kap">
+        <table class="paket-tablo" data-secili="2">
+          <caption class="sr">SEO paketlerinin karşılaştırması</caption>
+          <thead>
+            <tr>
+              <td></td>
+              <th scope="col" data-sutun="1">
+                <span class="paket-ad">Yerel</span>
+                <span class="paket-kim">Tek şube, bölgesel hizmet</span>
+                <span class="paket-fiyat">9.500 TL<small> / ay</small></span>
+                <a class="dugme dugme-cizgi" href="#analiz" data-paket="Yerel">Bu paketle başla</a>
+              </th>
+              <th scope="col" data-sutun="2" class="one-cikan">
+                <span class="paket-not">En çok seçilen</span>
+                <span class="paket-ad">Büyüme</span>
+                <span class="paket-kim">Birden çok şehir ya da e-ticaret</span>
+                <span class="paket-fiyat">18.500 TL<small> / ay</small></span>
+                <a class="dugme" href="#analiz" data-paket="Büyüme">Bu paketle başla</a>
+              </th>
+              <th scope="col" data-sutun="3">
+                <span class="paket-ad">Kurumsal</span>
+                <span class="paket-kim">Çok dilli site, büyük katalog</span>
+                <span class="paket-fiyat paket-fiyat-yazi">Görüşmeyle</span>
+                <a class="dugme dugme-cizgi" href="#analiz" data-paket="Kurumsal">Bu paketle başla</a>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Takip edilen anahtar kelime</th><td data-sutun="1">15</td><td data-sutun="2">50</td><td data-sutun="3">150 ve üzeri</td></tr>
+            <tr><th scope="row">Aylık içerik</th><td data-sutun="1">2 yazı</td><td data-sutun="2">6 yazı</td><td data-sutun="3">12 yazı ve kategori metinleri</td></tr>
+            <tr><th scope="row">Teknik denetim</th><td data-sutun="1">3 ayda bir</td><td data-sutun="2">Her ay</td><td data-sutun="3">Her ay ve her yayın öncesi</td></tr>
+            <tr><th scope="row">Google İşletme Profili</th><td data-sutun="1"><span class="var">Var</span></td><td data-sutun="2"><span class="var">Var</span></td><td data-sutun="3">Tüm şubeler</td></tr>
+            <tr><th scope="row">Yapay zekâ cevaplarında görünürlük takibi</th><td data-sutun="1"><span class="yok">Yok</span></td><td data-sutun="2"><span class="var">Var</span></td><td data-sutun="3"><span class="var">Var</span></td></tr>
+            <tr><th scope="row">Dijital PR ile bağlantı kazanımı</th><td data-sutun="1"><span class="yok">Yok</span></td><td data-sutun="2">Ayda 2</td><td data-sutun="3">Ayda 6</td></tr>
+            <tr><th scope="row">Raporlama</th><td data-sutun="1">Aylık</td><td data-sutun="2">Aylık ve canlı panel</td><td data-sutun="3">Haftalık ve canlı panel</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="dipnot">Fiyatlara KDV dahil değildir. Reklam yönetimi ücreti için <a href="#sss">sık sorulanlara</a> bakın.</p>
+    </div>
+  </section>
+
+  <!-- Web yazılım -->
+  <section class="bolum web acik" id="web" aria-labelledby="web-baslik">
+    <div class="kap web-izgara">
+      <div class="web-metin">
+        <h2 id="web-baslik">Reklamın gittiği sayfa da bizden</h2>
+        <p>Tıklamanın karşılığını alamamanın en sık sebebi yavaş ya da karışık bir açılış sayfası. Kurumsal sitenizi ve kampanya sayfalarınızı WordPress üzerinde, size özel tasarımla kodluyoruz; hazır tema kullanmıyoruz.</p>
+        <dl class="olcu">
+          <div><dt>Mobil hız puanı</dt><dd>90 ve üzeri</dd></div>
+          <div><dt>Sayfanın açılması</dt><dd>2 saniyenin altında</dd></div>
+          <div><dt>İçerik düzenleme</dt><dd>Panelden, kod bilmeden</dd></div>
+          <div><dt>KVKK</dt><dd>Aydınlatma metni ve çerez onayı kurulu</dd></div>
+          <div><dt>Ölçüm</dt><dd>Form, arama ve WhatsApp tıklamaları kayıtlı</dd></div>
+        </dl>
+        <p class="olcu-not">Bu beş maddeyi teslim günü sizinle birlikte kontrol ederiz.</p>
+        <a class="dugme" href="#analiz" data-hizmet="Web sitesi">Site için teklif iste</a>
+      </div>
+      <div class="web-onizleme" id="web-onizleme" aria-hidden="true"></div>
     </div>
   </section>
 

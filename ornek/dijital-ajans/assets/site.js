@@ -4,7 +4,6 @@
   'use strict';
 
   var azalt = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var masaustu = window.matchMedia('(min-width: 1080px)');
   var menuGenis = window.matchMedia('(min-width: 960px)');
 
   var SEKTOR = {
@@ -98,6 +97,8 @@
     seo: 'Organik sonuç, reklam değil'
   };
   var YUZEYLER = ['arama', 'akis', 'video', 'sohbet', 'seo'];
+  var KANAL = { arama: 'Google Ads', akis: 'Meta Ads', video: 'TikTok Ads', sohbet: 'ChatGPT Ads', seo: 'SEO' };
+  var DURUM_IK = '<svg class="durum-ik" viewBox="0 0 64 14" aria-hidden="true"><g fill="currentColor"><rect x="0" y="9" width="3" height="4" rx=".7"/><rect x="4.5" y="7" width="3" height="6" rx=".7"/><rect x="9" y="4.5" width="3" height="8.5" rx=".7"/><rect x="13.5" y="2" width="3" height="11" rx=".7"/></g><path d="M23 6.2a9 9 0 0 1 12 0M25.3 8.6a5.6 5.6 0 0 1 7.4 0M27.6 11a2.2 2.2 0 0 1 2.8 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><rect x="40" y="2" width="20" height="10" rx="3" fill="none" stroke="currentColor" stroke-opacity=".45"/><rect x="42" y="4" width="15" height="6" rx="1.6" fill="currentColor"/><rect x="61" y="5.3" width="1.6" height="3.6" rx=".8" fill="currentColor" fill-opacity=".45"/></svg>';
 
   function svg(ic, sinif) {
     return '<svg class="ik' + (sinif ? ' ' + sinif : '') + '" viewBox="0 0 24 24" aria-hidden="true">' + ic + '</svg>';
@@ -166,6 +167,8 @@
         '<p class="ara-baglanti">' + s.baglanti.map(function (b) { return '<span>' + esc(b) + '</span>'; }).join('') + '</p>' +
       '</div>' +
       '<div class="iskelet"><span class="isk isk-a"></span><span class="isk isk-b"></span><span class="isk isk-c"></span><span class="isk isk-d"></span></div>' +
+      '<div class="iskelet"><span class="isk isk-a"></span><span class="isk isk-b"></span><span class="isk isk-c"></span><span class="isk isk-d"></span></div>' +
+      '<div class="iskelet"><span class="isk isk-a"></span><span class="isk isk-b"></span><span class="isk isk-c"></span></div>' +
     '</div>';
   }
 
@@ -181,22 +184,25 @@
       '<div class="ara-kutu">' + IK.mercek + '<span class="ara-sorgu">' + esc(s.seoSorgu) + '</span></div>' +
       '<div class="ara-sekme"><span class="s">Tümü</span><span>Görseller</span><span>Haritalar</span><span>Haberler</span><span>Alışveriş</span></div>' +
       '<ol class="sira">' + satirlar + '</ol>' +
+      '<div class="iskelet"><span class="isk isk-a"></span><span class="isk isk-b"></span><span class="isk isk-c"></span><span class="isk isk-d"></span></div>' +
+      '<div class="iskelet"><span class="isk isk-a"></span><span class="isk isk-b"></span><span class="isk isk-c"></span></div>' +
     '</div>';
   }
 
   function akis(s) {
     return '<div class="akis">' +
       '<div class="akis-bas"><span class="avatar" data-k="harf">' + esc(harf()) + '</span><p class="akis-ad"><b>' + slotHTML() + '</b><small>Sponsorlu</small></p>' + IK.ucNokta + '</div>' +
-      '<img class="akis-foto" src="img/' + s.foto + '-akis.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">' +
+      '<img class="akis-foto" src="img/' + s.foto + '-akis.webp" alt="" width="960" height="1200" loading="lazy" decoding="async" draggable="false">' +
       '<div class="akis-cta"><span>' + esc(s.akisCta) + '</span>' + IK.ok + '</div>' +
       '<div class="akis-eylem">' + IK.kalp + IK.yorum + IK.gonder + '<span class="bosluk"></span>' + IK.kaydet + '</div>' +
       '<p class="akis-metin"><b data-k="handle">' + esc(slug()) + '</b> ' + esc(s.akisMetin) + '</p>' +
+      '<div class="akis-sonraki"><i></i><span class="isk isk-a"></span></div>' +
     '</div>';
   }
 
   function video(s) {
     return '<div class="video">' +
-      '<img class="video-foto" src="img/' + s.foto + '-dikey.webp" alt="" width="720" height="1280" loading="lazy" decoding="async">' +
+      '<img class="video-foto" src="img/' + s.foto + '-dikey.webp" alt="" width="720" height="1280" loading="lazy" decoding="async" draggable="false">' +
       '<div class="video-ilerleme"><span></span></div>' +
       '<div class="video-yan">' +
         '<span class="avatar avatar-video"><span data-k="harf">' + esc(harf()) + '</span><i>+</i></span>' +
@@ -221,7 +227,7 @@
         '<div class="soh-reklam">' +
           '<p class="soh-etiket"><span>Sponsorlu</span>' + IK.ucNokta + '</p>' +
           '<div class="soh-satir">' +
-            '<img class="soh-gorsel" src="img/' + s.foto + '-akis.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">' +
+            '<img class="soh-gorsel" src="img/' + s.foto + '-akis.webp" alt="" width="960" height="1200" loading="lazy" decoding="async" draggable="false">' +
             '<div class="soh-yazi"><p class="soh-marka"><span class="fav" data-k="harf">' + esc(harf()) + '</span>' + slotHTML() + '</p>' +
             '<p class="soh-baslik">' + esc(s.reklamBaslik) + '</p><p class="soh-metin">' + esc(s.reklamMetin) + '</p></div>' +
           '</div>' +
@@ -239,39 +245,35 @@
       '<div class="t-ust"><span class="t-geri">' + IK.geri + IK.ileri + '</span><span class="t-adres">' + IK.kilit + '<span data-k="alan">' + esc(alan()) + '</span></span></div>' +
       '<div class="t-site">' +
         '<div class="ts-menu"><span class="ts-logo">' + slotHTML() + '</span><span class="ts-linkler">' + w.menu.map(function (m) { return '<span>' + esc(m) + '</span>'; }).join('') + '</span><span class="ts-cta">' + esc(w.cta) + '</span></div>' +
-        '<div class="ts-hero"><img src="img/' + s.foto + '-yatay.webp" alt="" width="1600" height="1000" loading="lazy" decoding="async"><div class="ts-hero-ic"><p class="ts-baslik">' + esc(w.baslik) + '</p><span class="ts-dugme">' + esc(w.cta) + '</span></div></div>' +
+        '<div class="ts-hero"><img src="img/' + s.foto + '-yatay.webp" alt="" width="1600" height="1000" loading="lazy" decoding="async" draggable="false"><div class="ts-hero-ic"><p class="ts-baslik">' + esc(w.baslik) + '</p><span class="ts-dugme">' + esc(w.cta) + '</span></div></div>' +
         '<div class="ts-bilgi">' + w.bilgi.map(function (b) { return '<span>' + esc(b) + '</span>'; }).join('') + '</div>' +
       '</div>' +
     '</div>';
   }
 
   /* ---------- çizim ---------- */
-  var sahne = document.getElementById('sahne');
-  var sahneEtiket = document.getElementById('sahne-etiket');
-  var miniler = Array.prototype.slice.call(document.querySelectorAll('.mini-sahne'));
+  var vitrin = document.getElementById('vitrin');
+  var vitrinKap = document.querySelector('.vitrin-kap');
+  var vitrinAlt = document.querySelector('.vitrin-alt');
+  var vitrinAd = document.getElementById('vitrin-ad');
+  var vitrinEtiket = document.getElementById('vitrin-etiket');
+  var durDugme = document.querySelector('.vitrin-dur');
+  var sekmeler = Array.prototype.slice.call(document.querySelectorAll('.vitrin-sekmeler button'));
+  var cihazlar = vitrin ? Array.prototype.slice.call(vitrin.querySelectorAll('.cihaz')) : [];
   var webOnizleme = document.getElementById('web-onizleme');
-  var aktifYuzey = 'arama';
 
-  function ciz(yazarak) {
+  cihazlar.forEach(function (c) {
+    c.innerHTML = '<div class="ekran"><div class="durum"><span>09:41</span>' + DURUM_IK + '</div><span class="ada"></span><div class="ekran-ic"></div><span class="ev"></span></div>';
+  });
+
+  function ciz() {
     var s = sek();
-    if (sahne) {
-      sahne.innerHTML = YUZEYLER.map(function (y) {
-        return '<div class="yuzey yuzey-' + y + '" data-y="' + y + '">' + CIZ[y](s) + '</div>';
-      }).join('');
-    }
-    miniler.forEach(function (m) {
-      var y = m.getAttribute('data-mini');
-      m.innerHTML = '<div class="cerceve" data-yuzey="' + y + '" role="img" aria-label="Örnek ' + ETIKET[y].toLocaleLowerCase('tr') + '"><div class="yuzey yuzey-' + y + '" data-y="' + y + '">' + CIZ[y](s) + '</div></div>';
-      m._oynadi = false;
+    cihazlar.forEach(function (c) {
+      c.querySelector('.ekran-ic').innerHTML = CIZ[c.getAttribute('data-y')](s);
     });
     if (webOnizleme) webOnizleme.innerHTML = siteOnizleme(s);
     document.querySelectorAll('[data-firma-yaz]').forEach(function (el) { el.innerHTML = slotHTML(); });
-
-    if (sahne) yuzeyAc(sahne, aktifYuzey, true);
-    miniler.forEach(function (m) { if (m._gorunur) miniOynat(m); });
-    if (yazarak && !azalt) {
-      document.querySelectorAll('.yuzey-arama .ara-sorgu').forEach(function (el) { yaz(el, el.getAttribute('data-sorgu'), 900); });
-    }
+    if (cihazlar[aktifSira]) hareketBaslat(cihazlar[aktifSira], YUZEYLER[aktifSira]);
   }
 
   /* firma adı yazılırken yalnız ad geçen yerler güncellenir; fotoğraflar yeniden yüklenmez */
@@ -293,7 +295,7 @@
     });
   }
 
-  /* ---------- hareketler ---------- */
+  /* ---------- ekran içi hareketler ---------- */
   function yaz(el, metin, gecikme) {
     clearTimeout(el._zaman);
     el.textContent = '';
@@ -338,12 +340,12 @@
       yerlestirSira();
       liste._zaman = setTimeout(adim, 520);
     }
-    liste._zaman = setTimeout(adim, 650);
+    liste._zaman = setTimeout(adim, 700);
   }
 
-  function cevapAk(yuzey) {
-    var p = yuzey.querySelector('.soh-cevap');
-    var reklam = yuzey.querySelector('.soh-reklam');
+  function cevapAk(kap) {
+    var p = kap.querySelector('.soh-cevap');
+    var reklam = kap.querySelector('.soh-reklam');
     if (!p || !reklam) return;
     clearTimeout(p._zaman);
     var metin = p.getAttribute('data-cevap');
@@ -361,75 +363,208 @@
     p._zaman = setTimeout(adim, 500);
   }
 
-  function hareketBaslat(yuzey, y) {
-    if (!yuzey) return;
-    if (y === 'seo') siraTirman(yuzey.querySelector('.sira'));
-    if (y === 'sohbet') cevapAk(yuzey);
-    var v = yuzey.querySelector('.video');
-    if (v) v.classList.toggle('oynuyor', y === 'video');
+  function hareketBaslat(kap, y) {
+    if (y === 'arama' && !azalt) {
+      var sorgu = kap.querySelector('.ara-sorgu');
+      if (sorgu) yaz(sorgu, sorgu.getAttribute('data-sorgu'), 400);
+    }
+    if (y === 'seo') siraTirman(kap.querySelector('.sira'));
+    if (y === 'sohbet') cevapAk(kap);
+    var v = kap.querySelector('.video');
+    if (v) v.classList.add('oynuyor');
   }
 
-  function yuzeyAc(cerceve, y, zorla) {
-    if (!zorla && cerceve.getAttribute('data-yuzey') === y) return;
-    cerceve.setAttribute('data-yuzey', y);
-    cerceve.querySelectorAll('.video').forEach(function (v) { v.classList.remove('oynuyor'); });
-    hareketBaslat(cerceve.querySelector('.yuzey-' + y), y);
+  /* ---------- vitrin: konum ondalıklı; 0 = ilk telefon önde ---------- */
+  var ADIM = 13.5;            /* yan telefonun uzaklığı, em */
+  var SURE = 5600;            /* kendiliğinden ilerleme aralığı, ms */
+  var ELLE_SURE = 9000;       /* elle çevirdikten sonra bekleme, ms */
+  var konum = 0;
+  var aktifSira = 0;
+  var durduruldu = azalt;
+  var ustunde = false, odakta = false, gorunur = true, surukleniyor = false;
+  var otoZaman = null;
+
+  function fark(i) {
+    var d = (i - konum) % 5;
+    if (d < -2.5) d += 5;
+    if (d >= 2.5) d -= 5;
+    return d;
   }
 
-  function aktifEt(y) {
-    if (y === aktifYuzey) return;
-    aktifYuzey = y;
-    if (sahne) yuzeyAc(sahne, y);
-    if (sahneEtiket) sahneEtiket.textContent = ETIKET[y];
-    document.querySelectorAll('.sahne-sekmeler button').forEach(function (b) {
-      b.classList.toggle('aktif', b.getAttribute('data-yuzey') === y);
+  function yerlestirVitrin() {
+    cihazlar.forEach(function (c, i) {
+      var d = fark(i), a = Math.abs(d), yon = d < 0 ? -1 : 1;
+      var x = a <= 1 ? d * ADIM : yon * (ADIM + (a - 1) * 7);
+      var r = -Math.max(-1.3, Math.min(1.3, d)) * 32;
+      var z = -Math.min(a, 2) * 6;
+      var olcek = 1 - Math.min(a, 2) * 0.13;
+      var gorun = a <= 1 ? 1 : Math.max(0, 1 - (a - 1) * 1.8);
+      c.style.transform = 'translate3d(' + x.toFixed(3) + 'em,0,' + z.toFixed(3) + 'em) rotateY(' + r.toFixed(2) + 'deg) scale(' + olcek.toFixed(3) + ')';
+      c.style.opacity = gorun.toFixed(3);
+      c.style.zIndex = String(10 - Math.round(a * 2));
+      c.style.setProperty('--golge', (Math.min(a, 1) * 0.55).toFixed(3));
+      c.style.pointerEvents = a < 1.5 ? 'auto' : 'none';
     });
   }
 
-  function miniOynat(m) {
-    if (m._oynadi) return;
-    m._oynadi = true;
-    var y = m.getAttribute('data-mini');
-    hareketBaslat(m.querySelector('.yuzey'), y);
+  function aktifGuncelle(zorla) {
+    var sira = ((Math.round(konum) % 5) + 5) % 5;
+    if (sira === aktifSira && !zorla) return;
+    var eski = cihazlar[aktifSira];
+    if (eski && eski !== cihazlar[sira]) {
+      var v = eski.querySelector('.video');
+      if (v) v.classList.remove('oynuyor');
+    }
+    aktifSira = sira;
+    var y = YUZEYLER[sira];
+    if (vitrinAd) vitrinAd.textContent = KANAL[y];
+    if (vitrinEtiket) vitrinEtiket.textContent = ETIKET[y];
+    sekmeler.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-yuzey') === y ? 'true' : 'false'); });
+    if (cihazlar[sira]) hareketBaslat(cihazlar[sira], y);
   }
 
-  /* ---------- gözlemciler ---------- */
-  if ('IntersectionObserver' in window) {
-    var adimGozcu = new IntersectionObserver(function (girdiler) {
-      if (!masaustu.matches) return;
-      girdiler.forEach(function (g) { if (g.isIntersecting) aktifEt(g.target.getAttribute('data-yuzey')); });
-    }, { rootMargin: '-45% 0px -54% 0px', threshold: 0 });
-    document.querySelectorAll('.adim').forEach(function (a) { adimGozcu.observe(a); });
+  function git(sira) {
+    konum += Math.round(fark(sira));
+    yerlestirVitrin();
+    aktifGuncelle();
+  }
 
-    var miniGozcu = new IntersectionObserver(function (girdiler) {
-      girdiler.forEach(function (g) {
-        var m = g.target;
-        m._gorunur = g.isIntersecting;
-        if (g.isIntersecting) miniOynat(m);
-        else {
-          m._oynadi = false;
-          var v = m.querySelector('.video');
-          if (v) v.classList.remove('oynuyor');
-        }
+  function otoKur(bekle) {
+    clearTimeout(otoZaman);
+    if (!vitrinAlt) return;
+    vitrinAlt.classList.remove('oynuyor');
+    if (durduruldu || ustunde || odakta || !gorunur || surukleniyor || document.hidden) return;
+    var t = bekle || SURE;
+    vitrinAlt.style.setProperty('--sure', t + 'ms');
+    void vitrinAlt.offsetWidth;
+    vitrinAlt.classList.add('oynuyor');
+    otoZaman = setTimeout(function () {
+      konum += 1;
+      yerlestirVitrin();
+      aktifGuncelle();
+      otoKur();
+    }, t);
+  }
+
+  if (vitrin && cihazlar.length === 5) {
+    yerlestirVitrin();
+
+    /* sürükleme: yatay hareket vitrini çevirir, dikey kaydırma sayfaya kalır (touch-action: pan-y) */
+    var basX = 0, basKonum = 0, sonX = 0, sonT = 0, hiz = 0, isaretci = null, suruklendi = false, sonBirakma = 0;
+    function adimPx() { return ADIM * parseFloat(getComputedStyle(vitrin).fontSize); }
+    vitrin.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      isaretci = e.pointerId;
+      basX = sonX = e.clientX;
+      sonT = performance.now();
+      basKonum = konum;
+      hiz = 0;
+      suruklendi = false;
+    });
+    vitrin.addEventListener('pointermove', function (e) {
+      if (e.pointerId !== isaretci) return;
+      var dx = e.clientX - basX;
+      if (!suruklendi) {
+        if (Math.abs(dx) < 6) return;
+        suruklendi = true;
+        surukleniyor = true;
+        vitrin.classList.add('surukle');
+        try { vitrin.setPointerCapture(e.pointerId); } catch (hata) { /* yakalama desteklenmiyorsa sürükleme yine çalışır */ }
+        otoKur();
+      }
+      konum = basKonum - dx / adimPx();
+      var simdi = performance.now();
+      hiz = (e.clientX - sonX) / Math.max(1, simdi - sonT);
+      sonX = e.clientX;
+      sonT = simdi;
+      yerlestirVitrin();
+    });
+    function birak(e) {
+      if (e.pointerId !== isaretci) return;
+      isaretci = null;
+      if (!suruklendi) return;
+      surukleniyor = false;
+      sonBirakma = performance.now();
+      vitrin.classList.remove('surukle');
+      /* kısa ve hızlı fiske bir telefon çevirir; uzun sürüklemede en yakın telefona oturur */
+      var gecen = konum - basKonum;
+      var hedef = Math.abs(gecen) < 0.5 && Math.abs(hiz) > 0.25 ? basKonum + (hiz < 0 ? 1 : -1) : basKonum + Math.round(gecen);
+      konum = Math.max(basKonum - 2, Math.min(basKonum + 2, hedef));
+      yerlestirVitrin();
+      aktifGuncelle();
+      otoKur(ELLE_SURE);
+    }
+    vitrin.addEventListener('pointerup', birak);
+    vitrin.addEventListener('pointercancel', birak);
+    vitrin.addEventListener('dragstart', function (e) { e.preventDefault(); });
+    vitrin.addEventListener('click', function (e) {
+      if (performance.now() - sonBirakma < 350) return;
+      var c = e.target.closest('.cihaz');
+      if (!c) return;
+      var sira = cihazlar.indexOf(c);
+      if (sira !== aktifSira) { git(sira); otoKur(ELLE_SURE); }
+    });
+
+    sekmeler.forEach(function (b, i) {
+      b.addEventListener('click', function () {
+        git(YUZEYLER.indexOf(b.getAttribute('data-yuzey')));
+        otoKur(ELLE_SURE);
       });
-    }, { threshold: 0.45 });
-    miniler.forEach(function (m) { miniGozcu.observe(m); });
+      b.addEventListener('keydown', function (e) {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        e.preventDefault();
+        var hedef = sekmeler[(i + (e.key === 'ArrowRight' ? 1 : 4)) % 5];
+        hedef.focus();
+        hedef.click();
+      });
+    });
+
+    if (durDugme) {
+      var durYazi = durDugme.querySelector('.sr');
+      var durGuncelle = function () {
+        durDugme.setAttribute('aria-pressed', durduruldu ? 'true' : 'false');
+        if (durYazi) durYazi.textContent = durduruldu ? 'Vitrini kendiliğinden döndür' : 'Vitrinin kendiliğinden dönmesini durdur';
+      };
+      durGuncelle();
+      durDugme.addEventListener('click', function () {
+        durduruldu = !durduruldu;
+        durGuncelle();
+        otoKur();
+      });
+    }
+
+    if (vitrinKap) {
+      vitrinKap.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { ustunde = true; otoKur(); } });
+      vitrinKap.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') { ustunde = false; otoKur(ELLE_SURE); } });
+      vitrinKap.addEventListener('focusin', function () { odakta = true; otoKur(); });
+      vitrinKap.addEventListener('focusout', function (e) {
+        if (vitrinKap.contains(e.relatedTarget)) return;
+        odakta = false;
+        otoKur(ELLE_SURE);
+      });
+    }
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (girdiler) {
+        gorunur = girdiler[0].isIntersecting;
+        otoKur();
+      }, { threshold: 0.25 }).observe(vitrin);
+    }
+    document.addEventListener('visibilitychange', function () { otoKur(); });
+
+    /* açılışta telefonlar ortadan yana açılır */
+    if (!azalt) {
+      vitrin.classList.add('ilk');
+      setTimeout(function () { vitrin.classList.remove('ilk'); }, 420);
+    }
   }
 
-  masaustu.addEventListener('change', function () {
-    if (!masaustu.matches) return;
-    var orta = window.innerHeight / 2;
-    document.querySelectorAll('.adim').forEach(function (a) {
-      var r = a.getBoundingClientRect();
-      if (r.top <= orta && r.bottom >= orta) aktifEt(a.getAttribute('data-yuzey'));
-    });
-  });
-
-  document.querySelectorAll('.sahne-sekmeler button').forEach(function (b) {
-    if (b.getAttribute('data-yuzey') === aktifYuzey) b.classList.add('aktif');
+  /* hizmet satırındaki "Vitrinde gör" */
+  document.querySelectorAll('[data-vitrin]').forEach(function (b) {
     b.addEventListener('click', function () {
-      var hedef = document.getElementById(b.getAttribute('data-git'));
-      if (hedef) hedef.scrollIntoView({ behavior: azalt ? 'auto' : 'smooth', block: 'center' });
+      git(YUZEYLER.indexOf(b.getAttribute('data-vitrin')));
+      if (vitrinKap) vitrinKap.scrollIntoView({ behavior: azalt ? 'auto' : 'smooth', block: 'center' });
+      otoKur(ELLE_SURE);
     });
   });
 
@@ -458,7 +593,7 @@
       if (!r.checked) return;
       durum.sektor = r.value;
       kaydet();
-      ciz(true);
+      ciz();
     });
   });
 
@@ -567,6 +702,6 @@
   }
 
   /* ---------- başlat ---------- */
-  ciz(true);
+  ciz();
   formaAktar();
 })();
