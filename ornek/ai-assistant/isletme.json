@@ -1,0 +1,80 @@
+{
+  "name": "Speichenhaus Leipzig",
+  "demo": "Fictional business for a demo website. / Fiktiver Betrieb für eine Demo-Website.",
+  "contact": {
+    "address": "Ritzelgasse 4, 04229 Leipzig-Plagwitz, Germany",
+    "phone": "+49 341 000 0000",
+    "email": "hallo@speichenhaus.example",
+    "languages_spoken": "German, English"
+  },
+  "en": {
+    "about": "Independent bicycle and e-bike workshop in Leipzig-Plagwitz. Repairs, servicing and e-bike diagnostics for city, trekking, road, gravel and cargo bikes. We do not sell new bikes.",
+    "opening_hours": {
+      "Monday to Friday": "09:00-18:30",
+      "Saturday": "10:00-14:00",
+      "Sunday and public holidays": "closed"
+    },
+    "appointments": "Services are booked by phone or email; the next free slot is usually within 3-5 working days. Small repairs (punctures, brake and gear adjustment) are done without an appointment, Monday to Friday until 17:30, while you wait (about 20-30 minutes if there is no queue).",
+    "services": [
+      {"name": "Basic service", "price": "59 €", "time": "1 working day", "includes": "check and adjust brakes and gears, tyre pressure, clean and oil chain, check all bolts"},
+      {"name": "Full service", "price": "119 €", "time": "2 working days", "includes": "basic service plus wheel truing, check of hub, headset and bottom bracket bearings, new brake and gear cables if needed (parts extra)"},
+      {"name": "E-bike service", "price": "139 €", "time": "2 working days", "includes": "full service plus diagnostic read-out of motor and battery, battery capacity test, software update"},
+      {"name": "Puncture repair", "price": "15 € labour, inner tube from 8 €", "time": "about 20 minutes"},
+      {"name": "Brake pads", "price": "19 € per wheel, pads from 15 €"},
+      {"name": "Bleed hydraulic brake", "price": "29 € per brake"},
+      {"name": "Wheel truing", "price": "20 € per wheel"},
+      {"name": "Bike fitting (saddle and handlebar position)", "price": "49 €", "time": "45 minutes, by appointment"},
+      {"name": "Other work", "price": "68 € per hour, billed in 15-minute steps", "includes": "fitting accessories (mudguards, racks, lights, child seats) and repairs not listed above"}
+    ],
+    "e_bikes": "We service e-bikes with Bosch, Shimano Steps and Brose motors. We do not open motors or repair battery cells; faulty motors and batteries are sent to the manufacturer and the cost is quoted first. E-bikes with unbranded hub motors are not serviced.",
+    "cost_estimate": "Free cost estimate within 1 working day if you have the repair done here, otherwise 15 €. For repairs above 100 € we call you before starting.",
+    "pickup_and_delivery": "Pick-up and return service within the Leipzig city area: 15 € one way, 25 € both ways. Bikes and e-bikes up to 30 kg; cargo bikes are not collected. Book at least one working day ahead by phone or email. Parts we order for you usually arrive in 2-4 working days; we email you when they are ready. We do not ship parts.",
+    "loan_bike": "Loan city bike during a repair: 10 € per day, subject to availability.",
+    "warranty_and_returns": "6 months guarantee on our labour. New parts have the statutory 2-year warranty. Unused parts bought in the shop can be returned within 14 days with the receipt; parts ordered specially for you cannot be returned. No guarantee on parts you bring yourself.",
+    "payment": "Cash, girocard, Visa and Mastercard, paid when you collect the bike.",
+    "storage": "Please collect your bike within 7 days after we tell you it is ready; after that we charge 3 € per day storage.",
+    "special_requests": "Custom wheel builds, complete bike builds, servicing for company bike fleets and written quotes are handled by the workshop team. Leave your name and email address and we reply by email within 1 working day.",
+    "faq": [
+      {"q": "Do you sell bikes?", "a": "No new bikes. We usually have a few serviced used city bikes from 290 €; stock changes weekly, please ask by phone."},
+      {"q": "Do you repair cargo bikes?", "a": "Yes, cargo bikes up to 2.6 m long, including e-cargo bikes with Bosch or Shimano motors. Cargo bikes have to be brought in."},
+      {"q": "Can I bring my own parts?", "a": "Yes. Fitting is charged at the hourly rate and there is no guarantee on the parts."},
+      {"q": "Do you service leasing bikes from my employer?", "a": "Yes, we service leasing bikes and can invoice the leasing company if your contract includes servicing. Bring your leasing contract number."},
+      {"q": "Is there parking?", "a": "There is a bike rack in front of the workshop; car parking is on the street only."}
+    ]
+  },
+  "de": {
+    "about": "Unabhängige Fahrrad- und E-Bike-Werkstatt in Leipzig-Plagwitz. Reparatur, Inspektion und E-Bike-Diagnose für Stadt-, Trekking-, Renn-, Gravel- und Lastenräder. Wir verkaufen keine Neuräder.",
+    "opening_hours": {
+      "Montag bis Freitag": "09:00-18:30",
+      "Samstag": "10:00-14:00",
+      "Sonntag und Feiertage": "geschlossen"
+    },
+    "appointments": "Inspektionen werden per Telefon oder E-Mail vereinbart; der nächste freie Termin ist meist in 3-5 Werktagen. Kleine Reparaturen (Platten, Brems- und Schaltungseinstellung) ohne Termin, Montag bis Freitag bis 17:30, zum Mitwarten (ca. 20-30 Minuten, wenn keine Warteschlange ist).",
+    "services": [
+      {"name": "Basis-Inspektion", "price": "59 €", "time": "1 Werktag", "includes": "Bremsen und Schaltung prüfen und einstellen, Reifendruck, Kette reinigen und ölen, alle Schrauben prüfen"},
+      {"name": "Komplett-Inspektion", "price": "119 €", "time": "2 Werktage", "includes": "Basis-Inspektion plus Laufräder zentrieren, Lager von Naben, Steuersatz und Tretlager prüfen, neue Brems- und Schaltzüge bei Bedarf (Teile extra)"},
+      {"name": "E-Bike-Inspektion", "price": "139 €", "time": "2 Werktage", "includes": "Komplett-Inspektion plus Diagnose von Motor und Akku, Akku-Kapazitätstest, Software-Update"},
+      {"name": "Platten reparieren", "price": "15 € Arbeitslohn, Schlauch ab 8 €", "time": "ca. 20 Minuten"},
+      {"name": "Bremsbeläge", "price": "19 € pro Laufrad, Beläge ab 15 €"},
+      {"name": "Hydraulikbremse entlüften", "price": "29 € pro Bremse"},
+      {"name": "Laufrad zentrieren", "price": "20 € pro Laufrad"},
+      {"name": "Sitzposition einstellen (Sattel und Lenker)", "price": "49 €", "time": "45 Minuten, mit Termin"},
+      {"name": "Sonstige Arbeiten", "price": "68 € pro Stunde, Abrechnung in 15-Minuten-Schritten", "includes": "Montage von Zubehör (Schutzbleche, Gepäckträger, Licht, Kindersitze) und hier nicht genannte Reparaturen"}
+    ],
+    "e_bikes": "Wir warten E-Bikes mit Motoren von Bosch, Shimano Steps und Brose. Motoren öffnen wir nicht und Akkuzellen reparieren wir nicht; defekte Motoren und Akkus gehen an den Hersteller, die Kosten nennen wir vorher. E-Bikes mit Nabenmotoren ohne Marke warten wir nicht.",
+    "cost_estimate": "Kostenvoranschlag innerhalb von 1 Werktag, kostenlos bei Reparatur bei uns, sonst 15 €. Bei Reparaturen über 100 € rufen wir vor Beginn an.",
+    "pickup_and_delivery": "Hol- und Bringservice im Leipziger Stadtgebiet: 15 € pro Weg, 25 € hin und zurück. Fahrräder und E-Bikes bis 30 kg; Lastenräder holen wir nicht ab. Bitte mindestens einen Werktag vorher per Telefon oder E-Mail buchen. Bestellte Teile kommen meist in 2-4 Werktagen; wir schreiben Ihnen eine E-Mail, wenn sie da sind. Wir versenden keine Teile.",
+    "loan_bike": "Leih-Stadtrad während der Reparatur: 10 € pro Tag, je nach Verfügbarkeit.",
+    "warranty_and_returns": "6 Monate Garantie auf unsere Arbeit. Neue Teile haben die gesetzliche Gewährleistung von 2 Jahren. Unbenutzte, im Laden gekaufte Teile können innerhalb von 14 Tagen mit Kassenbon zurückgegeben werden; extra für Sie bestellte Teile sind vom Umtausch ausgeschlossen. Keine Garantie auf mitgebrachte Teile.",
+    "payment": "Bar, girocard, Visa und Mastercard, bezahlt wird bei Abholung.",
+    "storage": "Bitte holen Sie Ihr Rad innerhalb von 7 Tagen nach unserer Fertigmeldung ab; danach berechnen wir 3 € pro Tag Standgeld.",
+    "special_requests": "Laufrad-Aufbau nach Wunsch, komplette Radaufbauten, Wartung von Firmen-Dienstradflotten und schriftliche Angebote bearbeitet das Werkstatt-Team. Hinterlassen Sie Namen und E-Mail-Adresse, wir antworten innerhalb von 1 Werktag per E-Mail.",
+    "faq": [
+      {"q": "Verkaufen Sie Fahrräder?", "a": "Keine Neuräder. Meist haben wir einige überholte gebrauchte Stadträder ab 290 €; der Bestand wechselt wöchentlich, bitte telefonisch fragen."},
+      {"q": "Reparieren Sie Lastenräder?", "a": "Ja, Lastenräder bis 2,6 m Länge, auch E-Lastenräder mit Bosch- oder Shimano-Motor. Lastenräder müssen gebracht werden."},
+      {"q": "Kann ich eigene Teile mitbringen?", "a": "Ja. Der Einbau wird nach Stundensatz berechnet, auf die Teile gibt es keine Garantie."},
+      {"q": "Warten Sie Leasingräder meines Arbeitgebers?", "a": "Ja, wir warten Leasingräder und rechnen mit der Leasinggesellschaft ab, wenn Ihr Vertrag Wartung enthält. Bitte Vertragsnummer mitbringen."},
+      {"q": "Gibt es Parkplätze?", "a": "Vor der Werkstatt steht ein Fahrradständer; Autos parken nur an der Straße."}
+    ]
+  }
+}
