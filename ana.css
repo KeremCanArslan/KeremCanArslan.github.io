@@ -102,6 +102,9 @@ h3 { margin: 0; font-weight: 800; font-stretch: 80%; font-size: clamp(24px, 2.4v
 .sekme button:last-child { border-right: 0; }
 .sekme button[aria-pressed="true"] { background: var(--ink); color: var(--kagit); }
 .vaka-sekil figcaption { max-width: 76%; }
+.vaka-sekil.teller { padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(10px, 1.8vw, 24px); }
+.vaka-sekil.teller .tel { position: static; width: auto; box-shadow: none; }
+.vaka-sekil.teller .tel:nth-child(2) { margin-top: 12%; }
 
 /* Müşteri işleri */
 .musteri { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--ink); border-left: 1px solid var(--ink); }
