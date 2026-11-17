@@ -264,8 +264,8 @@
     function adim() {
       i++;
       el.textContent = metin.slice(0, i);
-      if (i < metin.length) el._zaman = setTimeout(adim, 55 + Math.random() * 55);
-      else if (bitince) el._zaman = setTimeout(bitince, 260);
+      if (i < metin.length) el._zaman = setTimeout(adim, 22 + Math.random() * 18);
+      else if (bitince) el._zaman = setTimeout(bitince, 120);
     }
     el._zaman = setTimeout(adim, gecikme || 0);
   }
@@ -295,7 +295,7 @@
     function adim() {
       if (konum === 0) {
         liste.classList.add('tamam');
-        if (bitince) liste._zaman = setTimeout(bitince, 250);
+        if (bitince) liste._zaman = setTimeout(bitince, 150);
         return;
       }
       var ust = sira[konum - 1];
@@ -303,9 +303,9 @@
       sira[konum] = ust;
       konum--;
       yerlestirSira();
-      liste._zaman = setTimeout(adim, 480);
+      liste._zaman = setTimeout(adim, 220);
     }
-    liste._zaman = setTimeout(adim, 450);
+    liste._zaman = setTimeout(adim, 200);
   }
 
   function cevapAk(kap, bitince) {
@@ -322,13 +322,13 @@
     function adim() {
       i++;
       p.textContent = kelimeler.slice(0, i).join(' ');
-      if (i < kelimeler.length) p._zaman = setTimeout(adim, 40);
+      if (i < kelimeler.length) p._zaman = setTimeout(adim, 18);
       else p._zaman = setTimeout(function () {
         reklam.classList.remove('gizli');
-        if (bitince) p._zaman = setTimeout(bitince, 300);
-      }, 260);
+        if (bitince) p._zaman = setTimeout(bitince, 120);
+      }, 120);
     }
-    p._zaman = setTimeout(adim, 600);
+    p._zaman = setTimeout(adim, 250);
   }
 
   /* imleç sahneye girip reklama tıklar (telefonda parmak dokunuşu); hareket azaltmada hiç çıkmaz */
@@ -352,7 +352,7 @@
       fare._zaman = setTimeout(function () {
         fare.classList.add('tik');
         hedef.classList.add('basildi');
-      }, 950);
+      }, 480);
     }, gecikme || 0);
   }
 
@@ -362,23 +362,23 @@
     var sorgu = kap.querySelector('.ys-sorgu');
     if ((y === 'arama' || y === 'seo') && ys && sorgu) {
       ys.classList.add('bekle');
-      yaz(sorgu, sorgu.getAttribute('data-sorgu'), 450, function () {
+      yaz(sorgu, sorgu.getAttribute('data-sorgu'), 150, function () {
         ys.classList.remove('bekle');
-        if (y === 'seo') siraTirman(kap.querySelector('.sira'), function () { fareGotur(kap, '.sira-firma .sira-baslik', 150); });
-        else fareGotur(kap, '.ys-baslik', 650);
+        if (y === 'seo') siraTirman(kap.querySelector('.sira'), function () { fareGotur(kap, '.sira-firma .sira-baslik', 100); });
+        else fareGotur(kap, '.ys-baslik', 200);
       });
     }
     if (y === 'sohbet') cevapAk(kap, function () { fareGotur(kap, '.soh-baslik', 0); });
-    if (y === 'akis') fareGotur(kap, '.akis-cta span', 1500);
-    if (y === 'video') fareGotur(kap, '.video-cta', 1800);
+    if (y === 'akis') fareGotur(kap, '.akis-cta span', 450);
+    if (y === 'video') fareGotur(kap, '.video-cta', 500);
     if (y === 'web') {
       var t = kap.querySelector('.tarayici');
       var adres = kap.querySelector('.t-adres [data-k="alan"]');
       if (t && adres) {
         t.classList.add('bekle');
-        yaz(adres, alan(), 350, function () {
+        yaz(adres, alan(), 150, function () {
           t.classList.remove('bekle');
-          fareGotur(kap, '.ts-dugme', 700);
+          fareGotur(kap, '.ts-dugme', 200);
         });
       }
     }
@@ -453,11 +453,13 @@
     kanalCubugaKaydir(kanallar[i]);
   }
 
-  /* kendiliğinden geçiş: fare üstünde, klavye odağında, ekran dışında ve sekme gizliyken durur */
-  var SURE = 7400;
-  var ELLE_SURE = 11000;
+  /* kendiliğinden geçiş: fare üstündeyken de sürer; klavye odağında, ekran dışında ve sekme gizliyken durur */
+  var SURE = 3000;
+  /* sahne başına süre: imleç reklama tıkladıktan sonra yaklaşık 1 sn daha görünür (arama, akış, video, sohbet, seo, web) */
+  var SURELER = [3000, 2400, 2500, 2800, 3700, 2600];
+  var ELLE_SURE = 8000;
   var durduruldu = azalt;
-  var ustunde = false, odakta = false, gorunur = true;
+  var odakta = false, gorunur = true;
   var elleOynatildi = false; /* kullanıcı oynat dediyse klavye odağı geçişi durdurmaz */
   var otoZaman = null;
   var durDugme = vitrin ? vitrin.querySelector('.v-dur') : null;
@@ -466,9 +468,9 @@
     clearTimeout(otoZaman);
     if (!vitrin) return;
     vitrin.classList.remove('oynuyor');
-    var calisiyor = !(durduruldu || ustunde || odakta || !gorunur || document.hidden);
+    var calisiyor = !(durduruldu || odakta || !gorunur || document.hidden);
     if (!calisiyor) return;
-    var t = bekle || SURE;
+    var t = bekle || SURELER[aktif] || SURE;
     vitrin.style.setProperty('--sure', t + 'ms');
     void vitrin.offsetWidth;
     vitrin.classList.add('oynuyor');
@@ -530,12 +532,6 @@
     sahne.addEventListener('pointercancel', function () { isaretci = null; });
     sahne.addEventListener('dragstart', function (e) { e.preventDefault(); });
 
-    var sahneVeCubuk = [sahne, vitrin.querySelector('.kanal-cubuk')];
-    sahneVeCubuk.forEach(function (el) {
-      if (!el) return;
-      el.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { ustunde = true; otoKur(); } });
-      el.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') { ustunde = false; otoKur(ELLE_SURE); } });
-    });
     /* fareyle tıklanan düğme odak alsa da geçiş durmaz; klavyeyle gelen odakta durur */
     var klavyeOdagi = function (el) {
       try { return el.matches(':focus-visible'); } catch (hata) { return true; }
