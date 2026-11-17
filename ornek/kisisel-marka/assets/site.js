@@ -371,16 +371,10 @@
     if (y === 'sohbet') cevapAk(kap, function () { fareGotur(kap, '.soh-baslik', 0); });
     if (y === 'akis') fareGotur(kap, '.akis-cta span', 450);
     if (y === 'video') fareGotur(kap, '.video-cta', 500);
+    /* site önizlemesi baştan görünür: adres yazılırken tarayıcı boş beyaz kalmaz */
     if (y === 'web') {
-      var t = kap.querySelector('.tarayici');
       var adres = kap.querySelector('.t-adres [data-k="alan"]');
-      if (t && adres) {
-        t.classList.add('bekle');
-        yaz(adres, alan(), 150, function () {
-          t.classList.remove('bekle');
-          fareGotur(kap, '.ts-dugme', 200);
-        });
-      }
+      if (adres) yaz(adres, alan(), 150, function () { fareGotur(kap, '.ts-dugme', 200); });
     }
     var v = kap.querySelector('.video');
     if (v) v.classList.add('oynuyor');
