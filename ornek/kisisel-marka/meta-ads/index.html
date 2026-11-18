@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Meta Ads yönetimi | Murat ERDOĞAN</title>
+<meta name="description" content="Instagram ve Facebook reklam yönetimi: görsel ve video üretimi, Piksel ve Dönüşümler API'si kurulumu, hedef kitle çalışması, form reklamları ve aylık rapor.">
+<meta name="theme-color" content="#1b1b1d">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:title" content="Meta Ads yönetimi | Murat ERDOĞAN">
+<meta property="og:description" content="Görsel ve video üretimi, Piksel ve Dönüşümler API'si kurulumu, hedef kitle çalışması ve aylık rapor.">
+<meta property="og:image" content="https://keremcanarslan.github.io/ornek/kisisel-marka/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Google arama sonucunda sponsorlu reklam önizlemesi ve reklam kanalları">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%230c1018'/%3E%3Cpath d='M8 23V9.5l8 8 8-8V23' fill='none' stroke='%23fff' stroke-width='3' stroke-linejoin='round'/%3E%3Ccircle cx='24' cy='23' r='2.4' fill='%23ff5b22'/%3E%3C/svg%3E">
+<link rel="preload" href="../assets/fonts/mona-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/mona-sans-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+<script>if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) { document.documentElement.classList.add('hareket'); setTimeout(function () { if (!window.meHazir) document.documentElement.classList.remove('hareket'); }, 4000); }</script>
+<link rel="stylesheet" href="../assets/site.css?v=24">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Service",
+   "name": "Meta Ads yönetimi",
+   "serviceType": "Meta Ads reklam yönetimi",
+   "provider": {
+    "@type": "ProfessionalService",
+    "name": "Murat ERDOĞAN"
+   },
+   "areaServed": "TR"
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Ana Sayfa",
+     "item": "https://keremcanarslan.github.io/ornek/kisisel-marka/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Meta Ads",
+     "item": "https://keremcanarslan.github.io/ornek/kisisel-marka/meta-ads/"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Reklam bütçesi paket ücretine dahil mi?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Hayır. Reklam bütçesi kendi kartınızdan doğrudan Meta'ya ödenir. Paket ücreti yönetim ve görsel üretimi içindir, faturalar ayrı olur."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Görselleri ve videoları kim hazırlıyor?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Görsel ve video üretimi ücrete dahildir. Sayısı pakete göre değişir: Başlangıç'ta ayda 4 görsel, Büyüme'de 8 görsel ve 2 video, Performans'ta 12 görsel ve 4 video. Ürün ya da işyeri fotoğraflarınız varsa onlar da kullanılır."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Reklamlar nerede görünür?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Instagram ve Facebook'ta akışta, Hikayeler'de ve Reels'te. Seçilen amaca göre Messenger, WhatsApp, Threads ve Meta Audience Network'te de görünebilir. Hangi alanlarda görüneceği kampanya kurulurken seçilir."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Form reklamından gelen kişiler bana nasıl ulaşır?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Hızlı formu dolduran kişinin bilgileri e-postanıza iletilir. Aynı kayıtlar Meta Business Suite'teki Potansiyel Müşteri Merkezi'nde de durur, oradan indirilebilir."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Ne kadar sürede sonuç alırım?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yeni reklam seti önce öğrenme aşamasından geçer, bu sürede sonuçlar daha az istikrarlıdır. Meta'ya göre bu aşama genellikle haftada 50 sonuçtan sonra biter. Hangi görselin iyi gittiği ilk ayın sonunda belli olur."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Zaten açık bir reklam hesabım var, devam edilebilir mi?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Evet. Mevcut hesap incelenir, geçmiş veriler ve kitleler korunarak devralınır. Reklam hesabı, sayfalar ve Piksel sizin adınıza kalır."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.9"/><circle cx="17.1" cy="6.9" r=".6"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 10.5v6M8 7.6v.1M11.5 16.5v-6M11.5 13c0-1.6 1-2.6 2.4-2.6s2.1.9 2.1 2.6v3.5"/></symbol>
+  <symbol id="i-youtube" viewBox="0 0 24 24"><rect x="2.8" y="5.8" width="18.4" height="12.4" rx="3.6"/><path d="m10.3 9.4 4.6 2.6-4.6 2.6Z"/></symbol>
+  <symbol id="i-ara" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.2"/><path d="m15.2 15.2 4.8 4.8"/></symbol>
+  <!-- platform logoları: markaların resmî dosyalarından, renkler aynen; tek renkli parçalar currentColor (zemine göre siyah ya da beyaz) -->
+  <defs><linearGradient id="meta-d1" x1="61" y1="117" x2="259" y2="127" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0064e1"/><stop offset="0.4" stop-color="#0064e1"/><stop offset="0.83" stop-color="#0073ee"/><stop offset="1" stop-color="#0082fb"/></linearGradient><linearGradient id="meta-d2" x1="45" y1="139" x2="45" y2="66" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0082fb"/><stop offset="1" stop-color="#0064e0"/></linearGradient></defs>
+  <symbol id="i-google" viewBox="-5.3 -18.5 266.5 266.5" stroke="none"><path fill="#fbbc04" d="M5.9 166.4 90.9 21c10.8 6.4 65.2 36.5 74 42.2L80 208.6C70.6 221-5.9 185 6 166.4"/><path fill="#4285f4" d="M250 166.4 165 20.9a43.3 43.3 0 0 0-58.4-15.3 41 41 0 0 0-15.5 57.5l85 145.5a43.4 43.4 0 0 0 58.4 15.3 42 42 0 0 0 15.6-57.5"/><ellipse cx="42.7" cy="187.9" fill="#34a853" rx="42.7" ry="41.6"/></symbol>
+  <symbol id="i-meta" viewBox="0.0 -48.3 287.6 287.6" stroke="none"><path fill="#0081fb" d="M31 126a48 48 0 0 0 5.6 24.5 19 19 0 0 0 16.6 9.5c8 0 15.5-2 29.8-21.8 11.4-15.8 24.9-38 34-52l15.3-23.6c10.7-16.3 23-34.6 37.2-47 11.6-10 24-15.6 36.6-15.6 21 0 41.1 12.2 56.5 35.1 16.8 25 25 56.7 25 89.3 0 19.4-3.9 33.6-10.4 44.8a43 43 0 0 1-39 21.8v-31c17.6 0 22-16.2 22-34.8 0-26.4-6.2-55.7-19.8-76.7-9.6-14.8-22-23.9-35.8-23.9-14.9 0-26.8 11.2-40.2 31.2a595 595 0 0 0-22.7 38.1l-9.1 16c-18.2 32.3-22.8 39.7-32 51.8C84.8 183 71.2 191 53.3 191a47 47 0 0 1-43-23A84 84 0 0 1 0 124.7z"/><path fill="url(#meta-d1)" d="M24.5 37.3C38.7 15.3 59.3 0 82.9 0a63 63 0 0 1 41.3 15.6c15.5 12.7 32 33.5 52.7 67.8l7.4 12.3c17.8 29.8 28 45 33.9 52.3 7.6 9.2 13 12 20 12 17.6 0 22-16.2 22-34.8l27.4-.8c0 19.4-3.9 33.6-10.4 44.9a43 43 0 0 1-39 21.7 49 49 0 0 1-36.8-14.6c-9.6-9-20.9-25.2-29.5-39.7L146 93.6a296 296 0 0 0-31.7-45c-7.4-7.9-16.9-17.4-32-17.4-12.3 0-22.7 8.6-31.5 21.8z"/><path fill="url(#meta-d2)" d="M82.4 31.2C70 31.2 59.6 39.8 50.8 53A139 139 0 0 0 31 126a48 48 0 0 0 5.5 24.5L10 167.9A84 84 0 0 1 0 125c0-31 8.4-63 24.5-87.7C38.7 15.3 59.3 0 82.9 0z"/></symbol>
+  <symbol id="i-tiktok" viewBox="320.8 143.6 663.7 663.7" stroke="none"><path fill="#25f4ee" d="M593 411.2v-24.4q-12.3-1.7-25-1.8a185 185 0 0 0-106 336.7 184 184 0 0 1-49.1-126c0-100.7 80-182.2 180.2-184.5"/><path fill="#25f4ee" d="M597.3 680.8a85.7 85.7 0 0 0 85-82l.2-402.5 73-.6a140 140 0 0 1-2.3-25.5H652.6l-.2 403A84.6 84.6 0 0 1 528.8 645a85 85 0 0 0 68.5 35.9m295.8-347.7v-23a139 139 0 0 1-76.2-22.8 141 141 0 0 0 76.2 45.8"/><path fill="#fe2c55" d="M816.9 287.4a139 139 0 0 1-34.4-91.7h-27a140 140 0 0 0 61.4 91.7M568 485.6A84.7 84.7 0 0 0 528.8 645a84.7 84.7 0 0 1 93.5-130V412.3q-12.3-1.7-25-1.8l-4.3.1v78.9q-12-3.9-25-4"/><path fill="#fe2c55" d="M893.1 332.5v78.2a239 239 0 0 1-140-45V570c0 102.1-83 185.2-185 185.2a184 184 0 0 1-106.2-33.6 185.3 185.3 0 0 0 320.6-126V391.1c39.4 28.3 87.8 45 140 45V335.6q-15.2 0-29.4-3"/><path fill="currentColor" d="M753.2 570.1V365.7a239 239 0 0 0 139.9 45v-78.2a140 140 0 0 1-76.2-45 140 140 0 0 1-61.4-91.8H682l-.2 403.1a84.6 84.6 0 0 1-153 46.1A84.6 84.6 0 0 1 568 485.6q13 0 25 3.9v-78.9a185.3 185.3 0 0 0-180.8 185c0 48.7 18.9 93 49.7 126.1A184 184 0 0 0 568 755.3a185.4 185.4 0 0 0 185.2-185.2"/></symbol>
+  <symbol id="i-chatgpt" viewBox="-13.9 -13.9 347.8 347.8" stroke="none"><path fill="currentColor" d="M297 131a80.6 80.6 0 0 0-93.7-104.2 80.6 80.6 0 0 0-137 29A80.6 80.6 0 0 0 23 189a80.6 80.6 0 0 0 93.7 104.2 80.6 80.6 0 0 0 137-29A80.7 80.7 0 0 0 297.1 131zM176.9 299c-14 .1-27.6-4.8-38.4-13.8l1.9-1 63.7-36.9a10 10 0 0 0 5.2-9v-89.9l27 15.6q.4.2.5.7v74.4a60 60 0 0 1-60 60M47.9 244a60 60 0 0 1-7.1-40.1l1.9 1.1 63.7 36.8c3.2 1.9 7.2 1.9 10.5 0l77.8-45V228q0 .5-.4.8L129.9 266a60 60 0 0 1-82-22M31.2 105c7-12.2 18-21.5 31.2-26.3v75.8c0 3.7 2 7.2 5.2 9l77.8 45-27 15.5a1 1 0 0 1-.9 0l-64.4-37a60 60 0 0 1-22-82zm221.2 51.5-77.8-45 27-15.5a1 1 0 0 1 .9 0l64.4 37.1a60 60 0 0 1-9.3 108.2v-75.8c0-3.7-2-7.2-5.2-9m26.8-40.4-1.9-1.1-63.7-36.8a10 10 0 0 0-10.5 0L125.4 123V92q0-.5.3-.8L190.1 54a60 60 0 0 1 89.1 62.1m-168.5 55.4-27-15.5-.4-.7V80.9a60 60 0 0 1 98.3-46.1l-1.9 1-63.7 37a10 10 0 0 0-5.2 9zm14.6-31.5 34.7-20 34.6 20v40L160 200l-34.7-20z"/></symbol>
+  <symbol id="i-seo" viewBox="0 0 24 24"><path d="m3.8 16.8 5.4-5.4 3.8 3.8 7.2-7.2"/><path d="M14.8 8h5.4v5.4"/></symbol>
+  <symbol id="i-web" viewBox="0 0 24 24"><rect x="3.5" y="4.8" width="17" height="14.4" rx="2.2"/><path d="M3.5 9h17M6.6 6.9h.01M8.9 6.9h.01"/></symbol>
+  <symbol id="i-yazilim" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.2"/><path d="m9 10-2.5 2.5L9 15M15 10l2.5 2.5L15 15"/></symbol>
+  <symbol id="i-paket" viewBox="0 0 24 24"><path d="M12 3.6 19.8 8v8L12 20.4 4.2 16V8L12 3.6Z"/><path d="M4.4 8.1 12 12.4l7.6-4.3M12 12.4v8"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 3.6a8.4 8.4 0 0 0-7.3 12.6L3.6 20.4l4.3-1.1A8.4 8.4 0 1 0 12 3.6Z"/><path d="M9.1 8.6c.2 2.9 3.4 6.1 6.3 6.3l1-1.4-1.9-1-.9.7c-1-.4-2.3-1.7-2.7-2.7l.7-.9-1-1.9-1.5.9Z"/></symbol>
+  <symbol id="i-tel" viewBox="0 0 24 24"><path d="M7 3.9 9.6 4.6l1 3.8-1.9 1.5a11 11 0 0 0 5.3 5.3l1.5-1.9 3.8 1 .7 2.6c-.3 1.6-1.7 2.6-3.2 2.6C10.6 19.2 4.8 13.4 4.4 7.1 4.4 5.6 5.4 4.2 7 3.9Z"/></symbol>
+  <symbol id="i-posta" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4 6.5 8 6.2 8-6.2"/></symbol>
+  <symbol id="i-konum" viewBox="0 0 24 24"><path d="M12 20.6s-6.4-5.6-6.4-10.6a6.4 6.4 0 0 1 12.8 0c0 5-6.4 10.6-6.4 10.6Z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+  <symbol id="i-ok" viewBox="0 0 24 24"><path d="M7.5 16.5 16.5 7.5M9.5 7.5h7v7"/></symbol>
+  <symbol id="i-asagi" viewBox="0 0 24 24"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"/></symbol>
+  <symbol id="i-kisi" viewBox="0 0 24 24"><circle cx="12" cy="8.2" r="3.9"/><path d="M4.6 20c.9-3.7 3.8-5.6 7.4-5.6s6.5 1.9 7.4 5.6"/></symbol>
+  <symbol id="i-rapor" viewBox="0 0 24 24"><path d="M6.5 3.5h7.3l3.7 3.7v13.3h-11z"/><path d="M13.6 3.6v3.8h3.8M9.2 16.6v-3M12 16.6v-5M14.8 16.6v-2"/></symbol>
+  <symbol id="i-anahtar" viewBox="0 0 24 24"><circle cx="8.3" cy="15.7" r="4.3"/><path d="m11.4 12.6 8.4-8.4M16.4 7.6l2.6 2.6M14.1 9.9l1.9 1.9"/></symbol>
+  <symbol id="i-saat" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.4V12l3.1 2"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M10.2 13.8a3.6 3.6 0 0 0 5.1 0l3.2-3.2a3.6 3.6 0 0 0-5.1-5.1l-1.2 1.2"/><path d="M13.8 10.2a3.6 3.6 0 0 0-5.1 0l-3.2 3.2a3.6 3.6 0 0 0 5.1 5.1l1.2-1.2"/></symbol>
+  <symbol id="i-hedef" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="4.6"/><path d="M12 12h.01"/></symbol>
+  <symbol id="i-soru" viewBox="0 0 24 24"><path d="M5.2 4.8h13.6c.9 0 1.7.8 1.7 1.7v8.8c0 .9-.8 1.7-1.7 1.7h-7.5l-4.8 3.4v-3.4H5.2c-.9 0-1.7-.8-1.7-1.7V6.5c0-.9.8-1.7 1.7-1.7Z"/><path d="M10 9.2a2 2 0 1 1 2.8 1.8c-.5.2-.8.6-.8 1.1v.5M12 14.6h.01"/></symbol>
+  <symbol id="i-bina" viewBox="0 0 24 24"><path d="M4.5 20.5h15M6.5 20.5V5.5h7v15M13.5 9.5h4v11M9 9h2M9 12.5h2M9 16h2"/></symbol>
+  <symbol id="i-yuzde" viewBox="0 0 24 24"><path d="m6.5 17.5 11-11"/><circle cx="7.5" cy="7.5" r="2"/><circle cx="16.5" cy="16.5" r="2"/></symbol>
+  <symbol id="i-kitap" viewBox="0 0 24 24"><path d="M4.5 5.5c2.8-.9 5.3-.6 7.5 1v13c-2.2-1.6-4.7-1.9-7.5-1z"/><path d="M19.5 5.5c-2.8-.9-5.3-.6-7.5 1v13c2.2-1.6 4.7-1.9 7.5-1z"/></symbol>
+  <symbol id="i-kalkan" viewBox="0 0 24 24"><path d="M12 3.6 19 6.4v5.2c0 4.2-2.9 7.4-7 8.8-4.1-1.4-7-4.6-7-8.8V6.4z"/><path d="m9.1 12 2.1 2.1 3.8-3.9"/></symbol>
+  <symbol id="i-karekod" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><path d="M14 14h2.5v2.5H14zM17.5 17.5H20V20h-2.5zM14 19.5h1.5M19.5 14v1.5"/></symbol>
+</svg>
+
+<a class="atla" href="#icerik">İçeriğe geç</a>
+
+<header class="ust" id="ust">
+  <div class="ust-ic">
+    <a class="marka" href="../">
+      <span class="sr">Murat ERDOĞAN, sayfanın başına dön</span>
+      <span class="marka-ad" aria-hidden="true">Murat</span><span class="marka-soyad" aria-hidden="true">ERDOĞAN</span>
+    </a>
+
+    <nav class="menu" id="menu" aria-label="Ana menü">
+      <ul class="menu-liste">
+        <li class="menu-oge"><a class="menu-bag" href="../">Ana Sayfa</a></li>
+        <li class="menu-oge"><a class="menu-bag" href="../hakkimda/">Hakkımda</a></li>
+        <li class="menu-oge acilir">
+          <button class="menu-dugme" type="button" aria-expanded="false" aria-controls="panel-hizmet">Hizmetlerim<svg class="ik ik-asagi"><use href="#i-asagi"/></svg></button>
+          <div class="menu-panel" id="panel-hizmet">
+            <ul class="panel-izgara">
+              <li><a href="../google-ads/"><span class="tas"><svg class="ik ik-logo"><use href="#i-google"/></svg></span><span class="pi-yazi"><b>Google Ads</b><small>Arayan kişinin karşısına, arama anında çıkın.</small></span></a></li>
+              <li><a href="./" aria-current="page"><span class="tas"><svg class="ik ik-logo"><use href="#i-meta"/></svg></span><span class="pi-yazi"><b>Meta Ads</b><small>Instagram ve Facebook'ta yeni müşteriye ulaşın.</small></span></a></li>
+              <li><a href="../tiktok-ads/"><span class="tas"><svg class="ik ik-logo"><use href="#i-tiktok"/></svg></span><span class="pi-yazi"><b>TikTok Ads</b><small>Kısa dikey videoyla ilk üç saniyede yakalayın.</small></span></a></li>
+              <li><a href="../chatgpt-ads/"><span class="tas"><svg class="ik ik-logo"><use href="#i-chatgpt"/></svg></span><span class="pi-yazi"><b>ChatGPT Ads</b><small>Soru sorulduğunda cevabın altında görünün.</small></span></a></li>
+              <li><a href="../seo/"><span class="tas"><svg class="ik"><use href="#i-seo"/></svg></span><span class="pi-yazi"><b>SEO</b><small>Reklam durduğunda da gelen ziyaretçi.</small></span></a></li>
+              <li><a href="../web-tasarim/"><span class="tas"><svg class="ik"><use href="#i-web"/></svg></span><span class="pi-yazi"><b>Web tasarım</b><small>Size özel kodlanmış, hızlı WordPress sitesi.</small></span></a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="menu-oge"><a class="menu-bag" href="../yazilimlar/">Yazılımlar</a></li>
+        <li class="menu-oge"><a class="menu-bag" href="../blog/">Blog</a></li>
+        <li class="menu-oge"><a class="menu-bag" href="../iletisim/">İletişim</a></li>
+      </ul>
+      <div class="menu-mobil-iletisim">
+        <a class="dugme dugme-turuncu" href="#iletisim" data-mesaj="WhatsApp'tan dönüş istiyorum."><svg class="ik"><use href="#i-wa"/></svg>WhatsApp</a>
+        <a class="dugme dugme-koyu-cizgi" href="#iletisim" data-mesaj="Telefonla aranmak istiyorum."><svg class="ik"><use href="#i-tel"/></svg>Ara</a>
+      </div>
+    </nav>
+
+    <div class="hap-iletisim">
+      <a href="#iletisim" data-mesaj="WhatsApp'tan dönüş istiyorum."><svg class="ik"><use href="#i-wa"/></svg>WhatsApp</a>
+      <a href="#iletisim" data-mesaj="Telefonla aranmak istiyorum."><svg class="ik"><use href="#i-tel"/></svg>Ara</a>
+    </div>
+
+    <button class="menu-ac" type="button" aria-expanded="false" aria-controls="menu">
+      <span class="menu-ac-yazi">Menü</span>
+      <span class="menu-ac-cizgi" aria-hidden="true"></span>
+    </button>
+  </div>
+</header>
+
+<main id="icerik">
+
+  <!-- Sayfa başı: solda yazı, sağda ana sayfadaki canlı önizleme -->
+  <section class="sayfa-bas" aria-labelledby="sayfa-baslik">
+    <div class="kap sayfa-bas-ic">
+      <div class="sb-yazi">
+        <nav class="iz" aria-label="Sayfa yolu">
+          <ol><li><a href="../">Ana Sayfa</a></li><li><a href="../#hizmetler">Hizmetlerim</a></li><li><span aria-current="page">Meta Ads</span></li></ol>
+        </nav>
+        <p class="sb-tur"><span class="tas"><svg class="ik ik-logo"><use href="#i-meta"/></svg></span>Instagram ve Facebook</p>
+        <h1 id="sayfa-baslik">Meta Ads yönetimi</h1>
+        <p class="sb-giris">Henüz aramaya başlamamış ama ilgilenecek kişiye Instagram ve Facebook'ta ulaşılır. Her ay yeni görsel ve video setiyle test edilir; en düşük maliyetle talep getiren reklam bütçeyle büyütülür.</p>
+        <div class="sb-dugmeler">
+          <a class="dugme dugme-turuncu" href="#iletisim" data-hizmet="Meta Ads" data-mesaj="Meta Ads için ücretsiz analiz istiyorum.">Ücretsiz analiz iste</a>
+          <a class="dugme dugme-koyu-cizgi" href="#paketler">Paketleri gör</a>
+        </div>
+      </div>
+
+      <div class="sb-sahne">
+        <div class="sahne" data-sahne="akis" aria-hidden="true"></div>
+        <button class="v-dugme v-dur sb-dur" type="button" aria-pressed="false"><span class="sr">Önizleme hareketini durdur</span><span class="dur-ik" aria-hidden="true"></span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reklam türleri -->
+  <section class="bolum turler" id="reklam-turleri" aria-labelledby="turler-baslik">
+    <div class="kap">
+      <div class="bolum-bas orta">
+        <h2 id="turler-baslik">Meta reklam hedefleri</h2>
+        <p>Reklam Yöneticisi'nde her kampanya altı reklam verme amacından biriyle kurulur. Amaç, kampanyadan beklenen sonucu belirler.</p>
+      </div>
+      <div class="yazilim-izgara giris-izgara">
+        <article class="yz">
+          <div class="yz-ekran" aria-hidden="true"><div class="rt-cizim cizim"><svg viewBox="0 0 260 160" focusable="false"><g class="cz-1" style="--i:0"><rect x="8" y="6" width="132" height="148" rx="12" class="cz-kc"/><circle cx="24" cy="22" r="8" class="cz-t"/><text x="38" y="20.5" font-size="10" font-weight="700" class="cz-y">Firmanız</text><text x="38" y="32" font-size="8.5" font-weight="600" class="cz-y2">Sponsorlu</text><rect x="16" y="42" width="116" height="70" rx="8" class="cz-a"/><circle cx="74" cy="77" r="20" class="cz-gg"/><rect x="16" y="120" width="84" height="6" rx="3" class="cz-gg"/><rect x="16" y="132" width="108" height="5" rx="2.5" class="cz-g"/><rect x="16" y="142" width="70" height="5" rx="2.5" class="cz-g"/></g><g class="cz-1" style="--i:1"><rect x="150" y="6" width="102" height="148" rx="12" class="cz-k"/><text x="162" y="26" font-size="10" font-weight="650" class="cz-y2">Erişim</text><rect x="162" y="136" width="78" height="5" rx="2.5" class="cz-g"/></g><g class="cz-1" style="--i:2"><use href="#i-kisi" x="162" y="36" width="22" height="22" class="cz-ik"/><use href="#i-kisi" x="190" y="36" width="22" height="22" class="cz-ik"/><use href="#i-kisi" x="218" y="36" width="22" height="22" class="cz-ik"/></g><g class="cz-1" style="--i:3"><use href="#i-kisi" x="162" y="66" width="22" height="22" class="cz-ik"/><use href="#i-kisi" x="190" y="66" width="22" height="22" class="cz-ik"/><use href="#i-kisi" x="218" y="66" width="22" height="22" class="cz-ik"/></g><g class="cz-1" style="--i:4"><use href="#i-kisi" x="162" y="96" width="22" height="22" class="cz-ik"/><use href="#i-kisi" x="190" y="96" width="22" height="22" class="cz-ik"/><use href="#i-kisi" x="218" y="96" width="22" height="22" class="cz-ik"/></g><rect x="162" y="136" width="64" height="5" rx="2.5" class="cz-t cz-3" style="--i:5"/></svg></div></div>
+          <h3 class="yz-ad">Bilinirlik</h3>
+          <p class="yz-yazi">Reklam, onu hatırlama olasılığı en yüksek kişilerden olabildiğince çoğuna gösterilir.</p>
+          <p class="rt-kim"><b>Kime uygun:</b> Yeni açılan ya da adını değiştiren işletmeler, yeni şube ve yeni ürün duyuruları.</p>
+        </article>
+        <article class="yz">
+          <div class="yz-ekran" aria-hidden="true"><div class="rt-cizim cizim"><svg viewBox="0 0 260 160" focusable="false"><g class="cz-1" style="--i:0"><rect x="8" y="6" width="120" height="148" rx="12" class="cz-kc"/><circle cx="24" cy="22" r="8" class="cz-t"/><text x="38" y="20.5" font-size="10" font-weight="700" class="cz-y">Firmanız</text><text x="38" y="32" font-size="8.5" font-weight="600" class="cz-y2">Sponsorlu</text><rect x="16" y="42" width="104" height="66" rx="8" class="cz-a"/><rect x="50" y="56" width="36" height="38" rx="6" class="cz-gg"/></g><g class="cz-1" style="--i:1"><rect x="16" y="118" width="44" height="6" rx="3" class="cz-gg"/><rect x="16" y="130" width="32" height="5" rx="2.5" class="cz-g"/><rect x="64" y="116" width="56" height="22" rx="11" class="cz-m"/><text x="92" y="130.5" font-size="9" font-weight="650" text-anchor="middle" class="cz-k">Siteye git</text></g><g class="cz-1" style="--i:2"><path d="M132 127h12m-4-4 4 4-4 4" class="cz-c"/></g><g class="cz-1" style="--i:3"><rect x="150" y="14" width="102" height="132" rx="10" class="cz-kc"/><path d="M150.5 32h101" class="cz-c"/><circle cx="160" cy="23" r="2.4" class="cz-gg"/><circle cx="167" cy="23" r="2.4" class="cz-gg"/><circle cx="174" cy="23" r="2.4" class="cz-gg"/><rect x="184" y="19" width="58" height="8" rx="4" class="cz-a"/></g><g class="cz-1" style="--i:4"><rect x="160" y="42" width="82" height="38" rx="6" class="cz-ta"/><rect x="160" y="88" width="60" height="7" rx="3.5" class="cz-gg"/><rect x="160" y="101" width="82" height="5" rx="2.5" class="cz-g"/><rect x="160" y="111" width="70" height="5" rx="2.5" class="cz-g"/><rect x="160" y="124" width="44" height="13" rx="6.5" class="cz-t"/></g></svg></div></div>
+          <h3 class="yz-ad">Trafik</h3>
+          <p class="yz-yazi">Kişiler internet sitenize, uygulamanıza ya da Facebook Sayfanıza gönderilir.</p>
+          <p class="rt-kim"><b>Kime uygun:</b> Hizmetini sitesinde anlatan işletmeler ve kısa süreli indirim yapan mağazalar.</p>
+        </article>
+        <article class="yz">
+          <div class="yz-ekran" aria-hidden="true"><div class="rt-cizim cizim"><svg viewBox="0 0 260 160" focusable="false"><g class="cz-1" style="--i:0"><rect x="8" y="6" width="118" height="148" rx="12" class="cz-kc"/><circle cx="24" cy="22" r="8" class="cz-t"/><text x="38" y="20.5" font-size="10" font-weight="700" class="cz-y">Firmanız</text><text x="38" y="32" font-size="8.5" font-weight="600" class="cz-y2">Sponsorlu</text><rect x="16" y="42" width="102" height="64" rx="8" class="cz-a"/><circle cx="67" cy="74" r="16" class="cz-gg"/></g><g class="cz-1" style="--i:1"><rect x="16" y="116" width="102" height="28" rx="10" class="cz-m"/><use href="#i-wa" x="26" y="122" width="16" height="16" class="cz-ik"/><text x="48" y="134" font-size="9.5" font-weight="650" class="cz-k">Mesaj gönder</text></g><g class="cz-1" style="--i:2"><rect x="136" y="6" width="116" height="148" rx="12" class="cz-k"/><use href="#i-wa" x="148" y="16" width="16" height="16" class="cz-ik"/><text x="170" y="28" font-size="10" font-weight="700" class="cz-y">Firmanız</text><path d="M136 42h116" class="cz-c"/></g><g class="cz-1" style="--i:3"><rect x="146" y="54" width="80" height="22" rx="11" class="cz-a"/><text x="156" y="68.5" font-size="9.5" font-weight="600" class="cz-y">Fiyat nedir?</text></g><g class="cz-1" style="--i:4"><rect x="158" y="84" width="86" height="22" rx="11" class="cz-ta"/><text x="168" y="98.5" font-size="9.5" font-weight="650" class="cz-tm">Gönderiyorum</text></g><g class="cz-1" style="--i:5"><rect x="146" y="114" width="44" height="22" rx="11" class="cz-a"/><circle cx="159" cy="125" r="2.6" class="cz-gg"/><circle cx="168" cy="125" r="2.6" class="cz-gg"/><circle cx="177" cy="125" r="2.6" class="cz-gg"/></g></svg></div></div>
+          <h3 class="yz-ad">Etkileşim</h3>
+          <p class="yz-yazi">Mesaj gönderme, reklamla ya da Sayfanızla etkileşim kurma olasılığı en yüksek kişiler bulunur.</p>
+          <p class="rt-kim"><b>Kime uygun:</b> Siparişi ya da randevuyu mesajla alan işletmeler: güzellik salonu, kafe, restoran, kurs.</p>
+        </article>
+        <article class="yz">
+          <div class="yz-ekran" aria-hidden="true"><div class="rt-cizim cizim"><svg viewBox="0 0 260 160" focusable="false"><g class="cz-1" style="--i:0"><rect x="82" y="2" width="96" height="156" rx="18" class="cz-m"/><rect x="88" y="8" width="84" height="144" rx="13" class="cz-k"/><rect x="116" y="13" width="28" height="6" rx="3" class="cz-m"/></g><g class="cz-1" style="--i:1"><text x="98" y="40" font-size="10.5" font-weight="700" class="cz-y">Hızlı form</text><rect x="98" y="47" width="40" height="4" rx="2" class="cz-g"/></g><g class="cz-1" style="--i:2"><text x="98" y="65" font-size="8.5" font-weight="600" class="cz-y2">Ad soyad</text><rect x="98" y="69" width="64" height="15" rx="5" class="cz-kc"/></g><g class="cz-1" style="--i:3"><text x="98" y="97" font-size="8.5" font-weight="600" class="cz-y2">Telefon</text><rect x="98" y="101" width="64" height="15" rx="5" class="cz-kc"/></g><g class="cz-1" style="--i:4"><rect x="98" y="125" width="64" height="18" rx="9" class="cz-t"/><text x="130" y="137.5" font-size="9.5" font-weight="700" text-anchor="middle" class="cz-m">Gönder</text></g><g class="cz-1" style="--i:5"><circle cx="40" cy="66" r="17" class="cz-k"/><use href="#i-tel" x="31" y="57" width="18" height="18" class="cz-ik"/><text x="40" y="102" font-size="9.5" font-weight="650" text-anchor="middle" class="cz-y2">Arama</text></g><g class="cz-1" style="--i:6"><circle cx="220" cy="66" r="17" class="cz-k"/><use href="#i-wa" x="211" y="57" width="18" height="18" class="cz-ik"/><text x="220" y="102" font-size="9.5" font-weight="650" text-anchor="middle" class="cz-y2">Mesaj</text></g></svg></div></div>
+          <h3 class="yz-ad">Potansiyel Müşteriler</h3>
+          <p class="yz-yazi">İlgilenen kişilerin iletişim bilgisi mesaj, telefon araması ya da form yoluyla toplanır.</p>
+          <p class="rt-kim"><b>Kime uygun:</b> Teklif ya da ön görüşmeyle satan işletmeler: eğitim kurumları, tur şirketleri, sanayi tedarikçileri.</p>
+        </article>
+        <article class="yz">
+          <div class="yz-ekran" aria-hidden="true"><div class="rt-cizim cizim"><svg viewBox="0 0 260 160" focusable="false"><g class="cz-1" style="--i:0"><rect x="82" y="2" width="96" height="156" rx="18" class="cz-m"/><rect x="88" y="8" width="84" height="144" rx="13" class="cz-k"/><rect x="116" y="13" width="28" height="6" rx="3" class="cz-m"/></g><g class="cz-1" style="--i:1"><circle cx="102" cy="34" r="6" class="cz-t"/><rect x="112" y="29" width="34" height="5" rx="2.5" class="cz-gg"/><rect x="112" y="37" width="24" height="4" rx="2" class="cz-g"/></g><g class="cz-1" style="--i:2"><rect x="94" y="46" width="72" height="62" rx="8" class="cz-ta"/><rect x="114" y="61" width="32" height="32" rx="9" class="cz-t"/><circle cx="130" cy="77" r="7" class="cz-k"/></g><g class="cz-1" style="--i:3"><rect x="94" y="114" width="72" height="24" rx="6" class="cz-a"/><rect x="100" y="121" width="24" height="5" rx="2.5" class="cz-gg"/><rect x="100" y="129" width="18" height="4" rx="2" class="cz-g"/><rect x="130" y="118" width="32" height="16" rx="8" class="cz-m"/><text x="146" y="129.2" font-size="8.5" font-weight="650" text-anchor="middle" class="cz-k">Yükle</text><rect x="94" y="144" width="72" height="4" rx="2" class="cz-g"/></g><rect x="94" y="144" width="72" height="4" rx="2" class="cz-t cz-3" style="--i:4"/></svg></div></div>
+          <h3 class="yz-ad">Uygulama tanıtımı</h3>
+          <p class="yz-yazi">Mobil cihaz kullanan kişilerin uygulamanızı yüklemesi ya da uygulamada belirli bir işlem yapması sağlanır.</p>
+          <p class="rt-kim"><b>Kime uygun:</b> Mobil uygulaması olan işletmeler.</p>
+        </article>
+        <article class="yz">
+          <div class="yz-ekran" aria-hidden="true"><div class="rt-cizim cizim"><svg viewBox="0 0 260 160" focusable="false"><g class="cz-1" style="--i:0"><rect x="8" y="6" width="150" height="148" rx="12" class="cz-kc"/><circle cx="24" cy="22" r="8" class="cz-t"/><text x="38" y="20.5" font-size="10" font-weight="700" class="cz-y">Firmanız</text><text x="38" y="32" font-size="8.5" font-weight="600" class="cz-y2">Sponsorlu</text><circle cx="76" cy="146" r="2.2" class="cz-t"/><circle cx="83" cy="146" r="2.2" class="cz-gg"/><circle cx="90" cy="146" r="2.2" class="cz-gg"/></g><g class="cz-1" style="--i:1"><rect x="16" y="42" width="62" height="96" rx="8" class="cz-a"/><rect x="31" y="50" width="32" height="32" rx="6" class="cz-gg"/><rect x="22" y="90" width="40" height="5" rx="2.5" class="cz-gg"/><text x="22" y="110" font-size="11" font-weight="700" class="cz-tm">₺</text><rect x="32" y="103" width="24" height="7" rx="3.5" class="cz-t"/><rect x="22" y="117" width="50" height="15" rx="7.5" class="cz-m"/><text x="47" y="127.5" font-size="8" font-weight="650" text-anchor="middle" class="cz-k">Satın al</text></g><g class="cz-1" style="--i:2"><rect x="86" y="42" width="62" height="96" rx="8" class="cz-a"/><rect x="103" y="48" width="28" height="36" rx="14" class="cz-gg"/><rect x="92" y="90" width="40" height="5" rx="2.5" class="cz-gg"/><text x="92" y="110" font-size="11" font-weight="700" class="cz-tm">₺</text><rect x="102" y="103" width="24" height="7" rx="3.5" class="cz-t"/><rect x="92" y="117" width="50" height="15" rx="7.5" class="cz-m"/><text x="117" y="127.5" font-size="8" font-weight="650" text-anchor="middle" class="cz-k">Satın al</text></g><g class="cz-1" style="--i:3"><rect x="168" y="26" width="84" height="108" rx="12" class="cz-k"/><text x="178" y="44" font-size="10" font-weight="700" class="cz-y">Sepet</text><path d="M168 54h84" class="cz-c"/><rect x="178" y="64" width="22" height="22" rx="5" class="cz-a"/><rect x="206" y="67" width="36" height="5" rx="2.5" class="cz-gg"/><rect x="206" y="77" width="24" height="5" rx="2.5" class="cz-g"/></g><g class="cz-1" style="--i:4"><circle cx="185" cy="111" r="7" class="cz-ta"/><path d="M182 111l2.2 2.3 4.2-4.8" class="cz-ik"/><text x="196" y="114.5" font-size="8.5" font-weight="650" class="cz-y">Satın alma</text></g></svg></div></div>
+          <h3 class="yz-ad">Satışlar</h3>
+          <p class="yz-yazi">Ürününüzü ya da hizmetinizi satın alma olasılığı yüksek kişiler bulunur. Sepete ekleme gibi başka eylemler için de kurulabilir.</p>
+          <p class="rt-kim"><b>Kime uygun:</b> E-ticaret mağazaları ve sitesinden satış yapan işletmeler.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Neler dahil -->
+  <section class="bolum dahil" id="neler-dahil" aria-labelledby="dahil-baslik">
+    <div class="kap">
+      <div class="bolum-bas orta">
+        <h2 id="dahil-baslik">Neler dahil</h2>
+        <p>Görsel ve video üretiminden aylık rapora kadar Meta Ads tarafındaki işlerin hepsi.</p>
+      </div>
+      <div class="neden-izgara giris-izgara">
+        <article class="nk">
+          <div class="nk-bas">
+            <h3><b>Görsel ve video</b> <span>üretimi</span></h3>
+            <span class="nk-tas"><svg class="ik"><use href="#i-instagram"/></svg></span>
+          </div>
+          <div class="nk-gorsel" aria-hidden="true"><div class="nk-cizim cizim"><svg viewBox="0 0 240 150" focusable="false"><g class="cz-1" style="--i:0"><rect x="12" y="26" width="80" height="86" rx="8" class="cz-kc"/><rect x="18" y="32" width="68" height="52" rx="5" class="cz-a"/><rect x="38" y="42" width="28" height="32" rx="5" class="cz-gg"/><rect x="18" y="92" width="44" height="5" rx="2.5" class="cz-gg"/><rect x="18" y="101" width="30" height="4" rx="2" class="cz-g"/><text x="52" y="132" font-size="10" font-weight="650" text-anchor="middle" class="cz-y2">Akış</text></g><g class="cz-1" style="--i:1"><rect x="106" y="14" width="54" height="100" rx="8" class="cz-m"/><circle cx="133" cy="60" r="11" class="cz-s"/><path d="M129.5 54v12l9.5-6z" class="cz-k"/><rect x="114" y="94" width="30" height="4" rx="2" class="cz-s"/><rect x="114" y="102" width="22" height="4" rx="2" class="cz-s"/><text x="133" y="132" font-size="10" font-weight="650" text-anchor="middle" class="cz-y2">Reels</text></g><g class="cz-1" style="--i:2"><rect x="174" y="14" width="54" height="100" rx="8" class="cz-ta"/><rect x="180" y="20" width="42" height="2.5" rx="1.25" class="cz-t"/><circle cx="186" cy="30" r="5" class="cz-t"/><rect x="184" y="42" width="34" height="40" rx="6" class="cz-k"/><rect x="192" y="52" width="18" height="20" rx="4" class="cz-gg"/><rect x="184" y="96" width="34" height="10" rx="5" class="cz-t"/><text x="201" y="132" font-size="10" font-weight="650" text-anchor="middle" class="cz-y2">Hikaye</text></g></svg></div></div>
+          <div class="nk-yazi"><span class="nk-no">01</span><p>Her ay yeni görsel ve video seti hazırlanır, onayınızdan sonra yayına alınır. Üretim ücrete dahildir.</p></div>
+        </article>
+        <article class="nk">
+          <div class="nk-bas">
+            <h3><b>Piksel ve</b> <span>Dönüşümler API'si</span></h3>
+            <span class="nk-tas"><svg class="ik"><use href="#i-hedef"/></svg></span>
+          </div>
+          <div class="nk-gorsel" aria-hidden="true"><div class="nk-cizim cizim"><svg viewBox="0 0 240 150" focusable="false"><g class="cz-1" style="--i:0"><rect x="4" y="6" width="232" height="138" rx="12" class="cz-k"/><text x="16" y="28" font-size="9.5" font-weight="650" class="cz-y2">Olay</text><text x="170" y="28" font-size="9.5" font-weight="650" text-anchor="middle" class="cz-y2">Piksel</text><text x="212" y="28" font-size="9.5" font-weight="650" text-anchor="middle" class="cz-y2">API</text><path d="M4 38h232" class="cz-c"/></g><g class="cz-1" style="--i:1"><text x="16" y="60" font-size="11.5" font-weight="500" class="cz-y">Form gönderme</text><circle cx="170" cy="56" r="7" class="cz-ta"/><path d="M167 56l2.2 2.3 4.2-4.8" class="cz-ik"/></g><g class="cz-1" style="--i:2"><circle cx="212" cy="56" r="7" class="cz-ta"/><path d="M209 56l2.2 2.3 4.2-4.8" class="cz-ik"/></g><g class="cz-1" style="--i:2"><text x="16" y="84" font-size="11.5" font-weight="500" class="cz-y">WhatsApp tıklaması</text><circle cx="170" cy="80" r="7" class="cz-ta"/><path d="M167 80l2.2 2.3 4.2-4.8" class="cz-ik"/></g><g class="cz-1" style="--i:3"><circle cx="212" cy="80" r="7" class="cz-ta"/><path d="M209 80l2.2 2.3 4.2-4.8" class="cz-ik"/></g><g class="cz-1" style="--i:3"><text x="16" y="108" font-size="11.5" font-weight="500" class="cz-y">Telefon araması</text><circle cx="170" cy="104" r="7" class="cz-ta"/><path d="M167 104l2.2 2.3 4.2-4.8" class="cz-ik"/></g><g class="cz-1" style="--i:4"><circle cx="212" cy="104" r="7" class="cz-ta"/><path d="M209 104l2.2 2.3 4.2-4.8" class="cz-ik"/></g><g class="cz-1" style="--i:4"><text x="16" y="132" font-size="11.5" font-weight="500" class="cz-y">Satın alma</text><circle cx="170" cy="128" r="7" class="cz-ta"/><path d="M167 128l2.2 2.3 4.2-4.8" class="cz-ik"/></g><g class="cz-1" style="--i:5"><circle cx="212" cy="128" r="7" class="cz-ta"/><path d="M209 128l2.2 2.3 4.2-4.8" class="cz-ik"/></g></svg></div></div>
+          <div class="nk-yazi"><span class="nk-no">02</span><p>Sitedeki form, WhatsApp, arama ve satın alma olayları Meta Pikseli'yle sayılır. Dönüşümler API'si aynı olayları sunucudan da gönderir, ölçüm daha güvenilir olur.</p></div>
+        </article>
+        <article class="nk">
+          <div class="nk-bas">
+            <h3><b>Hedef kitle</b> <span>ve benzer hedef kitle</span></h3>
+            <span class="nk-tas"><svg class="ik"><use href="#i-kisi"/></svg></span>
+          </div>
+          <div class="nk-gorsel" aria-hidden="true"><div class="nk-cizim cizim"><svg viewBox="0 0 240 150" focusable="false"><g class="cz-1" style="--i:0"><rect x="4" y="6" width="96" height="138" rx="12" class="cz-k"/><text x="52" y="28" font-size="9.5" font-weight="650" text-anchor="middle" class="cz-y2">Kaynak kitle</text><path d="M4 38h96" class="cz-c"/><use href="#i-kisi" x="26" y="54" width="22" height="22" class="cz-ik"/><use href="#i-kisi" x="54" y="54" width="22" height="22" class="cz-ik"/><use href="#i-kisi" x="26" y="86" width="22" height="22" class="cz-ik"/><use href="#i-kisi" x="54" y="86" width="22" height="22" class="cz-ik"/><text x="52" y="132" font-size="9" font-weight="650" text-anchor="middle" class="cz-y">Müşterileriniz</text></g><g class="cz-1" style="--i:1"><path d="M106 75h18m-4-4 4 4-4 4" class="cz-c"/></g><g class="cz-1" style="--i:2"><rect x="130" y="6" width="106" height="138" rx="12" class="cz-k"/><text x="183" y="28" font-size="9.5" font-weight="650" text-anchor="middle" class="cz-y2">Benzer kitle</text><path d="M130 38h106" class="cz-c"/><rect x="144" y="132" width="78" height="4" rx="2" class="cz-g"/></g><g class="cz-1" style="--i:3"><use href="#i-kisi" x="144" y="46" width="22" height="22" class="cz-ikg"/><use href="#i-kisi" x="172" y="46" width="22" height="22" class="cz-ikg"/><use href="#i-kisi" x="200" y="46" width="22" height="22" class="cz-ikg"/></g><g class="cz-1" style="--i:4"><use href="#i-kisi" x="144" y="73" width="22" height="22" class="cz-ikg"/><use href="#i-kisi" x="172" y="73" width="22" height="22" class="cz-ikg"/><use href="#i-kisi" x="200" y="73" width="22" height="22" class="cz-ikg"/></g><g class="cz-1" style="--i:5"><use href="#i-kisi" x="144" y="100" width="22" height="22" class="cz-ikg"/><use href="#i-kisi" x="172" y="100" width="22" height="22" class="cz-ikg"/><use href="#i-kisi" x="200" y="100" width="22" height="22" class="cz-ikg"/></g><rect x="144" y="132" width="30" height="4" rx="2" class="cz-t cz-3" style="--i:6"/></svg></div></div>
+          <div class="nk-yazi"><span class="nk-no">03</span><p>Sitenizi ziyaret edenlerden özel hedef kitle kurulur. Benzer hedef kitle, mevcut müşterilerinize benzeyen yeni kişileri bulur.</p></div>
+        </article>
+        <article class="nk">
+          <div class="nk-bas">
+            <h3><b>Reklam testi</b> <span>ve bütçe dağılımı</span></h3>
+            <span class="nk-tas"><svg class="ik"><use href="#i-yuzde"/></svg></span>
+          </div>
+          <div class="nk-gorsel" aria-hidden="true"><div class="nk-cizim cizim"><svg viewBox="0 0 240 150" focusable="false"><g class="cz-1" style="--i:0"><rect x="4" y="6" width="232" height="138" rx="12" class="cz-k"/><text x="16" y="28" font-size="9.5" font-weight="650" class="cz-y2">Talep başı maliyet</text><text x="224" y="28" font-size="9.5" font-weight="650" text-anchor="end" class="cz-y2">Bu ay</text><path d="M4 38h232" class="cz-c"/></g><g class="cz-1" style="--i:1"><rect x="16" y="48" width="60" height="44" rx="6" class="cz-a"/><rect x="34" y="56" width="24" height="28" rx="4" class="cz-gg"/></g><g class="cz-1" style="--i:2"><rect x="88" y="48" width="64" height="44" rx="6" class="cz-ta"/><circle cx="120" cy="70" r="13" class="cz-t"/></g><g class="cz-1" style="--i:3"><rect x="164" y="48" width="60" height="44" rx="6" class="cz-a"/><rect x="180" y="60" width="28" height="20" rx="4" class="cz-gg"/></g><rect x="16" y="100" width="52" height="6" rx="3" class="cz-gg cz-3" style="--i:4"/><rect x="88" y="100" width="22" height="6" rx="3" class="cz-t cz-3" style="--i:5"/><rect x="164" y="100" width="38" height="6" rx="3" class="cz-gg cz-3" style="--i:6"/><g class="cz-1" style="--i:7"><rect x="16" y="116" width="60" height="16" rx="8" class="cz-a"/><text x="46" y="127.2" font-size="9" font-weight="600" text-anchor="middle" class="cz-y2">Durdu</text><rect x="88" y="116" width="64" height="16" rx="8" class="cz-ta"/><text x="120" y="127.2" font-size="9" font-weight="600" text-anchor="middle" class="cz-tm">Bütçe artar</text><rect x="164" y="116" width="60" height="16" rx="8" class="cz-a"/><text x="194" y="127.2" font-size="9" font-weight="600" text-anchor="middle" class="cz-y2">Devam</text></g></svg></div></div>
+          <div class="nk-yazi"><span class="nk-no">04</span><p>Aynı kitleye birkaç görsel birlikte gösterilir. En düşük maliyetle talep getiren reklam bütçeyle büyütülür, geride kalan durdurulur.</p></div>
+        </article>
+        <article class="nk">
+          <div class="nk-bas">
+            <h3><b>Form kayıtları</b> <span>e-postanıza</span></h3>
+            <span class="nk-tas"><svg class="ik"><use href="#i-posta"/></svg></span>
+          </div>
+          <div class="nk-gorsel" aria-hidden="true"><div class="nk-cizim cizim"><svg viewBox="0 0 240 150" focusable="false"><g class="cz-1" style="--i:0"><rect x="12" y="4" width="84" height="142" rx="16" class="cz-m"/><rect x="17" y="9" width="74" height="132" rx="12" class="cz-k"/><rect x="42" y="13" width="24" height="5" rx="2.5" class="cz-m"/></g><g class="cz-1" style="--i:1"><text x="25" y="37" font-size="9.5" font-weight="700" class="cz-y">Hızlı form</text></g><g class="cz-1" style="--i:2"><text x="25" y="54" font-size="8" font-weight="600" class="cz-y2">Ad soyad</text><rect x="25" y="58" width="58" height="13" rx="5" class="cz-kc"/></g><g class="cz-1" style="--i:3"><text x="25" y="84" font-size="8" font-weight="600" class="cz-y2">Telefon</text><rect x="25" y="88" width="58" height="13" rx="5" class="cz-kc"/></g><g class="cz-1" style="--i:4"><rect x="25" y="112" width="58" height="18" rx="9" class="cz-t"/><text x="54" y="124.5" font-size="9" font-weight="700" text-anchor="middle" class="cz-m">Gönder</text></g><g class="cz-1" style="--i:5"><path d="M102 75h16m-4-4 4 4-4 4" class="cz-c"/></g><g class="cz-1" style="--i:6"><rect x="124" y="30" width="112" height="92" rx="12" class="cz-kc"/><use href="#i-posta" x="134" y="40" width="18" height="18" class="cz-ik"/><text x="158" y="53" font-size="10" font-weight="700" class="cz-y">Yeni kayıt</text><path d="M124.5 66h111" class="cz-c"/><text x="134" y="86" font-size="8.5" font-weight="600" class="cz-y2">Ad soyad</text><rect x="184" y="80" width="40" height="6" rx="3" class="cz-gg"/><text x="134" y="106" font-size="8.5" font-weight="600" class="cz-y2">Telefon</text><rect x="184" y="100" width="32" height="6" rx="3" class="cz-gg"/></g><g class="cz-1" style="--i:7"><circle cx="229" cy="32" r="6" class="cz-t"/></g></svg></div></div>
+          <div class="nk-yazi"><span class="nk-no">05</span><p>Hızlı formu dolduran kişinin bilgileri e-postanıza iletilir, beklemeden dönüş yapılabilir. Kayıtlar Potansiyel Müşteri Merkezi'nde de durur.</p></div>
+        </article>
+        <article class="nk">
+          <div class="nk-bas">
+            <h3><b>Aylık rapor</b> <span>ve sonraki ayın planı</span></h3>
+            <span class="nk-tas"><svg class="ik"><use href="#i-rapor"/></svg></span>
+          </div>
+          <div class="nk-gorsel" aria-hidden="true"><div class="nk-cizim cizim"><svg viewBox="0 0 240 150" focusable="false"><g class="cz-1" style="--i:0"><rect x="4" y="6" width="232" height="138" rx="12" class="cz-k"/><text x="16" y="30" font-size="12" font-weight="700" class="cz-y">Aylık rapor</text><path d="M16 112.5h128" class="cz-c"/><rect x="16" y="123" width="9" height="9" rx="2.5" class="cz-gg"/><text x="30" y="131" font-size="9.5" font-weight="600" class="cz-y2">Harcama</text><rect x="84" y="123" width="9" height="9" rx="2.5" class="cz-t"/><text x="98" y="131" font-size="9.5" font-weight="600" class="cz-y2">Talep</text><path d="M156 46v86" class="cz-c"/></g><rect x="24" y="68" width="13" height="44" rx="3.5" class="cz-gg cz-2" style="--i:1"/><rect x="40" y="82" width="13" height="30" rx="3.5" class="cz-t cz-2" style="--i:1"/><rect x="64" y="62" width="13" height="50" rx="3.5" class="cz-gg cz-2" style="--i:2"/><rect x="80" y="72" width="13" height="40" rx="3.5" class="cz-t cz-2" style="--i:2"/><rect x="104" y="66" width="13" height="46" rx="3.5" class="cz-gg cz-2" style="--i:3"/><rect x="120" y="70" width="13" height="42" rx="3.5" class="cz-t cz-2" style="--i:3"/><g class="cz-1" style="--i:4"><text x="166" y="54" font-size="9" font-weight="650" class="cz-y2">En iyi görsel</text><rect x="166" y="62" width="60" height="46" rx="6" class="cz-ta"/><circle cx="196" cy="85" r="12" class="cz-t"/><rect x="166" y="116" width="44" height="5" rx="2.5" class="cz-gg"/><rect x="166" y="126" width="30" height="5" rx="2.5" class="cz-g"/></g></svg></div></div>
+          <div class="nk-yazi"><span class="nk-no">06</span><p>Harcama, gelen talep, talep başı maliyet ve en iyi giden görseller raporlanır. Sonraki ayın görselleri buna göre hazırlanır.</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Süreç -->
+  <section class="bolum surec" id="surec" aria-labelledby="surec-baslik">
+    <div class="kap">
+      <div class="bolum-bas orta">
+        <h2 id="surec-baslik">Nasıl ilerliyoruz?</h2>
+        <p>Görseller onaylandıktan sonra reklamlar 3-5 gün içinde yayında olur.</p>
+      </div>
+      <ol class="sk-liste giris-izgara">
+        <li class="sk">
+          <div class="sk-ust">
+            <span class="sk-no">Adım 01</span>
+            <button class="sk-arti" type="button" aria-expanded="false" aria-controls="adim-1-ayrinti"><span class="sr">Ayrıntı: Ücretsiz analiz</span></button>
+          </div>
+          <h3>Ücretsiz analiz</h3>
+          <div class="sk-govde">
+            <div class="sk-cizim cizim" aria-hidden="true"><svg viewBox="0 0 180 110" focusable="false"><g class="cz-1" style="--i:0"><rect x="38" y="6" width="76" height="98" rx="8" class="cz-kc"/><circle cx="50" cy="19" r="5" class="cz-t"/><rect x="59" y="16" width="30" height="6" rx="3" class="cz-gg"/><rect x="46" y="30" width="60" height="40" rx="5" class="cz-a"/><rect x="66" y="40" width="20" height="20" rx="4" class="cz-gg"/><rect x="46" y="78" width="46" height="5" rx="2.5" class="cz-g"/><rect x="46" y="88" width="56" height="5" rx="2.5" class="cz-g"/></g><g class="cz-1" style="--i:1"><circle cx="112" cy="64" r="18" class="cz-ct"/><path d="m125 77 14 14" class="cz-ct"/></g></svg></div>
+            <p class="sk-kisa">Varsa reklam hesabınıza, sayfalarınıza ve sitenize bakılır, bütçenin nereye gittiği yazılı raporla gönderilir.</p>
+            <div class="sk-detay" id="adim-1-ayrinti" hidden>
+              <p class="sk-gun">1–3. gün</p>
+              <p>Varsa reklam hesabınıza, sayfalarınıza ve sitenize bakılır, bütçenin nereye gittiği yazılı raporla gönderilir.</p>
+            </div>
+          </div>
+        </li>
+        <li class="sk">
+          <div class="sk-ust">
+            <span class="sk-no">Adım 02</span>
+            <button class="sk-arti" type="button" aria-expanded="false" aria-controls="adim-2-ayrinti"><span class="sr">Ayrıntı: Görsel ve video seti</span></button>
+          </div>
+          <h3>Görsel ve video seti</h3>
+          <div class="sk-govde">
+            <div class="sk-cizim cizim" aria-hidden="true"><svg viewBox="0 0 180 110" focusable="false"><g class="cz-1" style="--i:0"><rect x="8" y="4" width="164" height="102" rx="10" class="cz-kc"/></g><g class="cz-1" style="--i:1"><rect x="20" y="16" width="40" height="46" rx="6" class="cz-a"/><rect x="30" y="26" width="20" height="26" rx="4" class="cz-gg"/></g><g class="cz-1" style="--i:2"><rect x="70" y="16" width="40" height="46" rx="6" class="cz-ta"/><circle cx="90" cy="39" r="10" class="cz-t"/></g><g class="cz-1" style="--i:3"><rect x="120" y="16" width="40" height="46" rx="6" class="cz-m"/><circle cx="140" cy="39" r="9" class="cz-s"/><path d="M137.2 34.5v9l7-4.5z" class="cz-k"/></g><g class="cz-1" style="--i:4"><text x="20" y="90" font-size="10" font-weight="600" class="cz-y2">İlk ay seti</text><rect x="100" y="76" width="60" height="20" rx="10" class="cz-m"/><text x="130" y="90" font-size="10" font-weight="650" text-anchor="middle" class="cz-k">Onayla</text></g><g class="cz-1" style="--i:5"><circle cx="56" cy="20" r="7" class="cz-ta"/><path d="M53 20l2.2 2.3 4.2-4.8" class="cz-ik"/></g><g class="cz-1" style="--i:6"><circle cx="106" cy="20" r="7" class="cz-ta"/><path d="M103 20l2.2 2.3 4.2-4.8" class="cz-ik"/></g><g class="cz-1" style="--i:7"><circle cx="156" cy="20" r="7" class="cz-ta"/><path d="M153 20l2.2 2.3 4.2-4.8" class="cz-ik"/></g></svg></div>
+            <p class="sk-kisa">İlk ayın görselleri, videoları ve reklam metinleri hazırlanır.</p>
+            <div class="sk-detay" id="adim-2-ayrinti" hidden>
+              <p class="sk-gun">3–7. gün</p>
+              <p>İlk ayın görselleri, videoları ve reklam metinleri hazırlanır. Onayınıza sunulur, istediğiniz değişiklik yapılır.</p>
+            </div>
+          </div>
+        </li>
+        <li class="sk">
+          <div class="sk-ust">
+            <span class="sk-no">Adım 03</span>
+            <button class="sk-arti" type="button" aria-expanded="false" aria-controls="adim-3-ayrinti"><span class="sr">Ayrıntı: Piksel ve kitle</span></button>
+          </div>
+          <h3>Piksel ve kitle</h3>
+          <div class="sk-govde">
+            <div class="sk-cizim cizim" aria-hidden="true"><svg viewBox="0 0 180 110" focusable="false"><g class="cz-1" style="--i:0"><rect x="16" y="4" width="148" height="102" rx="10" class="cz-kc"/><path d="M16.5 38h147M16.5 72h147" class="cz-c"/></g><g class="cz-1" style="--i:1"><text x="30" y="25" font-size="11" font-weight="600" class="cz-y">Piksel</text><rect x="124" y="13" width="30" height="16" rx="8" class="cz-t"/><circle cx="146" cy="21" r="5.5" class="cz-k"/></g><g class="cz-1" style="--i:2"><text x="30" y="59" font-size="11" font-weight="600" class="cz-y">Dönüşümler API</text><rect x="124" y="47" width="30" height="16" rx="8" class="cz-t"/><circle cx="146" cy="55" r="5.5" class="cz-k"/></g><g class="cz-1" style="--i:3"><text x="30" y="93" font-size="11" font-weight="600" class="cz-y">Kitleler</text><rect x="124" y="81" width="30" height="16" rx="8" class="cz-t"/><circle cx="146" cy="89" r="5.5" class="cz-k"/></g></svg></div>
+            <p class="sk-kisa">Meta Pikseli ve Dönüşümler API'si kurulur, olaylar test edilir.</p>
+            <div class="sk-detay" id="adim-3-ayrinti" hidden>
+              <p class="sk-gun">Onaydan sonra 1–3. gün</p>
+              <p>Meta Pikseli ve Dönüşümler API'si kurulur, olaylar test edilir. Hedef kitle ve benzer hedef kitle hazırlanır.</p>
+            </div>
+          </div>
+        </li>
+        <li class="sk">
+          <div class="sk-ust">
+            <span class="sk-no">Adım 04</span>
+            <button class="sk-arti" type="button" aria-expanded="false" aria-controls="adim-4-ayrinti"><span class="sr">Ayrıntı: Yayın</span></button>
+          </div>
+          <h3>Yayın</h3>
+          <div class="sk-govde">
+            <div class="sk-cizim cizim" aria-hidden="true"><svg viewBox="0 0 180 110" focusable="false"><g class="cz-1" style="--i:0"><rect x="10" y="4" width="160" height="102" rx="10" class="cz-kc"/></g><g class="cz-1" style="--i:1"><rect x="22" y="16" width="78" height="24" rx="12" class="cz-ta"/><circle cx="35" cy="28" r="4" class="cz-t"/><text x="44" y="32" font-size="11" font-weight="700" class="cz-tm">Yayında</text><rect x="126" y="19" width="32" height="18" rx="9" class="cz-t"/><circle cx="149" cy="28" r="6.5" class="cz-k"/></g><g class="cz-1" style="--i:2"><circle cx="29" cy="58" r="6" class="cz-t"/><text x="41" y="61.5" font-size="9.5" font-weight="700" class="cz-y">Sponsorlu</text><rect x="22" y="70" width="64" height="26" rx="5" class="cz-a"/><rect x="46" y="76" width="16" height="14" rx="3" class="cz-gg"/><rect x="94" y="72" width="64" height="6" rx="3" class="cz-gg"/><rect x="94" y="84" width="48" height="5" rx="2.5" class="cz-g"/></g></svg></div>
+            <p class="sk-kisa">Reklamlar Meta'nın değerlendirmesinden geçip yayına girer, ilk günler her gün kontrol edilir.</p>
+            <div class="sk-detay" id="adim-4-ayrinti" hidden>
+              <p class="sk-gun">Onaydan sonra 3–5. gün</p>
+              <p>Reklamlar Meta'nın değerlendirmesinden geçip yayına girer, ilk günler her gün kontrol edilir.</p>
+            </div>
+          </div>
+        </li>
+        <li class="sk">
+          <div class="sk-ust">
+            <span class="sk-no">Adım 05</span>
+            <button class="sk-arti" type="button" aria-expanded="false" aria-controls="adim-5-ayrinti"><span class="sr">Ayrıntı: Test ve rapor</span></button>
+          </div>
+          <h3>Test ve rapor</h3>
+          <div class="sk-govde">
+            <div class="sk-cizim cizim" aria-hidden="true"><svg viewBox="0 0 180 110" focusable="false"><g class="cz-1" style="--i:0"><rect x="6" y="4" width="96" height="102" rx="10" class="cz-kc"/><rect x="108" y="4" width="66" height="102" rx="10" class="cz-kc"/><rect x="118" y="16" width="30" height="7" rx="3.5" class="cz-gg"/><path d="M116 92.5h50" class="cz-c"/></g><g class="cz-1" style="--i:1"><rect x="16" y="14" width="22" height="22" rx="4" class="cz-a"/><rect x="44" y="22" width="36" height="6" rx="3" class="cz-gg"/></g><g class="cz-sol cz-1" style="--i:2"><rect x="16" y="44" width="22" height="22" rx="4" class="cz-a"/><rect x="44" y="52" width="36" height="6" rx="3" class="cz-gg"/></g><g class="cz-1" style="--i:3"><rect x="16" y="74" width="22" height="22" rx="4" class="cz-ta"/><rect x="44" y="82" width="36" height="6" rx="3" class="cz-gg"/><circle cx="90" cy="85" r="7" class="cz-ta"/><path d="M87 85l2.2 2.3 4.2-4.8" class="cz-ik"/></g><rect x="40" y="54" width="44" height="2" rx="1" class="cz-t cz-3" style="--i:4"/><rect x="118" y="68" width="9" height="24" rx="2.5" class="cz-gg cz-2" style="--i:4"/><rect x="131" y="54" width="9" height="38" rx="2.5" class="cz-gg cz-2" style="--i:5"/><rect x="144" y="62" width="9" height="30" rx="2.5" class="cz-gg cz-2" style="--i:6"/><rect x="157" y="40" width="9" height="52" rx="2.5" class="cz-t cz-2" style="--i:7"/></svg></div>
+            <p class="sk-kisa">Geride kalan görseller durdurulur, bütçe iyi gidene kaydırılır.</p>
+            <div class="sk-detay" id="adim-5-ayrinti" hidden>
+              <p class="sk-gun">Her ay</p>
+              <p>Geride kalan görseller durdurulur, bütçe iyi gidene kaydırılır. Ay sonunda rapor gönderilir, yeni görsel seti hazırlanır.</p>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Paketler -->
+  <section class="bolum paketler" id="paketler" aria-labelledby="paketler-baslik">
+    <div class="kap">
+      <div class="bolum-bas orta">
+        <h2 id="paketler-baslik">Paketler</h2>
+        <p>Meta Ads yönetimi aylık ücretlidir, görsel ve video sayısı pakete göre değişir. Hangisinin size uyduğundan emin değilseniz ücretsiz analizle başlayın.</p>
+      </div>
+
+<div class="paket-panel" id="pp-reklam">
+        <div class="paket-izgara">
+          <article class="paket">
+            <h3 class="paket-ad">Başlangıç</h3>
+            <p class="paket-kim">Yeni başlayan, tek şubeli işletmeler</p>
+            <p class="paket-fiyat">9.500 TL<small>/ay</small></p>
+            <ul class="paket-madde">
+              <li>Tek kanal: Google Ads ya da Meta Ads</li>
+              <li>Ayda 4 görsel ve ölçüm kurulumu</li>
+              <li>Google İşletme Profili düzenleme</li>
+              <li>Aylık rapor</li>
+            </ul>
+            <a class="dugme dugme-cizgi" href="#iletisim" data-paket="Başlangıç">Teklif al</a>
+          </article>
+          <article class="paket">
+            <h3 class="paket-ad">Büyüme</h3>
+            <p class="paket-kim">Düzenli talep isteyen işletmeler</p>
+            <p class="paket-fiyat">16.500 TL<small>/ay</small></p>
+            <ul class="paket-madde">
+              <li>Google Ads ve Meta Ads</li>
+              <li>Ayda 8 görsel, 2 video</li>
+              <li>SEO: 15 kelime takibi, ayda 2 yazı</li>
+              <li>Aylık rapor ve görüşme</li>
+            </ul>
+            <a class="dugme dugme-cizgi" href="#iletisim" data-paket="Büyüme">Teklif al</a>
+          </article>
+          <article class="paket one-cikan">
+            <p class="paket-not">En çok seçilen</p>
+            <h3 class="paket-ad">Performans</h3>
+            <p class="paket-kim">Birden çok şehir ya da e-ticaret</p>
+            <p class="paket-fiyat">26.000 TL<small>/ay</small></p>
+            <ul class="paket-madde">
+              <li>Google, Meta ve TikTok Ads</li>
+              <li>Ayda 12 görsel, 4 video</li>
+              <li>SEO: 50 kelime takibi, ayda 6 yazı</li>
+              <li>Canlı panel ve haftalık özet</li>
+            </ul>
+            <a class="dugme dugme-turuncu" href="#iletisim" data-paket="Performans">Teklif al</a>
+          </article>
+          <article class="paket">
+            <h3 class="paket-ad">Kurumsal</h3>
+            <p class="paket-kim">Çok dilli site, büyük katalog</p>
+            <p class="paket-fiyat paket-fiyat-yazi">Görüşmeyle</p>
+            <ul class="paket-madde">
+              <li>Bütün kanallar ve ChatGPT Ads</li>
+              <li>SEO: 150 ve üzeri kelime</li>
+              <li>Haftalık rapor ve canlı panel</li>
+              <li>Öncelikli destek hattı</li>
+            </ul>
+            <a class="dugme dugme-cizgi" href="#iletisim" data-paket="Kurumsal">Teklif al</a>
+          </article>
+        </div>
+        <p class="dipnot">Fiyatlar örnektir, KDV dahil değildir. Reklam bütçesi pakete dahil değildir, kendi kartınızdan doğrudan platforma ödenir. SEO içeren paketlerde sözleşme en az 6 aydır.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SSS -->
+  <section class="bolum sss" id="sss" aria-labelledby="sss-baslik">
+    <div class="kap">
+      <div class="bolum-bas orta">
+        <h2 id="sss-baslik">Meta Ads hakkında sorular</h2>
+        <p>Aradığınız cevap burada yoksa <a href="#iletisim">yazın</a>, aynı iş günü dönülür.</p>
+      </div>
+      <div class="sss-izgara">
+        <div class="sss-sutun">
+          <details class="soru">
+            <summary><span class="soru-tas"><svg class="ik"><use href="#i-soru"/></svg></span><span class="soru-yazi">Reklam bütçesi paket ücretine dahil mi?</span><svg class="ik soru-ok"><use href="#i-asagi"/></svg></summary>
+            <p>Hayır. Reklam bütçesi kendi kartınızdan doğrudan Meta'ya ödenir. Paket ücreti yönetim ve görsel üretimi içindir, faturalar ayrı olur.</p>
+          </details>
+          <details class="soru">
+            <summary><span class="soru-tas"><svg class="ik"><use href="#i-soru"/></svg></span><span class="soru-yazi">Görselleri ve videoları kim hazırlıyor?</span><svg class="ik soru-ok"><use href="#i-asagi"/></svg></summary>
+            <p>Görsel ve video üretimi ücrete dahildir. Sayısı pakete göre değişir: Başlangıç'ta ayda 4 görsel, Büyüme'de 8 görsel ve 2 video, Performans'ta 12 görsel ve 4 video. Ürün ya da işyeri fotoğraflarınız varsa onlar da kullanılır.</p>
+          </details>
+          <details class="soru">
+            <summary><span class="soru-tas"><svg class="ik"><use href="#i-soru"/></svg></span><span class="soru-yazi">Reklamlar nerede görünür?</span><svg class="ik soru-ok"><use href="#i-asagi"/></svg></summary>
+            <p>Instagram ve Facebook'ta akışta, Hikayeler'de ve Reels'te. Seçilen amaca göre Messenger, WhatsApp, Threads ve Meta Audience Network'te de görünebilir. Hangi alanlarda görüneceği kampanya kurulurken seçilir.</p>
+          </details>
+        </div>
+        <div class="sss-sutun">
+          <details class="soru">
+            <summary><span class="soru-tas"><svg class="ik"><use href="#i-soru"/></svg></span><span class="soru-yazi">Form reklamından gelen kişiler bana nasıl ulaşır?</span><svg class="ik soru-ok"><use href="#i-asagi"/></svg></summary>
+            <p>Hızlı formu dolduran kişinin bilgileri e-postanıza iletilir. Aynı kayıtlar Meta Business Suite'teki Potansiyel Müşteri Merkezi'nde de durur, oradan indirilebilir.</p>
+          </details>
+          <details class="soru">
+            <summary><span class="soru-tas"><svg class="ik"><use href="#i-soru"/></svg></span><span class="soru-yazi">Ne kadar sürede sonuç alırım?</span><svg class="ik soru-ok"><use href="#i-asagi"/></svg></summary>
+            <p>Yeni reklam seti önce öğrenme aşamasından geçer, bu sürede sonuçlar daha az istikrarlıdır. Meta'ya göre bu aşama genellikle haftada 50 sonuçtan sonra biter. Hangi görselin iyi gittiği ilk ayın sonunda belli olur.</p>
+          </details>
+          <details class="soru">
+            <summary><span class="soru-tas"><svg class="ik"><use href="#i-soru"/></svg></span><span class="soru-yazi">Zaten açık bir reklam hesabım var, devam edilebilir mi?</span><svg class="ik soru-ok"><use href="#i-asagi"/></svg></summary>
+            <p>Evet. Mevcut hesap incelenir, geçmiş veriler ve kitleler korunarak devralınır. Reklam hesabı, sayfalar ve Piksel sizin adınıza kalır.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Çağrı -->
+  <section class="bolum cagri-bolum" aria-labelledby="cagri-baslik">
+    <div class="kap">
+      <div class="cagri">
+        <div>
+          <p class="cagri-etiket">İletişim</p>
+          <h2 id="cagri-baslik">Ücretsiz analizle başlayın</h2>
+          <p>Reklam hesabınıza, sayfalarınıza ve sitenize bakılır, bütçenin nereye gittiği yazılı raporla gönderilir.</p>
+        </div>
+        <div class="cagri-dugmeler">
+          <a class="dugme dugme-turuncu" href="#iletisim" data-mesaj="Meta Ads için ücretsiz analiz istiyorum."><svg class="ik"><use href="#i-wa"/></svg>WhatsApp'tan yazın</a>
+          <a class="dugme dugme-koyu-cizgi" href="#iletisim" data-mesaj="Telefonla aranmak istiyorum."><svg class="ik"><use href="#i-tel"/></svg>Arayın</a>
+          <a class="dugme dugme-koyu-cizgi" href="#iletisim"><svg class="ik"><use href="#i-posta"/></svg>E-posta gönderin</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Alt kısım -->
+<footer class="alt">
+  <div class="kap alt-izgara">
+    <div class="alt-sol">
+      <p class="alt-marka" aria-hidden="true"><span class="marka-ad">Murat</span><span class="marka-soyad">ERDOĞAN</span></p>
+      <div class="alt-blok">
+        <p class="alt-bas">Hakkımda</p>
+        <p class="alt-yazi">Google, Meta, TikTok ve ChatGPT reklamlarını, SEO'yu ve reklamın götürdüğü web sitesini tek elden yönetiyorum. Rakamlarla raporlarım, aynı gün dönerim.</p>
+        <a class="alt-hap" href="../hakkimda/">Beni tanıyın<svg class="ik"><use href="#i-ok"/></svg></a>
+      </div>
+      <div class="alt-blok" id="iletisim">
+        <p class="alt-bas">İletişim</p>
+        <ul class="ik-kartlar">
+          <li><a href="#iletisim" data-mesaj="Telefonla aranmak istiyorum."><span class="ikk-tas"><svg class="ik"><use href="#i-tel"/></svg></span><span class="ikk-yazi"><small>Telefon</small><b>0212 000 00 00</b></span><span class="ikk-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+          <li><a href="#iletisim" data-mesaj="WhatsApp'tan dönüş istiyorum."><span class="ikk-tas ikk-yesil"><svg class="ik"><use href="#i-wa"/></svg></span><span class="ikk-yazi"><small>WhatsApp</small><b>0500 000 00 00</b></span><span class="ikk-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+          <li><a href="#iletisim"><span class="ikk-tas"><svg class="ik"><use href="#i-posta"/></svg></span><span class="ikk-yazi"><small>E-posta</small><b>merhaba@<wbr>erdogandijital.com.tr</b></span><span class="ikk-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+          <li><a href="#iletisim"><span class="ikk-tas"><svg class="ik"><use href="#i-konum"/></svg></span><span class="ikk-yazi"><small>Adres</small><b>Kadıköy / İstanbul</b></span><span class="ikk-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+        </ul>
+      </div>
+      <p class="kart-not"><span class="kart-not-tas"><svg class="ik"><use href="#i-yuzde"/></svg></span>Fiyatlara KDV dahil değildir.</p>
+    </div>
+
+    <div class="alt-sag">
+      <form class="bulten" id="bulten" novalidate>
+        <div class="bulten-yazi">
+          <svg class="bulten-zarf" viewBox="0 0 80 66" aria-hidden="true">
+            <rect x="15" y="4" width="50" height="40" rx="3" fill="#fff"/>
+            <rect x="22" y="12" width="26" height="3.4" rx="1.7" fill="#ff5b22"/>
+            <rect x="22" y="19" width="36" height="3" rx="1.5" fill="#d9dde3"/>
+            <rect x="22" y="25" width="30" height="3" rx="1.5" fill="#d9dde3"/>
+            <path d="M6 28 40 50l34-22v32a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4Z" fill="#fff3ec"/>
+            <path d="m6 61 26-18M74 61 48 43" fill="none" stroke="#ffb896" stroke-width="2"/>
+            <path d="M6 28 40 50l34-22" fill="none" stroke="#1b1b1d" stroke-width="2" stroke-linejoin="round"/>
+            <circle cx="67" cy="9" r="7.5" fill="#1b1b1d" stroke="#fff" stroke-width="2"/>
+          </svg>
+          <div>
+            <p class="bulten-bas">Bültene abone olun</p>
+            <p class="bulten-alt">Ayda bir e-posta, yalnız işe yarayan yenilikler.</p>
+          </div>
+        </div>
+        <div class="bulten-alan">
+          <label class="sr" for="b-eposta">E-posta adresiniz</label>
+          <svg class="ik"><use href="#i-posta"/></svg>
+          <input id="b-eposta" name="eposta" type="email" inputmode="email" autocomplete="email" placeholder="E-posta adresiniz">
+          <button class="bulten-dugme" type="submit">Abone ol</button>
+        </div>
+        <p class="bulten-durum" id="bulten-durum" role="status"></p>
+      </form>
+
+      <div class="kesfet">
+        <div class="kesfet-ust">
+          <p class="kesfet-bas"><small>Murat ERDOĞAN ile</small>Keşfedin</p>
+          <div class="kesfet-ara">
+            <label class="sr" for="k-ara">Bağlantı ara</label>
+            <svg class="ik"><use href="#i-ara"/></svg>
+            <input id="k-ara" type="search" placeholder="Bağlantı ara" autocomplete="off" aria-controls="kp-ara">
+          </div>
+        </div>
+        <div class="kesfet-sekmeler" role="tablist" aria-label="Bağlantı grupları">
+            <button class="ks" type="button" role="tab" id="ks-site" aria-controls="kp-site" aria-selected="true"><svg class="ik"><use href="#i-kitap"/></svg>Site içi</button>
+            <button class="ks" type="button" role="tab" id="ks-reklam" aria-controls="kp-reklam" aria-selected="false" tabindex="-1"><svg class="ik"><use href="#i-ara"/></svg>Reklam</button>
+            <button class="ks" type="button" role="tab" id="ks-web" aria-controls="kp-web" aria-selected="false" tabindex="-1"><svg class="ik"><use href="#i-web"/></svg>Web ve yazılım</button>
+        </div>
+        <div class="kesfet-panel" id="kp-site" role="tabpanel" aria-labelledby="ks-site">
+          <ul class="kb-izgara">
+            <li><a href="../#hizmetler"><span class="kb-tas"><svg class="ik"><use href="#i-paket"/></svg></span>Hizmetlerim<span class="kb-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+            <li><a href="../hakkimda/"><span class="kb-tas"><svg class="ik"><use href="#i-kisi"/></svg></span>Hakkımda<span class="kb-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+            <li><a href="../#referanslar"><span class="kb-tas"><svg class="ik"><use href="#i-yazilim"/></svg></span>Referanslar<span class="kb-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+            <li><a href="#surec"><span class="kb-tas"><svg class="ik"><use href="#i-saat"/></svg></span>Süreç<span class="kb-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+            <li><a href="#sss"><span class="kb-tas"><svg class="ik"><use href="#i-soru"/></svg></span>Sıkça sorulan sorular<span class="kb-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+            <li><a href="../blog/"><span class="kb-tas"><svg class="ik"><use href="#i-kitap"/></svg></span>Blog yazıları<span class="kb-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+          </ul>
+        </div>
+        <div class="kesfet-panel" id="kp-reklam" role="tabpanel" aria-labelledby="ks-reklam" hidden>
+          <ul class="kb-izgara">
+            <li><a href="../google-ads/"><span class="kb-tas"><svg class="ik ik-logo"><use href="#i-google"/></svg></span>Google Ads<span class="kb-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+            <li><a href="./" aria-current="page"><span class="kb-tas"><svg class="ik ik-logo"><use href="#i-meta"/></svg></span>Meta Ads<span class="kb-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+            <li><a href="../tiktok-ads/"><span class="kb-tas"><svg class="ik ik-logo"><use href="#i-tiktok"/></svg></span>TikTok Ads<span class="kb-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+            <li><a href="../chatgpt-ads/"><span class="kb-tas"><svg class="ik ik-logo"><use href="#i-chatgpt"/></svg></span>ChatGPT Ads<span class="kb-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+            <li><a href="../seo/"><span class="kb-tas"><svg class="ik"><use href="#i-seo"/></svg></span>SEO<span class="kb-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+            <li><a href="#paketler" data-paket-sekme="reklam"><span class="kb-tas"><svg class="ik"><use href="#i-paket"/></svg></span>Reklam paketleri<span class="kb-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+          </ul>
+        </div>
+        <div class="kesfet-panel" id="kp-web" role="tabpanel" aria-labelledby="ks-web" hidden>
+          <ul class="kb-izgara">
+            <li><a href="../web-tasarim/"><span class="kb-tas"><svg class="ik"><use href="#i-web"/></svg></span>Web tasarım<span class="kb-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+            <li><a href="#paketler" data-paket-sekme="web"><span class="kb-tas"><svg class="ik"><use href="#i-paket"/></svg></span>Web sitesi paketleri<span class="kb-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+            <li><a href="../yazilimlar/#yz-randevu"><span class="kb-tas"><svg class="ik"><use href="#i-yazilim"/></svg></span>Online randevu sistemi<span class="kb-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+            <li><a href="../yazilimlar/#yz-qr"><span class="kb-tas"><svg class="ik"><use href="#i-yazilim"/></svg></span>QR menü<span class="kb-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+            <li><a href="../yazilimlar/#yz-whatsapp"><span class="kb-tas"><svg class="ik"><use href="#i-yazilim"/></svg></span>WhatsApp sipariş<span class="kb-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+            <li><a href="../yazilimlar/#yz-teklif"><span class="kb-tas"><svg class="ik"><use href="#i-yazilim"/></svg></span>Teklif ve cari takip<span class="kb-ok"><svg class="ik"><use href="#i-ok"/></svg></span></a></li>
+          </ul>
+        </div>
+        <div class="kesfet-panel" id="kp-ara" hidden>
+          <ul class="kb-izgara"></ul>
+          <p class="kesfet-yok" hidden>Bu aramayla eşleşen bağlantı yok. Başka bir kelime deneyin.</p>
+        </div>
+        <p class="sr" id="k-ara-durum" role="status"></p>
+      </div>
+
+      <div class="alt-rozet-satir">
+        <div class="rozetler">
+          <p class="rozet"><span class="rozet-kod"><svg class="ik"><use href="#i-karekod"/></svg></span><span><b>ETBİS</b><small>T.C. Ticaret Bakanlığı kaydı</small></span></p>
+          <p class="rozet"><span class="rozet-kod"><svg class="ik"><use href="#i-kalkan"/></svg></span><span><b>SSL</b><small>Güvenli bağlantı</small></span></p>
+        </div>
+        <ul class="sozlesmeler">
+          <li><button type="button" data-detay="s-gizlilik">Gizlilik politikası</button></li>
+          <li><button type="button" data-detay="s-kvkk">KVKK aydınlatma metni</button></li>
+          <li><button type="button" data-detay="s-kullanim">Kullanım koşulları</button></li>
+          <li><button type="button" data-detay="s-mesafeli">Mesafeli satış sözleşmesi</button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="kap alt-telif">
+    <p>© 2026 Murat ERDOĞAN. Tüm hakları saklıdır.</p>
+    <ul class="sosyal" aria-label="Sosyal medya">
+      <li><a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram, yeni sekmede açılır"><svg class="ik"><use href="#i-instagram"/></svg></a></li>
+      <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn, yeni sekmede açılır"><svg class="ik"><use href="#i-linkedin"/></svg></a></li>
+      <li><a href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="YouTube, yeni sekmede açılır"><svg class="ik"><use href="#i-youtube"/></svg></a></li>
+    </ul>
+    <p class="alt-not">Sayfadaki iletişim bilgileri örnektir.</p>
+  </div>
+</footer>
+
+<!-- Telefonda hızlı iletişim şeridi -->
+<div class="hizli" role="group" aria-label="Hızlı iletişim">
+  <a href="#iletisim" data-mesaj="WhatsApp'tan dönüş istiyorum."><svg class="ik"><use href="#i-wa"/></svg>WhatsApp</a>
+  <a href="#iletisim" data-mesaj="Telefonla aranmak istiyorum."><svg class="ik"><use href="#i-tel"/></svg>Ara</a>
+</div>
+
+<!-- Detay pencereleri: hizmetler -->
+<dialog class="detay" id="d-google" aria-labelledby="d-google-b">
+  <div class="dt-ic">
+    <button class="dt-kapat" type="button"><span class="sr">Pencereyi kapat</span><span class="kapat-ik" aria-hidden="true"></span></button>
+    <p class="dt-ust"><span class="tas"><svg class="ik ik-logo"><use href="#i-google"/></svg></span>Arama, YouTube ve Performance Max</p>
+    <h2 class="dt-baslik" id="d-google-b">Google Ads yönetimi</h2>
+    <p>Google'da ürününüzü ya da hizmetinizi arayan kişi, aramayı yaptığı anda karşısında sizi görür. Bütçe satın alma niyeti taşıyan aramalara ayrılır; bilgi arayan, iş arayan ya da ücretsiz arayan sorgular her hafta temizlenir.</p>
+    <h3>Neler dahil</h3>
+    <ul class="dt-liste">
+      <li>Hesap ve dönüşüm kurulumu: form, telefon ve WhatsApp ayrı sayılır</li>
+      <li>Anahtar kelime ve rakip analizi</li>
+      <li>Reklam metinleri, uzantılar ve açılış sayfası önerisi</li>
+      <li>Haftalık arama terimi temizliği ve teklif ayarı</li>
+      <li>Aylık rapor ve değerlendirme görüşmesi</li>
+    </ul>
+    <dl class="dt-bilgi"><div><dt>Kimler için</dt><dd>Ürününü ya da hizmetini arayan müşterisi olan işletmeler: yerel hizmetler, e-ticaret, sanayi tedarikçileri.</dd></div><div><dt>Yayına giriş</dt><dd>Hesap kurulumundan sonra 7-10 gün.</dd></div></dl>
+    <a class="dugme dugme-turuncu" href="#iletisim" data-hizmet="Google Ads">Google Ads için teklif al</a>
+  </div>
+</dialog>
+
+<dialog class="detay" id="d-meta" aria-labelledby="d-meta-b">
+  <div class="dt-ic">
+    <button class="dt-kapat" type="button"><span class="sr">Pencereyi kapat</span><span class="kapat-ik" aria-hidden="true"></span></button>
+    <p class="dt-ust"><span class="tas"><svg class="ik ik-logo"><use href="#i-meta"/></svg></span>Instagram ve Facebook</p>
+    <h2 class="dt-baslik" id="d-meta-b">Meta Ads yönetimi</h2>
+    <p>Henüz aramaya başlamamış ama ilgilenecek kişiye Instagram ve Facebook'ta ulaşılır. Her ay yeni görsel ve video setiyle test edilir; en düşük maliyetle talep getiren reklam bütçeyle büyütülür.</p>
+    <h3>Neler dahil</h3>
+    <ul class="dt-liste">
+      <li>Görsel ve video üretimi</li>
+      <li>Piksel ve Dönüşümler API kurulumu</li>
+      <li>Hedef kitle ve benzer kitle çalışması</li>
+      <li>Form reklamlarından gelen kişilerin e-postanıza aktarılması</li>
+      <li>Aylık rapor</li>
+    </ul>
+    <dl class="dt-bilgi"><div><dt>Kimler için</dt><dd>Görselle anlatılabilen ürün ve hizmetler: e-ticaret, turizm, eğitim, güzellik, yeme içme.</dd></div><div><dt>Yayına giriş</dt><dd>Görseller onaylandıktan sonra 3-5 gün.</dd></div></dl>
+    <a class="dugme dugme-turuncu" href="#iletisim" data-hizmet="Meta Ads">Meta Ads için teklif al</a>
+  </div>
+</dialog>
+
+<dialog class="detay" id="d-tiktok" aria-labelledby="d-tiktok-b">
+  <div class="dt-ic">
+    <button class="dt-kapat" type="button"><span class="sr">Pencereyi kapat</span><span class="kapat-ik" aria-hidden="true"></span></button>
+    <p class="dt-ust"><span class="tas"><svg class="ik ik-logo"><use href="#i-tiktok"/></svg></span>Dikey kısa video</p>
+    <h2 class="dt-baslik" id="d-tiktok-b">TikTok Ads yönetimi</h2>
+    <p>TikTok'ta reklam, akıştaki öbür videolar gibi görünür; ilk üç saniyede durdurmayan video izlenmez. Senaryo bu yüzden reklamdan önce yazılır, çekim sizin ekibinizle ya da içerik üreticileriyle planlanır.</p>
+    <h3>Neler dahil</h3>
+    <ul class="dt-liste">
+      <li>Her ay yeni video senaryoları</li>
+      <li>Spark Ads ile içerik üretici paylaşımlarını öne çıkarma</li>
+      <li>TikTok Pikseli ve olay takibi</li>
+      <li>Kitle ve teklif ayarları</li>
+      <li>Aylık rapor</li>
+    </ul>
+    <dl class="dt-bilgi"><div><dt>Kimler için</dt><dd>Genç kitleye satan markalar, e-ticaret, yeme içme, eğitim ve eğlence.</dd></div><div><dt>Yayına giriş</dt><dd>İlk video seti hazır olunca 3-5 gün.</dd></div></dl>
+    <a class="dugme dugme-turuncu" href="#iletisim" data-hizmet="TikTok Ads">TikTok Ads için teklif al</a>
+  </div>
+</dialog>
+
+<dialog class="detay" id="d-chatgpt" aria-labelledby="d-chatgpt-b">
+  <div class="dt-ic">
+    <button class="dt-kapat" type="button"><span class="sr">Pencereyi kapat</span><span class="kapat-ik" aria-hidden="true"></span></button>
+    <p class="dt-ust"><span class="tas"><svg class="ik ik-logo"><use href="#i-chatgpt"/></svg></span>Yapay zekâ sohbetleri</p>
+    <h2 class="dt-baslik" id="d-chatgpt-b">ChatGPT Ads yönetimi</h2>
+    <p>ChatGPT'de reklam, sohbetteki cevabın altında, Sponsorlu etiketiyle ve cevaptan ayrı bir kutuda gösterilir. Kutuda reklamverenin adı ve logosu, bir başlık, kısa bir metin ve görsel yer alır. Reklam cevabın içeriğini değiştirmez; konuşmanın konusuna ve verilen bağlam ipuçlarına göre gösterilir.</p>
+    <h3>Neler dahil</h3>
+    <ul class="dt-liste">
+      <li>Reklam hesabı, ödeme ve kampanya kurulumu</li>
+      <li>Müşterinin sorduğu sorulara göre bağlam ipuçları</li>
+      <li>Açılış sayfasının o soruya cevap verecek biçimde düzenlenmesi</li>
+      <li>Markanızın yapay zekâ cevaplarında aylık takibi</li>
+    </ul>
+    <dl class="dt-bilgi"><div><dt>Kimler için</dt><dd>Karar vermeden önce soru soran, karşılaştıran müşterisi olan işletmeler.</dd></div><div><dt>Ölçüm</dt><dd>ChatGPT'den gelen talepler öbür kanallarla aynı raporda.</dd></div></dl>
+    <a class="dugme dugme-turuncu" href="#iletisim" data-hizmet="ChatGPT Ads">ChatGPT Ads için teklif al</a>
+  </div>
+</dialog>
+
+<dialog class="detay" id="d-seo" aria-labelledby="d-seo-b">
+  <div class="dt-ic">
+    <button class="dt-kapat" type="button"><span class="sr">Pencereyi kapat</span><span class="kapat-ik" aria-hidden="true"></span></button>
+    <p class="dt-ust"><span class="tas"><svg class="ik"><use href="#i-seo"/></svg></span>Organik arama ve Google İşletme Profili</p>
+    <h2 class="dt-baslik" id="d-seo-b">SEO</h2>
+    <p>Reklam bütçesi durduğunda da gelen ziyaretçi için sitenin teknik altyapısı düzeltilir, aranan sorulara cevap veren içerikler yazılır ve Google İşletme Profiliniz düzenli tutulur. Takip edilen kelimeler sözleşmede yazılı olur, sıralamalar her ay raporda görünür.</p>
+    <h3>Neler dahil</h3>
+    <ul class="dt-liste">
+      <li>Teknik SEO denetimi ve hız düzeltmeleri</li>
+      <li>Anahtar kelime planı ve aylık içerik</li>
+      <li>Google İşletme Profili yönetimi</li>
+      <li>Aylık sıralama ve trafik raporu</li>
+    </ul>
+    <dl class="dt-bilgi"><div><dt>Kimler için</dt><dd>Uzun vadede reklam maliyetini düşürmek isteyen her işletme.</dd></div><div><dt>Süre</dt><dd>Sözleşme en az 6 ay; kalıcı artış çoğu sektörde üçüncü aydan sonra.</dd></div></dl>
+    <a class="dugme dugme-turuncu" href="#iletisim" data-hizmet="SEO">SEO için teklif al</a>
+  </div>
+</dialog>
+
+<dialog class="detay" id="d-web" aria-labelledby="d-web-b">
+  <div class="dt-ic">
+    <button class="dt-kapat" type="button"><span class="sr">Pencereyi kapat</span><span class="kapat-ik" aria-hidden="true"></span></button>
+    <p class="dt-ust"><span class="tas"><svg class="ik"><use href="#i-web"/></svg></span>Kurumsal site, e-ticaret ve kampanya sayfaları</p>
+    <h2 class="dt-baslik" id="d-web-b">Web tasarım</h2>
+    <p>Siteniz WordPress üzerinde, size özel tasarımla kodlanır; hazır tema kullanılmaz. Önce ana sayfa tasarımı gösterilir, onayınızdan sonra öbür sayfalara geçilir. İçeriği panelden, kod bilmeden düzenlersiniz.</p>
+    <h3>Neler dahil</h3>
+    <ul class="dt-liste">
+      <li>Size özel tasarım ve kodlama</li>
+      <li>Mobil hız puanı 90 ve üzeri</li>
+      <li>SEO uyumlu sayfa yapısı</li>
+      <li>KVKK metinleri ve çerez onayı</li>
+      <li>Alan adı ve barındırma kurulumu</li>
+    </ul>
+    <dl class="dt-bilgi"><div><dt>Kimler için</dt><dd>Reklamdan gelen ziyaretçiyi müşteriye çevirecek bir site isteyen işletmeler.</dd></div><div><dt>Süre</dt><dd>Standart kurumsal site çoğunlukla 2-3 hafta.</dd></div></dl>
+    <a class="dugme dugme-turuncu" href="#iletisim" data-hizmet="Web tasarım">Web sitesi için teklif al</a>
+  </div>
+</dialog>
+
+<!-- Detay pencereleri: hazır yazılımlar -->
+<dialog class="detay" id="y-randevu" aria-labelledby="y-randevu-b">
+  <div class="dt-ic">
+    <button class="dt-kapat" type="button"><span class="sr">Pencereyi kapat</span><span class="kapat-ik" aria-hidden="true"></span></button>
+    <p class="dt-ust"><span class="tas"><svg class="ik"><use href="#i-yazilim"/></svg></span>Hazır yazılım</p>
+    <h2 class="dt-baslik" id="y-randevu-b">Online randevu sistemi</h2>
+    <p>Müşteriniz sitenizden boş saatleri görür, hizmeti ve personeli seçip randevusunu kendisi alır. Randevudan önce ona ve size hatırlatma gider, iptal edilen saat yeniden açılır.</p>
+    <h3>Özellikler</h3>
+    <ul class="dt-liste">
+      <li>Personel ve hizmet bazında çalışma saatleri</li>
+      <li>SMS ve WhatsApp hatırlatma</li>
+      <li>Günlük ve haftalık takvim görünümü</li>
+      <li>Müşteri geçmişi ve notlar</li>
+      <li>Telefondan yönetim</li>
+    </ul>
+    <dl class="dt-bilgi"><div><dt>Kimler için</dt><dd>Kuaför, güzellik salonu, klinik, danışmanlık, spor salonu.</dd></div><div><dt>Kurulum</dt><dd>Logonuz, renkleriniz ve hizmet listenizle 5-10 iş günü.</dd></div></dl>
+    <a class="dugme dugme-turuncu" href="#iletisim" data-hizmet="Hazır yazılım" data-mesaj="Online randevu sistemi için demo istiyorum.">Demo iste</a>
+  </div>
+</dialog>
+
+<dialog class="detay" id="y-qr" aria-labelledby="y-qr-b">
+  <div class="dt-ic">
+    <button class="dt-kapat" type="button"><span class="sr">Pencereyi kapat</span><span class="kapat-ik" aria-hidden="true"></span></button>
+    <p class="dt-ust"><span class="tas"><svg class="ik"><use href="#i-yazilim"/></svg></span>Hazır yazılım</p>
+    <h2 class="dt-baslik" id="y-qr-b">QR menü ve masadan sipariş</h2>
+    <p>Masadaki karekodu okutan müşteri menüyü kendi dilinde görür, siparişini doğrudan mutfağa gönderir. Fiyat ve ürün değişikliği panelden anında yayına girer, menü bastırmaya gerek kalmaz.</p>
+    <h3>Özellikler</h3>
+    <ul class="dt-liste">
+      <li>Türkçe, İngilizce ve istenen dillerde menü</li>
+      <li>Masadan sipariş ve garson çağırma</li>
+      <li>Mutfak ve kasa ekranı</li>
+      <li>Ürün fotoğrafı, alerjen ve içerik bilgisi</li>
+    </ul>
+    <dl class="dt-bilgi"><div><dt>Kimler için</dt><dd>Kafe, restoran, otel restoranı, plaj işletmesi.</dd></div><div><dt>Kurulum</dt><dd>Menünüz girilmiş hâlde 3-5 iş günü.</dd></div></dl>
+    <a class="dugme dugme-turuncu" href="#iletisim" data-hizmet="Hazır yazılım" data-mesaj="QR menü ve masadan sipariş için demo istiyorum.">Demo iste</a>
+  </div>
+</dialog>
+
+<dialog class="detay" id="y-whatsapp" aria-labelledby="y-whatsapp-b">
+  <div class="dt-ic">
+    <button class="dt-kapat" type="button"><span class="sr">Pencereyi kapat</span><span class="kapat-ik" aria-hidden="true"></span></button>
+    <p class="dt-ust"><span class="tas"><svg class="ik"><use href="#i-yazilim"/></svg></span>Hazır yazılım</p>
+    <h2 class="dt-baslik" id="y-whatsapp-b">WhatsApp sipariş ve bildirim</h2>
+    <p>Müşteriniz siparişini WhatsApp'tan verir; sipariş panele düşer, onay, hazırlık ve yola çıkış mesajları müşteriye kendiliğinden gider. Resmî WhatsApp Business altyapısıyla çalışır.</p>
+    <h3>Özellikler</h3>
+    <ul class="dt-liste">
+      <li>Sipariş paneli ve günlük özet</li>
+      <li>Durum bildirimleri</li>
+      <li>Ürün listesi ve fiyat yönetimi</li>
+      <li>Müşteri kaydı ve tekrar sipariş</li>
+    </ul>
+    <dl class="dt-bilgi"><div><dt>Kimler için</dt><dd>Paket servis yapan restoranlar, butik mağazalar, su ve tüp bayileri.</dd></div><div><dt>Kurulum</dt><dd>İşletme hesabı onaylandıktan sonra 5-7 iş günü.</dd></div></dl>
+    <a class="dugme dugme-turuncu" href="#iletisim" data-hizmet="Hazır yazılım" data-mesaj="WhatsApp sipariş ve bildirim için demo istiyorum.">Demo iste</a>
+  </div>
+</dialog>
+
+<dialog class="detay" id="y-teklif" aria-labelledby="y-teklif-b">
+  <div class="dt-ic">
+    <button class="dt-kapat" type="button"><span class="sr">Pencereyi kapat</span><span class="kapat-ik" aria-hidden="true"></span></button>
+    <p class="dt-ust"><span class="tas"><svg class="ik"><use href="#i-yazilim"/></svg></span>Hazır yazılım</p>
+    <h2 class="dt-baslik" id="y-teklif-b">Teklif ve cari takip</h2>
+    <p>Teklifi birkaç dakikada PDF olarak hazırlayıp müşterinize gönderirsiniz. Onaylanan teklif cariye işlenir; tahsilat, kalan bakiye ve geciken ödemeler aynı panelde görünür.</p>
+    <h3>Özellikler</h3>
+    <ul class="dt-liste">
+      <li>Logolu PDF teklif ve e-posta ile gönderim</li>
+      <li>Cari hesap ve bakiye takibi</li>
+      <li>Tahsilat hatırlatma</li>
+      <li>Excel'e aktarma</li>
+    </ul>
+    <dl class="dt-bilgi"><div><dt>Kimler için</dt><dd>Teklifle çalışan firmalar: inşaat, sanayi, ajans, servis işletmeleri.</dd></div><div><dt>Kurulum</dt><dd>5-7 iş günü, mevcut müşteri listeniz aktarılır.</dd></div></dl>
+    <a class="dugme dugme-turuncu" href="#iletisim" data-hizmet="Hazır yazılım" data-mesaj="Teklif ve cari takip için demo istiyorum.">Demo iste</a>
+  </div>
+</dialog>
+
+<dialog class="detay" id="y-emlak" aria-labelledby="y-emlak-b">
+  <div class="dt-ic">
+    <button class="dt-kapat" type="button"><span class="sr">Pencereyi kapat</span><span class="kapat-ik" aria-hidden="true"></span></button>
+    <p class="dt-ust"><span class="tas"><svg class="ik"><use href="#i-yazilim"/></svg></span>Hazır yazılım</p>
+    <h2 class="dt-baslik" id="y-emlak-b">Emlak ilan sitesi</h2>
+    <p>Portföyünüzü kendi sitenizde yayınlarsınız: ilan, fotoğraf, harita ve talep formu tek panelden yönetilir. Gelen talepler ilanla birlikte size düşer.</p>
+    <h3>Özellikler</h3>
+    <ul class="dt-liste">
+      <li>Satılık ve kiralık ilan yönetimi</li>
+      <li>Haritada ve filtreyle arama</li>
+      <li>İlana özel talep formu ve WhatsApp düğmesi</li>
+      <li>Danışman sayfaları</li>
+    </ul>
+    <dl class="dt-bilgi"><div><dt>Kimler için</dt><dd>Emlak ofisleri, gayrimenkul danışmanları, inşaat firmaları.</dd></div><div><dt>Kurulum</dt><dd>7-10 iş günü, ilk ilanlarınız girilmiş hâlde.</dd></div></dl>
+    <a class="dugme dugme-turuncu" href="#iletisim" data-hizmet="Hazır yazılım" data-mesaj="Emlak ilan sitesi için demo istiyorum.">Demo iste</a>
+  </div>
+</dialog>
+
+<dialog class="detay" id="y-transfer" aria-labelledby="y-transfer-b">
+  <div class="dt-ic">
+    <button class="dt-kapat" type="button"><span class="sr">Pencereyi kapat</span><span class="kapat-ik" aria-hidden="true"></span></button>
+    <p class="dt-ust"><span class="tas"><svg class="ik"><use href="#i-yazilim"/></svg></span>Hazır yazılım</p>
+    <h2 class="dt-baslik" id="y-transfer-b">Transfer ve tur rezervasyonu</h2>
+    <p>Müşteri güzergâhı ve aracı seçince fiyatı hemen görür, rezervasyonunu bırakır. Onay müşteriye ve size aynı anda gider; şoför ve araç ataması panelden yapılır.</p>
+    <h3>Özellikler</h3>
+    <ul class="dt-liste">
+      <li>Güzergâh ve araç bazında fiyat</li>
+      <li>Rezervasyon paneli ve şoför ataması</li>
+      <li>Çok dilli rezervasyon sayfası</li>
+      <li>Uçuş numarası ve karşılama notu</li>
+    </ul>
+    <dl class="dt-bilgi"><div><dt>Kimler için</dt><dd>Transfer firmaları, tur operatörleri, oteller.</dd></div><div><dt>Kurulum</dt><dd>Güzergâh ve fiyat listenizle 7-10 iş günü.</dd></div></dl>
+    <a class="dugme dugme-turuncu" href="#iletisim" data-hizmet="Hazır yazılım" data-mesaj="Transfer ve tur rezervasyonu için demo istiyorum.">Demo iste</a>
+  </div>
+</dialog>
+
+<!-- Blog yazıları -->
+<dialog class="detay detay-yazi" id="yazi-1" aria-labelledby="yazi-1-b">
+  <div class="dt-ic">
+    <button class="dt-kapat" type="button"><span class="sr">Yazıyı kapat</span><span class="kapat-ik" aria-hidden="true"></span></button>
+    <p class="yazi-bilgi"><span>Google Ads</span><span>4 Kasım 2026</span><span>4 dk</span></p>
+    <h2 class="dt-baslik" id="yazi-1-b">Google Ads bütçenizi yiyen 5 arama terimi hatası</h2>
+    <p>Arama ağı reklamlarında bütçenin bir kısmı, reklamı tetikleyen ama satın almaya niyeti olmayan aramalara gidebilir. Hesaplarda her hafta bakılan beş nokta:</p>
+    <ol>
+      <li><b>Bilgi arayan sorgular.</b> "nasıl yapılır", "nedir", "pdf" gibi aramalar öğrenmek isteyen kişiden gelir. Bu kelimeler negatif listeye eklenir.</li>
+      <li><b>İş arayanlar.</b> "iş ilanı", "eleman", "maaş" geçen aramalar teklif değil iş başvurusu getirir.</li>
+      <li><b>Ücretsiz arayanlar.</b> "ücretsiz" ve "bedava" geçen aramalar ücretli bir hizmette nadiren satışa döner.</li>
+      <li><b>Kontrolsüz geniş eşleme.</b> Geniş eşleme yeterli dönüşüm verisi olmadan açılırsa reklam alakasız aramalarda da çıkar. Önce sıralı ve tam eşlemeyle başlanır.</li>
+      <li><b>Hizmet verilmeyen bölgeler.</b> Konum ayarında "ilgi" de seçili kalırsa hizmet bölgeniz dışındaki kişilere de görünürsünüz. Yerel işletmede yalnız bölgede bulunan kişiler seçilir.</li>
+    </ol>
+    <p>Bu temizliğin kaynağı Arama terimleri raporudur. Haftada bir bakmak, bütçenin hatırı sayılır bir kısmını doğru aramalara geri kazandırır.</p>
+  </div>
+</dialog>
+
+<dialog class="detay detay-yazi" id="yazi-2" aria-labelledby="yazi-2-b">
+  <div class="dt-ic">
+    <button class="dt-kapat" type="button"><span class="sr">Yazıyı kapat</span><span class="kapat-ik" aria-hidden="true"></span></button>
+    <p class="yazi-bilgi"><span>ChatGPT Ads</span><span>28 Ekim 2026</span><span>3 dk</span></p>
+    <h2 class="dt-baslik" id="yazi-2-b">ChatGPT reklamları nasıl görünüyor, kimler için anlamlı?</h2>
+    <p>ChatGPT'de reklam, sohbetteki cevabın altında, Sponsorlu etiketiyle ve cevaptan ayrı bir kutuda gösterilir. Kutuda reklamverenin adı ve logosu, bir başlık, kısa bir metin ve görsel yer alır; tıklayan kişi işletmenin sayfasına gider.</p>
+    <p>Reklam, cevabın içeriğini değiştirmez. Hangi reklamın gösterileceği konuşmanın konusuna ve reklamverenin verdiği bağlam ipuçlarına göre belirlenir.</p>
+    <p>Karar vermeden önce soru soran, karşılaştıran müşterisi olan işletmeler için anlamlıdır: eğitim kurumları, turizm, sanayi tedarikçileri, uzun düşünülerek alınan ürünler. İlk kampanyada bakılan üç nokta:</p>
+    <ol>
+      <li><b>Hangi sorularda görünmek istiyorsunuz?</b> Müşterinin sorduğu sorular listelenir, bağlam ipuçları buna göre yazılır.</li>
+      <li><b>Açılış sayfası o soruya cevap veriyor mu?</b> Tıklayan kişi aradığını ilk ekranda bulmalı.</li>
+      <li><b>Talep başı maliyet.</b> ChatGPT'den gelen talepler öbür kanallarla aynı raporda, aynı ölçüyle karşılaştırılır.</li>
+    </ol>
+  </div>
+</dialog>
+
+<dialog class="detay detay-yazi" id="yazi-3" aria-labelledby="yazi-3-b">
+  <div class="dt-ic">
+    <button class="dt-kapat" type="button"><span class="sr">Yazıyı kapat</span><span class="kapat-ik" aria-hidden="true"></span></button>
+    <p class="yazi-bilgi"><span>Yerel SEO</span><span>21 Ekim 2026</span><span>5 dk</span></p>
+    <h2 class="dt-baslik" id="yazi-3-b">Google İşletme Profili'nde sık yapılan 6 hata</h2>
+    <p>Haritalarda ve yerel aramalarda üst sıraya çıkmak çoğu zaman büyük bir bütçe değil, profilin düzenli tutulmasını ister. En sık görülen altı hata:</p>
+    <ol>
+      <li><b>Yanlış ya da çok genel ana kategori.</b> Ana kategori, hangi aramalarda görüneceğinizi en çok belirleyen alandır.</li>
+      <li><b>Güncel olmayan çalışma saatleri.</b> Bayram ve tatil saatleri girilmezse kapalı olduğunuz gün gelen müşteri kötü yorum bırakabilir.</li>
+      <li><b>Cevapsız yorumlar.</b> İyi ya da kötü, her yoruma kısa ve kibar bir cevap verilmelidir.</li>
+      <li><b>Site ve profilde farklı bilgiler.</b> Adres, telefon ve işletme adı her yerde aynı yazılmalıdır.</li>
+      <li><b>Eski ya da eksik fotoğraflar.</b> Dükkânın içi, dışı ve ekip fotoğrafları güveni artırır.</li>
+      <li><b>Boş hizmet ve ürün listesi.</b> Verdiğiniz her hizmeti kısa açıklamasıyla ekleyin.</li>
+    </ol>
+    <p>Bu altı maddeyi düzelttikten sonra profilin her ay kontrol edilmesi yeterlidir.</p>
+  </div>
+</dialog>
+
+<!-- Sözleşmeler (örnek metin; kurulumda hukuki metinlerle değişir) -->
+<dialog class="detay detay-yazi" id="s-gizlilik" aria-labelledby="s-gizlilik-b">
+  <div class="dt-ic">
+    <button class="dt-kapat" type="button"><span class="sr">Pencereyi kapat</span><span class="kapat-ik" aria-hidden="true"></span></button>
+    <h2 class="dt-baslik" id="s-gizlilik-b">Gizlilik politikası</h2>
+    <p>Bu sitede yalnız formlarda kendi isteğinizle paylaştığınız bilgiler ve sitenin çalışması için gerekli çerezler kullanılır. Bilgileriniz satılmaz, üçüncü kişilerle paylaşılmaz.</p>
+    <p>Bu metin örnektir; kurulumda işletmenize göre hazırlanmış metinle değişir.</p>
+  </div>
+</dialog>
+<dialog class="detay detay-yazi" id="s-kvkk" aria-labelledby="s-kvkk-b">
+  <div class="dt-ic">
+    <button class="dt-kapat" type="button"><span class="sr">Pencereyi kapat</span><span class="kapat-ik" aria-hidden="true"></span></button>
+    <h2 class="dt-baslik" id="s-kvkk-b">KVKK aydınlatma metni</h2>
+    <p>Formlarda paylaştığınız ad, telefon, e-posta ve firma bilgileri, 6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında yalnız talebinize dönüş yapmak amacıyla işlenir. 11. maddedeki haklarınızı kullanmak için iletişim adresine yazabilirsiniz.</p>
+    <p>Bu metin örnektir; kurulumda işletmenize göre hazırlanmış metinle değişir.</p>
+  </div>
+</dialog>
+<dialog class="detay detay-yazi" id="s-kullanim" aria-labelledby="s-kullanim-b">
+  <div class="dt-ic">
+    <button class="dt-kapat" type="button"><span class="sr">Pencereyi kapat</span><span class="kapat-ik" aria-hidden="true"></span></button>
+    <h2 class="dt-baslik" id="s-kullanim-b">Kullanım koşulları</h2>
+    <p>Sitedeki metin, görsel ve tasarımlar izinsiz kopyalanamaz. Sayfalardaki fiyatlar bilgi amaçlıdır; kesin fiyat yazılı teklifle belirlenir.</p>
+    <p>Bu metin örnektir; kurulumda işletmenize göre hazırlanmış metinle değişir.</p>
+  </div>
+</dialog>
+<dialog class="detay detay-yazi" id="s-mesafeli" aria-labelledby="s-mesafeli-b">
+  <div class="dt-ic">
+    <button class="dt-kapat" type="button"><span class="sr">Pencereyi kapat</span><span class="kapat-ik" aria-hidden="true"></span></button>
+    <h2 class="dt-baslik" id="s-mesafeli-b">Mesafeli satış sözleşmesi</h2>
+    <p>İnternet üzerinden satın alınan paket ve hizmetlerde tarafların hakları, ödeme, teslim ve cayma koşulları bu sözleşmede yazılıdır.</p>
+    <p>Bu metin örnektir; kurulumda işletmenize göre hazırlanmış metinle değişir.</p>
+  </div>
+</dialog>
+
+<script src="../assets/site.js?v=8" defer></script>
+</body>
+</html>
