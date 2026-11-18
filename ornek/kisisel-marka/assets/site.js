@@ -1093,3 +1093,168 @@
   /* head'deki yedek: bu satıra gelinmezse giriş hareketi kaldırılır, kartlar görünür kalır */
   window.meHazir = true;
 })();
+
+/* ---------- genel sayfalar: süzgeç, iletişim formu, çalışma saati (genel_sayfa.py) ----------
+   Hakkımda, Yazılımlar, Blog ve İletişim sayfaları; ana sayfada bu öğeler yok, kod bir şey yapmaz.
+   Form demo: bilgiler hiçbir yere gönderilmez, yalnız doğrulanır ve "Mesajınız alındı" gösterilir
+   (WordPress'te form eklentisine ya da e-postaya bağlanacak). */
+(function () {
+  'use strict';
+
+  function dizi(l) { return Array.prototype.slice.call(l); }
+
+  /* ---------- süzgeç: düğmeler [data-suzgec] grubunda, öğeler data-suzgec-oge="<ad>" ve data-etiket="a b".
+     JS yoksa düğme grubu gizli kalır, bütün kartlar görünür. Ok tuşları düğmeler arasında gezer. ---------- */
+  dizi(document.querySelectorAll('[data-suzgec]')).forEach(function (grup) {
+    var ad = grup.getAttribute('data-suzgec');
+    var birim = grup.getAttribute('data-birim') || '';
+    var durum = document.getElementById(grup.getAttribute('data-durum'));
+    var dugmeler = dizi(grup.querySelectorAll('button[data-deger]'));
+    var ogeler = dizi(document.querySelectorAll('[data-suzgec-oge="' + ad + '"]'));
+    var kumeler = dizi(document.querySelectorAll('[data-suzgec-grup="' + ad + '"]'));
+    if (!dugmeler.length || !ogeler.length) return;
+
+    function uygula(secili) {
+      var deger = secili.getAttribute('data-deger');
+      var n = 0;
+      dugmeler.forEach(function (b) { b.setAttribute('aria-pressed', b === secili ? 'true' : 'false'); });
+      ogeler.forEach(function (o) {
+        var uyar = !deger || (' ' + o.getAttribute('data-etiket') + ' ').indexOf(' ' + deger + ' ') > -1;
+        o.hidden = !uyar;
+        if (uyar) n++;
+      });
+      kumeler.forEach(function (k) { k.hidden = !k.querySelector('[data-suzgec-oge]:not([hidden])'); });
+      if (durum) durum.textContent = (deger ? secili.textContent + ': ' : '') + n + ' ' + birim;
+    }
+
+    dugmeler.forEach(function (b, i) {
+      b.addEventListener('click', function () { uygula(b); });
+      b.addEventListener('keydown', function (e) {
+        var n = dugmeler.length, h = null;
+        if (e.key === 'ArrowRight') h = dugmeler[(i + 1) % n];
+        else if (e.key === 'ArrowLeft') h = dugmeler[(i + n - 1) % n];
+        else if (e.key === 'Home') h = dugmeler[0];
+        else if (e.key === 'End') h = dugmeler[n - 1];
+        if (h) { e.preventDefault(); h.focus(); }
+      });
+    });
+    grup.hidden = false;
+    uygula(dugmeler.filter(function (b) { return b.getAttribute('aria-pressed') === 'true'; })[0] || dugmeler[0]);
+  });
+
+  /* ---------- iletişim formu: ad soyad, telefon, hizmet, mesaj, KVKK onayı ---------- */
+  var adres = new URLSearchParams(location.search);
+  dizi(document.querySelectorAll('.if-form')).forEach(function (form) {
+    var kutu = form.parentNode;
+    var tamam = kutu.querySelector('.if-tamam');
+    var tamamYazi = kutu.querySelector('.if-tamam-yazi');
+    var yeni = kutu.querySelector('.if-yeni');
+    var el = form.elements;
+    if (!tamam || !tamamYazi || !el.ad || !el.telefon || !el.kvkk) return;
+
+    function hata(alan, goster) {
+      var g = el[alan];
+      var h = document.getElementById(g.id + '-hata');
+      if (!h) return;
+      h.hidden = !goster;
+      var kap = g.closest('.alan');
+      if (kap) kap.classList.toggle('gecersiz', goster);
+      if (goster) {
+        g.setAttribute('aria-invalid', 'true');
+        g.setAttribute('aria-describedby', h.id);
+      } else {
+        g.removeAttribute('aria-invalid');
+        g.removeAttribute('aria-describedby');
+      }
+    }
+
+    /* başka sayfadan gelince (?hizmet=...&mesaj=...) hizmet seçili, mesaj yazılı gelir */
+    var hizmet = adres.get('hizmet');
+    if (hizmet && el.hizmet && dizi(el.hizmet.options).some(function (o) { return o.value === hizmet; })) el.hizmet.value = hizmet;
+    var mesaj = adres.get('mesaj');
+    if (mesaj && el.mesaj && !el.mesaj.value) {
+      el.mesaj.value = mesaj.slice(0, 1000);
+      form._otoMesaj = el.mesaj.value;
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var adSoyad = el.ad.value.trim();
+      var tel = el.telefon.value.replace(/\D/g, '');
+      var adHata = adSoyad.length < 2;
+      var telHata = tel.length < 10 || tel.length > 13;
+      var kvkkHata = !el.kvkk.checked;
+      hata('ad', adHata);
+      hata('telefon', telHata);
+      hata('kvkk', kvkkHata);
+      var ilk = adHata ? el.ad : telHata ? el.telefon : kvkkHata ? el.kvkk : null;
+      if (ilk) { ilk.focus(); return; }
+      tamamYazi.textContent = 'Teşekkürler ' + adSoyad.split(/\s+/)[0] + '. Size ' + el.telefon.value.trim() +
+        ' numarası üzerinden dönüş yapılacak; hafta içi gelen mesajlara aynı gün dönülür.';
+      form.hidden = true;
+      tamam.hidden = false;
+      tamam.focus();
+    });
+    ['ad', 'telefon'].forEach(function (a) {
+      el[a].addEventListener('input', function () { if (el[a].getAttribute('aria-invalid')) hata(a, false); });
+    });
+    el.kvkk.addEventListener('change', function () { if (el.kvkk.checked) hata('kvkk', false); });
+    if (yeni) {
+      yeni.addEventListener('click', function () {
+        form.reset();
+        form._otoMesaj = '';
+        tamam.hidden = true;
+        form.hidden = false;
+        el.ad.focus();
+      });
+    }
+  });
+
+  /* sayfadaki forma giden bağlantılar (iletişim kartları, "WhatsApp'tan yazın") mesajı yazar;
+     kişinin kendi yazdığı mesajın üstüne yazılmaz */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"][data-mesaj]');
+    if (!a) return;
+    var hedef = document.getElementById(a.getAttribute('href').slice(1));
+    var form = hedef && hedef.querySelector('.if-form');
+    if (!form || !form.elements.mesaj) return;
+    var m = form.elements.mesaj;
+    if (m.value.trim() && m.value !== form._otoMesaj) return;
+    m.value = a.getAttribute('data-mesaj');
+    form._otoMesaj = m.value;
+  });
+
+  /* ---------- çalışma saati: İstanbul saatine göre "Şu an açık / kapalı" (saatler kutunun niteliklerinde) ---------- */
+  dizi(document.querySelectorAll('[data-saat]')).forEach(function (kutu) {
+    var yer = kutu.querySelector('[data-saat-durum]');
+    if (!yer || !window.Intl) return;
+    var gunler = (kutu.getAttribute('data-gunler') || '1-5').split('-').map(Number);
+    function dakika(s) { var p = s.split(':'); return Number(p[0]) * 60 + Number(p[1]); }
+    var acilis = dakika(kutu.getAttribute('data-acilis') || '09:00');
+    var kapanis = dakika(kutu.getAttribute('data-kapanis') || '18:00');
+    var parca = {};
+    try {
+      new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Istanbul', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
+        .formatToParts(new Date()).forEach(function (p) { parca[p.type] = p.value; });
+    } catch (hataNesnesi) {
+      return; /* saat dilimi desteklenmiyorsa durum gösterilmez, saat listesi yine görünür */
+    }
+    var gun = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(parca.weekday);
+    var simdi = Number(parca.hour) * 60 + Number(parca.minute);
+    var acik = gun >= gunler[0] && gun <= gunler[1] && simdi >= acilis && simdi < kapanis;
+    yer.textContent = acik ? 'Şu an açık' : 'Şu an kapalı';
+    yer.classList.toggle('acik', acik);
+    yer.hidden = false;
+  });
+
+  /* ---------- telefonda alt şerit form ekrandayken çekilir (gönder düğmesini kapatmasın) ---------- */
+  var hizli = document.querySelector('.hizli');
+  var kutular = dizi(document.querySelectorAll('.if-kutu'));
+  if (hizli && kutular.length && 'IntersectionObserver' in window) {
+    var gozcu = new IntersectionObserver(function (girdiler) {
+      girdiler.forEach(function (g) { g.target._ekranda = g.isIntersecting; });
+      hizli.classList.toggle('gs-gizli', kutular.some(function (k) { return k._ekranda; }));
+    });
+    kutular.forEach(function (k) { gozcu.observe(k); });
+  }
+})();
