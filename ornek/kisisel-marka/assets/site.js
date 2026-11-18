@@ -7,6 +7,9 @@
   var genis = window.matchMedia('(min-width: 1080px)');
   var fareli = window.matchMedia('(hover: hover) and (pointer: fine)');
   var kok = document.documentElement;
+  /* sahne fotoğrafları sitenin kökündeki img/ klasöründe; iç sayfalarda da aynı yer */
+  var betik = document.currentScript;
+  var IMG = betik && betik.src ? new URL('../img/', betik.src).href : 'img/';
 
   var SEKTOR = {
     sanayi: {
@@ -175,7 +178,7 @@
   function akis(s) {
     return '<div class="akis">' +
       '<div class="akis-bas"><span class="avatar" data-k="harf">' + esc(harf()) + '</span><p class="akis-ad"><b>' + slotHTML() + '</b><small>Sponsorlu</small></p>' + IK.ucNokta + '</div>' +
-      '<img class="akis-foto" src="img/' + s.foto + '-akis.webp" alt="" width="960" height="1200" loading="lazy" decoding="async" draggable="false">' +
+      '<img class="akis-foto" src="' + IMG + s.foto + '-akis.webp" alt="" width="960" height="1200" loading="lazy" decoding="async" draggable="false">' +
       '<div class="akis-cta"><span>' + esc(s.akisCta) + '</span>' + IK.ok + '</div>' +
       '<div class="akis-eylem">' + IK.kalp + IK.yorum + IK.gonder + '<span class="bosluk"></span>' + IK.kaydet + '</div>' +
       '<p class="akis-metin"><b data-k="handle">' + esc(slug()) + '</b> ' + esc(s.akisMetin) + '</p>' +
@@ -185,7 +188,7 @@
 
   function hikaye(s) {
     return '<div class="hikaye">' +
-      '<img class="hikaye-foto" src="img/' + s.foto + '-dikey.webp" alt="" width="720" height="1280" loading="lazy" decoding="async" draggable="false">' +
+      '<img class="hikaye-foto" src="' + IMG + s.foto + '-dikey.webp" alt="" width="720" height="1280" loading="lazy" decoding="async" draggable="false">' +
       '<div class="hikaye-cubuk"><span></span><span></span><span></span></div>' +
       '<div class="hikaye-bas"><span class="avatar" data-k="harf">' + esc(harf()) + '</span><p><b>' + slotHTML() + '</b><small>Sponsorlu</small></p></div>' +
       '<div class="hikaye-alt"><p class="hikaye-metin">' + esc(s.akisMetin) + '</p><span class="hikaye-cta">' + esc(s.akisCta) + '</span></div>' +
@@ -194,7 +197,7 @@
 
   function video(s) {
     return '<div class="video">' +
-      '<img class="video-foto" src="img/' + s.foto + '-dikey.webp" alt="" width="720" height="1280" loading="lazy" decoding="async" draggable="false">' +
+      '<img class="video-foto" src="' + IMG + s.foto + '-dikey.webp" alt="" width="720" height="1280" loading="lazy" decoding="async" draggable="false">' +
       '<div class="video-ilerleme"><span></span></div>' +
       '<div class="video-yan">' +
         '<span class="avatar avatar-video"><span data-k="harf">' + esc(harf()) + '</span><i>+</i></span>' +
@@ -210,6 +213,27 @@
     '</div>';
   }
 
+  /* TikTok arama sonuçları: aynı akış reklamı aramada da "Sponsorlu" olarak çıkar
+     (TikTok Ads yardım sayfası, Automatic Search Placement: akış reklamları arama sonuçlarına uzanır, küresel).
+     Öbür sonuçlar aynı sektör fotoğrafının soluk kırpımları ve yazısız iskelet; yeni metin ya da sayı yok.
+     Yalnız iki sütunlu geniş düzende görünür. */
+  function ttArama(s) {
+    function diger(dosya, konum) {
+      return '<div class="tta-oge tta-diger"><span class="tta-kapak"><img src="' + IMG + s.foto + dosya + '" alt="" width="960" height="1200" loading="lazy" decoding="async" draggable="false" style="object-position:' + konum + '"></span><span class="isk isk-b"></span><span class="isk isk-a"></span></div>';
+    }
+    return '<div class="tta">' +
+      '<div class="tta-ust">' + IK.geri + '<span class="tta-kutu">' + IK.mercek + '<span class="tta-sorgu" data-sorgu="' + esc(s.sorgu) + '">' + esc(s.sorgu) + '</span></span></div>' +
+      '<div class="tta-sekme"><span class="isk"></span><span class="isk"></span><span class="isk"></span></div>' +
+      '<div class="tta-izgara">' +
+        '<div class="tta-oge tta-reklam">' +
+          '<span class="tta-kapak"><img src="' + IMG + s.foto + '-dikey.webp" alt="" width="720" height="1280" loading="lazy" decoding="async" draggable="false"><span class="video-sponsor">Sponsorlu</span></span>' +
+          '<p class="tta-metin">' + esc(s.videoMetin) + '</p>' +
+          '<p class="tta-ad"><span class="avatar" data-k="harf">' + esc(harf()) + '</span><span data-k="handle">' + esc(slug()) + '</span></p>' +
+        '</div>' + diger('-akis.webp', '50% 30%') + diger('-yatay.webp', '20% 50%') + diger('-yatay.webp', '85% 50%') +
+      '</div>' +
+    '</div>';
+  }
+
   function sohbet(s) {
     return '<div class="ys ys-soh">' +
       '<div class="soh-akis">' +
@@ -218,7 +242,7 @@
         '<div class="soh-reklam">' +
           '<p class="soh-etiket"><span>Sponsorlu</span>' + IK.ucNokta + '</p>' +
           '<div class="soh-satir">' +
-            '<img class="soh-gorsel" src="img/' + s.foto + '-akis.webp" alt="" width="960" height="1200" loading="lazy" decoding="async" draggable="false">' +
+            '<img class="soh-gorsel" src="' + IMG + s.foto + '-akis.webp" alt="" width="960" height="1200" loading="lazy" decoding="async" draggable="false">' +
             '<div class="soh-yazi"><p class="soh-marka"><span class="fav" data-k="harf">' + esc(harf()) + '</span>' + slotHTML() + '</p>' +
             '<p class="soh-baslik">' + esc(s.reklamBaslik) + '</p><p class="soh-metin">' + esc(s.reklamMetin) + '</p></div>' +
           '</div>' +
@@ -234,7 +258,7 @@
       '<div class="t-ust"><span class="t-geri">' + IK.geri + IK.ileri + '</span><span class="t-adres">' + IK.kilit + '<span data-k="alan">' + esc(alan()) + '</span></span></div>' +
       '<div class="t-site">' +
         '<div class="ts-menu"><span class="ts-logo">' + slotHTML() + '</span><span class="ts-linkler">' + w.menu.map(function (m) { return '<span>' + esc(m) + '</span>'; }).join('') + '</span><span class="ts-cta">' + esc(w.cta) + '</span></div>' +
-        '<div class="ts-hero"><img src="img/' + s.foto + '-yatay.webp" alt="" width="1600" height="1000" loading="lazy" decoding="async" draggable="false"><div class="ts-hero-ic"><p class="ts-baslik">' + esc(w.baslik) + '</p><span class="ts-dugme">' + esc(w.cta) + '</span></div></div>' +
+        '<div class="ts-hero"><img src="' + IMG + s.foto + '-yatay.webp" alt="" width="1600" height="1000" loading="lazy" decoding="async" draggable="false"><div class="ts-hero-ic"><p class="ts-baslik">' + esc(w.baslik) + '</p><span class="ts-dugme">' + esc(w.cta) + '</span></div></div>' +
         '<div class="ts-bilgi">' + w.bilgi.map(function (b) { return '<span>' + esc(b) + '</span>'; }).join('') + '</div>' +
       '</div>' +
     '</div>';
@@ -370,7 +394,15 @@
     }
     if (y === 'sohbet') cevapAk(kap, function () { fareGotur(kap, '.soh-baslik', 0); });
     if (y === 'akis') fareGotur(kap, '.akis-cta span', 450);
-    if (y === 'video') fareGotur(kap, '.video-cta', 500);
+    if (y === 'video') {
+      fareGotur(kap, '.video-cta', 500);
+      var tta = kap.querySelector('.tta');
+      var ttaSorgu = kap.querySelector('.tta-sorgu');
+      if (tta && ttaSorgu && tta.offsetWidth) {
+        tta.classList.add('bekle');
+        yaz(ttaSorgu, ttaSorgu.getAttribute('data-sorgu'), 250, function () { tta.classList.remove('bekle'); });
+      }
+    }
     /* site önizlemesi baştan görünür: adres yazılırken tarayıcı boş beyaz kalmaz */
     if (y === 'web') {
       var adres = kap.querySelector('.t-adres [data-k="alan"]');
@@ -396,7 +428,7 @@
   var SAHNE = {
     arama: function (s) { return '<div class="gorsel gorsel-yuzen">' + arama(s) + '</div>'; },
     akis: function (s) { return '<div class="gorsel gorsel-akis"><div class="kart kart-akis">' + akis(s) + '</div><div class="kart kart-hikaye">' + hikaye(s) + '</div></div>'; },
-    video: function (s) { return '<div class="gorsel gorsel-video"><div class="kart">' + video(s) + '</div></div>'; },
+    video: function (s) { return '<div class="gorsel gorsel-video"><div class="kart">' + video(s) + '</div><div class="kart kart-tta">' + ttArama(s) + '</div></div>'; },
     sohbet: function (s) { return '<div class="gorsel gorsel-yuzen gorsel-soh">' + sohbet(s) + '</div>'; },
     seo: function (s) { return '<div class="gorsel gorsel-yuzen">' + seo(s) + '</div>'; },
     web: function (s) { return '<div class="gorsel gorsel-web">' + siteOnizleme(s) + '</div>'; }
@@ -411,21 +443,25 @@
   var N = kanallar.length;
   var aktif = 0;
 
-  function sahneCiz(i, ilk) {
-    if (!sahne) return;
-    var y = YUZEYLER[i];
+  /* bir sahne kutusuna yeni katman: eskisi solarak çıkar, yenisi girer ve hareketi başlar (ana sayfa ve iç sayfa) */
+  function katmanCiz(kap, y, ilk) {
     var yeni = document.createElement('div');
     yeni.className = 'katman' + (ilk || azalt ? '' : ' gir');
     yeni.innerHTML = SAHNE[y](sek()) + (azalt ? '' : FARE);
-    Array.prototype.slice.call(sahne.children).forEach(function (eski) {
+    Array.prototype.slice.call(kap.children).forEach(function (eski) {
       /* zaten çıkan katmanın silme sırası bozulmaz; hızlı geçişte katman birikmez */
       if (eski.classList.contains('cik')) return;
       eski.classList.add('cik');
       [eski].concat(Array.prototype.slice.call(eski.querySelectorAll('*'))).forEach(function (el) { if (el._zaman) clearTimeout(el._zaman); });
       eski._sil = setTimeout(function () { if (eski.parentNode) eski.parentNode.removeChild(eski); }, azalt ? 0 : 500);
     });
-    sahne.appendChild(yeni);
+    kap.appendChild(yeni);
     hareketBaslat(yeni, y);
+  }
+
+  function sahneCiz(i, ilk) {
+    if (!sahne) return;
+    katmanCiz(sahne, YUZEYLER[i], ilk);
   }
 
   function kanalCubugaKaydir(b) {
@@ -433,6 +469,50 @@
     var hedef = b.getBoundingClientRect().left - kanalKap.getBoundingClientRect().left + kanalKap.scrollLeft - (kanalKap.clientWidth - b.offsetWidth) / 2;
     try { kanalKap.scrollTo({ left: Math.max(0, hedef), behavior: azalt ? 'auto' : 'smooth' }); }
     catch (e) { kanalKap.scrollLeft = Math.max(0, hedef); }
+  }
+
+  /* geniş ekranda soldaki kanal bilgisi: başlık kanal düğmesinin adı; alt başlık, üç madde ve "detaylı bilgi"
+     o kanalın hizmet kartından kopyalanır, metin tek yerde durur. Eskisi solar, yenisi sahneyle birlikte girer. */
+  var vitrinKanal = document.getElementById('vitrin-kanal');
+  function solCiz(i, ilk) {
+    /* firma adı ya da sektör değişince sahne yeniden oynar; kanal aynıysa soldaki metin yerinde kalır */
+    if (!vitrinKanal || (vitrinKanal._kanal === i && !ilk)) return;
+    vitrinKanal._kanal = i;
+    var b = kanallar[i];
+    var kart = document.getElementById(b.getAttribute('data-kart'));
+    var parca = kart ? [kart.querySelector('.hizmet-ad'), kart.querySelector('.hizmet-alt'), kart.querySelector('.hizmet-madde'), kart.querySelector('.hizmet-detay')] : [];
+    var ic = null;
+    if (parca.length && parca.every(Boolean)) {
+      ic = document.createElement('div');
+      ic.className = 'vs-ic' + (ilk || azalt ? '' : ' gir');
+      var ad = document.createElement('p');
+      ad.className = 'vs-ad';
+      ad.textContent = b.querySelector('.kanal-ad').textContent;
+      var alt = document.createElement('p');
+      alt.className = 'vs-alt';
+      alt.textContent = parca[1].textContent;
+      var madde = parca[2].cloneNode(true);
+      madde.className = 'vs-madde';
+      var dugmeler = document.createElement('div');
+      dugmeler.className = 'vs-dugmeler';
+      var detay = parca[3].cloneNode(true);
+      detay.className = 'dugme dugme-turuncu';
+      var teklif = document.createElement('a');
+      teklif.className = 'dugme dugme-koyu-cizgi';
+      teklif.href = '#iletisim';
+      teklif.setAttribute('data-hizmet', parca[0].textContent);
+      teklif.textContent = 'Teklif al';
+      dugmeler.appendChild(detay);
+      dugmeler.appendChild(teklif);
+      [ad, alt, madde, dugmeler].forEach(function (el) { ic.appendChild(el); });
+    }
+    Array.prototype.slice.call(vitrinKanal.children).forEach(function (eski) {
+      if (eski.classList.contains('cik')) return;
+      eski.classList.add('cik');
+      eski.inert = true;
+      setTimeout(function () { if (eski.parentNode) eski.parentNode.removeChild(eski); }, azalt ? 0 : 300);
+    });
+    if (ic) vitrinKanal.appendChild(ic);
   }
 
   function goster(i, kullanici, ilk) {
@@ -444,6 +524,7 @@
     if (vitrin) vitrin.style.setProperty('--kanal-renk', YUZEY_RENK[i]);
     if (sahneOzet && kullanici) sahneOzet.textContent = KANAL_AD[i] + ': ' + OZET[i];
     sahneCiz(i, ilk);
+    solCiz(i, ilk);
     kanalCubugaKaydir(kanallar[i]);
   }
 
@@ -462,7 +543,7 @@
     clearTimeout(otoZaman);
     if (!vitrin) return;
     vitrin.classList.remove('oynuyor');
-    var calisiyor = !(durduruldu || odakta || !gorunur || document.hidden);
+    var calisiyor = !(durduruldu || odakta || !gorunur || document.hidden || document.querySelector('dialog[open]'));
     if (!calisiyor) return;
     var t = bekle || SURELER[aktif] || SURE;
     vitrin.style.setProperty('--sure', t + 'ms');
@@ -544,6 +625,43 @@
     }
     document.addEventListener('visibilitychange', function () { otoKur(); });
   }
+
+  /* ---------- iç sayfa başı: sayfanın kanalındaki önizleme aynı kodla oynar, bitince baştan ----------
+     Sahne sayfa verisinden gelir (data-sahne). Ekran dışında, sekme gizliyken ve durdurulunca döngü bekler;
+     hareket azaltmada son hâli bir kez çizilir, durdur düğmesi gizlenir. */
+  var DONGU_EK = 1000;
+  Array.prototype.slice.call(document.querySelectorAll('.sahne[data-sahne]')).forEach(function (kap) {
+    var y = kap.getAttribute('data-sahne');
+    var sira = YUZEYLER.indexOf(y);
+    if (sira < 0) return;
+    var kutu = kap.parentNode;
+    var dur = kutu.querySelector('.sb-dur');
+    var durdu = false, gorunurK = true, zaman = null;
+    function kur() {
+      clearTimeout(zaman);
+      if (azalt || durdu || !gorunurK || document.hidden) return;
+      zaman = setTimeout(function () { katmanCiz(kap, y); kur(); }, SURELER[sira] + DONGU_EK);
+    }
+    katmanCiz(kap, y, true);
+    if (dur) {
+      if (azalt) dur.hidden = true;
+      dur.addEventListener('click', function () {
+        durdu = !durdu;
+        dur.setAttribute('aria-pressed', durdu ? 'true' : 'false');
+        kutu.classList.toggle('durdu', durdu);
+        kur();
+      });
+    }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (g) {
+        var once = gorunurK;
+        gorunurK = g[0].intersectionRatio >= 0.25;
+        if (gorunurK !== once) kur();
+      }, { threshold: [0, 0.25] }).observe(kap);
+    }
+    document.addEventListener('visibilitychange', kur);
+    kur();
+  });
 
   /* ---------- firma adı ve sektör ---------- */
   var girdi = document.getElementById('firma-adi');
@@ -822,6 +940,8 @@
       var donus = d._donus;
       d._donus = null;
       if (donus) donus.focus();
+      /* pencere açıkken duran geçiş kaldığı yerden sürer */
+      otoKur();
     });
     /* pencere içindeki "teklif al" bağlantısı pencereyi kapatıp forma gider */
     d.querySelectorAll('a[href^="#"]').forEach(function (a) {
@@ -899,11 +1019,26 @@
     });
   }
 
-  /* ---------- ekrana girişler: kart ızgaraları ve süreç çizgisi ---------- */
+  /* ---------- iç sayfa süreç kartları: artı düğmesi adımın gününü ve tam açıklamasını açar ---------- */
+  document.querySelectorAll('.sk-arti').forEach(function (b) {
+    var panel = document.getElementById(b.getAttribute('aria-controls'));
+    var kart = b.closest('.sk');
+    if (!panel || !kart) return;
+    b.addEventListener('click', function () {
+      var ac = b.getAttribute('aria-expanded') !== 'true';
+      b.setAttribute('aria-expanded', ac ? 'true' : 'false');
+      panel.hidden = !ac;
+      kart.classList.toggle('acik', ac);
+    });
+  });
+
+  /* ---------- ekrana girişler: kart ızgaraları, süreç çizgisi ve iç sayfa çizimleri ---------- */
   var izlenenler = Array.prototype.slice.call(document.querySelectorAll('.giris-izgara, .adimlar'));
   izlenenler.forEach(function (iz) {
     Array.prototype.slice.call(iz.children).forEach(function (c, i) { c.style.setProperty('--s', i % 3); });
   });
+  /* her çizim kendi kartı ekrana girince bir kez canlanır (telefonda kaydırmalı sırada kart görünür olunca) */
+  var cizimler = Array.prototype.slice.call(document.querySelectorAll('.cizim'));
   if (!azalt && 'IntersectionObserver' in window) {
     var gozcu = new IntersectionObserver(function (girdiler) {
       girdiler.forEach(function (g) {
@@ -912,7 +1047,7 @@
         gozcu.unobserve(g.target);
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-    izlenenler.forEach(function (iz) { gozcu.observe(iz); });
+    izlenenler.concat(cizimler).forEach(function (iz) { gozcu.observe(iz); });
   } else {
     kok.classList.remove('hareket');
     izlenenler.forEach(function (iz) { iz.classList.add('hazir'); });
