@@ -18,6 +18,7 @@
       baslik: '{F} | CNC İşleme ve Fason Üretim | 48 Saatte Fiyat',
       aciklama: 'Teknik resminizi gönderin, 48 saat içinde fiyat verelim. Tek parçadan seri üretime <b>CNC işleme</b> ve <b>fason üretim</b>.',
       baglanti: ['Teklif iste', 'Makine parkı', 'Referanslar', 'İletişim'],
+      rakipler: ['CNC Torna ve Freze İşleme | Hızlı Fiyat Teklifi', 'Fason CNC Parça Üretimi | Prototip ve Seri', 'CNC İşleme Hizmeti | Teknik Resme Göre Üretim'],
       akisMetin: 'Tek parça prototipten 10.000 adetlik seriye. Teknik resminizi gönderin, 48 saatte fiyatlayalım.',
       akisCta: 'Teklif al',
       videoMetin: 'Bu parça 6 saatte tezgâhtan çıktı. Sizinkini de gönderin.',
@@ -38,6 +39,7 @@
       baslik: '{F} | El Yapımı Kanvas Sneaker | Aynı Gün Kargo',
       aciklama: 'Yerli üretim kanvas, el dikişi taban. <b>Sneaker</b> modellerinde 30 gün ücretsiz değişim, 2.000 TL üzeri kargo bizden.',
       baglanti: ['Yeni sezon', 'Beden rehberi', 'Kargo ve iade', 'Mağazalar'],
+      rakipler: ['Kanvas Sneaker Modelleri | Ücretsiz Kargo', 'Yeni Sezon Sneaker | Kapıda Ödeme', 'Kadın ve Erkek Sneaker | Sezon İndirimi'],
       akisMetin: 'Yeni sezon kutudan çıktı. Siyah kanvas, beyaz kauçuk taban, el dikişi.',
       akisCta: 'Alışverişe başla',
       videoMetin: 'Bir siparişin paketlenişi, baştan sona 40 saniye.',
@@ -58,6 +60,7 @@
       baslik: '{F} | YKS Hazırlık | 12 Kişilik Sınıflar',
       aciklama: 'Haftalık deneme sınavı, birebir rehberlik ve etüt. Kayıttan önce ücretsiz seviye belirleme sınavıyla <b>YKS hazırlık</b> programınızı planlayın.',
       baglanti: ['Programlar', 'Deneme sınavı', 'Ücretler', 'Şubeler'],
+      rakipler: ['YKS Hazırlık Kursu | Kadıköy Şubesi', 'Birebir YKS Koçluğu | Ücretsiz Deneme Dersi', 'TYT ve AYT Hazırlık | Erken Kayıt'],
       akisMetin: 'Sınava 7 ay var. Seviye belirleme sınavı ücretsiz, sonucu aynı gün.',
       akisCta: 'Kayıt ol',
       videoMetin: 'Bir YKS öğrencisinin haftası: 3 deneme, 2 etüt, 1 birebir görüşme.',
@@ -78,6 +81,7 @@
       baslik: '{F} | Denize Sıfır Butik Otel | Erken Rezervasyon',
       aciklama: 'Koya bakan 24 oda, sonsuzluk havuzu, kahvaltı dahil. Fethiye <b>butik otel</b> erken rezervasyonunda ön ödeme yok.',
       baglanti: ['Odalar', 'Fiyatlar', 'Galeri', 'Konum'],
+      rakipler: ['Fethiye Otelleri | En Uygun Fiyatlar', 'Ölüdeniz Butik Otel | Online Rezervasyon', 'Fethiye Tatil Fırsatları | Erken Rezervasyon'],
       akisMetin: 'Sabah 8\'de havuz böyle. 2027 yazı için erken rezervasyon açıldı.',
       akisCta: 'Rezervasyon yap',
       videoMetin: 'Odadan koya 30 adım.',
@@ -160,6 +164,10 @@
         '<p class="ys-baslik">' + yerlestir(s.baslik) + '</p>' +
         '<p class="ys-aciklama">' + s.aciklama + '</p>' +
         '<p class="ys-baglanti">' + s.baglanti.map(function (b) { return '<span>' + esc(b) + '</span>'; }).join('') + '</p>' +
+        /* aynı aramada çıkan öbür üç reklam: adları gri çubuk (gerçek firma adı yok), sırayla belirir */
+        '<div class="ys-rakipler">' + s.rakipler.map(function (b, i) {
+          return '<div class="ys-rakip" style="--i:' + i + '"><div class="ys-kaynak"><span class="fav"></span><span class="ys-rad"><i class="isk"></i><i class="isk"></i></span></div><p class="ys-rbaslik">' + esc(b) + '</p></div>';
+        }).join('') + '</div>' +
       '</div>' +
     '</div>';
   }
@@ -389,7 +397,7 @@
       yaz(sorgu, sorgu.getAttribute('data-sorgu'), 150, function () {
         ys.classList.remove('bekle');
         if (y === 'seo') siraTirman(kap.querySelector('.sira'), function () { fareGotur(kap, '.sira-firma .sira-baslik', 100); });
-        else fareGotur(kap, '.ys-baslik', 200);
+        else fareGotur(kap, '.ys-baslik', kap.querySelector('.ys-rakip') ? 1000 : 200);
       });
     }
     if (y === 'sohbet') cevapAk(kap, function () { fareGotur(kap, '.soh-baslik', 0); });
@@ -530,8 +538,9 @@
 
   /* kendiliğinden geçiş: fare üstündeyken de sürer; klavye odağında, ekran dışında ve sekme gizliyken durur */
   var SURE = 3000;
-  /* sahne başına süre: imleç reklama tıkladıktan sonra yaklaşık 1 sn daha görünür (arama, akış, video, sohbet, seo, web) */
-  var SURELER = [3000, 2400, 2500, 2800, 3700, 2600];
+  /* sahne başına süre: imleç reklama tıkladıktan sonra yaklaşık 1 sn daha görünür (arama, akış, video, sohbet, seo, web);
+     aramada üç rakip reklam da oturduğu için 1 sn daha uzun */
+  var SURELER = [4000, 2400, 2500, 2800, 3700, 2600];
   var ELLE_SURE = 8000;
   var durduruldu = azalt;
   var odakta = false, gorunur = true;
@@ -1030,6 +1039,62 @@
       panel.hidden = !ac;
       kart.classList.toggle('acik', ac);
     });
+  });
+
+  /* ---------- blog şeridi (Murat 19.11 "bloga hareket"): oklarla ve birkaç saniyede bir kendiliğinden bir kart kayar.
+     Üstüne gelince, içinde odak varken, dokunulunca, ekran dışındayken ve sekme arkadayken bekler; durdur düğmesiyle
+     ya da hareket azaltma açıksa hiç kaymaz. Sonda ileri basılınca başa, başta geri basılınca sona döner. ---------- */
+  document.querySelectorAll('[data-serit]').forEach(function (serit) {
+    var iz = serit.querySelector('.blog-kaydir');
+    if (!iz) return;
+    var onceki = serit.querySelector('.serit-onceki');
+    var sonraki = serit.querySelector('.serit-sonraki');
+    var dur = serit.querySelector('.serit-dur');
+    var SURE = 4500;
+    var durdu = azalt;
+    var gorunur = false;
+    var ustunde = false;
+    var odakta = false;
+    var zaman = null;
+    function adim() {
+      var k = iz.firstElementChild;
+      var ara = parseFloat(getComputedStyle(iz).columnGap) || 0;
+      return k ? k.getBoundingClientRect().width + ara : iz.clientWidth;
+    }
+    function kaydir(yon) {
+      var son = iz.scrollWidth - iz.clientWidth;
+      if (son <= 2) return;
+      var hedef = iz.scrollLeft + yon * adim();
+      if (yon > 0 && iz.scrollLeft >= son - 4) hedef = 0;
+      else if (yon < 0 && iz.scrollLeft <= 4) hedef = son;
+      try { iz.scrollTo({ left: hedef, behavior: azalt ? 'auto' : 'smooth' }); } catch (e) { iz.scrollLeft = hedef; }
+    }
+    function calis() {
+      clearTimeout(zaman);
+      if (durdu || !gorunur || ustunde || odakta || document.hidden) return;
+      zaman = setTimeout(function () { kaydir(1); calis(); }, SURE);
+    }
+    function durumYaz() {
+      if (!dur) return;
+      dur.setAttribute('aria-pressed', durdu ? 'true' : 'false');
+    }
+    if (onceki) onceki.addEventListener('click', function () { kaydir(-1); calis(); });
+    if (sonraki) sonraki.addEventListener('click', function () { kaydir(1); calis(); });
+    if (dur) dur.addEventListener('click', function () { durdu = !durdu; durumYaz(); calis(); });
+    /* fare kartların üstündeyken bekler; düğmelerin üstündeyken beklemez (başlat'a basınca hemen kayar) */
+    iz.addEventListener('mouseenter', function () { ustunde = true; calis(); });
+    iz.addEventListener('mouseleave', function () { ustunde = false; calis(); });
+    /* klavyeyle kartlara girilince kayma durur; ok ve durdur düğmelerindeki odak kaymayı durdurmaz */
+    serit.addEventListener('focusin', function (e) { odakta = !e.target.closest('.s-dugme'); calis(); });
+    serit.addEventListener('focusout', function (e) { if (!serit.contains(e.relatedTarget)) { odakta = false; calis(); } });
+    /* elle kaydırma (dokunma, tekerlek): sayaç baştan başlar */
+    iz.addEventListener('pointerdown', calis, { passive: true });
+    iz.addEventListener('wheel', calis, { passive: true });
+    document.addEventListener('visibilitychange', calis);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (g) { gorunur = g[0].isIntersecting; calis(); }, { threshold: 0.35 }).observe(iz);
+    }
+    durumYaz();
   });
 
   /* ---------- ekrana girişler: kart ızgaraları, süreç çizgisi ve iç sayfa çizimleri ---------- */
