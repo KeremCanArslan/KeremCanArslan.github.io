@@ -645,6 +645,7 @@ h2 {
 /* iç sayfadaki tür kartı gibi: üstte hizmetin çizimi, adın solunda platformun kendi logosu (Murat 19.11) */
 .hizmet > :not(.hz-ekran) { margin-left: 20px; margin-right: 20px; }
 .hz-ekran { margin-bottom: 24px; }
+.hizmet.hz-sade { padding-top: 30px; }
 .hz-tas { flex: none; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px; background: var(--turuncu); color: var(--murekkep); }
 .hz-tas .ik { width: 22px; height: 22px; }
 .hz-tas.hz-logo { background: var(--kagit); box-shadow: inset 0 0 0 1px var(--cizgi); }
@@ -674,6 +675,7 @@ a.hizmet-detay { display: inline-flex; align-items: center; justify-content: cen
   @media (min-width: 640px) {
     .hizmet-izgara { grid-auto-rows: auto; }
     .hizmet { display: grid; grid-row: span 6; grid-template-rows: subgrid; row-gap: 0; }
+    .hizmet.hz-sade { grid-row: span 5; }
     .hizmet-detay { align-self: end; }
   }
 }
@@ -1568,6 +1570,7 @@ a.ref-ekran { display: block; }
   .hizmet { padding: 10px 10px 24px; }
   .hizmet > :not(.hz-ekran) { margin-left: 14px; margin-right: 14px; }
   .hz-ekran { margin-bottom: 20px; }
+  .hizmet.hz-sade { padding-top: 24px; }
   .hizmet-madde { display: none; }
   .paket-sekme { padding: 0 16px; font-size: 14.5px; }
   .paket-kim { min-height: 0; }
