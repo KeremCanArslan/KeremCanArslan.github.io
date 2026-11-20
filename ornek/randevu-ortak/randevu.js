@@ -5,6 +5,8 @@
 'use strict';
 const C = window.ISLETME;
 const Z = C.soz;
+const MG = !!C.mobilGorunum; // true: telefon görünümü 'uygulama' diye anılmaz
+const T = (uyg, mob) => MG ? mob : uyg;
 const APP = new URLSearchParams(location.search).has('app');
 const KEY = C.anahtar;
 const IMG = (id, w) => 'https://images.unsplash.com/photo-' + id + '?w=' + (w || 900) + '&q=62&auto=format&fit=crop';
@@ -91,7 +93,7 @@ function tohumla(d){
   const n = Math.min(420, ADLAR.length * HARF.length), M = Array.from({length: n}, (_, i) => ADLAR[i % ADLAR.length] + ' ' + HARF[Math.floor(i / ADLAR.length) % HARF.length] + '.');
   const on = ['0532','0533','0535','0536','0538','0542','0543','0544','0505','0506','0552','0555'];
   const tel = i => on[i % on.length] + ' ' + String(100 + (i * 337) % 900) + ' ' + pad((i * 53 + 17) % 100) + ' ' + pad((i * 29 + 41) % 100);
-  const kaynak = () => { const x = r(); return x < .3 ? 'Site' : x < .47 ? 'Uygulama' : x < .64 ? 'Instagram' : x < .88 ? 'Telefon' : 'WhatsApp'; };
+  const kaynak = () => { const x = r(); return x < .3 ? 'Site' : x < .47 ? T('Uygulama', 'Site') : x < .64 ? 'Instagram' : x < .88 ? 'Telefon' : 'WhatsApp'; };
   const odeme = () => { const x = r(); return x < .56 ? 'Kart' : x < .95 ? 'Nakit' : 'Havale'; };
   const ilk2 = acikGunler(2);
   C.uzmanlar.forEach(u => { if (u.mola) ilk2.forEach(k => d.kapali.push({id: 'k' + (++d.sayac), gun: k, uzman: u.ad, bas: u.mola[0], bit: u.mola[1], neden: 'Öğle arası'})); });
@@ -204,7 +206,7 @@ function siteIskelet(){
   <button class="menuBtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav">Menü</button>
   <nav id="nav">
     <a href="#hizmetler">Hizmetler</a><a href="#ekip">${esc(Z.ekipMenu)}</a><a href="#randevu">Randevu</a><a href="#galeri">${esc(Z.isletme)}</a><a href="#iletisim">İletişim</a>
-    <a class="v" href="#uygulama" data-v="uygulama">Mobil uygulama</a><a class="v" href="#panel" data-v="panel">${esc(Z.panel)}</a>
+    <a class="v" href="#uygulama" data-v="uygulama">${T('Mobil uygulama', 'Mobil görünüm')}</a><a class="v" href="#panel" data-v="panel">${esc(Z.panel)}</a>
   </nav>
 </div></header>
 <main id="v-site">
@@ -217,7 +219,7 @@ function siteIskelet(){
     <div class="hbilgi"><div><b>Çalışma saatleri</b>${esc(C.saat.gunMetin)} <span class="hSaat"></span></div><div><b>Adres</b>${esc(C.adresKisa)}</div><div><b>Telefon</b>${esc(C.telefon)}</div></div>
   </div></section>
   <section class="bolum" id="hizmetler"><div class="wrap">
-    <div class="bbas"><div class="ust">Hizmetler</div><h2>Hizmetler ve fiyatlar</h2><p>Fiyatlar ${esc(Z.panelden)} güncellenir; burada ve uygulamada hep aynı fiyat görünür.</p></div>
+    <div class="bbas"><div class="ust">Hizmetler</div><h2>Hizmetler ve fiyatlar</h2><p>Fiyatlar ${esc(Z.panelden)} güncellenir; ${T('burada ve uygulamada', 'bilgisayarda ve telefonda')} hep aynı fiyat görünür.</p></div>
     <div class="hiz"><div class="foto"><img id="katFoto" alt=""></div><div><div class="katlar" id="katlar"></div><div id="hizListe"></div></div></div>
   </div></section>
   <section class="bolum beyaz" id="ekip"><div class="wrap">
@@ -256,22 +258,22 @@ function siteIskelet(){
 </main>
 <section id="v-uygulama" hidden><div class="wrap uyg">
   <div>
-    <div class="ust">Mobil uygulama</div>
+    <div class="ust">${T('Mobil uygulama', 'Mobil görünüm')}</div>
     <h1>${esc(Z.uygBaslik)}</h1>
-    <p>Yandaki telefon gerçekten çalışıyor: hizmet seçip randevu alabilir, Randevularım sekmesinden görebilir ve iptal edebilirsiniz. Uygulamadan alınan randevu da siteden alınan gibi ${esc(Z.paneline)} düşer.</p>
+    <p>Yandaki telefon gerçekten çalışıyor: hizmet seçip randevu alabilir, Randevularım sekmesinden görebilir ve iptal edebilirsiniz. ${T('Uygulamadan alınan randevu da siteden alınan gibi', 'Telefondan alınan randevu da bilgisayardan alınan gibi')} ${esc(Z.paneline)} düşer.</p>
     <div class="ozel">
       <div><b>Randevu al</b>Hizmet, ${esc(Z.uzmanKucuk)}, gün ve boş saat seçilir; dolu saatler görünmez.</div>
       <div><b>Randevularım</b>Müşteri yaklaşan randevusunu görür, gelemeyecekse kendisi iptal eder, o saat yeniden açılır.</div>
-      <div><b>${esc(Z.isletme)} bilgileri</b>Fiyatlar, kampanya, adres ve çalışma saatleri tek yerde. Telefonun ana ekranına uygulama gibi eklenir.</div>
+      <div><b>${esc(Z.isletme)} bilgileri</b>Fiyatlar, kampanya, adres ve çalışma saatleri tek yerde. ${T('Telefonun ana ekranına uygulama gibi eklenir.', 'Telefonun ana ekranına eklenir, simgesine dokununca tam ekran açılır.')}</div>
     </div>
     <div class="btns"><a class="btn" href="#panel">${esc(Z.paneline.charAt(0).toLocaleUpperCase('tr-TR') + Z.paneline.slice(1))} geç</a><a class="btn cizgi" href="?app=1" target="_blank" rel="noopener">Tam ekran aç</a></div>
   </div>
-  <div class="telefon"><iframe id="uygCerceve" title="Mobil uygulama örneği" loading="lazy"></iframe></div>
+  <div class="telefon"><iframe id="uygCerceve" title="${T('Mobil uygulama örneği', 'Mobil görünüm örneği')}" loading="lazy"></iframe></div>
 </div></section>
 <section id="v-panel" hidden><div class="pnl"><div class="wrap">
   <div class="pust">
-    <div><div class="ust">${esc(Z.panel)}</div><h1 id="pBaslik">Takvim</h1><p class="pnot">Bu bölümü yalnızca siz görürsünüz, şifreyle girilir. Müşteriniz siteden ya da uygulamadan randevu alınca burada anında görünür.</p></div>
-    <div class="btns" style="margin-top:0"><a class="btn cizgi kucuk" href="#randevu">Siteden randevu al</a><a class="btn cizgi kucuk" href="#uygulama">Uygulamadan randevu al</a></div>
+    <div><div class="ust">${esc(Z.panel)}</div><h1 id="pBaslik">Takvim</h1><p class="pnot">Bu bölümü yalnızca siz görürsünüz, şifreyle girilir. Müşteriniz ${T('siteden ya da uygulamadan', 'bilgisayardan ya da telefondan')} randevu alınca burada anında görünür.</p></div>
+    <div class="btns" style="margin-top:0"><a class="btn cizgi kucuk" href="#randevu">Siteden randevu al</a><a class="btn cizgi kucuk" href="#uygulama">${T('Uygulamadan randevu al', 'Telefondan randevu al')}</a></div>
   </div>
   <div class="psekme" id="pSekme" role="tablist"></div>
   <div id="pIc"></div>
@@ -344,7 +346,7 @@ function siteOzet(){
   o.innerHTML = `<h3>Randevu özeti</h3><dl><dt>Hizmet</dt><dd>${h ? esc(h.ad) : '-'}</dd><dt>${esc(Z.uzman)}</dt><dd>${esc(u || (S.uzman === 'farketmez' ? 'Fark etmez' : S.uzman))}</dd><dt>Gün</dt><dd>${S.gun ? gunUzun(S.gun) : '-'}</dd><dt>Saat</dt><dd>${S.saat || '-'}</dd><dt>Süre</dt><dd>${h ? h.dk + ' dakika' : '-'}</dd></dl>
     <div class="top"><span>Ücret</span><span>${h ? tl(h.fiyat) : '-'}</span></div>
     <button class="btn" id="rGonder" type="button">Randevuyu gönder</button><div class="hata" id="rHata"></div>
-    <p class="not">Ödeme ${esc(Z.isletmede)} yapılır. Gelemeyecekseniz uygulamadan ya da telefonla iptal edebilirsiniz.</p>`;
+    <p class="not">Ödeme ${esc(Z.isletmede)} yapılır. Gelemeyecekseniz ${T('uygulamadan', 'siteden')} ya da telefonla iptal edebilirsiniz.</p>`;
 }
 function siteHepsi(){ siteUst(); siteHizmetler(); siteEkip(); siteRandevu(); }
 function rehberGoster(){
@@ -474,7 +476,7 @@ function mYeniCiz(){
     if (!M.bit || saat2dk(M.bit) <= saat2dk(M.bas)) M.bit = dk2saat(Math.min(saat2dk(M.bas) + 60, kp));
     modalAc(ust + `<div class="iki"><label>Başlangıç<select id="kBas">${ops.slice(0, -1).map(s => `<option${s === M.bas ? ' selected' : ''}>${s}</option>`).join('')}</select></label><label>Bitiş<select id="kBit">${ops.filter(s => saat2dk(s) > saat2dk(M.bas)).map(s => `<option${s === M.bit ? ' selected' : ''}>${s}</option>`).join('')}</select></label></div>
       <label>Neden<select id="kNeden">${['Mola', 'Öğle arası', 'İzin', 'Kişisel iş', 'Diğer'].map(x => `<option${x === M.neden ? ' selected' : ''}>${x}</option>`).join('')}</select></label>
-      <p class="bos">Kapatılan saat sitede ve uygulamada dolu görünür, o saate randevu alınamaz.</p>
+      <p class="bos">Kapatılan saat ${T('sitede ve uygulamada', 'sitede')} dolu görünür, o saate randevu alınamaz.</p>
       <button class="btn" type="button" data-kkaydet>Saati kapat</button><div class="hata" id="yHata"></div></div>`);
   }
 }
@@ -522,7 +524,7 @@ function mDetay(id){
 function mKapali(id){
   const d = veri(), x = d.kapali.find(k => k.id === id); if (!x) return;
   M = {tur: 'kapali', id};
-  modalAc(`<div class="ust">${gunUzun(x.gun)}</div><h3>${x.bas} - ${x.bit} kapalı</h3><p class="bos">${esc(x.uzman)} · ${esc(x.neden)}. Bu aralık sitede ve uygulamada dolu görünüyor.</p><div class="btns"><button class="btn" type="button" data-kac="${x.id}">Saati yeniden aç</button></div>`);
+  modalAc(`<div class="ust">${gunUzun(x.gun)}</div><h3>${x.bas} - ${x.bit} kapalı</h3><p class="bos">${esc(x.uzman)} · ${esc(x.neden)}. Bu aralık ${T('sitede ve uygulamada', 'sitede')} dolu görünüyor.</p><div class="btns"><button class="btn" type="button" data-kac="${x.id}">Saati yeniden aç</button></div>`);
 }
 function mHatirlat(){
   const d = veri(), b = bugunK(), yarin = acikGunler(2).find(g => g > b) || gunEkle(b, 1);
@@ -677,7 +679,7 @@ function pRapor(d){
   const enYog = yog.reduce((a, x) => x.v > a.v ? x : a, yog[0] || {v: 0, e: '-'});
   $('pIc').innerHTML = `
     <p class="bos" style="margin:-4px 0 14px">Son 30 gün (${gunEtiket(bas)} - bugün). Rakamlar kasadaki adisyonlardan ve takvimdeki randevulardan kendiliğinden hesaplanır.</p>
-    <div class="sayilar">${tile(tl(ciro), 'Ciro · ' + tam.length + ' adisyon')}${tile(randevulu.length, 'Randevu')}${tile('%' + Math.round(randevulu.length ? online / randevulu.length * 100 : 0), 'Online gelen (site, uygulama, Instagram)')}${tile('%' + Math.round(kapanan ? gelmedi / kapanan * 100 : 0), 'Gelmeyen müşteri')}</div>
+    <div class="sayilar">${tile(tl(ciro), 'Ciro · ' + tam.length + ' adisyon')}${tile(randevulu.length, 'Randevu')}${tile('%' + Math.round(randevulu.length ? online / randevulu.length * 100 : 0), T('Online gelen (site, uygulama, Instagram)', 'Online gelen (site, Instagram)'))}${tile('%' + Math.round(kapanan ? gelmedi / kapanan * 100 : 0), 'Gelmeyen müşteri')}</div>
     <div class="kutu"><h3>Günlük ciro</h3><p class="bos">Son 14 günün açık günleri; sütunun üstüne gelince tutar görünür.</p>${sutunGrafik(gunCiro, kisaTl)}</div>
     <div class="parca">
       <div class="kutu"><h3>En çok tercih edilen hizmetler</h3><p class="bos">Tamamlanan işlem sayısı</p>${yatayGrafik(topH.map(([a, n]) => ({e: a, v: n, m: n + ' kez', ip: a + ': ' + n + ' kez, ' + Math.round(n / Math.max(tam.length, 1) * 100) + '%'})))}</div>
@@ -693,13 +695,13 @@ function pAyar(d){
   $('pIc').innerHTML = `<div class="parca" style="margin-top:0">
     <div class="kutu"><h3>Randevu kuralları</h3>
       <label class="anahtar" style="margin:10px 0 4px"><input type="checkbox" id="sOto"${d.ayar.otoOnay ? ' checked' : ''}> Gelen randevuları otomatik onayla</label>
-      <p class="bos">Kapalıyken siteden ve uygulamadan gelen randevu önce "Onay bekliyor" olarak düşer, siz onaylarsınız.</p>
+      <p class="bos">Kapalıyken ${T('siteden ve uygulamadan', 'siteden')} gelen randevu önce "Onay bekliyor" olarak düşer, siz onaylarsınız.</p>
       <div class="iki" style="margin-top:14px"><label>Açılış<select id="sAc">${sOps(7 * 60, 12 * 60, d.ayar.acilis)}</select></label><label>Kapanış<select id="sKp">${sOps(17 * 60, 23 * 60, d.ayar.kapanis)}</select></label></div>
       <p class="bos" style="margin-top:6px">${esc(C.saat.kapaliMetin)} kapalı. Saat değişince sitedeki boş saatler hemen güncellenir.</p>
       <div class="adim" style="margin:16px 0 8px"><b>${esc(Z.uzman)} primleri</b>${C.uzmanlar.map(u => `<div class="ay-sat" style="grid-template-columns:1fr 110px"><span>${esc(u.ad)}</span><label style="display:flex;align-items:center;gap:6px">%<input type="number" min="0" max="100" step="1" data-prim="${esc(u.ad)}" value="${d.ayar.prim[u.ad]}" aria-label="${esc(u.ad)} prim oranı"></label></div>`).join('')}</div>
       <button class="btn" type="button" data-skaydet style="width:100%">Ayarları kaydet</button><div class="hata" id="sHata"></div>
     </div>
-    <div class="kutu"><h3>Hizmetler, süreler ve fiyatlar</h3><p class="bos">Değiştirip kaydedin; sitede, uygulamada ve takvimde hemen güncellenir.</p>
+    <div class="kutu"><h3>Hizmetler, süreler ve fiyatlar</h3><p class="bos">Değiştirip kaydedin; ${T('sitede, uygulamada', 'sitede')} ve takvimde hemen güncellenir.</p>
       <div class="ay-kap">${C.kategoriler.map(k => `<div class="ay-sat kb"><span>${esc(k.ad)}</span><span>Süre</span><span>Fiyat</span></div>` + d.hizmetler.filter(h => h.kat === k.k).map(h => `<div class="ay-sat"><span>${esc(h.ad)}</span><select data-hdk="${h.id}" aria-label="${esc(h.ad)} süresi">${sureler.concat(sureler.includes(h.dk) ? [] : [h.dk]).sort((a, b) => a - b).map(s => `<option value="${s}"${s === h.dk ? ' selected' : ''}>${s} dk</option>`).join('')}</select><input type="number" min="0" step="10" inputmode="numeric" data-hf="${h.id}" value="${h.fiyat}" aria-label="${esc(h.ad)} fiyatı"></div>`).join('')).join('')}</div>
       <button class="btn" type="button" data-hkaydet style="width:100%">Hizmetleri kaydet</button>
     </div></div>
@@ -720,7 +722,7 @@ function hizmetKaydet(){
   document.querySelectorAll('[data-hf]').forEach(i => { const v = Math.round(Number(i.value)), h = hizmetBul(d, i.dataset.hf); if (i.value === '' || !Number.isFinite(v) || v < 0) hata = true; else if (h) h.fiyat = v; });
   if (hata) { toast('Fiyat alanları boş ya da eksi olamaz'); return; }
   document.querySelectorAll('[data-hdk]').forEach(s => { const h = hizmetBul(d, s.dataset.hdk); if (h) h.dk = Number(s.value); });
-  yaz(d); siteHepsi(); toast('Hizmetler sitede ve uygulamada güncellendi');
+  yaz(d); siteHepsi(); toast(T('Hizmetler sitede ve uygulamada güncellendi', 'Hizmetler sitede güncellendi'));
 }
 
 /* ---- panel olayları ---- */
@@ -828,7 +830,7 @@ function app(){
       <div class="a-bolum">Hizmetler</div>
       <div class="a-kats">${C.kategoriler.map(k => `<button type="button" data-akat="${k.k}"><img src="${IMG(k.foto, 400)}" alt=""><span>${esc(k.ad)}</span></button>`).join('')}</div>
       <div class="a-bolum">${esc(Z.isletme)}</div>
-      <div class="a-kart"><p><b style="color:var(--ink)">${esc(C.adresKisa)}</b><br>${esc(C.saat.gunMetin)} ${saatMetin(d)} · ${esc(C.saat.kapaliMetin)} kapalı</p><div class="a-iki"><button class="btn cizgi kucuk" data-bilgi="Gerçek uygulamada ${esc(Z.isletmeKucuk)} aranır" type="button">Ara</button><button class="btn wa kucuk" data-bilgi="Gerçek uygulamada WhatsApp açılır" type="button">WhatsApp</button></div></div>`;
+      <div class="a-kart"><p><b style="color:var(--ink)">${esc(C.adresKisa)}</b><br>${esc(C.saat.gunMetin)} ${saatMetin(d)} · ${esc(C.saat.kapaliMetin)} kapalı</p><div class="a-iki"><button class="btn cizgi kucuk" data-bilgi="${T('Gerçek uygulamada', 'Gerçek sitede')} ${esc(Z.isletmeKucuk)} aranır" type="button">Ara</button><button class="btn wa kucuk" data-bilgi="${T('Gerçek uygulamada', 'Gerçek sitede')} WhatsApp açılır" type="button">WhatsApp</button></div></div>`;
   }
   if (A.t === 'al') {
     const h = hizmetBul(d, A.hizmet), uz = h ? C.uzmanlar.filter(u => u.kat.includes(h.kat)) : [];
@@ -850,7 +852,7 @@ function app(){
   }
   if (A.t === 'benim') {
     const l = benimler(d);
-    ic.innerHTML = `<h2 class="a-baslik">Randevularım</h2>` + (l.length ? l.map(r => `<div class="a-rdv${r.gecmis || r.durum === 'iptal' ? ' gecmis' : ''}"><div class="ust2"><b>${gunUzun(r.gun)} · ${r.saat}</b><span class="etiket ${r.durum}">${DURUM[r.durum]}</span></div><p>${esc(hizmetAd(d, r))} · ${esc(r.uzman)} · ${tl(r.fiyat)}</p>${!r.gecmis && (r.durum === 'onay' || r.durum === 'bekliyor') ? `<div class="a-iki"><button class="btn cizgi kucuk" data-aiptal="${r.id}" type="button">İptal et</button><button class="btn cizgi kucuk" data-bilgi="Gerçek uygulamada ${esc(Z.isletmenin)} konumu haritada açılır" type="button">Yol tarifi</button></div>` : ''}</div>`).join('')
+    ic.innerHTML = `<h2 class="a-baslik">Randevularım</h2>` + (l.length ? l.map(r => `<div class="a-rdv${r.gecmis || r.durum === 'iptal' ? ' gecmis' : ''}"><div class="ust2"><b>${gunUzun(r.gun)} · ${r.saat}</b><span class="etiket ${r.durum}">${DURUM[r.durum]}</span></div><p>${esc(hizmetAd(d, r))} · ${esc(r.uzman)} · ${tl(r.fiyat)}</p>${!r.gecmis && (r.durum === 'onay' || r.durum === 'bekliyor') ? `<div class="a-iki"><button class="btn cizgi kucuk" data-aiptal="${r.id}" type="button">İptal et</button><button class="btn cizgi kucuk" data-bilgi="${T('Gerçek uygulamada', 'Gerçek sitede')} ${esc(Z.isletmenin)} konumu haritada açılır" type="button">Yol tarifi</button></div>` : ''}</div>`).join('')
       : `<div class="a-kart"><h3>Henüz randevunuz yok</h3><p>Aldığınız randevular burada görünür, ${esc(Z.isletmeKucuk)} onaylayınca durumu değişir.</p><button class="btn kucuk" data-git="al" type="button">Randevu al</button></div>`);
   }
 }
@@ -872,7 +874,7 @@ function appKur(){
     if (i) { const d = veri(), r = d.randevular.find(x => x.id === i.dataset.aiptal); if (r) { r.durum = 'iptal'; yaz(d); app(); toast('Randevunuz iptal edildi'); } return; }
     if (e.target.id === 'aGonder') {
       const d = veri(), ad = d.profil ? d.profil.ad : ($('aAd2') || {}).value, tel = d.profil ? d.profil.tel : ($('aTel2') || {}).value;
-      const sonuc = rezerve({hizmet: A.hizmet, uzman: A.uzman, gun: A.gun, saat: A.saat, ad, tel, kaynak: 'Uygulama'});
+      const sonuc = rezerve({hizmet: A.hizmet, uzman: A.uzman, gun: A.gun, saat: A.saat, ad, tel, kaynak: T('Uygulama', 'Site')});
       if (sonuc.hata) { if (/doldu/.test(sonuc.hata)) { A.saat = ''; app(); } $('aHata2').textContent = sonuc.hata; return; }
       A.saat = ''; A.hizmet = ''; A.t = 'benim'; app(); scrollTo(0, 0); toast(sonuc.r.durum === 'onay' ? 'Randevunuz onaylandı' : 'Randevunuz alındı, ' + Z.isletmeKucuk + ' onaylayınca bildirilir');
     }
