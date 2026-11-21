@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Canlı fiyat testi</title>
+<link rel="icon" href="data:,">
+<style>
+  :root {
+    --zemin: #f4f5f7;
+    --kart: #ffffff;
+    --yazi: #111418;
+    --soluk: #5f6873;
+    --cizgi: #e3e6ea;
+    --yesil: #0a8f5a;
+    --kirmizi: #d1343b;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--zemin); color: var(--yazi); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .sayfa { max-width: 1440px; margin: 0 auto; padding: 16px; }
+  .ust { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+  .ust h1 { font-size: 18px; margin: 0; font-weight: 650; }
+  .ara { display: flex; gap: 8px; align-items: center; }
+  .ara label { color: var(--soluk); font-size: 14px; }
+  .ara input { width: 170px; padding: 9px 11px; border: 1px solid var(--cizgi); border-radius: 8px; font: inherit; background: var(--kart); text-transform: uppercase; }
+  .ara input:focus { outline: 2px solid #2b6cb0; outline-offset: 1px; }
+  .izgara { display: grid; grid-template-columns: 260px 1fr 300px; gap: 14px; align-items: stretch; }
+  .kart { background: var(--kart); border: 1px solid var(--cizgi); border-radius: 10px; padding: 14px; }
+  .kart h2 { font-size: 14px; font-weight: 600; color: var(--soluk); margin: 0 0 10px; }
+  .funding-satir { padding: 10px 0; border-top: 1px solid var(--cizgi); }
+  .funding-satir:first-of-type { border-top: 0; padding-top: 0; }
+  .borsa { font-weight: 600; }
+  .oran { font-size: 22px; font-weight: 650; font-variant-numeric: tabular-nums; }
+  .ek { color: var(--soluk); font-size: 13px; }
+  .arti { color: var(--yesil); }
+  .eksi { color: var(--kirmizi); }
+  .grafik { padding: 0; overflow: hidden; min-height: 560px; display: flex; flex-direction: column; }
+  .grafik .tradingview-widget-container { flex: 1; min-height: 520px; }
+  .grafik-not { padding: 8px 12px; font-size: 13px; color: var(--soluk); border-top: 1px solid var(--cizgi); }
+  .fiyat-kutu .sembol { font-weight: 600; }
+  .fiyat { font-size: 40px; line-height: 1.1; font-weight: 700; font-variant-numeric: tabular-nums; margin: 8px 0 4px; transition: color .25s; letter-spacing: -.5px; word-break: break-all; }
+  .fiyat.yukari { color: var(--yesil); transition: none; }
+  .fiyat.asagi { color: var(--kirmizi); transition: none; }
+  .olcum { margin-top: 16px; border-top: 1px solid var(--cizgi); padding-top: 12px; }
+  .olcum div { display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; font-size: 14px; }
+  .olcum b { font-variant-numeric: tabular-nums; font-weight: 600; }
+  .durum::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #9aa3ad; margin-right: 6px; vertical-align: 1px; }
+  .durum.bagli::before { background: var(--yesil); }
+  .durum.kopuk::before { background: var(--kirmizi); }
+  .aciklama { margin-top: 14px; font-size: 13px; color: var(--soluk); }
+  .alt { margin-top: 14px; font-size: 12px; color: var(--soluk); }
+  .sol { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  .ab { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px; font-size: 14px; color: var(--soluk); }
+  .ab b { color: var(--yazi); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .az { margin-top: 8px; font-size: 12px; color: var(--soluk); }
+  .teyp { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+  .teyp th { text-align: left; font-weight: 500; color: var(--soluk); font-size: 12px; padding: 0 0 6px; }
+  .teyp td { padding: 3px 0; border-top: 1px solid var(--cizgi); white-space: nowrap; }
+  .teyp th:nth-child(n+2), .teyp td:nth-child(n+2) { text-align: right; }
+  .teyp tr.yeni td { background: #eef6f1; }
+  .karsilastir { display: inline-block; margin-top: 14px; font-size: 14px; font-weight: 600; color: #1d5fa8; text-decoration: none; }
+  .karsilastir:hover { text-decoration: underline; }
+  .karsilastir + .aciklama { margin-top: 4px; }
+  .bolum { display: flex; align-items: baseline; justify-content: space-between; gap: 8px 16px; flex-wrap: wrap; margin: 22px 0 10px; }
+  .bolum h2 { font-size: 16px; margin: 0; font-weight: 650; }
+  .izgara2 { display: grid; grid-template-columns: 340px 1fr; gap: 14px; align-items: start; }
+  .sm-satir { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--cizgi); }
+  .sm-satir:first-child { border-top: 0; padding-top: 0; }
+  .sm-satir .sayi { font-size: 20px; font-weight: 650; font-variant-numeric: tabular-nums; }
+  .rozet { font-size: 13px; font-weight: 600; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+  .rozet.eksi { background: #fdecee; }
+  .rozet.arti { background: #e7f5ee; }
+  .top30 th:nth-child(2), .top30 td:nth-child(2), .top30 th:first-child, .top30 td:first-child { text-align: left; }
+  .top30 td:first-child { color: var(--soluk); width: 30px; }
+  .top30 tbody tr { cursor: pointer; }
+  .top30 tbody tr:hover td { background: #f3f5f8; }
+  .top30 td.ters { color: var(--kirmizi); font-weight: 600; }
+  #bildirimler { position: fixed; right: 16px; bottom: 16px; display: flex; flex-direction: column; gap: 8px; z-index: 50; max-width: calc(100vw - 32px); }
+  .bildirim { background: #111418; color: #fff; padding: 11px 15px; border-radius: 8px; font-size: 14px; box-shadow: 0 6px 20px rgba(0, 0, 0, .18); }
+  @media (max-width: 900px) { .izgara2 { grid-template-columns: 1fr; } }
+  @media (max-width: 1100px) {
+    .izgara { grid-template-columns: 1fr 1fr; }
+    .grafik { grid-column: 1 / -1; grid-row: 2; }
+  }
+  @media (max-width: 640px) {
+    .sayfa { padding: 12px; }
+    .izgara { grid-template-columns: 1fr; }
+    .grafik { grid-row: auto; min-height: 440px; }
+    .grafik .tradingview-widget-container { min-height: 400px; }
+    .fiyat-kutu { order: -1; }
+    .fiyat { font-size: 34px; }
+    .ara input { width: 140px; }
+  }
+</style>
+</head>
+<body>
+<div class="sayfa">
+  <div class="ust">
+    <h1>Canlı fiyat testi</h1>
+    <form class="ara" id="araForm" autocomplete="off">
+      <label for="coin">Coin</label>
+      <input id="coin" list="coinListe" value="BTC" spellcheck="false" aria-label="Coin ara">
+      <datalist id="coinListe"></datalist>
+    </form>
+  </div>
+
+  <div class="izgara">
+    <div class="sol">
+      <section class="kart" aria-label="Funding oranları">
+        <h2>Funding</h2>
+        <div class="funding-satir">
+          <div class="borsa">Binance</div>
+          <div class="oran" id="fBinance">–</div>
+          <div class="ek" id="fBinanceEk">&nbsp;</div>
+        </div>
+        <div class="funding-satir">
+          <div class="borsa">MEXC</div>
+          <div class="oran" id="fMexc">–</div>
+          <div class="ek" id="fMexcEk">&nbsp;</div>
+        </div>
+      </section>
+
+      <section class="kart" aria-label="Son işlemler">
+        <h2>Son işlemler · Binance vadeli</h2>
+        <table class="teyp">
+          <thead><tr><th>Saat</th><th>Fiyat</th><th>Gecikme</th></tr></thead>
+          <tbody id="teyp"><tr><td colspan="3" class="ek">bekleniyor</td></tr></tbody>
+        </table>
+      </section>
+    </div>
+
+    <section class="kart grafik" aria-label="Grafik">
+      <div id="tvKap" class="tradingview-widget-container"></div>
+      <div class="grafik-not">Grafik TradingView'in ücretsiz sürümü, 1-4 saniye geriden gelir. Anlık fiyat yandaki kutuda.</div>
+    </section>
+
+    <section class="kart fiyat-kutu" aria-label="Anlık fiyat">
+      <h2>Anlık fiyat · Binance vadeli</h2>
+      <div class="sembol" id="sembol">BTCUSDT</div>
+      <div class="fiyat" id="fiyat" aria-live="off">–</div>
+      <div class="ek" id="sonIslem">&nbsp;</div>
+      <div class="ab"><span>Alış <b id="alis">–</b></span><span>Satış <b id="satis">–</b></span></div>
+      <div class="az" id="az" hidden>Bu kontratta işlem az, büyük fiyat ancak işlem olunca değişir. Alış ve satış fiyatı canlı.</div>
+      <div class="olcum">
+        <div><span>Borsadan ekrana</span><b id="gecikme">ölçülüyor</b></div>
+        <div><span>En hızlı / en yavaş</span><b id="gecikmeAralik">–</b></div>
+        <div><span>Son 1 dakikada işlem</span><b id="islemSay">–</b></div>
+        <div><span>Bağlantı</span><b class="durum" id="durum">bağlanıyor</b></div>
+      </div>
+      <p class="aciklama">Borsadan ekrana: işlemin ya da alış-satış fiyatındaki değişikliğin Binance'te olduğu andan bu ekranda görünmesine kadar geçen süre, son 1 dakikanın ortası. En hızlı ve en yavaş da son 1 dakikadan. Coin seçildikten sonraki ilk 5 saniye, grafik yüklenirken tarayıcı meşgul olduğu için sayılmaz. Bilgisayarın saati Binance saatine göre düzeltilir.</p>
+      <a class="karsilastir" id="binanceLink" href="https://www.binance.com/tr/futures/BTCUSDT" target="_blank" rel="noopener">Binance'in kendi ekranında aç ↗</a>
+      <p class="aciklama">İki pencereyi yan yana koyun, fiyat ikisinde aynı anda değişir.</p>
+    </section>
+  </div>
+
+  <div class="bolum">
+    <h2>Abone menüsündeki veriler: terste kalanlar ve Top 30</h2>
+    <span class="ek" id="smDurum">Binance Smart Money verisi yükleniyor</span>
+  </div>
+  <div class="izgara2">
+    <section class="kart" aria-label="Seçilen coinde terste kalanlar">
+      <h2 id="smBaslik">Terste kalanlar</h2>
+      <div id="smCoin"><p class="ek">yükleniyor</p></div>
+    </section>
+    <section class="kart" aria-label="Top 30">
+      <h2>Top 30 · en çok terste kalan alt coinler (BTC ve ETH hariç)</h2>
+      <table class="teyp top30">
+        <thead><tr><th>#</th><th>Coin</th><th>Long</th><th>Short</th><th>Terste</th></tr></thead>
+        <tbody id="top30"><tr><td colspan="5" class="ek">yükleniyor</td></tr></tbody>
+      </table>
+    </section>
+  </div>
+
+  <p class="alt">Veri: Binance USDⓈ-M vadeli ve MEXC vadeli herkese açık canlı akışları, Binance Smart Money. Grafik: TradingView.</p>
+</div>
+<div id="bildirimler" aria-live="polite"></div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const BINANCE_WS = 'wss://fstream.binance.com/market/stream?streams=';
+  const BINANCE_PUBLIC_WS = 'wss://fstream.binance.com/public/stream?streams=';
+  const MEXC_WS = 'wss://contract.mexc.com/edge';
+  const ISINMA = 5000;         // coin seçilince grafik yüklenirken geçen ilk 5 sn ölçüme girmez
+  const SM_URL = 'https://www.binance.com/bapi/futures/v1/public/future/smart-money/signal/list?timeRange=ALL';
+  let tur = {}, tabanBul = {}, smVeri = null, fiyatlar = {}, top30Onceki = null;
+
+  let semboller = {};          // BTC -> {sym:'BTCUSDT', ondalik:1}
+  let aralik = {};             // BTCUSDT -> 8
+  let saatFarki = null;        // Binance saati - bilgisayar saati (ms)
+  let saatDenendi = false;
+  let aktif = null;            // {taban, sym, ondalik}
+  let bws = null, mws = null, mPing = null, yenidenB = null, yenidenM = null;
+  let pws = null, yenidenP = null;
+  let sonFiyat = null, oncekiFiyat = null, sonT = null, ciz = false;
+  let alis = null, satis = null, sonOrnek = 0, secimZamani = 0;
+  let olcumler = [], islemZaman = [], sonIslemler = [], teypDegisti = false;
+  let nesil = 0;
+
+  const fmt = (n, d) => new Intl.NumberFormat('tr-TR', { minimumFractionDigits: d, maximumFractionDigits: d }).format(n);
+  const yuzde = (r) => { const y = r * 100; const d = (y !== 0 && Math.abs(y) < 0.00005) ? 6 : 4; return (r > 0 ? '+' : '') + new Intl.NumberFormat('tr-TR', { minimumFractionDigits: 4, maximumFractionDigits: d }).format(y) + '%'; };
+  const saat = (ms) => new Date(ms).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+  const saatMs = (ms) => { const d = new Date(ms); return d.toLocaleTimeString('tr-TR') + ',' + String(d.getMilliseconds()).padStart(3, '0'); };
+  const ondalikBul = (tick) => { const s = String(tick).replace(/0+$/, ''); return s.includes('.') ? s.split('.')[1].length : 0; };
+
+  async function saatEsitle() {
+    let enIyi = null;
+    for (let i = 0; i < 5; i++) {
+      try {
+        const t0 = Date.now();
+        const r = await fetch('https://fapi.binance.com/fapi/v1/time', { cache: 'no-store' });
+        const j = await r.json();
+        const t1 = Date.now();
+        const rtt = t1 - t0;
+        if (!enIyi || rtt < enIyi.rtt) enIyi = { rtt, fark: j.serverTime - (t0 + t1) / 2 };
+      } catch (e) { console.warn('Binance saati alınamadı', e); }
+    }
+    if (enIyi) saatFarki = enIyi.fark;
+    saatDenendi = true;
+  }
+
+  async function listeYukle() {
+    const [bilgi, fon] = await Promise.all([
+      fetch('https://fapi.binance.com/fapi/v1/exchangeInfo').then(r => r.json()),
+      fetch('https://fapi.binance.com/fapi/v1/fundingInfo').then(r => r.json()).catch(() => [])
+    ]);
+    const dl = $('coinListe');
+    const secenekler = [];
+    for (const s of bilgi.symbols) {
+      if (s.contractType !== 'PERPETUAL' || s.quoteAsset !== 'USDT' || s.status !== 'TRADING') continue;
+      const tick = (s.filters.find(f => f.filterType === 'PRICE_FILTER') || {}).tickSize || '0.01';
+      semboller[s.baseAsset] = { taban: s.baseAsset, sym: s.symbol, ondalik: ondalikBul(tick) };
+      tur[s.symbol] = s.underlyingType; tabanBul[s.symbol] = s.baseAsset;
+      secenekler.push(s.baseAsset);
+    }
+    secenekler.sort();
+    dl.innerHTML = secenekler.map(b => `<option value="${b}"></option>`).join('');
+    for (const f of fon) aralik[f.symbol] = f.fundingIntervalHours;
+  }
+
+  function grafikKur(sym) {
+    const kap = $('tvKap');
+    kap.innerHTML = '<div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>';
+    const s = document.createElement('script');
+    s.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+    s.async = true;
+    s.textContent = JSON.stringify({
+      autosize: true, symbol: 'BINANCE:' + sym + '.P', interval: '1', timezone: 'Europe/Istanbul',
+      theme: 'light', style: '1', locale: 'tr', allow_symbol_change: false, hide_side_toolbar: false,
+      save_image: false, calendar: false, support_host: 'https://www.tradingview.com'
+    });
+    kap.appendChild(s);
+  }
+
+  function durum(metin, sinif) { const d = $('durum'); d.textContent = metin; d.className = 'durum ' + (sinif || ''); }
+
+  function binanceBagla(n) {
+    if (n !== nesil) return;
+    const k = aktif.sym.toLowerCase();
+    bws = new WebSocket(BINANCE_WS + k + '@aggTrade/' + k + '@markPrice@1s');
+    bws.onopen = () => { if (n === nesil) durum('bağlı', 'bagli'); };
+    bws.onmessage = (e) => {
+      if (n !== nesil) return;
+      const m = JSON.parse(e.data);
+      const d = m.data;
+      if (!d) return;
+      if (d.e === 'aggTrade') {
+        const simdi = Date.now();
+        sonFiyat = parseFloat(d.p); sonT = d.T;
+        const ms = saatFarki !== null ? simdi + saatFarki - d.T : null;
+        if (ms !== null && simdi - secimZamani >= ISINMA) olcumler.push({ z: simdi, ms });
+        islemZaman.push(simdi);
+        if (!sonIslemler.some(x => x.a === d.a)) {
+          sonIslemler.unshift({ a: d.a, T: d.T, p: sonFiyat, sat: d.m, ms, yeni: true });
+          if (sonIslemler.length > 10) sonIslemler.length = 10;
+          teypDegisti = true;
+        }
+        if (!ciz) { ciz = true; requestAnimationFrame(fiyatCiz); }
+      } else if (d.e === 'markPriceUpdate') {
+        const r = parseFloat(d.r);
+        const el = $('fBinance');
+        el.textContent = yuzde(r); el.className = 'oran ' + (r > 0 ? 'arti' : r < 0 ? 'eksi' : '');
+        const sa = aralik[aktif.sym] || 8;
+        $('fBinanceEk').textContent = sa + ' saatte bir · sonraki ödeme ' + saat(d.T);
+      }
+    };
+    bws.onclose = () => {
+      if (n !== nesil) return;
+      durum('yeniden bağlanıyor', 'kopuk');
+      clearTimeout(yenidenB); yenidenB = setTimeout(() => binanceBagla(n), 1500);
+    };
+    bws.onerror = () => bws.close();
+  }
+
+  function publicBagla(n) {
+    if (n !== nesil) return;
+    pws = new WebSocket(BINANCE_PUBLIC_WS + aktif.sym.toLowerCase() + '@bookTicker');
+    pws.onmessage = (e) => {
+      if (n !== nesil) return;
+      const d = JSON.parse(e.data).data;
+      if (!d || d.e !== 'bookTicker') return;
+      const simdi = Date.now();
+      alis = parseFloat(d.b); satis = parseFloat(d.a);
+      if (saatFarki !== null && simdi - sonOrnek >= 100 && simdi - secimZamani >= ISINMA) { sonOrnek = simdi; olcumler.push({ z: simdi, ms: simdi + saatFarki - d.T }); }
+      if (!ciz) { ciz = true; requestAnimationFrame(fiyatCiz); }
+    };
+    pws.onclose = () => {
+      if (n !== nesil) return;
+      clearTimeout(yenidenP); yenidenP = setTimeout(() => publicBagla(n), 1500);
+    };
+    pws.onerror = () => pws.close();
+  }
+
+  function oncekiIslemler(n, sym) {
+    fetch('https://fapi.binance.com/fapi/v1/aggTrades?symbol=' + sym + '&limit=10')
+      .then(r => r.json())
+      .then(liste => {
+        if (n !== nesil || !Array.isArray(liste)) return;
+        for (const t of liste) {
+          if (sonIslemler.some(x => x.a === t.a)) continue;
+          sonIslemler.push({ a: t.a, T: t.T, p: parseFloat(t.p), sat: t.m, ms: null, yeni: false });
+        }
+        sonIslemler.sort((x, y) => y.a - x.a);
+        if (sonIslemler.length > 10) sonIslemler.length = 10;
+        if (sonFiyat === null && sonIslemler.length) { sonFiyat = sonIslemler[0].p; sonT = sonIslemler[0].T; }
+        teypDegisti = true;
+        if (!ciz) { ciz = true; requestAnimationFrame(fiyatCiz); }
+      })
+      .catch(e => console.warn('Son işlemler alınamadı', e));
+  }
+
+  function teypCiz() {
+    teypDegisti = false;
+    const tb = $('teyp');
+    if (!sonIslemler.length) { tb.innerHTML = '<tr><td colspan="3" class="ek">bekleniyor</td></tr>'; return; }
+    tb.innerHTML = sonIslemler.map(x =>
+      `<tr${x.yeni ? ' class="yeni"' : ''}><td>${saatMs(x.T)}</td><td class="${x.sat ? 'eksi' : 'arti'}">${fmt(x.p, aktif.ondalik)}</td><td>${x.ms === null ? '–' : fmt(Math.max(0, Math.round(x.ms)), 0) + ' ms'}</td></tr>`
+    ).join('');
+    sonIslemler.forEach(x => { x.yeni = false; });
+  }
+
+  // Terste: anlık fiyat o tarafın ağırlıklı ortalama girişinin aleyhinde (long için altında, short için üstünde)
+  const terste = (x, f) => ({ long: x.longTraders > 0 && f < x.longAvgEntryPrice, short: x.shortTraders > 0 && f > x.shortAvgEntryPrice });
+
+  async function smYukle() {
+    try {
+      const [sm, pi] = await Promise.all([
+        fetch(SM_URL, { cache: 'no-store' }).then(r => r.json()),
+        fetch('https://fapi.binance.com/fapi/v1/premiumIndex', { cache: 'no-store' }).then(r => r.json())
+      ]);
+      if (!sm || !sm.success || !Array.isArray(sm.data) || !Array.isArray(pi)) throw new Error('Smart Money verisi beklenen biçimde değil');
+      fiyatlar = {};
+      for (const p of pi) fiyatlar[p.symbol] = parseFloat(p.markPrice);
+      smVeri = {};
+      for (const x of sm.data) smVeri[x.symbol] = x;
+      $('smDurum').textContent = 'Binance Smart Money · dakikada bir yenilenir · son güncelleme ' + new Date().toLocaleTimeString('tr-TR');
+      top30Ciz();
+      smCoinCiz();
+    } catch (e) {
+      console.warn('Smart Money verisi alınamadı', e);
+      $('smDurum').textContent = 'Binance Smart Money verisi alınamadı, 1 dakika sonra yeniden denenecek';
+    }
+  }
+
+  function top30Ciz() {
+    const satirlar = [];
+    for (const sym in smVeri) {
+      if (sym === 'BTCUSDT' || sym === 'ETHUSDT' || tur[sym] !== 'COIN' || !tabanBul[sym]) continue;
+      const f = fiyatlar[sym];
+      if (!f) continue;
+      const x = smVeri[sym], t = terste(x, f);
+      const say = (t.long ? x.longTraders : 0) + (t.short ? x.shortTraders : 0);
+      if (say > 0) satirlar.push({ sym, x, t, say });
+    }
+    satirlar.sort((a, b) => b.say - a.say);
+    const ilk = satirlar.slice(0, 30);
+    const simdiki = new Set(ilk.map(r => r.sym));
+    if (top30Onceki) for (const s of simdiki) if (!top30Onceki.has(s)) bildirim(s + ' top 30 listesine eklendi');
+    top30Onceki = simdiki;
+    $('top30').innerHTML = ilk.length ? ilk.map((r, i) =>
+      `<tr data-taban="${tabanBul[r.sym]}"><td>${i + 1}</td><td>${tabanBul[r.sym]}</td><td class="${r.t.long ? 'ters' : ''}">${fmt(r.x.longTraders, 0)}</td><td class="${r.t.short ? 'ters' : ''}">${fmt(r.x.shortTraders, 0)}</td><td>${r.t.long && r.t.short ? 'ikisi' : r.t.long ? 'long' : 'short'} · ${fmt(r.say, 0)}</td></tr>`
+    ).join('') : '<tr><td colspan="5" class="ek">veri yok</td></tr>';
+  }
+
+  function smCoinCiz() {
+    if (!aktif) return;
+    $('smBaslik').textContent = 'Terste kalanlar · ' + aktif.sym;
+    const x = smVeri && smVeri[aktif.sym];
+    const f = sonFiyat !== null ? sonFiyat : fiyatlar[aktif.sym];
+    if (!smVeri) return;
+    if (!x || !f) { $('smCoin').innerHTML = '<p class="ek">Bu coin için Binance Smart Money verisi yok.</p>'; return; }
+    const t = terste(x, f);
+    const satir = (ad, n, ort, ters) =>
+      `<div class="sm-satir"><div><div class="borsa">${ad}</div><div class="sayi">${fmt(n, 0)} trader</div><div class="ek">ağırlıklı ortalama giriş ${fmt(ort, aktif.ondalik)}</div></div><span class="rozet ${ters ? 'eksi' : 'arti'}">${ters ? 'terste' : 'kârda'}</span></div>`;
+    $('smCoin').innerHTML = satir('Long', x.longTraders, x.longAvgEntryPrice, t.long) + satir('Short', x.shortTraders, x.shortAvgEntryPrice, t.short) +
+      `<p class="ek">Anlık fiyat ${fmt(f, aktif.ondalik)}. Fiyat bir tarafın ortalama girişinin aleyhine geçince o taraf terste sayılır.</p>`;
+  }
+
+  function bildirim(metin) {
+    const d = document.createElement('div');
+    d.className = 'bildirim'; d.textContent = metin;
+    $('bildirimler').appendChild(d);
+    setTimeout(() => d.remove(), 8000);
+  }
+
+  function mexcBagla(n) {
+    if (n !== nesil) return;
+    let msym = aktif.taban + '_USDT';
+    let geldi = false;
+    const abone = (ws, sym) => {
+      ws.send(JSON.stringify({ method: 'sub.ticker', param: { symbol: sym } }));
+      ws.send(JSON.stringify({ method: 'sub.funding.rate', param: { symbol: sym } }));
+    };
+    mws = new WebSocket(MEXC_WS);
+    mws.onopen = () => {
+      if (n !== nesil) return;
+      abone(mws, msym);
+      clearInterval(mPing); mPing = setInterval(() => { if (mws.readyState === 1) mws.send('{"method":"ping"}'); }, 15000);
+      setTimeout(() => { if (n === nesil && !geldi) { $('fMexc').textContent = '–'; $('fMexcEk').textContent = 'Bu coin MEXC vadelide yok'; } }, 12000);
+    };
+    mws.onmessage = (e) => {
+      if (n !== nesil) return;
+      const m = JSON.parse(e.data);
+      if (m.channel === 'rs.error' && /not exists/.test(m.data) && /^10{3,}/.test(aktif.taban) && msym === aktif.taban + '_USDT') {
+        msym = aktif.taban.replace(/^10{3,}/, '') + '_USDT';
+        abone(mws, msym);
+        return;
+      }
+      if (m.channel === 'push.ticker' && m.data && typeof m.data.fundingRate === 'number') {
+        geldi = true;
+        const r = m.data.fundingRate, el = $('fMexc');
+        el.textContent = yuzde(r); el.className = 'oran ' + (r > 0 ? 'arti' : r < 0 ? 'eksi' : '');
+        if (!$('fMexcEk').dataset.sonraki) $('fMexcEk').textContent = 'canlı · ödeme saatini MEXC dakikada bir gönderir';
+      } else if (m.channel === 'push.funding.rate' && m.data) {
+        geldi = true;
+        $('fMexcEk').dataset.sonraki = '1';
+        $('fMexcEk').textContent = 'sonraki ödeme ' + saat(m.data.nextSettleTime);
+      }
+    };
+    mws.onclose = () => {
+      if (n !== nesil) return;
+      clearInterval(mPing);
+      clearTimeout(yenidenM); yenidenM = setTimeout(() => mexcBagla(n), 2000);
+    };
+    mws.onerror = () => mws.close();
+  }
+
+  function fiyatCiz() {
+    ciz = false;
+    if (alis !== null) { $('alis').textContent = fmt(alis, aktif.ondalik); $('satis').textContent = fmt(satis, aktif.ondalik); }
+    if (teypDegisti) teypCiz();
+    if (sonFiyat === null) return;
+    const el = $('fiyat');
+    el.textContent = fmt(sonFiyat, aktif.ondalik);
+    if (oncekiFiyat !== null && sonFiyat !== oncekiFiyat) {
+      el.classList.remove('yukari', 'asagi');
+      void el.offsetWidth;
+      el.classList.add(sonFiyat > oncekiFiyat ? 'yukari' : 'asagi');
+      clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('yukari', 'asagi'), 300);
+    }
+    oncekiFiyat = sonFiyat;
+    $('sonIslem').textContent = 'Son işlem ' + saatMs(sonT);
+  }
+
+  setInterval(() => {
+    const simdi = Date.now();
+    islemZaman = islemZaman.filter(t => simdi - t < 60000);
+    $('islemSay').textContent = aktif ? fmt(islemZaman.length, 0) : '–';
+    $('az').hidden = !(aktif && simdi - secimZamani > 20000 && islemZaman.length < 10);
+    if (saatFarki === null) { if (saatDenendi) $('gecikme').textContent = 'ölçülemedi'; return; }
+    olcumler = olcumler.filter(o => simdi - o.z < 60000);
+    if (olcumler.length < 3) return;
+    const s = olcumler.map(o => o.ms).sort((a, b) => a - b);
+    const sure = (v) => { v = Math.max(0, Math.round(v)); return v < 1000 ? fmt(v, 0) + ' ms' : fmt(v / 1000, 1) + ' sn'; };
+    $('gecikme').textContent = sure(s[Math.floor(s.length / 2)]);
+    const enAz = Math.max(0, Math.round(s[0])), enCok = Math.max(0, Math.round(s[s.length - 1]));
+    $('gecikmeAralik').textContent = enCok < 1000 ? fmt(enAz, 0) + ' / ' + fmt(enCok, 0) + ' ms' : sure(enAz) + ' / ' + sure(enCok);
+  }, 500);
+
+  function sec(girdi) {
+    const taban = String(girdi || '').trim().toUpperCase().replace(/USDT$/, '').replace(/[^A-Z0-9]/g, '');
+    const s = semboller[taban];
+    if (!s) { $('coin').setCustomValidity('Binance vadelide bulunamadı'); $('coin').reportValidity(); return; }
+    $('coin').setCustomValidity('');
+    if (aktif && aktif.sym === s.sym) return;
+    nesil++;
+    const n = nesil;
+    aktif = s;
+    [bws, pws, mws].forEach(w => { if (w) { w.onclose = null; w.close(); } });
+    clearInterval(mPing); clearTimeout(yenidenB); clearTimeout(yenidenP); clearTimeout(yenidenM);
+    sonFiyat = oncekiFiyat = sonT = alis = satis = null; olcumler = []; islemZaman = []; sonIslemler = []; teypDegisti = true;
+    secimZamani = Date.now();
+    $('coin').value = s.taban;
+    $('sembol').textContent = s.sym;
+    $('fiyat').textContent = '–'; $('sonIslem').innerHTML = '&nbsp;';
+    $('alis').textContent = '–'; $('satis').textContent = '–'; $('az').hidden = true;
+    $('gecikme').textContent = 'ölçülüyor'; $('gecikmeAralik').textContent = '–';
+    $('binanceLink').href = 'https://www.binance.com/tr/futures/' + s.sym;
+    smCoinCiz();
+    ['fBinance', 'fMexc'].forEach(id => { $(id).textContent = '–'; $(id).className = 'oran'; });
+    $('fBinanceEk').innerHTML = '&nbsp;'; $('fMexcEk').innerHTML = '&nbsp;'; delete $('fMexcEk').dataset.sonraki;
+    durum('bağlanıyor', '');
+    const u = new URL(location.href); u.searchParams.set('coin', s.taban); history.replaceState(null, '', u);
+    grafikKur(s.sym);
+    binanceBagla(n);
+    publicBagla(n);
+    oncekiIslemler(n, s.sym);
+    mexcBagla(n);
+  }
+
+  $('top30').addEventListener('click', (e) => {
+    const tr = e.target.closest('tr[data-taban]');
+    if (!tr) return;
+    sec(tr.dataset.taban);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  setInterval(() => { if (smVeri) smCoinCiz(); }, 5000);
+  $('araForm').addEventListener('submit', (e) => { e.preventDefault(); sec($('coin').value); });
+  $('coin').addEventListener('change', () => sec($('coin').value));
+  $('coin').addEventListener('input', () => $('coin').setCustomValidity(''));
+
+  (async () => {
+    saatEsitle();
+    setInterval(saatEsitle, 10 * 60 * 1000);
+    try { await listeYukle(); }
+    catch (e) { durum('Binance listesi alınamadı', 'kopuk'); return; }
+    sec(new URLSearchParams(location.search).get('coin') || 'BTC');
+    smYukle();
+    setInterval(smYukle, 60 * 1000);
+  })();
+})();
+</script>
+</body>
+</html>
