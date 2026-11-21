@@ -79,7 +79,17 @@
   .top30 td.ters { color: var(--kirmizi); font-weight: 600; }
   #bildirimler { position: fixed; right: 16px; bottom: 16px; display: flex; flex-direction: column; gap: 8px; z-index: 50; max-width: calc(100vw - 32px); }
   .bildirim { background: #111418; color: #fff; padding: 11px 15px; border-radius: 8px; font-size: 14px; box-shadow: 0 6px 20px rgba(0, 0, 0, .18); }
-  @media (max-width: 900px) { .izgara2 { grid-template-columns: 1fr; } }
+  .izgara2.ls { grid-template-columns: 1fr 1fr; }
+  .ls-satir { padding: 9px 0; border-top: 1px solid var(--cizgi); }
+  .ls-satir:first-child { border-top: 0; padding-top: 0; }
+  .ls-ust, .ls-alt { display: flex; justify-content: space-between; gap: 8px; font-variant-numeric: tabular-nums; }
+  .ls-ust { font-size: 14px; }
+  .ls-ust b { font-weight: 600; }
+  .ls-alt { font-size: 13px; color: var(--soluk); margin-top: 4px; }
+  .lsbar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; background: var(--kirmizi); margin-top: 6px; }
+  .lsbar span { background: var(--yesil); transition: width .3s; }
+  #lsKontrat { margin: -4px 0 10px; }
+  @media (max-width: 900px) { .izgara2, .izgara2.ls { grid-template-columns: 1fr; } }
   @media (max-width: 1100px) {
     .izgara { grid-template-columns: 1fr 1fr; }
     .grafik { grid-column: 1 / -1; grid-row: 2; }
@@ -156,6 +166,25 @@
   </div>
 
   <div class="bolum">
+    <h2>Long / short hacmi ve oranı · Binance</h2>
+    <span class="ek">Binance herkese açık verisi · hacim canlı, oran 5 dakikada bir yenilenir</span>
+  </div>
+  <div class="izgara2 ls">
+    <section class="kart" aria-label="Long short hacmi">
+      <h2 id="lsBaslik">Long / short hacmi</h2>
+      <p class="ek" id="lsKontrat">&nbsp;</p>
+      <div id="lsHacim"><p class="ek">yükleniyor</p></div>
+      <p class="aciklama">Long hacmi piyasa fiyatından alan işlemlerin (taker alış), short hacmi piyasa fiyatından satan işlemlerin (taker satış) dolar toplamı. CoinGlass'taki Long / Short Volume ile aynı tanım. Süreler şu andan geriye sayılır, içinde bulunulan dakika canlı akıştan gelir.</p>
+      <a class="karsilastir" id="cgLink" href="https://www.coinglass.com/LongShortRatio/BTC" target="_blank" rel="noopener">CoinGlass'ta aynı coini aç ↗</a>
+      <p class="aciklama">CoinGlass sayfasının altındaki borsa tablosunda süreyi aynı seçip Binance satırına bakın. 1, 4 ve 12 saatte oran aynı çıkar; 24 saatte CoinGlass 1 puan kadar farklı gösteriyor.</p>
+    </section>
+    <section class="kart" aria-label="Long short hesap oranı">
+      <h2 id="lsOranBaslik">Long / short hesap oranı</h2>
+      <div id="lsOran"><p class="ek">yükleniyor</p></div>
+    </section>
+  </div>
+
+  <div class="bolum">
     <h2>Abone menüsündeki veriler: zarardaki pozisyonlar ve Top 30</h2>
     <span class="ek" id="smDurum">Binance Smart Money verisi yükleniyor</span>
   </div>
@@ -174,7 +203,7 @@
     </section>
   </div>
 
-  <p class="alt">Veri: Binance USDⓈ-M vadeli ve MEXC vadeli herkese açık canlı akışları, Binance Smart Money. Grafik: TradingView.</p>
+  <p class="alt">Veri: Binance vadeli (USDⓈ-M ve COIN-M) ve MEXC vadeli herkese açık canlı akışları, Binance Smart Money. Grafik: TradingView.</p>
 </div>
 <div id="bildirimler" aria-live="polite"></div>
 
@@ -190,6 +219,15 @@
   const SM_ARALIK = 30 * 1000;  // Binance kendi Smart Money ekranını da 30 sn'de bir yeniliyor
   let tur = {}, tabanBul = {}, smVeri = null, smOnceki = null, smSonraki = 0, fiyatlar = {}, top30Onceki = null;
   let smOzet = null, smOzetOnceki = null, sonMark = null;
+  const ORAN_URL = 'https://fapi.binance.com/futures/data/';
+  const HACIM_SURELER = [['5 dk', 5], ['1 saat', 60], ['4 saat', 240], ['12 saat', 720], ['24 saat', 1440]];
+  const ORAN_TURLERI = [
+    { yol: 'globalLongShortAccountRatio', ad: 'Bütün hesaplar', olcu: 'hesap', cg: 'Retail' },
+    { yol: 'topLongShortAccountRatio', ad: 'Büyük hesaplar · hesap sayısı', olcu: 'hesap', cg: 'Whale Account' },
+    { yol: 'topLongShortPositionRatio', ad: 'Büyük hesaplar · pozisyon büyüklüğü', olcu: 'pozisyon', cg: 'Whale Position' }
+  ];
+  let usdcSym = {}, cmSym = {};  // BTC -> 'BTCUSDC' · BTC -> {sym:'BTCUSD_PERP', carpan:100}
+  let hacim = null, hws = null, cws = null, yenidenH = null, yenidenC = null, oranSon = null;
 
   let semboller = {};          // BTC -> {sym:'BTCUSDT', ondalik:1}
   let aralik = {};             // BTCUSDT -> 8
@@ -226,13 +264,18 @@
   }
 
   async function listeYukle() {
-    const [bilgi, fon] = await Promise.all([
+    const [bilgi, fon, cm] = await Promise.all([
       fetch('https://fapi.binance.com/fapi/v1/exchangeInfo').then(r => r.json()),
-      fetch('https://fapi.binance.com/fapi/v1/fundingInfo').then(r => r.json()).catch(() => [])
+      fetch('https://fapi.binance.com/fapi/v1/fundingInfo').then(r => r.json()).catch(() => []),
+      fetch('https://dapi.binance.com/dapi/v1/exchangeInfo').then(r => r.json()).catch(() => ({ symbols: [] }))
     ]);
+    for (const s of (cm.symbols || [])) {
+      if (s.contractType === 'PERPETUAL' && s.contractStatus === 'TRADING') cmSym[s.baseAsset] = { sym: s.symbol, carpan: s.contractSize };
+    }
     const dl = $('coinListe');
     const secenekler = [];
     for (const s of bilgi.symbols) {
+      if (s.contractType === 'PERPETUAL' && s.status === 'TRADING' && s.quoteAsset === 'USDC') usdcSym[s.baseAsset] = s.symbol;
       if (s.contractType !== 'PERPETUAL' || s.quoteAsset !== 'USDT' || s.status !== 'TRADING') continue;
       const tick = (s.filters.find(f => f.filterType === 'PRICE_FILTER') || {}).tickSize || '0.01';
       semboller[s.baseAsset] = { taban: s.baseAsset, sym: s.symbol, ondalik: ondalikBul(tick) };
@@ -441,6 +484,131 @@
     setTimeout(() => d.remove(), 8000);
   }
 
+  // Long / short hacmi: taker alış (long) ve taker satış (short) dolar toplamı. Binance'teki bütün sürekli
+  // kontratlar toplanır (USDT, USDC, coin-margined); CoinGlass'ın Binance satırı da böyle hesaplıyor.
+  // Geçmiş 1 dakikalık mumlardan, içinde bulunulan dakika canlı mum akışından gelir.
+  function hacimBaslat(n) {
+    const t = aktif.taban;
+    const k = [{ sym: aktif.sym, cm: false }];
+    if (usdcSym[t]) k.push({ sym: usdcSym[t], cm: false });
+    if (cmSym[t]) k.push({ sym: cmSym[t].sym, cm: true, carpan: cmSym[t].carpan });
+    hacim = { n, k, mum: new Map(k.map(x => [x.sym, new Map()])) };
+    $('lsBaslik').textContent = 'Long / short hacmi · ' + t;
+    kontratYaz();
+    hacimBagla(n, false, false);
+    hacimBagla(n, true, false);
+    for (const x of k) hacimGecmis(n, x);
+  }
+
+  function kontratYaz() {
+    $('lsKontrat').textContent = 'Toplanan kontratlar: ' + hacim.k.map(x => x.sym + (x.hata ? ' (alınamadı)' : '')).join(', ');
+  }
+
+  function mumYaz(sym, t, al, top) {
+    const m = hacim && hacim.mum.get(sym);
+    if (m) m.set(t, [al, top - al]);
+  }
+
+  function hacimGecmis(n, x) {
+    const url = (x.cm ? 'https://dapi.binance.com/dapi/v1/klines' : 'https://fapi.binance.com/fapi/v1/klines') + '?symbol=' + x.sym + '&interval=1m&limit=1440';
+    fetch(url, { cache: 'no-store' })
+      .then(r => r.json())
+      .then(liste => {
+        if (n !== nesil) return;
+        if (!Array.isArray(liste)) throw new Error('mum verisi beklenen biçimde değil');
+        for (const c of liste) {
+          if (x.cm) mumYaz(x.sym, c[0], c[9] * x.carpan, c[5] * x.carpan);
+          else mumYaz(x.sym, c[0], parseFloat(c[10]), parseFloat(c[7]));
+        }
+        x.hazir = true; x.hata = false;
+        kontratYaz(); hacimCiz();
+      })
+      .catch(e => {
+        if (n !== nesil) return;
+        console.warn(x.sym + ' hacim geçmişi alınamadı', e);
+        if (!x.hazir) { x.hata = true; kontratYaz(); hacimCiz(); }
+      });
+  }
+
+  function hacimBagla(n, cm, yeniden) {
+    if (n !== nesil || !hacim) return;
+    const liste = hacim.k.filter(x => x.cm === cm);
+    if (!liste.length) return;
+    const ws = new WebSocket((cm ? 'wss://dstream.binance.com/stream?streams=' : BINANCE_WS) + liste.map(x => x.sym.toLowerCase() + '@kline_1m').join('/'));
+    // Bağlantı koptuysa aradaki dakikalar kaçmasın: yeniden bağlanınca geçmiş baştan alınır
+    ws.onopen = () => { if (n === nesil && yeniden) liste.forEach(x => hacimGecmis(n, x)); };
+    ws.onmessage = (e) => {
+      if (n !== nesil) return;
+      const d = JSON.parse(e.data).data;
+      if (!d || d.e !== 'kline') return;
+      const x = liste.find(y => y.sym === d.s), k = d.k;
+      if (!x) return;
+      if (cm) mumYaz(x.sym, k.t, k.V * x.carpan, k.v * x.carpan);
+      else mumYaz(x.sym, k.t, parseFloat(k.Q), parseFloat(k.q));
+    };
+    ws.onclose = () => {
+      if (n !== nesil) return;
+      const t = setTimeout(() => hacimBagla(n, cm, true), 2000);
+      if (cm) { clearTimeout(yenidenC); yenidenC = t; } else { clearTimeout(yenidenH); yenidenH = t; }
+    };
+    ws.onerror = () => ws.close();
+    if (cm) cws = ws; else hws = ws;
+  }
+
+  const dolar = (v) => v >= 1e9 ? '$' + fmt(v / 1e9, 2) + ' milyar' : v >= 1e6 ? '$' + fmt(v / 1e6, 2) + ' milyon' : v >= 1e3 ? '$' + fmt(v / 1e3, 1) + ' bin' : '$' + fmt(v, 0);
+
+  function hacimCiz() {
+    if (!hacim || hacim.n !== nesil) return;
+    const hazir = hacim.k.filter(x => x.hazir);
+    if (!hazir.length) {
+      if (hacim.k.every(x => x.hata)) $('lsHacim').innerHTML = '<p class="ek">Binance hacim verisi alınamadı.</p>';
+      return;
+    }
+    const simdi = Math.floor((Date.now() + (saatFarki || 0)) / 60000) * 60000;
+    const sinir = simdi - 1439 * 60000;
+    for (const m of hacim.mum.values()) for (const t of m.keys()) if (t < sinir) m.delete(t);
+    $('lsHacim').innerHTML = HACIM_SURELER.map(([ad, dk]) => {
+      const bas = simdi - (dk - 1) * 60000;
+      let al = 0, sat = 0;
+      for (const x of hazir) for (const [t, v] of hacim.mum.get(x.sym)) if (t >= bas) { al += v[0]; sat += v[1]; }
+      const y = al + sat > 0 ? al / (al + sat) * 100 : 50;
+      return `<div class="ls-satir"><div class="ls-ust"><b>${ad}</b><span><span class="arti">long %${fmt(y, 2)}</span> · <span class="eksi">short %${fmt(100 - y, 2)}</span></span></div>` +
+        `<div class="lsbar"><span style="width:${y.toFixed(2)}%"></span></div>` +
+        `<div class="ls-alt"><span>Long ${dolar(al)}</span><span>Short ${dolar(sat)}</span></div></div>`;
+    }).join('');
+  }
+
+  // Long / short hesap oranı: Binance'in resmî verisi (CoinGlass'ta Retail, Whale Account, Whale Position), 5 dakikada bir
+  // Binance'in sunucuları son 5 dakikalık noktayı aynı anda vermiyor (bir istekte 17:10, sonrakinde 17:05 gelebiliyor);
+  // geri gitmesin diye her tür için görülen en yeni nokta tutulur
+  async function oranYukle(n) {
+    const sym = aktif.sym;
+    const yeni = await Promise.all(ORAN_TURLERI.map(o =>
+      fetch(ORAN_URL + o.yol + '?symbol=' + sym + '&period=5m&limit=5', { cache: 'no-store' })
+        .then(r => r.json())
+        .then(j => (Array.isArray(j) && j.length ? j.reduce((a, b) => (b.timestamp > a.timestamp ? b : a)) : null))
+        .catch(e => { console.warn(o.yol + ' alınamadı', e); return null; })
+    ));
+    if (n !== nesil) return;
+    if (!oranSon || oranSon.n !== n) oranSon = { n, veri: [] };
+    const sonuc = ORAN_TURLERI.map((o, i) => {
+      const eski = oranSon.veri[i], x = yeni[i];
+      return (!x || (eski && eski.timestamp > x.timestamp)) ? eski || null : x;
+    });
+    oranSon.veri = sonuc;
+    $('lsOranBaslik').textContent = 'Long / short hesap oranı · ' + sym;
+    const gelen = sonuc.filter(Boolean);
+    if (!gelen.length) { $('lsOran').innerHTML = '<p class="ek">Bu coin için Binance long / short oranı yok.</p>'; return; }
+    const zaman = Math.max(...gelen.map(x => x.timestamp));
+    $('lsOran').innerHTML = ORAN_TURLERI.map((o, i) => {
+      const x = sonuc[i];
+      if (!x) return `<div class="sm-satir"><div><div class="borsa">${o.ad}</div><div class="ek">veri yok</div></div></div>`;
+      const l = parseFloat(x.longAccount) * 100;
+      return `<div class="sm-satir"><div><div class="borsa">${o.ad}</div><div class="ek">${o.olcu}: long %${fmt(l, 1)} · short %${fmt(100 - l, 1)} · ${saat(x.timestamp)} verisi</div><div class="ek">CoinGlass'ta ${o.cg}</div></div><div class="sayi">${fmt(parseFloat(x.longShortRatio), 2)}</div></div>`;
+    }).join('') +
+      `<p class="ek">Oran, long taraftaki hesabın (ya da pozisyonun) short taraftakinin kaç katı olduğunu gösterir: 2 ise her short hesaba 2 long hesap düşer. Büyük hesaplar Binance'in Top Trader verisi. Binance bu oranı 5 dakikada bir günceller, son veri ${saat(zaman)}. CoinGlass bu kutuyu kendiliğinden yenilemiyor, bazen de bir önceki 5 dakikanın rakamını gösteriyor; karşılaştırırken CoinGlass sayfasını yenileyin.</p>`;
+  }
+
   function mexcBagla(n) {
     if (n !== nesil) return;
     let msym = aktif.taban + '_USDT';
@@ -524,8 +692,9 @@
     nesil++;
     const n = nesil;
     aktif = s;
-    [bws, pws, mws].forEach(w => { if (w) { w.onclose = null; w.close(); } });
-    clearInterval(mPing); clearTimeout(yenidenB); clearTimeout(yenidenP); clearTimeout(yenidenM);
+    [bws, pws, mws, hws, cws].forEach(w => { if (w) { w.onclose = null; w.close(); } });
+    hws = cws = null;
+    clearInterval(mPing); clearTimeout(yenidenB); clearTimeout(yenidenP); clearTimeout(yenidenM); clearTimeout(yenidenH); clearTimeout(yenidenC);
     sonFiyat = oncekiFiyat = sonT = alis = satis = null; olcumler = []; islemZaman = []; sonIslemler = []; teypDegisti = true;
     secimZamani = Date.now();
     $('coin').value = s.taban;
@@ -535,6 +704,8 @@
     $('gecikme').textContent = 'ölçülüyor'; $('gecikmeAralik').textContent = '–';
     $('binanceLink').href = 'https://www.binance.com/tr/futures/' + s.sym;
     $('smLink').href = 'https://www.binance.com/tr/smart-money/signal/' + s.sym;
+    $('cgLink').href = 'https://www.coinglass.com/LongShortRatio/' + s.taban.replace(/^10{3,}/, '');
+    $('lsHacim').innerHTML = '<p class="ek">yükleniyor</p>'; $('lsOran').innerHTML = '<p class="ek">yükleniyor</p>';
     sonMark = null; smOzet = smOzetOnceki = null;
     smCoinCiz();
     ozetYukle(s.sym);
@@ -547,6 +718,8 @@
     publicBagla(n);
     oncekiIslemler(n, s.sym);
     mexcBagla(n);
+    hacimBaslat(n);
+    oranYukle(n);
   }
 
   $('top30').addEventListener('click', (e) => {
@@ -556,6 +729,8 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
   setInterval(() => { if (smVeri) smCoinCiz(); }, 1000);
+  setInterval(hacimCiz, 1000);
+  setInterval(() => { if (aktif) oranYukle(nesil); }, 60 * 1000);
   // Kutu doluyken liste yalnız o yazıya uyan coini gösteriyor: tıklayınca boşalt, seçilmezse eski coini geri koy
   $('coin').addEventListener('focus', () => { const c = $('coin'); c.placeholder = aktif ? aktif.taban : 'BTC'; c.value = ''; });
   $('coin').addEventListener('blur', () => { const c = $('coin'); if (!c.value.trim() && aktif) { c.value = aktif.taban; c.setCustomValidity(''); } });
