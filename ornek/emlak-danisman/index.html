@@ -20,7 +20,7 @@
 <link rel="preload" href="assets/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/hanken-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('hareket');</script>
-<link rel="stylesheet" href="assets/site.css?v=3">
+<link rel="stylesheet" href="assets/site.css?v=4">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -54,10 +54,10 @@
     </a>
     <nav class="menu" id="menu" aria-label="Ana menü">
       <ul>
-        <li><a href="#ilanlar" data-git-sekme="satilik">Satılık</a></li>
-        <li><a href="#ilanlar" data-git-sekme="kiralik">Kiralık</a></li>
-        <li><a href="#ilanlar" data-git-sekme="proje">Projeler</a></li>
-        <li><a href="#ilanlar" data-git-sekme="arsa">Arsa</a></li>
+        <li><a href="#satilik">Satılık</a></li>
+        <li><a href="#kiralik">Kiralık</a></li>
+        <li><a href="#projeler">Projeler</a></li>
+        <li><a href="#" data-demo="kategori">Arsa</a></li>
         <li class="menu-acilir">
           <button class="acilir-dugme" type="button" aria-expanded="false" aria-controls="talep-listesi">Talepler<svg class="ik ik-ok" aria-hidden="true"><use href="#i-ok"/></svg></button>
           <ul class="acilir-liste" id="talep-listesi" hidden>
@@ -172,59 +172,125 @@
     </div>
   </section>
 
-  <section class="arama" aria-label="İlan ara">
-    <form class="kap arama-form" id="arama-form">
-      <label class="arama-alan"><span>İlan türü</span>
-        <select name="tur" id="a-tur">
-          <option value="satilik">Satılık</option><option value="kiralik">Kiralık</option><option value="proje">Proje</option><option value="arsa">Arsa</option>
-        </select>
-      </label>
-      <label class="arama-alan"><span>İlçe</span>
-        <select name="ilce" id="a-ilce"><option value="">Tümü</option><option value="Ataşehir">Ataşehir</option><option value="Bodrum">Bodrum</option><option value="Esenyurt">Esenyurt</option><option value="Kaş">Kaş</option></select>
-      </label>
-      <label class="arama-alan" id="a-oda-alan"><span>Oda sayısı</span>
-        <select name="oda" id="a-oda"><option value="">Tümü</option><option value="1">1+1</option><option value="2">2+1</option><option value="3">3+1</option><option value="4">4+1 ve üzeri</option></select>
-      </label>
-      <label class="arama-alan"><span>En yüksek fiyat</span>
-        <select name="fiyat" id="a-fiyat"><option value="">Tümü</option></select>
-      </label>
-      <button class="dugme dugme-koyu arama-dugme" type="submit">İlanları göster</button>
-    </form>
-  </section>
-
-  <section class="tanitim" aria-label="Danışman">
-    <div class="kap tanitim-ic">
-      <div class="tanitim-ad">
-        <p class="tanitim-isim">Murat ERDOĞAN</p>
-        <p class="tanitim-unvan">Yeni nesil gayrimenkul danışmanı</p>
+  <section class="hakkimda" id="hakkimda" aria-labelledby="hakkimda-baslik">
+    <div class="kap hakkimda-ic">
+      <div class="hakkimda-foto">
+        <img src="img/hakkimda.webp" alt="İstanbul'da kırmızı çatılı apartmanlar, uzakta gökdelenler" width="1200" height="800" loading="lazy" decoding="async">
       </div>
-      <div class="tanitim-yol">
-        <button class="hap" type="button" data-talep="ariyorum">Gayrimenkul arıyorum</button>
-        <button class="hap" type="button" data-talep="satiyorum">Gayrimenkulümü satmak istiyorum</button>
-        <button class="hap" type="button" data-talep="kiralik">Kiraya vermek istiyorum</button>
+      <div class="hakkimda-metin">
+        <p class="ust-yazi">Murat ERDOĞAN · Yeni nesil gayrimenkul danışmanı</p>
+        <h2 id="hakkimda-baslik">Ben kimim, ne yapıyorum?</h2>
+        <p>İstanbul'un canlı emlak pazarındaki 15 yıllık deneyimimle, her bütçeye uygun seçenekler arasından güvenle yaşayacağınız evi bulmanız için yanınızdayım. Gayrimenkul sadece bir yatırım değil, yeni başlangıçların gerçeğe dönüştüğü bir süreçtir.</p>
+        <dl class="bilgi">
+          <div><dt>Hizmet bölgeleri</dt><dd>Beylikdüzü merkezli, İstanbul ve Türkiye geneli</dd></div>
+          <div><dt>Uzmanlık</dt><dd>Konut, proje, arsa ve yurt dışı projeleri</dd></div>
+        </dl>
+        <a class="dugme dugme-cizgi-koyu" href="#" data-demo="hakkimda">Devamını okuyun</a>
       </div>
     </div>
   </section>
 
-  <section class="ilanlar" id="ilanlar" aria-labelledby="ilanlar-baslik">
-    <div class="kap">
-      <div class="ilanlar-bas">
-        <h2 id="ilanlar-baslik">İlanlar</h2>
-        <div class="sekmeler" role="tablist" aria-label="İlan türleri"><button class="sekme" type="button" role="tab" id="sekme-satilik" aria-controls="panel-satilik" aria-selected="true" tabindex="0" data-sekme="satilik" data-tum="Tüm satılık ilanlar">Satılık</button><button class="sekme" type="button" role="tab" id="sekme-kiralik" aria-controls="panel-kiralik" aria-selected="false" tabindex="-1" data-sekme="kiralik" data-tum="Tüm kiralık ilanlar">Kiralık</button><button class="sekme" type="button" role="tab" id="sekme-proje" aria-controls="panel-proje" aria-selected="false" tabindex="-1" data-sekme="proje" data-tum="Tüm projeler">Projeler</button><button class="sekme" type="button" role="tab" id="sekme-arsa" aria-controls="panel-arsa" aria-selected="false" tabindex="-1" data-sekme="arsa" data-tum="Tüm arsalar">Arsa</button></div>
-        <a class="metin-bag ilanlar-tum" href="#" data-demo="kategori" id="tum-bag">Tüm satılık ilanlar</a>
-      </div>
-      <div class="filtre-sonuc" id="filtre-sonuc" hidden>
-        <p id="filtre-metin" role="status"></p>
-        <button class="metin-bag" type="button" id="filtre-temizle">Filtreyi temizle</button>
-        <p class="filtre-not">Örnek sayfada yalnız ana sayfadaki ilanlar aranır, temada arama bütün ilanlarda yapılır.</p>
-      </div>
-      <div class="bos-durum" id="bos-durum" hidden>
-        <p>Bu ölçütlere uyan ilan şu an yok. Fiyat sınırını yükseltin ya da başka bir ilçe seçin. Aradığınızı yazarsanız uygun bir ilan çıkınca size haber veririm.</p>
+  <section class="kapilar" aria-label="Alıcıya ve satıcıya özel danışmanlık hizmeti">
+    <div class="kap kapilar-ic">
+      <article class="kapi">
+        <img src="img/kapi-alici.webp" alt="Akşam ışığında yamaca sıralanmış evler" width="1200" height="800" loading="lazy" decoding="async">
+        <h2>Alıcıya özel danışmanlık hizmeti</h2>
+        <p>Yalnızca elimdeki portföyü satmaya çalışmam. İhtiyaçlarınızı dinler, bütçenize en uygun gayrimenkulü araştırırım. Pazarlıkta, sözleşmede ve satıştan sonra da yanınızdayım.</p>
         <button class="dugme dugme-koyu" type="button" data-talep="ariyorum">Aradığım evi anlat</button>
+      </article>
+      <article class="kapi">
+        <img src="img/kapi-satici.webp" alt="Ofiste anahtar teslim eden eller" width="1200" height="800" loading="lazy" decoding="async">
+        <h2>Satıcıya özel danışmanlık hizmeti</h2>
+        <p>Gayrimenkulünüzü doğru değerle ve kısa sürede satmanız için mülkünüz önce piyasa şartlarına göre analiz edilir. Bölge analizi, hedef kitle ve dijital tanıtımla doğru alıcıyı bulur, süreci baştan sona yürütürüm.</p>
+        <button class="dugme dugme-koyu" type="button" data-talep="satiyorum">Evimi değerlendir</button>
+      </article>
+    </div>
+  </section>
+
+  <section class="liste liste-genis" id="one-cikan" aria-labelledby="one-cikan-baslik">
+    <div class="kap">
+      <div class="liste-bas">
+        <div class="liste-metin">
+          <h2 id="one-cikan-baslik">Öne çıkan evler</h2>
+          <p>Portföyümden seçtiğim, şu an öne çıkardığım ilanlar.</p>
+        </div>
+        <a class="dugme dugme-cizgi-koyu" href="#" data-demo="kategori" aria-label="Bütün ilanları gör">Tümünü gör</a>
       </div>
-      <div class="ilan-panel" role="tabpanel" id="panel-satilik" aria-labelledby="sekme-satilik">
-        <div class="ilan-izgara">
-          <article class="kart kart-1" data-tur="satilik" data-ilce="Kaş" data-oda-az="4" data-oda-cok="4" data-fiyat="41500000">
+      <div class="ilan-izgara">
+          <article class="kart">
+            <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true"><span class="kart-etiket">Satılık</span>
+              <img src="img/o-site.webp" alt="Yamaçtaki taş evlerin önünde palmiyeli ortak havuz" width="1200" height="800" loading="lazy" decoding="async">
+            </a>
+            <div class="kart-alt">
+              <div class="kart-sol">
+                <h3><a href="#" data-demo="ilan">Havuzlu sitede bahçe katı</a></h3>
+                <p class="kart-konum">Muğla, Bodrum, Türkbükü</p>
+              </div>
+              <div class="kart-sag">
+                <p class="kart-fiyat">26.500.000 TL</p>
+                <p class="kart-ozellik"><span>3+1</span><span>165 m²</span></p>
+              </div>
+            </div>
+          </article>
+          <article class="kart">
+            <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true"><span class="kart-etiket">Kiralık</span>
+              <img src="img/o-rezidans.webp" alt="Boydan camlı salon, beyaz deri koltuklar ve deniz manzarası" width="1200" height="800" loading="lazy" decoding="async">
+            </a>
+            <div class="kart-alt">
+              <div class="kart-sol">
+                <h3><a href="#" data-demo="ilan">Deniz manzaralı rezidans</a></h3>
+                <p class="kart-konum">İstanbul, Kartal, Kordonboyu</p>
+              </div>
+              <div class="kart-sag">
+                <p class="kart-fiyat">95.000 TL / ay</p>
+                <p class="kart-ozellik"><span>4+1</span><span>240 m²</span></p>
+              </div>
+            </div>
+          </article>
+          <article class="kart">
+            <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true"><span class="kart-etiket">Satılık</span>
+              <img src="img/o-mustakil.webp" alt="Taş duvarlı bahçede beyaz badanalı tek katlı ev" width="1200" height="800" loading="lazy" decoding="async">
+            </a>
+            <div class="kart-alt">
+              <div class="kart-sol">
+                <h3><a href="#" data-demo="ilan">Kayalıkların önünde müstakil ev</a></h3>
+                <p class="kart-konum">Antalya, Kaş, Çukurbağ</p>
+              </div>
+              <div class="kart-sag">
+                <p class="kart-fiyat">14.750.000 TL</p>
+                <p class="kart-ozellik"><span>2+1</span><span>120 m²</span></p>
+              </div>
+            </div>
+          </article>
+          <article class="kart">
+            <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true"><span class="kart-etiket">Satılık</span>
+              <img src="img/o-bahce.webp" alt="Ahşap ve taş cepheli villa, mozaik kaplı basamaklar ve çimenli bahçe" width="1200" height="800" loading="lazy" decoding="async">
+            </a>
+            <div class="kart-alt">
+              <div class="kart-sol">
+                <h3><a href="#" data-demo="ilan">Geniş bahçeli modern villa</a></h3>
+                <p class="kart-konum">İstanbul, Silivri, Selimpaşa</p>
+              </div>
+              <div class="kart-sag">
+                <p class="kart-fiyat">47.500.000 TL</p>
+                <p class="kart-ozellik"><span>5+1</span><span>380 m²</span></p>
+              </div>
+            </div>
+          </article>
+      </div>
+    </div>
+  </section>
+  <section class="liste" id="satilik" aria-labelledby="satilik-baslik">
+    <div class="kap">
+      <div class="liste-bas">
+        <div class="liste-metin">
+          <h2 id="satilik-baslik">Satılık evler</h2>
+          <p>Daire, villa ve müstakil evlerde güncel satılık ilanlar.</p>
+        </div>
+        <a class="dugme dugme-cizgi-koyu" href="#" data-demo="kategori" aria-label="Tüm satılık evleri gör">Tümünü gör</a>
+      </div>
+      <div class="ilan-sira">
+          <article class="kart">
             <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true">
               <img src="img/s-villa.webp" alt="Pergolalı teras, havuz ve gün batımında koy manzarası" width="1200" height="800" loading="lazy" decoding="async">
             </a>
@@ -239,7 +305,7 @@
               </div>
             </div>
           </article>
-          <article class="kart kart-2" data-tur="satilik" data-ilce="Esenyurt" data-oda-az="2" data-oda-cok="2" data-fiyat="5450000">
+          <article class="kart">
             <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true">
               <img src="img/s-daire.webp" alt="Cam korkuluklu balkonları olan yeni apartman cephesi" width="1200" height="800" loading="lazy" decoding="async">
             </a>
@@ -254,7 +320,7 @@
               </div>
             </div>
           </article>
-          <article class="kart kart-3" data-tur="satilik" data-ilce="Ataşehir" data-oda-az="3" data-oda-cok="3" data-fiyat="13900000">
+          <article class="kart">
             <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true">
               <img src="img/s-balkon.webp" alt="Oturma grubu olan geniş balkon ve şehir manzarası" width="1200" height="800" loading="lazy" decoding="async">
             </a>
@@ -269,7 +335,7 @@
               </div>
             </div>
           </article>
-          <article class="kart kart-4" data-tur="satilik" data-ilce="Bodrum" data-oda-az="3" data-oda-cok="3" data-fiyat="32000000">
+          <article class="kart">
             <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true">
               <img src="img/s-tasev.webp" alt="Taş duvarlı ev, bahçe yolu ve havuz" width="1200" height="800" loading="lazy" decoding="async">
             </a>
@@ -284,11 +350,20 @@
               </div>
             </div>
           </article>
-        </div>
       </div>
-      <div class="ilan-panel" role="tabpanel" id="panel-kiralik" aria-labelledby="sekme-kiralik" hidden>
-        <div class="ilan-izgara">
-          <article class="kart kart-1" data-tur="kiralik" data-ilce="Kadıköy" data-oda-az="1" data-oda-cok="1" data-fiyat="38000">
+    </div>
+  </section>
+  <section class="liste" id="kiralik" aria-labelledby="kiralik-baslik">
+    <div class="kap">
+      <div class="liste-bas">
+        <div class="liste-metin">
+          <h2 id="kiralik-baslik">Kiralık evler</h2>
+          <p>Eşyalı ve eşyasız, taşınmaya hazır kiralık evler.</p>
+        </div>
+        <a class="dugme dugme-cizgi-koyu" href="#" data-demo="kategori" aria-label="Tüm kiralık evleri gör">Tümünü gör</a>
+      </div>
+      <div class="ilan-sira">
+          <article class="kart">
             <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true">
               <img src="img/k-esyali.webp" alt="Sade döşenmiş, aydınlık yatak odası" width="1200" height="800" loading="lazy" decoding="async">
             </a>
@@ -303,7 +378,7 @@
               </div>
             </div>
           </article>
-          <article class="kart kart-2" data-tur="kiralik" data-ilce="Beylikdüzü" data-oda-az="2" data-oda-cok="2" data-fiyat="32500">
+          <article class="kart">
             <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true">
               <img src="img/k-mutfak.webp" alt="Ahşap dolaplı modern mutfak" width="1200" height="800" loading="lazy" decoding="async">
             </a>
@@ -318,7 +393,7 @@
               </div>
             </div>
           </article>
-          <article class="kart kart-3" data-tur="kiralik" data-ilce="Karşıyaka" data-oda-az="3" data-oda-cok="3" data-fiyat="45000">
+          <article class="kart">
             <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true">
               <img src="img/k-manzara.webp" alt="Cam korkuluklu balkondan şehir ve dağ manzarası" width="1200" height="800" loading="lazy" decoding="async">
             </a>
@@ -333,7 +408,7 @@
               </div>
             </div>
           </article>
-          <article class="kart kart-4" data-tur="kiralik" data-ilce="Büyükçekmece" data-oda-az="2" data-oda-cok="2" data-fiyat="27000">
+          <article class="kart">
             <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true">
               <img src="img/k-beyaz.webp" alt="Gömme dolaplı beyaz yatak odası" width="1200" height="800" loading="lazy" decoding="async">
             </a>
@@ -348,11 +423,20 @@
               </div>
             </div>
           </article>
-        </div>
       </div>
-      <div class="ilan-panel" role="tabpanel" id="panel-proje" aria-labelledby="sekme-proje" hidden>
-        <div class="ilan-izgara">
-          <article class="kart kart-1" data-tur="proje" data-ilce="Beylikdüzü" data-oda-az="1" data-oda-cok="3" data-fiyat="6200000">
+    </div>
+  </section>
+  <section class="liste" id="projeler" aria-labelledby="projeler-baslik">
+    <div class="kap">
+      <div class="liste-bas">
+        <div class="liste-metin">
+          <h2 id="projeler-baslik">Projeler</h2>
+          <p>Yeni konut projelerinde daire tipleri, teslim tarihleri ve başlangıç fiyatları.</p>
+        </div>
+        <a class="dugme dugme-cizgi-koyu" href="#" data-demo="kategori" aria-label="Tüm projeleri gör">Tümünü gör</a>
+      </div>
+      <div class="ilan-sira">
+          <article class="kart">
             <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true">
               <img src="img/p-balkon.webp" alt="Fransız balkonlu, beton cepheli yeni konut binası" width="1200" height="800" loading="lazy" decoding="async">
             </a>
@@ -367,7 +451,7 @@
               </div>
             </div>
           </article>
-          <article class="kart kart-2" data-tur="proje" data-ilce="Kartal" data-oda-az="2" data-oda-cok="3" data-fiyat="9850000">
+          <article class="kart">
             <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true">
               <img src="img/p-cam.webp" alt="Cam balkonlu ve yeşillikli yeni konut binası" width="1200" height="800" loading="lazy" decoding="async">
             </a>
@@ -382,7 +466,7 @@
               </div>
             </div>
           </article>
-          <article class="kart kart-3" data-tur="proje" data-ilce="Başakşehir" data-oda-az="1" data-oda-cok="4" data-fiyat="7400000">
+          <article class="kart">
             <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true">
               <img src="img/p-peyzaj.webp" alt="Bloklar arasında yürüyüş yolları olan peyzajlı site" width="1200" height="800" loading="lazy" decoding="async">
             </a>
@@ -397,7 +481,7 @@
               </div>
             </div>
           </article>
-          <article class="kart kart-4" data-tur="proje" data-ilce="Çankaya" data-oda-az="2" data-oda-cok="3" data-fiyat="0">
+          <article class="kart">
             <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true">
               <img src="img/p-merkez.webp" alt="Açık gökyüzü altında modern apartman cepheleri" width="1200" height="800" loading="lazy" decoding="async">
             </a>
@@ -412,112 +496,20 @@
               </div>
             </div>
           </article>
-        </div>
-      </div>
-      <div class="ilan-panel" role="tabpanel" id="panel-arsa" aria-labelledby="sekme-arsa" hidden>
-        <div class="ilan-izgara">
-          <article class="kart kart-1" data-tur="arsa" data-ilce="Marmaraereğlisi" data-oda-az="0" data-oda-cok="0" data-fiyat="2900000">
-            <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true">
-              <img src="img/a-parsel.webp" alt="Parsel sınırları çizilmiş arazi, havadan görünüm" width="1200" height="800" loading="lazy" decoding="async">
-            </a>
-            <div class="kart-alt">
-              <div class="kart-sol">
-                <h3><a href="#" data-demo="ilan">Konut imarlı parseller</a></h3>
-                <p class="kart-konum">Tekirdağ, Marmaraereğlisi, Sultanköy</p>
-              </div>
-              <div class="kart-sag">
-                <p class="kart-fiyat">2.900.000 TL&#x27;den</p>
-                <p class="kart-ozellik"><span>18 parsel</span><span>600-1.100 m²</span></p>
-              </div>
-            </div>
-          </article>
-          <article class="kart kart-2" data-tur="arsa" data-ilce="Ayvalık" data-oda-az="0" data-oda-cok="0" data-fiyat="6900000">
-            <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true">
-              <img src="img/a-zeytin.webp" alt="Kır çiçekleri arasında zeytin ağaçları" width="1200" height="800" loading="lazy" decoding="async">
-            </a>
-            <div class="kart-alt">
-              <div class="kart-sol">
-                <h3><a href="#" data-demo="ilan">Yola cepheli zeytinlik</a></h3>
-                <p class="kart-konum">Balıkesir, Ayvalık, Küçükköy</p>
-              </div>
-              <div class="kart-sag">
-                <p class="kart-fiyat">6.900.000 TL</p>
-                <p class="kart-ozellik"><span>4.800 m²</span><span>Zeytinlik</span></p>
-              </div>
-            </div>
-          </article>
-          <article class="kart kart-3" data-tur="arsa" data-ilce="Çatalca" data-oda-az="0" data-oda-cok="0" data-fiyat="4250000">
-            <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true">
-              <img src="img/a-tarla.webp" alt="Tarlalar ve köy yolu, havadan görünüm" width="1200" height="800" loading="lazy" decoding="async">
-            </a>
-            <div class="kart-alt">
-              <div class="kart-sol">
-                <h3><a href="#" data-demo="ilan">Köye yakın tarla</a></h3>
-                <p class="kart-konum">İstanbul, Çatalca, Ormanlı</p>
-              </div>
-              <div class="kart-sag">
-                <p class="kart-fiyat">4.250.000 TL</p>
-                <p class="kart-ozellik"><span>3.200 m²</span><span>Tarla</span></p>
-              </div>
-            </div>
-          </article>
-          <article class="kart kart-4" data-tur="arsa" data-ilce="Urla" data-oda-az="0" data-oda-cok="0" data-fiyat="9750000">
-            <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true">
-              <img src="img/a-bahce.webp" alt="Bulutlu gökyüzü altında zeytin bahçesi" width="1200" height="800" loading="lazy" decoding="async">
-            </a>
-            <div class="kart-alt">
-              <div class="kart-sol">
-                <h3><a href="#" data-demo="ilan">Dağ manzaralı zeytin bahçesi</a></h3>
-                <p class="kart-konum">İzmir, Urla, Bademler</p>
-              </div>
-              <div class="kart-sag">
-                <p class="kart-fiyat">9.750.000 TL</p>
-                <p class="kart-ozellik"><span>6.500 m²</span><span>Zeytinlik</span></p>
-              </div>
-            </div>
-          </article>
-        </div>
       </div>
     </div>
   </section>
 
-  <section class="kapilar" aria-label="Alıcıya ve satıcıya özel danışmanlık">
-    <div class="kap kapilar-ic">
-      <article class="kapi">
-        <img src="img/kapi-alici.webp" alt="Akşam ışığında yamaca sıralanmış evler" width="1200" height="800" loading="lazy" decoding="async">
-        <h2>Alıcıya özel danışmanlık</h2>
-        <p>Yalnızca elimdeki portföyü satmaya çalışmam. İhtiyaçlarınızı dinler, bütçenize en uygun gayrimenkulü araştırırım. Pazarlıkta, sözleşmede ve satıştan sonra da yanınızdayım.</p>
-        <button class="dugme dugme-koyu" type="button" data-talep="ariyorum">Aradığım evi anlat</button>
-      </article>
-      <article class="kapi">
-        <img src="img/kapi-satici.webp" alt="Ofiste anahtar teslim eden eller" width="1200" height="800" loading="lazy" decoding="async">
-        <h2>Satıcıya özel danışmanlık</h2>
-        <p>Gayrimenkulünüzü doğru değerle ve kısa sürede satmanız için mülkünüz önce piyasa şartlarına göre analiz edilir. Bölge analizi, hedef kitle ve dijital tanıtımla doğru alıcıyı bulur, süreci baştan sona yürütürüm.</p>
+  <section class="surec" id="surec" aria-labelledby="surec-baslik">
+    <div class="kap surec-ic">
+      <div class="surec-bas">
+        <h2 id="surec-baslik">Satış nasıl ilerler?</h2>
+        <p>Değer analizinden satış sonrasına kadar süreç beş adımda ilerler.</p>
         <button class="dugme dugme-koyu" type="button" data-talep="satiyorum">Evimi değerlendir</button>
-      </article>
-    </div>
-  </section>
-
-  <section class="surec" aria-labelledby="surec-baslik">
-    <div class="kap">
-      <h2 id="surec-baslik">Satış nasıl ilerler?</h2>
-      <ol class="surec-liste"><li><span class="surec-no" aria-hidden="true">1</span><h3>Değer analizi</h3><p>Gayrimenkulünüz fiziki ve teknik olarak incelenir, piyasa şartlarına göre değeri belirlenir.</p></li><li><span class="surec-no" aria-hidden="true">2</span><h3>Bölge ve alıcı analizi</h3><p>Bölgedeki fiyat eğilimi ve evinize uygun alıcı kitlesi çıkarılır.</p></li><li><span class="surec-no" aria-hidden="true">3</span><h3>İlan ve tanıtım</h3><p>İlan hazırlanır, dijital kampanyalar ve sosyal medya reklamlarıyla geniş bir alıcı kitlesine ulaşılır.</p></li><li><span class="surec-no" aria-hidden="true">4</span><h3>Pazarlık ve sözleşme</h3><p>Gösterimlerden pazarlığa ve sözleşmeye kadar yanınızda olurum.</p></li><li><span class="surec-no" aria-hidden="true">5</span><h3>Satış sonrası</h3><p>Satıştan sonra da bir yıl boyunca danışmanlık desteği sürer.</p></li></ol>
-    </div>
-  </section>
-
-  <section class="hakkimda" id="hakkimda" aria-labelledby="hakkimda-baslik">
-    <div class="kap hakkimda-ic">
-      <div class="hakkimda-foto">
-        <img src="img/hakkimda.webp" alt="İstanbul'da kırmızı çatılı apartmanlar, uzakta gökdelenler" width="1200" height="800" loading="lazy" decoding="async">
       </div>
-      <div class="hakkimda-metin">
-        <h2 id="hakkimda-baslik">Ben kimim, ne yapıyorum?</h2>
-        <p>İstanbul'un canlı emlak pazarındaki 15 yıllık deneyimimle, her bütçeye uygun seçenekler arasından güvenle yaşayacağınız evi bulmanız için yanınızdayım. Gayrimenkul sadece bir yatırım değil, yeni başlangıçların gerçeğe dönüştüğü bir süreçtir.</p>
-        <dl class="bilgi">
-          <div><dt>Hizmet bölgeleri</dt><dd>Beylikdüzü merkezli, İstanbul ve Türkiye geneli</dd></div>
-          <div><dt>Uzmanlık</dt><dd>Konut, proje, arsa ve yurt dışı projeleri</dd></div>
-        </dl>
-        <a class="dugme dugme-cizgi-koyu" href="#" data-demo="hakkimda">Devamını okuyun</a>
+      <div class="surec-akis">
+        <span class="surec-ray" aria-hidden="true"><span></span></span>
+        <ol class="surec-liste"><li class="adim"><span class="adim-no" aria-hidden="true">01</span><div class="adim-metin"><h3>Değer analizi</h3><p>Gayrimenkulünüz fiziki ve teknik olarak incelenir, piyasa şartlarına göre değeri belirlenir.</p></div></li><li class="adim"><span class="adim-no" aria-hidden="true">02</span><div class="adim-metin"><h3>Bölge ve alıcı analizi</h3><p>Bölgedeki fiyat eğilimi ve evinize uygun alıcı kitlesi çıkarılır.</p></div></li><li class="adim"><span class="adim-no" aria-hidden="true">03</span><div class="adim-metin"><h3>İlan ve tanıtım</h3><p>İlan hazırlanır, dijital kampanyalar ve sosyal medya reklamlarıyla geniş bir alıcı kitlesine ulaşılır.</p></div></li><li class="adim"><span class="adim-no" aria-hidden="true">04</span><div class="adim-metin"><h3>Pazarlık ve sözleşme</h3><p>Gösterimlerden pazarlığa ve sözleşmeye kadar yanınızda olurum.</p></div></li><li class="adim"><span class="adim-no" aria-hidden="true">05</span><div class="adim-metin"><h3>Satış sonrası</h3><p>Satıştan sonra da bir yıl boyunca danışmanlık desteği sürer.</p></div></li></ol>
       </div>
     </div>
   </section>
@@ -598,10 +590,11 @@
       <div>
         <h2>İlanlar</h2>
         <ul>
-          <li><a href="#ilanlar" data-git-sekme="satilik">Satılık</a></li>
-          <li><a href="#ilanlar" data-git-sekme="kiralik">Kiralık</a></li>
-          <li><a href="#ilanlar" data-git-sekme="proje">Projeler</a></li>
-          <li><a href="#ilanlar" data-git-sekme="arsa">Arsa</a></li>
+          <li><a href="#one-cikan">Öne çıkan evler</a></li>
+          <li><a href="#satilik">Satılık</a></li>
+          <li><a href="#kiralik">Kiralık</a></li>
+          <li><a href="#projeler">Projeler</a></li>
+          <li><a href="#" data-demo="kategori">Arsa</a></li>
           <li><a href="#" data-demo="kategori">Yurt dışı projeleri</a></li>
         </ul>
       </div>
@@ -700,7 +693,21 @@
     </div>
   </div>
 </dialog>
+
+<div class="renk-panel">
+  <button class="renk-ac" type="button" aria-expanded="false" aria-controls="renk-liste"><span class="renk-ornek" aria-hidden="true"></span><span class="renk-ac-yazi">Tema rengi</span></button>
+  <div class="renk-liste" id="renk-liste" hidden>
+    <fieldset>
+      <legend>Tema rengi</legend><label class="renk-secenek"><input type="radio" name="renk" value="yesil" checked><span class="renk-cift" style="--a:#123234;--b:#d5e0c7" aria-hidden="true"></span><span class="renk-ad">Yeşil<small>Varsayılan</small></span></label><label class="renk-secenek"><input type="radio" name="renk" value="kirmizi-mavi"><span class="renk-cift" style="--a:#003da5;--b:#dc1c2e" aria-hidden="true"></span><span class="renk-ad">Mavi ve kırmızı<small>RE/MAX renkleri</small></span></label><label class="renk-secenek"><input type="radio" name="renk" value="altin"><span class="renk-cift" style="--a:#252526;--b:#c7b98f" aria-hidden="true"></span><span class="renk-ad">Siyah ve altın<small>Century 21 renkleri</small></span></label><label class="renk-secenek"><input type="radio" name="renk" value="mavi"><span class="renk-cift" style="--a:#00539f;--b:#00aeef" aria-hidden="true"></span><span class="renk-ad">Lacivert ve mavi<small>Turyap renkleri</small></span></label>
+      <div class="renk-ozel">
+        <label class="renk-secenek"><input type="radio" name="renk" value="ozel"><span class="renk-cift renk-cift-ozel" aria-hidden="true"></span><span class="renk-ad">Kendi renginiz<small>Sağdaki kutudan seçin</small></span></label>
+        <input type="color" id="renk-sec" value="#7a1f3d" aria-label="Kendi renginizi seçin">
+      </div>
+    </fieldset>
+    <p class="renk-not">Örnek sayfada denemek için. Temada renkler panelden seçilir.</p>
+  </div>
+</div>
 <div class="bildirim" id="bildirim" role="status" aria-live="polite"></div>
-<script src="assets/site.js?v=4" defer></script>
+<script src="assets/site.js?v=5" defer></script>
 </body>
 </html>
