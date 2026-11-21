@@ -71,6 +71,7 @@
   .rozet { font-size: 13px; font-weight: 600; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
   .rozet.eksi { background: #fdecee; }
   .rozet.arti { background: #e7f5ee; }
+  .fark { font-size: 14px; font-weight: 600; color: var(--soluk); margin-left: 6px; }
   .top30 th:nth-child(2), .top30 td:nth-child(2), .top30 th:first-child, .top30 td:first-child { text-align: left; }
   .top30 td:first-child { color: var(--soluk); width: 30px; }
   .top30 tbody tr { cursor: pointer; }
@@ -155,18 +156,18 @@
   </div>
 
   <div class="bolum">
-    <h2>Abone menüsündeki veriler: terste kalanlar ve Top 30</h2>
+    <h2>Abone menüsündeki veriler: zarardaki pozisyonlar ve Top 30</h2>
     <span class="ek" id="smDurum">Binance Smart Money verisi yükleniyor</span>
   </div>
   <div class="izgara2">
-    <section class="kart" aria-label="Seçilen coinde terste kalanlar">
-      <h2 id="smBaslik">Terste kalanlar</h2>
+    <section class="kart" aria-label="Seçilen coinde pozisyon durumu">
+      <h2 id="smBaslik">Pozisyon durumu</h2>
       <div id="smCoin"><p class="ek">yükleniyor</p></div>
     </section>
     <section class="kart" aria-label="Top 30">
-      <h2>Top 30 · en çok terste kalan alt coinler (BTC ve ETH hariç)</h2>
+      <h2>Top 30 · zararda en çok trader olan alt coinler (BTC ve ETH hariç)</h2>
       <table class="teyp top30">
-        <thead><tr><th>#</th><th>Coin</th><th>Long</th><th>Short</th><th>Terste</th></tr></thead>
+        <thead><tr><th>#</th><th>Coin</th><th>Long</th><th>Short</th><th>Zararda</th></tr></thead>
         <tbody id="top30"><tr><td colspan="5" class="ek">yükleniyor</td></tr></tbody>
       </table>
     </section>
@@ -184,7 +185,8 @@
   const MEXC_WS = 'wss://contract.mexc.com/edge';
   const ISINMA = 5000;         // coin seçilince grafik yüklenirken geçen ilk 5 sn ölçüme girmez
   const SM_URL = 'https://www.binance.com/bapi/futures/v1/public/future/smart-money/signal/list?timeRange=ALL';
-  let tur = {}, tabanBul = {}, smVeri = null, fiyatlar = {}, top30Onceki = null;
+  const SM_ARALIK = 30 * 1000;  // Binance kendi Smart Money ekranını da 30 sn'de bir yeniliyor
+  let tur = {}, tabanBul = {}, smVeri = null, smOnceki = null, smSonraki = 0, fiyatlar = {}, top30Onceki = null;
 
   let semboller = {};          // BTC -> {sym:'BTCUSDT', ondalik:1}
   let aralik = {};             // BTCUSDT -> 8
@@ -344,6 +346,7 @@
   const terste = (x, f) => ({ long: x.longTraders > 0 && f < x.longAvgEntryPrice, short: x.shortTraders > 0 && f > x.shortAvgEntryPrice });
 
   async function smYukle() {
+    smSonraki = Date.now() + SM_ARALIK;
     try {
       const [sm, pi] = await Promise.all([
         fetch(SM_URL, { cache: 'no-store' }).then(r => r.json()),
@@ -352,14 +355,15 @@
       if (!sm || !sm.success || !Array.isArray(sm.data) || !Array.isArray(pi)) throw new Error('Smart Money verisi beklenen biçimde değil');
       fiyatlar = {};
       for (const p of pi) fiyatlar[p.symbol] = parseFloat(p.markPrice);
+      smOnceki = smVeri;
       smVeri = {};
       for (const x of sm.data) smVeri[x.symbol] = x;
-      $('smDurum').textContent = 'Binance Smart Money · dakikada bir yenilenir · son güncelleme ' + new Date().toLocaleTimeString('tr-TR');
+      $('smDurum').textContent = 'Binance Smart Money · 30 saniyede bir yenilenir · son güncelleme ' + new Date().toLocaleTimeString('tr-TR');
       top30Ciz();
       smCoinCiz();
     } catch (e) {
       console.warn('Smart Money verisi alınamadı', e);
-      $('smDurum').textContent = 'Binance Smart Money verisi alınamadı, 1 dakika sonra yeniden denenecek';
+      $('smDurum').textContent = 'Binance Smart Money verisi alınamadı, 30 saniye sonra yeniden denenecek';
     }
   }
 
@@ -385,16 +389,24 @@
 
   function smCoinCiz() {
     if (!aktif) return;
-    $('smBaslik').textContent = 'Terste kalanlar · ' + aktif.sym;
-    const x = smVeri && smVeri[aktif.sym];
-    const f = sonFiyat !== null ? sonFiyat : fiyatlar[aktif.sym];
+    $('smBaslik').textContent = 'Pozisyon durumu · ' + aktif.sym;
     if (!smVeri) return;
+    const x = smVeri[aktif.sym], o = smOnceki && smOnceki[aktif.sym];
+    const f = sonFiyat !== null ? sonFiyat : fiyatlar[aktif.sym];
     if (!x || !f) { $('smCoin').innerHTML = '<p class="ek">Bu coin için Binance Smart Money verisi yok.</p>'; return; }
     const t = terste(x, f);
-    const satir = (ad, n, ort, ters) =>
-      `<div class="sm-satir"><div><div class="borsa">${ad}</div><div class="sayi">${fmt(n, 0)} trader</div><div class="ek">ağırlıklı ortalama giriş ${fmt(ort, aktif.ondalik)}</div></div><span class="rozet ${ters ? 'eksi' : 'arti'}">${ters ? 'terste' : 'kârda'}</span></div>`;
-    $('smCoin').innerHTML = satir('Long', x.longTraders, x.longAvgEntryPrice, t.long) + satir('Short', x.shortTraders, x.shortAvgEntryPrice, t.short) +
-      `<p class="ek">Anlık fiyat ${fmt(f, aktif.ondalik)}. Fiyat bir tarafın ortalama girişinin aleyhine geçince o taraf terste sayılır.</p>`;
+    const fark = (yeni, eski) => {
+      if (eski === undefined || eski === null || yeni === eski) return '';
+      const d = yeni - eski;
+      return `<span class="fark">${d > 0 ? '+' : '−'}${fmt(Math.abs(d), 0)}</span>`;
+    };
+    const uzaklik = (ort) => { const y = (f - ort) / ort * 100; return 'anlık fiyat bundan %' + fmt(Math.abs(y), 2) + (y < 0 ? ' aşağıda' : ' yukarıda'); };
+    const satir = (ad, n, eski, ort, zarar) =>
+      `<div class="sm-satir"><div><div class="borsa">${ad}</div><div class="sayi">${fmt(n, 0)} trader${fark(n, eski)}</div><div class="ek">ağırlıklı ortalama giriş ${fmt(ort, aktif.ondalik)}</div><div class="ek">${uzaklik(ort)}</div></div><span class="rozet ${zarar ? 'eksi' : 'arti'}">${zarar ? 'zararda' : 'kârda'}</span></div>`;
+    const kalan = Math.max(0, Math.ceil((smSonraki - Date.now()) / 1000));
+    $('smCoin').innerHTML = satir('Long', x.longTraders, o && o.longTraders, x.longAvgEntryPrice, t.long) +
+      satir('Short', x.shortTraders, o && o.shortTraders, x.shortAvgEntryPrice, t.short) +
+      `<p class="ek">Anlık fiyat <b>${fmt(f, aktif.ondalik)}</b>. Fiyat bir tarafın ortalama girişinin aleyhine geçince o taraf zararda sayılır. Trader sayılarını ve ortalamaları Binance toplar, 30 saniyede bir yenilenir; değişen sayının yanında farkı yazar. Sonraki yenileme ${kalan} sn.</p>`;
   }
 
   function bildirim(metin) {
@@ -515,9 +527,12 @@
     sec(tr.dataset.taban);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
-  setInterval(() => { if (smVeri) smCoinCiz(); }, 5000);
-  $('araForm').addEventListener('submit', (e) => { e.preventDefault(); sec($('coin').value); });
-  $('coin').addEventListener('change', () => sec($('coin').value));
+  setInterval(() => { if (smVeri) smCoinCiz(); }, 1000);
+  // Kutu doluyken liste yalnız o yazıya uyan coini gösteriyor: tıklayınca boşalt, seçilmezse eski coini geri koy
+  $('coin').addEventListener('focus', () => { const c = $('coin'); c.placeholder = aktif ? aktif.taban : 'BTC'; c.value = ''; });
+  $('coin').addEventListener('blur', () => { const c = $('coin'); if (!c.value.trim() && aktif) { c.value = aktif.taban; c.setCustomValidity(''); } });
+  $('araForm').addEventListener('submit', (e) => { e.preventDefault(); if ($('coin').value.trim()) sec($('coin').value); });
+  $('coin').addEventListener('change', () => { if ($('coin').value.trim()) sec($('coin').value); });
   $('coin').addEventListener('input', () => $('coin').setCustomValidity(''));
 
   (async () => {
@@ -527,7 +542,7 @@
     catch (e) { durum('Binance listesi alınamadı', 'kopuk'); return; }
     sec(new URLSearchParams(location.search).get('coin') || 'BTC');
     smYukle();
-    setInterval(smYukle, 60 * 1000);
+    setInterval(smYukle, SM_ARALIK);
   })();
 })();
 </script>
