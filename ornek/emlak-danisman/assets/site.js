@@ -179,122 +179,146 @@
   }, { passive: true });
   zamanla(SURE);
 
-  /* İlan sekmeleri */
-  var sekmeler = $$('.sekme');
-  var tumBag = $('#tum-bag');
-  var filtreSonuc = $('#filtre-sonuc');
-  var filtreMetin = $('#filtre-metin');
-  var bosDurum = $('#bos-durum');
+  /* Süreç: kaydırdıkça çizgi dolar, geçilen adım koyulaşır; çizgi son adımın noktasında biter */
+  var akis = $('.surec-akis');
+  if (akis) {
+    var ray = $('.surec-ray', akis);
+    var adimlar = $$('.adim', akis);
+    /* Numaranın konumu .surec-akis'e göre (ilk konumlu üst öğe); nokta CSS'te top .14em, 12 px */
+    var noktaPay = function (adim) {
+      var no = $('.adim-no', adim);
+      return no.offsetTop + parseFloat(getComputedStyle(no).fontSize) * 0.14 + 6;
+    };
+    var rayBoyu = function () {
+      ray.style.top = noktaPay(adimlar[0]) + 'px';
+      ray.style.bottom = Math.max(0, akis.offsetHeight - noktaPay(adimlar[adimlar.length - 1])) + 'px';
+    };
+    rayBoyu();
+    window.addEventListener('resize', rayBoyu);
+    window.addEventListener('load', rayBoyu);
+    if (kok.classList.contains('hareket')) {
+      akis.classList.add('canli');
+      var bekleyen = false;
+      var ilerle = function () {
+        bekleyen = false;
+        var cizgi = window.innerHeight * 0.62;
+        var r = ray.getBoundingClientRect();
+        var oran = r.height ? (cizgi - r.top) / r.height : 0;
+        akis.style.setProperty('--ilerle', Math.min(1, Math.max(0, oran)).toFixed(4));
+        adimlar.forEach(function (adim) {
+          adim.classList.toggle('gecti', $('.adim-no', adim).getBoundingClientRect().top < cizgi);
+        });
+      };
+      var istek = function () { if (!bekleyen) { bekleyen = true; requestAnimationFrame(ilerle); } };
+      window.addEventListener('scroll', istek, { passive: true });
+      window.addEventListener('resize', istek);
+      ilerle();
+    }
+  }
 
-  function sekmeSec(ad, odakla) {
-    sekmeler.forEach(function (s) {
-      var secili = s.dataset.sekme === ad;
-      s.setAttribute('aria-selected', secili ? 'true' : 'false');
-      s.setAttribute('tabindex', secili ? '0' : '-1');
-      var panel = document.getElementById(s.getAttribute('aria-controls'));
-      panel.hidden = !secili;
-      if (secili) {
-        $$('.kart.bekliyor', panel).forEach(function (k) { k.classList.remove('bekliyor'); });
-        tumBag.textContent = s.dataset.tum;
-        panel.classList.remove('giris');
-        if (!hareketAzalt) { void panel.offsetWidth; panel.classList.add('giris'); }
-        if (odakla) s.focus();
+  /* Tema rengi seçici (yalnız örnek sayfada): hazır firma renkleri ya da kendi renginiz.
+     Ana renk düğme ve alt bilgide, vurgu etiketlerde; yazı okunurluğu en az 4,5:1 tutulur. */
+  var renkPanel = $('.renk-panel');
+  if (renkPanel) {
+    var renkAc = $('.renk-ac', renkPanel), renkListe = $('#renk-liste'), renkSec = $('#renk-sec');
+    var temaMeta = $('meta[name="theme-color"]');
+    var VARSAYILAN = temaMeta ? temaMeta.content : '#123234';
+    var TAKIMLAR = {};
+    $$('.renk-secenek .renk-cift[style]', renkPanel).forEach(function (s) {
+      var girdi = s.parentNode.querySelector('input');
+      TAKIMLAR[girdi.value] = [s.style.getPropertyValue('--a').trim(), s.style.getPropertyValue('--b').trim()];
+    });
+
+    var hexRgb = function (h) {
+      h = h.replace('#', '');
+      if (h.length === 3) h = h.replace(/./g, '$&$&');
+      return [0, 2, 4].map(function (i) { return parseInt(h.substr(i, 2), 16); });
+    };
+    var rgbHex = function (c) {
+      return '#' + c.map(function (v) { return ('0' + Math.round(Math.max(0, Math.min(255, v))).toString(16)).slice(-2); }).join('');
+    };
+    var parlaklik = function (c) {
+      var d = c.map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+      return 0.2126 * d[0] + 0.7152 * d[1] + 0.0722 * d[2];
+    };
+    var karsitlik = function (x, y) {
+      var a = parlaklik(x), b = parlaklik(y);
+      return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+    };
+    var karistir = function (x, y, oran) { return x.map(function (v, i) { return v + (y[i] - v) * oran; }); };
+    var SIYAH = [0, 0, 0], BEYAZ = [255, 255, 255], KOYU_YAZI = [17, 17, 17];
+
+    /* Beyaz üstünde okunmayan açık renk, tonu korunarak koyulaştırılır */
+    var okunurYap = function (c) {
+      var adim = 0;
+      while (karsitlik(c, BEYAZ) < 4.5 && adim < 40) { c = karistir(c, SIYAH, 0.06); adim++; }
+      return c;
+    };
+    /* Karartma: ana rengin tonunu taşıyan çok koyu renk (fotoğraf üstü yazı için) */
+    var karartRenk = function (c) {
+      var gri = (c[0] + c[1] + c[2]) / 3;
+      return karistir(karistir(c, [gri, gri, gri], 0.3), SIYAH, 0.66);
+    };
+    var vurguYazi = function (ana, vurgu) {
+      if (karsitlik(ana, vurgu) >= 4.5) return rgbHex(ana);
+      return karsitlik(BEYAZ, vurgu) >= 4.5 ? '#ffffff' : rgbHex(KOYU_YAZI);
+    };
+
+    var uygula = function (anaHex, vurguHex) {
+      var st = kok.style;
+      if (!anaHex) {
+        ['--gece', '--gece-koyu', '--ihlamur', '--vurgu-yazi', '--karart'].forEach(function (p) { st.removeProperty(p); });
+        if (temaMeta) temaMeta.content = VARSAYILAN;
+        return;
       }
+      var ana = okunurYap(hexRgb(anaHex));
+      var vurgu = vurguHex ? hexRgb(vurguHex) : karistir(ana, BEYAZ, 0.8);
+      st.setProperty('--gece', rgbHex(ana));
+      st.setProperty('--gece-koyu', rgbHex(karistir(ana, SIYAH, 0.3)));
+      st.setProperty('--ihlamur', rgbHex(vurgu));
+      st.setProperty('--vurgu-yazi', vurguYazi(ana, vurgu));
+      st.setProperty('--karart', karartRenk(ana).map(Math.round).join(', '));
+      if (temaMeta) temaMeta.content = rgbHex(ana);
+    };
+    var secimUygula = function () {
+      var secili = $('input[name="renk"]:checked', renkPanel);
+      if (!secili || secili.value === 'yesil') { uygula(null); return; }
+      if (secili.value === 'ozel') { uygula(renkSec.value, null); return; }
+      var t = TAKIMLAR[secili.value];
+      uygula(t[0], t[1]);
+    };
+    $$('input[name="renk"]', renkPanel).forEach(function (g) { g.addEventListener('change', secimUygula); });
+    renkSec.addEventListener('input', function () {
+      renkPanel.style.setProperty('--ozel', renkSec.value);
+      $('input[value="ozel"]', renkPanel).checked = true;
+      secimUygula();
     });
-  }
-  sekmeler.forEach(function (s, i) {
-    s.addEventListener('click', function () { filtreTemizle(); sekmeSec(s.dataset.sekme); });
-    s.addEventListener('keydown', function (e) {
-      var hedef = null;
-      if (e.key === 'ArrowRight') hedef = sekmeler[(i + 1) % sekmeler.length];
-      else if (e.key === 'ArrowLeft') hedef = sekmeler[(i - 1 + sekmeler.length) % sekmeler.length];
-      else if (e.key === 'Home') hedef = sekmeler[0];
-      else if (e.key === 'End') hedef = sekmeler[sekmeler.length - 1];
-      if (hedef) { e.preventDefault(); filtreTemizle(); sekmeSec(hedef.dataset.sekme, true); }
-    });
-  });
-  $$('[data-git-sekme]').forEach(function (a) {
-    a.addEventListener('click', function () { filtreTemizle(); sekmeSec(a.dataset.gitSekme); });
-  });
+    renkPanel.style.setProperty('--ozel', renkSec.value);
 
-  /* Arama (filtre önerisi) */
-  var FIYATLAR = {
-    satilik: [10000000, 20000000, 40000000, 75000000],
-    kiralik: [30000, 40000, 50000],
-    proje: [8000000, 10000000, 20000000],
-    arsa: [2000000, 5000000, 10000000]
-  };
-  var TUR_AD = { satilik: 'Satılık ilanlarda', kiralik: 'Kiralık ilanlarda', proje: 'Projelerde', arsa: 'Arsalarda' };
-  var aTur = $('#a-tur'), aIlce = $('#a-ilce'), aOda = $('#a-oda'), aFiyat = $('#a-fiyat'), aOdaAlan = $('#a-oda-alan');
-
-  function paraYaz(tl) {
-    if (tl >= 1000000) return (tl / 1000000).toLocaleString('tr-TR') + ' milyon TL';
-    return tl.toLocaleString('tr-TR') + ' TL';
-  }
-  function fiyatYaz(tur, f, cumleIci) {
-    var on = tur === 'kiralik' ? (cumleIci ? 'aylık ' : 'Aylık ') : '';
-    return on + paraYaz(f) + "'ye kadar";
-  }
-  function secenekKur(liste, degerler, yazi) {
-    liste.innerHTML = '<option value="">Tümü</option>';
-    degerler.forEach(function (d) {
-      var o = document.createElement('option');
-      o.value = d;
-      o.textContent = yazi(d);
-      liste.appendChild(o);
+    var renkKapat = function (odakGeri) {
+      if (renkListe.hidden) return;
+      renkListe.hidden = true;
+      renkAc.setAttribute('aria-expanded', 'false');
+      if (odakGeri) renkAc.focus();
+    };
+    renkAc.addEventListener('click', function () {
+      var acik = !renkListe.hidden;
+      renkListe.hidden = acik;
+      renkAc.setAttribute('aria-expanded', acik ? 'false' : 'true');
+      if (!acik) { var secili = $('input[name="renk"]:checked', renkPanel); if (secili) secili.focus(); }
     });
-  }
-  function fiyatSecenekleri() {
-    var tur = aTur.value;
-    secenekKur(aFiyat, FIYATLAR[tur], function (f) { return fiyatYaz(tur, f); });
-    var ilceler = [];
-    $$('#panel-' + tur + ' .kart').forEach(function (k) {
-      if (ilceler.indexOf(k.dataset.ilce) < 0) ilceler.push(k.dataset.ilce);
-    });
-    ilceler.sort(function (a, b) { return a.localeCompare(b, 'tr'); });
-    secenekKur(aIlce, ilceler, function (i) { return i; });
-    var arsa = tur === 'arsa';
-    aOda.disabled = arsa;
-    if (arsa) aOda.value = '';
-    aOdaAlan.classList.toggle('pasif', arsa);
-  }
-  aTur.addEventListener('change', fiyatSecenekleri);
-  fiyatSecenekleri();
+    document.addEventListener('click', function (e) { if (!renkPanel.contains(e.target)) renkKapat(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !renkListe.hidden) renkKapat(true); });
 
-  function filtreTemizle() {
-    $$('.kart').forEach(function (k) { k.hidden = false; });
-    $$('.ilan-izgara').forEach(function (g) { g.classList.remove('suzuldu'); });
-    filtreSonuc.hidden = true;
-    bosDurum.hidden = true;
+    /* Vitrin geçilince belirir; vitrinin üstündeyken liste açıksa kapanır */
+    var renkGorunum = function () {
+      var gorunur = vitrin.getBoundingClientRect().bottom < window.innerHeight * 0.5;
+      renkPanel.classList.toggle('gorunur', gorunur);
+      if (!gorunur) renkKapat(false);
+    };
+    window.addEventListener('scroll', renkGorunum, { passive: true });
+    renkGorunum();
   }
-  $('#filtre-temizle').addEventListener('click', function () {
-    filtreTemizle();
-    aIlce.value = ''; aOda.value = ''; aFiyat.value = '';
-    sekmeSec(aTur.value, true);
-  });
-
-  $('#arama-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var tur = aTur.value, ilce = aIlce.value, oda = parseInt(aOda.value, 10) || 0, fiyat = parseInt(aFiyat.value, 10) || 0;
-    filtreTemizle();
-    sekmeSec(tur);
-    var panel = $('#panel-' + tur);
-    var say = 0;
-    $$('.kart', panel).forEach(function (k) {
-      var odaAz = parseInt(k.dataset.odaAz, 10), odaCok = parseInt(k.dataset.odaCok, 10), kFiyat = parseInt(k.dataset.fiyat, 10);
-      var uyar = (!ilce || k.dataset.ilce === ilce) &&
-        (!oda || (oda >= 4 ? odaCok >= 4 : odaAz <= oda && oda <= odaCok)) &&
-        (!fiyat || (kFiyat > 0 && kFiyat <= fiyat));
-      k.hidden = !uyar;
-      if (uyar) say++;
-    });
-    $('.ilan-izgara', panel).classList.add('suzuldu');
-    var olcut = [ilce, oda ? (oda >= 4 ? '4+1 ve üzeri' : oda + '+1') : '', fiyat ? fiyatYaz(tur, fiyat, true) : ''].filter(Boolean);
-    filtreSonuc.hidden = false;
-    filtreMetin.textContent = TUR_AD[tur] + ' ' + say + ' sonuç' + (olcut.length ? ': ' + olcut.join(', ') : '');
-    bosDurum.hidden = say > 0;
-    $('#ilanlar').scrollIntoView({ behavior: hareketAzalt ? 'auto' : 'smooth', block: 'start' });
-  });
 
   /* Talep pencereleri */
   function formSifirla(kap) {
@@ -379,7 +403,7 @@
         if (g.isIntersecting) { g.target.classList.remove('bekliyor'); belirt.unobserve(g.target); }
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
-    $$('.ilan-panel:not([hidden]) .kart, .yazi').forEach(function (el) {
+    $$('.kart, .yazi').forEach(function (el) {
       if (el.getBoundingClientRect().top > window.innerHeight) { el.classList.add('bekliyor'); belirt.observe(el); }
     });
   }
