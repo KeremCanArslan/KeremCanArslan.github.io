@@ -163,6 +163,7 @@
     <section class="kart" aria-label="Seçilen coinde pozisyon durumu">
       <h2 id="smBaslik">Pozisyon durumu</h2>
       <div id="smCoin"><p class="ek">yükleniyor</p></div>
+      <a class="karsilastir" id="smLink" href="https://www.binance.com/tr/smart-money/signal/BTCUSDT" target="_blank" rel="noopener">Binance Smart Money'de aynı coini aç ↗</a>
     </section>
     <section class="kart" aria-label="Top 30">
       <h2>Top 30 · zararda en çok trader olan alt coinler (BTC ve ETH hariç)</h2>
@@ -185,8 +186,10 @@
   const MEXC_WS = 'wss://contract.mexc.com/edge';
   const ISINMA = 5000;         // coin seçilince grafik yüklenirken geçen ilk 5 sn ölçüme girmez
   const SM_URL = 'https://www.binance.com/bapi/futures/v1/public/future/smart-money/signal/list?timeRange=ALL';
+  const SM_OZET_URL = 'https://www.binance.com/bapi/futures/v1/public/future/smart-money/signal/overview?symbol=';  // Binance coin sayfasının kendi özeti
   const SM_ARALIK = 30 * 1000;  // Binance kendi Smart Money ekranını da 30 sn'de bir yeniliyor
   let tur = {}, tabanBul = {}, smVeri = null, smOnceki = null, smSonraki = 0, fiyatlar = {}, top30Onceki = null;
+  let smOzet = null, smOzetOnceki = null, sonMark = null;
 
   let semboller = {};          // BTC -> {sym:'BTCUSDT', ondalik:1}
   let aralik = {};             // BTCUSDT -> 8
@@ -280,6 +283,7 @@
         }
         if (!ciz) { ciz = true; requestAnimationFrame(fiyatCiz); }
       } else if (d.e === 'markPriceUpdate') {
+        sonMark = parseFloat(d.p);
         const r = parseFloat(d.r);
         const el = $('fBinance');
         el.textContent = yuzde(r); el.className = 'oran ' + (r > 0 ? 'arti' : r < 0 ? 'eksi' : '');
@@ -365,6 +369,21 @@
       console.warn('Smart Money verisi alınamadı', e);
       $('smDurum').textContent = 'Binance Smart Money verisi alınamadı, 30 saniye sonra yeniden denenecek';
     }
+    if (aktif) ozetYukle(aktif.sym);
+  }
+
+  // Seçilen coinin kartı, Binance Smart Money coin sayfasının kullandığı özetten okunur (rakamlar o sayfayla aynı)
+  async function ozetYukle(sym) {
+    try {
+      const j = await fetch(SM_OZET_URL + sym, { cache: 'no-store' }).then(r => r.json());
+      if (!j || !j.success || !j.data || j.data.symbol !== sym) throw new Error('özet beklenen biçimde değil');
+      if (!aktif || aktif.sym !== sym) return;
+      smOzetOnceki = smOzet && smOzet.symbol === sym ? smOzet : null;
+      smOzet = j.data;
+      smCoinCiz();
+    } catch (e) {
+      console.warn('Smart Money coin özeti alınamadı', e);
+    }
   }
 
   function top30Ciz() {
@@ -390,9 +409,13 @@
   function smCoinCiz() {
     if (!aktif) return;
     $('smBaslik').textContent = 'Pozisyon durumu · ' + aktif.sym;
-    if (!smVeri) return;
-    const x = smVeri[aktif.sym], o = smOnceki && smOnceki[aktif.sym];
-    const f = sonFiyat !== null ? sonFiyat : fiyatlar[aktif.sym];
+    const oz = smOzet && smOzet.symbol === aktif.sym ? smOzet : null;
+    if (!oz && !smVeri) return;
+    // Önce Binance coin sayfasının özeti; o gelene kadar listedeki satır
+    const x = oz ? { longTraders: oz.longTraders, shortTraders: oz.shortTraders, longAvgEntryPrice: oz.longTradersAvgEntryPrice, shortAvgEntryPrice: oz.shortTradersAvgEntryPrice, longKar: oz.longProfitTraders, shortKar: oz.shortProfitTraders } : smVeri[aktif.sym];
+    const o = oz ? smOzetOnceki : (smOnceki && smOnceki[aktif.sym]);
+    // Binance kâr ve zararı mark fiyatla hesaplıyor, kart da onu kullanır
+    const f = sonMark !== null ? sonMark : (fiyatlar[aktif.sym] || sonFiyat);
     if (!x || !f) { $('smCoin').innerHTML = '<p class="ek">Bu coin için Binance Smart Money verisi yok.</p>'; return; }
     const t = terste(x, f);
     const fark = (yeni, eski) => {
@@ -400,13 +423,15 @@
       const d = yeni - eski;
       return `<span class="fark">${d > 0 ? '+' : '−'}${fmt(Math.abs(d), 0)}</span>`;
     };
-    const uzaklik = (ort) => { const y = (f - ort) / ort * 100; return 'anlık fiyat bundan %' + fmt(Math.abs(y), 2) + (y < 0 ? ' aşağıda' : ' yukarıda'); };
-    const satir = (ad, n, eski, ort, zarar) =>
-      `<div class="sm-satir"><div><div class="borsa">${ad}</div><div class="sayi">${fmt(n, 0)} trader${fark(n, eski)}</div><div class="ek">ağırlıklı ortalama giriş ${fmt(ort, aktif.ondalik)}</div><div class="ek">${uzaklik(ort)}</div></div><span class="rozet ${zarar ? 'eksi' : 'arti'}">${zarar ? 'zararda' : 'kârda'}</span></div>`;
+    const uzaklik = (ort) => { const y = (f - ort) / ort * 100; return 'mark fiyat bundan %' + fmt(Math.abs(y), 2) + (y < 0 ? ' aşağıda' : ' yukarıda'); };
+    // Binance oranı yuvarlamıyor, iki basamakta kesiyor (322 / 884 = %36,425 → %36,42)
+    const karOrani = (k, n) => (k === undefined || k === null || !n) ? '' : `<div class="ek">kârdaki trader oranı %${fmt(Math.floor(k / n * 10000) / 100, 2)}</div>`;
+    const satir = (ad, n, eski, ort, zarar, kar) =>
+      `<div class="sm-satir"><div><div class="borsa">${ad}</div><div class="sayi">${fmt(n, 0)} trader${fark(n, eski)}</div><div class="ek">ağırlıklı ortalama giriş ${fmt(ort, aktif.ondalik)}</div><div class="ek">${uzaklik(ort)}</div>${karOrani(kar, n)}</div><span class="rozet ${zarar ? 'eksi' : 'arti'}">${zarar ? 'zararda' : 'kârda'}</span></div>`;
     const kalan = Math.max(0, Math.ceil((smSonraki - Date.now()) / 1000));
-    $('smCoin').innerHTML = satir('Long', x.longTraders, o && o.longTraders, x.longAvgEntryPrice, t.long) +
-      satir('Short', x.shortTraders, o && o.shortTraders, x.shortAvgEntryPrice, t.short) +
-      `<p class="ek">Anlık fiyat <b>${fmt(f, aktif.ondalik)}</b>. Fiyat bir tarafın ortalama girişinin aleyhine geçince o taraf zararda sayılır. Trader sayılarını ve ortalamaları Binance toplar, 30 saniyede bir yenilenir; değişen sayının yanında farkı yazar. Sonraki yenileme ${kalan} sn.</p>`;
+    $('smCoin').innerHTML = satir('Long', x.longTraders, o && o.longTraders, x.longAvgEntryPrice, t.long, x.longKar) +
+      satir('Short', x.shortTraders, o && o.shortTraders, x.shortAvgEntryPrice, t.short, x.shortKar) +
+      `<p class="ek">Mark fiyat <b>${fmt(f, aktif.ondalik)}</b> (Binance kâr ve zararı bununla hesaplar). Fiyat bir tarafın ortalama girişinin aleyhine geçince o taraf zararda sayılır. Rakamlar Binance Smart Money coin sayfasıyla aynı kaynaktan gelir, 30 saniyede bir yenilenir; değişen sayının yanında farkı yazar. Sonraki yenileme ${kalan} sn.</p>`;
   }
 
   function bildirim(metin) {
@@ -509,7 +534,10 @@
     $('alis').textContent = '–'; $('satis').textContent = '–'; $('az').hidden = true;
     $('gecikme').textContent = 'ölçülüyor'; $('gecikmeAralik').textContent = '–';
     $('binanceLink').href = 'https://www.binance.com/tr/futures/' + s.sym;
+    $('smLink').href = 'https://www.binance.com/tr/smart-money/signal/' + s.sym;
+    sonMark = null; smOzet = smOzetOnceki = null;
     smCoinCiz();
+    ozetYukle(s.sym);
     ['fBinance', 'fMexc'].forEach(id => { $(id).textContent = '–'; $(id).className = 'oran'; });
     $('fBinanceEk').innerHTML = '&nbsp;'; $('fMexcEk').innerHTML = '&nbsp;'; delete $('fMexcEk').dataset.sonraki;
     durum('bağlanıyor', '');
