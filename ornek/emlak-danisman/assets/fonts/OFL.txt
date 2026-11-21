@@ -1,0 +1,7 @@
+Bu klasördeki yazı tipleri SIL Open Font License 1.1 ile dağıtılır.
+https://openfontlicense.org/open-font-license-official-text/
+
+Newsreader: Copyright The Newsreader Project Authors (https://github.com/productiontype/Newsreader)
+Hanken Grotesk: Copyright The Hanken Grotesk Project Authors (https://github.com/marcologous/hanken-grotesk)
+
+Dosyalar Google Fonts'tan (fonts.gstatic.com) latin ve latin-ext alt kümeleri olarak alındı, 20.11.2026.
