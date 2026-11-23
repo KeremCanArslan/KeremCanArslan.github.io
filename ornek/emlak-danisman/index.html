@@ -20,7 +20,7 @@
 <link rel="preload" href="assets/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/hanken-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('hareket');</script>
-<link rel="stylesheet" href="assets/site.css?v=4">
+<link rel="stylesheet" href="assets/site.css?v=5">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -174,49 +174,51 @@
 
   <section class="hakkimda" id="hakkimda" aria-labelledby="hakkimda-baslik">
     <div class="kap hakkimda-ic">
-      <div class="hakkimda-foto">
-        <img src="img/hakkimda.webp" alt="İstanbul'da kırmızı çatılı apartmanlar, uzakta gökdelenler" width="1200" height="800" loading="lazy" decoding="async">
-      </div>
-      <div class="hakkimda-metin">
-        <p class="ust-yazi">Murat ERDOĞAN · Yeni nesil gayrimenkul danışmanı</p>
-        <h2 id="hakkimda-baslik">Ben kimim, ne yapıyorum?</h2>
-        <p>İstanbul'un canlı emlak pazarındaki 15 yıllık deneyimimle, her bütçeye uygun seçenekler arasından güvenle yaşayacağınız evi bulmanız için yanınızdayım. Gayrimenkul sadece bir yatırım değil, yeni başlangıçların gerçeğe dönüştüğü bir süreçtir.</p>
-        <dl class="bilgi">
-          <div><dt>Hizmet bölgeleri</dt><dd>Beylikdüzü merkezli, İstanbul ve Türkiye geneli</dd></div>
-          <div><dt>Uzmanlık</dt><dd>Konut, proje, arsa ve yurt dışı projeleri</dd></div>
-        </dl>
-        <a class="dugme dugme-cizgi-koyu" href="#" data-demo="hakkimda">Devamını okuyun</a>
-      </div>
+      <p class="ust-yazi">Murat ERDOĞAN · Yeni nesil gayrimenkul danışmanı</p>
+      <h2 id="hakkimda-baslik">Ben kimim, ne yapıyorum?</h2>
+      <p class="hakkimda-yazi">İstanbul'un canlı emlak pazarındaki 15 yıllık deneyimimle, her bütçeye uygun seçenekler arasından güvenle yaşayacağınız evi bulmanız için yanınızdayım. Gayrimenkul sadece bir yatırım değil, yeni başlangıçların gerçeğe dönüştüğü bir süreçtir.</p>
+      <dl class="bilgi">
+        <div><dt>Hizmet bölgeleri</dt><dd>Beylikdüzü merkezli, İstanbul ve Türkiye geneli</dd></div>
+        <div><dt>Uzmanlık</dt><dd>Konut, proje, arsa ve yurt dışı projeleri</dd></div>
+      </dl>
+      <a class="dugme dugme-cizgi-koyu" href="#" data-demo="hakkimda">Devamını okuyun</a>
     </div>
   </section>
 
-  <section class="kapilar" aria-label="Alıcıya ve satıcıya özel danışmanlık hizmeti">
-    <div class="kap kapilar-ic">
-      <article class="kapi">
+  <section class="danisma cizgili" aria-labelledby="alici-baslik">
+    <div class="kap danisma-ic">
+      <div class="danisma-foto">
         <img src="img/kapi-alici.webp" alt="Akşam ışığında yamaca sıralanmış evler" width="1200" height="800" loading="lazy" decoding="async">
-        <h2>Alıcıya özel danışmanlık hizmeti</h2>
+      </div>
+      <div class="danisma-metin">
+        <h2 id="alici-baslik">Alıcıya özel danışmanlık hizmeti</h2>
         <p>Yalnızca elimdeki portföyü satmaya çalışmam. İhtiyaçlarınızı dinler, bütçenize en uygun gayrimenkulü araştırırım. Pazarlıkta, sözleşmede ve satıştan sonra da yanınızdayım.</p>
         <button class="dugme dugme-koyu" type="button" data-talep="ariyorum">Aradığım evi anlat</button>
-      </article>
-      <article class="kapi">
-        <img src="img/kapi-satici.webp" alt="Ofiste anahtar teslim eden eller" width="1200" height="800" loading="lazy" decoding="async">
-        <h2>Satıcıya özel danışmanlık hizmeti</h2>
-        <p>Gayrimenkulünüzü doğru değerle ve kısa sürede satmanız için mülkünüz önce piyasa şartlarına göre analiz edilir. Bölge analizi, hedef kitle ve dijital tanıtımla doğru alıcıyı bulur, süreci baştan sona yürütürüm.</p>
-        <button class="dugme dugme-koyu" type="button" data-talep="satiyorum">Evimi değerlendir</button>
-      </article>
+      </div>
     </div>
   </section>
 
-  <section class="liste liste-genis" id="one-cikan" aria-labelledby="one-cikan-baslik">
-    <div class="kap">
-      <div class="liste-bas">
-        <div class="liste-metin">
+  <section class="danisma danisma-ters cizgili" aria-labelledby="satici-baslik">
+    <div class="kap danisma-ic">
+      <div class="danisma-foto">
+        <img src="img/kapi-satici.webp" alt="Ofiste anahtar teslim eden eller" width="1200" height="800" loading="lazy" decoding="async">
+      </div>
+      <div class="danisma-metin">
+        <h2 id="satici-baslik">Satıcıya özel danışmanlık hizmeti</h2>
+        <p>Gayrimenkulünüzü doğru değerle ve kısa sürede satmanız için mülkünüz önce piyasa şartlarına göre analiz edilir. Bölge analizi, hedef kitle ve dijital tanıtımla doğru alıcıyı bulur, süreci baştan sona yürütürüm.</p>
+        <button class="dugme dugme-koyu" type="button" data-talep="satiyorum">Evimi değerlendir</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="ilanlar">
+    <section class="liste liste-genis" id="one-cikan" aria-labelledby="one-cikan-baslik">
+      <div class="kap">
+        <div class="liste-bas">
           <h2 id="one-cikan-baslik">Öne çıkan evler</h2>
           <p>Portföyümden seçtiğim, şu an öne çıkardığım ilanlar.</p>
         </div>
-        <a class="dugme dugme-cizgi-koyu" href="#" data-demo="kategori" aria-label="Bütün ilanları gör">Tümünü gör</a>
-      </div>
-      <div class="ilan-izgara">
+        <div class="ilan-izgara">
           <article class="kart">
             <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true"><span class="kart-etiket">Satılık</span>
               <img src="img/o-site.webp" alt="Yamaçtaki taş evlerin önünde palmiyeli ortak havuz" width="1200" height="800" loading="lazy" decoding="async">
@@ -277,19 +279,19 @@
               </div>
             </div>
           </article>
+        </div>
+        <div class="liste-dip">
+          <a class="dugme dugme-cizgi-koyu" href="#" data-demo="kategori" aria-label="Bütün ilanları gör">Tümünü gör</a>
+        </div>
       </div>
-    </div>
-  </section>
-  <section class="liste" id="satilik" aria-labelledby="satilik-baslik">
-    <div class="kap">
-      <div class="liste-bas">
-        <div class="liste-metin">
+    </section>
+    <section class="liste cizgili" id="satilik" aria-labelledby="satilik-baslik">
+      <div class="kap">
+        <div class="liste-bas">
           <h2 id="satilik-baslik">Satılık evler</h2>
           <p>Daire, villa ve müstakil evlerde güncel satılık ilanlar.</p>
         </div>
-        <a class="dugme dugme-cizgi-koyu" href="#" data-demo="kategori" aria-label="Tüm satılık evleri gör">Tümünü gör</a>
-      </div>
-      <div class="ilan-sira">
+        <div class="ilan-sira">
           <article class="kart">
             <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true">
               <img src="img/s-villa.webp" alt="Pergolalı teras, havuz ve gün batımında koy manzarası" width="1200" height="800" loading="lazy" decoding="async">
@@ -350,19 +352,19 @@
               </div>
             </div>
           </article>
+        </div>
+        <div class="liste-dip">
+          <a class="dugme dugme-cizgi-koyu" href="#" data-demo="kategori" aria-label="Tüm satılık evleri gör">Tümünü gör</a>
+        </div>
       </div>
-    </div>
-  </section>
-  <section class="liste" id="kiralik" aria-labelledby="kiralik-baslik">
-    <div class="kap">
-      <div class="liste-bas">
-        <div class="liste-metin">
+    </section>
+    <section class="liste cizgili" id="kiralik" aria-labelledby="kiralik-baslik">
+      <div class="kap">
+        <div class="liste-bas">
           <h2 id="kiralik-baslik">Kiralık evler</h2>
           <p>Eşyalı ve eşyasız, taşınmaya hazır kiralık evler.</p>
         </div>
-        <a class="dugme dugme-cizgi-koyu" href="#" data-demo="kategori" aria-label="Tüm kiralık evleri gör">Tümünü gör</a>
-      </div>
-      <div class="ilan-sira">
+        <div class="ilan-sira">
           <article class="kart">
             <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true">
               <img src="img/k-esyali.webp" alt="Sade döşenmiş, aydınlık yatak odası" width="1200" height="800" loading="lazy" decoding="async">
@@ -423,19 +425,19 @@
               </div>
             </div>
           </article>
+        </div>
+        <div class="liste-dip">
+          <a class="dugme dugme-cizgi-koyu" href="#" data-demo="kategori" aria-label="Tüm kiralık evleri gör">Tümünü gör</a>
+        </div>
       </div>
-    </div>
-  </section>
-  <section class="liste" id="projeler" aria-labelledby="projeler-baslik">
-    <div class="kap">
-      <div class="liste-bas">
-        <div class="liste-metin">
+    </section>
+    <section class="liste cizgili" id="projeler" aria-labelledby="projeler-baslik">
+      <div class="kap">
+        <div class="liste-bas">
           <h2 id="projeler-baslik">Projeler</h2>
           <p>Yeni konut projelerinde daire tipleri, teslim tarihleri ve başlangıç fiyatları.</p>
         </div>
-        <a class="dugme dugme-cizgi-koyu" href="#" data-demo="kategori" aria-label="Tüm projeleri gör">Tümünü gör</a>
-      </div>
-      <div class="ilan-sira">
+        <div class="ilan-sira">
           <article class="kart">
             <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true">
               <img src="img/p-balkon.webp" alt="Fransız balkonlu, beton cepheli yeni konut binası" width="1200" height="800" loading="lazy" decoding="async">
@@ -496,9 +498,13 @@
               </div>
             </div>
           </article>
+        </div>
+        <div class="liste-dip">
+          <a class="dugme dugme-cizgi-koyu" href="#" data-demo="kategori" aria-label="Tüm projeleri gör">Tümünü gör</a>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 
   <section class="surec" id="surec" aria-labelledby="surec-baslik">
     <div class="kap surec-ic">
@@ -514,7 +520,7 @@
     </div>
   </section>
 
-  <section class="blog" id="blog" aria-labelledby="blog-baslik">
+  <section class="blog cizgili" id="blog" aria-labelledby="blog-baslik">
     <div class="kap">
       <div class="blog-bas">
         <h2 id="blog-baslik">Blog</h2>
