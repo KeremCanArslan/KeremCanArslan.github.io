@@ -1,4 +1,11 @@
 /* Ana sayfa. Araç sayfaları stil.css kullanır. */
+/* Yazı tipleri sitede barındırılıyor (SIL OFL 1.1, lisanslar fonts/ klasöründe) */
+@font-face { font-family: 'Archivo'; font-style: normal; font-weight: 400 800; font-stretch: 62% 100%; font-display: swap; src: url(fonts/archivo-400-800-latin-ext.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Archivo'; font-style: normal; font-weight: 400 800; font-stretch: 62% 100%; font-display: swap; src: url(fonts/archivo-400-800-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/ibm-plex-mono-400-latin-ext.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/ibm-plex-mono-400-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/ibm-plex-mono-500-latin-ext.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/ibm-plex-mono-500-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 :root {
   --kagit: #ffffff;
   --gri: #f0f0ed;
@@ -283,3 +290,40 @@ h3 { margin: 0; font-weight: 800; font-stretch: 80%; font-size: clamp(24px, 2.4v
   .proje .yigin { grid-column: auto; }
   .deneyim > div { grid-template-columns: 1fr; }
 }
+
+/* Teknoloji etiketleri (iş kartları) */
+.etiketler { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 0; padding: 0; }
+.etiketler li { font: 500 12px/1 var(--mono); padding: 6px 8px; border: 1px solid var(--ink); background: var(--kagit); white-space: nowrap; }
+.m-yazi .etiketler { margin-top: 10px; }
+
+/* Bağladığım servisler */
+.servis { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 clamp(24px, 3vw, 48px); border-top: 2px solid var(--ink); }
+.servis div { display: grid; grid-template-columns: 150px 1fr; gap: 16px; padding: 13px 0; border-bottom: 1px solid var(--cizgi); }
+.servis dt { font-family: var(--mono); font-size: 13px; color: var(--ink-2); padding-top: 2px; }
+.servis dd { margin: 0; font-size: 16px; }
+
+/* Teknolojiye göre işler */
+.tek-tablo { border-top: 2px solid var(--ink); }
+.tek-satir { display: grid; grid-template-columns: 3fr 9fr; gap: 8px 40px; padding: 18px 0; border-bottom: 1px solid var(--cizgi); }
+.tek-satir h3 { font-size: 28px; }
+.tek-satir ul { list-style: none; margin: 0; padding: 0; }
+.tek-satir li { display: grid; grid-template-columns: minmax(180px, 3fr) 6fr 96px; gap: 4px 20px; align-items: baseline; padding: 6px 0; }
+.tek-satir li .dis { justify-self: end; }
+.tek-satir li + li { border-top: 1px dashed var(--cizgi); }
+.tek-satir li > a:first-child { font-weight: 700; font-stretch: 85%; font-size: 20px; text-decoration: none; }
+.tek-satir li > a:first-child:hover { text-decoration: underline; text-decoration-color: var(--isaret); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.tek-satir li span { color: var(--ink-2); font-size: 15.5px; }
+.tek-satir .dis { font: 500 12.5px/1 var(--mono); padding: 7px 9px; border: 1px solid var(--ink); text-decoration: none; white-space: nowrap; }
+.tek-satir .dis:hover { background: var(--ink); color: var(--kagit); }
+
+@media (max-width: 860px) {
+  .servis { grid-template-columns: 1fr; }
+  .tek-satir { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .servis div { grid-template-columns: 110px 1fr; }
+  .tek-satir li { grid-template-columns: 1fr auto; padding: 9px 0; }
+  .tek-satir li span { grid-column: 1 / -1; grid-row: 2; }
+}
+.servis-blok { margin-top: clamp(48px, 6vw, 80px); }
+.servis-blok h3 { font-size: 26px; margin-bottom: 14px; }
