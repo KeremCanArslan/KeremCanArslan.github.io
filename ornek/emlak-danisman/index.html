@@ -15,12 +15,12 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23123234'/%3E%3Cpath d='M8 23V13l8-6 8 6v10' fill='none' stroke='%23d5e0c7' stroke-width='2.4' stroke-linejoin='round'/%3E%3C/svg%3E">
-<link rel="preload" href="img/v-villa.webp" as="image" media="(min-width: 761px)" fetchpriority="high">
-<link rel="preload" href="img/v-villa-k.webp" as="image" media="(max-width: 760px)" fetchpriority="high">
+<link rel="preload" href="img/danisman.webp" as="image" media="(min-width: 761px)" fetchpriority="high">
+<link rel="preload" href="img/danisman-k.webp" as="image" media="(max-width: 760px)" fetchpriority="high">
 <link rel="preload" href="assets/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/hanken-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('hareket');</script>
-<link rel="stylesheet" href="assets/site.css?v=5">
+<link rel="stylesheet" href="assets/site.css?v=6">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -38,8 +38,6 @@
   <symbol id="i-kapat" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/></symbol>
   <symbol id="i-ok" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="m7 10 5 5 5-5"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M4 8h16M4 16h16"/></symbol>
-  <symbol id="i-durdur" viewBox="0 0 24 24"><path fill="currentColor" d="M8 6h3v12H8zM13 6h3v12h-3z"/></symbol>
-  <symbol id="i-oynat" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.5v13l10.5-6.5z"/></symbol>
   <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></symbol>
   <symbol id="i-facebook" viewBox="0 0 24 24"><path fill="currentColor" d="M13.4 21v-7.6h2.6l.4-3h-3V8.5c0-.9.3-1.5 1.5-1.5h1.6V4.3c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.7v3h2.6V21h3.1Z"/></symbol>
   <symbol id="i-youtube" viewBox="0 0 24 24"><path fill="currentColor" d="M21.6 7.2a2.6 2.6 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.6 2.6 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8c.2.9.9 1.6 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.6 2.6 0 0 0 1.8-1.8c.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8ZM10 15V9l5.2 3L10 15Z"/></symbol>
@@ -83,92 +81,31 @@
 </header>
 
 <main id="ana">
-  <section class="vitrin" aria-roledescription="slayt gösterisi" aria-label="Vitrindeki ilanlar">
-    <h1 class="gizli">Murat ERDOĞAN, Gayrimenkul Danışmanı</h1>
-    <div class="slaytlar">
-      <article class="slayt aktif" id="vitrin-s1" aria-roledescription="slayt" aria-label="1 / 4: Denize bakan taş villa">
-        <picture class="slayt-foto">
-          <source media="(max-width: 760px)" srcset="img/v-villa-k.webp">
-          <img src="img/v-villa.webp" alt="Taş cepheli villa ve deniz manzaralı sonsuzluk havuzu, akşam ışığında" width="2400" height="1600" fetchpriority="high" decoding="async">
+  <section class="giris" aria-labelledby="giris-baslik">
+    <div class="kap giris-ic">
+      <p class="giris-ust">Gayrimenkul Danışmanı · Beylikdüzü, İstanbul</p>
+      <h1 class="giris-ad" id="giris-baslik">Murat ERDOĞAN</h1>
+      <p class="giris-yazi">Satılık ve kiralık evler, konut projeleri ve arsalar için alıcıya ve satıcıya özel danışmanlık.</p>
+      <form class="arama" id="arama" role="search" aria-label="İlan ara" novalidate>
+        <fieldset class="arama-tur">
+          <legend class="gizli">İlan türü</legend>
+          <label><input type="radio" name="islem" value="satilik" checked><span>Satılık</span></label>
+          <label><input type="radio" name="islem" value="kiralik"><span>Kiralık</span></label>
+        </fieldset>
+        <div class="arama-alanlar">
+          <label class="arama-alan arama-konum"><span>Konum</span><input name="konum" placeholder="İlçe ya da mahalle" autocomplete="off"></label>
+          <label class="arama-alan"><span>Tür</span><select name="tur"><option>Hepsi</option><option>Daire</option><option>Villa / müstakil</option><option>Proje</option><option>Arsa</option></select></label>
+          <label class="arama-alan"><span>Fiyat</span><select name="fiyat" data-fiyat><option value="">Fark etmez</option><option>5 milyon TL&#x27;ye kadar</option><option>5-10 milyon TL</option><option>10-25 milyon TL</option><option>25 milyon TL üzeri</option></select></label>
+          <button class="dugme dugme-koyu arama-dugme" type="submit">Ara</button>
+        </div>
+      </form>
+      <figure class="giris-foto">
+        <picture>
+          <source media="(max-width: 760px)" srcset="img/danisman-k.webp">
+          <img src="img/danisman.webp" alt="Takım elbiseli danışman, arkası dönük, terastan şehre bakıyor" width="960" height="1200" fetchpriority="high" decoding="async">
         </picture>
-        <div class="slayt-metin">
-          <div class="kap">
-            <p class="slayt-ust"><span class="durum">Satılık</span><span>Muğla, Bodrum, Yalıkavak</span></p>
-            <h2 class="slayt-baslik"><a href="#" data-demo="ilan">Denize bakan taş villa</a></h2>
-            <dl class="kunye"><div><dt>Oda</dt><dd>5+1</dd></div><div><dt>Brüt alan</dt><dd>420 m²</dd></div><div><dt>Arsa</dt><dd>1.150 m²</dd></div><div class="kunye-fiyat"><dt>Fiyat</dt><dd>68.500.000 TL</dd></div></dl>
-            <a class="dugme dugme-beyaz" href="#" data-demo="ilan">İlanı incele</a>
-          </div>
-        </div>
-      </article>
-      <article class="slayt" id="vitrin-p1" aria-roledescription="slayt" aria-label="2 / 4: Yeşil avlulu konut projesi" aria-hidden="true">
-        <picture class="slayt-foto">
-          <source media="(max-width: 760px)" data-srcset="img/v-proje-k.webp">
-          <img data-src="img/v-proje.webp" alt="Peyzajlı avlunun çevresinde balkonlu konut blokları" width="2400" height="1600"  decoding="async">
-        </picture>
-        <div class="slayt-metin">
-          <div class="kap">
-            <p class="slayt-ust"><span class="durum">Proje</span><span>İstanbul, Büyükçekmece, Mimarsinan</span></p>
-            <h2 class="slayt-baslik"><a href="#" data-demo="ilan" tabindex="-1">Yeşil avlulu konut projesi</a></h2>
-            <dl class="kunye"><div><dt>Daire tipleri</dt><dd>1+1 / 4+1</dd></div><div><dt>Daire</dt><dd>312</dd></div><div><dt>Teslim</dt><dd>2027</dd></div><div class="kunye-fiyat"><dt>Fiyat</dt><dd>Fiyat için arayın</dd></div></dl>
-            <a class="dugme dugme-beyaz" href="#" data-demo="ilan" tabindex="-1">İlanı incele</a>
-          </div>
-        </div>
-      </article>
-      <article class="slayt" id="vitrin-s2" aria-roledescription="slayt" aria-label="3 / 4: Deniz manzaralı dubleks" aria-hidden="true">
-        <picture class="slayt-foto">
-          <source media="(max-width: 760px)" data-srcset="img/v-dubleks-k.webp">
-          <img data-src="img/v-dubleks.webp" alt="Yüksek tavanlı salon, boydan cam ve deniz manzarası" width="2400" height="1600"  decoding="async">
-        </picture>
-        <div class="slayt-metin">
-          <div class="kap">
-            <p class="slayt-ust"><span class="durum">Satılık</span><span>İstanbul, Beylikdüzü, Kavaklı</span></p>
-            <h2 class="slayt-baslik"><a href="#" data-demo="ilan" tabindex="-1">Deniz manzaralı dubleks</a></h2>
-            <dl class="kunye"><div><dt>Oda</dt><dd>4+1</dd></div><div><dt>Brüt alan</dt><dd>260 m²</dd></div><div><dt>Kat</dt><dd>11. kat</dd></div><div class="kunye-fiyat"><dt>Fiyat</dt><dd>24.750.000 TL</dd></div></dl>
-            <a class="dugme dugme-beyaz" href="#" data-demo="ilan" tabindex="-1">İlanı incele</a>
-          </div>
-        </div>
-      </article>
-      <article class="slayt" id="vitrin-a1" aria-roledescription="slayt" aria-label="4 / 4: Villa imarlı arsalar" aria-hidden="true">
-        <picture class="slayt-foto">
-          <source media="(max-width: 760px)" data-srcset="img/v-arsa-k.webp">
-          <img data-src="img/v-arsa.webp" alt="Yeşil tarlalar ve ağaç sıraları, havadan görünüm" width="2400" height="1600"  decoding="async">
-        </picture>
-        <div class="slayt-metin">
-          <div class="kap">
-            <p class="slayt-ust"><span class="durum">Arsa</span><span>Balıkesir, Kepsut</span></p>
-            <h2 class="slayt-baslik"><a href="#" data-demo="ilan" tabindex="-1">Villa imarlı arsalar</a></h2>
-            <dl class="kunye"><div><dt>Parsel</dt><dd>24</dd></div><div><dt>Parsel alanı</dt><dd>500-900 m²</dd></div><div><dt>İmar</dt><dd>Villa</dd></div><div class="kunye-fiyat"><dt>Fiyat</dt><dd>1.250.000 TL&#x27;den</dd></div></dl>
-            <a class="dugme dugme-beyaz" href="#" data-demo="ilan" tabindex="-1">İlanı incele</a>
-          </div>
-        </div>
-      </article>
-    </div>
-    <div class="vitrin-alt">
-      <div class="kap vitrin-ray">
-        <div class="ray" role="group" aria-label="Vitrin ilanları">
-        <button class="ray-oge aktif" type="button" data-slayt="0" aria-controls="vitrin-s1" aria-current="true">
-          <img src="img/v-villa-r.webp" alt="" width="240" height="160" decoding="async">
-          <span class="ray-ad">Denize bakan taş villa</span>
-          <span class="ray-cizgi" aria-hidden="true"><span></span></span>
-        </button>
-        <button class="ray-oge" type="button" data-slayt="1" aria-controls="vitrin-p1" aria-current="false">
-          <img src="img/v-proje-r.webp" alt="" width="240" height="160" decoding="async">
-          <span class="ray-ad">Yeşil avlulu konut projesi</span>
-          <span class="ray-cizgi" aria-hidden="true"><span></span></span>
-        </button>
-        <button class="ray-oge" type="button" data-slayt="2" aria-controls="vitrin-s2" aria-current="false">
-          <img src="img/v-dubleks-r.webp" alt="" width="240" height="160" decoding="async">
-          <span class="ray-ad">Deniz manzaralı dubleks</span>
-          <span class="ray-cizgi" aria-hidden="true"><span></span></span>
-        </button>
-        <button class="ray-oge" type="button" data-slayt="3" aria-controls="vitrin-a1" aria-current="false">
-          <img src="img/v-arsa-r.webp" alt="" width="240" height="160" decoding="async">
-          <span class="ray-ad">Villa imarlı arsalar</span>
-          <span class="ray-cizgi" aria-hidden="true"><span></span></span>
-        </button>
-        </div>
-        <button class="ray-durdur" type="button" aria-label="Geçişi durdur" aria-pressed="false"><svg class="ik ik-durdur" aria-hidden="true"><use href="#i-durdur"/></svg><svg class="ik ik-oynat" aria-hidden="true"><use href="#i-oynat"/></svg></button>
-      </div>
+        <figcaption>Örnek fotoğraf. Temada kendi fotoğrafınızı panelden yüklersiniz.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -177,9 +114,11 @@
       <p class="ust-yazi">Murat ERDOĞAN · Yeni nesil gayrimenkul danışmanı</p>
       <h2 id="hakkimda-baslik">Ben kimim, ne yapıyorum?</h2>
       <p class="hakkimda-yazi">İstanbul'un canlı emlak pazarındaki 15 yıllık deneyimimle, her bütçeye uygun seçenekler arasından güvenle yaşayacağınız evi bulmanız için yanınızdayım. Gayrimenkul sadece bir yatırım değil, yeni başlangıçların gerçeğe dönüştüğü bir süreçtir.</p>
+      <p class="hakkimda-yazi">Alıcıyla da satıcıyla da işe aynı yerden başlarım: önce ne istediğinizi dinlerim. Ev arayana bütçesine ve yaşam düzenine uyan seçenekleri, satana mülkünün piyasadaki gerçek değerini ve doğru alıcıyı bulurum. İlk görüşmeden tapu devrine kadar her adımı açıkça anlatırım, karar her zaman sizde kalır.</p>
       <dl class="bilgi">
-        <div><dt>Hizmet bölgeleri</dt><dd>Beylikdüzü merkezli, İstanbul ve Türkiye geneli</dd></div>
-        <div><dt>Uzmanlık</dt><dd>Konut, proje, arsa ve yurt dışı projeleri</dd></div>
+        <div><dt>Hizmet bölgeleri</dt><dd>Beylikdüzü merkezli; Büyükçekmece, Esenyurt ve Avcılar başta olmak üzere İstanbul ve Türkiye geneli</dd></div>
+        <div><dt>Uzmanlık</dt><dd>Konut ve proje satışı, kiralama, arsa ve yurt dışı projelerinde alım ve satım</dd></div>
+        <div><dt>Çalışma şekli</dt><dd>Yerinde görüşme, değer analizi ve tapu devrine kadar birebir takip</dd></div>
       </dl>
       <a class="dugme dugme-cizgi-koyu" href="#" data-demo="hakkimda">Devamını okuyun</a>
     </div>
@@ -212,13 +151,13 @@
   </section>
 
   <div class="ilanlar">
-    <section class="liste liste-genis" id="one-cikan" aria-labelledby="one-cikan-baslik">
+    <section class="liste" id="one-cikan" aria-labelledby="one-cikan-baslik">
       <div class="kap">
         <div class="liste-bas">
           <h2 id="one-cikan-baslik">Öne çıkan evler</h2>
           <p>Portföyümden seçtiğim, şu an öne çıkardığım ilanlar.</p>
         </div>
-        <div class="ilan-izgara">
+        <div class="ilan-sira">
           <article class="kart">
             <a class="kart-foto" href="#" data-demo="ilan" tabindex="-1" aria-hidden="true"><span class="kart-etiket">Satılık</span>
               <img src="img/o-site.webp" alt="Yamaçtaki taş evlerin önünde palmiyeli ortak havuz" width="1200" height="800" loading="lazy" decoding="async">
@@ -507,15 +446,57 @@
   </div>
 
   <section class="surec" id="surec" aria-labelledby="surec-baslik">
-    <div class="kap surec-ic">
+    <div class="kap">
       <div class="surec-bas">
-        <h2 id="surec-baslik">Satış nasıl ilerler?</h2>
-        <p>Değer analizinden satış sonrasına kadar süreç beş adımda ilerler.</p>
+        <div>
+          <h2 id="surec-baslik">Satış nasıl ilerler?</h2>
+          <p>Değer analizinden satış sonrasına kadar süreç beş adımda ilerler.</p>
+        </div>
         <button class="dugme dugme-koyu" type="button" data-talep="satiyorum">Evimi değerlendir</button>
       </div>
-      <div class="surec-akis">
-        <span class="surec-ray" aria-hidden="true"><span></span></span>
-        <ol class="surec-liste"><li class="adim"><span class="adim-no" aria-hidden="true">01</span><div class="adim-metin"><h3>Değer analizi</h3><p>Gayrimenkulünüz fiziki ve teknik olarak incelenir, piyasa şartlarına göre değeri belirlenir.</p></div></li><li class="adim"><span class="adim-no" aria-hidden="true">02</span><div class="adim-metin"><h3>Bölge ve alıcı analizi</h3><p>Bölgedeki fiyat eğilimi ve evinize uygun alıcı kitlesi çıkarılır.</p></div></li><li class="adim"><span class="adim-no" aria-hidden="true">03</span><div class="adim-metin"><h3>İlan ve tanıtım</h3><p>İlan hazırlanır, dijital kampanyalar ve sosyal medya reklamlarıyla geniş bir alıcı kitlesine ulaşılır.</p></div></li><li class="adim"><span class="adim-no" aria-hidden="true">04</span><div class="adim-metin"><h3>Pazarlık ve sözleşme</h3><p>Gösterimlerden pazarlığa ve sözleşmeye kadar yanınızda olurum.</p></div></li><li class="adim"><span class="adim-no" aria-hidden="true">05</span><div class="adim-metin"><h3>Satış sonrası</h3><p>Satıştan sonra da bir yıl boyunca danışmanlık desteği sürer.</p></div></li></ol>
+      <ol class="surec-liste" aria-label="Satış adımları"><li class="adim"><span class="adim-no" aria-hidden="true">01</span><h3>Değer analizi</h3><p>Gayrimenkulünüz fiziki ve teknik olarak incelenir, piyasa şartlarına göre değeri belirlenir.</p></li><li class="adim"><span class="adim-no" aria-hidden="true">02</span><h3>Bölge ve alıcı analizi</h3><p>Bölgedeki fiyat eğilimi ve evinize uygun alıcı kitlesi çıkarılır.</p></li><li class="adim"><span class="adim-no" aria-hidden="true">03</span><h3>İlan ve tanıtım</h3><p>İlan hazırlanır, dijital kampanyalar ve sosyal medya reklamlarıyla geniş bir alıcı kitlesine ulaşılır.</p></li><li class="adim"><span class="adim-no" aria-hidden="true">04</span><h3>Pazarlık ve sözleşme</h3><p>Gösterimlerden pazarlığa ve sözleşmeye kadar yanınızda olurum.</p></li><li class="adim"><span class="adim-no" aria-hidden="true">05</span><h3>Satış sonrası</h3><p>Satıştan sonra da bir yıl boyunca danışmanlık desteği sürer.</p></li></ol>
+    </div>
+  </section>
+
+  <section class="mahalle cizgili" id="mahalle" aria-labelledby="mahalle-baslik">
+    <div class="kap">
+      <div class="liste-bas">
+        <h2 id="mahalle-baslik">Mahalle rehberi</h2>
+        <p>Çalıştığım mahallelerde yaşam, ulaşım ve konut seçenekleri.</p>
+      </div>
+      <div class="mahalle-izgara">
+        <article class="mahalle-kart">
+          <a class="mahalle-foto" href="#" data-demo="mahalle" tabindex="-1" aria-hidden="true"><img src="img/m-yakuplu.webp" alt="Yeşillik içinde yükselen konut kuleleri" width="900" height="600" loading="lazy" decoding="async"></a>
+          <p class="mahalle-ilce">Beylikdüzü</p>
+          <h3><a href="#" data-demo="mahalle">Yakuplu</a></h3>
+          <p class="mahalle-yazi">Yeni konut projelerinin ve site içi dairelerin yoğun olduğu, sahile yakın büyük mahalle.</p>
+          <p class="mahalle-etiket"><span>Yeni projeler</span><span>Site içi daire</span></p>
+        </article>
+        <article class="mahalle-kart">
+          <a class="mahalle-foto" href="#" data-demo="mahalle" tabindex="-1" aria-hidden="true"><img src="img/m-kavakli.webp" alt="Sahil boyunca uzanan mahalle, havadan görünüm" width="900" height="600" loading="lazy" decoding="async"></a>
+          <p class="mahalle-ilce">Beylikdüzü</p>
+          <h3><a href="#" data-demo="mahalle">Kavaklı</a></h3>
+          <p class="mahalle-yazi">Denize yakın konumu ve manzaralı daireleriyle öne çıkan sahil mahallesi.</p>
+          <p class="mahalle-etiket"><span>Deniz manzarası</span><span>Sahil</span></p>
+        </article>
+        <article class="mahalle-kart">
+          <a class="mahalle-foto" href="#" data-demo="mahalle" tabindex="-1" aria-hidden="true"><img src="img/m-gurpinar.webp" alt="Yeşil parkın ve yürüyüş yolunun arkasında konut blokları" width="900" height="600" loading="lazy" decoding="async"></a>
+          <p class="mahalle-ilce">Beylikdüzü</p>
+          <h3><a href="#" data-demo="mahalle">Gürpınar</a></h3>
+          <p class="mahalle-yazi">Bahçeli sitelerin, villaların ve parkların bulunduğu daha sakin bir mahalle.</p>
+          <p class="mahalle-etiket"><span>Villa</span><span>Bahçeli site</span></p>
+        </article>
+        <article class="mahalle-kart">
+          <a class="mahalle-foto" href="#" data-demo="mahalle" tabindex="-1" aria-hidden="true"><img src="img/m-kahveci.webp" alt="Kırmızı çatılı apartmanlar ve yüksek konut blokları" width="900" height="600" loading="lazy" decoding="async"></a>
+          <p class="mahalle-ilce">Beylikdüzü</p>
+          <h3><a href="#" data-demo="mahalle">Adnan Kahveci</a></h3>
+          <p class="mahalle-yazi">Oturmuş apartmanları, okulları ve çarşısıyla günlük hayatın kolay olduğu merkez mahalle.</p>
+          <p class="mahalle-etiket"><span>Merkezi konum</span><span>Aileye uygun</span></p>
+        </article>
+      </div>
+      <p class="mahalle-not">Örnek fotoğraflar. Temada mahalleleri ve fotoğraflarını panelden eklersiniz.</p>
+      <div class="liste-dip">
+        <a class="dugme dugme-cizgi-koyu" href="#" data-demo="mahalle" aria-label="Bütün mahalle rehberlerini gör">Tüm mahalleler</a>
       </div>
     </div>
   </section>
@@ -563,6 +544,8 @@
           <div class="alan-izgara">
             <label class="alan"><span>Adınız soyadınız</span><input name="ad" autocomplete="name" required data-ad="ad soyad"></label>
             <label class="alan"><span>Telefonunuz</span><input name="telefon" type="tel" autocomplete="tel" inputmode="tel" required data-ad="telefon"></label>
+        <label class="alan"><span>Aranmak istediğiniz gün</span><select name="gun" data-gun><option value="">Fark etmez</option></select></label>
+        <label class="alan"><span>Aranmak istediğiniz saat</span><select name="saat" data-saat><option value="">Fark etmez</option><option>09:00-12:00</option><option>12:00-15:00</option><option>15:00-19:00</option></select></label>
             <label class="alan alan-genis"><span>Mesajınız</span><textarea name="mesaj" id="iletisim-mesaj" rows="4" required data-ad="mesaj"></textarea></label>
           </div>
           <label class="onay"><input type="checkbox" name="kvkk" required><span><a href="#" data-demo="kvkk">Aydınlatma metnini</a> okudum.</span></label>
@@ -617,6 +600,7 @@
         <h2>Kurumsal</h2>
         <ul>
           <li><a href="#hakkimda">Hakkımda</a></li>
+          <li><a href="#mahalle">Mahalle rehberi</a></li>
           <li><a href="#blog">Blog</a></li>
           <li><a href="#iletisim">İletişim</a></li>
           <li><a href="#" data-demo="kvkk">KVKK aydınlatma metni</a></li>
@@ -647,6 +631,8 @@
       <div class="alan-izgara">
         <label class="alan"><span>Adınız soyadınız</span><input name="ad" autocomplete="name" required data-ad="ad soyad"></label>
         <label class="alan"><span>Telefonunuz</span><input name="telefon" type="tel" autocomplete="tel" inputmode="tel" required data-ad="telefon"></label>
+        <label class="alan"><span>Aranmak istediğiniz gün</span><select name="gun" data-gun><option value="">Fark etmez</option></select></label>
+        <label class="alan"><span>Aranmak istediğiniz saat</span><select name="saat" data-saat><option value="">Fark etmez</option><option>09:00-12:00</option><option>12:00-15:00</option><option>15:00-19:00</option></select></label>
         <label class="alan"><span>Satılık mı, kiralık mı?</span><select name="islem"><option>Satılık</option><option>Kiralık</option></select></label>
         <label class="alan"><span>Oda sayısı</span><select name="oda"><option>Fark etmez</option><option>1+1</option><option>2+1</option><option>3+1</option><option>4+1 ve üzeri</option></select></label>
         <label class="alan alan-genis"><span>Hangi bölgede?</span><input name="bolge" placeholder="Örneğin Beylikdüzü, Büyükçekmece"></label>
@@ -682,6 +668,8 @@
       <div class="alan-izgara">
         <label class="alan"><span>Adınız soyadınız</span><input name="ad" autocomplete="name" required data-ad="ad soyad"></label>
         <label class="alan"><span>Telefonunuz</span><input name="telefon" type="tel" autocomplete="tel" inputmode="tel" required data-ad="telefon"></label>
+        <label class="alan"><span>Aranmak istediğiniz gün</span><select name="gun" data-gun><option value="">Fark etmez</option></select></label>
+        <label class="alan"><span>Aranmak istediğiniz saat</span><select name="saat" data-saat><option value="">Fark etmez</option><option>09:00-12:00</option><option>12:00-15:00</option><option>15:00-19:00</option></select></label>
         <label class="alan"><span>Gayrimenkul türü</span><select name="tur"><option>Daire</option><option>Villa / müstakil ev</option><option>Arsa / tarla</option><option>İş yeri</option></select></label>
         <label class="alan"><span>Brüt alan (m²)</span><input name="alan" inputmode="numeric" placeholder="Örneğin 120"></label>
         <label class="alan alan-genis"><span>Adres (il, ilçe, mahalle)</span><input name="adres" placeholder="Örneğin İstanbul, Beylikdüzü, Kavaklı"></label>
@@ -714,6 +702,6 @@
   </div>
 </div>
 <div class="bildirim" id="bildirim" role="status" aria-live="polite"></div>
-<script src="assets/site.js?v=5" defer></script>
+<script src="assets/site.js?v=6" defer></script>
 </body>
 </html>
