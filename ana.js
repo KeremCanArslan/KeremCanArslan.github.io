@@ -26,12 +26,14 @@
 
   // Vaka görünümü
   [].slice.call(document.querySelectorAll('[data-sekme]')).forEach(function (f) {
-    var ekran = f.querySelector('.ekran img'), tel = f.querySelector('.tel img');
+    var ekran = f.querySelector('.ekran img'), tel = f.querySelector('.tel img'), telKutu = tel && tel.closest('.tel');
     var bs = [].slice.call(f.querySelectorAll('.sekme button'));
     bs.forEach(function (b) {
       b.addEventListener('click', function () {
         bs.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-        ekran.src = b.dataset.ekran; ekran.alt = b.dataset.alt; tel.src = b.dataset.tel;
+        ekran.src = b.dataset.ekran; ekran.alt = b.dataset.alt;
+        // Sekmenin kendi telefon görüntüsü yoksa telefon çerçevesi gizlenir
+        if (telKutu) { telKutu.hidden = !b.dataset.tel; if (b.dataset.tel) tel.src = b.dataset.tel; }
       });
     });
   });
@@ -39,7 +41,8 @@
   // İmleçle gelen önizleme (yalnız fareyle)
   var on = document.querySelector('.onizleme'), dizin = document.querySelector('.dizin');
   if (!on || !dizin || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-  var img = on.querySelector('img'), x = 0, y = 0, bekliyor = false;
+  // konum: imlecin yeri bir fare ya da tekerlek olayından öğrenildi mi
+  var img = on.querySelector('img'), x = 0, y = 0, konum = false, bekliyor = false;
   function yerlestir() {
     bekliyor = false;
     var w = on.offsetWidth, h = on.offsetHeight;
@@ -48,15 +51,19 @@
     py = Math.max(12, Math.min(py, innerHeight - h - 12));
     on.style.transform = 'translate(' + px + 'px,' + py + 'px)';
   }
-  dizin.addEventListener('mousemove', function (e) {
-    x = e.clientX; y = e.clientY;
-    if (!bekliyor) { bekliyor = true; requestAnimationFrame(yerlestir); }
-  });
+  // Fare sabitken tekerlekle kaydırınca satır imlecin altına kendisi gelir; imlecin son yeri
+  // fare ve tekerlek olaylarından tutulur, önizleme açılırken o yere konur.
+  function izle(e) {
+    x = e.clientX; y = e.clientY; konum = true;
+    if (on.classList.contains('acik') && !bekliyor) { bekliyor = true; requestAnimationFrame(yerlestir); }
+  }
+  document.addEventListener('mousemove', izle, { passive: true });
+  document.addEventListener('wheel', izle, { passive: true });
   satirlar.forEach(function (li) {
     var k = li.querySelector('img.d-kucuk');
     li.addEventListener('mouseenter', function () {
-      if (!k) { on.classList.remove('acik'); return; }
-      img.src = k.getAttribute('src'); on.classList.add('acik');
+      if (!k || !konum) { on.classList.remove('acik'); return; }
+      img.src = k.getAttribute('src'); yerlestir(); on.classList.add('acik');
     });
     li.addEventListener('mouseleave', function () { on.classList.remove('acik'); });
   });

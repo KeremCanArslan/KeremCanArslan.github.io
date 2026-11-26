@@ -357,7 +357,13 @@ h3 { margin: 0; font-weight: 800; font-stretch: 80%; font-size: clamp(24px, 2.4v
 @media (max-width: 640px) {
   .m-grup { font-size: 22px; }
   .m-yazi h4 { font-size: 22px; }
-  .m-platform { padding: 16px 0; }
+  /* Telefonda kart görseli kırpılmasın: telefon ve ekran görüntüsü kendi oranında, tam görünür */
+  .m-gorsel { align-items: flex-start; padding: 16px 0; }
+  .m-gorsel .tel { height: auto; aspect-ratio: auto; border-bottom: 2px solid var(--ink); border-radius: 16px; }
+  .m-gorsel .tel img { height: auto; }
+  .m-gorsel .ekran { height: auto; border-bottom: 1px solid var(--ink); }
+  .m-gorsel .ekran img { height: auto; }
+  .m-platform { align-items: center; padding: 16px 0; }
   .m-platform li { font-size: 19px; padding: 9px 0; }
   .m-platform span { font-size: 11px; }
 }
