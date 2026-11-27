@@ -86,7 +86,10 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; }
 /* Giriş kısa tutulur: iş görseli ilk ekranda görünsün */
 .giris { padding: clamp(32px, 4vw, 56px) 0 0; }
 .giris .kap { display: flex; flex-direction: column; }
-.giris-ust { order: 0; display: flex; justify-content: space-between; gap: 16px; color: var(--ink-2); }
+.giris-ust { order: 0; display: flex; justify-content: space-between; align-items: baseline; gap: 16px; color: var(--ink-2); }
+/* Unvan: okul adıyla, gri satırdan bir kademe belirgin */
+.unvan { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 14px; }
+.unvan b { font-weight: 600; font-size: 16px; letter-spacing: -.01em; color: var(--ink); }
 h1 { order: 1; margin-top: clamp(14px, 1.6vw, 22px); font-size: clamp(38px, 5vw, 72px); line-height: 1; letter-spacing: -.036em; }
 h1 em { font-style: normal; }
 .giris-alt { order: 2; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 22px 48px; margin-top: clamp(18px, 2vw, 28px); align-items: end; }
@@ -393,7 +396,8 @@ h3 { font-size: clamp(24px, 2.3vw, 32px); line-height: 1.1; letter-spacing: -.02
   .ust .kap { height: 58px; gap: 16px; }
   .ad { font-size: 16.5px; gap: 9px; }
   .ad::before { width: 18px; height: 18px; }
-  .giris-ust span:last-child { display: none; }
+  .giris-ust > span:last-child { display: none; }
+  .unvan b { font-size: 15.5px; }
   h1 { font-size: clamp(36px, 10.4vw, 46px); }
   .btn { min-height: 46px; padding: 0 20px; }
   .sahne { padding: 20px 24% 0 18px; }
@@ -423,7 +427,7 @@ h3 { font-size: clamp(24px, 2.3vw, 32px); line-height: 1.1; letter-spacing: -.02
   .m-platform { align-items: center; padding: 14px 0; }
   .m-platform ul { width: 82%; }
   .m-platform li { font-size: 18px; padding: 9px 0; }
-  .m-platform span { font-size: 11px; }
+  .m-platform span { font-size: 12px; }
   .dizin a { grid-template-columns: 96px 1fr; gap: 4px 14px; padding: 12px 10px; margin: 0 -10px; align-items: start; }
   .d-kucuk { display: block; grid-row: 1 / span 2; width: 96px; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 8px; background: var(--sahne); }
   .d-kucuk.bos { display: grid; place-items: center; font-size: 12px; color: var(--ink-3); }
