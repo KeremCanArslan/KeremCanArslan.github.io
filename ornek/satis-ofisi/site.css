@@ -152,8 +152,8 @@ body[data-gorunum="kat"] .ust .dugme.hafif, body[data-gorunum="daire"] .ust .dug
 .lejant li { display: flex; align-items: center; gap: 6px; }
 .lejant i { width: 14px; height: 14px; border: 1.5px solid var(--grafit); border-radius: 2px; }
 .l-satilik { background: var(--beyaz); border-color: var(--ozalit) !important; }
-.l-rezerve { background: repeating-linear-gradient(45deg, rgba(185, 124, 12, .55) 0 1.5px, transparent 1.5px 4px), var(--beyaz); border-color: var(--amber) !important; }
-.l-satildi { background: repeating-linear-gradient(45deg, rgba(35, 39, 43, .45) 0 1.5px, transparent 1.5px 4px), var(--aydinger-2); border-color: var(--grafit-2) !important; }
+.l-rezerve { background: rgba(185, 124, 12, .28); border-color: var(--amber) !important; }
+.l-satildi { background: #c4c8c5; border-color: var(--grafit-2) !important; }
 
 .daire-listesi { margin-top: 22px; border-top: 1px solid var(--cizgi); }
 .daire-satir { display: grid; grid-template-columns: 1fr auto; row-gap: 2px; width: 100%; padding: 14px 4px; border-bottom: 1px solid var(--cizgi); text-align: left; transition: background .25s ease, padding .25s ease; }
@@ -169,32 +169,36 @@ body[data-gorunum="kat"] .ust .dugme.hafif, body[data-gorunum="daire"] .ust .dug
 .kat-plan svg { width: 100%; height: 100%; max-height: calc(100vh - var(--ust-h) - 40px); opacity: 0; transform: scale(.96); transition: opacity .7s ease .15s, transform .9s var(--cik) .15s; }
 #g-kat.acik .kat-plan svg { opacity: 1; transform: none; }
 
-/* plan çizimi */
-.plan .duvar { fill: none; stroke: var(--grafit); stroke-width: 2.6; stroke-linejoin: miter; }
-.plan .ic { fill: none; stroke: var(--grafit); stroke-width: .9; }
-.plan .cekirdek { fill: url(#t-cekirdek); stroke: var(--grafit); stroke-width: .9; }
-.plan .basamak { stroke: var(--grafit); stroke-width: .5; opacity: .6; }
+/* plan görseli ve üstündeki katmanlar */
+.plan .render { pointer-events: none; }
 .plan .yazi { font-family: 'Archivo', sans-serif; fill: var(--grafit); }
 .plan .oda-ad { font-size: 4.6px; font-weight: 600; }
 .plan .oda-m2 { font-size: 4px; fill: var(--grafit-2); }
 .plan .kuzey path { fill: var(--grafit); }
 .plan .olcek rect { fill: var(--grafit); }
 .plan .daire { cursor: pointer; }
-.plan .daire .zemin { fill: var(--beyaz); transition: fill .3s ease; }
-.plan .daire.rezerve .zemin { fill: url(#t-rezerve); }
-.plan .daire.satildi .zemin { fill: url(#t-satildi); }
-.plan .daire .vurgu { fill: none; stroke: var(--ozalit); stroke-width: 2.4; opacity: 0; transition: opacity .25s ease; }
+.plan .daire .zemin { fill: rgba(31, 69, 200, 0); transition: fill .3s ease; }
+.plan .daire.rezerve .zemin { fill: rgba(185, 124, 12, .15); }
+.plan .daire.satildi .ort { fill: rgba(232, 236, 233, .4); pointer-events: none; }
+.plan .daire .vurgu { fill: none; stroke: var(--ozalit); stroke-width: 1.6; opacity: 0; transition: opacity .25s ease; pointer-events: none; }
+.plan .daire.rezerve .vurgu { stroke: var(--amber); }
+.plan .daire.satildi .vurgu { stroke: var(--grafit-2); }
 .plan .daire.on .vurgu { opacity: 1; }
-.plan .daire.satilik.on .zemin { fill: var(--ozalit-acik); }
+.plan .daire.satilik.on .zemin { fill: rgba(31, 69, 200, .16); }
+.plan .daire.rezerve.on .zemin { fill: rgba(185, 124, 12, .3); }
+.plan .damga { pointer-events: none; }
+.plan .damga rect { fill: rgba(255, 255, 255, .6); stroke: var(--grafit); stroke-width: 1; }
+.plan .damga text { fill: var(--grafit); font-family: 'Archivo', sans-serif; font-size: 7.4px; font-weight: 800; letter-spacing: 1.3px; }
 .plan .etiket rect { fill: var(--grafit); }
 .plan .daire.satilik .etiket rect { fill: var(--ozalit); }
 .plan .daire.satildi .etiket rect { fill: var(--grafit-2); }
 .plan .daire.rezerve .etiket rect { fill: var(--amber); }
 .plan .etiket text { fill: var(--beyaz); font-family: 'Archivo', sans-serif; }
-.plan .etiket .e1 { font-size: 6.4px; font-weight: 700; }
-.plan .etiket .e2 { font-size: 4.6px; }
-.plan.ciz .duvar, .plan.ciz .ic { stroke-dasharray: 1400; stroke-dashoffset: 1400; animation: ciz 1.3s var(--cik) .2s forwards; }
-.plan.ciz .ic { animation-duration: 1.6s; animation-delay: .45s; }
+.plan .etiket .e1 { font-size: 5.6px; font-weight: 700; }
+.plan .etiket .e2 { font-size: 4.1px; }
+.plan .etiket { pointer-events: none; }
+.plan.ciz .etiket, .plan.ciz .damga { animation: belir .5s ease .6s both; }
+@keyframes belir { from { opacity: 0; } }
 
 /* ---------- daire ---------- */
 #g-daire { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 36px; padding: calc(var(--ust-h) + 8px) 32px 24px; }
@@ -202,15 +206,15 @@ body[data-gorunum="kat"] .ust .dugme.hafif, body[data-gorunum="daire"] .ust .dug
 .daire-plan svg { width: 100%; height: 100%; max-height: calc(100vh - var(--ust-h) - 40px); transform-origin: 0 0; }
 .daire-plan svg.ucus { transition: transform .85s var(--egri); }
 .daire-plan .oda { cursor: pointer; }
-.daire-plan .oda .zemin { fill: var(--beyaz); transition: fill .3s ease; }
-.daire-plan .oda.balkon .zemin { fill: var(--aydinger-2); }
-.daire-plan .oda:hover .zemin, .daire-plan .oda.on .zemin { fill: var(--ozalit-acik); }
-.daire-plan .oda .vurgu { fill: none; stroke: var(--ozalit); stroke-width: 1.6; opacity: 0; transition: opacity .25s ease; }
+.daire-plan .oda .zemin { fill: rgba(31, 69, 200, 0); transition: fill .3s ease; }
+.daire-plan .oda:hover .zemin, .daire-plan .oda.on .zemin { fill: rgba(31, 69, 200, .16); }
+.daire-plan .oda .vurgu { fill: none; stroke: var(--ozalit); stroke-width: 1.2; opacity: 0; transition: opacity .25s ease; pointer-events: none; }
+.daire-plan .oda-zemin { fill: rgba(255, 255, 255, .9); stroke: rgba(35, 39, 43, .12); stroke-width: .25; }
 .daire-plan .oda.on .vurgu { opacity: 1; }
 .daire-plan .foto circle { fill: var(--ozalit); }
 .daire-plan .foto path, .daire-plan .foto .mercek { fill: none; stroke: var(--beyaz); stroke-width: .45; stroke-linejoin: round; }
-.daire-plan .oda-ad { font-size: 4.2px; }
-.daire-plan .oda-m2 { font-size: 3.6px; }
+.daire-plan .oda-ad { font-size: 3.3px; }
+.daire-plan .oda-m2 { font-size: 2.8px; }
 .daire-plan .olcu line { stroke: var(--grafit-2); stroke-width: .35; }
 .daire-plan .olcu text { font-size: 3.4px; fill: var(--grafit-2); font-family: 'Archivo', sans-serif; font-stretch: 75%; }
 .daire-plan .yazilar, .daire-plan .olcu { opacity: 0; transition: opacity .5s ease .75s; }

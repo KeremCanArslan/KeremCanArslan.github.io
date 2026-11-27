@@ -20,12 +20,12 @@ const TIPLER = {
     ['balkon', 'Balkon', R(15, 180, 85, 194)] ] },
   B: { oda: '3+1', cephe: 'Güney ve doğu', kutu: [140, 80, 240, 194], dis: R(140, 80, 240, 180), odalar: [
     ['salon', 'Salon', R(185, 125, 240, 180), 'salon'],
-    ['mutfak', 'Mutfak', R(140, 150, 185, 180), 'mutfak'],
-    ['antre', 'Antre', [[175, 112], [205, 112], [205, 125], [185, 125], [185, 150], [140, 150], [140, 125], [175, 125]]],
+    ['mutfak', 'Mutfak', R(140, 140, 185, 180), 'mutfak'],
+    ['antre', 'Antre', [[166, 108], [175, 108], [175, 112], [205, 112], [205, 125], [185, 125], [185, 140], [140, 140], [140, 125], [166, 125]]],
     ['yatak', 'Ebeveyn yatak odası', R(205, 80, 240, 125), 'yatak'],
     ['yatak2', 'Yatak odası', R(175, 80, 205, 112)],
     ['yatak3', 'Çocuk odası', R(140, 80, 175, 108)],
-    ['banyo', 'Banyo', R(140, 108, 175, 125)],
+    ['banyo', 'Banyo', R(140, 108, 166, 125)],
     ['balkon', 'Balkon', R(155, 180, 225, 194)] ] },
   C: { oda: '2+1', cephe: 'Kuzey ve batı', kutu: [0, 0, 100, 80], dis: R(0, 0, 100, 80), odalar: [
     ['salon', 'Salon', R(0, 0, 50, 45), 'salon'],
@@ -53,6 +53,14 @@ const DURUM = {
 };
 const DURUM_AD = { satilik: 'Satışta', rezerve: 'Rezerve', satildi: 'Satıldı' };
 const FOTO = { salon: 'img/oda-salon.webp', mutfak: 'img/oda-mutfak.webp', yatak: 'img/oda-yatak.webp' };
+// Mobilyalı plan görselleri ve plan birimindeki yerleri (x, y, genişlik, yükseklik); D, C'nin aynası
+const PLAN_GORSEL = {
+  kat: { src: 'img/plan-kat.webp', vb: [-35.2, -19.4, 310.4, 232.8] },
+  A: { src: 'img/plan-A.webp', vb: [-10, 57, 120, 160] },
+  B: { src: 'img/plan-B.webp', vb: [130, 57, 120, 160] },
+  C: { src: 'img/plan-C.webp', vb: [-14, -8, 128, 96] },
+  D: { src: 'img/plan-D.webp', vb: [126, -8, 128, 96] }
+};
 
 // Cephe görsellerinde kat çizgileri (görsel pikseli, 1376x768): üstten alta 5 çizgi
 const CEPHE = {
@@ -73,6 +81,8 @@ const yol = p => 'M' + p.map(q => q.join(' ')).join('L') + 'Z';
 const tl = n => n.toLocaleString('tr-TR') + ' TL';
 const icindeMi = (x, y, p) => { let ic = false; for (let i = 0, j = p.length - 1; i < p.length; j = i++) { const [xi, yi] = p[i], [xj, yj] = p[j]; if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) ic = !ic; } return ic; };
 const bekle = ms => new Promise(r => setTimeout(r, ms));
+const onYuklenen = new Set();
+const onYukle = src => { if (onYuklenen.has(src)) return; onYuklenen.add(src); const i = new Image(); i.src = src; };
 
 Object.values(TIPLER).forEach(t => {
   t.net = t.odalar.filter(o => o[0] !== 'balkon').reduce((s, o) => s + alan(o[2]), 0);
@@ -247,32 +257,31 @@ addEventListener('wheel', e => {
 /* ================= KAT ================= */
 const katPlan = $('kat-plan');
 const DESEN = `<defs>
-  <pattern id="t-satildi" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="4" fill="#dfe4e1"/><line x1="0" y1="0" x2="0" y2="4" stroke="#4a5157" stroke-width="1" opacity=".45"/></pattern>
-  <pattern id="t-rezerve" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="4" fill="#fff"/><line x1="0" y1="0" x2="0" y2="4" stroke="#b97c0c" stroke-width="1" opacity=".55"/></pattern>
-  <pattern id="t-cekirdek" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><rect width="3" height="3" fill="#dfe4e1"/><line x1="0" y1="0" x2="0" y2="3" stroke="#23272b" stroke-width=".4" opacity=".35"/></pattern>
+  <filter id="f-satildi" x="-5%" y="-5%" width="110%" height="110%"><feColorMatrix type="saturate" values="0"/><feGaussianBlur stdDeviation=".8"/></filter>
 </defs>`;
+const gorselEtiketi = (G, ek = '') => `<image class="render" href="${G.src}" x="${G.vb[0]}" y="${G.vb[1]}" width="${G.vb[2]}" height="${G.vb[3]}" preserveAspectRatio="none"${ek}/>`;
 function katPlaniCiz(ciz) {
-  const kat = D.kat;
-  let h = `<svg class="plan${ciz && !hareketAz ? ' ciz' : ''}" viewBox="-24 -30 288 242" role="img" aria-label="${kat}. kat planı">${DESEN}`;
-  // çekirdek: merdiven, asansör, hol
-  h += `<path class="cekirdek" d="${yol(R(100, 0, 140, 180))}"/>`;
-  h += `<rect x="104" y="4" width="32" height="44" fill="#fff" stroke="#23272b" stroke-width=".7"/>`;
-  for (let y = 8; y < 46; y += 3.4) h += `<line class="basamak" x1="104" y1="${y}" x2="120" y2="${y}"/><line class="basamak" x1="120" y1="${y}" x2="136" y2="${y}"/>`;
-  h += `<line x1="120" y1="4" x2="120" y2="48" stroke="#23272b" stroke-width=".7"/>`;
-  h += `<rect x="108" y="54" width="24" height="20" fill="#fff" stroke="#23272b" stroke-width=".7"/><path d="M108 54l24 20M132 54l-24 20" stroke="#23272b" stroke-width=".4"/>`;
-  h += `<text class="yazi" x="120" y="86" text-anchor="middle" style="font-size:4.2px">Asansör</text><text class="yazi" x="120" y="128" text-anchor="middle" style="font-size:4.2px">Kat holü</text>`;
+  const kat = D.kat, G = PLAN_GORSEL.kat;
+  let h = `<svg class="plan${ciz && !hareketAz ? ' ciz' : ''}" viewBox="-14 -30 276 246" role="img" aria-label="${kat}. kat planı">${DESEN}`;
+  h += gorselEtiketi(G);
   TIP_SIRA.forEach(t => {
     const T = TIPLER[t], d = DURUM[kat][t], no = daireNo(kat, t);
     const [kx0, ky0, kx1, ky1] = T.kutu, dp = T.dis;
     const [lx, ly] = merkez(dp);
+    const balkon = T.odalar.filter(o => o[0] === 'balkon').map(o => yol(o[2])).join('');
     h += `<g class="daire ${d}" data-tip="${t}" tabindex="-1">`;
-    h += `<path class="zemin" d="${yol(dp)}"/>`;
-    T.odalar.forEach(o => { if (o[0] === 'balkon') h += `<path class="zemin" d="${yol(o[2])}"/>`; });
-    T.odalar.forEach(o => { h += `<path class="ic" d="${yol(o[2])}"/>`; });
-    h += `<path class="duvar" d="${yol(dp)}"/>`;
+    if (d === 'satildi') {
+      // satılmış daire: görselin o kısmı soluk ve bulanık, üstünde damga
+      h += `<clipPath id="kp-${t}"><path d="${yol(dp)}${balkon}"/></clipPath>`;
+      h += gorselEtiketi(G, ` clip-path="url(#kp-${t})" filter="url(#f-satildi)"`);
+      h += `<path class="ort" d="${yol(dp)}${balkon}"/>`;
+    }
+    h += `<path class="zemin" d="${yol(dp)}${balkon}"/>`;
     h += `<path class="vurgu" d="${yol(dp)}"/>`;
     h += `<rect class="kutu-ref" x="${kx0}" y="${ky0}" width="${kx1 - kx0}" height="${ky1 - ky0}" fill="none" pointer-events="none"/>`;
-    h += `<g class="etiket"><rect x="${lx - 23}" y="${ly - 9}" width="46" height="18" rx="2"/><text class="e1" x="${lx}" y="${ly - 1}" text-anchor="middle">Daire ${no}</text><text class="e2" x="${lx}" y="${ly + 5.6}" text-anchor="middle">${T.oda}, ${Math.round(T.net)} m², ${DURUM_AD[d].toLocaleLowerCase('tr-TR')}</text></g>`;
+    const ey = d === 'satildi' ? ly - 13 : ly;
+    h += `<g class="etiket"><rect x="${lx - 21}" y="${ey - 8}" width="42" height="16" rx="1.6"/><text class="e1" x="${lx}" y="${ey - 1.2}" text-anchor="middle">Daire ${no}</text><text class="e2" x="${lx}" y="${ey + 4.8}" text-anchor="middle">${T.oda}, ${Math.round(T.net)} m², ${DURUM_AD[d].toLocaleLowerCase('tr-TR')}</text></g>`;
+    if (d === 'satildi') h += `<g class="damga" transform="translate(${lx} ${ly + 9}) rotate(-8)"><rect x="-25" y="-7.5" width="50" height="15" rx="1.2"/><text y="3" text-anchor="middle">SATILDI</text></g>`;
     h += `</g>`;
   });
   // kuzey oku ve ölçek
@@ -319,6 +328,7 @@ async function katAc(n) {
   sahne.classList.add('kataGit');
   await bekle(hareketAz ? 0 : 320);
   katPlaniCiz(true);
+  TIP_SIRA.forEach(t => onYukle(PLAN_GORSEL[t].src));
   gorunumAyarla('kat');
   $('g-kat').classList.add('acik'); $('g-kat').scrollTop = 0;
   katVurgu(null);
@@ -343,19 +353,23 @@ $('kat-alt').addEventListener('click', () => katDegistir(D.kat - 1));
 /* ================= DAİRE ================= */
 const dPlan = $('daire-plan');
 function dairePlaniCiz() {
-  const T = TIPLER[D.tip], [x0, y0, x1, y1] = T.kutu, pad = 16;
-  let h = `<svg class="plan" viewBox="${x0 - pad} ${y0 - pad} ${x1 - x0 + pad * 2} ${y1 - y0 + pad * 2}" role="img" aria-label="Daire ${daireNo(D.kat, D.tip)} planı">`;
+  const T = TIPLER[D.tip], [x0, y0, x1, y1] = T.kutu, pad = 16, G = PLAN_GORSEL[D.tip];
+  const vx0 = Math.min(G.vb[0], x0 - pad), vy0 = Math.min(G.vb[1], y0 - pad);
+  const vx1 = Math.max(G.vb[0] + G.vb[2], x1 + pad), vy1 = Math.max(G.vb[1] + G.vb[3], y1 + pad);
+  let h = `<svg class="plan" viewBox="${vx0} ${vy0} ${vx1 - vx0} ${vy1 - vy0}" role="img" aria-label="Daire ${daireNo(D.kat, D.tip)} planı">`;
+  h += gorselEtiketi(G);
   h += `<rect class="kutu-ref" x="${x0}" y="${y0}" width="${x1 - x0}" height="${y1 - y0}" fill="none" pointer-events="none"/>`;
   T.odalar.forEach(o => {
-    h += `<g class="oda${o[0] === 'balkon' ? ' balkon' : ''}" data-oda="${o[0]}"><path class="zemin" d="${yol(o[2])}" stroke="#23272b" stroke-width=".8"/><path class="vurgu" d="${yol(o[2])}"/></g>`;
+    h += `<g class="oda${o[0] === 'balkon' ? ' balkon' : ''}" data-oda="${o[0]}"><path class="zemin" d="${yol(o[2])}"/><path class="vurgu" d="${yol(o[2])}"/></g>`;
   });
-  h += `<path class="duvar" d="${yol(T.dis)}" pointer-events="none"/>`;
   h += `<g class="yazilar" pointer-events="none">`;
   T.odalar.forEach(o => {
     const [cx, cy] = merkez(o[2]);
     const ad = o[1].length > 13 && (o[2][1][0] - o[2][0][0]) < 45 ? o[1].replace(' yatak odası', '') : o[1];
-    h += `<text class="yazi oda-ad" x="${cx}" y="${cy - 1}" text-anchor="middle">${ad}</text><text class="yazi oda-m2" x="${cx}" y="${cy + 4.4}" text-anchor="middle">${m2(alan(o[2]))} m²</text>`;
-    if (o[3]) h += `<g class="foto" transform="translate(${cx} ${cy - 9.5})"><circle r="3.2"/><path d="M-1.6 -.6h.8l.5-.7h.6l.5.7h.8v2h-3.2z"/><circle class="mercek" cy=".45" r=".55"/></g>`;
+    const m = `${m2(alan(o[2]))} m²`, gen = Math.max(ad.length * 1.9, m.length * 1.62) + 4;
+    h += `<rect class="oda-zemin" x="${cx - gen / 2}" y="${cy - 4.6}" width="${gen}" height="9.2" rx="1.2"/>`;
+    h += `<text class="yazi oda-ad" x="${cx}" y="${cy - .6}" text-anchor="middle">${ad}</text><text class="yazi oda-m2" x="${cx}" y="${cy + 3.2}" text-anchor="middle">${m}</text>`;
+    if (o[3]) h += `<g class="foto" transform="translate(${cx} ${cy - 7.9})"><circle r="2.6"/><path d="M-1.6 -.6h.8l.5-.7h.6l.5.7h.8v2h-3.2z"/><circle class="mercek" cy=".45" r=".55"/></g>`;
   });
   h += `</g>`;
   // ölçü çizgileri
@@ -550,7 +564,7 @@ Promise.all([Promise.all(yuklenecek), document.fonts ? document.fonts.ready : nu
   $('g-bina').classList.add('acik');
   gorunumAyarla('bina');
   katKatmani(true);
-  // oda görsellerini arka planda hazırla
-  setTimeout(() => Object.values(FOTO).forEach(src => { const i = new Image(); i.src = src; }), 1500);
+  // kat planı ve oda görsellerini arka planda hazırla; daire planları kat açılınca
+  setTimeout(() => [PLAN_GORSEL.kat.src, ...Object.values(FOTO)].forEach(onYukle), 1500);
 });
 })();
