@@ -77,6 +77,10 @@
   .top30 tbody tr { cursor: pointer; }
   .top30 tbody tr:hover td { background: #f3f5f8; }
   .top30 td.ters { color: var(--kirmizi); font-weight: 600; }
+  .top30 .ayri { display: block; font-size: 11px; font-weight: 400; color: var(--soluk); }
+  .sm-baslik { font-size: 13px; font-weight: 600; color: var(--soluk); margin: 14px 0 2px; }
+  .sm-baslik:first-child { margin-top: 0; }
+  .sm-genel { margin-top: 12px; padding: 10px 12px; background: #f3f5f8; border-radius: 8px; font-size: 14px; font-variant-numeric: tabular-nums; }
   #bildirimler { position: fixed; right: 16px; bottom: 16px; display: flex; flex-direction: column; gap: 8px; z-index: 50; max-width: calc(100vw - 32px); }
   .bildirim { background: #111418; color: #fff; padding: 11px 15px; border-radius: 8px; font-size: 14px; box-shadow: 0 6px 20px rgba(0, 0, 0, .18); }
   .izgara2.ls { grid-template-columns: 1fr 1fr; }
@@ -186,7 +190,7 @@
 
   <div class="bolum">
     <h2>Abone menüsündeki veriler: zarardaki pozisyonlar ve Top 30</h2>
-    <span class="ek" id="smDurum">Binance Smart Money verisi yükleniyor</span>
+    <span class="ek"><span id="smDurum">Binance Smart Money verisi yükleniyor</span><br><span id="mexDurum">MEXC verisi yükleniyor</span></span>
   </div>
   <div class="izgara2">
     <section class="kart" aria-label="Seçilen coinde pozisyon durumu">
@@ -195,15 +199,16 @@
       <a class="karsilastir" id="smLink" href="https://www.binance.com/tr/smart-money/signal/BTCUSDT" target="_blank" rel="noopener">Binance Smart Money'de aynı coini aç ↗</a>
     </section>
     <section class="kart" aria-label="Top 30">
-      <h2>Top 30 · zararda en çok trader olan alt coinler (BTC ve ETH hariç)</h2>
+      <h2>Top 30 · zararda en çok trader olan alt coinler, Binance + MEXC (BTC ve ETH hariç)</h2>
       <table class="teyp top30">
         <thead><tr><th>#</th><th>Coin</th><th>Long</th><th>Short</th><th>Zararda</th></tr></thead>
         <tbody id="top30"><tr><td colspan="5" class="ek">yükleniyor</td></tr></tbody>
       </table>
+      <p class="aciklama">Long ve short iki borsanın toplamı; altında B Binance Smart Money, M MEXC kopya trader'ları, kırmızı olan o borsada zararda. Zararda sütunu iki borsada zararda olan trader'ların toplamı; her borsanın zararı kendi ortalama girişine göre hesaplanır.</p>
     </section>
   </div>
 
-  <p class="alt">Veri: Binance vadeli (USDⓈ-M ve COIN-M) ve MEXC vadeli herkese açık canlı akışları, Binance Smart Money. Grafik: TradingView.</p>
+  <p class="alt">Veri: Binance vadeli (USDⓈ-M ve COIN-M) ve MEXC vadeli herkese açık canlı akışları, Binance Smart Money, MEXC kopya trade lider trader'larının açık işlemleri. Grafik: TradingView.</p>
 </div>
 <div id="bildirimler" aria-live="polite"></div>
 
@@ -219,6 +224,11 @@
   const SM_ARALIK = 30 * 1000;  // Binance kendi Smart Money ekranını da 30 sn'de bir yeniliyor
   let tur = {}, tabanBul = {}, smVeri = null, smOnceki = null, smSonraki = 0, fiyatlar = {}, top30Onceki = null;
   let smOzet = null, smOzetOnceki = null, sonMark = null;
+  // MEXC kopya trade özeti sunucuda (GitHub Actions) 30 dakikada bir taranıp bu dosyaya yazılır;
+  // MEXC'nin adresleri başka sitelerden tarayıcı isteğine izin vermediği için sayfa MEXC'yi doğrudan okuyamaz
+  const MEXC_OZET_URL = 'mexc.json';
+  const MEXC_ARALIK = 5 * 60 * 1000;
+  let mexVeri = null, mexcFiyat = null, mexcFiyatSym = null;
   const ORAN_URL = 'https://fapi.binance.com/futures/data/';
   const HACIM_SURELER = [['5 dk', 5], ['1 saat', 60], ['4 saat', 240], ['12 saat', 720], ['24 saat', 1440]];
   const ORAN_TURLERI = [
@@ -391,6 +401,35 @@
 
   // Terste: anlık fiyat o tarafın ağırlıklı ortalama girişinin aleyhinde (long için altında, short için üstünde)
   const terste = (x, f) => ({ long: x.longTraders > 0 && f < x.longAvgEntryPrice, short: x.shortTraders > 0 && f > x.shortAvgEntryPrice });
+  const tersteM = (m, f) => ({ long: m.lt > 0 && m.lo !== null && f < m.lo, short: m.st > 0 && m.so !== null && f > m.so });
+
+  // Binance adı MEXC'de aynıysa doğrudan; Binance '1000PEPE' gibi 1000 katı kontratsa MEXC'de öneksiz ad
+  // (fiyat 1000'de bir) aranır. carpan: Binance fiyatı / MEXC fiyatı
+  function mexBul(taban) {
+    if (!mexVeri) return null;
+    const c = mexVeri.coin;
+    if (c[taban]) return { k: taban, carpan: 1, x: c[taban] };
+    const m = taban.match(/^(10{3,})(.+)$/);
+    if (m && c[m[2]]) return { k: m[2], carpan: Number(m[1]), x: c[m[2]] };
+    return null;
+  }
+
+  async function mexYukle() {
+    try {
+      const r = await fetch(MEXC_OZET_URL, { cache: 'no-store' });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const j = await r.json();
+      if (!j || !j.coin || !j.zaman) throw new Error('MEXC özeti beklenen biçimde değil');
+      mexVeri = j;
+      const gun = new Date(j.zaman).toLocaleDateString('tr-TR') === new Date().toLocaleDateString('tr-TR') ? '' : new Date(j.zaman).toLocaleDateString('tr-TR') + ' ';
+      $('mexDurum').textContent = `MEXC kopya trade · ${fmt(j.trader, 0)} lider trader tarandı, açık işlemi olan ${fmt(j.acikTrader, 0)} · 30 dakikada bir taranır · son tarama ${gun}${saat(j.zaman)}`;
+      if (smVeri) top30Ciz();
+      smCoinCiz();
+    } catch (e) {
+      console.warn('MEXC özeti alınamadı', e);
+      if (!mexVeri) $('mexDurum').textContent = 'MEXC verisi alınamadı, 5 dakika sonra yeniden denenecek';
+    }
+  }
 
   async function smYukle() {
     smSonraki = Date.now() + SM_ARALIK;
@@ -429,23 +468,35 @@
     }
   }
 
+  // Binance Smart Money ve MEXC kopya trader'ları birlikte; her borsanın zararı kendi ortalama girişine göre,
+  // fiyat Binance mark fiyatı (MEXC'de 1000 katı olmayan adlar için bölünerek)
   function top30Ciz() {
     const satirlar = [];
-    for (const sym in smVeri) {
-      if (sym === 'BTCUSDT' || sym === 'ETHUSDT' || tur[sym] !== 'COIN' || !tabanBul[sym]) continue;
+    for (const taban in semboller) {
+      const sym = semboller[taban].sym;
+      if (sym === 'BTCUSDT' || sym === 'ETHUSDT' || tur[sym] !== 'COIN') continue;
       const f = fiyatlar[sym];
       if (!f) continue;
-      const x = smVeri[sym], t = terste(x, f);
-      const say = (t.long ? x.longTraders : 0) + (t.short ? x.shortTraders : 0);
-      if (say > 0) satirlar.push({ sym, x, t, say });
+      const b = smVeri && smVeri[sym], mb = mexBul(taban), m = mb && mb.x;
+      const tb = b ? terste(b, f) : { long: false, short: false };
+      const tm = m ? tersteM(m, f / mb.carpan) : { long: false, short: false };
+      const bz = b ? (tb.long ? b.longTraders : 0) + (tb.short ? b.shortTraders : 0) : 0;
+      const mz = m ? (tm.long ? m.lt : 0) + (tm.short ? m.st : 0) : 0;
+      if (bz + mz > 0) satirlar.push({
+        sym, taban, say: bz + mz, tb, tm, tl: tb.long || tm.long, ts: tb.short || tm.short,
+        bl: b ? b.longTraders : 0, bs: b ? b.shortTraders : 0, ml: m ? m.lt : 0, ms: m ? m.st : 0
+      });
     }
     satirlar.sort((a, b) => b.say - a.say);
     const ilk = satirlar.slice(0, 30);
     const simdiki = new Set(ilk.map(r => r.sym));
     if (top30Onceki) for (const s of simdiki) if (!top30Onceki.has(s)) bildirim(s + ' top 30 listesine eklendi');
     top30Onceki = simdiki;
+    // Toplam, o taraf borsalardan birinde zararda ise kırmızı; alttaki B / M hangi borsada zararda olduğunu ayrı gösterir
+    const parca = (ad, n, ters) => `<span class="${ters ? 'eksi' : ''}">${ad} ${fmt(n, 0)}</span>`;
+    const hucre = (b, m, tB, tM) => `<td class="${tB || tM ? 'ters' : ''}">${fmt(b + m, 0)}<span class="ayri">${parca('B', b, tB)} · ${parca('M', m, tM)}</span></td>`;
     $('top30').innerHTML = ilk.length ? ilk.map((r, i) =>
-      `<tr data-taban="${tabanBul[r.sym]}"><td>${i + 1}</td><td>${tabanBul[r.sym]}</td><td class="${r.t.long ? 'ters' : ''}">${fmt(r.x.longTraders, 0)}</td><td class="${r.t.short ? 'ters' : ''}">${fmt(r.x.shortTraders, 0)}</td><td>${r.t.long && r.t.short ? 'ikisi' : r.t.long ? 'long' : 'short'} · ${fmt(r.say, 0)}</td></tr>`
+      `<tr data-taban="${r.taban}"><td>${i + 1}</td><td>${r.taban}</td>${hucre(r.bl, r.ml, r.tb.long, r.tm.long)}${hucre(r.bs, r.ms, r.tb.short, r.tm.short)}<td>${r.tl && r.ts ? 'ikisi' : r.tl ? 'long' : 'short'} · ${fmt(r.say, 0)}</td></tr>`
     ).join('') : '<tr><td colspan="5" class="ek">veri yok</td></tr>';
   }
 
@@ -453,28 +504,54 @@
     if (!aktif) return;
     $('smBaslik').textContent = 'Pozisyon durumu · ' + aktif.sym;
     const oz = smOzet && smOzet.symbol === aktif.sym ? smOzet : null;
-    if (!oz && !smVeri) return;
+    if (!oz && !smVeri && !mexVeri) return;
     // Önce Binance coin sayfasının özeti; o gelene kadar listedeki satır
-    const x = oz ? { longTraders: oz.longTraders, shortTraders: oz.shortTraders, longAvgEntryPrice: oz.longTradersAvgEntryPrice, shortAvgEntryPrice: oz.shortTradersAvgEntryPrice, longKar: oz.longProfitTraders, shortKar: oz.shortProfitTraders } : smVeri[aktif.sym];
+    const x = oz ? { longTraders: oz.longTraders, shortTraders: oz.shortTraders, longAvgEntryPrice: oz.longTradersAvgEntryPrice, shortAvgEntryPrice: oz.shortTradersAvgEntryPrice, longKar: oz.longProfitTraders, shortKar: oz.shortProfitTraders } : (smVeri && smVeri[aktif.sym]);
     const o = oz ? smOzetOnceki : (smOnceki && smOnceki[aktif.sym]);
     // Binance kâr ve zararı mark fiyatla hesaplıyor, kart da onu kullanır
     const f = sonMark !== null ? sonMark : (fiyatlar[aktif.sym] || sonFiyat);
-    if (!x || !f) { $('smCoin').innerHTML = '<p class="ek">Bu coin için Binance Smart Money verisi yok.</p>'; return; }
-    const t = terste(x, f);
     const fark = (yeni, eski) => {
       if (eski === undefined || eski === null || yeni === eski) return '';
       const d = yeni - eski;
       return `<span class="fark">${d > 0 ? '+' : '−'}${fmt(Math.abs(d), 0)}</span>`;
     };
-    const uzaklik = (ort) => { const y = (f - ort) / ort * 100; return 'mark fiyat bundan %' + fmt(Math.abs(y), 2) + (y < 0 ? ' aşağıda' : ' yukarıda'); };
+    const uzaklik = (ort, fy, ad) => { const y = (fy - ort) / ort * 100; return ad + ' bundan %' + fmt(Math.abs(y), 2) + (y < 0 ? ' aşağıda' : ' yukarıda'); };
     // Binance oranı yuvarlamıyor, iki basamakta kesiyor (322 / 884 = %36,425 → %36,42)
     const karOrani = (k, n) => (k === undefined || k === null || !n) ? '' : `<div class="ek">kârdaki trader oranı %${fmt(Math.floor(k / n * 10000) / 100, 2)}</div>`;
-    const satir = (ad, n, eski, ort, zarar, kar) =>
-      `<div class="sm-satir"><div><div class="borsa">${ad}</div><div class="sayi">${fmt(n, 0)} trader${fark(n, eski)}</div><div class="ek">ağırlıklı ortalama giriş ${fmt(ort, aktif.ondalik)}</div><div class="ek">${uzaklik(ort)}</div>${karOrani(kar, n)}</div><span class="rozet ${zarar ? 'eksi' : 'arti'}">${zarar ? 'zararda' : 'kârda'}</span></div>`;
+    const satir = (ad, n, eski, ort, zarar, kar, ondalik, fy, fyAd) =>
+      `<div class="sm-satir"><div><div class="borsa">${ad}</div><div class="sayi">${fmt(n, 0)} trader${fark(n, eski)}</div><div class="ek">ağırlıklı ortalama giriş ${fmt(ort, ondalik)}</div><div class="ek">${uzaklik(ort, fy, fyAd)}</div>${karOrani(kar, n)}</div><span class="rozet ${zarar ? 'eksi' : 'arti'}">${zarar ? 'zararda' : 'kârda'}</span></div>`;
+    let html = '<div class="sm-baslik">Binance Smart Money</div>';
+    let gL = 0, gS = 0, gZ = 0;
+    if (x && f) {
+      const t = terste(x, f);
+      html += satir('Long', x.longTraders, o && o.longTraders, x.longAvgEntryPrice, t.long, x.longKar, aktif.ondalik, f, 'mark fiyat') +
+        satir('Short', x.shortTraders, o && o.shortTraders, x.shortAvgEntryPrice, t.short, x.shortKar, aktif.ondalik, f, 'mark fiyat');
+      gL += x.longTraders; gS += x.shortTraders; gZ += (t.long ? x.longTraders : 0) + (t.short ? x.shortTraders : 0);
+    } else {
+      html += `<p class="ek">${smVeri || oz ? 'Bu coin için Binance Smart Money verisi yok.' : 'yükleniyor'}</p>`;
+    }
+    html += `<div class="sm-baslik">MEXC kopya trader'ları</div>`;
+    const mb = mexBul(aktif.taban);
+    // MEXC tarafı MEXC'nin kendi canlı fiyatıyla; o gelene kadar Binance mark fiyatından
+    const mf = mb && mexcFiyat !== null && mexcFiyatSym === mb.k + '_USDT' ? mexcFiyat : (mb && f ? f / mb.carpan : null);
+    if (!mexVeri) {
+      html += '<p class="ek">yükleniyor</p>';
+    } else if (!mb || !mf || (!mb.x.lt && !mb.x.st)) {
+      html += '<p class="ek">MEXC kopya trader\'larında bu coinde açık işlem yok.</p>';
+    } else {
+      const m = mb.x, tm = tersteM(m, mf), od = aktif.ondalik + Math.round(Math.log10(mb.carpan));
+      const fyAd = mexcFiyat !== null && mexcFiyatSym === mb.k + '_USDT' ? 'MEXC fiyatı' : 'fiyat';
+      if (m.lt) html += satir('Long', m.lt, null, m.lo, tm.long, null, od, mf, fyAd);
+      else html += '<div class="sm-satir"><div><div class="borsa">Long</div><div class="ek">açık long işlem yok</div></div></div>';
+      if (m.st) html += satir('Short', m.st, null, m.so, tm.short, null, od, mf, fyAd);
+      else html += '<div class="sm-satir"><div><div class="borsa">Short</div><div class="ek">açık short işlem yok</div></div></div>';
+      if (mb.carpan !== 1) html += `<p class="ek">MEXC'de ${mb.k} adıyla, fiyatı Binance'teki ${aktif.taban} fiyatının ${fmt(mb.carpan, 0)}'de biri.</p>`;
+      gL += m.lt; gS += m.st; gZ += (tm.long ? m.lt : 0) + (tm.short ? m.st : 0);
+    }
+    html += `<div class="sm-genel">Genel (Binance + MEXC): long <b>${fmt(gL, 0)}</b> trader, short <b>${fmt(gS, 0)}</b> trader · zararda <b>${fmt(gZ, 0)}</b></div>`;
     const kalan = Math.max(0, Math.ceil((smSonraki - Date.now()) / 1000));
-    $('smCoin').innerHTML = satir('Long', x.longTraders, o && o.longTraders, x.longAvgEntryPrice, t.long, x.longKar) +
-      satir('Short', x.shortTraders, o && o.shortTraders, x.shortAvgEntryPrice, t.short, x.shortKar) +
-      `<p class="ek">Mark fiyat <b>${fmt(f, aktif.ondalik)}</b> (Binance kâr ve zararı bununla hesaplar). Fiyat bir tarafın ortalama girişinin aleyhine geçince o taraf zararda sayılır. Rakamlar Binance Smart Money coin sayfasıyla aynı kaynaktan gelir, 30 saniyede bir yenilenir; değişen sayının yanında farkı yazar. Sonraki yenileme ${kalan} sn.</p>`;
+    html += `<p class="ek">${f ? `Mark fiyat <b>${fmt(f, aktif.ondalik)}</b> (Binance kâr ve zararı bununla hesaplar). ` : ''}Fiyat bir tarafın ortalama girişinin aleyhine geçince o taraf zararda sayılır. Binance rakamları Binance Smart Money coin sayfasıyla aynı kaynaktan gelir, 30 saniyede bir yenilenir; değişen sayının yanında farkı yazar. Sonraki yenileme ${kalan} sn. MEXC rakamları MEXC kopya trade'deki lider trader'ların açık işlemlerinden, 30 dakikada bir taranır; zararda mı kârda mı anlık fiyatla hesaplanır.</p>`;
+    $('smCoin').innerHTML = html;
   }
 
   function bildirim(metin) {
@@ -632,6 +709,9 @@
         abone(mws, msym);
         return;
       }
+      if (m.channel === 'push.ticker' && m.data && typeof m.data.fairPrice === 'number') {
+        mexcFiyat = m.data.fairPrice; mexcFiyatSym = m.data.symbol || msym;
+      }
       if (m.channel === 'push.ticker' && m.data && typeof m.data.fundingRate === 'number') {
         geldi = true;
         const r = m.data.fundingRate, el = $('fMexc');
@@ -706,7 +786,7 @@
     $('smLink').href = 'https://www.binance.com/tr/smart-money/signal/' + s.sym;
     $('cgLink').href = 'https://www.coinglass.com/LongShortRatio/' + s.taban.replace(/^10{3,}/, '');
     $('lsHacim').innerHTML = '<p class="ek">yükleniyor</p>'; $('lsOran').innerHTML = '<p class="ek">yükleniyor</p>';
-    sonMark = null; smOzet = smOzetOnceki = null;
+    sonMark = null; smOzet = smOzetOnceki = null; mexcFiyat = mexcFiyatSym = null;
     smCoinCiz();
     ozetYukle(s.sym);
     ['fBinance', 'fMexc'].forEach(id => { $(id).textContent = '–'; $(id).className = 'oran'; });
@@ -728,7 +808,7 @@
     sec(tr.dataset.taban);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
-  setInterval(() => { if (smVeri) smCoinCiz(); }, 1000);
+  setInterval(() => { if (smVeri || mexVeri) smCoinCiz(); }, 1000);
   setInterval(hacimCiz, 1000);
   setInterval(() => { if (aktif) oranYukle(nesil); }, 60 * 1000);
   // Kutu doluyken liste yalnız o yazıya uyan coini gösteriyor: tıklayınca boşalt, seçilmezse eski coini geri koy
@@ -746,6 +826,8 @@
     sec(new URLSearchParams(location.search).get('coin') || 'BTC');
     smYukle();
     setInterval(smYukle, SM_ARALIK);
+    mexYukle();
+    setInterval(mexYukle, MEXC_ARALIK);
   })();
 })();
 </script>

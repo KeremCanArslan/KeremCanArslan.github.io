@@ -1,0 +1,35 @@
+name: MEXC verisi
+
+# ornek/kripto-canli test sayfası için MEXC kopya trade özetini 30 dakikada bir yeniler.
+# Tarama yaklaşık 20 dakika sürer; üst üste binmesin diye aynı anda tek çalışma.
+on:
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mexc-veri
+  cancel-in-progress: false
+
+jobs:
+  topla:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: MEXC kopya trader taraması
+        run: node .github/mexc/topla.mjs ornek/kripto-canli/mexc.json
+
+      - name: Özeti kaydet
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add ornek/kripto-canli/mexc.json
+          if git diff --cached --quiet; then echo 'Değişiklik yok'; exit 0; fi
+          git commit -m 'Veri: MEXC kopya trader özeti'
+          git pull --rebase
+          git push
