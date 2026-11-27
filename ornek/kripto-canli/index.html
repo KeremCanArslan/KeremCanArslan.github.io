@@ -68,6 +68,7 @@
   .sm-satir { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--cizgi); }
   .sm-satir:first-child { border-top: 0; padding-top: 0; }
   .sm-satir .sayi { font-size: 20px; font-weight: 650; font-variant-numeric: tabular-nums; }
+  .sm-satir > .sayi { white-space: nowrap; flex-shrink: 0; }
   .rozet { font-size: 13px; font-weight: 600; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
   .rozet.eksi { background: #fdecee; }
   .rozet.arti { background: #e7f5ee; }
@@ -569,7 +570,7 @@
       const x = o[t.k];
       if (!x) return `<div class="sm-satir"><div><div class="borsa">${t.ad}</div><div class="ek">veri yok</div></div></div>`;
       const l = x[1] * 100;
-      return `<div class="sm-satir"><div><div class="borsa">${t.ad}</div><div class="ek">${t.olcu}: long %${fmt(l, 1)} · short %${fmt(100 - l, 1)} · ${saat(x[0])} verisi</div><div class="ek">MEXC Big Data'da ${t.mx}</div></div><div class="sayi">${fmt(x[2], 2)}</div></div>`;
+      return `<div class="sm-satir"><div><div class="borsa">${t.ad}</div><div class="ek">${t.olcu}: short %${fmt(100 - l, 1)} · long / short oranı ${fmt(x[2], 2)} · ${saat(x[0])} verisi</div><div class="ek">MEXC Big Data'da ${t.mx}</div></div><div class="sayi">%${fmt(l, 1)} long</div></div>`;
     }).join('') + (mb.k !== aktif.taban ? `<p class="ek">MEXC'de ${mb.k} adıyla.</p>` : '');
   }
 
@@ -881,9 +882,9 @@
       const x = sonuc[i];
       if (!x) return `<div class="sm-satir"><div><div class="borsa">${o.ad}</div><div class="ek">veri yok</div></div></div>`;
       const l = parseFloat(x.longAccount) * 100;
-      return `<div class="sm-satir"><div><div class="borsa">${o.ad}</div><div class="ek">${o.olcu}: long %${fmt(l, 1)} · short %${fmt(100 - l, 1)} · ${saat(x.timestamp)} verisi</div><div class="ek">CoinGlass'ta ${o.cg}</div></div><div class="sayi">${fmt(parseFloat(x.longShortRatio), 2)}</div></div>`;
+      return `<div class="sm-satir"><div><div class="borsa">${o.ad}</div><div class="ek">${o.olcu}: short %${fmt(100 - l, 1)} · long / short oranı ${fmt(parseFloat(x.longShortRatio), 2)} · ${saat(x.timestamp)} verisi</div><div class="ek">CoinGlass'ta ${o.cg}</div></div><div class="sayi">%${fmt(l, 1)} long</div></div>`;
     }).join('') +
-      `<p class="ek">Oran, long taraftaki hesabın (ya da pozisyonun) short taraftakinin kaç katı olduğunu gösterir: 2 ise her short hesaba 2 long hesap düşer. Büyük hesaplar Binance'in Top Trader verisi. Binance bu oranı 5 dakikada bir günceller, son veri ${saat(zaman)}. CoinGlass bu kutuyu kendiliğinden yenilemiyor, bazen de bir önceki 5 dakikanın rakamını gösteriyor; karşılaştırırken CoinGlass sayfasını yenileyin.</p>`;
+      `<p class="ek">Büyük yazı, hesapların (ya da pozisyonların) yüzde kaçının long olduğunu gösterir. Long / short oranı long tarafın short tarafın kaç katı olduğunu gösterir: 2 ise her short hesaba 2 long hesap düşer; CoinGlass bu oranı gösteriyor. Büyük hesaplar Binance'in Top Trader verisi. Binance bu oranı 5 dakikada bir günceller, son veri ${saat(zaman)}. CoinGlass bu kutuyu kendiliğinden yenilemiyor, bazen de bir önceki 5 dakikanın rakamını gösteriyor; karşılaştırırken CoinGlass sayfasını yenileyin.</p>`;
   }
 
   // MEXC'de coinin adı farklı olabiliyor ve olmayan sembole abonelik de 'success' dönüyor: bütün aday adlara
