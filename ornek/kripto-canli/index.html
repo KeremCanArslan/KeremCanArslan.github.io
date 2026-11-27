@@ -707,12 +707,12 @@
     const satir = (ad, n, eski, ort, zarar, kar, ondalik, fy, fyAd) =>
       `<div class="sm-satir"><div><div class="borsa">${ad}</div><div class="sayi">${fmt(n, 0)} trader${fark(n, eski)}</div><div class="ek">ağırlıklı ortalama giriş ${fmt(ort, ondalik)}</div><div class="ek">${uzaklik(ort, fy, fyAd)}</div>${karOrani(kar, n)}</div><span class="rozet ${zarar ? 'eksi' : 'arti'}">${zarar ? 'zararda' : 'kârda'}</span></div>`;
     let html = '<div class="sm-baslik">Binance Smart Money</div>';
-    let gL = 0, gS = 0, gZ = 0;
+    let gL = 0, gS = 0, zL = 0, zS = 0;  // zL / zS: zararda sayılan long / short trader
     if (x && f) {
       const t = terste(x, f);
       html += satir('Long', x.longTraders, o && o.longTraders, x.longAvgEntryPrice, t.long, x.longKar, aktif.ondalik, f, 'mark fiyat') +
         satir('Short', x.shortTraders, o && o.shortTraders, x.shortAvgEntryPrice, t.short, x.shortKar, aktif.ondalik, f, 'mark fiyat');
-      gL += x.longTraders; gS += x.shortTraders; gZ += (t.long ? x.longTraders : 0) + (t.short ? x.shortTraders : 0);
+      gL += x.longTraders; gS += x.shortTraders; if (t.long) zL += x.longTraders; if (t.short) zS += x.shortTraders;
     } else {
       html += `<p class="ek">${smVeri || oz ? 'Bu coin için Binance Smart Money verisi yok.' : 'yükleniyor'}</p>`;
     }
@@ -732,12 +732,14 @@
       if (m.st) html += satir('Short', m.st, null, m.so, tm.short, null, od, mf, fyAd);
       else html += '<div class="sm-satir"><div><div class="borsa">Short</div><div class="ek">açık short işlem yok</div></div></div>';
       if (mb.k !== aktif.taban) html += `<p class="ek">MEXC'de ${mb.k} adıyla${mb.carpan !== 1 ? `, fiyatı Binance'teki ${aktif.taban} fiyatının ${fmt(mb.carpan, 0)}'de biri` : ''}.</p>`;
-      gL += m.lt; gS += m.st; gZ += (tm.long ? m.lt : 0) + (tm.short ? m.st : 0);
+      gL += m.lt; gS += m.st; if (tm.long) zL += m.lt; if (tm.short) zS += m.st;
     }
     // Genel, iki borsanın verisi de gelince yazılır; biri gelmeden yazılırsa tek borsanın sayısı genel gibi görünür
     const ikisiGeldi = !!mexVeri && !!(smVeri || oz) && !!fiyatlar[aktif.sym];
     html += ikisiGeldi
-      ? `<div class="sm-genel">Genel (Binance + MEXC): long <b>${fmt(gL, 0)}</b> trader, short <b>${fmt(gS, 0)}</b> trader · zararda <b>${fmt(gZ, 0)}</b></div>`
+      ? `<div class="sm-genel">Genel (Binance + MEXC): long <b>${fmt(gL, 0)}</b> trader, short <b>${fmt(gS, 0)}</b> trader<br>${zL && zS
+          ? `Zararda: long <b>${fmt(zL, 0)}</b> trader, short <b>${fmt(zS, 0)}</b> trader`
+          : zL || zS ? `Zararda olan taraf: <b>${zL ? 'long' : 'short'}</b>, <b>${fmt(zL || zS, 0)}</b> trader` : 'İki taraf da kârda'}</div>`
       : '<div class="sm-genel">Genel (Binance + MEXC): iki borsanın verisi gelince hesaplanır</div>';
     // Long / short bölümündeki genel trader oranı aynı sayılardan
     const gT = gL + gS;
