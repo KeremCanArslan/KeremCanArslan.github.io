@@ -3,6 +3,8 @@ name: MEXC verisi
 # ornek/kripto-canli test sayfası için MEXC verisini 30 dakikada bir yeniler:
 # kopya trade özeti (mexc.json, yaklaşık 20 dakika) ve Big Data ekranı (mexc-oran.json, yaklaşık 10 dakika).
 # İki iş ayrı makinede aynı anda çalışır; üst üste binmesin diye aynı anda tek çalışma.
+# Her çalışma bitince bir sonrakini kendisi başlatır (zincir işi); zamanlanmış tetikleme yalnız yedek.
+# Durdurmak için: gh workflow disable mexc-veri.yml (ya da süren çalışmayı iptal et).
 on:
   schedule:
     - cron: '7,37 * * * *'
@@ -54,3 +56,23 @@ jobs:
           git commit -m 'Veri: MEXC Big Data özeti'
           for i in 1 2 3 4 5; do git pull --rebase && git push && exit 0; sleep $((i * 5)); done
           exit 1
+
+  zincir:
+    # GitHub'ın zamanlanmış tetiklemesi bu depoda hiç çalışmadı (27.11, 13:54-20:07 arası 12 dilim).
+    # GITHUB_TOKEN ile başlatılan workflow_dispatch yeni çalışma açar (docs.github.com/en/actions/concepts/security/github_token).
+    # Çalışma başlangıcından 30 dakika dolunca sonrakini başlatır; iki işten biri hata verse de zincir kopmaz, iptal edilirse durur.
+    needs: [topla, oran]
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      actions: write
+    steps:
+      - name: Sonraki çalışmayı başlat
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          bas=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq .run_started_at)
+          bekle=$(( 1800 - ( $(date +%s) - $(date -d "$bas" +%s) ) ))
+          if [ "$bekle" -gt 0 ]; then echo "Sonraki çalışmaya $bekle sn"; sleep "$bekle"; fi
+          gh workflow run mexc-veri.yml --repo "$GITHUB_REPOSITORY" --ref main
