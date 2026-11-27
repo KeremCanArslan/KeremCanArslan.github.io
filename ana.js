@@ -13,12 +13,26 @@
   var sayi = document.getElementById('ornek-sayi');
   if (sayi && satirlar.length) sayi.textContent = satirlar.filter(function (li) { return li.hasAttribute('data-canli'); }).length;
 
+  // Uzun liste kısa açılır: ilk 10 satır, gerisi düğmeyle (betik çalışmazsa liste tam görünür)
+  var liste = document.querySelector('.dizin'), hepsiniAc = null;
+  function listeyiAc() { if (liste) liste.classList.remove('kisa'); if (hepsiniAc) hepsiniAc.hidden = true; }
+  if (liste && satirlar.length > 12) {
+    liste.classList.add('kisa');
+    hepsiniAc = document.createElement('button');
+    hepsiniAc.type = 'button';
+    hepsiniAc.className = 'btn dizin-ac';
+    hepsiniAc.textContent = (en ? 'Show all demos' : 'Bütün örnekleri göster') + ' (' + satirlar.length + ')';
+    liste.insertAdjacentElement('afterend', hepsiniAc);
+    hepsiniAc.addEventListener('click', listeyiAc);
+  }
+
   // Süzgeç
   var dugmeler = [].slice.call(document.querySelectorAll('.suzgec button'));
   dugmeler.forEach(function (b) {
     var k = b.dataset.k;
     b.querySelector('sup').textContent = k === 'hepsi' ? satirlar.length : satirlar.filter(function (li) { return li.dataset.k === k; }).length;
     b.addEventListener('click', function () {
+      if (k !== 'hepsi') listeyiAc();
       dugmeler.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
       satirlar.forEach(function (li) { li.hidden = !(k === 'hepsi' || li.dataset.k === k); });
     });
