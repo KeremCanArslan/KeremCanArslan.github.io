@@ -81,6 +81,7 @@
   .sm-baslik { font-size: 13px; font-weight: 600; color: var(--soluk); margin: 14px 0 2px; }
   .sm-baslik:first-child { margin-top: 0; }
   .sm-genel { margin-top: 12px; padding: 10px 12px; background: #f3f5f8; border-radius: 8px; font-size: 14px; font-variant-numeric: tabular-nums; }
+  .sm-baslik + .sm-genel { margin-top: 4px; }
   #bildirimler { position: fixed; right: 16px; bottom: 16px; display: flex; flex-direction: column; gap: 8px; z-index: 50; max-width: calc(100vw - 32px); }
   .bildirim { background: #111418; color: #fff; padding: 11px 15px; border-radius: 8px; font-size: 14px; box-shadow: 0 6px 20px rgba(0, 0, 0, .18); }
   .izgara2.ls { grid-template-columns: 1fr 1fr; }
@@ -170,24 +171,25 @@
   </div>
 
   <div class="bolum">
-    <h2>Long / short oranı ve hacmi · Binance + MEXC</h2>
+    <h2>Long / short ve alış / satış hacmi · Binance + MEXC</h2>
     <span class="ek">Binance: hacim canlı, oran 5 dakikada bir yenilenir<br><span id="mexOranDurum">MEXC verisi yükleniyor</span></span>
   </div>
   <div class="izgara2 ls">
-    <section class="kart" aria-label="Long short hesap oranı">
-      <h2 id="lsOranBaslik">Long / short hesap oranı</h2>
-      <div class="sm-baslik">Binance</div>
+    <section class="kart" aria-label="Long short">
+      <h2 id="lsOranBaslik">Long / short</h2>
+      <div class="sm-baslik">Trader sayısı · Binance + MEXC</div>
+      <div class="sm-genel" id="lsOranGenel">Trader sayısı yükleniyor</div>
+      <div class="sm-baslik">Hesap oranı · Binance</div>
       <div id="lsOran"><p class="ek">yükleniyor</p></div>
-      <div class="sm-baslik">MEXC</div>
+      <div class="sm-baslik">Hesap oranı · MEXC</div>
       <div id="lsOranMexc"><p class="ek">yükleniyor</p></div>
-      <div class="sm-genel" id="lsOranGenel">Genel trader oranı yükleniyor</div>
-      <p class="aciklama">Hesap oranları iki borsada ayrı gösterilir: borsalar hesap sayısını açıklamadığı için iki oran toplanamaz. Genel trader oranı, iki borsada sayısı bilinen trader'lardan hesaplanır: Binance Smart Money ve MEXC kopya trade lider trader'ları (aşağıdaki pozisyon kartıyla aynı sayılar).</p>
+      <p class="aciklama">Trader sayısı, iki borsada sayısı bilinen trader'lardan: Binance Smart Money ve MEXC kopya trade lider trader'ları (aşağıdaki pozisyon kartıyla aynı sayılar). Borsalar bütün hesapların sayısını açıklamıyor, yalnız oranını veriyor; bu yüzden hesap oranları iki borsada ayrı gösterilir, toplanamaz.</p>
     </section>
-    <section class="kart" aria-label="Long short hacmi">
-      <h2 id="lsBaslik">Long / short hacmi</h2>
+    <section class="kart" aria-label="Alış satış hacmi">
+      <h2 id="lsBaslik">Alış / satış hacmi</h2>
       <p class="ek" id="lsKontrat">&nbsp;</p>
       <div id="lsHacim"><p class="ek">yükleniyor</p></div>
-      <p class="aciklama">Long hacmi piyasa fiyatından alan işlemlerin (taker alış), short hacmi piyasa fiyatından satan işlemlerin (taker satış) dolar toplamı. CoinGlass'taki Long / Short Volume ile aynı tanım. Süreler şu andan geriye sayılır, içinde bulunulan dakika canlı akıştan gelir.</p>
+      <p class="aciklama">Alış hacmi piyasa fiyatından alan işlemlerin (taker alış), satış hacmi piyasa fiyatından satan işlemlerin (taker satış) dolar toplamı. Trader sayısı değildir; her işlemin bir alanı bir satanı olduğu için saatlik pencerede çoğu zaman yarıya yakın çıkar. CoinGlass'ta Long / Short Volume adıyla geçer. Süreler şu andan geriye sayılır, içinde bulunulan dakika canlı akıştan gelir.</p>
       <a class="karsilastir" id="cgLink" href="https://www.coinglass.com/LongShortRatio/BTC" target="_blank" rel="noopener">CoinGlass'ta aynı coini aç ↗</a>
       <p class="aciklama">CoinGlass sayfasının altındaki borsa tablosunda süreyi aynı seçip Binance satırına bakın. 1, 4 ve 12 saatte oran aynı çıkar; 24 saatte CoinGlass 1 puan kadar farklı gösteriyor.</p>
       <div class="sm-baslik">Genel toplam · Binance + MEXC</div>
@@ -599,10 +601,10 @@
       let bAl = 0, bSat = 0;
       for (const x of hazir) for (const [t, v] of hacim.mum.get(x.sym)) if (t >= bas && t < h.t) { bAl += v[0]; bSat += v[1]; }
       const gAl = bAl + m[0], gSat = bSat + m[1], y = pay(gAl, gSat);
-      return `<div class="ls-satir"><div class="ls-ust">${baslik}<span><span class="arti">long %${fmt(y, 2)}</span> · <span class="eksi">short %${fmt(100 - y, 2)}</span></span></div>` +
+      return `<div class="ls-satir"><div class="ls-ust">${baslik}<span><span class="arti">alış %${fmt(y, 2)}</span> · <span class="eksi">satış %${fmt(100 - y, 2)}</span></span></div>` +
         `<div class="lsbar"><span style="width:${y.toFixed(2)}%"></span></div>` +
-        `<div class="ls-alt"><span>Long ${dolar(gAl)}</span><span>Short ${dolar(gSat)}</span></div>` +
-        `<div class="ls-alt"><span>Binance long %${fmt(pay(bAl, bSat), 2)} · ${dolar(bAl + bSat)}</span><span>MEXC long %${fmt(pay(m[0], m[1]), 2)} · ${dolar(m[0] + m[1])}</span></div>` +
+        `<div class="ls-alt"><span>Alış ${dolar(gAl)}</span><span>Satış ${dolar(gSat)}</span></div>` +
+        `<div class="ls-alt"><span>Binance alış %${fmt(pay(bAl, bSat), 2)} · ${dolar(bAl + bSat)}</span><span>MEXC alış %${fmt(pay(m[0], m[1]), 2)} · ${dolar(m[0] + m[1])}</span></div>` +
         (yayim < s ? `<div class="ek">MEXC bu ${s} saatte yalnız ${yayim} saatlik veri yayımlamış (az işlemli saatleri yayımlamıyor), MEXC tarafı o saatlerin toplamı</div>` : '') + '</div>';
     }).join('');
   }
@@ -739,9 +741,9 @@
       : '<div class="sm-genel">Genel (Binance + MEXC): iki borsanın verisi gelince hesaplanır</div>';
     // Long / short bölümündeki genel trader oranı aynı sayılardan
     const gT = gL + gS;
-    $('lsOranGenel').innerHTML = !ikisiGeldi ? 'Genel trader oranı yükleniyor'
-      : gT ? `Genel trader oranı (Binance + MEXC): long <b>%${fmt(gL / gT * 100, 1)}</b> · short <b>%${fmt(gS / gT * 100, 1)}</b> · ${fmt(gL, 0)} long, ${fmt(gS, 0)} short trader`
-      : 'Genel trader oranı: bu coinde iki borsada da açık pozisyonu bilinen trader yok';
+    $('lsOranGenel').innerHTML = !ikisiGeldi ? 'Trader sayısı yükleniyor'
+      : gT ? `long <b>${fmt(gL, 0)}</b> trader · short <b>${fmt(gS, 0)}</b> trader · long %${fmt(gL / gT * 100, 1)} · short %${fmt(gS / gT * 100, 1)}`
+      : 'Bu coinde iki borsada da açık pozisyonu bilinen trader yok';
     const kalan = Math.max(0, Math.ceil((smSonraki - Date.now()) / 1000));
     html += `<p class="ek">${f ? `Mark fiyat <b>${fmt(f, aktif.ondalik)}</b> (Binance kâr ve zararı bununla hesaplar). ` : ''}Fiyat bir tarafın ortalama girişinin aleyhine geçince o taraf zararda sayılır. Binance rakamları Binance Smart Money coin sayfasıyla aynı kaynaktan gelir, 30 saniyede bir yenilenir; değişen sayının yanında farkı yazar. Sonraki yenileme ${kalan} sn. MEXC rakamları MEXC kopya trade'deki lider trader'ların açık işlemlerinden, 30 dakikada bir taranır; zararda mı kârda mı anlık fiyatla hesaplanır.</p>`;
     $('smCoin').innerHTML = html;
@@ -763,7 +765,7 @@
     for (const sym of ekSym[t] || []) k.push({ sym, cm: false });
     if (cmSym[t]) k.push({ sym: cmSym[t].sym, cm: true, carpan: cmSym[t].carpan });
     hacim = { n, k, mum: new Map(k.map(x => [x.sym, new Map()])) };
-    $('lsBaslik').textContent = 'Long / short hacmi · ' + t;
+    $('lsBaslik').textContent = 'Alış / satış hacmi · ' + t;
     kontratYaz();
     hacimBagla(n, false, false);
     hacimBagla(n, true, false);
@@ -844,9 +846,9 @@
       let al = 0, sat = 0;
       for (const x of hazir) for (const [t, v] of hacim.mum.get(x.sym)) if (t >= bas) { al += v[0]; sat += v[1]; }
       const y = al + sat > 0 ? al / (al + sat) * 100 : 50;
-      return `<div class="ls-satir"><div class="ls-ust"><b>${ad}</b><span><span class="arti">long %${fmt(y, 2)}</span> · <span class="eksi">short %${fmt(100 - y, 2)}</span></span></div>` +
+      return `<div class="ls-satir"><div class="ls-ust"><b>${ad}</b><span><span class="arti">alış %${fmt(y, 2)}</span> · <span class="eksi">satış %${fmt(100 - y, 2)}</span></span></div>` +
         `<div class="lsbar"><span style="width:${y.toFixed(2)}%"></span></div>` +
-        `<div class="ls-alt"><span>Long ${dolar(al)}</span><span>Short ${dolar(sat)}</span></div></div>`;
+        `<div class="ls-alt"><span>Alış ${dolar(al)}</span><span>Satış ${dolar(sat)}</span></div></div>`;
     }).join('');
     mexHacimCiz();
   }
@@ -869,7 +871,7 @@
       return (!x || (eski && eski.timestamp > x.timestamp)) ? eski || null : x;
     });
     oranSon.veri = sonuc;
-    $('lsOranBaslik').textContent = 'Long / short hesap oranı · ' + sym;
+    $('lsOranBaslik').textContent = 'Long / short · ' + sym;
     const gelen = sonuc.filter(Boolean);
     if (!gelen.length) { $('lsOran').innerHTML = '<p class="ek">Bu coin için Binance long / short oranı yok.</p>'; return; }
     const zaman = Math.max(...gelen.map(x => x.timestamp));
@@ -1021,8 +1023,8 @@
     $('cgLink').href = 'https://www.coinglass.com/LongShortRatio/' + s.taban.replace(/^10{3,}/, '');
     mexcSecili = null;
     $('lsHacim').innerHTML = '<p class="ek">yükleniyor</p>'; $('lsOran').innerHTML = '<p class="ek">yükleniyor</p>';
-    $('lsOranBaslik').textContent = 'Long / short hesap oranı · ' + s.sym;
-    $('lsHacimMexc').innerHTML = '<p class="ek">yükleniyor</p>'; $('lsOranGenel').textContent = 'Genel trader oranı yükleniyor';
+    $('lsOranBaslik').textContent = 'Long / short · ' + s.sym;
+    $('lsHacimMexc').innerHTML = '<p class="ek">yükleniyor</p>'; $('lsOranGenel').textContent = 'Trader sayısı yükleniyor';
     if (mexOran) mexOranCiz(); else $('lsOranMexc').innerHTML = '<p class="ek">yükleniyor</p>';
     sonMark = null; smOzet = smOzetOnceki = null; mexcFiyat = mexcFiyatSym = null;
     smCoinCiz();
