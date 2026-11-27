@@ -8,7 +8,7 @@ const KOPYA = 'https://futures.mexc.com/copyFutures/api/v1/';
 const TICKER = 'https://futures.mexc.com/api/v1/contract/ticker';
 const HIZ = 8;              // saniyede en çok istek; 8 ile hız uyarısı (510) alınmadı, daha hızlısında alındı
 const ISCI = 6;
-const SAYFA_SINIRI = 25;    // trader başına en çok 25 x 20 işlem
+const SAYFA_SINIRI = 250;   // trader başına en çok 250 x 20 işlem (27.11'de en çok işlemli trader 1.796 işlemle 90 sayfa)
 const HATA_SINIRI = 0.05;   // taranamayan trader oranı bunu geçerse eski dosya korunur
 const cikti = process.argv[2];
 if (!cikti) { console.error('Kullanım: node topla.mjs <çıktı.json>'); process.exit(2); }
@@ -52,21 +52,25 @@ for (let sayfa = 1; sayfa <= 200; sayfa++) {
 if (!uids.length) { console.error('Trader listesi boş geldi'); process.exit(1); }
 
 const islemler = new Map();   // işlem id -> işlem (aynı işlem iki sayfada gelirse bir kez sayılır)
-let taranamayan = 0, acikTrader = 0;
+let taranamayan = 0, kesilen = 0, acikTrader = 0;
 const kuyruk = uids.slice();
 async function isci() {
   while (kuyruk.length) {
     const uid = kuyruk.shift();
-    let n = 0, basarili = true;
+    let n = 0, basarili = true, bitti = false;
+    // MEXC sayfa boyunu 20'de sabit tutuyor ve toplam sayfa sayısını vermiyor: kısa sayfa gelene kadar okunur
     for (let sayfa = 1; sayfa <= SAYFA_SINIRI; sayfa++) {
       const d = await al(`${KOPYA}trader/orders/v2?limit=20&orderListType=ORDER&page=${sayfa}&uid=${uid}`);
       if (!d) { basarili = false; break; }
       const c = d.content || [];
-      for (const e of c) islemler.set(e.id, e);
-      n += c.length;
-      if (c.length < 20) break;
+      let yeni = 0;
+      for (const e of c) { if (!islemler.has(e.id)) yeni++; islemler.set(e.id, e); }
+      n += yeni;
+      if (c.length < 20 || !yeni) { bitti = true; break; }
     }
-    if (!basarili) taranamayan++;
+    // Sınıra takılan trader'ın işlemleri eksik kalır: taranamamış sayılır ve sayısı dosyaya yazılır
+    if (basarili && !bitti) kesilen++;
+    if (!basarili || !bitti) taranamayan++;
     if (n) acikTrader++;
   }
 }
@@ -103,9 +107,9 @@ for (const [taban, c] of Object.entries(coin)) {
 }
 
 const veri = {
-  zaman: Date.now(), baslangic, trader: uids.length, toplamTrader, taranamayan, acikTrader,
+  zaman: Date.now(), baslangic, trader: uids.length, toplamTrader, taranamayan, kesilen, acikTrader,
   islem: islemler.size, coin: ozet
 };
 await writeFile(cikti + '.tmp', JSON.stringify(veri));
 await rename(cikti + '.tmp', cikti);
-console.log(`Bitti: ${uids.length} trader (${toplamTrader} listede), taranamayan ${taranamayan}, açık işlemi olan ${acikTrader}, ${islemler.size} işlem, ${Object.keys(ozet).length} coin, ${istek} istek, hız uyarısı ${hizUyarisi}, ${((Date.now() - baslangic) / 60000).toFixed(1)} dk`);
+console.log(`Bitti: ${uids.length} trader (${toplamTrader} listede), taranamayan ${taranamayan} (sayfa sınırına takılan ${kesilen}), açık işlemi olan ${acikTrader}, ${islemler.size} işlem, ${Object.keys(ozet).length} coin, ${istek} istek, hız uyarısı ${hizUyarisi}, ${((Date.now() - baslangic) / 60000).toFixed(1)} dk`);

@@ -64,7 +64,7 @@
   .karsilastir + .aciklama { margin-top: 4px; }
   .bolum { display: flex; align-items: baseline; justify-content: space-between; gap: 8px 16px; flex-wrap: wrap; margin: 22px 0 10px; }
   .bolum h2 { font-size: 16px; margin: 0; font-weight: 650; }
-  .izgara2 { display: grid; grid-template-columns: 340px 1fr; gap: 14px; align-items: start; }
+  .izgara2 { display: grid; grid-template-columns: 340px 1fr; gap: 14px; align-items: stretch; }
   .sm-satir { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--cizgi); }
   .sm-satir:first-child { border-top: 0; padding-top: 0; }
   .sm-satir .sayi { font-size: 20px; font-weight: 650; font-variant-numeric: tabular-nums; }
@@ -86,7 +86,7 @@
   .izgara2.ls { grid-template-columns: 1fr 1fr; }
   .ls-satir { padding: 9px 0; border-top: 1px solid var(--cizgi); }
   .ls-satir:first-child { border-top: 0; padding-top: 0; }
-  .ls-ust, .ls-alt { display: flex; justify-content: space-between; gap: 8px; font-variant-numeric: tabular-nums; }
+  .ls-ust, .ls-alt { display: flex; justify-content: space-between; gap: 2px 8px; flex-wrap: wrap; font-variant-numeric: tabular-nums; }
   .ls-ust { font-size: 14px; }
   .ls-ust b { font-weight: 600; }
   .ls-alt { font-size: 13px; color: var(--soluk); margin-top: 4px; }
@@ -170,10 +170,19 @@
   </div>
 
   <div class="bolum">
-    <h2>Long / short hacmi ve oranı · Binance</h2>
-    <span class="ek">Binance herkese açık verisi · hacim canlı, oran 5 dakikada bir yenilenir</span>
+    <h2>Long / short oranı ve hacmi · Binance + MEXC</h2>
+    <span class="ek">Binance: hacim canlı, oran 5 dakikada bir yenilenir<br><span id="mexOranDurum">MEXC verisi yükleniyor</span></span>
   </div>
   <div class="izgara2 ls">
+    <section class="kart" aria-label="Long short hesap oranı">
+      <h2 id="lsOranBaslik">Long / short hesap oranı</h2>
+      <div class="sm-baslik">Binance</div>
+      <div id="lsOran"><p class="ek">yükleniyor</p></div>
+      <div class="sm-baslik">MEXC</div>
+      <div id="lsOranMexc"><p class="ek">yükleniyor</p></div>
+      <div class="sm-genel" id="lsOranGenel">Genel trader oranı yükleniyor</div>
+      <p class="aciklama">Hesap oranları iki borsada ayrı gösterilir: borsalar hesap sayısını açıklamadığı için iki oran toplanamaz. Genel trader oranı, iki borsada sayısı bilinen trader'lardan hesaplanır: Binance Smart Money ve MEXC kopya trade lider trader'ları (aşağıdaki pozisyon kartıyla aynı sayılar).</p>
+    </section>
     <section class="kart" aria-label="Long short hacmi">
       <h2 id="lsBaslik">Long / short hacmi</h2>
       <p class="ek" id="lsKontrat">&nbsp;</p>
@@ -181,10 +190,9 @@
       <p class="aciklama">Long hacmi piyasa fiyatından alan işlemlerin (taker alış), short hacmi piyasa fiyatından satan işlemlerin (taker satış) dolar toplamı. CoinGlass'taki Long / Short Volume ile aynı tanım. Süreler şu andan geriye sayılır, içinde bulunulan dakika canlı akıştan gelir.</p>
       <a class="karsilastir" id="cgLink" href="https://www.coinglass.com/LongShortRatio/BTC" target="_blank" rel="noopener">CoinGlass'ta aynı coini aç ↗</a>
       <p class="aciklama">CoinGlass sayfasının altındaki borsa tablosunda süreyi aynı seçip Binance satırına bakın. 1, 4 ve 12 saatte oran aynı çıkar; 24 saatte CoinGlass 1 puan kadar farklı gösteriyor.</p>
-    </section>
-    <section class="kart" aria-label="Long short hesap oranı">
-      <h2 id="lsOranBaslik">Long / short hesap oranı</h2>
-      <div id="lsOran"><p class="ek">yükleniyor</p></div>
+      <div class="sm-baslik">Genel toplam · Binance + MEXC</div>
+      <div id="lsHacimMexc"><p class="ek">yükleniyor</p></div>
+      <p class="aciklama">MEXC rakamı MEXC Big Data ekranındaki saatlik aktif alış ve satış (Platform's Active Buys and Sells), USDT kontratı. MEXC bu veriyi saat saat ve 1-3 saat geriden yayımlıyor, az işlemli saatleri hiç yayımlamıyor; genel toplam bu yüzden MEXC'nin yayımladığı son saatler için, Binance'in aynı saatleri eklenerek hesaplanır. MEXC bu ekranda toplam işlem hacminin yalnız bir kısmını sayıyor: MEXC mumlarıyla karşılaştırınca BTC, ETH, SOL, XRP gibi büyük coinlerde %75-95, küçük coinlerde çoğu zaman %50'nin altında, %5'e kadar iniyor.</p>
     </section>
   </div>
 
@@ -222,13 +230,23 @@
   const SM_URL = 'https://www.binance.com/bapi/futures/v1/public/future/smart-money/signal/list?timeRange=ALL';
   const SM_OZET_URL = 'https://www.binance.com/bapi/futures/v1/public/future/smart-money/signal/overview?symbol=';  // Binance coin sayfasının kendi özeti
   const SM_ARALIK = 30 * 1000;  // Binance kendi Smart Money ekranını da 30 sn'de bir yeniliyor
-  let tur = {}, tabanBul = {}, smVeri = null, smOnceki = null, smSonraki = 0, fiyatlar = {}, top30Onceki = null;
+  let tur = {}, tabanBul = {}, smVeri = null, smOnceki = null, smSonraki = 0, fiyatlar = {}, top30Gorulen = null;
   let smOzet = null, smOzetOnceki = null, sonMark = null;
   // MEXC kopya trade özeti sunucuda (GitHub Actions) 30 dakikada bir taranıp bu dosyaya yazılır;
   // MEXC'nin adresleri başka sitelerden tarayıcı isteğine izin vermediği için sayfa MEXC'yi doğrudan okuyamaz
   const MEXC_OZET_URL = 'mexc.json';
   const MEXC_ARALIK = 5 * 60 * 1000;
-  let mexVeri = null, mexcFiyat = null, mexcFiyatSym = null;
+  let mexVeri = null, mexcFiyat = null, mexcFiyatSym = null, mexDenendi = false;
+  let mexcSecili = null;  // seçili coinin MEXC'deki adı, canlı fiyatla seçilen: {k, carpan, taban}
+  // MEXC Big Data ekranının verisi (hesap oranları, saatlik aktif alış / satış) da aynı yolla, ayrı dosyada
+  const MEXC_ORAN_URL = 'mexc-oran.json';
+  const MEXC_ORAN_TURLERI = [
+    { k: 'u', ad: 'Bütün hesaplar', olcu: 'hesap', mx: "Platform's Long-Short Position Holders Ratio" },
+    { k: 'eu', ad: 'Seçkin hesaplar · hesap sayısı', olcu: 'hesap', mx: 'Elite Account Long-Short Position Holders Ratio' },
+    { k: 'ep', ad: 'Seçkin hesaplar · pozisyon büyüklüğü', olcu: 'pozisyon', mx: 'Elite Account Long-Short Position Holding Ratio' }
+  ];
+  const MEXC_HACIM_SURELER = [['1 saat', 1], ['4 saat', 4], ['12 saat', 12]];
+  let mexOran = null, mexOranDenendi = false;
   const ORAN_URL = 'https://fapi.binance.com/futures/data/';
   const HACIM_SURELER = [['5 dk', 5], ['1 saat', 60], ['4 saat', 240], ['12 saat', 720], ['24 saat', 1440]];
   const ORAN_TURLERI = [
@@ -236,7 +254,9 @@
     { yol: 'topLongShortAccountRatio', ad: 'Büyük hesaplar · hesap sayısı', olcu: 'hesap', cg: 'Whale Account' },
     { yol: 'topLongShortPositionRatio', ad: 'Büyük hesaplar · pozisyon büyüklüğü', olcu: 'pozisyon', cg: 'Whale Position' }
   ];
-  let usdcSym = {}, cmSym = {};  // BTC -> 'BTCUSDC' · BTC -> {sym:'BTCUSD_PERP', carpan:100}
+  // Binance'te USDT dışındaki dolar karşılıklı sürekli kontratlar: BTC -> ['BTCUSDC', 'BTCUSD1', 'BTCU'] · coin karşılıklı: BTC -> {sym:'BTCUSD_PERP', carpan:100}
+  const EK_KARSILIK = new Set(['USDC', 'USD1', 'U']);
+  let ekSym = {}, cmSym = {};
   let hacim = null, hws = null, cws = null, yenidenH = null, yenidenC = null, oranSon = null;
 
   let semboller = {};          // BTC -> {sym:'BTCUSDT', ondalik:1}
@@ -285,7 +305,7 @@
     const dl = $('coinListe');
     const secenekler = [];
     for (const s of bilgi.symbols) {
-      if (s.contractType === 'PERPETUAL' && s.status === 'TRADING' && s.quoteAsset === 'USDC') usdcSym[s.baseAsset] = s.symbol;
+      if (s.contractType === 'PERPETUAL' && s.status === 'TRADING' && EK_KARSILIK.has(s.quoteAsset)) (ekSym[s.baseAsset] ||= []).push(s.symbol);
       if (s.contractType !== 'PERPETUAL' || s.quoteAsset !== 'USDT' || s.status !== 'TRADING') continue;
       const tick = (s.filters.find(f => f.filterType === 'PRICE_FILTER') || {}).tickSize || '0.01';
       semboller[s.baseAsset] = { taban: s.baseAsset, sym: s.symbol, ondalik: ondalikBul(tick) };
@@ -349,7 +369,7 @@
       durum('yeniden bağlanıyor', 'kopuk');
       clearTimeout(yenidenB); yenidenB = setTimeout(() => binanceBagla(n), 1500);
     };
-    bws.onerror = () => bws.close();
+    bws.onerror = (e) => e.target.close();
   }
 
   function publicBagla(n) {
@@ -368,7 +388,7 @@
       if (n !== nesil) return;
       clearTimeout(yenidenP); yenidenP = setTimeout(() => publicBagla(n), 1500);
     };
-    pws.onerror = () => pws.close();
+    pws.onerror = (e) => e.target.close();
   }
 
   function oncekiIslemler(n, sym) {
@@ -403,15 +423,96 @@
   const terste = (x, f) => ({ long: x.longTraders > 0 && f < x.longAvgEntryPrice, short: x.shortTraders > 0 && f > x.shortAvgEntryPrice });
   const tersteM = (m, f) => ({ long: m.lt > 0 && m.lo !== null && f < m.lo, short: m.st > 0 && m.so !== null && f > m.so });
 
-  // Binance adı MEXC'de aynıysa doğrudan; Binance '1000PEPE' gibi 1000 katı kontratsa MEXC'de öneksiz ad
-  // (fiyat 1000'de bir) aranır. carpan: Binance fiyatı / MEXC fiyatı
-  function mexBul(taban) {
-    if (!mexVeri) return null;
-    const c = mexVeri.coin;
-    if (c[taban]) return { k: taban, carpan: 1, x: c[taban] };
-    const m = taban.match(/^(10{3,})(.+)$/);
-    if (m && c[m[2]]) return { k: m[2], carpan: Number(m[1]), x: c[m[2]] };
-    return null;
+  // Aynı ad iki borsada başka coin olabiliyor (CAT: Binance'te Caterpillar hissesi, MEXC'de bir meme coin; AI, FUN, TON):
+  // eşleşme ancak Binance mark fiyatı ile MEXC'nin tarama anındaki fiyatı tutarsa kabul edilir.
+  // Hızlı oynayan coin eski fiyatla reddedilmesin diye iki dosyadan daha yeni taranmış olanın fiyatı kullanılır.
+  const FIYAT_PAYI = 0.10;   // kesin adaylarda
+  const YAKIN_PAYI = 0.03;   // yakın adlarda: yanlış coine düşmemek için dar
+  const fiyatFarki = (binance, carpan, mexc) => (mexc > 0 && binance > 0 ? Math.abs(binance / carpan - mexc) / mexc : Infinity);
+
+  // Kesin adaylar [MEXC adı, carpan], sırayla: aynı ad; MEXC'nin farklı adı (TRUMP → TRUMPOFFICIAL, liste MEXC'nin
+  // kontrat listesinden); Binance '1000PEPE' gibi 1000 katı kontratsa öneksiz ad, '1MBABYDOGE' gibi milyon katıysa MEXC'nin
+  // '1000000BABYDOGE' adı ve öneksiz ad. carpan: Binance fiyatı / MEXC fiyatı
+  function kesinAdaylar(taban) {
+    const ad = (mexOran && mexOran.ad) || {}, a = [];
+    const ekle = (k, carpan) => { if (k && !a.some(x => x[0] === k)) a.push([k, carpan]); };
+    const adla = (k, carpan) => { ekle(k, carpan); ekle(ad[k], carpan); };
+    adla(taban, 1);
+    const bin = taban.match(/^(10{3,})(.+)$/), milyon = taban.match(/^1M(.+)$/);
+    if (bin) adla(bin[2], Number(bin[1]));
+    if (milyon) { ekle('1000000' + milyon[1], 1); adla(milyon[1], 1e6); }
+    return a;
+  }
+
+  // Yakın adlar: MEXC'deki ad Binance'tekiyle başlıyor ya da tersi (ARC → ARCSOL, NEIRO → NEIROCTO, RAYSOL → RAY,
+  // DODOX → DODO, DATAIP → DATA) ya da sondaki rakam atılınca aynı (LUNA2 → LUNA, BROCCOLI714 → BROCCOLI).
+  // Yalnız kesin aday tutmazsa denenir. Ad listesi iki dosyanın kontrat adları ve MEXC'nin coin adlarından.
+  // Ad listesi ve eşleşme kararları dosyaların tarama zamanına bağlı: yeni tarama gelince yeniden kurulur
+  let mexAdlar = null, mexAdKaynak = '', yakinOnbellek = new Map(), esleOnbellek = new Map();
+  function mexAdListesi() {
+    const kaynak = (mexOran ? mexOran.zaman : 0) + '/' + (mexVeri ? mexVeri.zaman : 0);
+    if (mexAdlar && mexAdKaynak === kaynak) return mexAdlar;
+    const l = new Map();  // ad -> MEXC kontrat adı
+    for (const j of [mexOran, mexVeri]) if (j) for (const k in j.coin) l.set(k, k);
+    if (mexOran && mexOran.ad) for (const [a, k] of Object.entries(mexOran.ad)) if (!l.has(a)) l.set(a, k);
+    mexAdlar = l; mexAdKaynak = kaynak; yakinOnbellek = new Map(); esleOnbellek = new Map();
+    return l;
+  }
+  function yakinAdaylar(taban) {
+    const adlar = mexAdListesi();
+    if (yakinOnbellek.has(taban)) return yakinOnbellek.get(taban);
+    const kesin = new Set(kesinAdaylar(taban).map(x => x[0])), a = [];
+    const bin = taban.match(/^(10{3,})(.+)$/), milyon = taban.match(/^1M(.+)$/);
+    const cekirdek = bin ? bin[2] : milyon ? milyon[1] : taban, carpan = bin ? Number(bin[1]) : milyon ? 1e6 : 1;
+    const rakamsiz = cekirdek.replace(/\d+$/, '');
+    for (const [ad, k] of adlar) {
+      if (kesin.has(k) || a.some(x => x[0] === k) || ad.length < 3) continue;
+      const yakin = (cekirdek.length >= 3 && ad !== cekirdek && (ad.startsWith(cekirdek) || cekirdek.startsWith(ad))) ||
+        (rakamsiz !== cekirdek && rakamsiz.length >= 3 && ad === rakamsiz);
+      if (yakin) a.push([k, carpan]);
+    }
+    yakinOnbellek.set(taban, a);
+    return a;
+  }
+  // WebSocket aboneliği için bütün adaylar: [MEXC adı, carpan, fiyat payı]
+  const mexAdaylari = (taban) => kesinAdaylar(taban).map(([k, c]) => [k, c, FIYAT_PAYI]).concat(yakinAdaylar(taban).map(([k, c]) => [k, c, YAKIN_PAYI]));
+
+  function mexFiyati(k) {
+    const d = [];
+    if (mexVeri && mexVeri.coin[k]) d.push([mexVeri.coin[k].f, mexVeri.zaman]);
+    if (mexOran && mexOran.coin[k]) d.push([mexOran.coin[k].f, mexOran.zaman]);
+    const gecerli = d.filter(([f]) => f > 0);
+    return gecerli.length ? gecerli.reduce((a, b) => (b[1] > a[1] ? b : a))[0] : null;
+  }
+  // Coinin MEXC'deki karşılığı iki dosyanın fiyatıyla seçilir, iki dosyada da aynı ad kullanılır: önce fiyatı tutan ilk
+  // kesin aday, o yoksa fiyatı en yakın yakın ad. Dosyadaki fiyat yarım saate kadar eski olabildiği için karar yeni tarama
+  // gelene kadar değişmez (yoksa hızlı oynayan coin sınırda eşleşip kopar, Top 30'a girip çıkar). Seçili coinde MEXC'nin
+  // canlı fiyatıyla yapılan seçim (mexcBagla) geçerlidir ve kayda da yazılır.
+  function mexEsle(taban) {
+    if (mexcSecili && mexcSecili.taban === taban) return mexcSecili;
+    return dosyaEsle(taban);
+  }
+  function dosyaEsle(taban) {
+    const s = semboller[taban], bf = s && fiyatlar[s.sym];
+    if (!bf || (!mexVeri && !mexOran)) return null;
+    mexAdListesi();
+    if (esleOnbellek.has(taban)) return esleOnbellek.get(taban);
+    let e = null;
+    for (const [k, carpan] of kesinAdaylar(taban)) if (fiyatFarki(bf, carpan, mexFiyati(k)) <= FIYAT_PAYI) { e = { k, carpan }; break; }
+    if (!e) {
+      let en = null;
+      for (const [k, carpan] of yakinAdaylar(taban)) {
+        const d = fiyatFarki(bf, carpan, mexFiyati(k));
+        if (d <= YAKIN_PAYI && (!en || d < en.d)) en = { k, carpan, d };
+      }
+      e = en && { k: en.k, carpan: en.carpan };
+    }
+    esleOnbellek.set(taban, e);
+    return e;
+  }
+  function mexBul(taban, c = mexVeri && mexVeri.coin) {
+    const e = c && mexEsle(taban);
+    return e && c[e.k] ? { k: e.k, carpan: e.carpan, x: c[e.k] } : null;
   }
 
   async function mexYukle() {
@@ -420,7 +521,9 @@
       if (!r.ok) throw new Error('HTTP ' + r.status);
       const j = await r.json();
       if (!j || !j.coin || !j.zaman) throw new Error('MEXC özeti beklenen biçimde değil');
+      if (!mexVeri) top30Gorulen = null;
       mexVeri = j;
+      mexcAdlaYenile();
       const gun = new Date(j.zaman).toLocaleDateString('tr-TR') === new Date().toLocaleDateString('tr-TR') ? '' : new Date(j.zaman).toLocaleDateString('tr-TR') + ' ';
       $('mexDurum').textContent = `MEXC kopya trade · ${fmt(j.trader, 0)} lider trader tarandı, açık işlemi olan ${fmt(j.acikTrader, 0)} · 30 dakikada bir taranır · son tarama ${gun}${saat(j.zaman)}`;
       if (smVeri) top30Ciz();
@@ -429,6 +532,79 @@
       console.warn('MEXC özeti alınamadı', e);
       if (!mexVeri) $('mexDurum').textContent = 'MEXC verisi alınamadı, 5 dakika sonra yeniden denenecek';
     }
+    if (!mexDenendi) { mexDenendi = true; if (smVeri) top30Ciz(); }
+  }
+
+  async function mexOranYukle() {
+    try {
+      const r = await fetch(MEXC_ORAN_URL, { cache: 'no-store' });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const j = await r.json();
+      if (!j || !j.coin || !j.zaman) throw new Error('MEXC Big Data özeti beklenen biçimde değil');
+      if (!mexOran) top30Gorulen = null;
+      mexOran = j;
+      mexcAdlaYenile();
+      const gun = new Date(j.zaman).toLocaleDateString('tr-TR') === new Date().toLocaleDateString('tr-TR') ? '' : new Date(j.zaman).toLocaleDateString('tr-TR') + ' ';
+      $('mexOranDurum').textContent = `MEXC: Big Data ekranından, saatlik veri · 30 dakikada bir taranır · son tarama ${gun}${saat(j.zaman)}`;
+      mexOranCiz();
+      mexHacimCiz();
+      if (smVeri) top30Ciz();
+      smCoinCiz();
+    } catch (e) {
+      console.warn('MEXC Big Data özeti alınamadı', e);
+      if (!mexOran) $('mexOranDurum').textContent = 'MEXC verisi alınamadı, 5 dakika sonra yeniden denenecek';
+    }
+    if (!mexOranDenendi) { mexOranDenendi = true; if (smVeri) top30Ciz(); }
+  }
+
+  function mexOranCiz() {
+    if (!aktif || !mexOran) return;
+    if (!fiyatlar[aktif.sym]) { $('lsOranMexc').innerHTML = '<p class="ek">yükleniyor</p>'; return; }
+    const mb = mexBul(aktif.taban, mexOran.coin);
+    const o = mb && mb.x.o;
+    if (!o || !Object.keys(o).length) { $('lsOranMexc').innerHTML = '<p class="ek">Bu coin için MEXC long / short oranı yok.</p>'; return; }
+    $('lsOranMexc').innerHTML = MEXC_ORAN_TURLERI.map(t => {
+      const x = o[t.k];
+      if (!x) return `<div class="sm-satir"><div><div class="borsa">${t.ad}</div><div class="ek">veri yok</div></div></div>`;
+      const l = x[1] * 100;
+      return `<div class="sm-satir"><div><div class="borsa">${t.ad}</div><div class="ek">${t.olcu}: long %${fmt(l, 1)} · short %${fmt(100 - l, 1)} · ${saat(x[0])} verisi</div><div class="ek">MEXC Big Data'da ${t.mx}</div></div><div class="sayi">${fmt(x[2], 2)}</div></div>`;
+    }).join('') + (mb.k !== aktif.taban ? `<p class="ek">MEXC'de ${mb.k} adıyla.</p>` : '');
+  }
+
+  // Genel hacim: MEXC'nin yayımladığı son saatler (T noktası, T-1 saat ile T arası) ve Binance'in aynı saatleri.
+  // Binance tarafı hacim kartının 1 dakikalık mumlarından; mumun açılış zamanı pencerenin içindeyse sayılır.
+  // MEXC az işlemli saatleri yayımlamıyor: pencerede yayımlanan saatler toplanır, eksikse kaç saat olduğu yazılır.
+  const gunSaat = (ms) => (new Date(ms).toDateString() === new Date().toDateString() ? '' : new Date(ms).toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit' }) + ' ') + saat(ms);
+  function mexHacimCiz() {
+    if (!aktif || !mexOran) return;
+    if (!fiyatlar[aktif.sym]) { $('lsHacimMexc').innerHTML = '<p class="ek">yükleniyor</p>'; return; }
+    const mb = mexBul(aktif.taban, mexOran.coin);
+    const h = mb && mb.x.h;
+    if (!h) { $('lsHacimMexc').innerHTML = '<p class="ek">Bu coin için MEXC alış / satış verisi yok.</p>'; return; }
+    // Binance kontratlarının geçmişi sırayla geliyor: hepsi gelmeden toplam eksik görünmesin
+    const bekliyor = !hacim || hacim.n !== nesil || hacim.k.some(x => !x.hazir && !x.hata);
+    const hazir = bekliyor ? [] : hacim.k.filter(x => x.hazir);
+    // Binance mumları son 24 saat tutuluyor
+    const sinir = Math.floor((Date.now() + (saatFarki || 0)) / 60000) * 60000 - 1439 * 60000;
+    const pay = (a, s) => a + s > 0 ? a / (a + s) * 100 : 50;
+    const satir = (baslik, metin) => `<div class="ls-satir"><div class="ls-ust">${baslik}</div><div class="ek">${metin}</div></div>`;
+    $('lsHacimMexc').innerHTML = MEXC_HACIM_SURELER.map(([ad, s]) => {
+      const m = h[s];
+      const bas = h.t - s * 3600000;
+      const baslik = `<span><b>${ad}</b> · ${gunSaat(bas)}-${gunSaat(h.t)}</span>`;
+      if (!m) return satir(baslik, 'MEXC bu saatlerde veri yayımlamamış');
+      if (bas < sinir) return satir(baslik, "MEXC'nin bu coindeki son verisi eski, o saatlerin Binance verisi bu ekranda yok");
+      if (!hazir.length) return satir(baslik, 'Binance verisi yükleniyor');
+      const yayim = m.length > 2 ? m[2] : s;
+      let bAl = 0, bSat = 0;
+      for (const x of hazir) for (const [t, v] of hacim.mum.get(x.sym)) if (t >= bas && t < h.t) { bAl += v[0]; bSat += v[1]; }
+      const gAl = bAl + m[0], gSat = bSat + m[1], y = pay(gAl, gSat);
+      return `<div class="ls-satir"><div class="ls-ust">${baslik}<span><span class="arti">long %${fmt(y, 2)}</span> · <span class="eksi">short %${fmt(100 - y, 2)}</span></span></div>` +
+        `<div class="lsbar"><span style="width:${y.toFixed(2)}%"></span></div>` +
+        `<div class="ls-alt"><span>Long ${dolar(gAl)}</span><span>Short ${dolar(gSat)}</span></div>` +
+        `<div class="ls-alt"><span>Binance long %${fmt(pay(bAl, bSat), 2)} · ${dolar(bAl + bSat)}</span><span>MEXC long %${fmt(pay(m[0], m[1]), 2)} · ${dolar(m[0] + m[1])}</span></div>` +
+        (yayim < s ? `<div class="ek">MEXC bu ${s} saatte yalnız ${yayim} saatlik veri yayımlamış (az işlemli saatleri yayımlamıyor), MEXC tarafı o saatlerin toplamı</div>` : '') + '</div>';
+    }).join('');
   }
 
   async function smYukle() {
@@ -447,6 +623,7 @@
       $('smDurum').textContent = 'Binance Smart Money · 30 saniyede bir yenilenir · son güncelleme ' + new Date().toLocaleTimeString('tr-TR');
       top30Ciz();
       smCoinCiz();
+      mexOranCiz();
     } catch (e) {
       console.warn('Smart Money verisi alınamadı', e);
       $('smDurum').textContent = 'Binance Smart Money verisi alınamadı, 30 saniye sonra yeniden denenecek';
@@ -470,6 +647,7 @@
 
   // Binance Smart Money ve MEXC kopya trader'ları birlikte; her borsanın zararı kendi ortalama girişine göre,
   // fiyat Binance mark fiyatı (MEXC'de 1000 katı olmayan adlar için bölünerek)
+  const TOP30_BEKLEME = 30 * 60 * 1000;
   function top30Ciz() {
     const satirlar = [];
     for (const taban in semboller) {
@@ -489,9 +667,15 @@
     }
     satirlar.sort((a, b) => b.say - a.say);
     const ilk = satirlar.slice(0, 30);
-    const simdiki = new Set(ilk.map(r => r.sym));
-    if (top30Onceki) for (const s of simdiki) if (!top30Onceki.has(s)) bildirim(s + ' top 30 listesine eklendi');
-    top30Onceki = simdiki;
+    // Bildirim: listeye yeni giren coin. Bütün kaynaklar gelmeden liste eksik olur (MEXC sayıları sonradan eklenince sıra
+    // değişir), o yüzden ilk tam listede yalnız taban kurulur. Sınırda girip çıkan coin 30 dakika içinde yeniden bildirilmez.
+    if (smVeri && mexDenendi && mexOranDenendi) {
+      const simdi = Date.now();
+      if (top30Gorulen) {
+        for (const r of ilk) { const g = top30Gorulen.get(r.sym); if (g === undefined || simdi - g > TOP30_BEKLEME) bildirim(r.sym + ' top 30 listesine eklendi'); }
+      } else top30Gorulen = new Map();
+      for (const r of ilk) top30Gorulen.set(r.sym, simdi);
+    }
     // Toplam, o taraf borsalardan birinde zararda ise kırmızı; alttaki B / M hangi borsada zararda olduğunu ayrı gösterir
     const parca = (ad, n, ters) => `<span class="${ters ? 'eksi' : ''}">${ad} ${fmt(n, 0)}</span>`;
     const hucre = (b, m, tB, tM) => `<td class="${tB || tM ? 'ters' : ''}">${fmt(b + m, 0)}<span class="ayri">${parca('B', b, tB)} · ${parca('M', m, tM)}</span></td>`;
@@ -534,7 +718,7 @@
     const mb = mexBul(aktif.taban);
     // MEXC tarafı MEXC'nin kendi canlı fiyatıyla; o gelene kadar Binance mark fiyatından
     const mf = mb && mexcFiyat !== null && mexcFiyatSym === mb.k + '_USDT' ? mexcFiyat : (mb && f ? f / mb.carpan : null);
-    if (!mexVeri) {
+    if (!mexVeri || !fiyatlar[aktif.sym]) {
       html += '<p class="ek">yükleniyor</p>';
     } else if (!mb || !mf || (!mb.x.lt && !mb.x.st)) {
       html += '<p class="ek">MEXC kopya trader\'larında bu coinde açık işlem yok.</p>';
@@ -545,10 +729,19 @@
       else html += '<div class="sm-satir"><div><div class="borsa">Long</div><div class="ek">açık long işlem yok</div></div></div>';
       if (m.st) html += satir('Short', m.st, null, m.so, tm.short, null, od, mf, fyAd);
       else html += '<div class="sm-satir"><div><div class="borsa">Short</div><div class="ek">açık short işlem yok</div></div></div>';
-      if (mb.carpan !== 1) html += `<p class="ek">MEXC'de ${mb.k} adıyla, fiyatı Binance'teki ${aktif.taban} fiyatının ${fmt(mb.carpan, 0)}'de biri.</p>`;
+      if (mb.k !== aktif.taban) html += `<p class="ek">MEXC'de ${mb.k} adıyla${mb.carpan !== 1 ? `, fiyatı Binance'teki ${aktif.taban} fiyatının ${fmt(mb.carpan, 0)}'de biri` : ''}.</p>`;
       gL += m.lt; gS += m.st; gZ += (tm.long ? m.lt : 0) + (tm.short ? m.st : 0);
     }
-    html += `<div class="sm-genel">Genel (Binance + MEXC): long <b>${fmt(gL, 0)}</b> trader, short <b>${fmt(gS, 0)}</b> trader · zararda <b>${fmt(gZ, 0)}</b></div>`;
+    // Genel, iki borsanın verisi de gelince yazılır; biri gelmeden yazılırsa tek borsanın sayısı genel gibi görünür
+    const ikisiGeldi = !!mexVeri && !!(smVeri || oz) && !!fiyatlar[aktif.sym];
+    html += ikisiGeldi
+      ? `<div class="sm-genel">Genel (Binance + MEXC): long <b>${fmt(gL, 0)}</b> trader, short <b>${fmt(gS, 0)}</b> trader · zararda <b>${fmt(gZ, 0)}</b></div>`
+      : '<div class="sm-genel">Genel (Binance + MEXC): iki borsanın verisi gelince hesaplanır</div>';
+    // Long / short bölümündeki genel trader oranı aynı sayılardan
+    const gT = gL + gS;
+    $('lsOranGenel').innerHTML = !ikisiGeldi ? 'Genel trader oranı yükleniyor'
+      : gT ? `Genel trader oranı (Binance + MEXC): long <b>%${fmt(gL / gT * 100, 1)}</b> · short <b>%${fmt(gS / gT * 100, 1)}</b> · ${fmt(gL, 0)} long, ${fmt(gS, 0)} short trader`
+      : 'Genel trader oranı: bu coinde iki borsada da açık pozisyonu bilinen trader yok';
     const kalan = Math.max(0, Math.ceil((smSonraki - Date.now()) / 1000));
     html += `<p class="ek">${f ? `Mark fiyat <b>${fmt(f, aktif.ondalik)}</b> (Binance kâr ve zararı bununla hesaplar). ` : ''}Fiyat bir tarafın ortalama girişinin aleyhine geçince o taraf zararda sayılır. Binance rakamları Binance Smart Money coin sayfasıyla aynı kaynaktan gelir, 30 saniyede bir yenilenir; değişen sayının yanında farkı yazar. Sonraki yenileme ${kalan} sn. MEXC rakamları MEXC kopya trade'deki lider trader'ların açık işlemlerinden, 30 dakikada bir taranır; zararda mı kârda mı anlık fiyatla hesaplanır.</p>`;
     $('smCoin').innerHTML = html;
@@ -562,12 +755,12 @@
   }
 
   // Long / short hacmi: taker alış (long) ve taker satış (short) dolar toplamı. Binance'teki bütün sürekli
-  // kontratlar toplanır (USDT, USDC, coin-margined); CoinGlass'ın Binance satırı da böyle hesaplıyor.
+  // kontratlar toplanır (USDT, USDC, USD1, U ve coin-margined); CoinGlass'ın Binance satırı da böyle hesaplıyor.
   // Geçmiş 1 dakikalık mumlardan, içinde bulunulan dakika canlı mum akışından gelir.
   function hacimBaslat(n) {
     const t = aktif.taban;
     const k = [{ sym: aktif.sym, cm: false }];
-    if (usdcSym[t]) k.push({ sym: usdcSym[t], cm: false });
+    for (const sym of ekSym[t] || []) k.push({ sym, cm: false });
     if (cmSym[t]) k.push({ sym: cmSym[t].sym, cm: true, carpan: cmSym[t].carpan });
     hacim = { n, k, mum: new Map(k.map(x => [x.sym, new Map()])) };
     $('lsBaslik').textContent = 'Long / short hacmi · ' + t;
@@ -637,8 +830,10 @@
   function hacimCiz() {
     if (!hacim || hacim.n !== nesil) return;
     const hazir = hacim.k.filter(x => x.hazir);
-    if (!hazir.length) {
+    // Kontratların geçmişi sırayla geliyor: hepsi gelmeden (ya da alınamadığı belli olmadan) toplam eksik görünmesin
+    if (!hazir.length || hacim.k.some(x => !x.hazir && !x.hata)) {
       if (hacim.k.every(x => x.hata)) $('lsHacim').innerHTML = '<p class="ek">Binance hacim verisi alınamadı.</p>';
+      mexHacimCiz();
       return;
     }
     const simdi = Math.floor((Date.now() + (saatFarki || 0)) / 60000) * 60000;
@@ -653,6 +848,7 @@
         `<div class="lsbar"><span style="width:${y.toFixed(2)}%"></span></div>` +
         `<div class="ls-alt"><span>Long ${dolar(al)}</span><span>Short ${dolar(sat)}</span></div></div>`;
     }).join('');
+    mexHacimCiz();
   }
 
   // Long / short hesap oranı: Binance'in resmî verisi (CoinGlass'ta Retail, Whale Account, Whale Position), 5 dakikada bir
@@ -686,31 +882,57 @@
       `<p class="ek">Oran, long taraftaki hesabın (ya da pozisyonun) short taraftakinin kaç katı olduğunu gösterir: 2 ise her short hesaba 2 long hesap düşer. Büyük hesaplar Binance'in Top Trader verisi. Binance bu oranı 5 dakikada bir günceller, son veri ${saat(zaman)}. CoinGlass bu kutuyu kendiliğinden yenilemiyor, bazen de bir önceki 5 dakikanın rakamını gösteriyor; karşılaştırırken CoinGlass sayfasını yenileyin.</p>`;
   }
 
+  // MEXC'de coinin adı farklı olabiliyor ve olmayan sembole abonelik de 'success' dönüyor: bütün aday adlara
+  // (mexAdaylari) abone olunur, ekrana fiyatı Binance'le tutan aday yazılır. Aynı adlı başka coin bu yüzden görünmez.
+  // Kesin aday yakın addan önce gelir; yakın adlardan fiyatı Binance'e en yakın olan seçilir.
+  let mwsAday = '';
   function mexcBagla(n) {
     if (n !== nesil) return;
-    let msym = aktif.taban + '_USDT';
-    let geldi = false;
-    const abone = (ws, sym) => {
-      ws.send(JSON.stringify({ method: 'sub.ticker', param: { symbol: sym } }));
-      ws.send(JSON.stringify({ method: 'sub.funding.rate', param: { symbol: sym } }));
-    };
-    mws = new WebSocket(MEXC_WS);
-    mws.onopen = () => {
-      if (n !== nesil) return;
-      abone(mws, msym);
-      clearInterval(mPing); mPing = setInterval(() => { if (mws.readyState === 1) mws.send('{"method":"ping"}'); }, 15000);
-      setTimeout(() => { if (n === nesil && !geldi) { $('fMexc').textContent = '–'; $('fMexcEk').textContent = 'Bu coin MEXC vadelide yok'; } }, 12000);
-    };
-    mws.onmessage = (e) => {
-      if (n !== nesil) return;
-      const m = JSON.parse(e.data);
-      if (m.channel === 'rs.error' && /not exists/.test(m.data) && /^10{3,}/.test(aktif.taban) && msym === aktif.taban + '_USDT') {
-        msym = aktif.taban.replace(/^10{3,}/, '') + '_USDT';
-        abone(mws, msym);
-        return;
+    const liste = mexAdaylari(aktif.taban);
+    mwsAday = JSON.stringify(liste);
+    const adaylar = liste.map(([k, carpan, pay], i) => ({ sym: k + '_USDT', carpan, pay, sira: i < kesinAdaylar(aktif.taban).length ? 0 : 1 }));
+    let secili = null, seciliFark = Infinity, geldi = false, baskaCoin = false;
+    // Bu bağlantıya ait olmayan olaylar (coin değişti ya da bağlantı yenilendi) yok sayılır
+    const ws = new WebSocket(MEXC_WS);
+    const benim = () => n === nesil && mws === ws;
+    mws = ws;
+    ws.onopen = () => {
+      if (!benim()) return;
+      for (const a of adaylar) {
+        ws.send(JSON.stringify({ method: 'sub.ticker', param: { symbol: a.sym } }));
+        ws.send(JSON.stringify({ method: 'sub.funding.rate', param: { symbol: a.sym } }));
       }
+      clearInterval(mPing); mPing = setInterval(() => { if (ws.readyState === 1) ws.send('{"method":"ping"}'); }, 15000);
+      setTimeout(() => {
+        if (benim() && !geldi) { $('fMexc').textContent = '–'; $('fMexcEk').textContent = baskaCoin ? "MEXC'deki aynı adlı kontrat başka bir coin" : 'Bu coin MEXC vadelide yok'; }
+      }, 12000);
+    };
+    ws.onmessage = (e) => {
+      if (!benim()) return;
+      const m = JSON.parse(e.data);
+      const sym = m.symbol || (m.data && m.data.symbol);
+      if (m.channel === 'push.ticker' && m.data && (!secili || secili.sira > 0)) {
+        const a = adaylar.find(x => x.sym === sym);
+        const bf = sonMark !== null ? sonMark : (fiyatlar[aktif.sym] || sonFiyat);
+        if (a && bf && a !== secili) {
+          const d = fiyatFarki(bf, a.carpan, m.data.fairPrice);
+          if (d <= a.pay) {
+            if (!secili || a.sira < secili.sira || (a.sira === secili.sira && d < seciliFark)) {
+              secili = a; seciliFark = d; mexcFiyat = null;
+              // Canlı fiyatla seçilen ad Top 30'da da geçerli. Dosya fiyatıyla verilen karardan farklıysa bu bir düzeltmedir,
+              // coin bu yüzden listeye girerse yeni giriş sayılıp bildirilmez
+              const onceki = dosyaEsle(aktif.taban);
+              mexcSecili = { k: a.sym.slice(0, -5), carpan: a.carpan, taban: aktif.taban };
+              esleOnbellek.set(aktif.taban, mexcSecili);
+              if (top30Gorulen && (!onceki || onceki.k !== mexcSecili.k)) top30Gorulen.set(aktif.sym, Date.now());
+              mexOranCiz(); mexHacimCiz(); smCoinCiz();
+            }
+          } else if (a.sira === 0) baskaCoin = true;
+        }
+      }
+      if (!secili || sym !== secili.sym) return;
       if (m.channel === 'push.ticker' && m.data && typeof m.data.fairPrice === 'number') {
-        mexcFiyat = m.data.fairPrice; mexcFiyatSym = m.data.symbol || msym;
+        mexcFiyat = m.data.fairPrice; mexcFiyatSym = sym;
       }
       if (m.channel === 'push.ticker' && m.data && typeof m.data.fundingRate === 'number') {
         geldi = true;
@@ -723,12 +945,24 @@
         $('fMexcEk').textContent = 'sonraki ödeme ' + saat(m.data.nextSettleTime);
       }
     };
-    mws.onclose = () => {
-      if (n !== nesil) return;
+    ws.onclose = () => {
+      if (!benim()) return;
       clearInterval(mPing);
       clearTimeout(yenidenM); yenidenM = setTimeout(() => mexcBagla(n), 2000);
     };
-    mws.onerror = () => mws.close();
+    ws.onerror = () => ws.close();
+  }
+
+  // MEXC dosyaları gelince seçili coinin aday adları değiştiyse (farklı ad ya da yakın ad çıktı) bağlantı yeniden kurulur
+  function mexcAdlaYenile() {
+    if (!aktif || !mws) return;
+    if (JSON.stringify(mexAdaylari(aktif.taban)) === mwsAday) return;
+    // Açılmakta olan bağlantı hemen kapatılırsa tarayıcı uyarı yazıyor: açılınca kapatılır
+    const eski = mws; eski.onclose = null; mws = null; mexcSecili = null;
+    if (eski.readyState === WebSocket.CONNECTING) eski.onopen = () => eski.close(); else eski.close();
+    clearInterval(mPing); clearTimeout(yenidenM);
+    mexcFiyat = mexcFiyatSym = null;
+    mexcBagla(nesil);
   }
 
   function fiyatCiz() {
@@ -785,7 +1019,11 @@
     $('binanceLink').href = 'https://www.binance.com/tr/futures/' + s.sym;
     $('smLink').href = 'https://www.binance.com/tr/smart-money/signal/' + s.sym;
     $('cgLink').href = 'https://www.coinglass.com/LongShortRatio/' + s.taban.replace(/^10{3,}/, '');
+    mexcSecili = null;
     $('lsHacim').innerHTML = '<p class="ek">yükleniyor</p>'; $('lsOran').innerHTML = '<p class="ek">yükleniyor</p>';
+    $('lsOranBaslik').textContent = 'Long / short hesap oranı · ' + s.sym;
+    $('lsHacimMexc').innerHTML = '<p class="ek">yükleniyor</p>'; $('lsOranGenel').textContent = 'Genel trader oranı yükleniyor';
+    if (mexOran) mexOranCiz(); else $('lsOranMexc').innerHTML = '<p class="ek">yükleniyor</p>';
     sonMark = null; smOzet = smOzetOnceki = null; mexcFiyat = mexcFiyatSym = null;
     smCoinCiz();
     ozetYukle(s.sym);
@@ -828,6 +1066,8 @@
     setInterval(smYukle, SM_ARALIK);
     mexYukle();
     setInterval(mexYukle, MEXC_ARALIK);
+    mexOranYukle();
+    setInterval(mexOranYukle, MEXC_ARALIK);
   })();
 })();
 </script>
