@@ -100,7 +100,8 @@ h1 em { font-style: normal; }
   padding: clamp(22px, 4.6vw, 68px) 23% 0 clamp(20px, 4.6vw, 68px); }
 .sahne .ekran { border-radius: 12px 12px 0 0; }
 .sahne .ekran img { aspect-ratio: 16 / 9; }
-.sahne .tel { position: absolute; right: clamp(18px, 4.6vw, 68px); bottom: -9%; width: 21%; }
+/* Telefon tam görünür: alt çerçevesi sahnenin içinde kalır, boyu sahneden gelir, eni telefonun kendi oranından */
+.sahne .tel { position: absolute; right: clamp(18px, 4.6vw, 68px); bottom: 7%; height: 87.5%; width: auto; }
 figcaption { margin-top: 14px; font-size: 14.5px; color: var(--ink-2); }
 figcaption a { color: var(--ink); text-underline-offset: 3px; }
 /* Kanıt satırı: sayı ve kısa açıklama yan yana, tek satır */
@@ -144,18 +145,17 @@ h3 { font-size: clamp(24px, 2.3vw, 32px); line-height: 1.1; letter-spacing: -.02
   padding: clamp(24px, 4.6vw, 68px) 24% 0 clamp(24px, 4.6vw, 68px); }
 .vaka-sekil .ekran { border-radius: 12px 12px 0 0; }
 .vaka-sekil .ekran img { aspect-ratio: 16 / 9; }
-.vaka-sekil .tel { position: absolute; right: clamp(20px, 4.6vw, 68px); bottom: -9%; width: 20%; }
+.vaka-sekil .tel { position: absolute; right: clamp(20px, 4.6vw, 68px); bottom: 7%; height: 87.5%; width: auto; }
 .sekme { display: inline-flex; flex-wrap: wrap; gap: 2px; margin-bottom: 16px; padding: 3px; max-width: 100%;
   background: var(--sahne-2); border-radius: 999px; }
 .sekme button { font: 500 13.5px/1 Archivo, sans-serif; padding: 9px 14px; border: 0; border-radius: 999px;
   background: transparent; color: var(--ink-2); cursor: pointer; transition: background .15s, color .15s; }
 .sekme button:hover { color: var(--ink); }
 .sekme button[aria-pressed="true"] { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgba(22, 24, 27, .14); }
-/* Portly: dört telefon yan yana, ikinci ve dördüncü aşağıdan başlar; alt kenarda sahneye gömülür */
-.vaka-sekil.teller { padding: clamp(32px, 4.6vw, 68px) clamp(20px, 5vw, 88px) 0; display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: clamp(12px, 2.2vw, 32px); align-items: start; max-height: clamp(380px, 40vw, 560px); }
-.vaka-sekil.teller .tel { position: static; width: auto; }
-.vaka-sekil.teller .tel:nth-child(even) { margin-top: 12%; }
+/* Portly: dört telefon yan yana, aynı hizada ve tam görünür; üstte ve altta eşit boşluk */
+.vaka-sekil.teller { padding: clamp(24px, 3.6vw, 52px) clamp(20px, 9vw, 136px); display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: clamp(12px, 2.2vw, 32px); align-items: start; }
+.vaka-sekil.teller .tel { position: static; width: auto; height: auto; }
 
 /* Yayındaki işler: ilk ikisi tam genişlik vitrin, kalanlar ikili ızgara (Atalia girişte gösterilir) */
 @media (min-width: 861px) {
@@ -166,7 +166,7 @@ h3 { font-size: clamp(24px, 2.3vw, 32px); line-height: 1.1; letter-spacing: -.02
   .isler-bolum .vaka:nth-of-type(n+3) .vaka-tur { margin-top: 8px; }
   .isler-bolum .vaka:nth-of-type(n+3) .ozellik li { padding: 7px 0; font-size: 14.5px; }
   .isler-bolum .vaka:nth-of-type(n+3) .vaka-sekil { order: -1; padding: clamp(20px, 2.8vw, 40px) 23% 0 clamp(20px, 2.8vw, 40px); }
-  .isler-bolum .vaka:nth-of-type(n+3) .vaka-sekil .tel { right: clamp(16px, 2.8vw, 40px); width: 21%; }
+  .isler-bolum .vaka:nth-of-type(n+3) .vaka-sekil .tel { right: clamp(16px, 2.8vw, 40px); }
   .isler-bolum .vaka:nth-of-type(n+3) .vaka-yazi > p:not(.vaka-tur) { margin-top: 16px; font-size: 16.5px; }
   .isler-bolum .vaka:nth-of-type(n+3) .ozellik { columns: 1; }
 }
@@ -181,7 +181,9 @@ h3 { font-size: clamp(24px, 2.3vw, 32px); line-height: 1.1; letter-spacing: -.02
 .musteri { --ara: clamp(20px, 2.4vw, 32px); display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(40px, 4vw, 56px) var(--ara); }
 .m-kart { display: flex; flex-direction: column; min-width: 0; }
 .m-gorsel { background: var(--sahne); border-radius: var(--r-sahne); padding: 32px 0 0; display: flex; justify-content: center; align-items: flex-end; overflow: hidden; height: 380px; }
-.m-gorsel .tel { width: 52%; height: 100%; aspect-ratio: auto; border-bottom: 0; border-radius: 30px 30px 0 0; }
+/* Kart telefonu tam görünür ve gerçek oranında (ekran görüntüsü yanlardan kırpılmaz) */
+.m-gorsel .tel { width: auto; height: 100%; }
+@media (min-width: 641px) { .m-gorsel:has(> .tel) { padding: 26px 0; align-items: center; } }
 .m-gorsel .ekran { width: 86%; height: 82%; align-self: flex-end; border-radius: 10px 10px 0 0; }
 .m-gorsel .ekran img { height: 100%; aspect-ratio: auto; }
 .m-yazi { padding: 22px 2px 0; display: flex; flex-direction: column; flex: 1; }
@@ -208,6 +210,7 @@ h3 { font-size: clamp(24px, 2.3vw, 32px); line-height: 1.1; letter-spacing: -.02
   .m-kart:nth-child(3n+1):last-child, .m-kart:nth-child(3n+1):nth-last-child(2), .m-kart:nth-child(3n+2):last-child { flex-direction: row; align-items: center; }
   .m-kart:nth-child(3n+1):last-child .m-gorsel, .m-kart:nth-child(3n+1):nth-last-child(2) .m-gorsel, .m-kart:nth-child(3n+2):last-child .m-gorsel { flex: none; height: auto; min-height: 380px; align-self: stretch; }
   .m-kart:nth-child(3n+1):last-child .m-gorsel { width: calc((100% - 2 * var(--ara)) / 3); }
+  .m-kart:nth-child(3n+1):last-child .m-gorsel:has(> .tel), .m-kart:nth-child(3n+1):nth-last-child(2) .m-gorsel:has(> .tel), .m-kart:nth-child(3n+2):last-child .m-gorsel:has(> .tel) { height: 380px; }
   .m-kart:nth-child(3n+1):nth-last-child(2) .m-gorsel, .m-kart:nth-child(3n+2):last-child .m-gorsel { width: 48%; }
   .m-kart:nth-child(3n+1):last-child .m-yazi, .m-kart:nth-child(3n+1):nth-last-child(2) .m-yazi, .m-kart:nth-child(3n+2):last-child .m-yazi { padding: 0 0 0 clamp(24px, 3vw, 48px); }
   .m-kart:nth-child(3n+1):last-child .m-yazi .linkler { margin-top: 0; }
@@ -219,6 +222,7 @@ h3 { font-size: clamp(24px, 2.3vw, 32px); line-height: 1.1; letter-spacing: -.02
 @media (min-width: 641px) and (max-width: 1080px) {
   .m-kart:nth-child(2n+1):last-child { grid-column: 1 / -1; flex-direction: row; align-items: center; }
   .m-kart:nth-child(2n+1):last-child .m-gorsel { flex: none; width: calc((100% - var(--ara)) / 2); height: auto; min-height: 380px; align-self: stretch; }
+  .m-kart:nth-child(2n+1):last-child .m-gorsel:has(> .tel) { height: 380px; }
   .m-kart:nth-child(2n+1):last-child .m-yazi { padding: 0 0 0 clamp(20px, 3vw, 36px); }
 }
 
@@ -401,15 +405,13 @@ h3 { font-size: clamp(24px, 2.3vw, 32px); line-height: 1.1; letter-spacing: -.02
   h1 { font-size: clamp(36px, 10.4vw, 46px); }
   .btn { min-height: 46px; padding: 0 20px; }
   .sahne { padding: 20px 24% 0 18px; }
-  .sahne .tel { right: 14px; width: 27%; bottom: -12%; }
+  .sahne .tel { right: 14px; bottom: 7%; height: 86%; }
   .ekran[data-alan]::before { height: 24px; line-height: 24px; font-size: 10.5px; }
   .vaka-sekil { padding: 18px 24% 0 16px; }
-  .vaka-sekil .tel { width: 24%; right: 14px; bottom: -14%; }
-  /* Telefonda üç ekran: grafik gizlenir, ortadaki (sinyaller) aşağıdan başlar */
-  .vaka-sekil.teller { grid-template-columns: repeat(3, 1fr); padding: 22px 18px 0; max-height: 300px; }
+  .vaka-sekil .tel { right: 14px; bottom: 7%; height: 86%; }
+  /* Telefonda üç ekran: grafik gizlenir, üçü aynı hizada ve tam görünür */
+  .vaka-sekil.teller { grid-template-columns: repeat(3, 1fr); padding: 18px; }
   .vaka-sekil.teller .tel:nth-child(2) { display: none; }
-  .vaka-sekil.teller .tel:nth-child(4) { margin-top: 0; }
-  .vaka-sekil.teller .tel:nth-child(3) { margin-top: 12%; }
   .olgu { flex-direction: column; align-items: flex-start; gap: 6px; }
   .sekme { display: grid; grid-template-columns: 1fr 1fr; width: 100%; border-radius: 14px; }
   .sekme button { padding: 10px 8px; font-size: 13px; border-radius: 11px; }
