@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Focus Prestij | Dijital satış ofisi</title>
+<meta name="description" content="Focus Prestij dijital satış ofisi: bloğu ve katı seçin, daire planını, odaları, ödeme planını ve konumu inceleyin.">
+<meta name="theme-color" content="#071827">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23071827'/%3E%3Cpath d='M10 25V9h12M10 17h9' fill='none' stroke='%23c3a15b' stroke-width='2.6'/%3E%3C/svg%3E">
+<link rel="preload" as="font" type="font/woff2" href="font/dmsans-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="font/serif-latin.woff2" crossorigin>
+<link rel="stylesheet" href="site.css?v=3">
+</head>
+<body data-gorunum="acilis">
+
+<!-- AÇILIŞ -->
+<div id="acilis">
+  <div class="ac-sahne" id="ac-1"></div>
+  <div class="ac-perde"></div>
+  <div class="ac-kredi" id="ac-kredi">
+    <div class="ac-logolar">
+      <img src="img/logo-izyap-beyaz.webp" alt="İZYAP İnşaat" width="287" height="160">
+      <span class="ac-carpi" aria-hidden="true"></span>
+      <img src="img/logo-barisan-beyaz.webp" alt="Barışan İnşaat" width="480" height="160">
+    </div>
+    <p>iş ortaklığıyla</p>
+  </div>
+  <div class="ac-baslik" id="ac-baslik">
+    <p class="ac-ust">Mahmutbey, İstanbul</p>
+    <h1 class="ac-ad" aria-label="Focus Prestij"><span>Focus</span> <span>Prestij</span></h1>
+  </div>
+  <div class="ac-alt">
+    <span class="ac-cubuk"><span id="ac-dolu"></span></span>
+    <button type="button" id="ac-gec">Geç</button>
+  </div>
+</div>
+
+<header class="ust">
+  <button class="marka" type="button" data-git="bina" aria-label="Focus Prestij, binaya dön">
+    <img class="marka-beyaz" src="img/logo-focus-beyaz.webp" alt="" width="480" height="160">
+    <img class="marka-renkli" src="img/logo-focus.webp" alt="" width="480" height="160">
+  </button>
+  <nav class="menu" aria-label="Bölümler">
+    <button type="button" data-git="bina" class="secili">Bina</button>
+    <button type="button" data-panel="p-konum">Konum</button>
+    <button type="button" data-panel="p-galeri">Galeri</button>
+    <button type="button" data-panel="p-odeme">Ödeme planı</button>
+    <button type="button" data-panel="p-ortak">Ortaklık</button>
+  </nav>
+  <nav class="yol" id="yol" aria-label="Bulunduğunuz yer"></nav>
+  <button class="dugme ana" type="button" data-form="genel">Bilgi al</button>
+  <button class="menu-ac" type="button" id="menu-ac" aria-label="Menü" aria-expanded="false"><span></span><span></span></button>
+</header>
+
+<!-- BİNA -->
+<section class="gorunum" id="g-bina" aria-label="Bloklar">
+  <div class="sahne" id="sahne">
+    <div class="sahne-kutu" id="kutu">
+      <img class="cephe" data-v="on" data-z="aksam" alt="Focus Prestij, ön cephe, akşam" decoding="async">
+      <img class="cephe" data-v="on" data-z="gunduz" alt="Focus Prestij, ön cephe, gündüz" decoding="async">
+      <img class="cephe" data-v="arka" data-z="aksam" alt="Focus Prestij, arka cephe, akşam" decoding="async">
+      <img class="cephe" data-v="arka" data-z="gunduz" alt="Focus Prestij, arka cephe, gündüz" decoding="async">
+      <img class="eskiz" id="eskiz" alt="" aria-hidden="true" decoding="async">
+      <svg class="katlar-svg" id="katlar-svg" viewBox="0 0 1600 893" preserveAspectRatio="none" aria-hidden="true"></svg>
+    </div>
+    <div class="sahne-golge"></div>
+  </div>
+  <div class="kat-cip" id="kat-cip" aria-hidden="true"><strong></strong><span></span></div>
+
+  <div class="bina-yazi">
+    <h2>Focus Prestij</h2>
+    <p>İZYAP ve Barışan iş ortaklığıyla Mahmutbey'de iki blok, 96 daire. Zemin katta cadde dükkânları.</p>
+    <p class="ipucu">Bir kata dokunun, o kattaki daireleri görün. Binayı yana sürükleyerek arkasına geçebilirsiniz.</p>
+  </div>
+
+  <aside class="kule-panel" aria-label="Katlar">
+    <div class="blok-sec" role="tablist" aria-label="Blok">
+      <button type="button" role="tab" data-blok="A" aria-selected="true">A Blok</button>
+      <button type="button" role="tab" data-blok="B" aria-selected="false">B Blok</button>
+    </div>
+    <div class="kat-listesi" id="kat-listesi"></div>
+    <p class="kat-lejant"><i class="h-satilik"></i>Satışta <i class="h-rezerve"></i>Rezerve <i class="h-satildi"></i>Satıldı</p>
+  </aside>
+
+  <div class="gorus">
+    <div class="ikili" role="group" aria-label="Cephe">
+      <button type="button" data-cephe="on" class="secili">Ön cephe</button>
+      <button type="button" data-cephe="arka">Arka cephe</button>
+    </div>
+    <div class="ikili" role="group" aria-label="Saat">
+      <button type="button" data-zaman="gunduz"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.4 1.4M11.6 11.6 13 13M3 13l1.4-1.4M11.6 4.4 13 3"/></svg>Gündüz</button>
+      <button type="button" data-zaman="aksam" class="secili"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M12.5 10.2A5.5 5.5 0 0 1 5.8 3.5 5.5 5.5 0 1 0 12.5 10.2Z"/></svg>Akşam</button>
+    </div>
+  </div>
+</section>
+
+<!-- KAT -->
+<section class="gorunum kagit" id="g-kat" aria-label="Kat planı">
+  <div class="kat-yan">
+    <button class="geri" type="button" data-git="bina"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg>Binaya dön</button>
+    <div class="kat-kimlik">
+      <p class="kat-blok" id="kat-blok"></p>
+      <h2 class="kat-no"><span id="kat-no"></span><small>. kat</small></h2>
+    </div>
+    <p class="kat-ozet" id="kat-ozet"></p>
+    <div class="mini-kule" id="mini-kule" aria-label="Kat seçimi"></div>
+    <ul class="daire-listesi" id="daire-listesi"></ul>
+  </div>
+  <div class="kat-plan" id="kat-plan"></div>
+</section>
+
+<!-- DAİRE -->
+<section class="gorunum kagit" id="g-daire" aria-label="Daire">
+  <div class="daire-plan" id="daire-plan"></div>
+  <aside class="daire-yan" id="daire-yan">
+    <button class="geri" type="button" data-git="kat"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg>Kat planına dön</button>
+    <p class="daire-ust" id="daire-ust"></p>
+    <h2 id="daire-ad"></h2>
+    <p class="daire-tip" id="daire-tip"></p>
+    <dl class="bilgi" id="daire-bilgi"></dl>
+    <div class="fiyat" id="daire-fiyat"></div>
+    <div class="taksit" id="taksit">
+      <div class="taksit-satir">
+        <label for="t-pesin">Peşinat <output id="t-pesin-yazi">%40</output></label>
+        <input type="range" id="t-pesin" min="25" max="60" step="5" value="40">
+      </div>
+      <div class="taksit-vade" role="group" aria-label="Vade">
+        <button type="button" data-vade="12">12 ay</button>
+        <button type="button" data-vade="24" class="secili">24 ay</button>
+        <button type="button" data-vade="36">36 ay</button>
+      </div>
+      <p class="taksit-sonuc"><span id="t-aylik"></span><small id="t-alt"></small></p>
+    </div>
+    <div class="eylem" id="daire-eylem">
+      <a class="dugme ana genis" id="wa" target="_blank" rel="noopener">WhatsApp'tan sorun</a>
+      <button class="dugme hafif genis" type="button" data-form="daire">Beni arayın</button>
+    </div>
+    <h3>Odalar</h3>
+    <ul class="oda-listesi" id="oda-listesi"></ul>
+    <div class="daire-gez">
+      <button type="button" id="onceki">Önceki daire</button>
+      <button type="button" id="sonraki">Sonraki daire</button>
+    </div>
+  </aside>
+</section>
+
+<!-- ODA -->
+<section class="gorunum" id="g-oda" aria-label="Oda görseli">
+  <div class="oda-resim" id="oda-resim"></div>
+  <div class="oda-yazi">
+    <h2 id="oda-ad"></h2>
+    <p id="oda-alt"></p>
+    <small>Görsel temsilidir. Malzeme ve eşyalar değişebilir.</small>
+  </div>
+  <div class="oda-alt-cubuk">
+    <button class="geri acik-renk" type="button" data-git="daire"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg>Daire planına dön</button>
+    <div class="oda-cipler" id="oda-cipler"></div>
+  </div>
+</section>
+
+<!-- PANELLER -->
+<section class="panel koyu" id="p-konum" aria-label="Konum" hidden>
+  <button class="kapat" type="button" data-kapat aria-label="Kapat"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 4 8 8M12 4l-8 8"/></svg></button>
+  <div class="panel-ic konum">
+    <div class="konum-yazi">
+      <h2>Mahmutbey, İstanbul</h2>
+      <p>Focus Prestij, TEM ve Basın Ekspres akslarına yakın Mahmutbey'de. Proje alanı haritada işaretlenir, yakın noktalara süreler panelden girilir.</p>
+      <ul class="mesafe" id="mesafe"></ul>
+      <p class="not">Süreler örnektir. Kurulumda yönetim panelinden girilir.</p>
+      <a class="dugme hafif" href="https://www.google.com/maps/search/?api=1&amp;query=Mahmutbey%2C%20Ba%C4%9Fc%C4%B1lar%2C%20%C4%B0stanbul" target="_blank" rel="noopener">Haritada aç</a>
+    </div>
+    <div class="harita" id="harita"></div>
+  </div>
+</section>
+
+<section class="panel koyu" id="p-galeri" aria-label="Galeri" hidden>
+  <button class="kapat" type="button" data-kapat aria-label="Kapat"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 4 8 8M12 4l-8 8"/></svg></button>
+  <div class="galeri">
+    <div class="galeri-sahne" id="galeri-sahne"></div>
+    <div class="galeri-alt">
+      <p class="galeri-sayac"><span id="galeri-no">1</span> / <span id="galeri-top">16</span></p>
+      <div class="galeri-oklar">
+        <button type="button" id="galeri-geri" aria-label="Önceki görsel"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg></button>
+        <button type="button" id="galeri-ileri" aria-label="Sonraki görsel"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></button>
+      </div>
+      <div class="galeri-seridi" id="galeri-seridi"></div>
+    </div>
+  </div>
+</section>
+
+<section class="panel kagit" id="p-odeme" aria-label="Ödeme planı" hidden>
+  <button class="kapat" type="button" data-kapat aria-label="Kapat"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 4 8 8M12 4l-8 8"/></svg></button>
+  <div class="panel-ic odeme">
+    <div class="odeme-sol">
+      <h2>Ödeme planı</h2>
+      <p>Peşinatı ve vadeyi seçin, aylık taksiti görün. Daire planında da aynı hesap o dairenin fiyatıyla çalışır.</p>
+      <div class="hesap">
+        <label for="h-fiyat">Daire fiyatı</label>
+        <select id="h-fiyat"></select>
+        <label for="h-pesin">Peşinat <output id="h-pesin-yazi">%40</output></label>
+        <input type="range" id="h-pesin" min="25" max="60" step="5" value="40">
+        <div class="taksit-vade" role="group" aria-label="Vade">
+          <button type="button" data-hvade="12">12 ay</button>
+          <button type="button" data-hvade="24" class="secili">24 ay</button>
+          <button type="button" data-hvade="36">36 ay</button>
+        </div>
+        <dl class="hesap-sonuc">
+          <dt>Peşinat</dt><dd id="h-pesinat"></dd>
+          <dt>Aylık taksit</dt><dd id="h-aylik" class="buyuk"></dd>
+        </dl>
+      </div>
+      <p class="not">Fiyatlar ve ödeme seçenekleri örnektir. Kurulumda yönetim panelinden girilir.</p>
+    </div>
+    <div class="odeme-sag">
+      <h3>İnşaat takvimi</h3>
+      <ol class="takvim" id="takvim">
+        <li class="bitti"><strong>Ruhsat ve proje onayı</strong><span>Eylül 2026</span></li>
+        <li class="simdi"><strong>Lansman ve ön satış</strong><span>Aralık 2026</span></li>
+        <li><strong>Temel ve bodrum katlar</strong><span>Mart 2027</span></li>
+        <li><strong>Kaba inşaat</strong><span>Kasım 2027</span></li>
+        <li><strong>İnce işler ve peyzaj</strong><span>Temmuz 2028</span></li>
+        <li><strong>Anahtar teslimi</strong><span>Aralık 2028</span></li>
+      </ol>
+      <p class="not">Takvim örnektir.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel kagit" id="p-ortak" aria-label="Ortaklık" hidden>
+  <button class="kapat" type="button" data-kapat aria-label="Kapat"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 4 8 8M12 4l-8 8"/></svg></button>
+  <div class="panel-ic ortak">
+    <div class="ortak-logolar">
+      <figure><img src="img/logo-izyap.webp" alt="İZYAP İnşaat A.Ş." width="287" height="160"><figcaption>İZYAP İnşaat A.Ş.</figcaption></figure>
+      <span class="ortak-carpi" aria-hidden="true"></span>
+      <figure><img src="img/logo-barisan.webp" alt="Barışan İnşaat A.Ş." width="480" height="160"><figcaption>Barışan İnşaat A.Ş.</figcaption></figure>
+    </div>
+    <h2>İki firma, tek proje</h2>
+    <p>Focus Prestij, İZYAP İnşaat ve Barışan İnşaat iş ortaklığıyla geliştiriliyor. Focus markasıyla Mahmutbey ve Güneşli'de konut projeleri yürüten ortaklığın yeni projesi.</p>
+    <dl class="sayilar">
+      <div><dt>Yıllık deneyim</dt><dd data-say="25">25+</dd></div>
+      <div><dt>Tamamlanan proje</dt><dd data-say="18">18</dd></div>
+      <div><dt>Devam eden proje</dt><dd data-say="6">6</dd></div>
+    </dl>
+    <p class="not">Rakamlar focusprojeler.com'dan alındı.</p>
+  </div>
+</section>
+
+<!-- ARAMA FORMU -->
+<div class="perde" id="perde" hidden></div>
+<aside class="levha" id="form" aria-label="Bilgi talebi" hidden>
+  <button class="kapat" type="button" data-kapat aria-label="Kapat"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 4 8 8M12 4l-8 8"/></svg></button>
+  <h2>Sizi arayalım</h2>
+  <p class="form-konu" id="form-konu"></p>
+  <form id="arama-formu" novalidate>
+    <label>Adınız<input name="ad" autocomplete="name" required></label>
+    <label>Telefonunuz<input name="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="05xx xxx xx xx" required></label>
+    <div class="iki">
+      <label>Hangi gün<select name="gun"><option>Bugün</option><option>Yarın</option><option>Hafta içi</option><option>Hafta sonu</option></select></label>
+      <label>Hangi saat<select name="saat"><option>09.00 - 12.00</option><option>12.00 - 15.00</option><option>15.00 - 18.00</option><option>18.00 - 20.00</option></select></label>
+    </div>
+    <label class="onay"><input type="checkbox" name="kvkk" required>Bilgilerimin bu talep için kullanılmasına izin veriyorum.</label>
+    <p class="hata" id="form-hata" role="alert"></p>
+    <button class="dugme ana genis" type="submit">Arama talebi gönder</button>
+  </form>
+  <div class="form-tamam" id="form-tamam" hidden>
+    <h3>Talebiniz alındı</h3>
+    <p>Seçtiğiniz gün ve saatte aranacaksınız. Bu sayfa örnek olduğu için talep kaydedilmedi; kurulumda talepler yönetim paneline düşer.</p>
+  </div>
+</aside>
+
+<p class="demo-not">Örnek demo. Daire, fiyat ve satış bilgileri örnektir; kat planları ve oda görselleri temsilidir.</p>
+
+<script src="site.js?v=3"></script>
+</body>
+</html>
